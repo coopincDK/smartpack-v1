@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>FAQ – SmartPack WMS | Svar på det du undrer dig over</title>
+  <meta name="description" content="Direkte svar på de spørgsmål vi oftest får. Pris, binding, onboarding, integrationer, support og alt det andet. Ingen corporate-speak.">
+  <meta name="keywords" content="SmartPack FAQ, WMS spørgsmål, lagersystem spørgsmål, SmartPack pris, SmartBoost">
+  <link rel="canonical" href="https://smartpack.dk/faq/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="SmartPack">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://smartpack.dk/faq/">
+  <meta property="og:site_name" content="SmartPack">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:title" content="FAQ – SmartPack WMS | Svar på det du undrer dig over">
+  <meta property="og:description" content="Direkte svar på pris, binding, onboarding, integrationer og support. Ingen corp-speak.">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SmartPackWMS">
+  <meta name="twitter:title" content="FAQ – SmartPack WMS">
+  <meta name="twitter:description" content="Direkte svar. Ingen corporate-speak. Bygget af e-købmænd til e-købmænd.">
+  <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="apple-touch-icon" href="Billeder OG VIDEO/favicon-smartpack0.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
+          {"@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://smartpack.dk/faq/"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://smartpack.dk/faq/",
+        "url": "https://smartpack.dk/faq/",
+        "name": "FAQ – SmartPack WMS",
+        "description": "Direkte svar på de spørgsmål vi oftest får om SmartPack.",
+        "isPartOf": {"@id": "https://smartpack.dk/#website"},
+        "publisher": {"@id": "https://smartpack.dk/#organization"}
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ── Page hero ── */
+    .faq-hero {
+      padding: 120px 0 70px;
+      text-align: center;
+    }
+    .faq-hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.75rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin: .75rem 0 1.25rem;
+    }
+    .faq-hero__sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+    @media (max-width: 640px) {
+      .faq-hero { padding: 90px 0 50px; }
+    }
+
+    /* ── Active nav link ── */
+    .nav__link--active { color: var(--accent) !important; }
+
+    /* ── FAQ section ── */
+    .faq-section {
+      padding: 0 0 var(--section-py);
+    }
+
+    /* ── Accordion wrapper ── */
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── Single item ── */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Question button ── */
+    .faq-item__btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.35rem 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.45;
+      transition: color var(--t-fast);
+    }
+    .faq-item__btn:hover {
+      color: var(--accent);
+    }
+    .faq-item.is-open .faq-item__btn {
+      color: var(--accent);
+    }
+
+    /* ── Icon ── */
+    .faq-item__icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-mid);
+      color: var(--text-3);
+    }
+    .faq-item__icon svg {
+      width: 11px;
+      height: 11px;
+      transition: transform var(--t-mid);
+    }
+    .faq-item__btn:hover .faq-item__icon {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .faq-item.is-open .faq-item__icon {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+    .faq-item.is-open .faq-item__icon svg {
+      transform: rotate(180deg);
+    }
+
+    /* ── Answer panel ── */
+    .faq-item__body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--t-mid);
+    }
+    .faq-item.is-open .faq-item__body {
+      grid-template-rows: 1fr;
+    }
+    .faq-item__body-inner {
+      overflow: hidden;
+    }
+    .faq-item__answer {
+      padding: 0 0 1.5rem;
+      font-size: .935rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .faq-item__answer p + p {
+      margin-top: .75rem;
+    }
+    .faq-item__answer strong {
+      color: var(--text-1);
+      font-weight: 700;
+    }
+    .faq-item__answer a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .faq-item__answer a:hover {
+      opacity: .8;
+    }
+    /* Inline highlight chip */
+    .faq-chip {
+      display: inline-block;
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.25);
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: .2em .8em;
+      margin: 0 .1em;
+      white-space: nowrap;
+    }
+
+    /* ── CTA strip below accordion ── */
+    .faq-cta-strip {
+      max-width: 720px;
+      margin: 3rem auto 0;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .faq-cta-strip__text p {
+      font-size: .75rem;
+      color: var(--text-3);
+      margin-top: .25rem;
+    }
+    .faq-cta-strip__text strong {
+      font-size: 1rem;
+      color: var(--text-1);
+    }
+    .faq-cta-strip__actions {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 600px) {
+      .faq-cta-strip {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html#funktioner" class="nav__link">Funktioner</a></li>
+      <li><a href="index.html#cases" class="nav__link">Cases</a></li>
+      <li><a href="index.html#integrationer" class="nav__link">Integrationer</a></li>
+      <li><a href="index.html#for-who" class="nav__link">Hvem er det til</a></li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link">Om os</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hjælp &rarr;</a>
+      <a href="#cta" class="btn btn--primary nav__cta">Få en snak</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="faq-hero" id="hero">
+  <div class="container">
+    <div class="eyebrow reveal">FAQ</div>
+    <h1 class="reveal">Svar på det du<br><span class="text-accent">undrer dig over.</span></h1>
+    <p class="faq-hero__sub reveal">Ingen marketingsprog. Vi svarer som folk der selv har pakket ordrer og kender lagerdrift indefra.</p>
+  </div>
+</section>
+
+<!-- FAQ ACCORDION -->
+<section class="faq-section">
+  <div class="container">
+
+    <ul class="faq-list" id="faq-list">
+
+      <!-- 1 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad koster det?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Du betaler <strong>per ordre</strong> – ikke per bruger, ikke per måned, ikke per linje på fakturaen du ikke forstår. Prisen starter ved <span class="faq-chip">3,00 kr./ordre</span> og falder gradvis jo mere volumen du har. Ved 5.000 ordrer/mdr. er du under 1,50 kr. Per ordre er alt inkluderet – WMS, support, opdateringer, integrationer.</p>
+              <p>Der er et minimumsforbrug på <strong>3.000 kr./mdr.</strong> Det svarer til ca. 1.000 ordrer. Sender du under det, betaler du minimummet. Der er ingen opstartsfee og ingen skjulte gebyrer.</p>
+              <p>Vil du have et konkret tal på jeres volumen? <a href="priser.html">Brug vores prisberegner</a> – den er præcis på to minutter.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 2 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Er der binding?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p><strong>Nej.</strong> En måneds opsigelsesvarsel – det er det hele. Vi har valgt det bevidst, fordi vi er sikre nok på produktet til ikke at have brug for at låse dig fast.</p>
+              <p>Langt de fleste bliver. Ikke fordi de er bundet, men fordi det virker.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 3 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad er inkluderet i prisen?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Alt det du rent faktisk bruger: <strong>WMS-platformen, onboarding, løbende support, alle softwareopdateringer, integrationer til webshop og ERP</strong>, labelprint, returhåndtering, batchpluk, lokationsstyring og brugeradgang til hele teamet.</p>
+              <p>Ingen moduler du skal betale ekstra for. Ingen "enterprise add-ons". Ingen overraskelse på næste faktura. Det vi lover på dag ét, er det du får.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 4 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvor lang tid tager onboarding?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Typisk <strong>1–3 uger</strong> fra kontrakt til første ordre plukket i systemet. Det afhænger af, hvor kompleks jeres opsætning er – antal lokationer, integrationer, om I skifter fra et andet system eller starter fra scratch.</p>
+              <p>Vi kører onboarding med jer – ikke ved at sende en PDF og håbe på det bedste. I får en dedikeret kontaktperson der kender lagerdrift, og som kan svare på de spørgsmål der opstår undervejs. Typisk er folk selvkørende inden for den første måned.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 5 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Kan I integrere med vores webshop eller ERP?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Ja. Vi har færdige integrationer til de platforme de fleste danske webshops kører på: <strong>Shopify, WooCommerce, Magento, Dandomain, Billy, e-conomic</strong> og de mest udbredte fragtleverandører.</p>
+              <p>Har I et specialsystem eller et ældre ERP, kigger vi på det. Vi har en åben API og har løst mere end én "det kan sikkert ikke lade sig gøre"-integration. Spørg os – det koster ikke noget at høre.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 6 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad sker der hvis vi sender færre pakker en måned?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Du betaler for det du bruger – og ikke mere. Falder volumen, falder fakturaen. Den eneste bundgrænse er minimumsfaktura på <span class="faq-chip">3.000 kr./mdr.</span>, svarende til ca. 1.000 ordrer.</p>
+              <p>Det betyder også, at sæsonudsving – sommerlavpunkter, perioder uden kampagner – ikke straffes. Vi er bygget til virkeligheden, ikke en Excel-model.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 7 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Har I support? Hvornår?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Ja. <strong>SOS-support kører 24/7</strong> – hvis lageret brænder (metaforisk), har I et nummer I kan ringe på. Til hverdag kører daglig support på hverdage via <a href="https://support.smartpack.dk" target="_blank" rel="noopener">support.smartpack.dk</a>.</p>
+              <p>Vi svarer hurtigt, fordi vi selv har siddet med det. Den der besvarer din support-henvendelse har sandsynligvis stået ved et plukbord. Det mærkes på svarene.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 8 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Kan vi bruge vores egne fragtaftaler?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p><strong>Ja, absolut.</strong> Vi tvinger jer ikke over på vores fragtaftaler. SmartPack arbejder med de aftaler I allerede har – GLS, PostNord, DAO, Bring, DHL, og de fleste andre. I beholder jeres priser og relationer.</p>
+              <p>Har I ikke gode fragtaftaler endnu, kan vi hjælpe med det. Men det er jeres valg, ikke vores krav.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 9 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Passer SmartPack til os? Vi sender X pakker om måneden.</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Et rimeligt udgangspunkt: fra <strong>ca. 1.000 ordrer/mdr.</strong> begynder det at give mening. Under det betaler I minimumsbeløbet uanset hvad, og det er svært at retfærdiggøre investeringen i tid og setup.</p>
+              <p>Sender I 500–900 ordrer/mdr. og vokser støt? Kom og snak. Vi er ikke interesserede i at sælge noget der ikke passer – det er spild for begge parter. Sender I 5.000+ ordrer/mdr. og gør det i et system der ikke er bygget til det, er det nærmest sikkert at SmartPack er det rigtige valg.</p>
+              <p>Det hurtigste svar: <a href="mailto:kontakt@smartpack.dk">send os en mail</a> med jeres volumen og nuværende setup. Vi siger ærligt om vi er et match.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 10 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad er SmartBoost?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>SmartBoost er et ekstra servicelag til jer der vil have mere end standard. Konkret betyder det: <strong>dedikeret support-kontakt, prioriteret implementering af nye features, kvartalsvise performancegennemgange</strong> og hurtigere responstid på alt.</p>
+              <p>Det er ikke et krav – standard SmartPack inkluderer allerede mere end de fleste konkurrenter kalder "premium". SmartBoost er til jer der vokser hurtigt, har komplekse behov, eller bare vil have en fast person de kender ved navn.</p>
+              <p>Pris og betingelser aftales individuelt. <a href="mailto:kontakt@smartpack.dk">Spørg os</a>.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 11 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Koster det ekstra at tilføje en lagerrobot?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p><strong>Nej.</strong> Robot-integration er inkluderet i SmartPack. Understøtter I automation eller planlægger at gøre det, er WMS-siden allerede klar – det er ikke en add-on der koster ekstra.</p>
+              <p>Robotten selv koster hvad robotten koster – det er separat hardware. Men SmartPack opkræver ikke en "robot-integration-fee" oveni. Vi er ligeglade med hvilken teknologi I bruger på lageret, bare I bruger vores system til at styre det.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 12 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad hvis vi vil stoppe?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Send en mail. <strong>Én måneds varsel.</strong> Ingen gebyrer, ingen "retention-samtaler", ingen sværd at falde på.</p>
+              <p>Jeres data er jeres – I får den eksporteret i et format I kan bruge. Vi hjælper med at flytte jer videre, selv om vi ikke er dem der tjener på det. Det er bare den rigtige måde at gøre det på.</p>
+              <p>Vil I stoppe fordi noget ikke virker? Ring til os inden I opsiger. Det er muligvis et problem vi kan løse på 20 minutter.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul><!-- /.faq-list -->
+
+    <!-- CTA strip -->
+    <div class="faq-cta-strip reveal">
+      <div class="faq-cta-strip__text">
+        <strong>Ikke fundet svaret?</strong>
+        <p>Ring eller skriv direkte – vi svarer inden for 24 timer.</p>
+      </div>
+      <div class="faq-cta-strip__actions">
+        <a href="mailto:kontakt@smartpack.dk" class="btn btn--primary">Skriv til os</a>
+        <a href="tel:+4588202019" class="btn btn--ghost">Ring direkte</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-section__inner reveal">
+      <div class="eyebrow">Klar til en snak?</div>
+      <h2>Vi svarer ærligt&nbsp;– også hvis vi ikke passer.</h2>
+      <p>20 minutter. Ingen forpligtelse. Vi kigger på jeres setup og siger hvad vi mener.</p>
+      <div class="cta-section__actions">
+        <a href="mailto:kontakt@smartpack.dk" class="btn btn--primary btn--xl">Få et prisestimat</a>
+        <a href="tel:+4588202019" class="btn btn--ghost btn--xl">Ring direkte</a>
+      </div>
+      <div class="cta-section__reassurance">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Bygget af e-købmænd. Til e-købmænd.</p>
+        <p class="footer__sub">WMS til webshops og 3PL der vil have styr på lageret.</p>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="index.html#funktioner">Funktioner</a></li>
+            <li><a href="index.html#integrationer">Integrationer</a></li>
+            <li><a href="index.html#cases">Cases</a></li>
+            <li><a href="priser.html">Priser</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="https://smartpack.dk/blog">Blog</a></li>
+            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
+            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="mailto:kontakt@smartpack.dk">kontakt@smartpack.dk</a></li>
+            <li><a href="tel:+4588202019">SOS 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2025 SmartPack &middot; Dansk lagersystem til webshops og 3PL</p>
+      <div class="footer__badges">
+        <span class="footer__badge">E-handel siden 2005</span>
+        <span class="footer__badge">Dansk Erhverv 2026</span>
+        <span class="footer__badge">WMS &middot; Lagerstyring &middot; 3PL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  (function () {
+    var list = document.getElementById('faq-list');
+    if (!list) return;
+
+    list.addEventListener('click', function (e) {
+      var btn = e.target.closest('.faq-item__btn');
+      if (!btn) return;
+
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('is-open');
+
+      // Close all
+      list.querySelectorAll('.faq-item.is-open').forEach(function (openItem) {
+        openItem.classList.remove('is-open');
+        openItem.querySelector('.faq-item__btn').setAttribute('aria-expanded', 'false');
+      });
+
+      // Open clicked (unless it was already open)
+      if (!isOpen) {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  })();
+</script>
+<script src="js/main.js" defer></script>
+
+</body>
+</html>

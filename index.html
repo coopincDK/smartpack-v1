@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>SmartPack – Dansk WMS til webshops og 3PL | Lagerstyring der virker fra dag ét</title>
+  <meta name="description" content="SmartPack er et dansk warehouse management system (WMS) bygget af e-købmænd siden 2005. Færre plukkefejl, hurtigere ekspedition og fuld kontrol over lageret. Til webshops og 3PL med 50–15.000 ordrer/dag.">
+  <meta name="keywords" content="WMS, lagerstyring, warehouse management system, lagersystem, pluk og pak, 3PL software, webshop lagerstyring, e-commerce WMS, lageroptimering, plukkesystem, dansk WMS">
+  <link rel="canonical" href="https://smartpack.dk/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="SmartPack">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://smartpack.dk/">
+  <meta property="og:site_name" content="SmartPack">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:title" content="SmartPack – Lagerstyring der virker | Dansk WMS til webshops">
+  <meta property="og:description" content="Bygget af e-købmænd siden 2005. Færre fejl, hurtigere pluk og styr på lageret fra dag ét. 30+ webshops kører allerede.">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SmartPackWMS">
+  <meta name="twitter:title" content="SmartPack – Dansk WMS til webshops og 3PL">
+  <meta name="twitter:description" content="Bygget af e-købmænd siden 2005. Færre fejl, hurtigere pluk, styr på lageret.">
+  <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="apple-touch-icon" href="Billeder OG VIDEO/favicon-smartpack0.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Preload kritiske ressourcer -->
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="preload" href="Billeder OG VIDEO/ChatGPT_Image_12._apr._2026__06.37.53-removebg-preview.png" as="image">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://smartpack.dk/#organization",
+        "name": "SmartPack",
+        "url": "https://smartpack.dk",
+        "logo": "https://smartpack.dk/images/smartpack-logo.png",
+        "description": "Dansk warehouse management system (WMS) bygget af e-købmænd siden 2005.",
+        "foundingDate": "2005",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Torvegade 3",
+          "postalCode": "8963",
+          "addressLocality": "Auning",
+          "addressCountry": "DK"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+4588202019",
+          "email": "kontakt@smartpack.dk",
+          "contactType": "customer service",
+          "availableLanguage": "Danish"
+        },
+        "sameAs": [
+          "https://dk.linkedin.com/company/smartpackwms",
+          "https://www.youtube.com/@SmartPackWMS"
+        ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://smartpack.dk/#software",
+        "name": "SmartPack WMS",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Dansk warehouse management system med ruteoptimering, scan-verificering, retur og integrationer til 57+ systemer.",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "DKK",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "unitText": "ordre"
+            }
+          }
+        },
+        "publisher": {"@id": "https://smartpack.dk/#organization"}
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://smartpack.dk/#website",
+        "url": "https://smartpack.dk",
+        "name": "SmartPack",
+        "publisher": {"@id": "https://smartpack.dk/#organization"},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://smartpack.dk/?s={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="#" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="#funktioner" class="nav__link">Funktioner</a></li>
+      <li><a href="#cases" class="nav__link">Cases</a></li>
+      <li><a href="#integrationer" class="nav__link">Integrationer</a></li>
+      <li><a href="#hvem" class="nav__link">Hvem er det til</a></li>
+      <li><a href="priser.html" class="nav__link" title="Se SmartPack priser">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link" title="Om SmartPack">Om os</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hjælp &rarr;</a>
+      <a href="#cta" class="btn btn--primary nav__cta">Få en snak</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <img src="Billeder OG VIDEO/bg-header-1.png" alt="" class="hero__bg-img" aria-hidden="true">
+    <div class="hero__bg-overlay"></div>
+  </div>
+  <div class="container hero__inner">
+    <div class="hero__content reveal">
+      <div class="eyebrow">WMS bygget af e-købmænd · Siden 2005</div>
+      <h1 class="hero__headline">
+        Du vokser.<br>
+        <span class="text-accent">Men lageret begynder at spænde ben.</span>
+      </h1>
+      <p class="hero__trigger">Du kan mærke det. Setup’et holder ikke længere.</p>
+      <p class="hero__sub">
+        Vi fjerner fejl.<br>
+        Skærer unødige skridt.<br>
+        Og får dit lager til at spille.
+      </p>
+      <p class="hero__not-later">Ikke om 6 måneder.<br>Fra dag ét.</p>
+      <div class="hero__actions">
+        <a href="#cta" class="btn btn--primary btn--lg">Få en snak</a>
+        <a href="#solution" class="btn btn--ghost btn--lg">Se hvad det kan</a>
+      </div>
+      <div class="hero__proof">
+        <div class="hero__proof-item">
+          <strong class="text-accent">42%</strong>
+          <span>flere ordrer</span>
+          <em>Black Friday – Batteribyen</em>
+        </div>
+        <div class="hero__proof-divider"></div>
+        <div class="hero__proof-item">
+          <strong class="text-accent">4x</strong>
+          <span>hurtigere pluk</span>
+          <em>Maya Freya</em>
+        </div>
+        <div class="hero__proof-divider"></div>
+        <div class="hero__proof-item">
+          <strong class="text-accent">~0</strong>
+          <span>pakkefejl</span>
+          <em>Totteland</em>
+        </div>
+        <div class="hero__proof-divider"></div>
+        <div class="hero__proof-item">
+          <strong class="text-accent">~7 dage</strong>
+          <span>typisk go-live</span>
+          <em>&nbsp;</em>
+        </div>
+      </div>
+    </div>
+    <div class="hero__visual reveal reveal--delay">
+      <div class="hero__composition">
+
+        <!-- Baggrund glow -->
+        <div class="hero__glow"></div>
+
+        <!-- LAG 1: Håndterminal (hoved) -->
+        <div class="hero__phone">
+          <img src="Billeder OG VIDEO/ChatGPT_Image_12._apr._2026__06.37.53-removebg-preview.png"
+               alt="SmartPack plukliste på håndterminal"
+               class="hero__phone-img">
+          <!-- Scan animation overlay -->
+          <div class="hero__scan-wrap">
+            <img src="Billeder OG VIDEO/scan gif.gif" alt="" class="hero__scan-gif" aria-hidden="true">
+          </div>
+        </div>
+
+        <!-- LAG 2: Warehouse grid animation -->
+        <div class="hero__dashboard">
+          <img src="Billeder OG VIDEO/aerial view of a dark warehouse grid.gif"
+               alt="SmartPack ruteoptimering"
+               class="hero__dashboard-img">
+        </div>
+
+        <!-- LAG 3: Flow-linje fra telefon ned til GIF -->
+        <div class="hero__flow-line" aria-hidden="true">
+          <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0 0 L6 3 L0 6 Z" fill="rgba(62,207,142,.7)"/>
+              </marker>
+            </defs>
+            <!-- stiplet linje fra telefon-bund, kurver ned-højre mod GIF -->
+            <path
+              d="M30 10 C30 60 140 60 160 110"
+              stroke="rgba(62,207,142,.35)"
+              stroke-width="1.5"
+              stroke-dasharray="5 4"
+              marker-end="url(#arrowhead)"
+            />
+            <!-- puls-punkt ved start -->
+            <circle cx="30" cy="10" r="3" fill="rgba(62,207,142,.6)">
+              <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+
+        <!-- BADGES -->
+        <div class="hero__badge hero__badge--1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>
+          Pluk godkendt
+        </div>
+        <div class="hero__badge hero__badge--2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Rute optimeret
+        </div>
+        <div class="hero__badge hero__badge--3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Fejl forhindret
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="hero__logos-wrap">
+    <p class="hero__logos-label">Brugt af vækstvirksomheder som</p>
+    <div class="logo-carousel">
+      <div class="logo-carousel__track">
+        <!-- Sæt 1 -->
+        <img src="Billeder OG VIDEO/totteland-removebg.png"                      alt="Totteland"        class="hero__logo-img">
+        <img src="Billeder OG VIDEO/Maya_Freya_Logo_Sort-2.svg"                  alt="Maya Freya"       class="hero__logo-img">
+        <img src="Billeder OG VIDEO/firstgrade.png"                              alt="First Grade"      class="hero__logo-img">
+        <img src="Billeder OG VIDEO/DanGuitar-logo.png"                          alt="DanGuitar"        class="hero__logo-img">
+        <img src="Billeder OG VIDEO/julesweaters-logo0.svg"                      alt="Jule-Sweaters"    class="hero__logo-img">
+        <img src="Billeder OG VIDEO/billigfitness-logo-removebg.png"             alt="Billig Fitness"   class="hero__logo-img">
+        <img src="Billeder OG VIDEO/Geekd0.png"                                  alt="Geekd"            class="hero__logo-img">
+        <img src="Billeder OG VIDEO/noovall_logo.png"                            alt="Noovall"          class="hero__logo-img">
+        <img src="Billeder OG VIDEO/BFT-logo.png"                                alt="BFT"              class="hero__logo-img">
+        <img src="Billeder OG VIDEO/uniqperler-removebg.png"                     alt="Uniq Perler"      class="hero__logo-img">
+        <img src="Billeder OG VIDEO/nimara-logo.webp"                            alt="Nimara"           class="hero__logo-img">
+        <img src="Billeder OG VIDEO/white_specktrum_logo.webp"                   alt="Specktrum"        class="hero__logo-img">
+        <img src="Billeder OG VIDEO/TrendyLiving.dk_-removebg-preview.png"       alt="Trendy Living"    class="hero__logo-img">
+        <img src="Billeder OG VIDEO/Fashion_By_Strand_logo-removebg-preview.png" alt="Fashion by Strand" class="hero__logo-img">
+        <img src="Billeder OG VIDEO/bObles_Logo.webp"                            alt="bObles"           class="hero__logo-img">
+        <img src="Billeder OG VIDEO/SBP+logo+sort.webp"                          alt="SBP"              class="hero__logo-img">
+        <img src="Billeder OG VIDEO/Rhenus logo.png"               alt="Rhenus"            class="hero__logo-img">
+        <img src="Billeder OG VIDEO/klaedeskabet-removebg.png"       alt="Klædeskabet"       class="hero__logo-img">
+        <img src="Billeder OG VIDEO/Skagen-removebg-preview.png"     alt="Skagen"            class="hero__logo-img">
+        <img src="Billeder OG VIDEO/suspekt logo.png"               alt="Suspekt"           class="hero__logo-img">
+        <img src="Billeder OG VIDEO/sumo-shop-logo-1-200x200-1.png"  alt="Sumo Shop"         class="hero__logo-img">
+        <img src="Billeder OG VIDEO/logo_minta-removebg.png"         alt="Minta"             class="hero__logo-img">
+        <img src="Billeder OG VIDEO/reversio logo.png"               alt="Reversio"          class="hero__logo-img">
+        <img src="Billeder OG VIDEO/Filibabba+logo+gr%C3%A5tonet.webp" alt="Filibabba"       class="hero__logo-img">
+        <img src="Billeder OG VIDEO/logo-vinhuset.webp"              alt="Vinhuset"          class="hero__logo-img">
+        <img src="Billeder OG VIDEO/DressForSuccess_Logo_1000x.png"  alt="Dress for Success" class="hero__logo-img">
+        <img src="Billeder OG VIDEO/Pitaya-logo--400x225.png"        alt="Pitaya"            class="hero__logo-img">
+        <img src="Billeder OG VIDEO/littleunbox-logo.png"            alt="Little Unbox"      class="hero__logo-img">
+        <img src="Billeder OG VIDEO/lakuda-og-Batteribyen-2.png"     alt="Batteribyen"       class="hero__logo-img">
+        <!-- Sæt 2 (kopi for seamless loop) -->
+        <img src="Billeder OG VIDEO/totteland-removebg.png"                      alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/Maya_Freya_Logo_Sort-2.svg"                  alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/firstgrade.png"                              alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/DanGuitar-logo.png"                          alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/julesweaters-logo0.svg"                      alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/billigfitness-logo-removebg.png"             alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/Geekd0.png"                                  alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/noovall_logo.png"                            alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/BFT-logo.png"                                alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/uniqperler-removebg.png"                     alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/nimara-logo.webp"                            alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/white_specktrum_logo.webp"                   alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/TrendyLiving.dk_-removebg-preview.png"       alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/Fashion_By_Strand_logo-removebg-preview.png" alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/bObles_Logo.webp"                            alt=""  class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/SBP+logo+sort.webp"                          alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/Rhenus logo.png"                              alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/klaedeskabet-removebg.png"                    alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/Skagen-removebg-preview.png"                  alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/suspekt logo.png"                            alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/sumo-shop-logo-1-200x200-1.png"               alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/logo_minta-removebg.png"                      alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/reversio logo.png"                            alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/Filibabba+logo+gr%C3%A5tonet.webp"            alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/logo-vinhuset.webp"                           alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/DressForSuccess_Logo_1000x.png"               alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/Pitaya-logo--400x225.png"                     alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/littleunbox-logo.png"                         alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="Billeder OG VIDEO/lakuda-og-Batteribyen-2.png"                  alt="" class="hero__logo-img" aria-hidden="true">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section class="trust-bar">
+  <div class="container">
+    <div class="trust-bar__inner">
+      <div class="trust-bar__item reveal">
+        <svg class="trust-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        <div><strong>E-handel siden 2005</strong><span>Ikke teori. Praksis.</span></div>
+      </div>
+      <div class="trust-bar__divider"></div>
+      <div class="trust-bar__item reveal">
+        <svg class="trust-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div><strong>Dansk Erhverv · E-logistik guide 2026</strong><span>Medforfatter</span></div>
+      </div>
+      <div class="trust-bar__divider"></div>
+      <div class="trust-bar__item reveal">
+        <svg class="trust-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l4.553-2.069A1 1 0 0121 8.845v6.31a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>
+        <div><strong>60+ videoer om e-logistik</strong><span>YouTube · FAQ · Vidensbase</span></div>
+      </div>
+      <div class="trust-bar__divider"></div>
+      <div class="trust-bar__item reveal">
+        <svg class="trust-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        <div><strong>SOS support 24/7</strong><span>Ring, når det brænder på</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Lyder noget af det her bekendt?</div>
+      <h2>Du er ikke den første,<br>der vokser hurtigere end lageret kan følge med.</h2>
+    </div>
+    <div class="problem__grid">
+      <div class="problem__card reveal">
+        <div class="problem__icon problem__icon--red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <h3>Fejlene koster nu rigtige penge</h3>
+        <p>Forkert vare.<br>Forkert kunde.<br>Return.<br>Kreditnota.</p>
+        <p class="problem__punchline">Igen i morgen.</p>
+      </div>
+      <div class="problem__card reveal">
+        <div class="problem__icon problem__icon--yellow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Tempoet halter</h3>
+        <p>Ordrer venter.<br>Ruter giver ikke mening.</p>
+        <p class="problem__punchline">Folk går unødige skridt.</p>
+      </div>
+      <div class="problem__card reveal">
+        <div class="problem__icon problem__icon--orange">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Du bruger for mange folk</h3>
+        <p>Omsætningen stiger.<br>Det samme gør bemandingen.</p>
+        <p class="problem__punchline">Det kan ikke blive ved.</p>
+      </div>
+      <div class="problem__card reveal">
+        <div class="problem__icon problem__icon--blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Du mangler overblik</h3>
+        <p>Ingen realtime data.<br>Ingen kontrol.<br>Ingen ro i maven.</p>
+        <p class="problem__punchline">Bare håb.</p>
+      </div>
+    </div>
+    <div class="problem__closer reveal">
+      <p>Det er præcis der,<br>vi går ind og fikser det.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution" id="solution">
+  <div class="container">
+    <div class="solution__inner">
+      <div class="solution__text reveal">
+        <div class="eyebrow">Løsningen</div>
+        <h2>Vi får dit lager til at spille.</h2>
+        <p class="lead">Ikke teori.<br>Ikke slides.<br>Bare et system der virker.</p>
+        <ul class="solution__list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Du kan ikke plukke forkert.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Du går færre skridt.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Samme team. Mere output.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Du ved hvad der sker. Hele tiden.</span>
+          </li>
+        </ul>
+        <a href="#cta" class="btn btn--primary">Lad os kigge på jeres setup</a>
+      </div>
+      <div class="solution__visual reveal reveal--delay">
+        <div class="solution__mockup">
+          <img src="Billeder OG VIDEO/DB1.png"
+               alt="SmartPack dashboard – realtid overblik" loading="lazy" class="solution__dashboard">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats__grid">
+      <div class="stats__item reveal">
+        <div class="stats__number" data-count="42">0</div>
+        <div class="stats__unit">%</div>
+        <div class="stats__label">Flere ordrer på Black Friday<br><span>med 7 færre på lageret</span></div>
+      </div>
+      <div class="stats__item reveal">
+        <div class="stats__number" data-count="4">0</div>
+        <div class="stats__unit">x</div>
+        <div class="stats__label">Hurtigere pakkehastighed<br><span>fra dag ét</span></div>
+      </div>
+      <div class="stats__item reveal">
+        <div class="stats__number" data-count="0">~0</div>
+        <div class="stats__unit"></div>
+        <div class="stats__label">Pakkefejl<br><span>næsten ingen</span></div>
+      </div>
+      <div class="stats__item reveal">
+        <div class="stats__number">1</div>
+        <div class="stats__unit">&nbsp;dag</div>
+        <div class="stats__label">Til at komme i gang<br><span>i visse tilfælde</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="cases">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Fra virkeligheden</div>
+      <h2>Se hvad der sker, når det virker.</h2>
+      <p>Konkrete resultater. Rigtige virksomheder. Ingen konstruerede tal.</p>
+    </div>
+    <div class="cases__grid">
+
+      <div class="case-card case-card--featured reveal">
+        <div class="case-card__featured-content">
+        <div class="case-card__before-after">
+          <div class="case-card__before">
+            <span class="before-after-label before-after-label--before">Før SmartPack</span>
+            <ul>
+              <li>42% færre ordrer klaret på Black Friday</li>
+              <li>7 ekstra folk på lageret</li>
+              <li>Skiftede WMS efter 7 måneder – det virkede ikke</li>
+            </ul>
+          </div>
+          <div class="case-card__after">
+            <span class="before-after-label before-after-label--after">Efter SmartPack</span>
+            <ul>
+              <li>42% <em>flere</em> ordrer på Black Friday</li>
+              <li>7 færre folk på lageret</li>
+              <li>Operationel på under 60 dage</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-card__tag">Black Friday · Batteribyen</div>
+        <blockquote class="case-card__quote">
+          “Vi håndterede 42% flere ordrer – med 7 færre folk på lageret.”
+        </blockquote>
+        <div class="case-card__meta">
+          <div class="case-card__person">
+            <img src="Billeder OG VIDEO/klaus lakuda batteribyen.webp" alt="Klaus Vadstrup Hansen" class="case-card__avatar">
+            <div>
+              <strong>Klaus Vadstrup Hansen</strong>
+              <span>COO, Lakuda / Batteribyen</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-card__stats">
+          <div class="case-card__stat"><strong>42%</strong><span>Flere ordrer</span></div>
+          <div class="case-card__stat"><strong>7 færre</strong><span>Folk på lager</span></div>
+          <div class="case-card__stat"><strong>&lt;60 dage</strong><span>Implementering</span></div>
+        </div>
+        <p class="case-card__context">De skiftede WMS.
+Det virkede ikke.<br><br>Startede med SmartPack i april.
+Fullt kørende i juni.<br><br><em>Under 60 dage.</em></p>
+        </div><!-- /featured-content -->
+        <div class="case-card__featured-visual">
+          <img src="Billeder OG VIDEO/batteribyen web.png" alt="Batteribyen.dk" class="case-card__featured-photo">
+          <div class="case-card__featured-stat">
+            <span class="featured-stat__number">42%</span>
+            <span class="featured-stat__label">Flere ordrer &middot; Black Friday</span>
+            <span class="featured-stat__sub">Med færre folk på lageret</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="case-card__tag">Mode · Vækst</div>
+        <blockquote class="case-card__quote">
+          “3–4x hurtigere pluk.
+Vi bruger tiden på forretningen – ikke lageret.”
+        </blockquote>
+        <div class="case-card__meta">
+          <div class="case-card__person">
+            <img src="Billeder OG VIDEO/Jonas Pichard Hedegaard ceo Mayafreya.jpeg" alt="Jonas Hedegaard" class="case-card__avatar">
+            <div>
+              <strong>Jonas Hedegaard</strong>
+              <span>Co-Founder &amp; CEO, Maya Freya</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-card__stats">
+          <div class="case-card__stat"><strong>3–4x</strong><span>Hurtigere pluk</span></div>
+          <div class="case-card__stat"><strong>Realtime</strong><span>Data</span></div>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="case-card__tag">Tøj &amp; Merchandise</div>
+        <blockquote class="case-card__quote">
+          “Oppe at køre på én dag.
+Vi voksede – uden flere folk.”
+        </blockquote>
+        <div class="case-card__meta">
+          <div class="case-card__person">
+            <img src="Billeder OG VIDEO/Jesper og Anders First grade.png" alt="Jesper Mortensen" class="case-card__avatar">
+            <div>
+              <strong>Jesper Mortensen</strong>
+              <span>Ejer, FirstGrade</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-card__stats">
+          <div class="case-card__stat"><strong>1 dag</strong><span>Til at starte</span></div>
+          <div class="case-card__stat"><strong>Vækst</strong><span>Uden ekstra folk</span></div>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="case-card__tag">Kæledyr · Livesalg</div>
+        <blockquote class="case-card__quote">
+          “Næsten nul fejl.
+Nye medarbejdere lærer det på ingen tid.”
+        </blockquote>
+        <div class="case-card__meta">
+          <div class="case-card__person">
+            <img src="Billeder OG VIDEO/marie totteland.jpg" alt="Marie Christensen" class="case-card__avatar">
+            <div>
+              <strong>Marie Christensen</strong>
+              <span>Ejer, Totteland</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-card__stats">
+          <div class="case-card__stat"><strong>≈0</strong><span>Pakkefejl</span></div>
+          <div class="case-card__stat"><strong>Hurtig</strong><span>Oplæring</span></div>
+        </div>
+      </div>
+
+      <div class="case-card reveal">
+        <div class="case-card__tag">Elektronik · Skalering</div>
+        <blockquote class="case-card__quote">
+          “Vi mærkede forskellen med det samme.
+Det hele kører bare hurtigere.”
+        </blockquote>
+        <div class="case-card__meta">
+          <div class="case-card__person">
+            <img src="Billeder OG VIDEO/team Geekd.png" alt="Team Geekd" class="case-card__avatar">
+            <div>
+              <strong>Team Geekd</strong>
+              <span>Geekd.dk</span>
+            </div>
+          </div>
+        </div>
+        <div class="case-card__stats">
+          <div class="case-card__stat"><strong>Hurtigere</strong><span>Flow</span></div>
+          <div class="case-card__stat"><strong>Mindre</strong><span>Bøvl</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="cases__cta reveal">
+      <a href="#cta" class="btn btn--outline">Se om det giver mening for jer →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="funktioner">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Funktioner</div>
+      <h2>Bygget til virkeligheden på lagergulvet.</h2>
+      <p>Her er værktøjerne, der fjerner flaskehalsene.</p>
+    </div>
+    <div class="features__grid">
+
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7M9 20l6-3M9 20V7m6 13l5.447-2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m0 13V7M9 7l6-3"/></svg>
+        </div>
+        <h3>Ruteoptimering</h3>
+        <p class="feature-card__tagline">Vi bruger matematik til at fjerne unødige skridt på lageret.</p>
+        <p>A* Pathfinding og TSP-algoritmer beregner den korteste vej til alle varerne. Ikke A-til-Z. Ikke mavefornæmmelse. Matematik.</p>
+        <p class="feature-card__outcome">Resultat: færre skridt. Mere tempo. Mindre træthed.</p>
+        <div class="feature-card__badge">A* Pathfinding · TSP-algoritme</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3>Fejlsikring</h3>
+        <p class="feature-card__tagline">Systemet tillader simpelthen ikke fejl.</p>
+        <p>Stemme-assisteret pluk. Scan-bekæftelse. Er du ved at tage den forkerte vare – stopper systemet dig. Hvert eneste gang.</p>
+        <p class="feature-card__outcome">Resultat: ingen reklamationer. Ingen kreditnotaer. Ingen undskyldningsmails.</p>
+        <div class="feature-card__badge">Næsten nul fejl</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <h3>Realtid KPI-overblik</h3>
+        <p class="feature-card__tagline">Du ser præcis hvad der foregår – hele tiden.</p>
+        <p>Live data på hvem pakker hvad, hvor hurtigt og med hvor mange fejl. Ikke i morgen. Ikke i rapporten. Nu.</p>
+        <p class="feature-card__outcome">Resultat: du leder ikke længere. Du ved.</p>
+        <div class="feature-card__badge">Live data</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z"/></svg>
+        </div>
+        <h3>Returportal</h3>
+        <p class="feature-card__tagline">Kunden håndterer sin retur. Du håndterer dit lager.</p>
+        <p>Selvbetjent returportal. Ombytning, kreditering, reklamation – kunden klarer det selv direkte på håndterminalen.</p>
+        <p class="feature-card__outcome">Resultat: du bruger ikke tid på returmails. Det klarer systemet.</p>
+        <div class="feature-card__badge">Selvbetjening</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+        </div>
+        <h3>Lager Designer</h3>
+        <p class="feature-card__tagline">Tegn dit lager. Systemet finder resten ud af det.</p>
+        <p>Visuel floor-plan designer. Systemet bruger layoutet til automatisk ruteoptimering. Ingen konsulent. Ingen opsætning i dagevis.</p>
+        <p class="feature-card__outcome">Resultat: opsætning på timer, ikke uger.</p>
+        <div class="feature-card__badge">Visuelt floor-plan</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-card__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+        <h3>Forecast og Indkøb</h3>
+        <p class="feature-card__tagline">Bestil det rigtige – ikke det du tror er rigtigt.</p>
+        <p>ABC-analyse, FIFO/FEFO og automatiske indkøbsforslag baseret på salgsdata. Aldrig udsolgt på det forkerte tidspunkt igen.</p>
+        <p class="feature-card__outcome">Resultat: aldrig udsolgt på det forkerte tidspunkt igen.</p>
+        <div class="feature-card__badge">ABC-analyse · FIFO/FEFO</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE OVERVIEW -->
+<section class="feature-overview">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Fuld overblik</div>
+      <h2>Det du bl.a. kan forvente at få med i din SmartPack.</h2>
+      <p>Her er hvad der faktisk er i systemet. Ingen skjulte moduler.</p>
+    </div>
+
+    <div class="fov__grid reveal">
+
+      <div class="fov__group">
+        <h4 class="fov__title">Pluk &amp; Flow</h4>
+        <ul class="fov__list">
+          <li>Ruteoptimering (A* Pathfinding)</li>
+          <li>TSP-algoritme</li>
+          <li>PDA / håndterminal</li>
+          <li>Stemme-assisteret pluk</li>
+          <li>Batchpluk</li>
+          <li>Multi-order picking</li>
+          <li>Scan-verificering</li>
+        </ul>
+      </div>
+
+      <div class="fov__group">
+        <h4 class="fov__title">Ordrer &amp; Prioritering</h4>
+        <ul class="fov__list">
+          <li>Ordremodtagelse</li>
+          <li>Prioritering &amp; køstyring</li>
+          <li>Real-time ordrestatus</li>
+          <li>Multi-channel sync</li>
+          <li>Split orders</li>
+          <li>Expresshåndtering</li>
+        </ul>
+      </div>
+
+      <div class="fov__group">
+        <h4 class="fov__title">Lager &amp; Lokationer</h4>
+        <ul class="fov__list">
+          <li>Lokationsstyring</li>
+          <li>Multi-lokation</li>
+          <li>Lager Designer (floor-plan)</li>
+          <li>Varemodtagelse</li>
+          <li>Auto-placering</li>
+          <li>Batch / lot tracking</li>
+          <li>FIFO / FEFO</li>
+          <li>Lageropgørelse</li>
+          <li>Flytninger</li>
+        </ul>
+      </div>
+
+      <div class="fov__group">
+        <h4 class="fov__title">Retur</h4>
+        <ul class="fov__list">
+          <li>Selvbetjent returportal</li>
+          <li>Scan &amp; kvalitetstjek</li>
+          <li>Ombytning</li>
+          <li>Reklamation</li>
+          <li>Automatisk genindlægning</li>
+          <li>Kreditering</li>
+        </ul>
+      </div>
+
+      <div class="fov__group">
+        <h4 class="fov__title">Data &amp; Kontrol</h4>
+        <ul class="fov__list">
+          <li>Realtid KPI-dashboard</li>
+          <li>Medarbejder performance</li>
+          <li>Fejltracking &amp; audit</li>
+          <li>Sporbarhed</li>
+          <li>Rapportering</li>
+        </ul>
+      </div>
+
+      <div class="fov__group">
+        <h4 class="fov__title">Indkøb &amp; Forecast</h4>
+        <ul class="fov__list">
+          <li>ABC-analyse</li>
+          <li>FIFO / FEFO regler</li>
+          <li>Indkøbsforslag</li>
+          <li>Leverandørstyring</li>
+          <li>Salgsdatabaserede forecasts</li>
+        </ul>
+      </div>
+
+      <div class="fov__group">
+        <h4 class="fov__title">Integrationer</h4>
+        <ul class="fov__list">
+          <li>Shopify / WooCommerce</li>
+          <li>Dandomain / Smartweb</li>
+          <li>e-conomic / Business Central</li>
+          <li>GLS / DAO / Bring / DHL</li>
+          <li>Åbent API &amp; webhooks</li>
+          <li>ERP real-time sync</li>
+        </ul>
+      </div>
+
+      <div class="fov__group">
+        <h4 class="fov__title">Automation &amp; 3PL</h4>
+        <ul class="fov__list">
+          <li>Robotintegration (Kangaroo, Element Logic, AutoStore, lagerautomater, sorteringsrobotter, pakke- og forsendelsesrobotter)</li>
+          <li>Automation-ready flows</li>
+          <li>Multi-tenant 3PL</li>
+          <li>Kundeopdelt lagerstyring</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="fov__footer reveal">
+      <p>Kan du ikke finde det du leder efter? <strong>Det er sandsynligvis der &ndash; bare ikke listet her. Udfordr os.</strong></p>
+      <a href="#cta" class="btn btn--ghost">Spørg os om jeres specifikke setup &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FLOW KNÆK -->
+<section class="flow-break">
+  <div class="container">
+    <div class="flow-break__inner">
+
+      <div class="flow-break__text">
+        <p class="flow-break__intro">Andre systemer giver dig funktioner.</p>
+        <h2 class="flow-break__headline">Vi giver dig flow.</h2>
+        <p class="flow-break__body">
+          Alt hænger sammen.<br>
+          Alt sker i rækkefølge.<br>
+          Og det er det, der gør forskellen på et lager der kører&nbsp;&ndash;<br>
+          og et lager der spiller.
+        </p>
+      </div>
+
+      <div class="flow-break__proof">
+        <p class="flow-break__proof-eyebrow">Vores målsætning er altid&hellip;</p>
+        <ul class="flow-break__list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            Ingen workarounds
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            Ingen systemer der ikke taler sammen
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            Ingen gætteri
+          </li>
+        </ul>
+        <p class="flow-break__kicker">Det er derfor,<br>det føles anderledes at arbejde i.</p>
+        <a href="#cta" class="btn btn--accent">Se hvad det kan gøre for jer</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO PLACEHOLDER -->
+<section class="video-section">
+  <div class="container">
+    <div class="video-section__inner reveal">
+      <div class="video-section__text">
+        <div class="eyebrow">Fra virkeligheden</div>
+        <h2>Sådan ser det ud, når lageret spiller.</h2>
+        <p>Ikke reklamevideo.<br>Ikke animerede slides.<br>Et rigtigt lager. Rigtige folk. SmartPack i brug.</p>
+        <div class="video-script">
+          <div class="video-script__scene">
+            <span class="video-script__time">0–5 sek</span>
+            <span>Kaos: medarbejder går frem og tilbage, scanner fejl</span>
+          </div>
+          <div class="video-script__scene">
+            <span class="video-script__time">5–15 sek</span>
+            <span>SmartPack i brug: scanning ✔️, rute-flow, hurtig bevægelse</span>
+          </div>
+          <div class="video-script__scene">
+            <span class="video-script__time">15–25 sek</span>
+            <span>Dashboard: realtime data, performance</span>
+          </div>
+          <div class="video-script__scene">
+            <span class="video-script__time">25–35 sek</span>
+            <span>Smilende medarbejder: ro, flow, tempo</span>
+          </div>
+          <div class="video-script__scene video-script__scene--signature">
+            <span>&ldquo;Det er smart.&rdquo; &mdash; pause &mdash; &ldquo;Ja… det er derfor vi hedder SmartPack.&rdquo;</span>
+          </div>
+        </div>
+        <a href="https://www.youtube.com/@SmartPackWMS" target="_blank" rel="noopener" class="btn btn--outline">Se videoer på YouTube →</a>
+      </div>
+      <div class="video-section__embed">
+        <div class="video-placeholder">
+          <div class="video-placeholder__icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <p>Video fra lageret</p>
+          <span>Indsæt YouTube-embed eller videofil her</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Processen</div>
+      <h2>Sådan fungerer det.</h2>
+      <p>Ingen lange projekter. Ingen konsulenttimer der løber løbsk.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step__number">01</div>
+        <div class="step__content">
+          <h3>Vi tager en snak</h3>
+          <p>20 minutter. Vi kigger på jeres setup og hører hvad der ikke fungerer.<br>Vi er ærlige om, om SmartPack giver mening for jer.<br><br>Ingen salgspitch. Ingen pres.</p>
+        </div>
+      </div>
+      <div class="step__connector"></div>
+      <div class="step reveal">
+        <div class="step__number">02</div>
+        <div class="step__content">
+          <h3>Vi sætter jer i gang – rigtigt</h3>
+          <p>De fleste er operative inden for 7 dage. Nogen på én dag.<br><br>Vi integrerer, opsætter og sørger for at folk på lageret er trygge fra dag ét. Det er her, hele forskellen skabes – og det er derfor det er en del af det, du køber.</p>
+        </div>
+      </div>
+      <div class="step__connector"></div>
+      <div class="step reveal">
+        <div class="step__number">03</div>
+        <div class="step__content">
+          <h3>I begynder at plukke smartere</h3>
+          <p>Fra dag ét. Bedre ruter. Færre fejl. Mere overblik. Medarbejderne oplever systemet som hjælp – ikke endnu et system de skal navigere rundt om.</p>
+        </div>
+      </div>
+      <div class="step__connector"></div>
+      <div class="step reveal">
+        <div class="step__number">04</div>
+        <div class="step__content">
+          <h3>Vi er der. Altid.</h3>
+          <p>SOS support 24/7. Hurtig reaktionstid.<br><br>Vi forsvinder ikke, når I er i gang. Det her er et langsigtet samarbejde – ikke et projekt vi leverer og går fra.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELVSTART -->
+<section class="selfstart">
+  <div class="container">
+    <div class="selfstart__inner reveal">
+
+      <div class="selfstart__text">
+        <div class="eyebrow">Kommer snart</div>
+        <h2>Mere til at gøre det selv?<br>Det forstår vi godt &ndash; sådan er vi også.</h2>
+        <p class="selfstart__body">
+          Lige nu kan du starte med os eller via en partner.<br><br>
+          Men vi er ved at bygge en AI-wizard,<br>
+          der gør det muligt at onboarde dig selv &ndash;<br>
+          med selvstudier og guides,<br>
+          uden ekstra udgifter til oplæring.<br><br>
+          Vil du være først i køen når det er klar &ndash; skriv dig op.
+        </p>
+        <form class="selfstart__form" onsubmit="handleSignup(event)">
+          <input type="email" placeholder="din@email.dk" class="selfstart__input" required aria-label="Din email">
+          <button type="submit" class="btn btn--accent-outline">Skriv dig op</button>
+        </form>
+        <p class="selfstart__trust">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Ingen spam. Kun når det giver mening.
+        </p>
+      </div>
+
+      <div class="selfstart__choice">
+        <p class="selfstart__lead">Vil du selv i gang – gør det.</p>
+        <p class="selfstart__lead">Vil du have hjælp – så er vi der.</p>
+        <p class="selfstart__body selfstart__body--muted">
+          Og ellers har vi folk,
+          der kender SmartPack og e-handel,
+          som kan tage dig videre.
+        </p>
+        <p class="selfstart__tempo">Du bestemmer tempoet.</p>
+        <div class="selfstart__options">
+          <a href="#cta" class="partner-option partner-option--primary">
+            <div class="partner-option__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            </div>
+            <div>
+              <strong>Vi hjælper dig i gang</strong>
+              <span>Snak med SmartPack – ingen forpligtelse</span>
+            </div>
+            <svg class="partner-option__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="mailto:kontakt@smartpack.dk" class="partner-option">
+            <div class="partner-option__icon partner-option__icon--muted">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div>
+              <strong>Vi sætter dig i kontakt med en partner</strong>
+              <span>Folk der kender SmartPack og e-handel</span>
+            </div>
+            <svg class="partner-option__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="for-who" id="hvem">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Ærlighed</div>
+      <h2>SmartPack er ikke til alle.</h2>
+      <p>Det er mærket. Vi holder os til det, vi er gode til.</p>
+    </div>
+    <div class="for-who__grid">
+      <div class="for-who__card for-who__card--yes reveal">
+        <div class="for-who__card-header">
+          <div class="for-who__card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Godt til</h3>
+        </div>
+        <ul class="for-who__list">
+          <li>Webshops med 50–15.000 ordrer om dagen</li>
+          <li>Vækstvirksomheder der løber tør for lagerkapacitet</li>
+          <li>3PL’er der vil skalere uden at ansætte sig til vækst</li>
+          <li>E-commerce der vil have styr på fejl, tempo og kontrol</li>
+          <li>Dem der vil have et system – ikke et projekt</li>
+          <li>Sæsonvirksomheder med pludselige spidser</li>
+        </ul>
+        <p class="for-who__card-note">Alt fra startup til omnichannel-butikker med flere fysiske salgssteder og salg til det meste af verden.</p>
+      </div>
+      <div class="for-who__card for-who__card--no reveal">
+        <div class="for-who__card-header">
+          <div class="for-who__card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <h3>Ikke til</h3>
+        </div>
+        <ul class="for-who__list">
+          <li>Hobbyshops med 5 ordrer om ugen <em>&ndash; endnu. Måske et match i v2</em></li>
+          <li>Enterprise med 100 interne workflows, 2-årige projekter og gammel techstak man ikke vil slippe</li>
+          <li>Dem der forventer vi er et konsulenthus der holder dem i hånden &ndash; <em>vi har måske en partner der kan tage den rolle</em></li>
+          <li>Virksomheder der ikke vil ændre noget – men bare have et nyt system</li>
+        </ul>
+        <p class="for-who__card-note">Passer det ikke – siger vi det. Vi foretrækker et ærligt nej fremfor et dyrt ja.</p>
+      </div>
+    </div>
+
+    <div class="for-who__passion reveal">
+      <p>Vi drives af passion for e-handel.<br>
+      Det skræmmer indimellem de lidt støvede virksomheder &ndash; og det er helt okay.<br><br>
+      Men der hvor vi virkelig gør en forskel, er når vi møder nogen der vil det samme som os.<br>
+      <strong>Vi ser os mere som en medspiller end en leverandør.</strong></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="integrations" id="integrationer">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Plug and play</div>
+      <h2>Virker med det I allerede bruger.</h2>
+      <p><strong>Typisk sat op på under 2 minutter pr. integration.</strong> Forbind jeres webshop, fragtleverandør og ERP – uden konsulent, uden projekt.</p>
+    </div>
+    <div class="int-blocks reveal">
+
+      <div class="int-block">
+        <h4 class="int-block__title">Webshops</h4>
+        <div class="int-logos">
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/DanDomain-Classic.png" alt="DanDomain Classic" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/Prestashop.png" alt="Prestashop" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/Shoporama.png" alt="Shoporama" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Shop/sumoshop.png" alt="Sumoshop" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/POS/Shopbox.png" alt="Shopbox" loading="lazy"></div>
+          <div class="int-logo int-logo--text"><span>ideal.shop</span></div>
+        </div>
+      </div>
+
+      <div class="int-block">
+        <h4 class="int-block__title">Fragt &middot; Danmark</h4>
+        <div class="int-logos">
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="DAO" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Bring.png" alt="Bring" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Postnord.png" alt="PostNord" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/budbee.png" alt="Budbee" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/instabox.png" alt="Instabox" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/CoolRunner.png" alt="CoolRunner" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Shipmondo.png" alt="Shipmondo" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Airmee.png" alt="Airmee" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/LEMAN.png" alt="Leman" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Leman-Express.png" alt="Leman Express" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Freja-Transport-Logistics.png" alt="Freja Transport" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Freja-Express.png" alt="Freja Express" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Xpressen.png" alt="Xpressen" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Danske Fragtmænd.png" alt="Danske Fragtmænd" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Cargoflux.png" alt="Cargoflux" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/burd.png" alt="Burd" loading="lazy"></div>
+          <div class="int-logo int-logo--text"><span>K. Hansen</span></div>
+        </div>
+      </div>
+
+      <div class="int-block">
+        <h4 class="int-block__title">Fragt &middot; International</h4>
+        <div class="int-logos">
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/DHL Parcel.png" alt="DHL Parcel" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/DHL-eCommerce.png" alt="DHL eCommerce" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/DHL-Express.png" alt="DHL Express" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/DHL-Freight.png" alt="DHL Freight" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/UPS.png" alt="UPS" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Blue-Water-Shipping.png" alt="Blue Water Shipping" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/BFT-Logistik.png" alt="BFT Logistik" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Strait-Air.png" alt="Strait Air" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Sendcloud.png" alt="Sendcloud" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Webshipper.png" alt="Webshipper" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/WebrinQ.png" alt="WebrinQ" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Matkahuolto.png" alt="Matkahuolto" loading="lazy"></div>
+        </div>
+      </div>
+
+      <div class="int-block">
+        <h4 class="int-block__title">ERP &amp; Økonomi</h4>
+        <div class="int-logos">
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/ERP/GoFact.png" alt="GoFact" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/ERP/Traede.png" alt="Traede" loading="lazy"></div>
+          <div class="int-logo int-logo--text"><span>Dynaccount</span></div>
+        </div>
+      </div>
+
+      <div class="int-block">
+        <h4 class="int-block__title">Øvrige</h4>
+        <div class="int-logos">
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/POS/FlexPOS.png" alt="FlexPOS" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/POS/Customers-1st.png" alt="Customers 1st" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/Reversio/Return/Reversio.png" alt="Reversio" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/Herodesk/Other/Herodesk.png" alt="Herodesk" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/PurchaseOrder/Inventory-Planner.png" alt="Inventory Planner" loading="lazy"></div>
+          <div class="int-logo"><img src="Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky" loading="lazy"></div>
+          <div class="int-logo int-logo--text"><span>Kangaroo Robotics</span></div>
+          <div class="int-logo int-logo--text"><span>Element Logic</span></div>
+          <div class="int-logo int-logo--text"><span>AutoStore</span></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="integrations__api reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+      <p>Bruger I noget vi ikke nævner?<br>
+      <strong>Det kobler vi på.</strong><br><br>
+      Vi har åbent API.<br>
+      Og vi bygger selv integrationer &ndash; eller åbner op for dem, der skal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE -->
+<section class="signature">
+  <div class="container">
+    <div class="signature__inner reveal">
+      <div class="signature__left">
+        <div class="signature__quote-icon">&ldquo;</div>
+        <blockquote class="signature__quote">Det er smart.</blockquote>
+        <cite class="signature__attribution">– Næsten alle kunder. Første gang de ser det.</cite>
+      </div>
+      <div class="signature__divider"></div>
+      <div class="signature__right">
+        <blockquote class="signature__response">Ja… det er derfor vi hedder SmartPack.</blockquote>
+        <cite class="signature__attribution signature__attribution--us">– Os</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHORITY -->
+<section class="authority">
+  <div class="container">
+    <div class="authority__inner">
+      <div class="authority__text reveal">
+        <div class="eyebrow">Faglig autoritet</div>
+        <h2>Vi har nørdet e-logistik længe nok til,<br>at <span class="text-accent">Dansk Erhverv</span> bad os være med til at skrive guiden.</h2>
+        <p>Medforfatter på Dansk Erhvervs E-logistik guide 2026. E-handel og salg siden 2005. Over 60 videoer om lageroptimering og e-handelsdrift. Ikke konsulenter. Ikke teori. Bare folk der har stået på lageret &ndash; og kørt forretningen bag det.</p>
+        <div class="authority__ctas">
+          <a href="#cta" class="btn btn--primary">Få en snak med os</a>
+          <a href="https://danskerhverv-my.sharepoint.com/:w:/g/personal/suns_danskerhverv_dk/IQB7ayxt_fN_SKa2j-iIZGBlAaEaxyp7DyqfLRGCfGLYZH0?e=LC3pat" target="_blank" rel="noopener" class="btn btn--ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Læs guiden gratis
+          </a>
+        </div>
+      </div>
+      <div class="authority__visual reveal reveal--delay">
+        <a href="https://danskerhverv-my.sharepoint.com/:w:/g/personal/suns_danskerhverv_dk/IQB7ayxt_fN_SKa2j-iIZGBlAaEaxyp7DyqfLRGCfGLYZH0?e=LC3pat" target="_blank" rel="noopener" class="authority__book-link">
+          <img src="Billeder OG VIDEO/ebog.png" alt="E-logistik Guide 2026 – Dansk Erhverv &amp; SmartPack" class="authority__img authority__img--book" loading="lazy">
+          <span class="authority__book-cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Læs guiden gratis
+          </span>
+        </a>
+        <div class="authority__badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/></svg>
+          <span>Dansk Erhverv<br>E-logistik 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<!-- PRICING PHILOSOPHY – MOVED / DEPRECATED -->
+<section class="pricing-philosophy" style="display:none">
+  <div class="container">
+    <div class="pricing-philosophy__inner reveal">
+      <div class="pricing-philosophy__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+      </div>
+      <div class="pricing-philosophy__text">
+        <h2>Vi tror ikke på dumme gebyrer.</h2>
+        <p class="pricing-philosophy__story">
+          Vi har selv siddet på den anden side.
+          Betalt for systemer vi ikke brugte.
+          Pakker der ikke gav mening.
+          Og opstartsafgifter der aldrig rigtig kunne forklares.
+        </p>
+        <p class="pricing-philosophy__statement">Det gider vi ikke udsætte andre for.</p>
+        <div class="pricing-philosophy__promises">
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen opstartsfee</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen faste pakker du ikke bruger</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen skjulte overraskelser</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Du betaler for det, der giver værdi</span>
+          </div>
+        </div>
+        <p class="pricing-philosophy__close">Bare et system, der giver mening – også økonomisk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-section__inner reveal">
+      <div class="eyebrow">Klar til en snak?</div>
+      <h2>Lageret løser ikke sig selv.</h2>
+      <p>Lad os kigge på jeres setup. 20 minutter. Ingen forpligtelse. Ingen salgspitch. Ingen bullshit.<br><br><strong>Hvis det ikke passer – siger vi det.</strong></p>
+      <div class="cta-section__actions">
+        <a href="mailto:kontakt@smartpack.dk" class="btn btn--primary btn--xl">Få en snak</a>
+        <a href="tel:+4588202019" class="btn btn--ghost btn--xl">Ring direkte</a>
+      </div>
+      <div class="cta-section__reassurance">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="#" class="footer__logo">
+          <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Bygget af e-købmænd. Til e-købmænd.</p>
+        <p class="footer__sub">WMS til webshops og 3PL der vil have styr på lageret.</p>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="#funktioner">Funktioner</a></li>
+            <li><a href="#integrationer">Integrationer</a></li>
+            <li><a href="#cases">Cases</a></li>
+            <li><a href="priser.html" title="SmartPack priser">Priser</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html" title="Om SmartPack">Om os</a></li>
+            <li><a href="https://smartpack.dk/blog">Blog</a></li>
+            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
+            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="https://smartpack.dk/faq">FAQ</a></li>
+            <li><a href="mailto:kontakt@smartpack.dk">kontakt@smartpack.dk</a></li>
+            <li><a href="tel:+4588202019">SOS 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 SmartPack · Dansk lagersystem til webshops og 3PL</p>
+      <div class="footer__badges">
+        <span class="footer__badge">E-handel siden 2005</span>
+        <span class="footer__badge">Dansk Erhverv 2026</span>
+        <span class="footer__badge">WMS · Lagerstyring · 3PL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="js/main.js" defer></script>
+  <script src="js/hero-editor.js" defer></script>
+</body>
+</html>

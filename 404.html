@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 – Siden findes ikke | SmartPack</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .error-video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .55;
+      filter: saturate(.6) brightness(.5);
+    }
+    .error-video-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(9,12,15,.2) 0%, rgba(9,12,15,.75) 100%);
+    }
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-page__inner {
+      max-width: 560px;
+    }
+    .error-code {
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.05em;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+      opacity: .18;
+      display: block;
+      margin-bottom: -.5rem;
+    }
+    .error-page h1 {
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 900;
+      margin: 0 0 1rem;
+      line-height: 1.2;
+    }
+    .error-page p {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .error-links {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .error-links a {
+      font-size: .85rem;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color var(--t-fast);
+    }
+    .error-links a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html#funktioner" class="nav__link">Funktioner</a></li>
+      <li><a href="index.html#cases" class="nav__link">Cases</a></li>
+      <li><a href="index.html#integrationer" class="nav__link">Integrationer</a></li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link">Om os</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hj&aelig;lp &rarr;</a>
+      <a href="index.html#cta" class="btn btn--primary nav__cta">F&aring; en snak</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="error-video-bg" aria-hidden="true">
+  <video autoplay muted loop playsinline>
+    <source src="Billeder OG VIDEO/403-404.mp4" type="video/mp4">
+  </video>
+</div>
+
+<main class="error-page" style="position:relative;z-index:1">
+  <div class="error-page__inner reveal">
+    <span class="error-code" aria-hidden="true">404</span>
+    <h1>Den side kunne vi ikke finde.</h1>
+    <p>
+      M&aring;ske er linket gammelt, eller ogs&aring; stavede nogen forkert.<br>
+      Det sker &ndash; selv p&aring; velorganiserede lagre.
+    </p>
+    <div class="error-actions">
+      <a href="index.html" class="btn btn--primary">G&aring; til forsiden</a>
+      <a href="mailto:kontakt@smartpack.dk" class="btn btn--ghost">Kontakt os</a>
+    </div>
+    <nav class="error-links" aria-label="N&oslash;glsider">
+      <a href="priser.html">Priser</a>
+      <a href="om-os.html">Om os</a>
+      <a href="cases.html">Cases</a>
+      <a href="funktioner.html">Funktioner</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </div>
+</main>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

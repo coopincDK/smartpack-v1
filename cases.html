@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>Cases – SmartPack WMS | Webshops der valgte SmartPack</title>
+  <meta name="description" content="Se hvordan danske webshops og 3PL'er bruger SmartPack til at skalere lageret uden at ansætte mere. 30+ virksomheder kører allerede.">
+  <meta name="keywords" content="SmartPack cases, WMS cases, lagerstyring eksempler, webshop lagersystem, Danfilter, Batteriby, Maya Freya, Totteland, FirstGrade, Geekd">
+  <link rel="canonical" href="https://smartpack.dk/cases/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="SmartPack">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://smartpack.dk/cases/">
+  <meta property="og:site_name" content="SmartPack">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:title" content="Cases – SmartPack WMS | De valgte SmartPack">
+  <meta property="og:description" content="30+ webshops og 3PL'er kører allerede. Se hvad de oplevede.">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SmartPackWMS">
+  <meta name="twitter:title" content="SmartPack Cases – 30+ webshops kører allerede">
+  <meta name="twitter:description" content="Se hvordan Danfilter, Batteriby, Maya Freya og andre skalerede med SmartPack WMS.">
+  <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="apple-touch-icon" href="Billeder OG VIDEO/favicon-smartpack0.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
+          {"@type": "ListItem", "position": 2, "name": "Cases", "item": "https://smartpack.dk/cases/"}
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://smartpack.dk/cases/",
+        "url": "https://smartpack.dk/cases/",
+        "name": "Cases – SmartPack WMS",
+        "description": "30+ webshops og 3PL'er kører allerede med SmartPack.",
+        "isPartOf": {"@id": "https://smartpack.dk/#website"},
+        "publisher": {"@id": "https://smartpack.dk/#organization"}
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ── Page hero ── */
+    .cases-hero {
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+    .cases-hero h1 {
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin: .75rem 0 1.25rem;
+    }
+    .cases-hero .hero__sub {
+      max-width: 520px;
+      margin: 0 auto 2rem;
+    }
+    .cases-hero__stat {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.25);
+      border-radius: 99px;
+      padding: .4em 1.1em;
+    }
+    .cases-hero__stat svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ── Cases grid ── */
+    .cases-section {
+      padding: var(--section-py) 0 calc(var(--section-py) * 1.5);
+    }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    @media (max-width: 900px) {
+      .cases-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 580px) {
+      .cases-grid { grid-template-columns: 1fr; }
+      .cases-hero { padding: 80px 0 48px; }
+    }
+
+    /* ── Case card ── */
+    .case-item {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .case-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(62,207,142,.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .25s;
+      pointer-events: none;
+    }
+    .case-item:hover {
+      border-color: rgba(62,207,142,.45);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    }
+    .case-item:hover::before {
+      opacity: 1;
+    }
+    /* Placeholder / coming-soon card */
+    .case-item--placeholder {
+      border-style: dashed;
+      opacity: .55;
+    }
+    .case-item--placeholder:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--border);
+    }
+    .case-item--placeholder::before { display: none; }
+
+    .case-item__eyebrow {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--accent);
+      margin-bottom: .6rem;
+    }
+    .case-item__name {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--text-1);
+      letter-spacing: -.025em;
+      line-height: 1.15;
+      margin-bottom: .9rem;
+    }
+    .case-item__body {
+      font-size: .875rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+    .case-item__link {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: .01em;
+      transition: gap .18s;
+    }
+    .case-item__link:hover {
+      gap: .6rem;
+    }
+    .case-item__link svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      transition: transform .18s;
+    }
+    .case-item:hover .case-item__link svg {
+      transform: translateX(3px);
+    }
+
+    /* Placeholder label */
+    .case-item__soon {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    /* ── Divider strip ── */
+    .cases-divider {
+      padding: 4rem 0;
+      background: var(--bg-3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cases-divider__inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+    .cases-divider__stat strong {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--text-1);
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+    .cases-divider__stat strong em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .cases-divider__stat span {
+      font-size: .8rem;
+      color: var(--text-3);
+      margin-top: .3rem;
+      display: block;
+    }
+    .cases-divider__sep {
+      width: 1px;
+      height: 48px;
+      background: var(--border);
+    }
+    @media (max-width: 600px) {
+      .cases-divider__sep { display: none; }
+      .cases-divider__inner { gap: 2rem; }
+    }
+
+    /* ── Active nav ── */
+    .nav__link--active { color: var(--accent) !important; }
+
+    /* ── CTA section (reuse pattern from other pages) ── */
+    .cases-cta {
+      padding: var(--section-py) 0;
+      text-align: center;
+    }
+    .cases-cta h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      margin: .5rem 0 1rem;
+    }
+    .cases-cta p {
+      font-size: .95rem;
+      color: var(--text-2);
+      max-width: 480px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .cases-cta__actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html#funktioner" class="nav__link">Funktioner</a></li>
+      <li><a href="cases.html" class="nav__link nav__link--active">Cases</a></li>
+      <li><a href="index.html#integrationer" class="nav__link">Integrationer</a></li>
+      <li><a href="index.html#for-who" class="nav__link">Hvem er det til</a></li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link">Om os</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hjælp &rarr;</a>
+      <a href="#cta" class="btn btn--primary nav__cta">Få en snak</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="cases-hero" id="hero">
+  <div class="container">
+    <div class="eyebrow reveal">Cases</div>
+    <h1 class="reveal">De valgte SmartPack.</h1>
+    <p class="hero__sub reveal">30+ webshops og 3PL'er kører allerede. Her er nogle af dem.</p>
+    <div class="reveal">
+      <span class="cases-hero__stat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        30+ aktive kunder
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="cases-divider">
+  <div class="container">
+    <div class="cases-divider__inner">
+      <div class="cases-divider__stat">
+        <strong>30<em>+</em></strong>
+        <span>webshops og 3PL'er</span>
+      </div>
+      <div class="cases-divider__sep"></div>
+      <div class="cases-divider__stat">
+        <strong><em>&lt;</em>1 dag</strong>
+        <span>typisk onboarding</span>
+      </div>
+      <div class="cases-divider__sep"></div>
+      <div class="cases-divider__stat">
+        <strong>2005</strong>
+        <span>bygget af e-købmænd</span>
+      </div>
+      <div class="cases-divider__sep"></div>
+      <div class="cases-divider__stat">
+        <strong>24<em>/7</em></strong>
+        <span>SOS support</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASES GRID -->
+<section class="cases-section">
+  <div class="container">
+
+    <div class="cases-grid">
+
+      <!-- 1: Danfilter -->
+      <article class="case-item reveal">
+        <div class="case-item__eyebrow">Industrifiltre &amp; produktion</div>
+        <h2 class="case-item__name">Danfilter</h2>
+        <p class="case-item__body">
+          &ldquo;2 mand klarede det samme som 12 på Black Friday.&rdquo;
+          Fra manuel kaos til skalérbar drift&nbsp;– uden at ansætte.
+        </p>
+        <a href="#" class="case-item__link">
+          Læs mere
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </article>
+
+      <!-- 2: Batteriby -->
+      <article class="case-item reveal">
+        <div class="case-item__eyebrow">E-handel &middot; Batterier</div>
+        <h2 class="case-item__name">Batteriby</h2>
+        <p class="case-item__body">
+          Batteri-webshop med komplekst varesortiment og høj ordrefrekvens.
+          SmartPack gav dem overblikket og hastigheden til at følge væksten.
+        </p>
+        <a href="#" class="case-item__link">
+          Læs mere
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </article>
+
+      <!-- 3: Maya Freya -->
+      <article class="case-item reveal">
+        <div class="case-item__eyebrow">Mode &middot; Kvindebrand</div>
+        <h2 class="case-item__name">Maya Freya</h2>
+        <p class="case-item__body">
+          Modebrand med sæsonudsving og eksplosive kampagner.
+          Med SmartPack håndterer de peaks uden ekstra mandskab og næsten nul fejl.
+        </p>
+        <a href="#" class="case-item__link">
+          Læs mere
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </article>
+
+      <!-- 4: Totteland -->
+      <article class="case-item reveal">
+        <div class="case-item__eyebrow">Legetøj &middot; Børn &amp; familie</div>
+        <h2 class="case-item__name">Totteland</h2>
+        <p class="case-item__body">
+          Specialiseret legetøjswebshop med knivskarpe julesæsoner.
+          SmartPack sørger for præcis plukning og hurtig ekspedition – selv i travleste perioder.
+        </p>
+        <a href="#" class="case-item__link">
+          Læs mere
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </article>
+
+      <!-- 5: FirstGrade -->
+      <article class="case-item reveal">
+        <div class="case-item__eyebrow">Tøj &amp; Merchandise</div>
+        <h2 class="case-item__name">FirstGrade</h2>
+        <p class="case-item__body">
+          &ldquo;Oppe at køre på én dag. Vi voksede – uden flere folk.&rdquo;
+          Jesper Mortensen fik styr på lageret fra dag ét og skalerede uden at ansætte.
+        </p>
+        <a href="#" class="case-item__link">
+          Læs mere
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </article>
+
+      <!-- 6: Geekd -->
+      <article class="case-item reveal">
+        <div class="case-item__eyebrow">Gaming &middot; Tech</div>
+        <h2 class="case-item__name">Geekd</h2>
+        <p class="case-item__body">
+          Gaming- og tech-webshop med hurtige leveringstider og krævende community.
+          SmartPack leverede præcision og hastighed, så ingen ordre går galt.
+        </p>
+        <a href="#" class="case-item__link">
+          Læs mere
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </article>
+
+      <!-- 7: Placeholder -->
+      <article class="case-item case-item--placeholder reveal">
+        <div class="case-item__eyebrow">Kommer snart</div>
+        <h2 class="case-item__name" style="color:var(--text-3)">???</h2>
+        <p class="case-item__body" style="color:var(--text-3)">
+          Endnu en webshop er på vej i familien.
+          Vi opdaterer løbende med nye cases.
+        </p>
+        <span class="case-item__soon">Snart her &hellip;</span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cases-cta" id="cta">
+  <div class="container">
+    <div class="eyebrow reveal">Næste skridt</div>
+    <h2 class="reveal">Er din webshop den næste?</h2>
+    <p class="reveal">Book en 20-minutters snak. Vi kigger på jeres setup og fortæller dig præcis hvad SmartPack kan gøre for jer.</p>
+    <div class="cases-cta__actions reveal">
+      <a href="mailto:kontakt@smartpack.dk" class="btn btn--primary">Få en gratis snak</a>
+      <a href="priser.html" class="btn btn--ghost">Se priser &rarr;</a>
+    </div>
+    <div class="cta-section__reassurance" style="margin-top:2rem;">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Bygget af e-købmænd. Til e-købmænd.</p>
+        <p class="footer__sub">WMS til webshops og 3PL der vil have styr på lageret.</p>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="index.html#funktioner">Funktioner</a></li>
+            <li><a href="index.html#integrationer">Integrationer</a></li>
+            <li><a href="cases.html">Cases</a></li>
+            <li><a href="priser.html">Priser</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="https://smartpack.dk/blog">Blog</a></li>
+            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
+            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="https://smartpack.dk/faq">FAQ</a></li>
+            <li><a href="mailto:kontakt@smartpack.dk">kontakt@smartpack.dk</a></li>
+            <li><a href="tel:+4588202019">SOS 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2025 SmartPack &middot; Dansk lagersystem til webshops og 3PL</p>
+      <div class="footer__badges">
+        <span class="footer__badge">E-handel siden 2005</span>
+        <span class="footer__badge">Dansk Erhverv 2026</span>
+        <span class="footer__badge">WMS &middot; Lagerstyring &middot; 3PL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>

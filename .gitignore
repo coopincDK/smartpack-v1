@@ -1,0 +1,34 @@
+# ================================================
+# SmartPack v1 — .gitignore
+# Kun kode trackes. Billeder/video håndteres separat.
+# ================================================
+
+# Hele billedmappen (for stor til GitHub)
+Billeder OG VIDEO/
+
+# Gammel Next.js kodebase
+"Billeder OG VIDEO/Smartpack, hjemmeside/"
+
+# Analyse-dokumenter på roden
+Analyse af SmartPack.dk og Markedsposition
+Blueprint*
+Den Komplette*
+Den Ultimative*
+Feature Gap*
+Feature-Sammenligning*
+Forslag til*
+Grafisk Asset*
+Hvis internettet*
+Konkurrentanalyse*
+Opsummering*
+SmartPack Integrationer*
+SmartPack Kundecases*
+Specifik Asset*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log

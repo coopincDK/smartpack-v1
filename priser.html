@@ -1,0 +1,691 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>Priser på SmartPack WMS | Betaler per ordre – ingen binding</title>
+  <meta name="description" content="SmartPack fakturerer per ordre – ikke per måned eller bruger. Ingen opstartsfee, ingen skjulte pakker, ingen binding. Alt er inkluderet. Få et prisestimat på 20 minutter.">
+  <meta name="keywords" content="WMS pris, lagersystem pris, SmartPack pris, warehouse management system pris, lagerstyring omkostning">
+  <link rel="canonical" href="https://smartpack.dk/priser/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="SmartPack">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://smartpack.dk/priser/">
+  <meta property="og:site_name" content="SmartPack">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:title" content="Priser – SmartPack WMS | Ingen binding, ingen overraskelser">
+  <meta property="og:description" content="Betaler per ordre. Ingen opstartsfee. Ingen faste pakker du ikke bruger. Alt inkluderet fra dag ét.">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SmartPackWMS">
+  <meta name="twitter:title" content="SmartPack priser – betaler per ordre">
+  <meta name="twitter:description" content="Ingen binding, ingen skjulte overraskelser. Du betaler for det der giver værdi.">
+  <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="apple-touch-icon" href="Billeder OG VIDEO/favicon-smartpack0.png">
+
+  <!-- JSON-LD: BreadcrumbList + WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
+          {"@type": "ListItem", "position": 2, "name": "Priser", "item": "https://smartpack.dk/priser/"}
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://smartpack.dk/priser/",
+        "url": "https://smartpack.dk/priser/",
+        "name": "Priser på SmartPack WMS",
+        "description": "SmartPack fakturerer per ordre. Ingen opstartsfee, ingen skjulte pakker, ingen binding.",
+        "isPartOf": {"@id": "https://smartpack.dk/#website"},
+        "publisher": {"@id": "https://smartpack.dk/#organization"}
+      }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Page-hero */
+    .page-hero { padding: 120px 0 80px; }
+    .priser-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .priser-video-wrap { position: relative; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.5); border: 1px solid var(--border); display: block; background: #111; }
+    .priser-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .priser-quote-overlay { position: absolute; bottom: 0; left: 0; right: 0; margin: 0; padding: 1rem 1.25rem 1rem 1.1rem; background: linear-gradient(to top, rgba(0,0,0,.92) 60%, transparent); border-left: 3px solid var(--accent); pointer-events: none; }
+    .priser-quote-overlay p { font-size: .82rem; color: #fff; line-height: 1.55; font-style: italic; margin: 0 0 .4rem; text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+    .priser-quote-overlay footer { font-size: .72rem; }
+    .priser-quote-overlay strong { color: var(--accent); font-weight: 800; }
+    .priser-quote-overlay span { color: rgba(255,255,255,.6); }
+    .priser-video-thumb { text-decoration: none; }
+    .priser-video-thumb:hover .priser-video-play svg circle { fill: rgba(62,207,142,.85); transition: fill .2s; }
+    .priser-video-play { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; background: rgba(0,0,0,.25); transition: background .2s; }
+    .priser-video-thumb:hover .priser-video-play { background: rgba(0,0,0,.15); }
+    .priser-video-play span { font-size: .8rem; font-weight: 700; color: #fff; letter-spacing: .05em; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+    .priser-quote { margin: 0; padding: 1.1rem 1.4rem; border-left: 3px solid var(--accent); background: rgba(62,207,142,.06); border-radius: 0 8px 8px 0; }
+    .priser-quote p { font-size: .92rem; color: var(--text-1); line-height: 1.7; font-style: italic; margin: 0 0 .6rem; }
+    .priser-quote footer { font-size: .78rem; }
+    .priser-quote strong { color: var(--accent); font-weight: 800; }
+    .priser-quote span { color: var(--text-3); }
+    @media (max-width: 860px) { .priser-hero-grid { grid-template-columns: 1fr; gap: 2rem; } .priser-hero-video { order: -1; } }
+    .page-hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.1; margin-bottom: 1.25rem; }
+    .page-hero__badges { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 2rem; }
+    .page-hero__badge { font-size: .8rem; font-weight: 600; color: var(--accent); background: rgba(62,207,142,.1); border: 1px solid rgba(62,207,142,.25); border-radius: 20px; padding: .35em 1em; }
+
+    /* Pricing grid */
+    .pricing-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .pricing-col { background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2.25rem 2.5rem; }
+    @media (max-width: 640px) { .pricing-col { padding: 1.5rem 1.25rem; } }
+    .pricing-col h4 { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 1.5rem; }
+    .pricing-col ul { list-style: none; display: flex; flex-direction: column; gap: .85rem; }
+    .pricing-col li { font-size: 1rem; color: var(--text-2); padding-left: 1.4rem; position: relative; }
+    .pricing-col li::before { content: '\2713'; position: absolute; left: 0; color: var(--accent); font-size: .85rem; top: .1em; }
+
+    /* Active nav link */
+    .nav__link--active { color: var(--accent) !important; }
+
+    /* Pricing philosophy list */
+    .pricing-philosophy__promises { display: flex; flex-direction: column; gap: .75rem; margin-top: 2rem; }
+    .pricing-philosophy__promise { display: flex; align-items: center; gap: .6rem; font-size: .9rem; color: var(--text-2); }
+    .pricing-philosophy__promise svg { flex-shrink: 0; color: var(--accent); }
+
+    /* Filosofi + beregner side-by-side */
+    .pricing-hero-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; padding: var(--section-py) 0 2rem; }
+    .pricing-hero-left { padding-top: 1rem; }
+    .pricing-hero-right {}
+    @media (max-width: 900px) { .pricing-hero-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 0; } }
+
+    /* Pricing calculator */
+    .pricing-calc-section { padding: 0; background: var(--bg-2); }
+    .pricing-calc {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2.5rem 2.75rem;
+      max-width: 680px;
+      margin: 3rem auto 0;
+    }
+    .calc-field { margin-bottom: 1.75rem; }
+    .calc-field__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; }
+    .calc-field__lbl { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-3); }
+    .calc-field__input { font-size: 1.2rem; font-weight: 800; color: var(--accent); background: rgba(62,207,142,.08); border: 1px solid rgba(62,207,142,.25); border-radius: 8px; padding: .2em .6em; width: 120px; text-align: right; transition: border-color var(--t-fast), background var(--t-fast); }
+    .calc-field__input:focus { outline: none; border-color: var(--accent); background: rgba(62,207,142,.13); }
+    /* Remove number arrows */
+    .calc-field__input::-webkit-outer-spin-button,
+    .calc-field__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .calc-field__input[type=number] { -moz-appearance: textfield; }
+    .calc-field input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; height: 4px; }
+    .calc-field__minmax { display: flex; justify-content: space-between; font-size: .65rem; color: var(--text-3); margin-top: .35rem; opacity: .6; }
+    /* Result grid – 3 equal cells */
+    .calc-result-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      background: rgba(62,207,142,.06);
+      border: 1px solid rgba(62,207,142,.2);
+      border-radius: var(--r-md);
+      margin-top: 1.5rem;
+      overflow: hidden;
+    }
+    .calc-res {
+      padding: 1.4rem 1.5rem;
+      border-right: 1px solid rgba(62,207,142,.15);
+    }
+    .calc-res:last-child { border-right: none; }
+    .calc-res__lbl { font-size: .65rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text-3); margin-bottom: .5rem; }
+    .calc-res__num { font-size: 2rem; font-weight: 900; color: var(--accent); letter-spacing: -.03em; line-height: 1; }
+    .calc-res__num span { font-size: .9rem; color: var(--text-2); font-weight: 700; margin-left: .15em; }
+    .calc-res--total .calc-res__num { color: var(--text-1); }
+    .calc-note { font-size: .73rem; color: var(--text-3); margin-top: 1.25rem; line-height: 1.65; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .calc-note strong { color: var(--text-2); }
+    .calc-cta { display: block; text-align: center; background: var(--accent); color: var(--bg) !important; font-weight: 800; font-size: .9rem; padding: .9rem 1.5rem; border-radius: var(--r-sm); text-decoration: none; transition: opacity var(--t-fast); margin-top: 1.5rem; }
+    .calc-cta:hover { opacity: .88; }
+    @media (max-width: 640px) {
+      .pricing-calc { padding: 1.25rem 1rem; margin-top: 0; }
+      .calc-result-row { grid-template-columns: 1fr; }
+      .calc-res { border-right: none; border-bottom: 1px solid rgba(62,207,142,.15); }
+      .calc-res:last-child { border-bottom: none; }
+      .calc-field__input { width: 90px; font-size: 1rem; }
+      .page-hero { padding: 80px 0 40px; }
+    }
+    @media (max-width: 720px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-col { min-height: auto; }
+    }
+    .lp-checks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1rem; }
+    @media (max-width: 900px) {
+      #betingelser { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+    }
+    @media (max-width: 580px) {
+      .lp-checks-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Calc → labelprint hint arrow */
+    .calc-label-hint { display: flex; align-items: center; gap: .6rem; margin-top: 1rem; color: var(--accent); opacity: .75; }
+    .calc-label-hint__arrow { width: 52px; height: 32px; flex-shrink: 0; transform: scaleX(-1); }
+    .calc-label-hint span { font-size: .75rem; font-weight: 600; line-height: 1.4; color: var(--accent); }
+    @keyframes dashMove { to { stroke-dashoffset: -18; } }
+    .calc-label-hint__arrow path { animation: dashMove 1.2s linear infinite; }
+
+    /* Labelprint callout */
+    .labelprint-callout { padding: 0; background: transparent; }
+    .labelprint-callout__box {
+      background: linear-gradient(135deg, rgba(62,207,142,.12) 0%, rgba(62,207,142,.04) 100%);
+      border: 2px solid rgba(62,207,142,.45);
+      border-radius: var(--r-lg);
+      padding: 2.5rem 2.75rem;
+      position: relative;
+      margin-top: 2.5rem;
+    }
+    .labelprint-callout__badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: .68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: .3em .85em;
+      border-radius: 99px;
+      margin-bottom: 1.25rem;
+    }
+    .labelprint-callout__body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .labelprint-callout__headline {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 900;
+      color: var(--text-1);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .labelprint-callout__headline em { font-style: normal; color: var(--accent); }
+    .labelprint-callout__sub { font-size: .9rem; color: var(--text-2); line-height: 1.7; }
+    @media (max-width: 580px) { .labelprint-callout__savings { grid-template-columns: 1fr; } }
+    .labelprint-callout__savings { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem 1.5rem; padding-top: .25rem; align-content: start; }
+    .labelprint-callout__saving-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: .9rem;
+      color: var(--text-1);
+      font-weight: 600;
+    }
+    .labelprint-callout__saving-item svg { color: var(--accent); flex-shrink: 0; }
+    @media (max-width: 800px) { .labelprint-callout__body { grid-template-columns: 1fr; gap: 1.5rem; } .labelprint-callout__box { padding: 1.75rem; } }
+
+    /* ROI Strip */
+    .roi-strip { padding: 4rem 0; background: var(--bg-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .roi-strip__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .roi-strip__headline { font-size: clamp(1.3rem, 2.5vw, 1.75rem); font-weight: 900; color: var(--text-1); margin: .5rem 0 1rem; line-height: 1.25; }
+    .roi-strip__body { font-size: .9rem; color: var(--text-2); line-height: 1.7; }
+    .roi-strip__examples { display: flex; flex-direction: column; gap: .75rem; }
+    .roi-ex { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); padding: .85rem 1.25rem; gap: 1rem; }
+    .roi-ex--mid { border-color: rgba(62,207,142,.3); background: rgba(62,207,142,.05); }
+    .roi-ex__pkg { font-size: .8rem; color: var(--text-3); flex: 1; }
+    .roi-ex__price { font-size: 1.5rem; font-weight: 900; color: var(--accent); letter-spacing: -.02em; }
+    .roi-ex--mid .roi-ex__price { font-size: 1.75rem; }
+    .roi-ex__lbl { font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); min-width: 60px; text-align: right; }
+    @media (max-width: 800px) { .roi-strip__inner { grid-template-columns: 1fr; } }
+
+    /* SmartBoost */
+    .smartboost-section { padding: var(--section-py) 0; background: var(--bg); }
+    .smartboost__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+    .smartboost__text h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); margin: .5rem 0 1rem; }
+    .smartboost__text p { font-size: .9rem; color: var(--text-2); line-height: 1.7; }
+    .smartboost__list { background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem; }
+    .smartboost__list-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 1rem; }
+    .smartboost__list ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .smartboost__list li { font-size: .875rem; color: var(--text-2); padding-left: 1.4rem; position: relative; }
+    .smartboost__list li::before { content: '\2713'; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+    .smartboost__disclaimer { font-size: .72rem; color: var(--text-3); margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); line-height: 1.6; font-style: italic; }
+    @media (max-width: 800px) { .smartboost__inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html#funktioner" class="nav__link">Funktioner</a></li>
+      <li><a href="cases.html" class="nav__link">Cases</a></li>
+      <li><a href="index.html#integrationer" class="nav__link">Integrationer</a></li>
+      <li><a href="index.html#for-who" class="nav__link">Hvem er det til</a></li>
+      <li><a href="priser.html" class="nav__link nav__link--active">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link">Om os</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hjælp &rarr;</a>
+      <a href="#cta" class="btn btn--primary nav__cta">Få en snak</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero" id="hero">
+  <div class="container">
+    <div class="priser-hero-grid reveal">
+
+      <!-- Venstre: tekst -->
+      <div>
+        <div class="eyebrow">Transparent prissætning</div>
+        <h1 style="margin:.75rem 0 1.25rem">Du betaler for det,<br><span class="text-accent">der giver værdi.</span></h1>
+        <p class="hero__sub" style="margin-bottom:1.75rem">Ingen opstartsfee. Ingen faste pakker du ikke bruger. Ingen skjulte overraskelser.</p>
+        <div class="page-hero__badges" style="margin-bottom:2rem">
+          <span class="page-hero__badge">✓ Ingen binding</span>
+          <span class="page-hero__badge">✓ Skalerer med dig</span>
+          <span class="page-hero__badge">✓ Alt inkluderet</span>
+        </div>
+      </div>
+
+      <!-- Højre: video + citat overlay -->
+      <div class="priser-hero-video">
+        <div class="priser-video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/yAJVnI7PT9g?rel=0&modestbranding=1&color=white"
+            title="Danfilter om SmartPack – Black Friday med 2 mand"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+          <!-- Citat overlay -->
+          <blockquote class="priser-quote-overlay">
+            <p>&ldquo;Vi var 2 mand der klarede det samme som 12 &ndash; og de opdagede ikke engang vi havde travlt.&rdquo;</p>
+            <footer><strong>Henrik Friis</strong><span> &ndash; Danfilter</span></footer>
+          </blockquote>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRISFILOSOFI + BEREGNER -->
+<section class="pricing-calc-section" id="filosofi" style="background:var(--bg-2);position:relative">
+  <div class="container">
+    <div class="pricing-hero-grid reveal">
+
+      <!-- Venstre: tekst -->
+      <div class="pricing-hero-left">
+        <div class="eyebrow">Sådan tænker vi</div>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;line-height:1.15;margin:.5rem 0 1.5rem">Prisen følger jeres brug &ndash;<br>ikke vores &oslash;nsker.</h2>
+        <p style="color:var(--text-2);line-height:1.75;font-size:1rem;margin-bottom:1.5rem">
+          Vi fakturerer per ordre. Travle måneder koster lidt mere. Stille måneder koster lidt mindre.
+          Ingen faste pakker du betaler for uden at bruge. Ingen overraskelser.
+        </p>
+        <div class="pricing-philosophy__promises">
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen opstartsfee</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen faste pakker du ikke bruger</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen skjulte overraskelser</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Du betaler for det, der giver værdi</span>
+          </div>
+        </div>
+
+        <!-- Slot: venstre kolonne -->
+        <div id="lp-left-slot"></div>
+        <!-- Labelprint block -->
+        <div data-labelprint style="margin-top:1.25rem;">
+          <div class="labelprint-callout__badge" style="margin-bottom:1rem">Spar penge fra dag &eacute;t</div>
+          <h4 style="font-size:1.3rem;font-weight:900;color:var(--text-1);line-height:1.25;margin-bottom:.75rem">
+            Labelprint er <em style="font-style:normal;color:var(--accent)">inkluderet</em>.<br>
+            Fragtportalen er m&aring;ske overfl&oslash;dig.
+          </h4>
+          <p style="font-size:.85rem;color:var(--text-2);line-height:1.7;margin-bottom:1rem">
+            De fleste SmartPack-kunder dropper fragtportalen helt &ndash; direkte integrationer til GLS, PostNord, DAO, Budbee og resten printer labels direkte fra systemet.
+          </p>
+          <div class="lp-checks-grid">
+            <div class="labelprint-callout__saving-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Ingen fragtportal-fee</span></div>
+            <div class="labelprint-callout__saving-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Ingen per-label-pris</span></div>
+            <div class="labelprint-callout__saving-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">30+ fragtfirmaer direkte</span></div>
+            <div class="labelprint-callout__saving-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Brug egne fragtaftaler</span></div>
+          </div>
+          <p style="font-size:.72rem;color:var(--text-3);margin-top:.85rem;line-height:1.6">Nichepr&aelig;gede l&oslash;sninger? Vi kobler p&aring; via Webshipper eller Shipmondo &ndash; men de fleste har slet ikke brug for det.</p>
+        </div>
+      </div>
+
+      <!-- Højre: beregner -->
+      <div class="pricing-hero-right">
+        <div class="eyebrow" style="margin-bottom:.5rem">Hvad koster det dig?</div>
+        <h3 style="font-size:1.75rem;font-weight:900;margin-bottom:.5rem">Beregn din månedlige pris.</h3>
+        <p style="font-size:.85rem;color:var(--text-3);margin-bottom:1.5rem">Prisen falder automatisk jo flere pakker du sender.</p>
+    <div class="pricing-calc">
+
+      <!-- Slider: pakker -->
+      <div class="calc-field">
+        <div class="calc-field__header">
+          <span class="calc-field__lbl">Pakker / m&aring;ned</span>
+          <div style="display:flex;align-items:center;gap:.4rem">
+            <input type="number" class="calc-field__input" id="pkgInput" min="0" max="999999" value="1500" oninput="syncFromInput('packages','pkgInput')">
+            <span style="font-size:.85rem;font-weight:700;color:var(--text-3)">stk.</span>
+          </div>
+        </div>
+        <input type="range" id="packages" min="0" max="100000" step="50" value="1500" oninput="syncFromSlider('packages','pkgInput')">
+        <div class="calc-field__minmax"><span>0 pakker</span><span>100.000 pakker</span></div>
+      </div>
+
+      <!-- Slider: returprocent -->
+      <div class="calc-field" style="margin-bottom:1rem">
+        <div class="calc-field__header">
+          <span class="calc-field__lbl">Returprocent</span>
+          <div style="display:flex;align-items:center;gap:.4rem;margin-left:auto">
+            <input type="number" class="calc-field__input" id="retPctInput" min="0" max="100" step="0.5" value="3" oninput="syncFromInput('retPct','retPctInput')" style="width:80px">
+            <span style="font-size:1.1rem;font-weight:800;color:var(--text-1)">%</span>
+          </div>
+        </div>
+        <input type="range" id="retPct" min="0" max="50" step="0.5" value="3" oninput="syncFromSlider('retPct','retPctInput')">
+        <div class="calc-field__minmax"><span>0 %</span><span>50 %</span></div>
+      </div>
+
+      <!-- Resultat -->
+      <div class="calc-result-row">
+        <div class="calc-res">
+          <div class="calc-res__lbl">Per pakke</div>
+          <div class="calc-res__num" id="outPkg">&ndash; <span>kr.</span></div>
+        </div>
+        <div class="calc-res calc-res--total">
+          <div class="calc-res__lbl">Total / m&aring;ned</div>
+          <div class="calc-res__num" id="outTotal">&ndash; <span>kr.</span></div>
+        </div>
+        <div class="calc-res">
+          <div class="calc-res__lbl">Returpakker</div>
+          <div class="calc-res__num" id="outReturns">0 <span>stk.</span></div>
+        </div>
+      </div>
+
+      <p class="calc-note">
+        Prisen justeres automatisk m&aring;ned for m&aring;ned &ndash; ingen binding.<br>
+        <strong>Minimumsafregning: 3.000 kr./m&aring;ned.</strong> Laveste stykpris: 0,69 kr. ved 95.000+ pakker.<br>
+        <a href="#betingelser" style="color:var(--accent);opacity:.7;font-size:.7rem">* Se betingelser for beregning &darr;</a>
+      </p>
+      <a href="#cta" class="calc-cta">F&aring; et pr&aelig;cist tilbud &rarr;</a>
+
+      <!-- Slot: under beregner (højre) -->
+      <div id="lp-right-slot"></div>
+      <!-- Labelprint hint knap -->
+      <div style="margin-top:.85rem;text-align:center">
+        <span style="display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.1);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.45em 1.1em;cursor:default">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Labelprint inkluderet &ndash; ingen fragtportal n&oslash;dvendig
+        </span>
+      </div>
+
+    </div><!-- /pricing-calc -->
+      </div><!-- /pricing-hero-right -->
+
+    </div><!-- /pricing-hero-grid -->
+
+    <!-- Betingelser – under beregneren -->
+    <div id="betingelser" style="padding-top:1.5rem;border-top:1px solid var(--border);display:grid;grid-template-columns:5fr 7fr;gap:4rem;align-items:start">
+      <div style="font-size:.78rem;color:var(--text-3);line-height:1.75;display:flex;flex-direction:column;gap:.6rem">
+        <p style="font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:.25rem">Betingelser for beregning</p>
+        <p><span style="color:var(--accent);font-weight:700">*</span> Returordre, interne ordrer samt opdeling eller flere plukkeruter &oslash;ger antallet af pakker pr. ordre. Samsendelse t&aelig;ller mindst &eacute;n pakke pr. ordre.</p>
+        <p><span style="color:var(--accent);font-weight:700">*</span> Minimumsafregning: <strong style="color:var(--text-2)">3.000 DKK/m&aring;ned</strong>. Med SmartBoost: mulighed for 1.500 DKK/m&aring;ned i 12 m&aring;neder. Se betingelser (afsnit 17).</p>
+      </div>
+      <div style="background:rgba(62,207,142,.06);border:1px solid rgba(62,207,142,.2);border-radius:10px;padding:1rem 1.25rem">
+        <p style="font-size:.82rem;font-weight:800;color:var(--text-1);margin-bottom:.4rem">T&aelig;nker du p&aring; robotter?</p>
+        <p style="font-size:.78rem;color:var(--text-3);line-height:1.7">Hos SmartPack er der ikke et m&aring;nedligt fee p&aring;, at jeres lagerrobot snakker med vores system. Vi ser robotten som en ligesindet medarbejder n&aring;r den er i drift &ndash; ligesom det &oslash;vrige personale.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ROI STRIP fjernet -->
+<section class="roi-strip reveal" style="display:none">
+  <div class="container">
+    <div class="roi-strip__inner">
+      <div class="roi-strip__text">
+        <div class="eyebrow" style="color:var(--accent)">Pris vs. investering</div>
+        <h3 class="roi-strip__headline">I langt de fleste tilf&aelig;lde tjent hjem inden 6 m&aring;neder.</h3>
+        <p class="roi-strip__body">SmartPack er ikke en post i regnskabet &ndash; det er en investering i bundlinjen. Alt du optimerer herefter, er direkte profit.</p>
+      </div>
+      <div class="roi-strip__examples">
+        <div class="roi-ex">
+          <span class="roi-ex__pkg">1.500 pakker/mdr.</span>
+          <span class="roi-ex__price">2,46 kr.</span>
+          <span class="roi-ex__lbl">= 3.700 kr./mdr.</span>
+        </div>
+        <div class="roi-ex roi-ex--mid">
+          <span class="roi-ex__pkg">5.000 pakker/mdr.</span>
+          <span class="roi-ex__price">1,50 kr.</span>
+          <span class="roi-ex__lbl">= 7.500 kr./mdr.</span>
+        </div>
+        <div class="roi-ex">
+          <span class="roi-ex__pkg">50.000 pakker/mdr.</span>
+          <span class="roi-ex__price">0,74 kr.</span>
+          <span class="roi-ex__lbl">= 37.000 kr./mdr.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HVAD ER INKLUDERET -->
+<section class="solution" id="inkluderet">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="eyebrow">Hvad er inkluderet</div>
+      <h2>Alt hvad I har brug for –<br>fra dag ét.</h2>
+    </div>
+    <div class="pricing-grid reveal">
+
+      <!-- Kolonne 1: Basis -->
+      <div class="pricing-col">
+        <h4>Basis</h4>
+        <ul>
+          <li>Alle kernefunktioner (pluk, pak, lager, retur)</li>
+          <li>Ubegrænset antal brugere</li>
+          <li>Alle integrationer</li>
+          <li>SOS support 24/7</li>
+          <li>Løbende opdateringer</li>
+        </ul>
+      </div>
+
+      <!-- Kolonne 2: Onboarding -->
+      <div class="pricing-col">
+        <h4>Onboarding</h4>
+        <ul>
+          <li>Vi sætter jer i gang</li>
+          <li>Operative inden for 7 dage</li>
+          <li>Træning af jeres folk</li>
+          <li>Vi integrerer jeres systemer</li>
+        </ul>
+      </div>
+
+      <!-- Kolonne 3: Løbende -->
+      <div class="pricing-col">
+        <h4>Løbende</h4>
+        <ul>
+          <li>Dedikeret kontaktperson</li>
+          <li>Vi forsvinder ikke når I er i gang</li>
+          <li>Langsigtet samarbejde</li>
+          <li>Vi er en medspiller</li>
+        </ul>
+      </div>
+
+      <!-- Kolonne 4: Support -->
+      <div class="pricing-col">
+        <h4>Support</h4>
+        <ul>
+          <li>Super-/supportbrugere hverdage 09&ndash;16 <strong style="color:var(--accent)">gratis</strong></li>
+          <li>Kritisk fejl udenfor &aring;bningstid <strong style="color:var(--accent)">gratis</strong></li>
+          <li>SOS support 24/7</li>
+          <li>Onsite opstarter inkluderet</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SMARTBOOST -->
+<section class="smartboost-section" id="smartboost">
+  <div class="container">
+    <div class="smartboost__inner reveal">
+      <div class="smartboost__text">
+        <div class="eyebrow">Kun for nye SmartPack-kunder</div>
+        <h2>SmartBoost &ndash; gratis ekspertgennemgang<br>af din forretning.</h2>
+        <p>Som ny SmartPack-bruger matcher vi dig med 1&ndash;2 erfarne eksperter fra vores netv&aelig;rk. De gennemg&aring;r din forretning og identificerer konkrete muligheder for forbedring og v&aelig;kst.</p>
+        <p style="font-size:.875rem;color:var(--text-3);margin-top:.75rem">SmartPack d&aelig;kker alle omkostninger. Ingen binding &ndash; ingen faktura. &AElig;nsker du hj&aelig;lp til implementering efterf&oslash;lgende, er det helt op til dig og eksperten.</p>
+        <a href="#cta" class="btn btn--primary" style="margin-top:1.5rem;display:inline-block">Bliv en del af SmartBoost &rarr;</a>
+      </div>
+      <div class="smartboost__list">
+        <div class="smartboost__list-title">Vores netv&aelig;rk d&aelig;kker bl.a.:</div>
+        <ul>
+          <li>Konverteringsoptimering (CRO)</li>
+          <li>Marketing og kunderejser</li>
+          <li>Automatiserede e-mailflows og kundekommunikation</li>
+          <li>Logistik, lageroptimering og plukstrategier</li>
+          <li>Webshop-systemer og teknisk setup</li>
+          <li>og meget mere</li>
+        </ul>
+        <p class="smartboost__disclaimer">SmartBoost er i testfase &ndash; vi evaluerer l&oslash;bende b&aring;de format og samarbejde for at sikre st&oslash;rst mulig v&aelig;rdi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-section__inner reveal">
+      <div class="eyebrow">Klar til en snak?</div>
+      <h2>Hvad koster det for jer?</h2>
+      <p>Det afhænger af jeres volumen. Lad os kigge på det sammen – 20 minutter. Ingen forpligtelse.</p>
+      <div class="cta-section__actions">
+        <a href="mailto:kontakt@smartpack.dk" class="btn btn--primary btn--xl">Få et prisestimat</a>
+        <a href="tel:+4588202019" class="btn btn--ghost btn--xl">Ring direkte</a>
+      </div>
+      <div class="cta-section__reassurance">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Bygget af e-købmænd. Til e-købmænd.</p>
+        <p class="footer__sub">WMS til webshops og 3PL der vil have styr på lageret.</p>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="index.html#funktioner">Funktioner</a></li>
+            <li><a href="index.html#integrationer">Integrationer</a></li>
+            <li><a href="cases.html">Cases</a></li>
+            <li><a href="priser.html">Priser</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="https://smartpack.dk/blog">Blog</a></li>
+            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
+            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="https://smartpack.dk/faq">FAQ</a></li>
+            <li><a href="mailto:kontakt@smartpack.dk">kontakt@smartpack.dk</a></li>
+            <li><a href="tel:+4588202019">SOS 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2025 SmartPack &middot; Dansk lagersystem til webshops og 3PL</p>
+      <div class="footer__badges">
+        <span class="footer__badge">E-handel siden 2005</span>
+        <span class="footer__badge">Dansk Erhverv 2026</span>
+        <span class="footer__badge">WMS &middot; Lagerstyring &middot; 3PL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script>
+    const priceTiers = [
+      { min: 1, max: 99, price: 3.00 },{ min: 100, max: 199, price: 2.96 },{ min: 200, max: 299, price: 2.93 },{ min: 300, max: 399, price: 2.89 },{ min: 400, max: 499, price: 2.85 },{ min: 500, max: 599, price: 2.82 },{ min: 600, max: 699, price: 2.78 },{ min: 700, max: 799, price: 2.74 },{ min: 800, max: 899, price: 2.71 },{ min: 900, max: 999, price: 2.67 },{ min: 1000, max: 1099, price: 2.63 },{ min: 1100, max: 1199, price: 2.60 },{ min: 1200, max: 1299, price: 2.56 },{ min: 1300, max: 1399, price: 2.53 },{ min: 1400, max: 1499, price: 2.49 },{ min: 1500, max: 1599, price: 2.46 },{ min: 1600, max: 1699, price: 2.42 },{ min: 1700, max: 1799, price: 2.39 },{ min: 1800, max: 1899, price: 2.35 },{ min: 1900, max: 1999, price: 2.32 },{ min: 2000, max: 2099, price: 2.29 },{ min: 2100, max: 2199, price: 2.25 },{ min: 2200, max: 2299, price: 2.22 },{ min: 2300, max: 2399, price: 2.19 },{ min: 2400, max: 2499, price: 2.15 },{ min: 2500, max: 2599, price: 2.12 },{ min: 2600, max: 2699, price: 2.09 },{ min: 2700, max: 2799, price: 2.06 },{ min: 2800, max: 2899, price: 2.03 },{ min: 2900, max: 2999, price: 2.00 },{ min: 3000, max: 3099, price: 1.97 },{ min: 3100, max: 3199, price: 1.94 },{ min: 3200, max: 3299, price: 1.91 },{ min: 3300, max: 3399, price: 1.89 },{ min: 3400, max: 3499, price: 1.86 },{ min: 3500, max: 3599, price: 1.83 },{ min: 3600, max: 3699, price: 1.81 },{ min: 3700, max: 3799, price: 1.78 },{ min: 3800, max: 3899, price: 1.76 },{ min: 3900, max: 3999, price: 1.73 },{ min: 4000, max: 4099, price: 1.71 },{ min: 4100, max: 4199, price: 1.68 },{ min: 4200, max: 4299, price: 1.66 },{ min: 4300, max: 4399, price: 1.64 },{ min: 4400, max: 4499, price: 1.62 },{ min: 4500, max: 4599, price: 1.60 },{ min: 4600, max: 4699, price: 1.58 },{ min: 4700, max: 4799, price: 1.56 },{ min: 4800, max: 4899, price: 1.54 },{ min: 4900, max: 4999, price: 1.52 },{ min: 5000, max: 5099, price: 1.50 },{ min: 5100, max: 5199, price: 1.49 },{ min: 5200, max: 5299, price: 1.47 },{ min: 5300, max: 5399, price: 1.46 },{ min: 5400, max: 5499, price: 1.44 },{ min: 5500, max: 5599, price: 1.43 },{ min: 5600, max: 5699, price: 1.41 },{ min: 5700, max: 5799, price: 1.40 },{ min: 5800, max: 5899, price: 1.39 },{ min: 5900, max: 5999, price: 1.37 },{ min: 6000, max: 6099, price: 1.36 },{ min: 6100, max: 6199, price: 1.35 },{ min: 6200, max: 6299, price: 1.34 },{ min: 6300, max: 6399, price: 1.33 },{ min: 6400, max: 6499, price: 1.32 },{ min: 6500, max: 6599, price: 1.31 },{ min: 6600, max: 6699, price: 1.30 },{ min: 6700, max: 6799, price: 1.29 },{ min: 6800, max: 6899, price: 1.28 },{ min: 6900, max: 6999, price: 1.27 },{ min: 7000, max: 7099, price: 1.26 },{ min: 7100, max: 7199, price: 1.25 },{ min: 7200, max: 7299, price: 1.24 },{ min: 7300, max: 7399, price: 1.23 },{ min: 7400, max: 7499, price: 1.23 },{ min: 7500, max: 7599, price: 1.22 },{ min: 7600, max: 7699, price: 1.21 },{ min: 7700, max: 7799, price: 1.20 },{ min: 7800, max: 7899, price: 1.20 },{ min: 7900, max: 7999, price: 1.19 },{ min: 8000, max: 8099, price: 1.18 },{ min: 8100, max: 8199, price: 1.18 },{ min: 8200, max: 8299, price: 1.17 },{ min: 8300, max: 8399, price: 1.16 },{ min: 8400, max: 8499, price: 1.16 },{ min: 8500, max: 8599, price: 1.15 },{ min: 8600, max: 8699, price: 1.15 },{ min: 8700, max: 8799, price: 1.14 },{ min: 8800, max: 8899, price: 1.14 },{ min: 8900, max: 8999, price: 1.13 },{ min: 9000, max: 9099, price: 1.12 },{ min: 9100, max: 9199, price: 1.12 },{ min: 9200, max: 9299, price: 1.11 },{ min: 9300, max: 9399, price: 1.11 },{ min: 9400, max: 9499, price: 1.10 },{ min: 9500, max: 9599, price: 1.10 },{ min: 9600, max: 9699, price: 1.09 },{ min: 9700, max: 9799, price: 1.09 },{ min: 9800, max: 9899, price: 1.09 },{ min: 9900, max: 10099, price: 1.08 },{ min: 10100, max: 10299, price: 1.07 },{ min: 10300, max: 10599, price: 1.06 },{ min: 10600, max: 10899, price: 1.05 },{ min: 10900, max: 11099, price: 1.04 },{ min: 11100, max: 11399, price: 1.03 },{ min: 11400, max: 11699, price: 1.02 },{ min: 11700, max: 12099, price: 1.01 },{ min: 12100, max: 12399, price: 1.00 },{ min: 12400, max: 12799, price: 0.99 },{ min: 12800, max: 13199, price: 0.98 },{ min: 13200, max: 13999, price: 0.97 },{ min: 14000, max: 14499, price: 0.95 },{ min: 14500, max: 14999, price: 0.94 },{ min: 15000, max: 15599, price: 0.93 },{ min: 15600, max: 16199, price: 0.92 },{ min: 16200, max: 16799, price: 0.91 },{ min: 16800, max: 17499, price: 0.90 },{ min: 17500, max: 18199, price: 0.89 },{ min: 18200, max: 18999, price: 0.88 },{ min: 19000, max: 19899, price: 0.87 },{ min: 19900, max: 20899, price: 0.86 },{ min: 20900, max: 21899, price: 0.85 },{ min: 21900, max: 23099, price: 0.84 },{ min: 23100, max: 24399, price: 0.83 },{ min: 24400, max: 25899, price: 0.82 },{ min: 25900, max: 27599, price: 0.81 },{ min: 27600, max: 29499, price: 0.80 },{ min: 29500, max: 31699, price: 0.79 },{ min: 31700, max: 34199, price: 0.78 },{ min: 34200, max: 37199, price: 0.77 },{ min: 37200, max: 40699, price: 0.76 },{ min: 40700, max: 44999, price: 0.75 },{ min: 45000, max: 50299, price: 0.74 },{ min: 50300, max: 56999, price: 0.73 },{ min: 57000, max: 65699, price: 0.72 },{ min: 65700, max: 77699, price: 0.71 },{ min: 77700, max: 94899, price: 0.70 },{ min: 94900, max: Infinity, price: 0.69 }
+    ];
+    function syncFromSlider(sliderId, inputId) {
+      document.getElementById(inputId).value = document.getElementById(sliderId).value;
+      calculatePrice();
+    }
+    function syncFromInput(sliderId, inputId) {
+      var v = parseFloat(document.getElementById(inputId).value) || 0;
+      var slider = document.getElementById(sliderId);
+      // Clamp slider (input can exceed max)
+      slider.value = Math.min(v, parseFloat(slider.max));
+      calculatePrice();
+    }
+    function calcUpdate() { calculatePrice(); }
+    function calculatePrice() {
+      var packages = parseInt(document.getElementById('pkgInput').value) || 0;
+      var retPct   = parseFloat(document.getElementById('retPctInput').value) || 0;
+      var returns  = Math.round(packages * retPct / 100);
+      var total    = packages + returns;
+      var ppp      = total > 0 ? (priceTiers.find(function(t){ return total >= t.min && total <= t.max; }) || {price:0}).price : 0;
+      var rawTotal = ppp * total;
+      var billable = total > 0 ? Math.max(Math.round(rawTotal / 100) * 100, 3000) : 0;
+      var isMin    = total > 0 && rawTotal < 3000;
+      document.getElementById('outPkg').innerHTML    = total > 0 ? ppp.toFixed(2).replace('.',',') + ' <span>kr.</span>' : '&ndash; <span>kr.</span>';
+      document.getElementById('outTotal').innerHTML  = total > 0 ? Math.round(billable).toLocaleString('da-DK') + ' <span>kr.' + (isMin ? '&thinsp;<small style="font-size:.6rem;opacity:.6">(min)</small>' : '') + '</span>' : '&ndash; <span>kr.</span>';
+      document.getElementById('outReturns').innerHTML = returns.toLocaleString('da-DK') + ' <span>stk.</span>';
+    }
+    document.addEventListener('DOMContentLoaded', calculatePrice);
+  </script>
+  <script src="js/main.js" defer></script>
+
+
+</body>
+</html>

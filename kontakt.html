@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>Kontakt SmartPack | Lad os tage en snak om dit lager</title>
+  <meta name="description" content="Tag kontakt til SmartPack – ring, skriv eller kig forbi. Vi svarer inden for 24 timer og hjælper dig i gang uden forpligtelse.">
+  <meta name="keywords" content="kontakt SmartPack, SmartPack telefon, SmartPack email, WMS kontakt">
+  <link rel="canonical" href="https://smartpack.dk/kontakt/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="SmartPack">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://smartpack.dk/kontakt/">
+  <meta property="og:site_name" content="SmartPack">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:title" content="Kontakt SmartPack – Lad os tage en snak">
+  <meta property="og:description" content="Ring, skriv eller kig forbi. Vi svarer inden for 24 timer.">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SmartPackWMS">
+  <meta name="twitter:title" content="Kontakt SmartPack">
+  <meta name="twitter:description" content="Ring, skriv eller kig forbi. Vi svarer inden for 24 timer.">
+  <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="apple-touch-icon" href="Billeder OG VIDEO/favicon-smartpack0.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
+          {"@type": "ListItem", "position": 2, "name": "Kontakt", "item": "https://smartpack.dk/kontakt/"}
+        ]
+      },
+      {
+        "@type": "ContactPage",
+        "@id": "https://smartpack.dk/kontakt/",
+        "url": "https://smartpack.dk/kontakt/",
+        "name": "Kontakt SmartPack",
+        "description": "Kontaktside for SmartPack WMS. Ring eller skriv – vi svarer hurtigt.",
+        "isPartOf": {"@id": "https://smartpack.dk/#website"},
+        "publisher": {"@id": "https://smartpack.dk/#organization"}
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://smartpack.dk/#organization",
+        "name": "SmartPack",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Torvegade 3",
+          "postalCode": "8963",
+          "addressLocality": "Auning",
+          "addressCountry": "DK"
+        },
+        "telephone": "+4588202019",
+        "email": "kontakt@smartpack.dk",
+        "taxID": "42007617"
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Page hero ── */
+    .page-hero {
+      padding: 130px 0 90px;
+      text-align: center;
+    }
+    .page-hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1.08;
+      margin: .75rem 0 1.25rem;
+    }
+    .page-hero__sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-2);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── Kontaktinfo ── */
+    .contact-section {
+      padding: var(--section-py) 0;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .contact-card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2.25rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-card__label {
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--accent);
+    }
+    .contact-card__items {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+    }
+    .contact-item__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--r-sm);
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+    .contact-item__text {
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+    }
+    .contact-item__title {
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .contact-item__value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-1);
+      line-height: 1.5;
+    }
+    .contact-item__value a {
+      color: var(--text-1);
+      transition: color var(--t-fast);
+    }
+    .contact-item__value a:hover {
+      color: var(--accent);
+    }
+    .contact-item__sub {
+      font-size: .8rem;
+      color: var(--text-3);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      .page-hero { padding: 100px 0 60px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-card { padding: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html#funktioner" class="nav__link">Funktioner</a></li>
+      <li><a href="cases.html" class="nav__link">Cases</a></li>
+      <li><a href="index.html#integrationer" class="nav__link">Integrationer</a></li>
+      <li><a href="index.html#for-who" class="nav__link">Hvem er det til</a></li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link">Om os</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hjælp &rarr;</a>
+      <a href="#cta" class="btn btn--primary nav__cta">Få en snak</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero" id="hero">
+  <div class="container">
+    <div class="eyebrow reveal">Kom i kontakt</div>
+    <h1 class="reveal">Lad os tage en snak.</h1>
+    <p class="page-hero__sub reveal">Ring, skriv eller kig forbi. Vi svarer inden for 24 timer og hjælper dig i gang – uden forpligtelse.</p>
+  </div>
+</section>
+
+<!-- KONTAKTINFO -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid reveal">
+
+      <!-- Venstre: fysisk info -->
+      <div class="contact-card">
+        <div class="contact-card__label">Find os</div>
+        <div class="contact-card__items">
+          <div class="contact-item">
+            <div class="contact-item__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-item__text">
+              <span class="contact-item__title">Adresse</span>
+              <span class="contact-item__value">Torvegade 3<br>8963 Auning</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+              </svg>
+            </div>
+            <div class="contact-item__text">
+              <span class="contact-item__title">CVR-nummer</span>
+              <span class="contact-item__value">42007617</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Højre: kontaktinfo -->
+      <div class="contact-card">
+        <div class="contact-card__label">Skriv eller ring</div>
+        <div class="contact-card__items">
+          <div class="contact-item">
+            <div class="contact-item__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-item__text">
+              <span class="contact-item__title">E-mail</span>
+              <span class="contact-item__value"><a href="mailto:kontakt@smartpack.dk">kontakt@smartpack.dk</a></span>
+              <span class="contact-item__sub">Vi svarer inden for 24 timer</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.85 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.28-1.28a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="contact-item__text">
+              <span class="contact-item__title">Telefon</span>
+              <span class="contact-item__value"><a href="tel:+4588202019">+45 88 20 20 19</a></span>
+              <span class="contact-item__sub">SOS support 24/7</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-section__inner reveal">
+      <div class="eyebrow">Klar til en snak?</div>
+      <h2>Få en snak</h2>
+      <p>Fortæl os om jeres lager og volumen &ndash; så vender vi tilbage inden for 24 timer. Ingen forpligtelse.</p>
+      <div class="cta-section__actions">
+        <a href="mailto:kontakt@smartpack.dk" class="btn btn--primary btn--xl">Få en snak</a>
+        <a href="tel:+4588202019" class="btn btn--ghost btn--xl">Ring direkte</a>
+      </div>
+      <div class="cta-section__reassurance">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Bygget af e-købmænd. Til e-købmænd.</p>
+        <p class="footer__sub">WMS til webshops og 3PL der vil have styr på lageret.</p>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="index.html#funktioner">Funktioner</a></li>
+            <li><a href="index.html#integrationer">Integrationer</a></li>
+            <li><a href="cases.html">Cases</a></li>
+            <li><a href="priser.html">Priser</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="https://smartpack.dk/blog">Blog</a></li>
+            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
+            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="https://smartpack.dk/faq">FAQ</a></li>
+            <li><a href="mailto:kontakt@smartpack.dk">kontakt@smartpack.dk</a></li>
+            <li><a href="tel:+4588202019">SOS 24/7</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2025 SmartPack &middot; Dansk lagersystem til webshops og 3PL</p>
+      <div class="footer__badges">
+        <span class="footer__badge">E-handel siden 2005</span>
+        <span class="footer__badge">Dansk Erhverv 2026</span>
+        <span class="footer__badge">WMS &middot; Lagerstyring &middot; 3PL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="js/main.js" defer></script>
+
+</body>
+</html>
