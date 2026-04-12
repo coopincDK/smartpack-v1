@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vilkår og betingelser | SmartPack</title>
+  <meta name="description" content="Læs SmartPacks vilkår og betingelser for brug af lager- og logistikløsningen.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/png" href="Billeder OG VIDEO/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .legal-hero {
+      padding: clamp(6rem, 10vw, 9rem) 0 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-hero .eyebrow { margin-bottom: .75rem; }
+    .legal-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      margin-bottom: 1rem;
+    }
+    .legal-hero p {
+      color: var(--text-2);
+      font-size: 1rem;
+      max-width: 560px;
+    }
+    .legal-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 4rem;
+      align-items: start;
+      padding: 4rem 0 6rem;
+    }
+    /* Sticky TOC */
+    .legal-toc {
+      position: sticky;
+      top: 5rem;
+      max-height: calc(100vh - 7rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .legal-toc h2 {
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-3);
+      margin-bottom: 1rem;
+    }
+    .legal-toc ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+    }
+    .legal-toc a {
+      font-size: .82rem;
+      color: var(--text-3);
+      text-decoration: none;
+      padding: .3rem .6rem;
+      border-radius: 4px;
+      display: block;
+      line-height: 1.4;
+      transition: color var(--t-fast), background var(--t-fast);
+    }
+    .legal-toc a:hover {
+      color: var(--text-1);
+      background: var(--bg-3);
+    }
+    .legal-toc a.active {
+      color: var(--accent);
+      background: rgba(62,207,142,.08);
+    }
+    /* Content */
+    .legal-content {
+      min-width: 0;
+    }
+    .legal-section {
+      padding-top: 2.5rem;
+      margin-top: .5rem;
+      border-top: 1px solid var(--border);
+    }
+    .legal-section:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+    .legal-section h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: baseline;
+      gap: .6rem;
+    }
+    .legal-section h2 .num {
+      font-size: .9rem;
+      color: var(--accent);
+      font-weight: 700;
+      min-width: 1.6rem;
+    }
+    .legal-section h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 1.75rem 0 .75rem;
+      color: var(--text-1);
+    }
+    .legal-section p {
+      color: var(--text-2);
+      font-size: .95rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .legal-section ul, .legal-section ol {
+      color: var(--text-2);
+      font-size: .95rem;
+      line-height: 1.75;
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .legal-section li { margin-bottom: .35rem; }
+    .legal-section strong { color: var(--text-1); }
+    .legal-def {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .5rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .legal-def dt {
+      font-weight: 700;
+      color: var(--text-1);
+      font-size: .95rem;
+      padding-top: .1rem;
+      white-space: nowrap;
+    }
+    .legal-def dd {
+      color: var(--text-2);
+      font-size: .95rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .legal-updated {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .8rem;
+      color: var(--text-3);
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .4rem .8rem;
+      margin-top: 2rem;
+    }
+    .legal-updated::before { content: '📅'; }
+    @media (max-width: 900px) {
+      .legal-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .legal-toc { position: static; max-height: none; background: var(--bg-2); border-radius: var(--r-md); padding: 1.25rem; border: 1px solid var(--border); }
+      .legal-toc ol { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .legal-toc ol { grid-template-columns: 1fr; }
+      .legal-def { grid-template-columns: 1fr; gap: .25rem; }
+      .legal-def dt::after { content: ':'; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html#funktioner" class="nav__link">Funktioner</a></li>
+      <li><a href="cases.html" class="nav__link">Cases</a></li>
+      <li><a href="index.html#integrationer" class="nav__link">Integrationer</a></li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link">Om os</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hj&aelig;lp &rarr;</a>
+      <a href="index.html#cta" class="btn btn--primary nav__cta">F&aring; en snak</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="legal-hero">
+  <div class="container">
+    <div class="eyebrow">Juridisk</div>
+    <h1>Vilk&aring;r og betingelser</h1>
+    <p>Disse vilk&aring;r regulerer kundens brug af SmartPacks lager- og logistikl&oslash;sning, herunder support, drift, opdateringer og &oslash;vrige serviceydelser.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="legal-layout">
+
+    <!-- TOC -->
+    <aside class="legal-toc" aria-label="Indholdsfortegnelse">
+      <h2>Indhold</h2>
+      <ol>
+        <li><a href="#s1">1. Indledning</a></li>
+        <li><a href="#s2">2. Definitioner</a></li>
+        <li><a href="#s3">3. Aftalens omfang</a></li>
+        <li><a href="#s4">4. SmartPacks forpligtelser</a></li>
+        <li><a href="#s5">5. Drift og adgang</a></li>
+        <li><a href="#s6">6. Hotline og support</a></li>
+        <li><a href="#s7">7. Serviceniveau</a></li>
+        <li><a href="#s8">8. Fejlklassificering</a></li>
+        <li><a href="#s9">9. Afhjælpningsfristerne</a></li>
+        <li><a href="#s10">10. Releases</a></li>
+        <li><a href="#s11">11. Vejledning og ændringer</a></li>
+        <li><a href="#s12">12. Forebyggende arbejde</a></li>
+        <li><a href="#s13">13. Testmiljøer</a></li>
+        <li><a href="#s14">14. Kundens forpligtelser</a></li>
+        <li><a href="#s15">15. Reference</a></li>
+        <li><a href="#s16">16. Personoplysninger</a></li>
+        <li><a href="#s17">17. Betaling</a></li>
+        <li><a href="#s18">18. Data og backup</a></li>
+        <li><a href="#s19">19. Integrationer</a></li>
+        <li><a href="#s20">20. Samarbejde</a></li>
+        <li><a href="#s21">21. Misligholdelse</a></li>
+        <li><a href="#s22">22. Fortrolighed</a></li>
+        <li><a href="#s23">23. Ansvarsbegrænsning</a></li>
+        <li><a href="#s24">24. Opsigelse</a></li>
+        <li><a href="#s25">25. Ændringer i vilkårene</a></li>
+        <li><a href="#s26">26. Force majeure</a></li>
+        <li><a href="#s27">27. Lovvalg og værneting</a></li>
+        <li><a href="#s28">28. Delvis ugyldighed</a></li>
+        <li><a href="#s29">29. Overdragelse</a></li>
+        <li><a href="#s30">30. Sidst opdateret</a></li>
+      </ol>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="legal-content">
+
+      <section class="legal-section" id="s1">
+        <h2><span class="num">1.</span> Indledning</h2>
+        <p>Disse vilk&aring;r regulerer kundens brug af SmartPacks lager- og logistikl&oslash;sning, herunder tilknyttet support, drift, opdateringer og &oslash;vrige serviceydelser.</p>
+        <p>SmartPack leverer en cloud-baseret l&oslash;sning, der underst&oslash;tter lagerstyring, arbejdsgange, integrationer og relaterede processer. Vi arbejder l&oslash;bende p&aring; at sikre stabil drift, videreudvikling af systemet og et velfungerende samarbejde med kunden.</p>
+        <p>Aftalen bygger p&aring;, at begge parter bidrager loyalt og konstruktivt til en velfungerende l&oslash;sning.</p>
+      </section>
+
+      <section class="legal-section" id="s2">
+        <h2><span class="num">2.</span> Definitioner</h2>
+        <p>I disse vilk&aring;r anvendes f&oslash;lgende begreber:</p>
+        <dl class="legal-def">
+          <dt>Afhj&aelig;lpning</dt>
+          <dd>En handling, der er n&oslash;dvendig for at bringe SmartPack i overensstemmelse med aftalt funktionalitet eller genetablere det aftalte serviceniveau.</dd>
+          <dt>Vejledning</dt>
+          <dd>En handling, hvor SmartPack vejleder kunden i korrekt brug af systemet og derved l&oslash;ser et brugsmæssigt problem.</dd>
+          <dt>Omg&aring;else</dt>
+          <dd>En midlertidig l&oslash;sning eller alternativ arbejdsgang, der g&oslash;r det muligt at forts&aelig;tte arbejdet, selv om det oprindelige problem endnu ikke er permanent rettet.</dd>
+          <dt>Problem</dt>
+          <dd>Et problem kan v&aelig;re systemm&aelig;ssigt, driftsm&aelig;ssigt eller brugsm&aelig;ssigt.</dd>
+          <dt>Brugsm&aelig;ssigt problem</dt>
+          <dd>Et problem, som kunden oplever i forbindelse med brugen af systemet, selv om systemet fungerer i overensstemmelse med den tilsigtede funktionalitet.</dd>
+          <dt>Driftsm&aelig;ssigt problem</dt>
+          <dd>Et problem, hvor det aftalte serviceniveau ikke er opretholdt, herunder at systemet ikke er tilg&aelig;ngeligt som forudsat.</dd>
+          <dt>Systemm&aelig;ssigt problem</dt>
+          <dd>Et problem, der skyldes en uoverensstemmelse mellem systemets tilsigtede eller aftalte funktionalitet og dets faktiske funktionalitet.</dd>
+          <dt>Driftstid</dt>
+          <dd>Kundens aftalte driftstid, dvs. de tidsrum hvor kunden normalt anvender systemet.</dd>
+          <dt>Opgavestyringssystem</dt>
+          <dd>SmartPacks opgavestyringssystem, hvori opgaver, fejl, &oslash;nsker og &oslash;vrige forhold vedr&oslash;rende kunden registreres.</dd>
+          <dt>Normal arbejdstid</dt>
+          <dd>Mandag til fredag kl. 09.00&ndash;16.00, bortset fra danske helligdage, juleaftensdag, grundlovsdag og nyt&aring;rsaftensdag.</dd>
+          <dt>Release</dt>
+          <dd>En mindre opdatering af SmartPack, typisk med fejlrettelser og mindre forbedringer.</dd>
+          <dt>Rettelse</dt>
+          <dd>En permanent og d&aelig;kkende abhj&aelig;lpning af et systemm&aelig;ssigt problem, ofte implementeret via en release.</dd>
+          <dt>Version</dt>
+          <dd>En ny udgave af SmartPack med v&aelig;sentligt &aelig;ndret eller udvidet funktionalitet.</dd>
+          <dt>Service</dt>
+          <dd>De ydelser, som SmartPack er forpligtet til at levere i henhold til denne aftale.</dd>
+          <dt>Superbruger</dt>
+          <dd>En medarbejder hos kunden, som gennem opl&aelig;ring eller praktisk erfaring er kvalificeret til at indg&aring; i dialog med SmartPack om systemets drift, anvendelse og fejl.</dd>
+          <dt>Systemet</dt>
+          <dd>Den samlede l&oslash;sning, som SmartPack stiller til r&aring;dighed for kunden.</dd>
+        </dl>
+      </section>
+
+      <section class="legal-section" id="s3">
+        <h2><span class="num">3.</span> Aftalens omfang</h2>
+        <p>Aftalen beskriver den service, som SmartPack leverer til kunden i relation til systemet.</p>
+        <p>Aftalen omfatter som udgangspunkt:</p>
+        <ul>
+          <li>adgang til SmartPack</li>
+          <li>l&oslash;bende opdateringer og forbedringer</li>
+          <li>support til kundens udpegede superbrugere</li>
+          <li>abhj&aelig;lpning af driftsm&aelig;ssige problemer</li>
+          <li>abhj&aelig;lpning af systemm&aelig;ssige problemer inden for aftalt support og serviceniveau</li>
+          <li>forebyggende arbejde p&aring; systemet</li>
+        </ul>
+        <p>Visse ydelser er omfattet af den l&oslash;bende aftale, mens andre ydes mod s&aelig;rskilt betaling. Dette fremg&aring;r af punkt 17 om betaling.</p>
+      </section>
+
+      <section class="legal-section" id="s4">
+        <h2><span class="num">4.</span> SmartPacks forpligtelser</h2>
+        <p>SmartPack er forpligtet til at levere service som beskrevet i denne aftale og til at have en organisation med kvalificerede medarbejdere til r&aring;dighed for l&oslash;sning af de omfattede opgaver.</p>
+        <p>SmartPack er desuden forpligtet til:</p>
+        <ul>
+          <li>at yde service med behørig omhu og i overensstemmelse med almindelige faglige standarder</li>
+          <li>at stille systemet til rådighed for kundens brug</li>
+          <li>at opretholde det aftalte serviceniveau</li>
+          <li>at yde afhjælpning af driftsmæssige og systemmæssige problemer som beskrevet i disse vilkår</li>
+          <li>at videreudvikle SmartPack og løbende frigive opdateringer og nye versioner</li>
+          <li>at udføre forebyggende arbejde med henblik på stabil drift</li>
+          <li>at bistå med vejledning til kundens superbrugere</li>
+          <li>at tilbyde test- og uddannelsesmiljøer mod særskilt betaling, når dette ønskes</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="s5">
+        <h2><span class="num">5.</span> Drift og adgang til support</h2>
+        <p>SmartPack stiller systemet til r&aring;dighed for kundens brug i overensstemmelse med denne aftale.</p>
+        <p>Kunden har adgang til support og vejledning via FAQ, mail og hotline. Support og kundeservice er som udgangspunkt tilg&aelig;ngelig i normal arbejdstid.</p>
+        <p>Uden for normal arbejdstid kan der i s&aelig;rlige tilf&aelig;lde v&aelig;re adgang til telefonisk support ved kritiske fejl, n&aring;r:</p>
+        <ul>
+          <li>fejlen er for&aring;rsaget af SmartPack og ikke af tredjepart</li>
+          <li>fejlen ikke med rimelighed kan omg&aring;s</li>
+          <li>fejlen har v&aelig;sentlig betydning for kundens mulighed for at opretholde driften</li>
+        </ul>
+        <p>Hotline uden for normal arbejdstid er ikke en garanteret, bemandet 24/7-supportordning, medmindre dette er aftalt s&aelig;rskilt.</p>
+        <p>Kunden kan med mindst 10 arbejdsdages varsel anmode om &aelig;ndringer i serviceniveauet. Eventuelle &aelig;ndringer og tilh&oslash;rende betaling aftales s&aelig;rskilt.</p>
+      </section>
+
+      <section class="legal-section" id="s6">
+        <h2><span class="num">6.</span> Hotline og support</h2>
+        <p>Kun kundens udpegede superbrugere m&aring; kontakte SmartPacks hotline.</p>
+        <p>Superbrugere kan kontakte SmartPack:</p>
+        <ul>
+          <li>via mail vedr&oslash;rende alle typer af problemer, sp&oslash;rgsm&aring;l og &oslash;nsker</li>
+          <li>telefonisk ved akutte problemer</li>
+        </ul>
+        <p>Ved henvendelser oprettes eller opdateres en opgave i SmartPacks opgavestyringssystem med beskrivelse af problemets karakter og den f&aelig;lles forst&aring;else af situationen.</p>
+        <p>SmartPack vurderer, om det indrapporterede forhold er driftsm&aelig;ssigt, systemm&aelig;ssigt eller brugsm&aelig;ssigt, og yder derefter relevant afhjælpning eller vejledning.</p>
+        <p>Support er inkluderet som en del af l&oslash;sningen for kundens superbrugere. Hvis brugen af support afviger v&aelig;sentligt fra normal brug, kan SmartPack varsle s&aelig;rskilt afregning eller foresl&aring; en anden supportmodel.</p>
+        <p>Telefonnummer til hotline oplyses efter aftalens indg&aring;else og m&aring; kun benyttes af kundens superbrugere.</p>
+      </section>
+
+      <section class="legal-section" id="s7">
+        <h2><span class="num">7.</span> Serviceniveau for drift</h2>
+        <p>SmartPack garanterer inden for den aftalte driftstid et serviceniveau best&aring;ende af tilg&aelig;ngelighed og performance som beskrevet nedenfor.</p>
+        <h3>7.1 Tilgængelighed</h3>
+        <p>Der garanteres en tilg&aelig;ngelighedsgrad p&aring; <strong>99,5&nbsp;%</strong> inden for driftstiden.</p>
+        <p>Tilg&aelig;ngelighedsgraden beregnes som: <em>(aftalt driftstid &ndash; tid hvor systemet har v&aelig;ret utilg&aelig;ngeligt) / aftalt driftstid</em></p>
+        <p>F&oslash;lgende medregnes <strong>ikke</strong> ved beregning af tilg&aelig;ngelighedsgraden:</p>
+        <ul>
+          <li>fejl i kundens eget netv&aelig;rk</li>
+          <li>ustabil eller utilstr&aelig;kkelig internetforbindelse hos kunden</li>
+          <li>fejl i kundens udstyr</li>
+          <li>fejl eller nedbrud i tredjepartssystemer</li>
+        </ul>
+        <h3>7.2 Svartider</h3>
+        <p>SmartPack tilstr&aelig;ber f&oslash;lgende performance:</p>
+        <ul>
+          <li>svartid p&aring; h&oslash;jst <strong>1 sekund</strong> ved almindelige brugerhandlinger i 95&nbsp;% af tilf&aelig;ldene</li>
+          <li>svartid p&aring; h&oslash;jst <strong>5 sekunder</strong> ved fremsøgning af datalister i 95&nbsp;% af tilf&aelig;ldene</li>
+        </ul>
+      </section>
+
+      <section class="legal-section" id="s8">
+        <h2><span class="num">8.</span> Fejlklassificering og afhjælpning</h2>
+        <p>Systemm&aelig;ssige problemer klassificeres i f&oslash;lgende kategorier:</p>
+        <dl class="legal-def">
+          <dt>Blokerende fejl</dt>
+          <dd>Kritisk for kundens opgaver &mdash; rimelig omg&aring;else er <strong>ikke</strong> mulig.</dd>
+          <dt>Kritisk fejl</dt>
+          <dd>Kritisk for kundens opgaver &mdash; rimelig omg&aring;else er mulig.</dd>
+          <dt>St&oslash;rre fejl</dt>
+          <dd>Ikke kritisk &mdash; rimelig omg&aring;else er <strong>ikke</strong> mulig.</dd>
+          <dt>Mindre fejl</dt>
+          <dd>Ikke kritisk &mdash; rimelig omg&aring;else er mulig.</dd>
+          <dt>Triviel fejl</dt>
+          <dd>Ingen eller ubetydelig p&aring;virkning af kundens opgaver.</dd>
+        </dl>
+        <p>SmartPack og kundens superbruger vurderer i f&aelig;llesskab problemets betydning og mulighederne for omg&aring;else. En rimelig og sikker omg&aring;else kan v&aelig;lges f&oslash;rst, hvorefter en permanent rettelse gennemf&oslash;res efterf&oslash;lgende.</p>
+      </section>
+
+      <section class="legal-section" id="s9">
+        <h2><span class="num">9.</span> Tidsfrister for afhjælpning</h2>
+        <p>Ved systemm&aelig;ssige problemer tilstr&aelig;ber SmartPack f&oslash;lgende maksimale abhj&aelig;lningstider:</p>
+        <ul>
+          <li><strong>Blokerende fejl:</strong> inden for 6 timer</li>
+          <li><strong>Kritisk fejl:</strong> inden for 24 timer</li>
+          <li><strong>St&oslash;rre fejl:</strong> inden for 5 arbejdsdage</li>
+          <li><strong>Mindre fejl:</strong> inden for 1 m&aring;ned</li>
+          <li><strong>Triviel fejl:</strong> inden for 6 m&aring;neder</li>
+        </ul>
+        <p>Tidsfristen regnes fra det tidspunkt, hvor problemet er registreret i opgavestyringssystemet. Indrapporteres problemet uden for normal arbejdstid, begynder tidsfristen ved starten af n&aelig;ste normale arbejdstid.</p>
+        <p>Et problem ans&aring;s for afhjulpet, n&aring;r det enten er l&oslash;st permanent, eller er omg&aring;et i en s&aring;dan grad, at det ikke l&aelig;ngere har karakter af blokerende, kritisk eller st&oslash;rre fejl.</p>
+      </section>
+
+      <section class="legal-section" id="s10">
+        <h2><span class="num">10.</span> Releases og opdateringer</h2>
+        <p>SmartPack opdateres l&oslash;bende. Webapplikationen opdateres som udgangspunkt automatisk.</p>
+        <p>Mindre opdateringer kan medf&oslash;re kortvarig nedetid. SmartPack tilstr&aelig;ber, at s&aring;dan nedetid begr&aelig;nses mest muligt. Kortvarig nedetid i forbindelse med almindelige opdateringer ans&aring;s ikke som misligholdelse af denne aftale.</p>
+        <p>Opdateringer, som forventes at kunne p&aring;virke driften v&aelig;sentligt, gennemf&oslash;res s&aring; vidt muligt uden for normal driftstid.</p>
+      </section>
+
+      <section class="legal-section" id="s11">
+        <h2><span class="num">11.</span> Vejledning, ønsker og ændringer</h2>
+        <p>SmartPack yder vejledning i brugen af systemet inden for supporttiden.</p>
+        <p>Kunden kan indsende id&eacute;er, &oslash;nsker og forslag til &aelig;ndringer via SmartPacks anviste kanaler.</p>
+        <ul>
+          <li>&Oslash;nsker med generel v&aelig;rdi for produktet kan indg&aring; i SmartPacks roadmap uden s&aelig;rskilt betaling.</li>
+          <li>Kundespecifikke &oslash;nsker kan udvikles mod s&aelig;rskilt betaling efter estimat.</li>
+        </ul>
+        <p>SmartPack forbeholder sig retten til selv at prioritere roadmap, udviklingsressourcer og leveringsr&aelig;kkef&oslash;lge.</p>
+      </section>
+
+      <section class="legal-section" id="s12">
+        <h2><span class="num">12.</span> Forebyggende arbejde</h2>
+        <p>SmartPack udf&oslash;rer l&oslash;bende forebyggende arbejde med henblik p&aring; at sikre, at det aftalte serviceniveau kan opretholdes.</p>
+        <p>St&oslash;rre &aelig;ndringer eller arbejde, som forventes at p&aring;virke tilg&aelig;ngeligheden negativt, fors&oslash;ges gennemf&oslash;rt uden for normal driftstid. Hvis SmartPack forventer at skulle tage systemet helt ned som led i planlagt arbejde, vil kunden som udgangspunkt blive orienteret mindst <strong>3 arbejdsdage</strong> i forvejen.</p>
+      </section>
+
+      <section class="legal-section" id="s13">
+        <h2><span class="num">13.</span> Test- og uddannelsesmiljøer</h2>
+        <p>Kunden kan anmode om etablering af et eller flere milj&oslash;er til brug for test, uddannelse eller afpr&oslash;vning af nye funktioner. Etablering og drift faktureres s&aelig;rskilt.</p>
+        <p>Test- og uddannelsesmilj&oslash;er er ikke underlagt samme krav til serviceniveau, tilg&aelig;ngelighed eller svartider som kundens driftsmilj&oslash;.</p>
+      </section>
+
+      <section class="legal-section" id="s14">
+        <h2><span class="num">14.</span> Kundens forpligtelser</h2>
+        <p>Kunden forpligter sig til:</p>
+        <ul>
+          <li>at betale for de ydelser, der leveres i henhold til aftalen</li>
+          <li>at indrapportere systemm&aelig;ssige problemer uden unødigt ophold</li>
+          <li>at udpege og vedligeholde en relevant gruppe af superbrugere</li>
+          <li>at sikre, at superbrugere er passende oplært i systemet</li>
+          <li>at samarbejde loyalt og konstruktivt med SmartPacks support og medarbejdere</li>
+          <li>at medvirke til relevant fejls&oslash;gning og afpr&oslash;vning, n&aring;r dette er n&oslash;dvendigt</li>
+          <li>at beskytte loginoplysninger og sikre forsvarlig intern adgangsstyring</li>
+        </ul>
+        <p>Login m&aring; ikke deles mellem flere personer, medmindre dette udtrykkeligt er aftalt.</p>
+      </section>
+
+      <section class="legal-section" id="s15">
+        <h2><span class="num">15.</span> Reference</h2>
+        <p>Kunden giver SmartPack ret til at anvende kundens navn og logo i SmartPacks markedsf&oslash;ring, referencelister og salgsmateriale, medmindre andet er aftalt skriftligt.</p>
+      </section>
+
+      <section class="legal-section" id="s16">
+        <h2><span class="num">16.</span> Behandling af personoplysninger</h2>
+        <p>Ved behandling af personoplysninger handler SmartPack alene efter instruks fra kunden, som er dataansvarlig.</p>
+        <p>SmartPack tr&aelig;ffer rimelige og n&oslash;dvendige tekniske og organisatoriske sikkerhedsforanstaltninger med henblik p&aring; at beskytte oplysninger mod h&aelig;ndeligt eller ulovligt tab, &oslash;del&aelig;ggelse, &aelig;ndring, misbrug eller uautoriseret adgang.</p>
+        <p>Der henvises i &oslash;vrigt til parternes databehandleraftale.</p>
+      </section>
+
+      <section class="legal-section" id="s17">
+        <h2><span class="num">17.</span> Betaling og prisvilkår</h2>
+        <h3>17.1 Generelt</h3>
+        <p>Alle priser er angivet eksklusive moms. Opstartsfee betales inden igangs&aelig;ttelse af onboardingprocessen.</p>
+        <p>Hvis samarbejdet oph&oslash;rer under onboardingprocessen, refunderes maksimalt halvdelen af opstartsfee. SmartPack er desuden berettiget til at modregne forgæves tidsforbrug og dokumenterede omkostninger forbundet med opstarten.</p>
+        <h3>17.2 L&oslash;bende fakturering</h3>
+        <p>Den l&oslash;bende fakturering opg&oslash;res pr. den 1. i hver m&aring;ned med betalingsfrist p&aring; 8 dage fra fakturadato. SmartPack opfordrer kunden til at tilmelde betalingen til Leverand&oslash;rservice.</p>
+        <h3>17.3 Minimumspris</h3>
+        <p>Minimumsprisen er <strong>3.000 DKK pr. m&aring;ned</strong>.</p>
+        <p>Hvis virksomhedens prim&aelig;re forretningsomr&aring;de er B2B-salg, kan der g&aelig;lde et tillæg p&aring; 500 DKK pr. medarbejder pr. m&aring;ned, reguleret &eacute;n gang &aring;rligt p&aring; baggrund af antal ansatte registreret i CVR.</p>
+        <h3>17.4 Ekstra arbejde</h3>
+        <p>Estimering, udvikling og &oslash;vrige ydelser uden for denne aftale faktureres efter aftalt pris pr. opgave eller efter s&aelig;rskilt aftale.</p>
+        <h3>17.5 Manglende betaling</h3>
+        <p>Ved for sen betaling beregnes morarente med <strong>2&nbsp;%</strong> af det skyldige bel&oslash;b pr. p&aring;begyndt m&aring;ned samt et rykkergebyr p&aring; 100 kr. pr. fremsendt rykker.</p>
+        <p>Hvis der ikke reageres p&aring; f&oslash;rste rykker senest 2 dage efter fremsendelsen, forbeholder SmartPack sig retten til at suspendere adgang til systemet. Genåbning efter nedlukning koster <strong>5.000 DKK</strong>.</p>
+        <h3>17.6 Indeksregulering</h3>
+        <p>Priserne indeksreguleres &eacute;n gang &aring;rligt pr. 1. januar med den procentuelle &aring;rlige stigning i nettoprisindekset, baseret p&aring; det senest offentliggjorte indeks for oktober m&aring;ned.</p>
+        <h3>17.7 Ekstraordin&aelig;re prisstigninger</h3>
+        <p>Ved ekstraordin&aelig;re prisstigninger ud over indeksregulering varsler SmartPack kunden skriftligt med mindst <strong>6 m&aring;neders</strong> varsel. Nye premium features er frivillige tilvalg og p&aring;virker ikke eksisterende prismodel.</p>
+      </section>
+
+      <section class="legal-section" id="s18">
+        <h2><span class="num">18.</span> Data, backup og data ved ophør</h2>
+        <p>Kunden ejer altid sine data. SmartPack foretager l&oslash;bende backup, men kunden anbefales ogs&aring; selv at sikre kritiske data via eksport.</p>
+        <p>Ved oph&oslash;r af aftalen har kunden adgang til sine data i minimum <strong>30 dage</strong> efter oph&oslash;r. Herefter kan data slettes fra driftsmilj&oslash;et.</p>
+        <p>SmartPack kan opbevare visse oplysninger i op til 5 &aring;r, hvis dette er p&aring;kr&aelig;vet efter g&aelig;ldende lovgivning.</p>
+      </section>
+
+      <section class="legal-section" id="s19">
+        <h2><span class="num">19.</span> Integrationer og tredjepart</h2>
+        <p>SmartPack integrerer med tredjepartssystemer, herunder webshopplatforme, ERP-systemer, fragtl&oslash;sninger og betalingsl&oslash;sninger.</p>
+        <p>SmartPack ejer ikke disse systemer, garanterer ikke deres oppetid og er ikke ansvarlig for fejl, forsinkelser eller &aelig;ndringer i sådanne systemer. SmartPack bistår gerne med fejls&oslash;gning, men forhold uden for SmartPacks kontrol er ikke SmartPacks ansvar.</p>
+      </section>
+
+      <section class="legal-section" id="s20">
+        <h2><span class="num">20.</span> Samarbejde og forudsætninger</h2>
+        <p>SmartPack er en l&oslash;sning, der foruds&aelig;tter et aktivt og konstruktivt samarbejde mellem parterne.</p>
+        <p>Hvis der over tid opst&aring;r v&aelig;sentlige samarbejdsudfordringer &mdash; herunder gentagne konflikter, manglende samarbejde med support eller vedvarende urimelig adf&aelig;rd &mdash; forbeholder SmartPack sig retten til enten at opsige samarbejdet med op til 6 m&aring;neders varsel eller varsle &aelig;ndrede vilk&aring;r.</p>
+        <p>SmartPack vil som udgangspunkt altid s&oslash;ge dialog og l&oslash;sning, f&oslash;r denne bestemmelse bringes i anvendelse.</p>
+      </section>
+
+      <section class="legal-section" id="s21">
+        <h2><span class="num">21.</span> Misligholdelse</h2>
+        <p>Hvis en part indleder rekonstruktionsforhandlinger, tr&aelig;der i betalingsstandsning, erkl&aelig;res konkurs eller bliver genstand for anden insolvensbehandling, er den anden part berettiget til at oph&aelig;ve aftalen.</p>
+        <p>Det samme g&aelig;lder ved v&aelig;sentlig misligholdelse eller gentagne tilf&aelig;lde af misligholdelse. Den part, der vil p&aring;ber&aring;be sig misligholdelse, skal som udgangspunkt give skriftligt p&aring;krav og rimelig frist til at afhjælpe forholdet.</p>
+        <p>V&aelig;sentlig misligholdelse kan bl.a. best&aring; i: grov adf&aelig;rd over for SmartPacks medarbejdere, misbrug af systemet, overbelastning af API, vedvarende manglende betaling eller v&aelig;sentlig tilsidesættelse af kundens forpligtelser.</p>
+      </section>
+
+      <section class="legal-section" id="s22">
+        <h2><span class="num">22.</span> Fortrolighed</h2>
+        <p>Begge parter er forpligtet til at behandle oplysninger om den anden part fortroligt, herunder forretningsforhold, data, arbejdsgange, tekniske forhold og prisforhold.</p>
+        <p>Parterne m&aring; ikke videregive s&aring;danne oplysninger til tredjemand uden forudg&aring;ende samtykke, medmindre dette f&oslash;lger af lovgivning. Fortrolighedsforpligtelsen g&aelig;lder ogs&aring; efter aftalens oph&oslash;r.</p>
+      </section>
+
+      <section class="legal-section" id="s23">
+        <h2><span class="num">23.</span> Ansvarsbegrænsning</h2>
+        <p>SmartPack er ikke ansvarlig for:</p>
+        <ul>
+          <li>fejlpluk, indscanningsfejl eller fejl som skyldes kundens egne arbejdsgange</li>
+          <li>synkroniseringsfejl forårsaget af kundens eller tredjeparts systemer</li>
+          <li>driftstab, tabt avance, tab af data eller indirekte tab</li>
+          <li>f&oslash;lgeskader eller andre hændelige, ekstraordinære eller afledte &oslash;konomiske tab</li>
+        </ul>
+        <p>SmartPacks samlede erstatningsansvar er under alle omst&aelig;ndigheder begr&aelig;nset til det vederlag, som kunden har betalt til SmartPack i de seneste <strong>12 måneder</strong> forud for det ansvarsp&aring;dragende forhold.</p>
+      </section>
+
+      <section class="legal-section" id="s24">
+        <h2><span class="num">24.</span> Opsigelse</h2>
+        <p>Aftalen er l&oslash;bende og kan opsiges af kunden med <strong>1 m&aring;neds varsel</strong> til udgangen af en m&aring;ned. Opsigelse skal ske skriftligt via mail. Der er ingen binding, medmindre andet er s&aelig;rskilt aftalt.</p>
+        <p>Begge parter kan oph&aelig;ve aftalen uden varsel ved v&aelig;sentlig misligholdelse, n&aring;r betingelserne herfor er opfyldt.</p>
+      </section>
+
+      <section class="legal-section" id="s25">
+        <h2><span class="num">25.</span> Ændringer i vilkårene</h2>
+        <p>SmartPack forbeholder sig retten til at &aelig;ndre disse vilk&aring;r. V&aelig;sentlige &aelig;ndringer varsles skriftligt med mindst <strong>6 m&aring;neders varsel</strong>.</p>
+        <p>SmartPack forbeholder sig ret til at foretage &aelig;ndringer med kortere varsel, hvis dette er n&oslash;dvendigt som f&oslash;lge af &aelig;ndret lovgivning, myndighedskrav eller sikkerhedsm&aelig;ssige forhold.</p>
+      </section>
+
+      <section class="legal-section" id="s26">
+        <h2><span class="num">26.</span> Force majeure</h2>
+        <p>Ingen af parterne er ansvarlige for manglende opfyldelse af aftalen, hvis dette skyldes forhold uden for partens rimelige kontrol, herunder: arbejdskonflikter, brand, krig, myndighedsindgreb, pandemier, nedbrud hos hosting- eller infrastrukturl&oslash;sninger eller mangler hos underleverand&oslash;rer.</p>
+        <p>Den part, der p&aring;ber&aring;ber sig force majeure, skal uden ugrundet ophold informere den anden part om forholdet og dets forventede varighed.</p>
+      </section>
+
+      <section class="legal-section" id="s27">
+        <h2><span class="num">27.</span> Lovvalg og værneting</h2>
+        <p>Aftalen er underlagt <strong>dansk ret</strong>. Enhver tvist, der ikke kan l&oslash;ses i mindelighed, afg&oslash;res ved <strong>Retten i Randers</strong>.</p>
+      </section>
+
+      <section class="legal-section" id="s28">
+        <h2><span class="num">28.</span> Delvis ugyldighed</h2>
+        <p>Hvis en eller flere bestemmelser i disse vilk&aring;r m&aring;tte blive kendt ugyldige, p&aring;virker dette ikke gyldigheden af de &oslash;vrige bestemmelser. Parterne er forpligtet til at erstatte den ugyldige bestemmelse med en gyldig bestemmelse, der i videst muligt omfang opfylder det oprindelige form&aring;l.</p>
+      </section>
+
+      <section class="legal-section" id="s29">
+        <h2><span class="num">29.</span> Overdragelse</h2>
+        <p>SmartPack er berettiget til at overdrage sine rettigheder og forpligtelser til et koncernforbundet selskab eller i forbindelse med helt eller delvist salg af virksomheden. Kunden kan ikke overdrage aftalen uden SmartPacks forudg&aring;ende skriftlige samtykke.</p>
+      </section>
+
+      <section class="legal-section" id="s30">
+        <h2><span class="num">30.</span> Sidst opdateret</h2>
+        <p>Disse vilk&aring;r er senest opdateret:</p>
+        <span class="legal-updated">13. april 2026</span>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Lager&shy;styring der virker &ndash; fra dag &eacute;t.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Sidefod navigation">
+        <div>
+          <h4>L&oslash;sning</h4>
+          <ul>
+            <li><a href="index.html#funktioner">Funktioner</a></li>
+            <li><a href="priser.html">Priser</a></li>
+            <li><a href="index.html#integrationer">Integrationer</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="cases.html">Cases</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ressourcer</h4>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="https://support.smartpack.dk" target="_blank" rel="noopener">Support</a></li>
+            <li><a href="vilkaar.html" class="active">Vilk&aring;r</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2025 SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning &middot; <a href="vilkaar.html">Vilk&aring;r</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script>
+  // Active TOC link on scroll
+  const sections = document.querySelectorAll('.legal-section');
+  const links = document.querySelectorAll('.legal-toc a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.legal-toc a[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
