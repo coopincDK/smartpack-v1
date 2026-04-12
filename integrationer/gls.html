@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartPack + GLS integration | Print GLS-labels direkte fra WMS</title>
+  <meta name="description" content="Forbind GLS med SmartPack WMS. Print GLS-fragtlabels direkte fra lageret, automatisk sporingsopdatering og ordrestatus sendes tilbage til din webshop.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/gls/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="SmartPack + GLS – fragtlabels direkte fra lageret">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="../Billeder OG VIDEO/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>.int-page{padding:4rem 0 5rem}.int-page__hero{display:flex;align-items:flex-start;gap:3rem;margin-bottom:4rem;flex-wrap:wrap}.int-page__logo{width:80px;height:80px;object-fit:contain;border-radius:16px;background:var(--surface-2);padding:.75rem;border:1px solid var(--border)}.int-page__hero-content{flex:1;min-width:280px}.int-page__cat{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}.int-page__title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin:0 0 1rem}.int-page__title span{color:var(--accent)}.int-page__intro{font-size:1.1rem;color:var(--text-2);line-height:1.7;margin-bottom:1.5rem}.int-page__cta-row{display:flex;gap:1rem;flex-wrap:wrap}.int-page__body{display:grid;grid-template-columns:2fr 1fr;gap:3rem;align-items:start}.int-page__benefit{display:flex;gap:1rem;margin-bottom:1.2rem;padding:1rem 1.2rem;background:var(--surface-2);border-radius:10px;border:1px solid var(--border)}.int-page__benefit-icon{font-size:1.4rem;flex-shrink:0}.int-page__benefit h3{font-size:.95rem;margin:0 0 .3rem}.int-page__benefit p{font-size:.88rem;color:var(--text-2);margin:0;line-height:1.5}.int-page__step{display:flex;gap:1rem;margin-bottom:1rem}.int-page__step-num{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#000;font-weight:900;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}.int-page__step-body h3{font-size:.95rem;margin:0 0 .2rem}.int-page__step-body p{font-size:.88rem;color:var(--text-2);margin:0}.int-page__sidebar{position:sticky;top:100px}.int-page__cta-box{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}.int-page__cta-box h3{font-size:1.1rem;margin:0 0 .75rem}.int-page__cta-box p{font-size:.88rem;color:var(--text-2);margin-bottom:1.2rem}.int-page__related h3{font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin-bottom:1rem}.int-page__related-list{display:flex;flex-direction:column;gap:.5rem}.int-page__related-link{display:flex;align-items:center;gap:.75rem;padding:.6rem .8rem;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text-1);font-size:.88rem;transition:all var(--t-fast)}.int-page__related-link:hover{border-color:var(--accent)}.int-page__related-link img{width:24px;height:24px;object-fit:contain;border-radius:4px}.int-page__back{display:inline-flex;align-items:center;gap:.5rem;color:var(--text-3);font-size:.88rem;text-decoration:none;margin-bottom:2rem;transition:color var(--t-fast)}.int-page__back:hover{color:var(--accent)}@media(max-width:768px){.int-page__body{grid-template-columns:1fr}.int-page__sidebar{position:static}}</style>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container"><a href="../index.html" class="nav__logo"><img src="../Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a><ul class="nav__links" id="nav-links"><li><a href="../funktioner.html" class="nav__link">Funktioner</a></li><li><a href="../cases.html" class="nav__link">Cases</a></li><li><a href="../integrationer.html" class="nav__link nav__link--active">Integrationer</a></li><li><a href="../priser.html" class="nav__link">Priser</a></li><li><a href="../om-os.html" class="nav__link">Om os</a></li><li><a href="../kontakt.html" class="nav__link">Kontakt</a></li></ul><div class="nav__actions"><a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Allerede bruger? Hj&aelig;lp &rarr;</a><a href="../kontakt.html" class="btn btn--primary nav__cta">F&aring; en snak</a><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div></nav></header>
+<main id="main-content">
+<section class="int-page"><div class="container">
+  <a href="../integrationer.html" class="int-page__back">&larr; Alle integrationer</a>
+  <div class="int-page__hero">
+    <div><img src="../Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" class="int-page__logo"></div>
+    <div class="int-page__hero-content">
+      <div class="int-page__cat">Fragt &middot; Danmark</div>
+      <h1 class="int-page__title">SmartPack <span>+ GLS</span></h1>
+      <p class="int-page__intro">Print GLS-fragtlabels direkte fra SmartPack n&aring;r pakken er klar. Sporingsnummeret sendes automatisk til jeres webshop og kunden f&aring;r sin track &amp; trace-besked uden manuel h&aring;ndtering.</p>
+      <div class="int-page__cta-row"><a href="../kontakt.html" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser.html" class="btn btn--ghost">Se priser</a></div>
+    </div>
+  </div>
+  <div class="int-page__body">
+    <div class="int-page__main">
+      <h2>Hvad g&oslash;r integrationen?</h2>
+      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#127968;</div><div><h3>Print GLS-labels direkte fra lageret</h3><p>N&aring;r en ordre er plukket og pakket, printer SmartPack GLS-labelen automatisk. Ingen manuelt arbejde, ingen fejlindtastninger.</p></div></div>
+      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128204;</div><div><h3>Automatisk sporingsopdatering</h3><p>Sporingsnummeret f&oslash;res automatisk tilbage til din webshop og kunden notificeres med GLS Track &amp; Trace-link.</p></div></div>
+      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128338;</div><div><h3>Alle GLS-servicer underst&oslash;ttet</h3><p>Business, Parcel Shop-levering, Express og Flex Delivery &ndash; v&aelig;lg servicetypen per ordre direkte i SmartPack.</p></div></div>
+      <h2 style="margin-top:2.5rem">S&aring;dan forbinder du GLS med SmartPack</h2>
+      <div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Indtast GLS-kundenummer</h3><p>Log ind i SmartPack og g&aring; til Integrationer &rarr; Fragt. Indtast dit GLS-kundenummer og kontaktnummer.</p></div></div>
+      <div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>V&aelig;lg standardservice</h3><p>S&aelig;t hvilken GLS-service der skal bruges som standard. Kan overstyres per ordre.</p></div></div>
+      <div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test med en ordre</h3><p>Send en testforsendelse og bekr&aelig;ft at label og sporingsnummer ser korrekt ud.</p></div></div>
+    </div>
+    <div class="int-page__sidebar">
+      <div class="int-page__cta-box"><h3>Bruger I GLS?</h3><p>Book en demo og f&aring; vist, hvordan SmartPack h&aring;ndterer jeres GLS-forsendelser fra pakkelinjen.</p><a href="../kontakt.html" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div>
+      <div class="int-page__related"><h3>Andre fragtintegrationer</h3><div class="int-page__related-list">
+        <a href="dao.html" class="int-page__related-link"><img src="../Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="">DAO</a>
+        <a href="postnord.html" class="int-page__related-link"><img src="../Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Postnord.png" alt="">PostNord</a>
+        <a href="bring.html" class="int-page__related-link"><img src="../Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/Bring.png" alt="">Bring</a>
+        <a href="dhl-express.html" class="int-page__related-link"><img src="../Billeder OG VIDEO/SmartPack-App-Icons/SmartPack/Carrier/DHL-Express.png" alt="">DHL Express</a>
+      </div></div>
+    </div>
+  </div>
+</div></section>
+</main>
+<footer class="site-footer"><div class="container"><div class="footer__top"><div class="footer__brand"><a href="../index.html" class="footer__logo"><img src="../Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img"><span>SmartPack</span></a><p class="footer__sub">WMS til webshops og 3PL der vil have styr p&aring; lageret.</p></div><nav class="footer__nav"><div class="footer__nav-col"><h4>Produkt</h4><ul><li><a href="../funktioner.html">Funktioner</a></li><li><a href="../integrationer.html">Integrationer</a></li><li><a href="../priser.html">Priser</a></li></ul></div><div class="footer__nav-col"><h4>Virksomhed</h4><ul><li><a href="../om-os.html">Om os</a></li><li><a href="../kontakt.html">Kontakt</a></li><li><a href="../vilkaar.html">Vilk&aring;r</a></li></ul></div></nav></div><div class="footer__bottom"><p>&copy; 2026 SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning &middot; <a href="../vilkaar.html">Vilk&aring;r</a></p></div></div></footer>
+<script src="../js/main.js"></script></body></html>
