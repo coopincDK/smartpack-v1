@@ -119,6 +119,20 @@
       .about-story { grid-template-columns: 1fr; gap: 2.5rem; }
       .about-values { grid-template-columns: 1fr; }
     }
+
+    /* Team sektion */
+    .team-section { padding: var(--section-py) 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.5rem; }
+    .team-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; text-align: center; transition: transform .2s, border-color .2s; }
+    .team-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .team-card__img-wrap { aspect-ratio: 1/1; overflow: hidden; background: #111; }
+    .team-card__img-wrap--default { background: #f0f0f0; }
+    .team-card__img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .team-card__img--default { object-fit: contain; padding: 1.5rem; background: #f0f0f0; }
+    .team-card__info { padding: .9rem .75rem; }
+    .team-card__info strong { display: block; font-size: .88rem; font-weight: 700; color: var(--text-1); margin-bottom: .2rem; }
+    .team-card__info span { font-size: .78rem; color: var(--accent); font-weight: 600; }
+    @media (max-width: 600px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
   </style>
 </head>
 <body>
@@ -176,8 +190,8 @@
       <div class="about-hero-right">
         <div class="about-video-wrap">
           <iframe
-            src="https://www.youtube.com/embed/yAJVnI7PT9g?rel=0&modestbranding=1&color=white"
-            title="Danfilter om SmartPack &ndash; Black Friday med 2 mand"
+            src="https://www.youtube.com/embed/Ni-mkHy15yA?rel=0&modestbranding=1&color=white"
+            title="SmartPack &ndash; S&aring;dan virker det"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
@@ -288,6 +302,70 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
         Se vores YouTube-kanal
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- TEAMET -->
+<section class="team-section">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;margin-bottom:3rem">
+      <div class="eyebrow">Folkene bag</div>
+      <h2>M&oslash;d teamet</h2>
+      <p style="color:var(--text-2);max-width:540px;margin:.75rem auto 0">Vi er e-k&oslash;bm&aelig;nd, udviklere og lagernørder. Alle med en oprigtig k&aelig;rlighed til effektiv logistik.</p>
+    </div>
+    <!-- Team grid -->
+    <div class="team-grid reveal">
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Martin Mortesen.jpeg" alt="Martin Mortensen" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Martin Mortensen</strong><span>CEO &amp; Medstifter</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Mikkel Kvist Foldager.jpeg" alt="Mikkel Kvist Foldager" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Mikkel Kvist Foldager</strong><span>Udvikling</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Mads Nissen.jpeg" alt="Mads R. Nissen" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Mads R. Nissen</strong><span>Udvikling</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Niklas olesen.jpeg" alt="Niklas K. Olesen" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Niklas K. Olesen</strong><span>Support &amp; Onboarding</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Lasse bonde.jpeg" alt="Lasse Bonde" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Lasse Bonde</strong><span>Lager &amp; Operations</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Bertram.jpeg" alt="Bertram" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Bertram</strong><span>Lager &amp; Operations</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Jacob Johansen.jpeg" alt="Jacob Johansen" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Jacob Johansen</strong><span>Lager &amp; Operations</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Michael Rieland.jpeg" alt="Michael Rieland" loading="lazy" class="team-card__img"></div>
+        <div class="team-card__info"><strong>Michael Rieland</strong><span>Lager &amp; Operations</span></div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__img-wrap team-card__img-wrap--default"><img src="Billeder OG VIDEO/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" alt="Anita Friis Heidemann" loading="lazy" class="team-card__img team-card__img--default"></div>
+        <div class="team-card__info"><strong>Anita Friis Heidemann</strong><span>&Oslash;konomi</span></div>
+      </div>
+
+    </div>
+    <!-- Team foto -->
+    <div class="team-group-photo reveal" style="margin-top:3rem">
+      <img src="Billeder OG VIDEO/TEAM BILLEDE.jpeg" alt="SmartPack-teamet p&aring; lageret" loading="lazy" style="width:100%;border-radius:16px;object-fit:cover;max-height:480px">
     </div>
   </div>
 </section>
