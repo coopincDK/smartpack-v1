@@ -1,155 +1,81 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 &ndash; Siden findes ikke | SmartPack</title>
-  <meta name="robots" content="noindex, follow">
-  <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .error-video-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .error-video-bg video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: .55;
-      filter: saturate(.6) brightness(.5);
-    }
-    .error-video-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(9,12,15,.2) 0%, rgba(9,12,15,.75) 100%);
-    }
-    .error-page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
-    .error-page__inner {
-      max-width: 560px;
-    }
-    .error-code {
-      font-size: clamp(6rem, 20vw, 12rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -.05em;
-      color: transparent;
-      -webkit-text-stroke: 2px var(--accent);
-      opacity: .18;
-      display: block;
-      margin-bottom: -.5rem;
-    }
-    .error-page h1 {
-      font-size: clamp(1.6rem, 4vw, 2.5rem);
-      font-weight: 900;
-      margin: 0 0 1rem;
-      line-height: 1.2;
-    }
-    .error-page p {
-      color: var(--text-2);
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-    }
-    .error-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .error-links {
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .error-links a {
-      font-size: .85rem;
-      color: var(--text-3);
-      text-decoration: none;
-      transition: color var(--t-fast);
-    }
-    .error-links a:hover { color: var(--accent); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Side ikke fundet &ndash; SmartPack</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.error-page{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.error-page__code{font-size:clamp(6rem,20vw,12rem);font-weight:900;line-height:1;color:var(--accent);opacity:.15;margin-bottom:-2rem;display:block}
+.error-page__title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;margin-bottom:1rem}
+.error-page__sub{color:var(--text-2);max-width:480px;margin:0 auto 2rem;line-height:1.7}
+.error-page__links{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2rem}
+.error-page__redirect{font-size:.85rem;color:var(--text-3);margin-top:3rem}
+</style>
+<script>
+// Auto-redirect kendte gamle URL-m&oslash;nstre
+const path = window.location.pathname.toLowerCase();
+const redirects = {
+  '/superbruger':        '/priser.html',
+  '/superbruger/':       '/priser.html',
+  '/pak-og-pluk':        '/index.html',
+  '/kundecases':         '/cases.html',
+  '/kundecases/':        '/cases.html',
+  '/kundecase/totteland':          '/cases/totteland.html',
+  '/kundecase/totteland/':         '/cases/totteland.html',
+  '/kundecase/danguitar':          '/cases/danguitar.html',
+  '/kundecase/danguitar/':         '/cases/danguitar.html',
+  '/kundecase/geekd':              '/cases/geekd.html',
+  '/kundecase/geekd/':             '/cases/geekd.html',
+  '/kundecase/jule-sweaters':      '/cases/jule-sweaters.html',
+  '/kundecase/jule-sweaters/':     '/cases/jule-sweaters.html',
+  '/kundecase/lakuda-batteribyen': '/cases/lakuda-batteribyen.html',
+  '/kundecase/lakuda-batteribyen/':'/cases/lakuda-batteribyen.html',
+  '/faq':                '/faq.html',
+  '/faq/':               '/faq.html',
+  '/om-os':              '/om-os.html',
+  '/om-os/':             '/om-os.html',
+  '/priser':             '/priser.html',
+  '/priser/':            '/priser.html',
+  '/kontakt':            '/kontakt.html',
+  '/kontakt/':           '/kontakt.html',
+  '/integrationer':      '/integrationer.html',
+  '/integrationer/':     '/integrationer.html',
+  '/funktioner':         '/funktioner.html',
+  '/funktioner/':        '/funktioner.html',
+};
+const dest = redirects[path];
+if (dest) { window.location.replace(dest); }
+</script>
 </head>
 <body>
-
 <header class="site-header" id="site-header">
-  <nav class="nav container">
-    <a href="index.html" class="nav__logo">
-      <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
-      <span class="nav__logo-text">SmartPack</span>
-    </a>
-    <ul class="nav__links" id="nav-links">
-      <li class="nav__item--has-dropdown">
-        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6z"/></svg></button>
-        <div class="nav__megamenu">
-          <a href="funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
-          <a href="integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
-          <a href="priser.html" class="nav__mega-item"><strong>Priser</strong><span>Fast pris. Ingen overraskelser.</span></a>
-          <a href="cases.html" class="nav__mega-item"><strong>Cases</strong><span>Se hvad vores kunder opn&aring;r</span></a>
-          <a href="faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar p&aring; de hyppigste sp&oslash;rgsm&aring;l</span></a>
-          <a href="om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
-          <a href="medarbejdere.html" class="nav__mega-item"><strong>Teamet</strong><span>M&oslash;d folkene bag systemet</span></a>
-        </div>
-      </li>
-      <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
-    </ul>
-    <div class="nav__actions">
-      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Log ind &amp; support &rarr;</a>
-      <a href="index.html#cta" class="btn btn--primary nav__cta">Book demo</a>
-      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
+<nav class="nav container">
+  <a href="index.html" class="nav__logo">
+    <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img">
+    <span class="nav__logo-text">SmartPack</span>
+  </a>
+  <div class="nav__actions">
+    <a href="kontakt.html" class="btn btn--primary btn--sm">Book demo</a>
+  </div>
+</nav>
 </header>
 
-<div class="error-video-bg" aria-hidden="true">
-  <video autoplay muted loop playsinline>
-    <source src="assets/403-404.mp4" type="video/mp4">
-  </video>
-</div>
-
-<main class="error-page" style="position:relative;z-index:1">
-  <div class="error-page__inner reveal">
-    <span class="error-code" aria-hidden="true">404</span>
-    <h1>Den side kunne vi ikke finde.</h1>
-    <p>
-      M&aring;ske er linket gammelt, eller ogs&aring; stavede nogen forkert.<br>
-      Det sker &ndash; selv p&aring; velorganiserede lagre.
-    </p>
-    <div class="error-actions">
-      <a href="index.html" class="btn btn--primary">G&aring; til forsiden</a>
-      <a href="mailto:kontakt@smartpack.dk" class="btn btn--ghost">Kontakt os</a>
+<div class="error-page">
+  <div>
+    <span class="error-page__code">404</span>
+    <h1 class="error-page__title">Den side findes ikke.</h1>
+    <p class="error-page__sub">Siden er m&aring;ske flyttet, omd&oslash;bt eller slettet. Brug menuen eller g&aring; tilbage til forsiden.</p>
+    <div class="error-page__links">
+      <a href="index.html" class="btn btn--primary">Tilbage til forsiden</a>
+      <a href="cases.html" class="btn btn--ghost">Se cases</a>
+      <a href="kontakt.html" class="btn btn--ghost">Kontakt os</a>
     </div>
-    <nav class="error-links" aria-label="N&oslash;glsider">
-      <a href="priser.html">Priser</a>
-      <a href="om-os.html">Om os</a>
-      <a href="cases.html">Cases</a>
-      <a href="funktioner.html">Funktioner</a>
-      <a href="faq.html">FAQ</a>
-    </nav>
+    <p class="error-page__redirect" id="redirect-msg"></p>
   </div>
-</main>
+</div>
 
 <script src="js/main.js" defer></script>
 </body>
 </html>
-
