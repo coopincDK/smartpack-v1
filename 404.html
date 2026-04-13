@@ -6,7 +6,11 @@
 <title>Side ikke fundet &ndash; SmartPack</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
-.error-page{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.error-page{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden}
+.error-page__bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.error-page__bg img{width:100%;height:100%;object-fit:cover;opacity:.12;filter:saturate(.4)}
+.error-page__bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(9,12,15,.3) 0%,rgba(9,12,15,.95) 100%)}
+.error-page > div{position:relative;z-index:1}
 .error-page__code{font-size:clamp(6rem,20vw,12rem);font-weight:900;line-height:1;color:var(--accent);opacity:.15;margin-bottom:-2rem;display:block}
 .error-page__title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;margin-bottom:1rem}
 .error-page__sub{color:var(--text-2);max-width:480px;margin:0 auto 2rem;line-height:1.7}
@@ -63,6 +67,9 @@ if (dest) { window.location.replace(dest); }
 </header>
 
 <div class="error-page">
+  <div class="error-page__bg">
+    <img src="assets/aerial view of a dark warehouse grid.gif" alt="" aria-hidden="true">
+  </div>
   <div>
     <span class="error-page__code">404</span>
     <h1 class="error-page__title">Den side findes ikke.</h1>
