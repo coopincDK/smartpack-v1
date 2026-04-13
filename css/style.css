@@ -379,10 +379,10 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 4rem;
+  gap: 2rem;
   padding-top: clamp(0.5rem, 1.5vw, 1.5rem);
-  padding-bottom: 2rem;
-  flex: 1;
+  padding-bottom: 1.5rem;
+  flex: 0 0 auto;
 }
 .hero__content { display: flex; flex-direction: column; align-items: flex-start; }
 .hero__headline {
