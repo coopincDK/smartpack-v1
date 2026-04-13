@@ -68,10 +68,21 @@ if (dest) { window.location.replace(dest); }
 
 <div class="error-page">
   <div class="error-page__bg">
-    <video autoplay muted loop playsinline aria-hidden="true">
+    <video id="bg-video" autoplay muted loop playsinline aria-hidden="true" poster="assets/aerial view of a dark warehouse grid.gif">
       <source src="assets/403-404.mp4" type="video/mp4">
     </video>
   </div>
+  <script>
+    // Force play - fix for file:// og strenge autoplay-politikker
+    var v = document.getElementById('bg-video');
+    if (v) {
+      v.play().catch(function() {
+        // Fallback: spil ved første interaktion
+        document.addEventListener('click', function() { v.play(); }, { once: true });
+        document.addEventListener('keydown', function() { v.play(); }, { once: true });
+      });
+    }
+  </script>
   <div>
     <span class="error-page__code">404</span>
     <h1 class="error-page__title">Den side findes ikke.</h1>
