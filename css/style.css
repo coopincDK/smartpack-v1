@@ -350,7 +350,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 ============================================ */
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: calc(100svh - 80px);
   display: flex;
   flex-direction: column;
   padding-top: 68px;
