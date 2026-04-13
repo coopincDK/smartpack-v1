@@ -66,6 +66,16 @@
       color: #000;
     }
 
+    /* How-it-works GIF sektion */
+    .int-hub__how-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .int-hub__how-text h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; margin: .5rem 0 1rem; }
+    .int-hub__how-text p { color: var(--text-2); line-height: 1.7; margin-bottom: 1.25rem; }
+    .int-hub__how-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .75rem; }
+    .int-hub__how-steps li { display: flex; align-items: center; gap: .75rem; font-size: .95rem; color: var(--text-2); }
+    .int-hub__how-steps li span { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: rgba(62,207,142,.15); color: var(--accent); font-size: .78rem; font-weight: 800; flex-shrink: 0; }
+    .int-hub__how-gif { position: relative; }
+    @media (max-width: 760px) { .int-hub__how-inner { grid-template-columns: 1fr; } }
+
     .int-hub__stats {
       display: flex;
       gap: 2.5rem;
@@ -260,6 +270,26 @@
       <div class="int-hub__stat"><strong>40+</strong><span>integrationer klar til brug</span></div>
       <div class="int-hub__stat"><strong>&lt;2 min</strong><span>gennemsnitlig opsætningstid</span></div>
       <div class="int-hub__stat"><strong>Åbent</strong><span>REST API til egne behov</span></div>
+    </div>
+
+    <!-- GIF: Tilføj integration -->
+    <div class="int-hub__how reveal" style="margin:3rem 0">
+      <div class="int-hub__how-inner">
+        <div class="int-hub__how-text">
+          <div class="eyebrow">S&aring; nemt er det</div>
+          <h2>Tilslut en ny integration<br><span class="text-accent">p&aring; under 2 minutter</span></h2>
+          <p>Ingen konsulent. Ingen projekt. Ingen teknisk viden n&oslash;dvendig.<br>Find integrationen, klik tilf&oslash;j &ndash; og du er i gang.</p>
+          <ul class="int-hub__how-steps">
+            <li><span>1</span> Find integrationen i listen</li>
+            <li><span>2</span> Klik &ldquo;Tilf&oslash;j&rdquo; og indtast dine adgangsoplysninger</li>
+            <li><span>3</span> Ordrer og lager synkroniseres automatisk</li>
+          </ul>
+          <a href="kontakt.html" class="btn btn--primary" style="margin-top:1.5rem">Book demo &rarr;</a>
+        </div>
+        <div class="int-hub__how-gif">
+          <img src="Billeder OG VIDEO/GLS-app-GIF.gif" alt="Tilf&oslash;j GLS integration i SmartPack" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);">
+        </div>
+      </div>
     </div>
 
     <!-- Search + filter -->

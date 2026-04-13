@@ -247,7 +247,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   letter-spacing: .01em;
 }
 .nav__support-link:hover { color: var(--text-1); border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.08); }
-@media (max-width: 900px) { .nav__support-link { display: none; } }
+@media (max-width: 1080px) { .nav__support-link { display: none; } }
 .nav__actions {
   margin-left: auto;
   display: flex;
@@ -275,7 +275,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .nav__hamburger.open span:nth-child(2) { opacity: 0; }
 .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 860px) {
+@media (max-width: 1080px) {
   .nav__links {
     display: none;
     position: fixed;
