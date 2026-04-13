@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teamet bag SmartPack &ndash; M&oslash;d vores medarbejdere</title>
+  <meta name="description" content="M&oslash;d folkene bag SmartPack &ndash; e-k&oslash;bm&aelig;nd, udviklere og lagern&oslash;rder med &eacute;n f&aelig;lles passion: effektiv logistik.">
+  <link rel="canonical" href="https://smartpack.dk/medarbejdere/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Teamet bag SmartPack">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="Billeder OG VIDEO/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Page hero */
+    .team-page-hero { padding: 5rem 0 3.5rem; text-align: center; }
+    .team-page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1rem; }
+    .team-page-hero h1 span { color: var(--accent); }
+    .team-page-hero p { color: var(--text-2); max-width: 640px; margin: 0 auto; font-size: 1.1rem; line-height: 1.7; }
+    /* ESA callout */
+    .esa-callout { background: rgba(62,207,142,.05); border: 1px solid rgba(62,207,142,.2); border-radius: 12px; padding: 1.25rem 1.75rem; max-width: 700px; margin: 2rem auto 0; font-size: .95rem; color: var(--text-2); line-height: 1.7; }
+    .esa-callout strong { color: var(--text-1); }
+    /* Founders */
+    .founders-section { padding: 4rem 0 2rem; }
+    .founders-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 860px; margin: 2rem auto 0; }
+    .founder-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .founder-card__photo { aspect-ratio: 4/3; overflow: hidden; background: #111; }
+    .founder-card__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .founder-card__body { padding: 1.5rem; }
+    .founder-card__label { font-size: .68rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .5rem; }
+    .founder-card__name { font-size: 1.4rem; font-weight: 800; margin-bottom: .25rem; }
+    .founder-card__role { color: var(--text-2); font-size: .95rem; margin-bottom: 1rem; }
+    .founder-card__badge { display: inline-block; font-size: .72rem; font-weight: 700; color: var(--accent); border: 1px solid rgba(62,207,142,.3); border-radius: 20px; padding: .2rem .75rem; }
+    /* Team grid */
+    .team-full-section { padding: 3rem 0; }
+    .team-full-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.25rem; }
+    .team-member-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform .2s, border-color .2s; }
+    .team-member-card:hover { transform: translateY(-3px); border-color: rgba(62,207,142,.3); }
+    .team-member-card__photo { aspect-ratio: 1/1; overflow: hidden; background: #111; }
+    .team-member-card__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+    .team-member-card__photo--default { background: #1a1a1a; display: flex; align-items: center; justify-content: center; }
+    .team-member-card__photo--default svg { width: 48px; height: 48px; opacity: .25; }
+    .team-member-card__info { padding: 1rem 1rem .9rem; }
+    .team-member-card__name { font-size: .95rem; font-weight: 700; color: var(--text-1); margin-bottom: .2rem; }
+    .team-member-card__role { font-size: .78rem; color: var(--accent); font-weight: 600; }
+    /* Category label */
+    .team-cat-label { font-size: .72rem; font-weight: 800; color: var(--text-3); text-transform: uppercase; letter-spacing: .1em; margin: 2.5rem 0 1rem; }
+    /* Group photo */
+    .team-group { padding: 3rem 0 5rem; }
+    .team-group img { width: 100%; border-radius: 16px; object-fit: cover; max-height: 500px; display: block; }
+    /* Owned callout */
+    .owned-bar { background: rgba(62,207,142,.05); border-top: 1px solid rgba(62,207,142,.15); border-bottom: 1px solid rgba(62,207,142,.15); padding: 1.5rem 0; text-align: center; font-size: .95rem; color: var(--text-2); }
+    .owned-bar strong { color: var(--text-1); }
+    @media (max-width: 600px) { .founders-grid { grid-template-columns: 1fr; } .team-full-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="funktioner.html" class="nav__link">Funktioner</a></li>
+      <li><a href="cases.html" class="nav__link">Cases</a></li>
+      <li><a href="integrationer.html" class="nav__link">Integrationer</a></li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="om-os.html" class="nav__link nav__link--active">Om os</a></li>
+      <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Log ind &amp; support &rarr;</a>
+      <a href="kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- HERO -->
+  <section class="team-page-hero">
+    <div class="container">
+      <div class="eyebrow">Folkene bag SmartPack</div>
+      <h1>Vi er <span>e-k&oslash;bm&aelig;nd</span>,<br>udviklere og lagern&oslash;rder</h1>
+      <p>Alle med en oprigtig k&aelig;rlighed til effektiv logistik. Vi har endda &eacute;n p&aring; holdet der arbejdede hos ESA da Andreas Mogensen tog til rummet.</p>
+      <div class="esa-callout reveal">
+        <strong>&#128640; Vi bygger ikke raketvidenskab&hellip;</strong> men vi sigter efter stjernerne! Fra dansk webshop i k&aelig;lderen til et af landets skarpeste WMS &ndash; bygget af folk der selv har st&aring;et p&aring; lageret.
+      </div>
+    </div>
+  </section>
+
+  <!-- OWNED BAR -->
+  <div class="owned-bar">
+    <div class="container">
+      <strong>100% Founder-owned</strong> &middot; Ingen eksterne investorer &middot; 100% fokus p&aring; produktet
+    </div>
+  </div>
+
+  <!-- FOUNDERS -->
+  <section class="founders-section">
+    <div class="container">
+      <div class="eyebrow" style="text-align:center">Grundl&aelig;ggerne</div>
+      <div class="founders-grid">
+
+        <div class="founder-card reveal">
+          <div class="founder-card__photo">
+            <img src="Billeder OG VIDEO/Martin Mortesen.jpeg" alt="Martin Mortensen" loading="lazy">
+          </div>
+          <div class="founder-card__body">
+            <div class="founder-card__label">Founder &amp; CEO</div>
+            <div class="founder-card__name">Martin Mortensen</div>
+            <div class="founder-card__role">Vision, strategi og salg &ndash; e-k&oslash;bmand siden 2005</div>
+            <span class="founder-card__badge">50% Ejerskab</span>
+          </div>
+        </div>
+
+        <div class="founder-card reveal reveal--delay">
+          <div class="founder-card__photo">
+            <img src="Billeder OG VIDEO/Nicolai.webp" alt="Nicolai Mortensen" loading="lazy">
+          </div>
+          <div class="founder-card__body">
+            <div class="founder-card__label">Founder &amp; CTO</div>
+            <div class="founder-card__name">Nicolai Mortensen</div>
+            <div class="founder-card__role">Arkitektur og teknisk udvikling &ndash; koden bag systemet</div>
+            <span class="founder-card__badge">50% Ejerskab</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FULL TEAM -->
+  <section class="team-full-section">
+    <div class="container">
+
+      <div class="team-cat-label">Ledende N&oslash;glemedarbejdere</div>
+      <div class="team-full-grid">
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo"><img src="Billeder OG VIDEO/Mikkel Kvist Foldager.jpeg" alt="Mikkel Kvist Foldager" loading="lazy"></div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Mikkel Kvist Foldager</div><div class="team-member-card__role">Partner &amp; Kundechef</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo"><img src="Billeder OG VIDEO/Lasse bonde.jpeg" alt="Lasse Bonde" loading="lazy"></div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Lasse Bonde</div><div class="team-member-card__role">Support &amp; Scrummaster</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo"><img src="Billeder OG VIDEO/Niklas olesen.jpeg" alt="Niklas K. Olesen" loading="lazy"></div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Niklas K. Olesen</div><div class="team-member-card__role">Product Owner</div></div>
+        </div>
+      </div>
+
+      <div class="team-cat-label">Udvikling &amp; Support</div>
+      <div class="team-full-grid">
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo"><img src="Billeder OG VIDEO/Jacob Johansen.jpeg" alt="Jacob Johansen" loading="lazy"></div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Jacob Johansen</div><div class="team-member-card__role">Feature-udvikling &amp; 3rd line support</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo"><img src="Billeder OG VIDEO/Mads Nissen.jpeg" alt="Mads R. Nissen" loading="lazy"></div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Mads R. Nissen</div><div class="team-member-card__role">Feature-udvikling &amp; 3rd line support</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo"><img src="Billeder OG VIDEO/Bertram.jpeg" alt="Bertram" loading="lazy"></div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Bertram</div><div class="team-member-card__role">Junior udvikler &amp; 2nd line support</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo team-member-card__photo--default">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Tobias Poulsen</div><div class="team-member-card__role">Junior udvikler &amp; 2nd line support</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo team-member-card__photo--default">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Rasmus Soelberg</div><div class="team-member-card__role">1st line support</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo team-member-card__photo--default">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Laura Schultz</div><div class="team-member-card__role">1st line support</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo team-member-card__photo--default">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Michael Jensen</div><div class="team-member-card__role">1st line support</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo team-member-card__photo--default">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Sandra Nielsen</div><div class="team-member-card__role">Onboarding</div></div>
+        </div>
+      </div>
+
+      <div class="team-cat-label">Drift &amp; 3PL</div>
+      <div class="team-full-grid">
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo team-member-card__photo--default">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Casper Holm</div><div class="team-member-card__role">3PL Driftsansvarlig</div></div>
+        </div>
+      </div>
+
+      <div class="team-cat-label">Advisors &amp; Administration</div>
+      <div class="team-full-grid">
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo"><img src="Billeder OG VIDEO/Michael Rieland.jpeg" alt="Michael Rieland" loading="lazy"></div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Michael Rieland</div><div class="team-member-card__role">Forretningsudvikling &amp; Mentor</div></div>
+        </div>
+        <div class="team-member-card reveal">
+          <div class="team-member-card__photo team-member-card__photo--default">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div class="team-member-card__info"><div class="team-member-card__name">Per Hansen</div><div class="team-member-card__role">Bogholderi</div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GRUPPEBILLEDE -->
+  <section class="team-group">
+    <div class="container">
+      <img src="Billeder OG VIDEO/TEAM BILLEDE.jpeg" alt="SmartPack-teamet p&aring; lageret i Auning" loading="lazy">
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-section__inner reveal">
+        <div class="eyebrow">Vil du arbejde med os?</div>
+        <h2>Vi er altid interesserede i<br><span class="text-accent">skarpe mennesker</span></h2>
+        <p>Send os en uopfordret ans&oslash;gning &ndash; vi l&aelig;ser dem alle.</p>
+        <div class="cta-section__actions">
+          <a href="kontakt.html" class="btn btn--primary">Skriv til os &rarr;</a>
+          <a href="om-os.html" class="btn btn--ghost">L&aelig;s vores historie</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="Billeder OG VIDEO/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__sub">WMS til webshops og 3PL der vil have styr p&aring; lageret.</p>
+      </div>
+      <nav class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="funktioner.html">Funktioner</a></li>
+            <li><a href="integrationer.html">Integrationer</a></li>
+            <li><a href="priser.html">Priser</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="medarbejdere.html">Teamet</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="vilkaar.html">Vilk&aring;r</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning &middot; <a href="vilkaar.html">Vilk&aring;r</a></p>
+    </div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
