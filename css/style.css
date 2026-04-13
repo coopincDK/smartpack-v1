@@ -365,13 +365,16 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: .22;
-  filter: saturate(.6);
+  opacity: .10;
+  filter: saturate(.4) brightness(.8);
 }
 .hero__bg-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(62,207,142,.06) 0%, transparent 70%);
+  background:
+    linear-gradient(to bottom, rgba(9,12,15,.7) 0%, rgba(9,12,15,0) 25%, rgba(9,12,15,0) 70%, rgba(9,12,15,.6) 100%),
+    linear-gradient(to right, rgba(9,12,15,.4) 0%, rgba(9,12,15,0) 30%, rgba(9,12,15,0) 70%, rgba(9,12,15,.4) 100%),
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(62,207,142,.05) 0%, transparent 70%);
 }
 .hero__inner {
   position: relative;
@@ -585,8 +588,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .hero__logos-wrap {
   position: relative;
   z-index: 1;
-  padding: 1.5rem 0 2rem;
-  border-top: 1px solid var(--border);
+  padding: 2rem 0 2.5rem;
+  border-top: 1px solid rgba(255,255,255,.12);
   margin-top: auto;
   overflow: hidden;
 }
