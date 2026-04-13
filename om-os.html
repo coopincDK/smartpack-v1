@@ -121,18 +121,44 @@
     }
 
     /* Team sektion */
+    /* Team sektion */
     .team-section { padding: var(--section-py) 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.5rem; }
-    .team-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; text-align: center; transition: transform .2s, border-color .2s; }
-    .team-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-    .team-card__img-wrap { aspect-ratio: 1/1; overflow: hidden; background: #111; }
-    .team-card__img-wrap--default { background: #f0f0f0; }
-    .team-card__img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
-    .team-card__img--default { object-fit: contain; padding: 1.5rem; background: #f0f0f0; }
-    .team-card__info { padding: .9rem .75rem; }
-    .team-card__info strong { display: block; font-size: .88rem; font-weight: 700; color: var(--text-1); margin-bottom: .2rem; }
-    .team-card__info span { font-size: .78rem; color: var(--accent); font-weight: 600; }
-    @media (max-width: 600px) { .team-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+    .team-founders { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .team-founder { display: flex; align-items: center; gap: 1.25rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.5rem; }
+    .team-founder__img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: center top; flex-shrink: 0; border: 2px solid rgba(62,207,142,.3); }
+    .team-founder__img--default { object-fit: contain; background: #1a1a1a; padding: .5rem; }
+    .team-founder__label { font-size: .68rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .25rem; }
+    .team-founder__info strong { display: block; font-size: 1rem; font-weight: 700; color: var(--text-1); margin-bottom: .15rem; }
+    .team-founder__info > span { font-size: .85rem; color: var(--text-2); display: block; margin-bottom: .6rem; }
+    .team-founder__badge { display: inline-block; font-size: .7rem; font-weight: 700; color: var(--accent); border: 1px solid rgba(62,207,142,.3); border-radius: 20px; padding: .15rem .65rem; }
+    .team-owned-callout { background: rgba(62,207,142,.05); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; font-size: .9rem; color: var(--text-2); line-height: 1.7; margin-bottom: 2rem; }
+    .team-owned-callout strong { color: var(--text-1); }
+    .team-categories { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+    .team-cat { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; }
+    .team-cat__title { font-size: .68rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem; }
+    .team-cat__member { margin-bottom: .75rem; }
+    .team-cat__member:last-child { margin-bottom: 0; }
+    .team-cat__member strong { display: block; font-size: .92rem; font-weight: 700; color: var(--text-1); }
+    .team-cat__member span { font-size: .8rem; color: var(--text-3); }
+    @media (max-width: 640px) { .team-founders { grid-template-columns: 1fr; } }
+
+    /* Timeline */
+    .timeline-section { padding: var(--section-py) 0; background: var(--bg-1); }
+    .timeline { position: relative; max-width: 760px; margin: 0 auto; }
+    .timeline::before { content: ''; position: absolute; left: 110px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .timeline__item { display: grid; grid-template-columns: 100px 20px 1fr; gap: 0 1.5rem; align-items: start; margin-bottom: 3rem; position: relative; }
+    .timeline__year { font-size: .82rem; font-weight: 800; color: var(--accent); text-align: right; padding-top: .15rem; letter-spacing: .03em; text-transform: uppercase; }
+    .timeline__dot { width: 14px; height: 14px; border-radius: 50%; background: var(--border); border: 2px solid var(--bg-1); margin-top: .2rem; position: relative; z-index: 1; flex-shrink: 0; }
+    .timeline__dot--accent { background: var(--accent); box-shadow: 0 0 0 4px rgba(62,207,142,.2); }
+    .timeline__dot--warning { background: #f59e0b; }
+    .timeline__content h3 { font-size: 1.05rem; font-weight: 700; margin: 0 0 .4rem; color: var(--text-1); }
+    .timeline__content p { font-size: .92rem; color: var(--text-2); line-height: 1.7; margin: 0; }
+    .timeline__content--highlight { background: rgba(62,207,142,.05); border: 1px solid rgba(62,207,142,.15); border-radius: 10px; padding: 1rem 1.25rem; }
+    @media (max-width: 600px) {
+      .timeline::before { left: 0; }
+      .timeline__item { grid-template-columns: 18px 1fr; gap: 0 1rem; }
+      .timeline__year { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -232,6 +258,101 @@
   </div>
 </section>
 
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;margin-bottom:4rem">
+      <div class="eyebrow">Vores rejse</div>
+      <h2>Fra middagsbord til markedsleder</h2>
+      <p style="color:var(--text-2);max-width:560px;margin:.75rem auto 0">20 &aring;rs e-handelserfaring, et spilprojekt og en d&oslash;r lektion &ndash; det er historien bag SmartPack.</p>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2005</div>
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <h3>Den sk&aelig;bnesvangre middag</h3>
+          <p>Far Erik f&aring;r en kundehenvendelse om en hvidevaredel til en lavere pris end nettet. Martin og Nicolai ser muligheden &ndash; skiftselv.dk er k&oslash;bt samme aften. F&oslash;rste ordre: en kaffemaskine.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2008</div>
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <h3>Martin g&aring;r all-in</h3>
+          <p>Martin forlader sin stilling som non-food chef i Kvickly Ebeltoft og fokuserer alle ressourcer p&aring; Skiftselv.dk. Virksomheden vokser ud af barndomshjemmet og rykker til Trustrup.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2011</div>
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <h3>Den gyldne periode</h3>
+          <p>Skiftselv.dk overtager Merko-lokalerne i Trustrup. P&aring; sit h&oslash;jeste: knap 40 mio. kr. i &aring;rlig oms&aelig;tning, 130.000 forsendelser og op mod 1.000 pakker dagligt med 15 ansatte.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2015</div>
+        <div class="timeline__dot timeline__dot--accent"></div>
+        <div class="timeline__content timeline__content--highlight">
+          <h3>Tankwars.io &ndash; den uventede innovation</h3>
+          <p>Nicolai udvikler et multiplayer browser-spil med 30.000+ samtidige spillere. De A* pathfinding-algoritmer han designer til tankruter, vil vise sig at v&aelig;re n&oslash;glen til fremtidens lagersystem.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2015&ndash;18</div>
+        <div class="timeline__dot timeline__dot--warning"></div>
+        <div class="timeline__content">
+          <h3>Den dyre lektion</h3>
+          <p>Lageret outsources for at frigive tid til spilprojektet. Resultatet: 5 millioner kroner i tab og mistet kontrol over kerneprocesserne &ndash; en lektion der &aelig;ndrede alt.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2018</div>
+        <div class="timeline__dot"></div>
+        <div class="timeline__content">
+          <h3>Reset &ndash; Aalborg og nye planer</h3>
+          <p>Lageret flyttes til Aalborg og den fysiske butik lukkes. Br&oslash;drene erkender, at de har brug for en mere radikal l&oslash;sning end bare en ny adresse.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2019</div>
+        <div class="timeline__dot timeline__dot--accent"></div>
+        <div class="timeline__content timeline__content--highlight">
+          <h3>Id&eacute;en f&oslash;des</h3>
+          <p>Lageret tr&aelig;kkes hjem igen &ndash; men denne gang med en plan: at bygge det lagersystem, de selv manglede. Tankwars-algoritmerne transformeres til plukkerute-optimering.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">2021</div>
+        <div class="timeline__dot timeline__dot--accent"></div>
+        <div class="timeline__content timeline__content--highlight">
+          <h3>SmartPack grundl&aelig;gges</h3>
+          <p>SmartPack stiftes officielt p&aring; Torvegade 3 i Auning. Martin og Nicolai ejer 50/50 &ndash; forretningsforst&aring;else m&oslash;der teknisk genialitet i et ligevaerdigt partnerskab.</p>
+        </div>
+      </div>
+
+      <div class="timeline__item reveal">
+        <div class="timeline__year">I dag</div>
+        <div class="timeline__dot timeline__dot--accent"></div>
+        <div class="timeline__content timeline__content--highlight">
+          <h3>500+ webshops og 3PL&rsquo;er</h3>
+          <p>Fra intern redningsplan til Danmarks skarpeste WMS. SmartPack h&aring;ndterer alt fra sm&aring; webshops til store 3PL-lagre med hundredtusinder af m&aring;nedlige forsendelser.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- DET TROR VI PÃ… -->
 <section class="about-section about-section--alt">
   <div class="container">
@@ -312,57 +433,67 @@
     <div class="section-header reveal" style="text-align:center;margin-bottom:3rem">
       <div class="eyebrow">Folkene bag</div>
       <h2>M&oslash;d teamet</h2>
-      <p style="color:var(--text-2);max-width:540px;margin:.75rem auto 0">Vi er e-k&oslash;bm&aelig;nd, udviklere og lagernørder. Alle med en oprigtig k&aelig;rlighed til effektiv logistik.</p>
+      <p style="color:var(--text-2);max-width:640px;margin:.75rem auto 0">Vi er e-k&oslash;bm&aelig;nd, udviklere og lagern&oslash;rder &ndash; alle med en oprigtig k&aelig;rlighed til effektiv logistik. Vi har endda &eacute;n p&aring; holdet der arbejdede hos ESA da Andreas Mogensen tog til rummet. Vi bygger ikke raketvidenskab &ndash; men vi er heller ikke langt fra.</p>
     </div>
-    <!-- Team grid -->
-    <div class="team-grid reveal">
 
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Martin Mortesen.jpeg" alt="Martin Mortensen" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Martin Mortensen</strong><span>CEO &amp; Medstifter</span></div>
+    <!-- Founders -->
+    <div class="team-founders reveal">
+      <div class="team-founder">
+        <img src="Billeder OG VIDEO/Martin Mortesen.jpeg" alt="Martin Mortensen" class="team-founder__img" loading="lazy">
+        <div class="team-founder__info">
+          <div class="team-founder__label">Founder &amp; CEO</div>
+          <strong>Martin Mortensen</strong>
+          <span>Vision, strategi og salg.</span>
+          <div class="team-founder__badge">50% Ejerskab</div>
+        </div>
+      </div>
+      <div class="team-founder">
+        <img src="Billeder OG VIDEO/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" alt="Nicolai Mortensen" class="team-founder__img team-founder__img--default" loading="lazy">
+        <div class="team-founder__info">
+          <div class="team-founder__label">Founder &amp; CTO</div>
+          <strong>Nicolai Mortensen</strong>
+          <span>Arkitektur og teknisk udvikling.</span>
+          <div class="team-founder__badge">50% Ejerskab</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 100% founder-owned callout -->
+    <div class="team-owned-callout reveal">
+      <strong>100% Founder-owned:</strong> Vi har ingen eksterne investorer, der presser p&aring; for kortsigtede gevinster. Det betyder, at vi kan bygge pr&aelig;cis det produkt, markedet har brug for, med 100% fokus p&aring; den rene brugeroplevelse.
+    </div>
+
+    <!-- Team kategorier -->
+    <div class="team-categories reveal">
+
+      <div class="team-cat">
+        <div class="team-cat__title">Ledende N&oslash;glemedarbejdere</div>
+        <div class="team-cat__member"><strong>Mikkel Kvist Foldager</strong><span>Partner &amp; Kundechef</span></div>
+        <div class="team-cat__member"><strong>Lasse Bonde</strong><span>Support &amp; Scrummaster</span></div>
+        <div class="team-cat__member"><strong>Niklas K. Olesen</strong><span>Product Owner</span></div>
       </div>
 
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Mikkel Kvist Foldager.jpeg" alt="Mikkel Kvist Foldager" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Mikkel Kvist Foldager</strong><span>Udvikling</span></div>
+      <div class="team-cat">
+        <div class="team-cat__title">Udvikling &amp; Support</div>
+        <div class="team-cat__member"><strong>Jacob Johansen &amp; Mads R. Nissen</strong><span>Feature-udvikling, 3rd line support &amp; bugfixing</span></div>
+        <div class="team-cat__member"><strong>Bertram &amp; Tobias Poulsen</strong><span>Junior udviklere &amp; 2nd line support</span></div>
+        <div class="team-cat__member"><strong>Rasmus Soelberg, Laura Schultz &amp; Michael Jensen</strong><span>1st line support</span></div>
+        <div class="team-cat__member"><strong>Sandra Nielsen</strong><span>Onboarding</span></div>
       </div>
 
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Mads Nissen.jpeg" alt="Mads R. Nissen" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Mads R. Nissen</strong><span>Udvikling</span></div>
+      <div class="team-cat">
+        <div class="team-cat__title">Drift &amp; 3PL</div>
+        <div class="team-cat__member"><strong>Casper Holm</strong><span>3PL Driftsansvarlig</span></div>
       </div>
 
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Niklas olesen.jpeg" alt="Niklas K. Olesen" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Niklas K. Olesen</strong><span>Support &amp; Onboarding</span></div>
-      </div>
-
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Lasse bonde.jpeg" alt="Lasse Bonde" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Lasse Bonde</strong><span>Lager &amp; Operations</span></div>
-      </div>
-
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Bertram.jpeg" alt="Bertram" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Bertram</strong><span>Lager &amp; Operations</span></div>
-      </div>
-
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Jacob Johansen.jpeg" alt="Jacob Johansen" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Jacob Johansen</strong><span>Lager &amp; Operations</span></div>
-      </div>
-
-      <div class="team-card">
-        <div class="team-card__img-wrap"><img src="Billeder OG VIDEO/Michael Rieland.jpeg" alt="Michael Rieland" loading="lazy" class="team-card__img"></div>
-        <div class="team-card__info"><strong>Michael Rieland</strong><span>Lager &amp; Operations</span></div>
-      </div>
-
-      <div class="team-card">
-        <div class="team-card__img-wrap team-card__img-wrap--default"><img src="Billeder OG VIDEO/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" alt="Anita Friis Heidemann" loading="lazy" class="team-card__img team-card__img--default"></div>
-        <div class="team-card__info"><strong>Anita Friis Heidemann</strong><span>&Oslash;konomi</span></div>
+      <div class="team-cat">
+        <div class="team-cat__title">Advisors &amp; Administration</div>
+        <div class="team-cat__member"><strong>Michael Rieland</strong><span>Forretningsudvikling &amp; Mentor</span></div>
+        <div class="team-cat__member"><strong>Per Hansen</strong><span>Bogholderi</span></div>
       </div>
 
     </div>
+
     <!-- Team foto -->
     <div class="team-group-photo reveal" style="margin-top:3rem">
       <img src="Billeder OG VIDEO/TEAM BILLEDE.jpeg" alt="SmartPack-teamet p&aring; lageret" loading="lazy" style="width:100%;border-radius:16px;object-fit:cover;max-height:480px">
