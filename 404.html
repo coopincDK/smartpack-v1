@@ -6,11 +6,10 @@
 <title>Side ikke fundet &ndash; SmartPack</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
-.error-page{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden}
-.error-page__bg{position:fixed;inset:0;z-index:0;pointer-events:none}
-.error-page__bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;}
-.error-page__bg::after{content:'';position:absolute;inset:0;background:rgba(9,12,15,.55)}
-.error-page > div{position:relative;z-index:1}
+.error-page{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;z-index:1}
+.video-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.video-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.video-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(9,12,15,.9) 0%,rgba(9,12,15,.35) 100%)}
 .error-page__code{font-size:clamp(6rem,20vw,12rem);font-weight:900;line-height:1;color:var(--accent);opacity:.15;margin-bottom:-2rem;display:block}
 .error-page__title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;margin-bottom:1rem}
 .error-page__sub{color:var(--text-2);max-width:480px;margin:0 auto 2rem;line-height:1.7}
@@ -66,12 +65,13 @@ if (dest) { window.location.replace(dest); }
 </nav>
 </header>
 
+<div class="video-bg">
+  <video id="bg-video" autoplay muted loop playsinline aria-hidden="true">
+    <source src="assets/403-404.mp4" type="video/mp4">
+  </video>
+</div>
+
 <div class="error-page">
-  <div class="error-page__bg">
-    <video id="bg-video" autoplay muted loop playsinline aria-hidden="true" poster="assets/aerial view of a dark warehouse grid.gif">
-      <source src="assets/403-404.mp4" type="video/mp4">
-    </video>
-  </div>
   <script>
     // Force play - fix for file:// og strenge autoplay-politikker
     var v = document.getElementById('bg-video');
