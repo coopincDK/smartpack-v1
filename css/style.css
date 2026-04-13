@@ -234,18 +234,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   background: rgba(255,255,255,.06);
 }
 .nav__support-link {
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--accent);
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text-2);
   text-decoration: none;
   white-space: nowrap;
   transition: all var(--t-fast);
   padding: .45em 1.1em;
-  border: 1px solid rgba(62,207,142,.5);
+  border: 1px solid var(--border);
   border-radius: 20px;
-  background: rgba(62,207,142,.08);
+  background: rgba(255,255,255,.04);
+  letter-spacing: .01em;
 }
-.nav__support-link:hover { color: #fff; border-color: var(--accent); background: rgba(62,207,142,.18); }
+.nav__support-link:hover { color: var(--text-1); border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.08); }
 @media (max-width: 900px) { .nav__support-link { display: none; } }
 .nav__actions {
   margin-left: auto;
