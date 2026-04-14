@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartPack &ndash; Vores kunder</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  /* ===== PRÆSENTATION ONE-PAGER ===== */
+  .pres-hero {
+    min-height: 100svh;
+    background: var(--bg-0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .pres-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(62,207,142,.07) 0%, transparent 70%);
+  }
+  .pres-hero__logo { height: 52px; margin-bottom: 2.5rem; }
+  .pres-hero__title {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .pres-hero__sub {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--text-2);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+  .pres-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .pres-stat strong {
+    display: block;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .pres-stat span {
+    font-size: .85rem;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-weight: 600;
+  }
+  .pres-scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .4rem;
+    color: var(--text-3);
+    font-size: .75rem;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* ===== LOGO GRID ===== */
+  .pres-logos {
+    padding: 5rem 0;
+    background: var(--bg-1);
+  }
+  .pres-logos__heading {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .pres-logos__heading .eyebrow { margin-bottom: .75rem; }
+  .pres-logos__heading h2 { font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 900; }
+  .logo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .logo-grid__item {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    transition: border-color .2s, transform .2s;
+  }
+  .logo-grid__item:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .logo-grid__item img {
+    height: 36px;
+    max-width: 120px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: .85;
+  }
+  .logo-grid__item--text {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--text-2);
+    letter-spacing: .02em;
+  }
+
+  /* ===== QUOTES ===== */
+  .pres-quotes {
+    padding: 5rem 0;
+    background: var(--bg-0);
+  }
+  .pres-quotes__heading { text-align: center; margin-bottom: 3.5rem; }
+  .quotes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .quote-card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: 1.75rem;
+  }
+  .quote-card__text {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text-1);
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+  .quote-card__author {
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .quote-card__company {
+    font-size: .8rem;
+    color: var(--text-3);
+  }
+
+  /* ===== CTA ===== */
+  .pres-cta {
+    padding: 5rem 2rem;
+    text-align: center;
+    background: var(--bg-1);
+  }
+  .pres-cta h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 900; margin-bottom: 1rem; }
+  .pres-cta p { color: var(--text-2); margin-bottom: 2rem; font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="pres-hero">
+  <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack" class="pres-hero__logo">
+  <div class="eyebrow" style="margin-bottom:1.5rem">WMS BYGGET AF E-K&Oslash;BM&AElig;ND &middot; SIDEN 2005</div>
+  <h1 class="pres-hero__title">Vi hj&aelig;lper webshops<br>og 3PL'er med at vokse<br><span class="text-accent">uden at tabe kontrollen.</span></h1>
+  <p class="pres-hero__sub">SmartPack er et dansk lagerstyringssystem bygget af e-handler til e-handler. Fra dag &eacute;t &ndash; ikke om 6 m&aring;neder.</p>
+  <div class="pres-stats">
+    <div class="pres-stat"><strong>500+</strong><span>aktive webshops</span></div>
+    <div class="pres-stat"><strong>~0</strong><span>pakkefejl</span></div>
+    <div class="pres-stat"><strong>4x</strong><span>hurtigere pluk</span></div>
+    <div class="pres-stat"><strong>~7 dage</strong><span>typisk go-live</span></div>
+  </div>
+  <div class="pres-scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"><polyline points="6 9 12 15 18 9"/></svg>
+    Se vores kunder
+  </div>
+</section>
+
+<!-- LOGO GRID -->
+<section class="pres-logos">
+  <div class="pres-logos__heading">
+    <div class="eyebrow">BRUGT AF</div>
+    <h2>Virksomheder der stoler p&aring; SmartPack</h2>
+  </div>
+  <div class="logo-grid">
+    <div class="logo-grid__item"><img src="assets/totteland-removebg.png" alt="Totteland"></div>
+    <div class="logo-grid__item"><img src="assets/DanGuitar-logo.png" alt="DanGuitar"></div>
+    <div class="logo-grid__item"><img src="assets/Geekd0.png" alt="Geekd"></div>
+    <div class="logo-grid__item"><img src="assets/julesweaters-logo0.svg" alt="Jule-Sweaters"></div>
+    <div class="logo-grid__item"><img src="assets/lakuda-og-Batteribyen-2.png" alt="Batteribyen"></div>
+    <div class="logo-grid__item"><img src="assets/firstgrade.png" alt="Firstgrade"></div>
+    <div class="logo-grid__item"><img src="assets/Maya_Freya_Logo_Sort-2.svg" alt="Maya Freya"></div>
+    <div class="logo-grid__item"><img src="assets/uniqperler-removebg.png" alt="Uniq Perler"></div>
+    <div class="logo-grid__item"><img src="assets/nimara-logo.webp" alt="Nimara"></div>
+    <div class="logo-grid__item"><img src="assets/white_specktrum_logo.webp" alt="Specktrum"></div>
+    <div class="logo-grid__item"><img src="assets/TrendyLiving.dk_-removebg-preview.png" alt="Trendy Living"></div>
+    <div class="logo-grid__item"><img src="assets/Fashion_By_Strand_logo-removebg-preview.png" alt="Fashion by Strand"></div>
+    <div class="logo-grid__item"><img src="assets/noovall_logo.png" alt="Noovall"></div>
+    <div class="logo-grid__item"><img src="assets/billigfitness-logo-removebg.png" alt="Billig Fitness"></div>
+    <div class="logo-grid__item"><img src="assets/BFT-logo.png" alt="BFT Logistik"></div>
+    <div class="logo-grid__item"><img src="assets/SBP+logo+sort.webp" alt="SBP"></div>
+    <div class="logo-grid__item"><img src="assets/Rhenus logo.png" alt="Rhenus"></div>
+    <div class="logo-grid__item"><img src="assets/klaedeskabet-removebg.png" alt="Kl&aelig;deskabet"></div>
+    <div class="logo-grid__item"><img src="assets/Skagen-removebg-preview.png" alt="Skagen"></div>
+    <div class="logo-grid__item"><img src="assets/logo-vinhuset.webp" alt="Vinhuset"></div>
+    <div class="logo-grid__item"><img src="assets/DressForSuccess_Logo_1000x.png" alt="Dress for Success"></div>
+    <div class="logo-grid__item"><img src="assets/Pitaya-logo--400x225.png" alt="Nordic Fashion Store"></div>
+    <div class="logo-grid__item"><img src="assets/littleunbox-logo.png" alt="LittleUnbox"></div>
+    <div class="logo-grid__item"><img src="assets/sygeplejebutikken-logo-removebg.png" alt="Sygeplejebutikken"></div>
+    <div class="logo-grid__item logo-grid__item--text">Create2Stay</div>
+    <div class="logo-grid__item logo-grid__item--text">Danfilter</div>
+    <div class="logo-grid__item logo-grid__item--text">Luksushund</div>
+    <div class="logo-grid__item logo-grid__item--text">Gladkokken</div>
+    <div class="logo-grid__item logo-grid__item--text">Faustix</div>
+    <div class="logo-grid__item logo-grid__item--text">GreenGoing</div>
+    <div class="logo-grid__item logo-grid__item--text">Sj&ouml;</div>
+    <div class="logo-grid__item logo-grid__item--text">Lagerhotel Danmark</div>
+    <div class="logo-grid__item logo-grid__item--text">Modekompagniet</div>
+    <div class="logo-grid__item logo-grid__item--text">WALLY AND WHIZ</div>
+    <div class="logo-grid__item logo-grid__item--text">HEVEA</div>
+    <div class="logo-grid__item logo-grid__item--text">AYA&amp;IDA</div>
+    <div class="logo-grid__item logo-grid__item--text">ES16</div>
+    <div class="logo-grid__item logo-grid__item--text">+ mange flere</div>
+  </div>
+</section>
+
+<!-- QUOTES -->
+<section class="pres-quotes">
+  <div class="pres-quotes__heading">
+    <div class="eyebrow">DE SIGER SELV</div>
+    <h2>Hvad kunderne opl&aelig;ver</h2>
+  </div>
+  <div class="quotes-grid">
+    <div class="quote-card">
+      <p class="quote-card__text">&ldquo;Det eneste vi fortryder er vi ikke fik SmartPack f&oslash;r! Opl&aelig;ring af medarbejdere tager ingen tid og vi har stort set ingen pakkefejl.&rdquo;</p>
+      <div class="quote-card__author">Totteland</div>
+      <div class="quote-card__company">Leget&oslash;j &amp; babyprodukter</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-card__text">&ldquo;Vores valg af WMS blev SmartPack, da vi finder det mere effektivt og brugervenligt i forhold hvad der ellers findes p&aring; markedet.&rdquo;</p>
+      <div class="quote-card__author">DanGuitar</div>
+      <div class="quote-card__company">Musikinstrumenter &amp; sceneudstyr</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-card__text">&ldquo;Oppe at k&oslash;re p&aring; &eacute;n dag. Vi voksede &ndash; uden flere folk.&rdquo;</p>
+      <div class="quote-card__author">Jule-Sweaters</div>
+      <div class="quote-card__company">S&aelig;sonvarer &amp; julesweaters</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-card__text">&ldquo;Valget af WMS-system er alt afg&oslash;rende for stabilitet, kosteffektiv drift og glade medarbejdere. Vi valgte SmartPack.&rdquo;</p>
+      <div class="quote-card__author">Lakuda &amp; Batteribyen</div>
+      <div class="quote-card__company">Distribution &amp; LED-teknologi</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-card__text">&ldquo;16 terminaler &ndash; ELSKER jeres forventninger til fremtiden! Pr&aelig;cis plukning og fuld kontrol.&rdquo;</p>
+      <div class="quote-card__author">Geekd</div>
+      <div class="quote-card__company">Custom computere &amp; IT-udstyr</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-card__text">&ldquo;SmartPack effektiviserede vores setup s&aring; vi kunne h&aring;ndtere h&oslash;jere volumen end f&oslash;rst antaget.&rdquo;</p>
+      <div class="quote-card__author">Jule-Sweaters</div>
+      <div class="quote-card__company">S&aelig;sonvarer</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pres-cta">
+  <div class="eyebrow" style="margin-bottom:1rem">N&AElig;STE SKRIDT</div>
+  <h2>Klar til at se SmartPack i praksis?</h2>
+  <p>Book en 20-minutters demo og f&aring; et konkret billede af hvad det ville betyde for jer.</p>
+  <a href="kontakt.html" class="btn btn--primary btn--lg">Book gratis demo</a>
+</section>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
