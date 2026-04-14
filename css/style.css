@@ -352,7 +352,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   position: relative;
   min-height: 100svh;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto 1fr auto;
   padding-top: 68px;
   overflow-x: hidden;
 }
@@ -655,6 +655,11 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* ============================================
    TRUST BAR
 ============================================ */
+.trust-bar--hero {
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
 .trust-bar {
   background: var(--bg-2);
   border-top: 1px solid var(--border);
