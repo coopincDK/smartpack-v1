@@ -354,7 +354,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   display: grid;
   grid-template-rows: 1fr auto;
   padding-top: 68px;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .hero__bg {
   position: absolute;
