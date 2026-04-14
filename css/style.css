@@ -382,10 +382,10 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 2rem;
+  gap: 4rem;
   padding-top: clamp(0.5rem, 1.5vw, 1.5rem);
-  padding-bottom: 1.5rem;
-  flex: 0 0 auto;
+  padding-bottom: 2rem;
+  flex: 1;
 }
 .hero__content { display: flex; flex-direction: column; align-items: flex-start; }
 .hero__headline {
@@ -586,10 +586,10 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 
 /* Hero logos */
 .hero__logos-wrap {
-  position: relative;
-  z-index: 1;
-  padding: 2rem 0 2.5rem;
-  border-top: 1px solid rgba(255,255,255,.12);
+  background: var(--bg-1);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
   margin-top: auto;
   overflow: hidden;
 }
