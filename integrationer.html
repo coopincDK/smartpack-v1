@@ -124,49 +124,59 @@
     /* Logo grid */
     .int-hub__grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: .75rem;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
     }
     .int-hub__card {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: .5rem;
-      padding: 1rem .5rem .75rem;
+      gap: .6rem;
+      padding: 1.25rem .75rem 1rem;
       background: var(--surface-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       text-decoration: none;
-      transition: all var(--t-fast);
-      min-height: 90px;
+      transition: all .3s;
+      min-height: 110px;
       text-align: center;
+      position: relative;
     }
     .int-hub__card:hover {
       border-color: var(--accent);
       background: var(--surface-3);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(62,207,142,.12);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(62,207,142,.18);
     }
     .int-hub__card img {
-      width: 40px;
-      height: 40px;
+      width: 56px;
+      height: 56px;
       object-fit: contain;
-      border-radius: 6px;
+      border-radius: 8px;
     }
     .int-hub__card-name {
-      font-size: .72rem;
+      font-size: .78rem;
       color: var(--text-2);
-      font-weight: 500;
+      font-weight: 600;
       line-height: 1.2;
     }
     .int-hub__card--text {
-      padding: 1rem;
+      padding: 1.25rem;
     }
     .int-hub__card--text span {
-      font-size: .8rem;
+      font-size: .85rem;
       font-weight: 700;
       color: var(--text-1);
+    }
+
+    /* Random pulse/blink animation */
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: none; border-color: var(--border); }
+      50% { box-shadow: 0 0 20px rgba(62,207,142,.25), 0 0 40px rgba(62,207,142,.08); border-color: rgba(62,207,142,.5); }
+    }
+    .int-hub__card.pulse {
+      animation: logoPulse 2s ease-in-out;
     }
 
     /* Hidden in search */
@@ -704,6 +714,19 @@ filterBtns.forEach(btn => {
     activeFilter = btn.dataset.filter;
     updateCards();
   });
+});
+// Random pulse animation
+const allCards = document.querySelectorAll('.int-hub__card');
+function pulseRandom() {
+  const card = allCards[Math.floor(Math.random() * allCards.length)];
+  card.classList.add('pulse');
+  card.addEventListener('animationend', () => card.classList.remove('pulse'), { once: true });
+}
+setInterval(pulseRandom, 800);
+
+// Override all card links to main integrations page
+allCards.forEach(c => {
+  c.setAttribute('href', 'integrationer.html');
 });
 </script>
 
