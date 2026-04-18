@@ -120,31 +120,70 @@
     .case-item {
       background: var(--bg-3);
       border: 1px solid var(--border);
+      border-top: 3px solid transparent;
       border-radius: var(--r-lg);
       padding: 2rem 2rem 1.75rem;
       display: flex;
       flex-direction: column;
       gap: 0;
-      transition: border-color .2s, transform .2s, box-shadow .2s;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
       position: relative;
       overflow: hidden;
     }
     .case-item::before {
       content: '';
       position: absolute;
+      top: -3px; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), rgba(62,207,142,.2));
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .case-item::after {
+      content: '';
+      position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(62,207,142,.06) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(62,207,142,.05) 0%, transparent 60%);
       opacity: 0;
       transition: opacity .25s;
       pointer-events: none;
     }
     .case-item:hover {
-      border-color: rgba(62,207,142,.45);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+      border-color: rgba(62,207,142,.35);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,.4), 0 0 0 1px rgba(62,207,142,.15);
     }
-    .case-item:hover::before {
+    .case-item:hover::before,
+    .case-item:hover::after {
       opacity: 1;
+    }
+
+    /* Logo */
+    .case-item__logo {
+      height: 28px;
+      max-width: 100px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: .4;
+      margin-bottom: 1rem;
+      transition: opacity .2s;
+    }
+    .case-item:hover .case-item__logo { opacity: .75; }
+
+    /* Stat pill */
+    .case-item__stat {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .7rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.2);
+      border-radius: 99px;
+      padding: .25em .75em;
+      margin-bottom: .8rem;
+      width: fit-content;
     }
     /* Placeholder / coming-soon card */
     .case-item--placeholder {
@@ -366,6 +405,7 @@
     <div class="cases-grid">
 
       <article class="case-item reveal">
+        <img src="assets/DanGuitar-logo.png" alt="" class="case-item__logo">
         <div class="case-item__eyebrow">Musikinstrumenter</div>
         <h2 class="case-item__name">DanGuitar</h2>
         <p class="case-item__body">&ldquo;Mere effektivt og brugervenligt end hvad der ellers findes p&aring; markedet.&rdquo;</p>
@@ -373,6 +413,8 @@
       </article>
 
       <article class="case-item reveal">
+        <img src="assets/Geekd0.png" alt="" class="case-item__logo">
+        <div class="case-item__stat">16 terminaler</div>
         <div class="case-item__eyebrow">Custom computere</div>
         <h2 class="case-item__name">Geekd</h2>
         <p class="case-item__body">&ldquo;16 terminaler &ndash; ELSKER jeres forventninger til fremtiden!&rdquo;</p>
@@ -380,6 +422,7 @@
       </article>
 
       <article class="case-item reveal">
+        <img src="assets/totteland-removebg.png" alt="" class="case-item__logo">
         <div class="case-item__eyebrow">Leget&oslash;j &amp; babyprodukter</div>
         <h2 class="case-item__name">Totteland</h2>
         <p class="case-item__body">&ldquo;Det eneste vi fortryder er vi ikke fik SmartPack f&oslash;r!&rdquo;</p>
@@ -387,6 +430,7 @@
       </article>
 
       <article class="case-item reveal">
+        <img src="assets/julesweaters-logo0.svg" alt="" class="case-item__logo">
         <div class="case-item__eyebrow">S&aelig;sonvarer</div>
         <h2 class="case-item__name">Jule-Sweaters</h2>
         <p class="case-item__body">&ldquo;Vi kunne h&aring;ndtere h&oslash;jere volumen end f&oslash;rst antaget.&rdquo;</p>
@@ -394,6 +438,8 @@
       </article>
 
       <article class="case-item reveal">
+        <img src="assets/lakuda-og-Batteribyen-2.png" alt="" class="case-item__logo">
+        <div class="case-item__stat">42% flere ordrer &middot; &lt;60 dage</div>
         <div class="case-item__eyebrow">Distribution &amp; LED</div>
         <h2 class="case-item__name">Lakuda &amp; Batteribyen</h2>
         <p class="case-item__body">&ldquo;Valget af WMS er alt afg&oslash;rende for stabilitet og glade medarbejdere.&rdquo;</p>
@@ -401,6 +447,7 @@
       </article>
 
       <article class="case-item reveal">
+        <img src="assets/firstgrade.png" alt="" class="case-item__logo">
         <div class="case-item__eyebrow">T&oslash;j &amp; Merchandise</div>
         <h2 class="case-item__name">Firstgrade</h2>
         <p class="case-item__body">Oppe at k&oslash;re p&aring; dag 1. Vokset &ndash; uden ekstra folk.</p>
