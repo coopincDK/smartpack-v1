@@ -1345,7 +1345,18 @@ Det hele k&oslash;rer bare hurtigere.&rdquo;
       a.appendChild(el);
     });
 
+    // Calculate how many fit in 3 rows and hide the rest
     var allLogos = grid.querySelectorAll('.int-logo');
+    var first = allLogos[0];
+    if (first) {
+      var logoW = first.offsetWidth + 0.4 * 16; // gap ~.4rem
+      var cols = Math.floor(grid.offsetWidth / logoW);
+      var maxVisible = cols * 3;
+      allLogos.forEach(function(el, i) {
+        var wrapper = el.closest('a') || el;
+        wrapper.style.display = i < maxVisible ? '' : 'none';
+      });
+    }
 
     // Random green glow – multiple at once
     setInterval(function() {
