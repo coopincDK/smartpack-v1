@@ -1946,11 +1946,22 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   gap: .6rem;
   align-items: center;
 }
+/* Compact banner grid */
+.int-banner {
+  margin-top: 2.5rem;
+}
+.int-banner__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  justify-content: center;
+  align-items: center;
+}
 .int-logo {
   background: rgba(255,255,255,.04);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: .75rem 1rem;
+  border-radius: 8px;
+  padding: .45rem .6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1965,8 +1976,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .int-logo.glow { animation: intPulse 1.8s ease-in-out; }
 .int-logo img {
-  max-height: 36px;
-  max-width: 100px;
+  max-height: 28px;
+  max-width: 80px;
   width: auto;
   object-fit: contain;
   opacity: .8;
