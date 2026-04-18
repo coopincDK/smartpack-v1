@@ -1351,6 +1351,18 @@ Det hele k&oslash;rer bare hurtigere.&rdquo;
 
   <script src="js/main.js" defer></script>
   <script src="js/hero-editor.js" defer></script>
+  <script>
+  // Random integration logo glow
+  document.addEventListener('DOMContentLoaded', function() {
+    var logos = document.querySelectorAll('.int-logo');
+    if (!logos.length) return;
+    setInterval(function() {
+      var el = logos[Math.floor(Math.random() * logos.length)];
+      el.classList.add('glow');
+      el.addEventListener('animationend', function() { el.classList.remove('glow'); }, { once: true });
+    }, 600);
+  });
+  </script>
 </body>
 </html>
 

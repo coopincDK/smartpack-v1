@@ -1949,8 +1949,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .int-logo {
   background: rgba(255,255,255,.04);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: .5rem .75rem;
+  border-radius: 12px;
+  padding: .75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1958,10 +1958,15 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   min-width: 64px;
   transition: border-color var(--t-fast), background var(--t-fast);
 }
-.int-logo:hover { border-color: rgba(62,207,142,.35); background: rgba(255,255,255,.07); }
+.int-logo:hover { border-color: rgba(62,207,142,.45); background: rgba(255,255,255,.08); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(62,207,142,.12); }
+@keyframes intPulse {
+  0%, 100% { box-shadow: none; border-color: var(--border); }
+  50% { box-shadow: 0 0 18px rgba(62,207,142,.25); border-color: rgba(62,207,142,.5); }
+}
+.int-logo.glow { animation: intPulse 1.8s ease-in-out; }
 .int-logo img {
-  max-height: 26px;
-  max-width: 80px;
+  max-height: 36px;
+  max-width: 100px;
   width: auto;
   object-fit: contain;
   opacity: .8;
