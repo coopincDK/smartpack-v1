@@ -1973,9 +1973,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .int-logo:hover { border-color: rgba(62,207,142,.45); background: rgba(255,255,255,.08); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(62,207,142,.12); }
 @keyframes intPulse {
   0%, 100% { box-shadow: none; border-color: var(--border); }
-  50% { box-shadow: 0 0 18px rgba(62,207,142,.25); border-color: rgba(62,207,142,.5); }
+  50% { box-shadow: 0 0 22px rgba(62,207,142,.35), 0 0 44px rgba(62,207,142,.12); border-color: rgba(62,207,142,.6); }
 }
-.int-logo.glow { animation: intPulse 1.8s ease-in-out; }
+.int-logo.glow { animation: intPulse 1.4s ease-in-out; }
 .int-logo img {
   max-height: 28px;
   max-width: 80px;
