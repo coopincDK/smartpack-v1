@@ -1345,17 +1345,26 @@ Det hele k&oslash;rer bare hurtigere.&rdquo;
       a.appendChild(el);
     });
 
-    // Calculate how many fit in 3 rows and hide the rest
+    // Calculate how many fit in 3 rows, hide rest, add CTA
     var allLogos = grid.querySelectorAll('.int-logo');
     var first = allLogos[0];
     if (first) {
-      var logoW = first.offsetWidth + 0.4 * 16; // gap ~.4rem
-      var cols = Math.floor(grid.offsetWidth / logoW);
-      var maxVisible = cols * 3;
+      var style = getComputedStyle(grid);
+      var cols = style.gridTemplateColumns.split(' ').length;
+      var maxVisible = cols * 3 - 1; // leave 1 slot for CTA
+      var hidden = 0;
       allLogos.forEach(function(el, i) {
         var wrapper = el.closest('a') || el;
-        wrapper.style.display = i < maxVisible ? '' : 'none';
+        if (i >= maxVisible) { wrapper.style.display = 'none'; hidden++; }
       });
+      // Add "+N Se alle" CTA card
+      if (hidden > 0) {
+        var cta = document.createElement('a');
+        cta.href = 'integrationer.html';
+        cta.className = 'int-logo int-logo--cta';
+        cta.innerHTML = '<strong>+' + (hidden) + '</strong><span>Se alle &rarr;</span>';
+        grid.appendChild(cta);
+      }
     }
 
     // Random green glow – multiple at once

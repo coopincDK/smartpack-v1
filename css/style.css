@@ -1976,6 +1976,17 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   50% { box-shadow: 0 0 22px rgba(62,207,142,.35), 0 0 44px rgba(62,207,142,.12); border-color: rgba(62,207,142,.6); }
 }
 .int-logo.glow { animation: intPulse 1.4s ease-in-out; }
+.int-logo--cta {
+  flex-direction: column;
+  gap: .15rem;
+  background: rgba(62,207,142,.08);
+  border-color: rgba(62,207,142,.3);
+  text-decoration: none;
+  cursor: pointer;
+}
+.int-logo--cta strong { font-size: 1rem; color: var(--accent); }
+.int-logo--cta span { font-size: .65rem; color: var(--accent); opacity: .8; }
+.int-logo--cta:hover { background: rgba(62,207,142,.15); border-color: var(--accent); }
 .int-logo img {
   max-height: 28px;
   max-width: 80px;
