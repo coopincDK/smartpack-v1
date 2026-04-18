@@ -1323,15 +1323,50 @@ Det hele k&oslash;rer bare hurtigere.&rdquo;
   <script src="js/main.js" defer></script>
   <script src="js/hero-editor.js" defer></script>
   <script>
-  // Random integration logo glow
   document.addEventListener('DOMContentLoaded', function() {
-    var logos = document.querySelectorAll('.int-logo');
-    if (!logos.length) return;
+    var grid = document.querySelector('.int-banner__grid');
+    if (!grid) return;
+    var logos = Array.from(grid.children);
+
+    // Shuffle on load
+    for (var i = logos.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      grid.appendChild(logos[j]);
+      logos.splice(j, 1);
+    }
+
+    var allLogos = grid.querySelectorAll('.int-logo');
+
+    // Random glow pulse
     setInterval(function() {
-      var el = logos[Math.floor(Math.random() * logos.length)];
+      var el = allLogos[Math.floor(Math.random() * allLogos.length)];
       el.classList.add('glow');
       el.addEventListener('animationend', function() { el.classList.remove('glow'); }, { once: true });
-    }, 600);
+    }, 500);
+
+    // Swap two random logos every 3s
+    setInterval(function() {
+      var a = Math.floor(Math.random() * allLogos.length);
+      var b = Math.floor(Math.random() * allLogos.length);
+      if (a === b) return;
+      var elA = allLogos[a], elB = allLogos[b];
+      // Fade out
+      elA.style.transition = 'opacity .3s';
+      elB.style.transition = 'opacity .3s';
+      elA.style.opacity = '0';
+      elB.style.opacity = '0';
+      setTimeout(function() {
+        // Swap in DOM
+        var tmp = document.createElement('div');
+        elA.parentNode.insertBefore(tmp, elA);
+        elB.parentNode.insertBefore(elA, elB);
+        tmp.parentNode.insertBefore(elB, tmp);
+        tmp.remove();
+        // Fade in
+        elA.style.opacity = '1';
+        elB.style.opacity = '1';
+      }, 300);
+    }, 3000);
   });
   </script>
 </body>

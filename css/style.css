@@ -1951,11 +1951,12 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   margin-top: 2.5rem;
 }
 .int-banner__grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+  grid-template-rows: repeat(3, 1fr);
   gap: .4rem;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+  max-height: calc(3 * 52px + 2 * .4rem);
 }
 .int-logo {
   background: rgba(255,255,255,.04);
