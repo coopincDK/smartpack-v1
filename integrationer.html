@@ -714,14 +714,7 @@ filterBtns.forEach(btn => {
     updateCards();
   });
 });
-// Random pulse animation
-const allCards = document.querySelectorAll('.int-hub__card');
-function pulseRandom() {
-  const card = allCards[Math.floor(Math.random() * allCards.length)];
-  card.classList.add('pulse');
-  card.addEventListener('animationend', () => card.classList.remove('pulse'), { once: true });
-}
-setInterval(pulseRandom, 800);
+
 
 
 </script>
