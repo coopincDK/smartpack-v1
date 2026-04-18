@@ -1,0 +1,37 @@
+{
+  "updated": "2026-04-18T00:00:00.000Z",
+  "posts": [
+    {
+      "text": "Vi er medforfatter på Dansk Erhvervs E-logistik Guide 2026 \u2013 en håndbog for den voksende webshop. 20 års erfaring. Gratis at læse.",
+      "image": "assets/ebog.png",
+      "author": "SmartPack WMS",
+      "date": "Medforfatter \u00b7 2026",
+      "likes": "47",
+      "url": "https://www.linkedin.com/company/smartpackwms/"
+    },
+    {
+      "text": "De valgte et stort legacy WMS. Det spillede ikke. SmartPack leverede 42% flere ordrer på under 60 dage.",
+      "image": "assets/batteribyen web.png",
+      "author": "SmartPack WMS",
+      "date": "Case \u00b7 Lakuda",
+      "likes": "63",
+      "url": "https://www.linkedin.com/company/smartpackwms/"
+    },
+    {
+      "text": "60+ videoer om lageroptimering og e-handelsdrift. Ikke konsulenter. Bare folk der har stået på lageret \u2013 og kørt forretningen bag.",
+      "image": "assets/futurewarehuse.png",
+      "author": "SmartPack WMS",
+      "date": "YouTube \u00b7 60+ videoer",
+      "likes": "29",
+      "url": "https://www.linkedin.com/company/smartpackwms/"
+    },
+    {
+      "text": "500+ aktive webshops kører nu på SmartPack. Fra dag-\u00e9t opstart til Black Friday peaks. Tak til alle der stoler på os \ud83d\ude80",
+      "image": "assets/SmartPack_phone_mockup0.png",
+      "author": "SmartPack WMS",
+      "date": "Milestone \u00b7 500+",
+      "likes": "91",
+      "url": "https://www.linkedin.com/company/smartpackwms/"
+    }
+  ]
+}

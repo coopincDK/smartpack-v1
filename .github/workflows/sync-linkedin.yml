@@ -1,0 +1,126 @@
+name: Sync LinkedIn Posts
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # Kører dagligt kl 06:00 UTC
+  workflow_dispatch:         # Manuel trigger
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install puppeteer
+
+      - name: Scrape LinkedIn posts from Elfsight
+        run: |
+          node << 'SCRIPT'
+          const puppeteer = require('puppeteer');
+          const http = require('http');
+          const fs = require('fs');
+          const path = require('path');
+
+          // Simple static file server
+          const mime = {'.html':'text/html','.js':'application/javascript','.css':'text/css','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml'};
+          const server = http.createServer((req, res) => {
+            let f = path.join(process.cwd(), decodeURIComponent(req.url.split('?')[0]));
+            if (f.endsWith('/')) f += 'index.html';
+            if (fs.existsSync(f) && fs.statSync(f).isFile()) {
+              res.writeHead(200, {'Content-Type': mime[path.extname(f)] || 'application/octet-stream'});
+              fs.createReadStream(f).pipe(res);
+            } else { res.writeHead(404); res.end(); }
+          });
+
+          (async () => {
+            // Start server
+            await new Promise(r => server.listen(8787, r));
+            console.log('Server on :8787');
+
+            // Launch browser
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+            console.log('Loading shadow page...');
+            await page.goto('http://localhost:8787/shadow-linkedin.html', { waitUntil: 'networkidle2', timeout: 60000 });
+
+            // Wait for Elfsight to render posts
+            console.log('Waiting for Elfsight to render...');
+            try {
+              await page.waitForSelector('[class*="eapps-linkedin"] [class*="post"], [class*="elfsight"] [class*="card"], [class*="eapps"] article, [data-elfsight] [class*="post"]', { timeout: 30000 });
+            } catch(e) {
+              console.log('No specific selector found, waiting 20s for dynamic content...');
+              await new Promise(r => setTimeout(r, 20000));
+            }
+
+            // Extract post data from rendered DOM
+            const posts = await page.evaluate(() => {
+              const items = [];
+              // Try multiple selectors Elfsight might use
+              const cards = document.querySelectorAll('[class*="eapps-linkedin"] [class*="post"], [class*="feed"] article, [class*="card"]');
+              cards.forEach(card => {
+                const text = card.querySelector('[class*="text"], [class*="content"], p');
+                const img = card.querySelector('img[src*="media"], img[src*="linkedin"], img:not([class*="avatar"])');
+                const author = card.querySelector('[class*="author"], [class*="name"], strong');
+                const date = card.querySelector('[class*="date"], [class*="time"], time');
+                const likes = card.querySelector('[class*="like"], [class*="reaction"]');
+                const link = card.querySelector('a[href*="linkedin.com"]');
+
+                if (text && text.textContent.trim().length > 10) {
+                  items.push({
+                    text: text.textContent.trim().substring(0, 300),
+                    image: img ? img.src : null,
+                    author: author ? author.textContent.trim() : 'SmartPack WMS',
+                    date: date ? date.textContent.trim() : '',
+                    likes: likes ? likes.textContent.trim() : '',
+                    url: link ? link.href : 'https://www.linkedin.com/company/smartpackwms/'
+                  });
+                }
+              });
+              return items;
+            });
+
+            console.log(`Found ${posts.length} posts`);
+
+            if (posts.length > 0) {
+              // Write JSON
+              const data = {
+                updated: new Date().toISOString(),
+                posts: posts.slice(0, 6)  // Max 6 posts
+              };
+              fs.writeFileSync('linkedin-data.json', JSON.stringify(data, null, 2));
+              console.log('Written linkedin-data.json');
+            } else {
+              console.log('No posts found - keeping existing data');
+            }
+
+            await browser.close();
+            server.close();
+          })();
+          SCRIPT
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet linkedin-data.json 2>/dev/null; then
+            echo "No changes to commit"
+          else
+            git add linkedin-data.json
+            git commit -m "chore: auto-sync LinkedIn posts $(date -u +%Y-%m-%d)
+
+            Co-authored-by: Eric.Build <noreply@eric.build>"
+            git push
+          fi
