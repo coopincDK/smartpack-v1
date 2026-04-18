@@ -2,7 +2,7 @@ name: Sync LinkedIn Posts
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # Kører dagligt kl 06:00 UTC
+    - cron: '0 6,12,18,0 * * *'  # 4x dagligt: 06, 12, 18, 00 UTC
   workflow_dispatch:         # Manuel trigger
 
 permissions:
