@@ -17,62 +17,76 @@ if (header) {
 // --- NAV: Mobile hamburger toggle ---
 const hamburger = document.getElementById('nav-hamburger');
 const navLinks  = document.getElementById('nav-links');
-if (hamburger && navLinks) {
-  hamburger.addEventListener('click', () => {
-    const open = hamburger.classList.toggle('open');
-    navLinks.classList.toggle('open', open);
-    hamburger.setAttribute('aria-expanded', open);
-  });
 
-  // Close nav on link click (mobile) — but NOT the dropdown toggle
-  navLinks.querySelectorAll('.nav__link:not(.nav__dropdown-btn)').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
-    });
-  });
+function closeNav() {
+  if (hamburger && navLinks) {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+}
 
-  // Close nav when clicking mega-menu items (mobile navigation)
-  navLinks.querySelectorAll('.nav__mega-item').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
-    });
-  });
-
-  // Close on outside click
-  document.addEventListener('click', (e) => {
-    if (!header.contains(e.target)) {
-      hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
-    }
+function closeAllDropdowns() {
+  document.querySelectorAll('.nav__item--has-dropdown.open').forEach(function(item) {
+    item.classList.remove('open');
+    var btn = item.querySelector('.nav__dropdown-btn');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
   });
 }
 
-// --- NAV: Mega-menu dropdown ---
-document.querySelectorAll('.nav__item--has-dropdown').forEach(item => {
-  const btn = item.querySelector('.nav__dropdown-btn');
-  if (!btn) return;
-  btn.addEventListener('click', e => {
+if (hamburger && navLinks) {
+  hamburger.addEventListener('click', function(e) {
+    e.preventDefault();
     e.stopPropagation();
-    const isOpen = item.classList.toggle('open');
-    btn.setAttribute('aria-expanded', isOpen);
+    var open = hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+    if (!open) closeAllDropdowns();
   });
-});
-document.addEventListener('click', () => {
-  document.querySelectorAll('.nav__item--has-dropdown.open').forEach(item => {
-    item.classList.remove('open');
-    const btn = item.querySelector('.nav__dropdown-btn');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
-  });
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.nav__item--has-dropdown.open').forEach(item => {
-      item.classList.remove('open');
-      const btn = item.querySelector('.nav__dropdown-btn');
-      if (btn) btn.setAttribute('aria-expanded', 'false');
+
+  // Close nav on regular link click (not dropdown button)
+  navLinks.querySelectorAll('.nav__link:not(.nav__dropdown-btn), .nav__mega-item').forEach(function(link) {
+    link.addEventListener('click', function() {
+      closeNav();
+      closeAllDropdowns();
     });
+  });
+}
+
+// --- NAV: Mega-menu dropdown (works on both desktop and mobile) ---
+document.querySelectorAll('.nav__item--has-dropdown').forEach(function(item) {
+  var btn = item.querySelector('.nav__dropdown-btn');
+  if (!btn) return;
+
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    // Close other dropdowns
+    document.querySelectorAll('.nav__item--has-dropdown.open').forEach(function(other) {
+      if (other !== item) {
+        other.classList.remove('open');
+        var otherBtn = other.querySelector('.nav__dropdown-btn');
+        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+  });
+});
+
+// Close dropdowns on outside click (use event.target.closest to avoid touch issues)
+document.addEventListener('click', function(e) {
+  // Don't close if clicking inside the dropdown or the button
+  if (e.target.closest('.nav__item--has-dropdown') || e.target.closest('.nav__hamburger')) return;
+  closeAllDropdowns();
+  // Close mobile nav if clicking outside header
+  if (header && !header.contains(e.target)) closeNav();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeAllDropdowns();
+    closeNav();
   }
 });
 
