@@ -589,7 +589,7 @@
 <style>
 .customer-wall{padding:5rem 0;position:relative;overflow:hidden}
 .customer-wall::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,var(--bg) 100%);pointer-events:none;z-index:1}
-.customer-wall__grid{display:flex;flex-wrap:wrap;gap:.5rem .7rem;justify-content:center;align-items:center;position:relative;max-width:900px;margin:0 auto;max-height:280px;overflow:hidden}
+.customer-wall__grid{display:flex;flex-wrap:wrap;gap:.5rem .7rem;justify-content:center;align-items:center;position:relative;max-width:900px;margin:0 auto;max-height:280px;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,#000 60%,transparent 100%);mask-image:linear-gradient(to bottom,#000 60%,transparent 100%)}
 .customer-wall__grid span{font-weight:600;font-size:.85rem;white-space:nowrap;padding:.35rem .85rem;border-radius:999px;cursor:default;border:1px solid transparent;position:relative;transition:opacity 1.5s ease,color 1.5s ease,text-shadow 1.5s ease,border-color 1.5s ease;opacity:.12;color:var(--text-3)}
 .customer-wall__grid span.cw-mid{opacity:.4;color:var(--text-2);border-color:rgba(255,255,255,.05)}
 .customer-wall__grid span.cw-bright{opacity:.9;color:#fff;border-color:rgba(62,207,142,.2);text-shadow:0 0 15px rgba(62,207,142,.2)}
@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="container">
     <div class="eyebrow reveal">N&aelig;ste skridt</div>
     <h2 class="reveal">Er din webshop den n&aelig;ste?</h2>
-    <p class="reveal">Book en 20-minutters snak. Vi kigger p&aring; jeres setup og fort&aelig;ller dig pr&aelig;cis hvad SmartPack kan g&oslash;re for jer.</p>
+    <p class="reveal">Book en 20-minutters snak. Vi kigger p&aring; jeres setup og fort&aelig;ller dig pr&aelig;cis hvad SmartPack kan g&oslash;re for dig.</p>
     <div class="cases-cta__actions reveal">
       <a href="mailto:kontakt@smartpack.dk" class="btn btn--primary">F&aring; en gratis snak</a>
       <a href="priser.html" class="btn btn--ghost">Se priser &rarr;</a>
