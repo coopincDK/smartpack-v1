@@ -23,6 +23,7 @@ function closeNav() {
     hamburger.classList.remove('open');
     navLinks.classList.remove('open');
     hamburger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
   }
 }
 
@@ -41,6 +42,7 @@ if (hamburger && navLinks) {
     var open = hamburger.classList.toggle('open');
     navLinks.classList.toggle('open', open);
     hamburger.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('nav-open', open);
     if (!open) closeAllDropdowns();
   });
 
@@ -205,6 +207,24 @@ if (sections.length && navLinkEls.length) {
   };
   window.addEventListener('scroll', onScrollSpy, { passive: true });
 }
+
+// --- PHONE CTA: Only visible during Danish office hours (9-16) ---
+(function() {
+  var phoneBtns = document.querySelectorAll('.js-phone-cta');
+  if (!phoneBtns.length) return;
+  function checkHours() {
+    var now = new Date();
+    // Get current hour in Europe/Copenhagen timezone
+    var dk = now.toLocaleString('en-US', { timeZone: 'Europe/Copenhagen', hour: 'numeric', hour12: false });
+    var hour = parseInt(dk, 10);
+    var show = hour >= 9 && hour < 16;
+    phoneBtns.forEach(function(btn) {
+      btn.style.display = show ? '' : 'none';
+    });
+  }
+  checkHours();
+  setInterval(checkHours, 60000); // Re-check every minute
+})();
 
 // --- STAGGERED card reveal (extra polish) ---
 const staggerGroups = [

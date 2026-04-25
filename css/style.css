@@ -325,26 +325,46 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 
 @media (max-width: 1080px) {
-  .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgb(9,12,15); }
+  /* Kill backdrop-filter so it doesn't create a containing block */
+  .site-header {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgb(9,12,15) !important;
+  }
+  /* Mobile nav overlay - absolute to header, full viewport width */
   .nav__links {
     display: none;
-    position: fixed;
-    top: 68px; left: 0; right: 0; bottom: 0;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    width: 100vw;
+    max-height: calc(100vh - 68px);
+    max-height: calc(100dvh - 68px);
     background: rgb(9,12,15);
     flex-direction: column;
-    align-items: flex-start;
-    padding: 1.5rem 1.75rem 2rem;
-    gap: .25rem;
+    align-items: stretch;
+    padding: 1rem 1.25rem 2rem;
+    gap: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    z-index: 1200;
+    z-index: 9999;
+    border-bottom: 1px solid var(--border);
   }
   .nav__links.open {
     display: flex;
   }
-  .nav__link { font-size: 1rem; padding: .75rem 1rem; width: 100%; }
+  /* Lock body scroll when nav is open */
+  body.nav-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+  }
+  .nav__link { font-size: 1.05rem; padding: .85rem 1rem; width: 100%; color: var(--text-1); }
   .nav__hamburger { display: flex; z-index: 1300; }
   .nav__cta { display: none; }
+  /* Ensure header doesn't clip the nav overlay */
+  .site-header { overflow: visible !important; }
+  .nav { overflow: visible !important; }
 }
 
 /* ============================================
