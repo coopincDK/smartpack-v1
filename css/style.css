@@ -2221,7 +2221,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   position: absolute;
   bottom: 15%;
   left: -8%;
-  width: 140px;
+  width: 220px;
   transform: rotate(-12deg);
   z-index: 2;
   animation: wwBounce 2.5s ease-in-out infinite;
