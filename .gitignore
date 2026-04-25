@@ -9,6 +9,11 @@ Billeder OG VIDEO/
 # Gammel Next.js kodebase
 "Billeder OG VIDEO/Smartpack, hjemmeside/"
 
+# Scripts og interne filer
+*.ps1
+*.pdf
+linkedin-data.json
+
 # Analyse-dokumenter på roden
 Analyse af SmartPack.dk og Markedsposition
 Blueprint*
