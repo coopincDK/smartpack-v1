@@ -575,10 +575,36 @@
 </section>
 <style>
 .customer-wall{padding:5rem 0;background:var(--surface-1);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.customer-wall__grid{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
-.customer-wall__grid span{font-size:.8rem;font-weight:600;color:var(--text-3);padding:.35rem .85rem;border:1px solid var(--border);border-radius:999px;white-space:nowrap;transition:color var(--t-fast),border-color var(--t-fast)}
+.customer-wall__grid{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;min-height:180px;align-items:center}
+.customer-wall__grid span{font-size:.85rem;font-weight:600;color:var(--text-3);padding:.4rem .9rem;border:1px solid var(--border);border-radius:999px;white-space:nowrap;opacity:0;transform:scale(.85);transition:opacity .6s ease,transform .6s ease,color .2s,border-color .2s}
+.customer-wall__grid span.visible{opacity:1;transform:scale(1)}
 .customer-wall__grid span:hover{color:var(--text-1);border-color:var(--accent)}
 </style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var grid=document.querySelector('.customer-wall__grid');
+  if(!grid)return;
+  var spans=[].slice.call(grid.querySelectorAll('span'));
+  var VISIBLE=25;
+  // Shuffle
+  for(var i=spans.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));grid.appendChild(spans[j]);var t=spans[i];spans[i]=spans[j];spans[j]=t;}
+  // Show first batch
+  var active=[];
+  spans.forEach(function(s,i){if(i<VISIBLE){s.classList.add('visible');active.push(i);}});
+  // Rotate: every 1.5s swap one visible with one hidden
+  setInterval(function(){
+    var hidden=[];
+    spans.forEach(function(s,i){if(!s.classList.contains('visible'))hidden.push(i);});
+    if(!hidden.length)return;
+    // Pick random visible to hide
+    var vi=Math.floor(Math.random()*active.length);
+    var hi=Math.floor(Math.random()*hidden.length);
+    spans[active[vi]].classList.remove('visible');
+    spans[hidden[hi]].classList.add('visible');
+    active[vi]=hidden[hi];
+  },1500);
+});
+</script>
 
 <!-- CTA -->
 <section class="cases-cta" id="cta">
