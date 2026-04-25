@@ -613,11 +613,26 @@ document.addEventListener('DOMContentLoaded',function(){
     if(tier>0)s.classList.add(tiers[tier]);
   }
   spans.forEach(assignTier);
-  // Smooth rotation: 1 name every 1.2s
+  // Fast rotation: 3 names every 600ms
   setInterval(function(){
-    var idx=Math.floor(Math.random()*spans.length);
-    assignTier(spans[idx]);
-  },1200);
+    for(var k=0;k<3;k++){
+      var idx=Math.floor(Math.random()*spans.length);
+      assignTier(spans[idx]);
+    }
+  },600);
+  // Wave: every 4s, light up a streak of 5 consecutive names
+  setInterval(function(){
+    var start=Math.floor(Math.random()*(spans.length-5));
+    for(var w=0;w<5;w++){
+      (function(i,delay){
+        setTimeout(function(){
+          tiers.forEach(function(t){if(t)spans[i].classList.remove(t);});
+          spans[i].classList.add('cw-glow');
+        },delay);
+        setTimeout(function(){assignTier(spans[i]);},delay+1500);
+      })(start+w,w*200);
+    }
+  },4000);
 });
 </script>
 
