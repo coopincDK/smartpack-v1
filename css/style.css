@@ -715,9 +715,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .problem__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
   margin-bottom: 3rem;
+}
+@media (max-width: 900px) {
+  .problem__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 540px) {
+  .problem__grid {
+    grid-template-columns: 1fr;
+  }
 }
 .problem__card {
   background: var(--surface);
@@ -2196,6 +2206,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   align-items: center;
   justify-content: center;
   gap: .75rem;
+  margin-top: .4rem;
   padding: 1.5rem 2rem;
   background: var(--surface);
   border: 1px dashed var(--border-2);
