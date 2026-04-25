@@ -517,7 +517,7 @@
         <a href="cases/create2stay.html" class="case-item__link">Se video <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </article>
 
-      <article class="case-item case-item--placeholder reveal">
+      <article class="case-item case-item--placeholder reveal" id="cta-card">
         <div class="case-item__eyebrow">Kommer snart</div>
         <h2 class="case-item__name" style="color:var(--text-3)">Din virksomhed?</h2>
         <p class="case-item__body" style="color:var(--text-3)">Vi opdaterer l&oslash;bende. Din historie kunne v&aelig;re den n&aelig;ste.</p>
@@ -525,6 +525,18 @@
       </article>
 
     </div>
+    <script>
+    (function(){
+      var grid=document.querySelector('.cases-grid');
+      var cta=document.getElementById('cta-card');
+      if(!grid||!cta)return;
+      var items=grid.querySelectorAll('.case-item:not(.case-item--placeholder)').length;
+      var cols=3;
+      var rem=cols-(items%cols);
+      if(rem===0)rem=cols;
+      cta.style.gridColumn='span '+rem;
+    })();
+    </script>
   </div>
 </section>
 
