@@ -24,8 +24,16 @@ if (hamburger && navLinks) {
     hamburger.setAttribute('aria-expanded', open);
   });
 
-  // Close nav on link click (mobile)
-  navLinks.querySelectorAll('.nav__link').forEach(link => {
+  // Close nav on link click (mobile) — but NOT the dropdown toggle
+  navLinks.querySelectorAll('.nav__link:not(.nav__dropdown-btn)').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // Close nav when clicking mega-menu items (mobile navigation)
+  navLinks.querySelectorAll('.nav__mega-item').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.classList.remove('open');
       navLinks.classList.remove('open');
