@@ -2216,6 +2216,18 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .integrations__api svg { width: 20px; height: 20px; color: var(--accent); flex-shrink: 0; }
 .integrations__api p { font-size: .9rem; color: var(--text-2); }
 
+/* Warehouse Warrior badge */
+.ww-badge {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  width: 120px;
+  transition: transform var(--t-fast);
+  z-index: 2;
+}
+.ww-badge:hover { transform: scale(1.08) rotate(-2deg); }
+.ww-badge img { width: 100%; height: auto; filter: drop-shadow(0 4px 12px rgba(0,0,0,.4)); }
+
 /* ============================================
    LINKEDIN FEED
 ============================================ */
