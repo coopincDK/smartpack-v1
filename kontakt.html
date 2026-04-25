@@ -106,7 +106,7 @@
     }
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
       max-width: 860px;
       margin: 0 auto;
@@ -298,40 +298,29 @@
         </div>
       </div>
 
-      <!-- Onboarding & Kundeservice -->
-      <div class="contact-card">
-        <div class="contact-card__label">Onboarding &amp; kundeservice</div>
-        <div class="contact-card__items">
-          <div class="contact-item">
-            <div class="contact-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-            </div>
-            <div class="contact-item__text">
-              <span class="contact-item__title">Onboarding</span>
-              <span class="contact-item__value">Vi hj&aelig;lper jer i gang &ndash; trin for trin</span>
-              <span class="contact-item__sub">Typisk 2&ndash;4 uger fra start til drift</span>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-item__icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-              </svg>
-            </div>
-            <div class="contact-item__text">
-              <span class="contact-item__title">Kundeservice</span>
-              <span class="contact-item__value"><a href="https://support.smartpack.dk" target="_blank">support.smartpack.dk</a></span>
-              <span class="contact-item__sub">SOS support 24/7 &middot; Svar inden 24 timer</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
+  </div>
+</section>
 
+<!-- TEAMET -->
+<section style="padding:4rem 0">
+  <div class="container">
+    <div class="section-header reveal" style="text-align:center;margin-bottom:2.5rem">
+      <div class="eyebrow">Dem I taler med</div>
+      <h2>Onboarding &amp; kundeservice</h2>
+      <p style="color:var(--text-2);max-width:520px;margin:.75rem auto 0">Rigtige mennesker. Ingen chatbots. Ingen outsourcing.</p>
+    </div>
+    <div class="reveal" style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:center">
+      <div style="text-align:center;max-width:180px">
+        <img src="assets/Martin Mortesen.jpeg" alt="Martin Mortensen" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);margin-bottom:1rem" loading="lazy">
+        <div style="font-weight:700;color:var(--text-1)">Martin Mortensen</div>
+        <div style="font-size:.8rem;color:var(--accent)">Onboarding &amp; salg</div>
+      </div>
+      <div style="text-align:center;max-width:180px">
+        <img src="assets/TEAM BILLEDE.jpeg" alt="SmartPack teamet" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid var(--border);margin-bottom:1rem" loading="lazy">
+        <div style="font-weight:700;color:var(--text-1)">Kundeservice</div>
+        <div style="font-size:.8rem;color:var(--text-2)">Support &amp; drift</div>
+      </div>
     </div>
   </div>
 </section>
