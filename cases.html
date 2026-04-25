@@ -535,6 +535,7 @@
       var rem=cols-(items%cols);
       if(rem===0)rem=cols;
       cta.style.gridColumn='span '+rem;
+      if(rem>=2)cta.style.textAlign='center';
     })();
     </script>
   </div>
