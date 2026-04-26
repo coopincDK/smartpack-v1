@@ -208,22 +208,45 @@ if (sections.length && navLinkEls.length) {
   window.addEventListener('scroll', onScrollSpy, { passive: true });
 }
 
-// --- PHONE CTA: Only visible during Danish office hours (9-16) ---
+// --- PHONE CTA: Show/hide based on Danish office hours (9-16 weekdays) ---
 (function() {
-  var phoneBtns = document.querySelectorAll('.js-phone-cta');
-  if (!phoneBtns.length) return;
   function checkHours() {
     var now = new Date();
-    // Get current hour in Europe/Copenhagen timezone
     var dk = now.toLocaleString('en-US', { timeZone: 'Europe/Copenhagen', hour: 'numeric', hour12: false });
     var hour = parseInt(dk, 10);
-    var show = hour >= 9 && hour < 16;
-    phoneBtns.forEach(function(btn) {
-      btn.style.display = show ? '' : 'none';
+    var dayStr = now.toLocaleString('en-US', { timeZone: 'Europe/Copenhagen', weekday: 'short' });
+    var isWeekday = ['Mon','Tue','Wed','Thu','Fri'].indexOf(dayStr) !== -1;
+    var isOpen = isWeekday && hour >= 9 && hour < 16;
+
+    // Phone buttons (ring-knap)
+    document.querySelectorAll('.js-phone-cta').forEach(function(el) {
+      el.style.display = isOpen ? '' : 'none';
+    });
+    // Mail CTA (primary when closed)
+    document.querySelectorAll('.js-mail-cta').forEach(function(el) {
+      el.style.display = isOpen ? 'none' : '';
+    });
+    // Hero text swap
+    document.querySelectorAll('.js-hero-open').forEach(function(el) {
+      el.style.display = isOpen ? '' : 'none';
+    });
+    document.querySelectorAll('.js-hero-closed').forEach(function(el) {
+      el.style.display = isOpen ? 'none' : '';
+    });
+    // Phone status badges
+    document.querySelectorAll('.js-phone-status-open').forEach(function(el) {
+      el.style.display = isOpen ? 'inline-flex' : 'none';
+    });
+    document.querySelectorAll('.js-phone-status-closed').forEach(function(el) {
+      el.style.display = isOpen ? 'none' : 'inline-flex';
+    });
+    // CTA closed message
+    document.querySelectorAll('.js-cta-closed').forEach(function(el) {
+      el.style.display = isOpen ? 'none' : '';
     });
   }
   checkHours();
-  setInterval(checkHours, 60000); // Re-check every minute
+  setInterval(checkHours, 60000);
 })();
 
 // --- STAGGERED card reveal (extra polish) ---

@@ -178,7 +178,32 @@
       color: var(--text-3);
     }
 
-    /* â”€â”€ Responsive â”€â”€ */
+    /* Phone status */
+    .phone-status {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .phone-status__dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .phone-status--open .phone-status__dot { background: var(--accent); }
+    .phone-status--open { color: var(--accent); }
+    .phone-status--closed .phone-status__dot { background: var(--text-3); }
+    .phone-status--closed { color: var(--text-3); }
+
+    /* Closed-message in CTA */
+    .cta-closed-msg {
+      font-size: .9rem;
+      color: var(--text-3);
+      margin-top: .5rem;
+    }
+
+    /* Responsive */
     @media (max-width: 680px) {
       .page-hero { padding: 100px 0 60px; }
       .contact-grid { grid-template-columns: 1fr; }
@@ -224,9 +249,10 @@
 <!-- PAGE HERO -->
 <section class="page-hero" id="hero">
   <div class="container">
-    <div class="eyebrow reveal">Kom i kontakt</div>
+    <div class="eyebrow reveal">Kontakt</div>
     <h1 class="reveal">Lad os tage en snak.</h1>
-    <p class="page-hero__sub reveal">Ring, skriv eller kig forbi. Vi svarer inden for 24 timer og hj&aelig;lper dig i gang, uden forpligtelse.</p>
+    <p class="page-hero__sub reveal js-hero-open">Ring til os. Eller skriv. Vi vender tilbage inden for 24 timer.</p>
+    <p class="page-hero__sub reveal js-hero-closed" style="display:none">Telefonen er lukket lige nu. Skriv til os, s&aring; vender vi tilbage.</p>
   </div>
 </section>
 
@@ -293,7 +319,9 @@
             <div class="contact-item__text">
               <span class="contact-item__title">Telefon</span>
               <span class="contact-item__value"><a href="tel:+4588202019">+45 88 20 20 19</a></span>
-              <span class="contact-item__sub">SOS support 24/7</span>
+              <span class="phone-status phone-status--open js-phone-status-open" style="display:none"><span class="phone-status__dot"></span> Vi er her nu (9-16)</span>
+              <span class="phone-status phone-status--closed js-phone-status-closed" style="display:none"><span class="phone-status__dot"></span> Lukket - &aring;bner kl. 9</span>
+              <span class="contact-item__sub" style="margin-top:.35rem">Du kan ringe. Ogs&aring; uden for &aring;bningstid.<br>Hvis det br&aelig;nder p&aring;, g&oslash;r vi hvad vi kan.</span>
             </div>
           </div>
         </div>
@@ -361,18 +389,19 @@
 <section class="cta-section" id="cta">
   <div class="container">
     <div class="cta-section__inner reveal">
-      <div class="eyebrow">Klar til en snak?</div>
-      <h2>Book demo</h2>
-      <p>Fort&aelig;l os om jeres lager og volumen, s&aring; vender vi tilbage inden for 24 timer. Ingen forpligtelse.</p>
+      <div class="eyebrow">Klar?</div>
+      <h2>Lad os kigge p&aring; jeres setup</h2>
+      <p>Fort&aelig;l os om jeres lager. Vi vender tilbage inden for 24 timer. Ingen forpligtelse.</p>
       <div class="cta-section__actions">
-        <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--primary btn--xl">Book demo</a>
-        <a href="tel:+4588202019" class="btn btn--ghost btn--xl js-phone-cta" style="display:none">Ring til os</a>
-        <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--ghost btn--xl">Skriv en mail</a>
+        <a href="tel:+4588202019" class="btn btn--primary btn--xl js-phone-cta" style="display:none">Ring nu</a>
+        <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--primary btn--xl js-mail-cta" style="display:none">Skriv til os</a>
+        <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--ghost btn--xl">Send en mail</a>
       </div>
+      <p class="cta-closed-msg js-cta-closed" style="display:none">Telefonen er lukket. Skriv til os, s&aring; vender vi tilbage.</p>
       <div class="cta-section__reassurance">
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Support 24/7</span>
       </div>
     </div>
   </div>
