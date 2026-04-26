@@ -2786,6 +2786,17 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   border-radius: 999px;
   border: 1px solid var(--border);
 }
+.footer__quicksupport {
+  margin-top: .75rem;
+  font-size: .72rem;
+  color: var(--text-3);
+}
+.footer__quicksupport a {
+  color: var(--text-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer__quicksupport a:hover { color: var(--accent); }
 @media (max-width: 860px) {
   .footer__top { grid-template-columns: 1fr; gap: 2.5rem; }
   .footer__nav { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
