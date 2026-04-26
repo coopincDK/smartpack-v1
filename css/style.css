@@ -790,6 +790,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   border-radius: var(--r-md);
   padding: 2rem 1.75rem;
   transition: border-color var(--t-mid), transform var(--t-mid);
+  display: flex;
+  flex-direction: column;
 }
 .problem__card:hover {
   border-color: var(--border-2);
@@ -818,7 +820,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   font-size: .9rem;
   font-weight: 800;
   color: var(--accent);
-  margin-top: 1.25rem;
+  margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid var(--border);
 }
