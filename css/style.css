@@ -318,10 +318,23 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .nav__mega-divider { height: 1px; background: var(--border); margin: .35rem .5rem; }
 
 @media (max-width: 1080px) {
-  .nav__dropdown-btn { width: 100%; justify-content: space-between; color: var(--text-1); font-size: 1rem; padding: .75rem 1rem; }
-  .nav__megamenu { position: static; transform: none; box-shadow: none; border: none; border-radius: 0; background: rgba(255,255,255,.04); padding: 0 0 .5rem 1rem; min-width: 0; }
-  .nav__mega-item { padding: .5rem .75rem; }
-  .nav__mega-item strong { font-size: .95rem; }
+  /* Hide dropdown button entirely on mobile - show all items flat */
+  .nav__dropdown-btn { display: none !important; }
+  .nav__megamenu {
+    display: block !important;
+    position: static;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+    min-width: 0;
+  }
+  .nav__mega-item {
+    padding: .75rem 1rem;
+  }
+  .nav__mega-item strong { font-size: 1.05rem; }
 }
 
 @media (max-width: 1080px) {
