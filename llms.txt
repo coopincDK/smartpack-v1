@@ -1,0 +1,47 @@
+# SmartPack
+
+> SmartPack er et dansk warehouse management system (WMS) til webshops og 3PL.
+
+SmartPack hjælper lagre med færre plukkefejl, hurtigere pakning, bedre ruteoptimering og integrationer til webshop, fragt og ERP. Bygget af e-købmænd, til e-købmænd.
+
+## Fakta
+- Grundlagt: 2021
+- Lokation: Torvegade 3, 8963 Auning, Danmark
+- CVR: 42007617
+- Telefon: +45 88 20 20 19
+- Email (salg): bundlinjeboost@smartpack.dk
+- Email (support): support@smartpack.dk
+- Website: https://smartpack.dk
+
+## Kernesider
+- [Forside](https://smartpack.dk/)
+- [Funktioner](https://smartpack.dk/funktioner.html) — Alt hvad dit lager har brug for
+- [Integrationer](https://smartpack.dk/integrationer.html) — 40+ forbindelser til webshop, fragt og ERP
+- [Priser](https://smartpack.dk/priser.html) — Fast pris per ordre, ingen binding
+- [Cases](https://smartpack.dk/cases.html) — Se hvad vores kunder opnår
+- [FAQ](https://smartpack.dk/faq.html) — Svar på de hyppigste spørgsmål
+- [Om os](https://smartpack.dk/om-os.html) — Historien bag SmartPack
+- [Kontakt](https://smartpack.dk/kontakt.html) — Book demo eller ring
+- [Teamet](https://smartpack.dk/medarbejdere.html) — Mød folkene bag systemet
+
+## Hvad SmartPack gør
+- Lagerstyring og ordrehåndtering for webshops
+- Pluk, pak og afsendelse med scan-verificering
+- Integration med 40+ platforme (Shopify, WooCommerce, DanDomain, e-conomic, Uniconta m.fl.)
+- Fragtintegration (PostNord, GLS, DAO, Bring, DHL m.fl.)
+- 3PL multi-tenant styring
+- Ruteoptimering og batchpluk
+- Realtids lagerstatus
+
+## Brugsscenarier
+- WMS til danske webshops (B2C)
+- WMS til 3PL / fulfillment-centre
+- Skifte fra gammelt WMS eller manuel håndtering
+- Skalering fra 400+ ordrer/måned
+
+## Beviser og tillid
+- 500+ aktive webshops bruger SmartPack
+- Medlem af Dansk Erhverv
+- E-handel erfaring siden 2005
+- 15+ dokumenterede kundesucceser (cases)
+- SOS 24/7 support

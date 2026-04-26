@@ -1,64 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url>
-    <loc>https://smartpack.dk/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="da" href="https://smartpack.dk/"/>
-  </url>
+  <!-- Hovedsider -->
+  <url><loc>https://smartpack.dk/</loc><lastmod>2026-04-26</lastmod><priority>1.0</priority></url>
+  <url><loc>https://smartpack.dk/funktioner.html</loc><lastmod>2026-04-26</lastmod><priority>0.9</priority></url>
+  <url><loc>https://smartpack.dk/integrationer.html</loc><lastmod>2026-04-26</lastmod><priority>0.9</priority></url>
+  <url><loc>https://smartpack.dk/priser.html</loc><lastmod>2026-04-26</lastmod><priority>0.9</priority></url>
+  <url><loc>https://smartpack.dk/cases.html</loc><lastmod>2026-04-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://smartpack.dk/faq.html</loc><lastmod>2026-04-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://smartpack.dk/kontakt.html</loc><lastmod>2026-04-26</lastmod><priority>0.7</priority></url>
+  <url><loc>https://smartpack.dk/om-os.html</loc><lastmod>2026-04-26</lastmod><priority>0.7</priority></url>
+  <url><loc>https://smartpack.dk/medarbejdere.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/vilkaar.html</loc><lastmod>2026-04-26</lastmod><priority>0.3</priority></url>
 
-  <url>
-    <loc>https://smartpack.dk/priser/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="da" href="https://smartpack.dk/priser/"/>
-  </url>
+  <!-- Cases -->
+  <url><loc>https://smartpack.dk/cases/5d-diamond-paint.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/create2stay.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/danfilter.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/danguitar.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/den-sidste-flaske.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/firstgrade.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/geekd.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/jule-sweaters.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/lakuda-batteribyen.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/littleunbox.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/luksushund.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/sygeplejebutikken.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/totteland.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/uniq-perler.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/vinhuset.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
 
-  <url>
-    <loc>https://smartpack.dk/om-os/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="da" href="https://smartpack.dk/om-os/"/>
-  </url>
-
-  <url>
-    <loc>https://smartpack.dk/cases/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://smartpack.dk/funktioner/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://smartpack.dk/integrationer/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://smartpack.dk/kontakt/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://smartpack.dk/faq/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+  <!-- Integrationer -->
+  <url><loc>https://smartpack.dk/integrationer/shopify.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/woocommerce.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/magento.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dandomain.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dandomain-classic.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/prestashop.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/shoporama.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/shopbox.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/ideal-shop.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/sumoshop.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/economic.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/uniconta.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dynaccount.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dynamics-365.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/visma-business.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/postnord.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/gls.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dao.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/bring.html</loc><lastmod>2026-04-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dhl-express.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dhl-parcel.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dhl-ecommerce.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/dhl-freight.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/ups.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/danske-fragtmaend.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/coolrunner.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/shipmondo.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/webshipper.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/sendcloud.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/cargoflux.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/budbee.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/instabox.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/airmee.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/burd.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/freja-express.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/freja-transport.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/leman.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/leman-express.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/k-hansen.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/bft-logistik.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/blue-water.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/xpressen.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/strait-air.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/matkahuolto.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/autostore.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/element-logic.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/kangaroo-robotics.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/traede.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/stocky.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/inventory-planner.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/reversio.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/webrinq.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/herodesk.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/customers-1st.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/gofact.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
+  <url><loc>https://smartpack.dk/integrationer/flexpos.html</loc><lastmod>2026-04-26</lastmod><priority>0.5</priority></url>
 
 </urlset>

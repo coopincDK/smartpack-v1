@@ -1,10 +1,21 @@
 User-agent: *
 Allow: /
 
+# AI search crawlers — tillad discovery i ChatGPT Search, Bing Chat, Perplexity osv.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
 # Sitemap
 Sitemap: https://smartpack.dk/sitemap.xml
-
-# Disallow admin and private areas
-Disallow: /wp-admin/
-Disallow: /wp-login.php
-Disallow: /_next/
