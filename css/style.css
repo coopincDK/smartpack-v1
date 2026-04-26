@@ -2346,6 +2346,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   background: var(--bg-1);
   overflow: hidden;
 }
+/* Collapse Elfsight widget internal whitespace */
+.li-feed [class*="elfsight"] { max-height: fit-content !important; }
+.li-feed iframe { max-height: 400px !important; }
 .li-feed__header {
   display: flex;
   align-items: flex-end;
