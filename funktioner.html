@@ -130,7 +130,7 @@
 
     /* â”€â”€ Category sections â”€â”€ */
     .feat-category { padding: var(--section-py) 0; }
-    .feat-category + .feat-category { padding-top: 0; }
+    .feat-category + .feat-category { padding-top: clamp(3rem, 5vw, 4.5rem); }
     .feat-category--alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
     .feat-category__header { margin-bottom: 3rem; }
@@ -203,7 +203,7 @@
     .nav__link--active { color: var(--accent) !important; }
 
     /* â”€â”€ Feature overview strip â”€â”€ */
-    .overview-strip { padding: 3.5rem 0; background: var(--bg); }
+    .overview-strip { padding: 3.5rem 0 4rem; background: var(--bg); }
     .overview-strip__inner { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
     .overview-chip {
       display: flex;
