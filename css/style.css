@@ -2558,7 +2558,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .authority__img--book {
   object-fit: contain !important;
-  max-width: 420px;
+  max-width: 360px;
+  max-height: 460px;
   margin: 0 auto;
   display: block;
   border: none !important;
