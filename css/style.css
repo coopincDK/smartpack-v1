@@ -2342,7 +2342,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
    LINKEDIN FEED
 ============================================ */
 .li-feed {
-  padding: var(--section-py) 0;
+  padding: var(--section-py) 0 2rem;
   background: var(--bg-1);
   overflow: hidden;
 }
