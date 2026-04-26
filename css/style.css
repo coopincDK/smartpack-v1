@@ -1158,14 +1158,18 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .case-card__link {
   display: inline-block;
-  margin-top: 1rem;
-  font-size: .9rem;
+  margin-top: auto;
+  align-self: flex-end;
+  padding: .5rem 1.25rem;
+  font-size: .85rem;
   font-weight: 600;
   color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-sm);
   text-decoration: none;
-  transition: opacity var(--t-fast);
+  transition: background var(--t-fast), color var(--t-fast);
 }
-.case-card__link:hover { opacity: .7; }
+.case-card__link:hover { background: var(--accent); color: var(--bg-1); }
 
 .case-card__stats {
   display: flex;
