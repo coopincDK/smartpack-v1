@@ -191,6 +191,103 @@
       animation: logoPulse 2s ease-in-out;
     }
 
+    /* Hover overlay "Se flow" */
+    .int-hub__card { overflow: hidden; }
+    .int-hub__card::after {
+      content: 'Se flow \2192';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      background: var(--accent);
+      color: #000;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .4em .5em;
+      text-align: center;
+      border-radius: 0 0 12px 12px;
+      transform: translateY(100%);
+      transition: transform .2s ease;
+    }
+    .int-hub__card:hover::after { transform: translateY(0); }
+
+    /* Guide text above grid */
+    .int-hub__guide {
+      font-size: .88rem;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .int-hub__guide::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Category outcome description */
+    .int-category__desc {
+      font-size: .82rem;
+      color: var(--text-3);
+      margin: -.75rem 0 1.25rem;
+    }
+
+    /* Flow strip */
+    .int-flow {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 0;
+    }
+    .int-flow__inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .int-flow__step {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem 1.5rem;
+    }
+    .int-flow__num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(62,207,142,.15);
+      border: 1px solid rgba(62,207,142,.3);
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .int-flow__step p {
+      margin: 0;
+      font-size: .9rem;
+      color: var(--text-2);
+      line-height: 1.4;
+      max-width: 180px;
+    }
+    .int-flow__step strong { color: var(--text-1); font-weight: 700; }
+    .int-flow__arrow {
+      color: rgba(62,207,142,.4);
+      font-size: 1.25rem;
+      padding: 0 .25rem;
+      flex-shrink: 0;
+    }
+    @media (max-width: 700px) {
+      .int-flow__arrow { display: none; }
+      .int-flow__step { border-bottom: 1px solid var(--border); width: 100%; padding: .75rem 0; }
+      .int-flow__step:last-child { border-bottom: none; }
+    }
+
     /* Hidden in search */
     .int-hub__card.hidden { display: none; }
 
@@ -279,16 +376,43 @@
 <!-- HERO -->
 <section class="page-hero">
   <div class="container">
-    <div class="eyebrow">Virker med det du allerede bruger</div>
-    <h1>40+ integrationer.<br><span class="text-accent">Klar til brug p&aring; under 2 minutter.</span></h1>
-    <p class="page-hero__sub">Shopify, WooCommerce, GLS, PostNord, DHL, e-conomic og mange flere. Kobl din webshop, fragtleverand&oslash;r og &oslash;konomi direkte ind, ingen konsulent, ingen projekt.</p>
+    <div class="eyebrow">Ingen projekt. Ingen konsulenter.</div>
+    <h1>Forbind webshop, fragt og ERP.<br><span class="text-accent">Du g&oslash;r det selv p&aring; under 2 minutter.</span></h1>
+    <p class="page-hero__sub">Kobl Shopify, GLS og e-conomic direkte p&aring;. Det k&oslash;rer automatisk. Du slipper for at taste ordrer, oprette labels og holde lageret opdateret i h&aring;nden.</p>
     <div class="page-hero__badges">
       <span class="hero__badge">40+ integrationer</span>
-      <span class="hero__badge">Under 2 min. opsætning</span>
+      <span class="hero__badge">Under 2 min. ops&aelig;tning</span>
       <span class="hero__badge">&Aring;bent API</span>
     </div>
   </div>
 </section>
+
+<!-- FLOW: HVAD SKER DER AUTOMATISK -->
+<div class="int-flow">
+  <div class="container">
+    <div class="int-flow__inner reveal">
+      <div class="int-flow__step">
+        <div class="int-flow__num">1</div>
+        <p><strong>Ordre fra Shopify</strong><br>lander automatisk i lageret</p>
+      </div>
+      <div class="int-flow__arrow">&rarr;</div>
+      <div class="int-flow__step">
+        <div class="int-flow__num">2</div>
+        <p><strong>Label hos GLS</strong><br>oprettes med det samme</p>
+      </div>
+      <div class="int-flow__arrow">&rarr;</div>
+      <div class="int-flow__step">
+        <div class="int-flow__num">3</div>
+        <p><strong>Pluk og pak</strong><br>guides af SmartPack</p>
+      </div>
+      <div class="int-flow__arrow">&rarr;</div>
+      <div class="int-flow__step">
+        <div class="int-flow__num">4</div>
+        <p><strong>Lagerstatus sendes tilbage</strong><br>live til webshoppen</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- INTEGRATION HUB -->
 <section class="int-hub">
@@ -301,27 +425,28 @@
       <div class="int-hub__stat"><strong>Åbent</strong><span>REST API til egne behov</span></div>
     </div>
 
-    <!-- GIF: Tilføj integration -->
+    <!-- GIF: Kobl en integration på -->
     <div class="int-hub__how reveal" style="margin:3rem 0">
       <div class="int-hub__how-inner">
         <div class="int-hub__how-text">
-          <div class="eyebrow">S&aring; nemt er det</div>
-          <h2>Tilslut en ny integration<br><span class="text-accent">p&aring; under 2 minutter</span></h2>
-          <p>Ingen konsulent. Ingen projekt. Ingen teknisk viden n&oslash;dvendig.<br>Find integrationen, klik tilf&oslash;j, og du er i gang.</p>
+          <div class="eyebrow">Opsætning</div>
+          <h2>Du g&oslash;r det selv.<br><span class="text-accent">Klar p&aring; under 2 minutter.</span></h2>
+          <p>Ingen konsulent. Ingen projekt. Find integrationen, klik tilf&oslash;j, og det k&oslash;rer.</p>
           <ul class="int-hub__how-steps">
-            <li><span>1</span> Find integrationen i listen</li>
-            <li><span>2</span> Klik &ldquo;Tilf&oslash;j&rdquo; og indtast dine adgangsoplysninger</li>
-            <li><span>3</span> Ordrer og lager synkroniseres automatisk</li>
+            <li><span>1</span> Find integrationen i listen herunder</li>
+            <li><span>2</span> Klik "Tilf&oslash;j" og indtast dine adgangsoplysninger</li>
+            <li><span>3</span> Ordrer, labels og lagerstatus synkroniseres automatisk</li>
           </ul>
-          <a href="kontakt.html" class="btn btn--primary" style="margin-top:1.5rem">Book demo &rarr;</a>
+          <a href="kontakt.html" class="btn btn--primary" style="margin-top:1.5rem">Se om det virker med jeres setup &rarr;</a>
         </div>
         <div class="int-hub__how-gif">
-          <img src="assets/GLS-app-GIF.gif" alt="Tilf&oslash;j GLS integration i SmartPack" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);">
+          <img src="assets/GLS-app-GIF.gif" alt="Kobl GLS p&aring; i SmartPack" loading="lazy" style="width:100%;border-radius:12px;border:1px solid var(--border);">
         </div>
       </div>
     </div>
 
     <!-- Search + filter -->
+    <p class="int-hub__guide">Klik p&aring; en integration og se, hvordan det virker i praksis.</p>
     <div class="int-hub__search-wrap">
       <input type="text" class="int-hub__search" id="int-search" placeholder="S&oslash;g efter integration..." aria-label="S&oslash;g integrationer">
       <div class="int-hub__filters">
@@ -341,6 +466,7 @@
         <div class="int-category__line"></div>
         <span class="int-category__count">10 platforme</span>
       </div>
+      <p class="int-category__desc">Ordrer hentes automatisk og lander direkte i lageret. Du taster ingenting.</p>
       <div class="int-hub__grid">
         <a href="integrationer/shopify.html" class="int-hub__card" data-cat="webshop" data-name="shopify">
           <img src="assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify" loading="lazy">
@@ -390,8 +516,9 @@
       <div class="int-category__header">
         <span class="int-category__title">Fragt &middot; Danmark</span>
         <div class="int-category__line"></div>
-        <span class="int-category__count">18 fragtleverandører</span>
+        <span class="int-category__count">18 fragtleverand&oslash;rer</span>
       </div>
+      <p class="int-category__desc">Labels oprettes automatisk n&aring;r ordren er pakket. Du trykker send.</p>
       <div class="int-hub__grid">
         <a href="integrationer/gls.html" class="int-hub__card" data-cat="fragt-dk" data-name="gls">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS" loading="lazy">
@@ -470,8 +597,9 @@
       <div class="int-category__header">
         <span class="int-category__title">Fragt &middot; International</span>
         <div class="int-category__line"></div>
-        <span class="int-category__count">12 fragtleverandører</span>
+        <span class="int-category__count">12 fragtleverand&oslash;rer</span>
       </div>
+      <p class="int-category__desc">Samme flow som danske fragtleverand&oslash;rer. Bare til resten af verden.</p>
       <div class="int-hub__grid">
         <a href="integrationer/dhl-parcel.html" class="int-hub__card" data-cat="fragt-int" data-name="dhl parcel">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/DHL Parcel.png" alt="DHL Parcel" loading="lazy">
@@ -531,6 +659,7 @@
         <div class="int-category__line"></div>
         <span class="int-category__count">7 systemer</span>
       </div>
+      <p class="int-category__desc">Faktura og lagerstatus synkroniseres automatisk. &Oslash;konomien f&oslash;lger med uden ekstra arbejde.</p>
       <div class="int-hub__grid">
         <a href="integrationer/economic.html" class="int-hub__card" data-cat="erp" data-name="e-conomic economic">
           <img src="assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic" loading="lazy">
@@ -570,6 +699,7 @@
         <div class="int-category__line"></div>
         <span class="int-category__count">9 systemer</span>
       </div>
+      <p class="int-category__desc">Kassesystem, retur og robotlager. Kobles p&aring; n&oslash;jagtig samme m&aring;de.</p>
       <div class="int-hub__grid">
         <a href="integrationer/flexpos.html" class="int-hub__card" data-cat="other" data-name="flexpos kassesystem">
           <img src="assets/SmartPack-App-Icons/SmartPack/POS/FlexPOS.png" alt="FlexPOS" loading="lazy">
@@ -613,7 +743,10 @@
     <!-- API STRIP -->
     <div class="int-hub__api">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-      <p><strong>Bruger du noget vi ikke n&aelig;vner?</strong> Vi har &aring;bent REST API, og vi bygger selv nye integrationer. <a href="kontakt.html" style="color:var(--accent)">Kontakt os &rarr;</a></p>
+      <div>
+        <p><strong>Har du noget specielt?</strong><br>S&aring; kobler vi det p&aring;. Vi bygger nye integrationer og har &aring;bent REST API til egne behov.</p>
+        <a href="kontakt.html" style="color:var(--accent);font-size:.9rem;font-weight:600">Sp&oslash;rg os om jeres integrationer &rarr;</a>
+      </div>
     </div>
 
   </div>
@@ -623,11 +756,11 @@
 <section class="cta-section" id="cta">
   <div class="container">
     <div class="cta-section__inner reveal">
-      <div class="eyebrow">Kom i gang i dag</div>
-      <h2>Klar til at koble det hele sammen?</h2>
-      <p>Book en demo, og vi viser dig, hvordan det h&aelig;nger sammen med det du allerede bruger.</p>
+      <div class="eyebrow">Kom i gang</div>
+      <h2>Virker det med jeres setup?</h2>
+      <p>Book 15 minutter. Vi kigger p&aring; jeres webshop, fragt og &oslash;konomi og viser dig pr&aelig;cist hvad der kan kobles p&aring;.</p>
       <div class="cta-section__actions">
-        <a href="kontakt.html" class="btn btn--primary btn--lg">Book demo &rarr;</a>
+        <a href="kontakt.html" class="btn btn--primary btn--lg">Se om det virker med jeres setup</a>
         <a href="priser.html" class="btn btn--ghost btn--lg">Se priser</a>
       </div>
     </div>
