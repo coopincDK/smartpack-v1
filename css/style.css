@@ -1156,6 +1156,17 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   height: 44px;
   flex-shrink: 0;
 }
+.case-card__link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity var(--t-fast);
+}
+.case-card__link:hover { opacity: .7; }
+
 .case-card__stats {
   display: flex;
   gap: 1.5rem;
