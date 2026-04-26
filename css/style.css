@@ -2347,8 +2347,16 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   overflow: hidden;
 }
 /* Collapse Elfsight widget internal whitespace */
-.li-feed [class*="elfsight"] { max-height: fit-content !important; }
-.li-feed iframe { max-height: 400px !important; }
+.elfsight-app-591fcfd4-5dc3-4006-ae39-2bc36113b501 {
+  overflow: hidden !important;
+  height: auto !important;
+  max-height: none !important;
+}
+.elfsight-app-591fcfd4-5dc3-4006-ae39-2bc36113b501 > div,
+.elfsight-app-591fcfd4-5dc3-4006-ae39-2bc36113b501 iframe {
+  height: auto !important;
+  min-height: 0 !important;
+}
 .li-feed__header {
   display: flex;
   align-items: flex-end;
