@@ -59,6 +59,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -358,7 +359,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    width: 100vw;
+    width: 100%;
     max-height: calc(100vh - 76px);
     max-height: calc(100dvh - 76px);
     background: rgb(9,12,15);
