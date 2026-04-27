@@ -66,6 +66,21 @@
     .page-hero { padding: 130px 0 80px; }
     .page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.12; margin: .75rem 0 1.25rem; }
     .page-hero__sub { font-size: 1.05rem; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 2rem; }
+    .page-hero__inner { display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: center; }
+    .page-hero__content { max-width: 540px; }
+    .page-hero__visual { position: relative; }
+    .page-hero__video-wrap {
+      position: relative; border-radius: var(--r-lg); overflow: hidden;
+      aspect-ratio: 1/1; max-width: 440px; margin-left: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(62,207,142,.18);
+    }
+    .page-hero__video-glow { position: absolute; inset: -60px; background: radial-gradient(ellipse at 50% 60%, rgba(62,207,142,.22) 0%, transparent 65%); pointer-events: none; z-index: -1; }
+    .page-hero__iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block; }
+    @media (max-width: 960px) {
+      .page-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .page-hero__content { max-width: 100%; }
+      .page-hero__video-wrap { max-width: 440px; margin: 0 auto; }
+    }
 
     /* --- Feature sections --- */
     .feat-section { padding: clamp(4rem, 7vw, 6rem) 0; }
@@ -288,13 +303,31 @@
 
 <!-- HERO -->
 <section class="page-hero" id="hero">
-  <div class="container">
-    <div class="reveal" style="max-width:680px">
+  <div class="container page-hero__inner">
+
+    <!-- VENSTRE: tekst -->
+    <div class="page-hero__content reveal">
       <div class="eyebrow">Funktioner</div>
       <h1>Funktioner der faktisk g&oslash;r en forskel<br><span class="text-accent">i hverdagen</span></h1>
       <p class="page-hero__sub">SmartPack er ikke bygget til at se godt ud i en demo.<br>Det er bygget til at f&aring; dit lager til at k&oslash;re.<br><strong>Mindre fejl. Mindre rod. Mere fart.</strong></p>
       <a href="kontakt.html" class="btn btn--primary btn--xl">Lad os se p&aring; dit setup &rarr;</a>
     </div>
+
+    <!-- HOEJRE: video loop -->
+    <div class="page-hero__visual reveal reveal--delay">
+      <div class="page-hero__video-glow"></div>
+      <div class="page-hero__video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/0zMl2hw5PzE?autoplay=1&mute=1&loop=1&playlist=0zMl2hw5PzE&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1&enablejsapi=1"
+          title="SmartPack WMS demo"
+          frameborder="0"
+          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+          allowfullscreen
+          class="page-hero__iframe"
+        ></iframe>
+      </div>
+    </div>
+
   </div>
 </section>
 
