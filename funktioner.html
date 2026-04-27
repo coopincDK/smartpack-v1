@@ -265,6 +265,30 @@
 
     /* Active nav */
     .nav__link--active { color: var(--accent) !important; }
+
+    /* --- Alt det ekstra --- */
+    .extras { padding: clamp(4rem, 7vw, 6rem) 0; }
+    .extras__header { text-align: center; margin-bottom: 3rem; }
+    .extras__title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 900; color: var(--text-1); letter-spacing: -.025em; margin-bottom: .75rem; }
+    .extras__desc { font-size: .95rem; color: var(--text-2); line-height: 1.7; max-width: 560px; margin: 0 auto; }
+    .extras__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .extras__card {
+      background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 1.5rem 1.75rem; display: flex; flex-direction: column; gap: .5rem;
+      transition: border-color var(--t-mid), transform var(--t-mid);
+    }
+    .extras__card:hover { border-color: rgba(62,207,142,.3); transform: translateY(-2px); }
+    .extras__card-title { font-size: .95rem; font-weight: 700; color: var(--text-1); }
+    .extras__card-desc { font-size: .82rem; color: var(--text-2); line-height: 1.6; }
+    .extras__group { margin-bottom: 2.5rem; }
+    .extras__group-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .12em; color: var(--accent); margin-bottom: 1rem;
+    }
+    .extras__group-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    @media (max-width: 900px) { .extras__grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .extras__grid { grid-template-columns: 1fr; } .extras__card { padding: 1.25rem 1.35rem; } }
   </style>
 </head>
 <body>
@@ -506,6 +530,142 @@
         <div class="feat-visual__sub">Gennemsnitlig opl&aelig;ringstid.<br>De fleste er i gang p&aring; f&aring; timer.</div>
       </div>
     </div>
+  </div>
+</section>
+
+
+<!-- ALT DET EKSTRA -->
+<section class="extras" id="alle-funktioner">
+  <div class="container">
+    <div class="extras__header reveal">
+      <h2 class="extras__title">Alt det ekstra (n&aring;r du har brug for det)</h2>
+      <p class="extras__desc">De 6 blokke ovenfor d&aelig;kker kernen. Men SmartPack kan mere. Her er alt det du ogs&aring; f&aring;r med.</p>
+    </div>
+
+    <!-- Pluk & pak -->
+    <div class="extras__group reveal">
+      <div class="extras__group-label"><span class="extras__group-dot"></span> Pluk &amp; pak</div>
+      <div class="extras__grid">
+        <div class="extras__card">
+          <div class="extras__card-title">Korteste vej til varen</div>
+          <div class="extras__card-desc">Ruteoptimering beregner den hurtigste plukrute. Mindre g&aring;afstand, flere ordrer i timen.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Scanner du forkert, stopper systemet dig</div>
+          <div class="extras__card-desc">Scan-verificering p&aring; hvert trin. Forkert vare? Du f&aring;r besked med det samme.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Pluk flere ordrer p&aring; &eacute;n tur</div>
+          <div class="extras__card-desc">Multipluk samler flere ordrer i &eacute;n runde. F&aelig;rre ture, mere flow.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Del lageret i zoner</div>
+          <div class="extras__card-desc">Zonepluk fordeler arbejdet. Hver medarbejder d&aelig;kker sit omr&aring;de.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Saml ordrer, pluk dem samlet</div>
+          <div class="extras__card-desc">Batchpluk grupperer ens varer. &Eacute;n tur i stedet for ti.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Fragtlabel printes n&aring;r du er f&aelig;rdig</div>
+          <div class="extras__card-desc">Automatisk valg af fragtudbyder. Label klar med det samme. Ingen kopiering.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ordrer -->
+    <div class="extras__group reveal">
+      <div class="extras__group-label"><span class="extras__group-dot"></span> Ordrer</div>
+      <div class="extras__grid">
+        <div class="extras__card">
+          <div class="extras__card-title">Alle ordrer. &Eacute;t sted.</div>
+          <div class="extras__card-desc">Alle shops i &eacute;n liste. Filtr&eacute;r p&aring; status, dato, butik. Du ved hvad der venter.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Ordrer fordeles automatisk</div>
+          <div class="extras__card-desc">Nye ordrer tildeles plukopgaver uden du g&oslash;r noget. Hasteordrer &oslash;verst.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Retur? Scan den ind igen.</div>
+          <div class="extras__card-desc">Tilbage p&aring; hylden, kasseres eller karant&aelig;ne. Lageret opdateres med det samme.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Split ordrer uden b&oslash;vl</div>
+          <div class="extras__card-desc">Del ordrer automatisk. Restordre, dropship, flere lokationer. Systemet holder styr.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Status der faktisk giver mening</div>
+          <div class="extras__card-desc">Se hvor ordren er. Lige nu. Ikke bare &quot;plukket&quot; eller &quot;sendt&quot;.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Fuld historik p&aring; hver ordre</div>
+          <div class="extras__card-desc">Hvem plukkede, hvorn&aring;r pakket, hvilken label. Brugbart ved reklamationer.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lager & data -->
+    <div class="extras__group reveal">
+      <div class="extras__group-label"><span class="extras__group-dot"></span> Lager &amp; data</div>
+      <div class="extras__grid">
+        <div class="extras__card">
+          <div class="extras__card-title">Live dashboard</div>
+          <div class="extras__card-desc">Ordrer i k&oslash;, pakket, afsendt. Pluktid, fejlrate. Alt opdateres l&oslash;bende.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Beholdning pr. lokation</div>
+          <div class="extras__card-desc">Filtr&eacute;r p&aring; kategori, leverand&oslash;r, minimum. Advarsler n&aring;r noget er ved at l&oslash;be t&oslash;r.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Rapporter og eksport</div>
+          <div class="extras__card-desc">Uge, m&aring;ned eller custom. Eksport&eacute;r til Excel eller send til mail.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">T&aelig;l lageret uden at stoppe driften</div>
+          <div class="extras__card-desc">Opt&aelig;lling direkte fra scanneren. Systemet finder afvigelser automatisk.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Pluk de rigtige varer i rigtig r&aelig;kkef&oslash;lge</div>
+          <div class="extras__card-desc">FIFO og FEFO sikrer de &aelig;ldste varer plukkes f&oslash;rst. Automatisk.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Hold styr p&aring; partier og sporbarhed</div>
+          <div class="extras__card-desc">Batch- og LOT-styring uden ekstra arbejde. Dokumentation der bare virker.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integrationer & support -->
+    <div class="extras__group reveal">
+      <div class="extras__group-label"><span class="extras__group-dot"></span> Integrationer &amp; support</div>
+      <div class="extras__grid">
+        <div class="extras__card">
+          <div class="extras__card-title">Minutter, ikke uger</div>
+          <div class="extras__card-desc">Shopify, WooCommerce, Magento, GLS, PostNord, DAO, DHL. Klar ud af boksen.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">ERP synkroniserer automatisk</div>
+          <div class="extras__card-desc">Ordrer, lagerstatus og fakturaer til dit ERP. De mest brugte danske systemer er klar.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Scan med hvad du har</div>
+          <div class="extras__card-desc">Telefon eller h&aring;ndterminal. Ingen speciel hardware kr&aelig;vet.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Dansk support. P&aring; dansk.</div>
+          <div class="extras__card-desc">Rigtige mennesker der kender systemet. Ikke et script.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Akut? Tast 9.</div>
+          <div class="extras__card-desc">SOS-linje til kritiske situationer. Ogs&aring; kl. 3 om natten under Black Friday.</div>
+        </div>
+        <div class="extras__card">
+          <div class="extras__card-title">Vi sidder med dig til det virker</div>
+          <div class="extras__card-desc">Vi importerer varer, s&aelig;tter lokationer op og forbinder systemer. De fleste er i gang p&aring; &eacute;n dag.</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
