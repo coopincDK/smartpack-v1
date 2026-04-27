@@ -68,18 +68,9 @@
     .page-hero__sub { font-size: 1.05rem; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 2rem; }
     .page-hero__inner { display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: center; }
     .page-hero__content { max-width: 540px; }
-    .page-hero__visual { position: relative; }
-    .page-hero__video-wrap {
-      position: relative; border-radius: var(--r-lg); overflow: hidden;
-      aspect-ratio: 1/1; max-width: 440px; margin-left: auto;
-      box-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(62,207,142,.18);
-    }
-    .page-hero__video-glow { position: absolute; inset: -60px; background: radial-gradient(ellipse at 50% 60%, rgba(62,207,142,.22) 0%, transparent 65%); pointer-events: none; z-index: -1; }
-    .page-hero__iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block; }
     @media (max-width: 960px) {
       .page-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .page-hero__content { max-width: 100%; }
-      .page-hero__video-wrap { max-width: 440px; margin: 0 auto; }
     }
 
     /* --- Feature sections --- */
@@ -351,18 +342,45 @@
       <a href="kontakt.html" class="btn btn--primary btn--xl">Lad os se p&aring; dit setup &rarr;</a>
     </div>
 
-    <!-- HOEJRE: video loop -->
-    <div class="page-hero__visual reveal reveal--delay">
-      <div class="page-hero__video-glow"></div>
-      <div class="page-hero__video-wrap">
-        <iframe
-          src="https://www.youtube.com/embed/0zMl2hw5PzE?autoplay=1&mute=1&loop=1&playlist=0zMl2hw5PzE&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1&enablejsapi=1"
-          title="SmartPack WMS demo"
-          frameborder="0"
-          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
-          allowfullscreen
-          class="page-hero__iframe"
-        ></iframe>
+    <!-- HOEJRE: hero komposition -->
+    <div class="hero__visual reveal reveal--delay">
+      <div class="hero__composition">
+        <div class="hero__glow"></div>
+        <div class="hero__phone">
+          <img src="assets/ChatGPT_Image_12._apr._2026__06.37.53-removebg-preview.png" alt="SmartPack plukliste p&aring; h&aring;ndterminal" class="hero__phone-img">
+          <div class="hero__scan-wrap">
+            <img src="assets/scan gif.gif" alt="" class="hero__scan-gif" aria-hidden="true">
+          </div>
+        </div>
+        <div class="hero__dashboard">
+          <img src="assets/aerial view of a dark warehouse grid.gif" alt="SmartPack ruteoptimering" class="hero__dashboard-img">
+        </div>
+        <div class="hero__flow-line" aria-hidden="true">
+          <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0 0 L6 3 L0 6 Z" fill="rgba(62,207,142,.7)"/>
+              </marker>
+            </defs>
+            <path d="M30 10 C30 60 140 60 160 110" stroke="rgba(62,207,142,.35)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowhead)"/>
+            <circle cx="30" cy="10" r="3" fill="rgba(62,207,142,.6)">
+              <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <div class="hero__badge hero__badge--1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>
+          Pluk godkendt
+        </div>
+        <div class="hero__badge hero__badge--2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Rute optimeret
+        </div>
+        <div class="hero__badge hero__badge--3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Fejl forhindret
+        </div>
       </div>
     </div>
 
