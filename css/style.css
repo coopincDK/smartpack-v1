@@ -491,9 +491,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .hero__proof {
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin-top: 1.5rem;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  flex-wrap: nowrap;
 }
 .hero__proof-item {
   display: flex;
