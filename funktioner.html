@@ -67,10 +67,14 @@
     .page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.12; margin: .75rem 0 1.25rem; }
     .page-hero__sub { font-size: 1.05rem; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 2rem; }
     .page-hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-    .page-hero__content { max-width: 540px; }
+    .page-hero__content { max-width: 540px; position: relative; z-index: 2; }
+    /* Contain the hero composition */
+    .page-hero .hero__visual { position: relative; z-index: 1; }
+    .page-hero .hero__composition { transform: scale(.85); transform-origin: center right; }
     @media (max-width: 960px) {
       .page-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .page-hero__content { max-width: 100%; }
+      .page-hero .hero__composition { transform: scale(.75); transform-origin: center center; }
     }
 
     /* --- Feature sections --- */
@@ -153,7 +157,7 @@
       position: relative;
       border-radius: var(--r-lg);
       overflow: hidden;
-      min-height: 320px;
+      height: 380px;
     }
     .feat-visual img {
       border-radius: var(--r-lg);
