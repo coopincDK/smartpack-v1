@@ -1504,7 +1504,6 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 @media (max-width: 860px) {
   .video-section__inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .video-section__embed { margin: 0 auto; width: 100%; max-width: 100%; }
-  .video-section__video-wrap { aspect-ratio: 16 / 9; }
   .video-section__text { text-align: center; }
   .video-section__text .btn { margin: 0 auto; }
 }
@@ -2855,5 +2854,4 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   /* Authority book on small screens */
   .authority__img--book { max-width: 220px; max-height: 300px; }
   /* Video section */
-  .video-section__video-wrap { aspect-ratio: 16 / 9; }
 }
