@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartPack WMS | Dit lager. Uden kaos.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <style>
+    /* ===== INDEX2 PAGE STYLES ===== */
+
+    /* --- HERO --- */
+    .hero2 {
+      padding: clamp(140px, 18vw, 200px) 0 clamp(80px, 10vw, 120px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero2__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero2__eyebrow {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--accent);
+      border: 1px solid rgba(62,207,142,.3);
+      background: rgba(62,207,142,.08);
+      border-radius: 99px;
+      padding: .4em 1.2em;
+      margin-bottom: 1.5rem;
+    }
+    .hero2 h1 {
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+    .hero2 h1 span { color: var(--accent); }
+    .hero2__sub {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: .75rem;
+    }
+    .hero2__proof {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+    .hero2__visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    .hero2__visual img {
+      width: 100%;
+      max-width: 540px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 40px 80px rgba(0,0,0,.4);
+    }
+
+    /* --- DIFFERENTIATION --- */
+    .diff {
+      padding: clamp(5rem, 8vw, 7rem) 0;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .diff__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .diff h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .diff h2 span { color: var(--accent); }
+    .diff__sub {
+      font-size: 1rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .diff__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .diff__list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .diff__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    .diff__list-text strong {
+      display: block;
+      font-size: .95rem;
+      color: var(--text-1);
+      margin-bottom: .15rem;
+    }
+    .diff__list-text span {
+      font-size: .85rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* --- PROOF / RESULTS --- */
+    .proof {
+      padding: clamp(5rem, 8vw, 7rem) 0;
+    }
+    .proof__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .proof h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+    }
+    .proof__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .proof__card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: border-color .2s, transform .2s;
+    }
+    .proof__card:hover {
+      border-color: rgba(62,207,142,.3);
+      transform: translateY(-4px);
+    }
+    .proof__number {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -.03em;
+      line-height: 1;
+      margin-bottom: .5rem;
+    }
+    .proof__label {
+      font-size: .95rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* --- FLOW --- */
+    .flow {
+      padding: clamp(5rem, 8vw, 7rem) 0;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .flow__header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .flow h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+    .flow__steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+    .flow__step {
+      text-align: center;
+      position: relative;
+    }
+    .flow__step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(62,207,142,.12);
+      border: 2px solid var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .flow__step h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: .5rem;
+    }
+    .flow__step p {
+      font-size: .85rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    /* Arrow between steps */
+    .flow__step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 28px;
+      right: -1rem;
+      width: calc(2rem);
+      height: 2px;
+      background: var(--border);
+    }
+
+    /* --- FEATURES SHORT --- */
+    .feat2 {
+      padding: clamp(5rem, 8vw, 7rem) 0;
+    }
+    .feat2__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .feat2 h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+    .feat2__cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .feat2__card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: border-color .2s;
+    }
+    .feat2__card:hover { border-color: rgba(62,207,142,.3); }
+    .feat2__card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+    .feat2__card-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .feat2__card strong {
+      display: block;
+      font-size: .95rem;
+      color: var(--text-1);
+      margin-bottom: .25rem;
+    }
+    .feat2__card span {
+      font-size: .82rem;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .feat2__visual img {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      filter: saturate(.85) contrast(.95);
+    }
+
+    /* --- ANTI-BULLSHIT --- */
+    .anti {
+      padding: clamp(5rem, 8vw, 7rem) 0;
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .anti__inner {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .anti h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: .75rem;
+    }
+    .anti__sub {
+      font-size: 1rem;
+      color: var(--text-2);
+      margin-bottom: 3rem;
+    }
+    .anti__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      text-align: left;
+    }
+    .anti__card {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    .anti__card-x {
+      font-size: 1.5rem;
+      margin-bottom: .75rem;
+      display: block;
+    }
+    .anti__card strong {
+      display: block;
+      font-size: .95rem;
+      color: var(--text-1);
+      margin-bottom: .35rem;
+    }
+    .anti__card p {
+      font-size: .82rem;
+      color: var(--text-2);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* --- CTA2 --- */
+    .cta2 {
+      padding: clamp(5rem, 8vw, 7rem) 0;
+      text-align: center;
+    }
+    .cta2 h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .cta2__sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      margin-bottom: 2rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta2__actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cta2__trust {
+      margin-top: 2rem;
+      font-size: .82rem;
+      color: var(--text-3);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 860px) {
+      .hero2__inner,
+      .diff__inner,
+      .feat2__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .proof__grid { grid-template-columns: 1fr; }
+      .flow__steps { grid-template-columns: repeat(2, 1fr); }
+      .flow__step::after { display: none; }
+      .anti__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .flow__steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown">
+        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="nav__megamenu">
+          <a href="funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
+          <a href="integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
+          <a href="faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar p&aring; de hyppigste sp&oslash;rgsm&aring;l</span></a>
+          <a href="om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
+          <a href="medarbejdere.html" class="nav__mega-item"><strong>Teamet</strong><span>M&oslash;d folkene bag systemet</span></a>
+        </div>
+      </li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="cases.html" class="nav__link">Cases</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Log ind &amp; support &rarr;</a>
+      <a href="kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
+      <a href="#cta" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+
+<!-- 1. HERO -->
+<section class="hero2">
+  <div class="container">
+    <div class="hero2__inner">
+      <div>
+        <div class="hero2__eyebrow">Dansk WMS siden 2005</div>
+        <h1>Dit lager.<br><span>Uden kaos.</span></h1>
+        <p class="hero2__sub">SmartPack er ikke bygget til at se godt ud i en demo.<br>Det er bygget til at f&aring; dit lager til at k&oslash;re.</p>
+        <p class="hero2__proof">&check; 42% flere ordrer &middot; 0 pakkefejl &middot; Live p&aring; under 60 dage</p>
+        <a href="kontakt.html" class="btn btn--primary">Se dit setup &rarr;</a>
+      </div>
+      <div class="hero2__visual">
+        <img src="assets/pluk-1.jpg" alt="SmartPack pluk-flow" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 2. DIFFERENTIATION -->
+<section class="diff">
+  <div class="container">
+    <div class="diff__inner">
+      <div>
+        <h2>Det her er ikke<br><span>endnu et WMS</span></h2>
+        <p class="diff__sub">De fleste lagersystemer er bygget af konsulenter der aldrig har st&aring;et p&aring; et lager. SmartPack er bygget af folk der har.</p>
+      </div>
+      <ul class="diff__list">
+        <li>
+          <div class="diff__icon">&times;</div>
+          <div class="diff__list-text">
+            <strong>Ingen 6-m&aring;neders implementering</strong>
+            <span>De fleste er i gang p&aring; f&aring; timer. Ikke m&aring;neder.</span>
+          </div>
+        </li>
+        <li>
+          <div class="diff__icon">&times;</div>
+          <div class="diff__list-text">
+            <strong>Ingen konsulenter uden lagererfaring</strong>
+            <span>Vores CTO har selv st&aring;et p&aring; lageret. Ogs&aring; n&aring;r det br&aelig;nder p&aring;.</span>
+          </div>
+        </li>
+        <li>
+          <div class="diff__icon">&times;</div>
+          <div class="diff__list-text">
+            <strong>Ingen skjulte omkostninger</strong>
+            <span>&Eacute;n pris. Alt inkluderet. Ingen overraskelser p&aring; fakturaen.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3. PROOF / RESULTS -->
+<section class="proof">
+  <div class="container">
+    <div class="proof__header reveal">
+      <h2>Resultater. Ikke l&oslash;fter.</h2>
+    </div>
+    <div class="proof__grid reveal">
+      <div class="proof__card">
+        <div class="proof__number">42%</div>
+        <div class="proof__label">Flere ordrer ekspederet<br>per medarbejder per dag</div>
+      </div>
+      <div class="proof__card">
+        <div class="proof__number">0</div>
+        <div class="proof__label">Pakkefejl med<br>scan-verificering</div>
+      </div>
+      <div class="proof__card">
+        <div class="proof__number">&lt;60</div>
+        <div class="proof__label">Dage fra opstart<br>til fuldt k&oslash;rende</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 4. HOW IT WORKS -->
+<section class="flow">
+  <div class="container">
+    <div class="flow__header reveal">
+      <h2>S&aring;dan virker det</h2>
+    </div>
+    <div class="flow__steps reveal">
+      <div class="flow__step">
+        <div class="flow__step-num">1</div>
+        <h3>Ordre ind</h3>
+        <p>Ordrer synkroniseres automatisk fra din webshop. Ingen manuel h&aring;ndtering.</p>
+      </div>
+      <div class="flow__step">
+        <div class="flow__step-num">2</div>
+        <h3>Pluk</h3>
+        <p>SmartPack guider dig til den hurtigste rute. Scan bekr&aelig;fter hvert pluk.</p>
+      </div>
+      <div class="flow__step">
+        <div class="flow__step-num">3</div>
+        <h3>Pak</h3>
+        <p>Scan, pak, print label. 3 trin. Ingen tvivl, ingen flaskehals.</p>
+      </div>
+      <div class="flow__step">
+        <div class="flow__step-num">4</div>
+        <h3>Sendt</h3>
+        <p>Fragtlabel printes. Kunden f&aring;r tracking. Du g&aring;r videre til n&aelig;ste ordre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 5. FEATURES (kort) -->
+<section class="feat2">
+  <div class="container">
+    <div class="feat2__inner reveal">
+      <div>
+        <h2>Hvad det g&oslash;r.<br>Ikke hvad det hedder.</h2>
+        <div class="feat2__cards">
+          <div class="feat2__card">
+            <div class="feat2__card-icon"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="7" height="10" rx="1"/><line x1="6.5" y1="11" x2="6.5" y2="13"/><path d="M14 3l4 4-4 4"/><line x1="14" y1="7" x2="21" y2="7"/></svg></div>
+            <div>
+              <strong>Guidet pluk med scanning</strong>
+              <span>Systemet viser vej. Du scanner for at bekr&aelig;fte. Ingen fejl.</span>
+            </div>
+          </div>
+          <div class="feat2__card">
+            <div class="feat2__card-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z" fill="none"/><polyline points="7 14 10 10 13 13 17 8"/></svg></div>
+            <div>
+              <strong>Optimerede plukruter</strong>
+              <span>A* pathfinding finder den hurtigste vej. Ikke den du g&aelig;tter dig til.</span>
+            </div>
+          </div>
+          <div class="feat2__card">
+            <div class="feat2__card-icon"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="9" y1="11" x2="15" y2="7"/><line x1="9" y1="13" x2="15" y2="17"/></svg></div>
+            <div>
+              <strong>Integrationer der bare virker</strong>
+              <span>Shopify, WooCommerce, PostNord, GLS, e-conomic. Sat op p&aring; timer.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="feat2__visual">
+        <img src="assets/lager-1.jpg" alt="SmartPack lagerstyring" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 6. ANTI-BULLSHIT -->
+<section class="anti">
+  <div class="container">
+    <div class="anti__inner reveal">
+      <h2>Det du IKKE f&aring;r</h2>
+      <p class="anti__sub">Fordi vi tror p&aring; &aelig;rlighed frem for salgstaler.</p>
+      <div class="anti__grid">
+        <div class="anti__card">
+          <span class="anti__card-x">&times;</span>
+          <strong>Lange implementeringer</strong>
+          <p>De fleste medarbejdere er i gang p&aring; f&aring; timer. Ikke uger. Ikke m&aring;neder.</p>
+        </div>
+        <div class="anti__card">
+          <span class="anti__card-x">&times;</span>
+          <strong>Skjulte fees</strong>
+          <p>&Eacute;n pris. Inkl. support, opdateringer og integrationer. Ingen tilk&oslash;b.</p>
+        </div>
+        <div class="anti__card">
+          <span class="anti__card-x">&times;</span>
+          <strong>Konsulenter uden jord under neglene</strong>
+          <p>Vi har styr p&aring; lager fordi vi selv har k&oslash;rt det. I 20 &aring;r.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 7. CTA -->
+<section class="cta2" id="cta">
+  <div class="container reveal">
+    <h2>Klar til at f&aring; styr p&aring; lageret?</h2>
+    <p class="cta2__sub">Vi kigger p&aring; jeres setup, viser jer systemet og s&oslash;rger for det k&oslash;rer. De fleste medarbejdere er i gang p&aring; f&aring; timer.</p>
+    <div class="cta2__actions">
+      <a href="kontakt.html" class="btn btn--primary">Lad os se p&aring; dit setup &rarr;</a>
+      <a href="tel:+4588202019" class="btn btn--ghost">Ring: +45 88 20 20 19</a>
+    </div>
+    <p class="cta2__trust">Ingen binding &middot; Ingen skjulte priser &middot; Klar p&aring; f&aring; timer</p>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd.<br>Til dig der er tr&aelig;t af lagerb&oslash;vl.</p>
+        <p class="footer__sub">Har du styr p&aring; lageret?</p>
+        <a href="kontakt.html" class="footer__cta-btn">Lad os se p&aring; dit setup &rarr;</a>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="funktioner.html">Funktioner</a></li>
+            <li><a href="integrationer.html">Integrationer</a></li>
+            <li><a href="cases.html">Kundecases</a></li>
+            <li><a href="priser.html">Priser</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li>
+            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
+            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li>
+            <li><a href="tel:+4588202019">+45 88 20 20 19 &middot; Tast 2</a></li>
+            <li><a href="tel:+4588202019">Akut? Tast 9. Selv hvis vi sover.</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span id="copy-year">2026</span> SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p>
+      <div class="footer__badges">
+        <span class="footer__badge">E-handel siden 2005</span>
+        <span class="footer__badge">Medlem af Dansk Erhverv</span>
+        <span class="footer__badge">Bygget til lageret</span>
+      </div>
+      <div class="footer__quicksupport">
+        <a href="vilkaar.html">Vilk&aring;r</a> &middot; Fjernsupport: <a href="https://download.teamviewer.com/download/TeamViewerQS.exe" target="_blank" rel="noopener">QuickSupport PC</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" target="_blank" rel="noopener">QuickSupport Mac</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js?v=2" defer></script>
+</body>
+</html>
