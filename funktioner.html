@@ -1,4 +1,4 @@
-﻿﻿﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,7 @@
 
   <!-- Primary SEO -->
   <title>Funktioner | SmartPack WMS til pluk, pak og lager</title>
-  <meta name="description" content="Se alle funktioner i SmartPack WMS: A* plukruter, multipluk, scan-verificering, ordreh&aring;ndtering, 40+ integrationer og live dashboard. Bygget til webshops og 3PL.">
+  <meta name="description" content="Se alle funktioner i SmartPack WMS: guidet pluk, scan-verificering, ordreh&aring;ndtering, 40+ integrationer og live dashboard. Bygget til webshops og 3PL.">
   <link rel="canonical" href="https://smartpack.dk/funktioner.html">
   <meta name="robots" content="index, follow">
   <meta name="author" content="SmartPack">
@@ -16,15 +16,15 @@
   <meta property="og:url" content="https://smartpack.dk/funktioner/">
   <meta property="og:site_name" content="SmartPack">
   <meta property="og:locale" content="da_DK">
-  <meta property="og:title" content="Funktioner - SmartPack WMS | Alt hvad dit lager har brug for">
-  <meta property="og:description" content="A* plukruter, multipluk, nul pakkefejl, live dashboard og 40+ integrationer. SmartPack g&oslash;r lagerdrift enkelt.">
+  <meta property="og:title" content="Funktioner - SmartPack WMS | Det der f&aring;r lageret til at k&oslash;re">
+  <meta property="og:description" content="Guidet pluk, nul pakkefejl, live dashboard og 40+ integrationer. SmartPack g&oslash;r lagerdrift enkelt.">
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@SmartPackWMS">
   <meta name="twitter:title" content="SmartPack funktioner - WMS til webshops og 3PL">
-  <meta name="twitter:description" content="Plukruter, multipluk, scan-verificering og 40+ integrationer. Alt inkluderet fra dag &eacute;t.">
+  <meta name="twitter:description" content="Guidet pluk, scan-verificering og 40+ integrationer. Alt inkluderet fra dag &eacute;t.">
   <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <!-- Favicon -->
@@ -48,7 +48,7 @@
         "@id": "https://smartpack.dk/funktioner/",
         "url": "https://smartpack.dk/funktioner/",
         "name": "Funktioner i SmartPack WMS",
-        "description": "Se alle funktioner i SmartPack: A* plukruter, multipluk, scan-verificering, ordreh&aring;ndtering og 40+ integrationer.",
+        "description": "Se alle funktioner i SmartPack: guidet pluk, scan-verificering, ordreh&aring;ndtering og 40+ integrationer.",
         "isPartOf": {"@id": "https://smartpack.dk/#website"},
         "publisher": {"@id": "https://smartpack.dk/#organization"}
       }
@@ -62,163 +62,194 @@
   <link rel="stylesheet" href="css/style.css?v=2">
 
   <style>
-    /* â”€â”€ Page hero â”€â”€ */
+    /* --- Hero --- */
     .page-hero { padding: 130px 0 80px; }
-    .page-hero h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.1; margin: .75rem 0 1.25rem; }
-    .page-hero__sub { font-size: 1.1rem; color: var(--text-2); max-width: 520px; line-height: 1.7; margin-bottom: 2rem; }
-    .page-hero__badges { display: flex; gap: .75rem; flex-wrap: wrap; }
-    .page-hero__badge { font-size: .8rem; font-weight: 600; color: var(--accent); background: rgba(62,207,142,.1); border: 1px solid rgba(62,207,142,.25); border-radius: 20px; padding: .35em 1em; }
+    .page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.12; margin: .75rem 0 1.25rem; }
+    .page-hero__sub { font-size: 1.05rem; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 2rem; }
 
-    /* 2-col hero layout */
-    .page-hero__inner {
+    /* --- Feature sections --- */
+    .feat-section { padding: clamp(4rem, 7vw, 6rem) 0; }
+    .feat-section + .feat-section { padding-top: 0; }
+    .feat-section--alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: clamp(4rem, 7vw, 6rem) 0; }
+    .feat-section--alt + .feat-section { padding-top: clamp(4rem, 7vw, 6rem); }
+
+    .feat-section__inner {
       display: grid;
-      grid-template-columns: 3fr 2fr;
+      grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: center;
     }
-    .page-hero__content { max-width: 540px; }
+    .feat-section__inner--reverse { direction: rtl; }
+    .feat-section__inner--reverse > * { direction: ltr; }
 
-    /* Hero video (right side) */
-    .page-hero__visual { position: relative; }
-    .page-hero__video-wrap {
-      position: relative;
-      border-radius: var(--r-lg);
-      overflow: hidden;
-      aspect-ratio: 1 / 1;
-      max-width: 440px;
-      margin-left: auto;
-      box-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(62,207,142,.18);
+    .feat-section__label {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--accent);
+      margin-bottom: .75rem;
     }
-    .page-hero__video-glow {
-      position: absolute;
-      inset: -60px;
-      background: radial-gradient(ellipse at 50% 60%, rgba(62,207,142,.22) 0%, transparent 65%);
-      pointer-events: none;
-      z-index: -1;
-    }
-    .page-hero__iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-      display: block;
-    }
-    @media (max-width: 960px) {
-      .page-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .page-hero__content { max-width: 100%; }
-      .page-hero__video-wrap { max-width: 440px; margin: 0 auto; }
-    }
+    .feat-section__label-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
-    /* â”€â”€ Stat strip â”€â”€ */
-    .stat-strip { background: var(--bg-3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 3rem 0; }
-    .stat-strip__inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
-    .stat-item { padding: 1.25rem 2rem; border-right: 1px solid var(--border); text-align: center; }
-    .stat-item:last-child { border-right: none; }
-    .stat-item__num { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; color: var(--accent); letter-spacing: -.03em; line-height: 1; }
-    .stat-item__lbl { font-size: .78rem; color: var(--text-3); margin-top: .35rem; line-height: 1.4; }
-    @media (max-width: 720px) {
-      .stat-strip__inner { grid-template-columns: 1fr 1fr; }
-      .stat-item:nth-child(2) { border-right: none; }
-      .stat-item:nth-child(3) { border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
-      .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+    .feat-section__title {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 900;
+      color: var(--text-1);
+      letter-spacing: -.025em;
+      margin-bottom: 1rem;
+      line-height: 1.15;
     }
-    @media (max-width: 480px) {
-      .stat-strip__inner { grid-template-columns: 1fr; }
-      .stat-item { border-right: none !important; border-top: 1px solid var(--border); }
-      .stat-item:first-child { border-top: none; }
+    .feat-section__desc {
+      font-size: .95rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 1.5rem;
+    }
+    .feat-section__quote {
+      font-size: .92rem;
+      color: var(--text-3);
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(62,207,142,.3);
     }
 
-    /* â”€â”€ Category sections â”€â”€ */
-    .feat-category { padding: var(--section-py) 0; }
-    .feat-category + .feat-category { padding-top: clamp(3rem, 5vw, 4.5rem); }
-    .feat-category--alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .feat-benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+    .feat-benefits li {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .feat-benefits__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
 
-    .feat-category__header { margin-bottom: 3rem; }
-    .feat-category__label { display: inline-flex; align-items: center; gap: .5rem; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin-bottom: .75rem; }
-    .feat-category__label-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-    .feat-category__title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 900; color: var(--text-1); letter-spacing: -.025em; margin-bottom: .75rem; }
-    .feat-category__desc { font-size: .95rem; color: var(--text-2); line-height: 1.7; max-width: 560px; }
-
-    /* â”€â”€ Feature grid â”€â”€ */
-    .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-    .feat-grid--2col { grid-template-columns: repeat(2, 1fr); }
-
-    .feat-card {
+    /* Visual card (right side) */
+    .feat-visual {
       background: var(--bg-3);
       border: 1px solid var(--border);
       border-radius: var(--r-lg);
-      padding: 1.75rem 2rem;
+      padding: 2.5rem;
       display: flex;
       flex-direction: column;
-      gap: .75rem;
-      transition: border-color var(--t-mid), box-shadow var(--t-mid), transform var(--t-mid);
-    }
-    .feat-card:hover {
-      border-color: rgba(62,207,142,.3);
-      box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(62,207,142,.08);
-      transform: translateY(-2px);
-    }
-    .feat-card--highlight {
-      background: linear-gradient(135deg, rgba(62,207,142,.1) 0%, rgba(62,207,142,.04) 100%);
-      border-color: rgba(62,207,142,.3);
-    }
-    .feat-card__icon {
-      width: 44px;
-      height: 44px;
-      background: rgba(62,207,142,.12);
-      border: 1px solid rgba(62,207,142,.2);
-      border-radius: var(--r-sm);
-      display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent);
-      flex-shrink: 0;
+      gap: 1.5rem;
+      min-height: 320px;
+      text-align: center;
     }
-    .feat-card__title { font-size: 1rem; font-weight: 700; color: var(--text-1); line-height: 1.3; }
-    .feat-card__desc { font-size: .875rem; color: var(--text-2); line-height: 1.65; }
-    .feat-card__tag {
-      display: inline-block;
-      font-size: .68rem;
+    .feat-visual__icon {
+      font-size: 3rem;
+      line-height: 1;
+    }
+    .feat-visual__flow {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .feat-visual__step {
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.25);
+      border-radius: var(--r-sm);
+      padding: .5em 1em;
+      font-size: .82rem;
       font-weight: 700;
       color: var(--accent);
-      background: rgba(62,207,142,.1);
-      border: 1px solid rgba(62,207,142,.2);
+    }
+    .feat-visual__arrow {
+      color: var(--text-3);
+      font-size: .9rem;
+    }
+    .feat-visual__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      justify-content: center;
+    }
+    .feat-visual__tag {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--text-2);
+      background: var(--bg-2);
+      border: 1px solid var(--border);
       border-radius: 99px;
-      padding: .2em .7em;
-      align-self: flex-start;
-      margin-top: auto;
+      padding: .3em .9em;
     }
-
-    @media (max-width: 900px) {
-      .feat-grid { grid-template-columns: repeat(2, 1fr); }
-      .feat-grid--2col { grid-template-columns: 1fr; }
+    .feat-visual__tag--accent {
+      color: var(--accent);
+      background: rgba(62,207,142,.08);
+      border-color: rgba(62,207,142,.2);
     }
-    @media (max-width: 560px) {
-      .feat-grid { grid-template-columns: 1fr; }
-      .page-hero { padding: 90px 0 50px; }
-      .feat-card { padding: 1.25rem 1.35rem; }
+    .feat-visual__big {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: -.03em;
+      line-height: 1;
     }
-
-    /* â”€â”€ Active nav â”€â”€ */
-    .nav__link--active { color: var(--accent) !important; }
-
-    /* â”€â”€ Feature overview strip â”€â”€ */
-    .overview-strip { padding: 3.5rem 0 4rem; background: var(--bg); }
-    .overview-strip__inner { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
-    .overview-chip {
+    .feat-visual__sub {
+      font-size: .82rem;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+    .feat-visual__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .feat-visual__list li {
+      font-size: .85rem;
+      color: var(--text-2);
       display: flex;
       align-items: center;
       gap: .5rem;
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--text-2);
-      background: var(--bg-3);
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      padding: .4em 1em;
-      transition: border-color var(--t-fast), color var(--t-fast);
     }
-    .overview-chip svg { color: var(--accent); }
+    .feat-visual__list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 860px) {
+      .feat-section__inner,
+      .feat-section__inner--reverse { grid-template-columns: 1fr; direction: ltr; gap: 2.5rem; }
+      .feat-visual { min-height: auto; }
+    }
+    @media (max-width: 560px) {
+      .page-hero { padding: 90px 0 50px; }
+    }
+
+    /* Active nav */
+    .nav__link--active { color: var(--accent) !important; }
   </style>
 </head>
 <body>
@@ -236,7 +267,6 @@
         <div class="nav__megamenu">
           <a href="funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
           <a href="integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
-
           <a href="faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar p&aring; de hyppigste sp&oslash;rgsm&aring;l</span></a>
           <a href="om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
           <a href="medarbejdere.html" class="nav__mega-item"><strong>Teamet</strong><span>M&oslash;d folkene bag systemet</span></a>
@@ -256,400 +286,213 @@
   </nav>
 </header>
 
-<!-- PAGE HERO -->
+<!-- HERO -->
 <section class="page-hero" id="hero">
-  <div class="container page-hero__inner">
-
-    <!-- VENSTRE: tekst -->
-    <div class="page-hero__content reveal">
+  <div class="container">
+    <div class="reveal" style="max-width:680px">
       <div class="eyebrow">Funktioner</div>
-      <h1>Det her er ikke bare funktioner.<br><span class="text-accent">Det er det, der f&aring;r lageret til at k&oslash;re.</span></h1>
-      <p class="page-hero__sub">F&aelig;rre fejl. Kortere ruter. Mere overblik.<br>Alt inkluderet fra dag &eacute;t. Ingen tilk&oslash;bsmoduler.</p>
-      <div class="page-hero__badges">
-        <span class="page-hero__badge">&#10003; Klar p&aring; &eacute;n dag</span>
-        <span class="page-hero__badge">&#10003; 0 pakkefejl</span>
-        <span class="page-hero__badge">&#10003; 3x hurtigere pluk</span>
-        <span class="page-hero__badge">&#10003; Dansk support 24/7</span>
-      </div>
-    </div>
-
-    <!-- H&Oslash;JRE: video loop -->
-    <div class="page-hero__visual reveal reveal--delay">
-      <div class="page-hero__video-glow"></div>
-      <div class="page-hero__video-wrap">
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/0zMl2hw5PzE?autoplay=1&mute=1&loop=1&playlist=0zMl2hw5PzE&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&disablekb=1"
-          title="SmartPack WMS demo"
-          frameborder="0"
-          allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
-          class="page-hero__iframe"
-        ></iframe>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- STAT STRIP -->
-<div class="stat-strip">
-  <div class="container">
-    <div class="stat-strip__inner reveal">
-      <div class="stat-item">
-        <div class="stat-item__num">0</div>
-        <div class="stat-item__lbl">Pakkefejl med scan-verificering</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-item__num">40+</div>
-        <div class="stat-item__lbl">Integrationer klar fra dag &eacute;t</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-item__num">3&times;</div>
-        <div class="stat-item__lbl">Hurtigere pluk med korteste vej</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-item__num">24/7</div>
-        <div class="stat-item__lbl">Support. Ogs&aring; kl. 3 om natten.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- OVERVIEW CHIPS -->
-<div class="overview-strip">
-  <div class="container">
-    <div class="overview-strip__inner reveal">
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        A* plukruter
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Multipluk
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Scan-verificering
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Labelprint
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Returh&aring;ndtering
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Live dashboard
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Batchordrer
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        40+ integrationer
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Zonepluk
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Automatisk booking
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Lagert&aelig;lling
-      </span>
-      <span class="overview-chip">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        SOS-support 24/7
-      </span>
-    </div>
-  </div>
-</div>
-
-<!-- KATEGORI 1: PLUK & PAK -->
-<section class="feat-category" id="pluk-pak">
-  <div class="container">
-    <div class="feat-category__header reveal">
-      <div class="feat-category__label">
-        <span class="feat-category__label-dot"></span>
-        Pluk &amp; pak
-      </div>
-      <h2 class="feat-category__title">Hurtigere pluk. F&aelig;rre fejl. Mindre g&aring;afstand.</h2>
-      <p class="feat-category__desc">Det her er kernen. Den korteste vej til varen, og sikkerhed for at den rigtige vare havner i den rigtige pakke. Hver gang.</p>
-    </div>
-    <div class="feat-grid reveal">
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/><circle cx="9" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="7" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>
-        </div>
-        <div class="feat-card__title">Korteste vej til varen. Altid.</div>
-        <div class="feat-card__desc">Systemet finder den korteste rute for hvert pluk. F&aelig;rre skridt, flere ordrer p&aring; samme tid. Ruten opdateres automatisk n&aring;r lageret &aelig;ndrer sig.</div>
-        <span class="feat-card__tag">Kerne-funktion</span>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </div>
-        <div class="feat-card__title">Scanner du forkert, stopper systemet dig</div>
-        <div class="feat-card__desc">Varen scannes f&oslash;r den l&aelig;gges i kassen. Forkert vare? Du f&aring;r besked med det samme. Resultatet: nul pakkefejl.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="feat-card__title">Pluk flere ordrer p&aring; &eacute;n tur</div>
-        <div class="feat-card__desc">Systemet fort&aelig;ller pr&aelig;cist hvad der skal i hvilken kasse. Du t&aelig;nker ikke over r&aelig;kkef&oslash;lgen. S&aelig;rligt n&aring;r det er travlt.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg>
-        </div>
-        <div class="feat-card__title">Del lageret i zoner</div>
-        <div class="feat-card__desc">Tildel plukopgaver til medarbejdere i den rigtige zone. Mindre krydsende trafik, bedre overblik. Giver mening n&aring;r lageret er stort nok.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        </div>
-        <div class="feat-card__title">Saml ordrer, pluk dem samlet</div>
-        <div class="feat-card__desc">Ordrer med f&aelig;lles varer plukkes p&aring; &eacute;n tur. F&aelig;rre plukture, h&oslash;jere kapacitet. Uden flere folk.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-        </div>
-        <div class="feat-card__title">Fragtlabel printes n&aring;r du er f&aelig;rdig</div>
-        <div class="feat-card__desc">Ordren pakkes, labelen printes. Ingen copy-paste fra fragtportaler. GLS, PostNord, DAO og de andre er klar.</div>
-      </div>
-
+      <h1>Funktioner der faktisk g&oslash;r en forskel<br><span class="text-accent">i hverdagen</span></h1>
+      <p class="page-hero__sub">SmartPack er ikke bygget til at se godt ud i en demo.<br>Det er bygget til at f&aring; dit lager til at k&oslash;re.<br><strong>Mindre fejl. Mindre rod. Mere fart.</strong></p>
+      <a href="kontakt.html" class="btn btn--primary btn--xl">Lad os se p&aring; dit setup &rarr;</a>
     </div>
   </div>
 </section>
 
-<!-- KATEGORI 2: ORDREH&Aring;NDTERING -->
-<section class="feat-category feat-category--alt" id="ordre">
+
+<!-- A: PLUK UDEN FEJL -->
+<section class="feat-section">
   <div class="container">
-    <div class="feat-category__header reveal">
-      <div class="feat-category__label">
-        <span class="feat-category__label-dot"></span>
-        Ordreh&aring;ndtering
+    <div class="feat-section__inner reveal">
+      <div>
+        <div class="feat-section__label"><span class="feat-section__label-dot"></span> Pluk</div>
+        <h2 class="feat-section__title">Pluk uden fejl<br>(og uden at t&aelig;nke for meget)</h2>
+        <p class="feat-section__desc">N&aring;r der er travlt, sker fejlene.<br><br>SmartPack guider dig gennem plukket - step for step - med scanning hele vejen. Du ved altid hvad du skal tage, og hvor det ligger.</p>
+        <ul class="feat-benefits">
+          <li><span class="feat-benefits__dot"></span> Mindre opl&aelig;ring</li>
+          <li><span class="feat-benefits__dot"></span> F&aelig;rre fejlpluk</li>
+          <li><span class="feat-benefits__dot"></span> Hurtigere flow</li>
+        </ul>
       </div>
-      <h2 class="feat-category__title">Alle ordrer. &Eacute;t sted. Altid opdateret.</h2>
-      <p class="feat-category__desc">Ordrer fra alle webshops samles automatisk. Du slipper for at skifte mellem systemer, og du mister ikke overblikket n&aring;r det g&aring;r st&aelig;rkt.</p>
-    </div>
-    <div class="feat-grid reveal">
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <div class="feat-visual">
+        <div class="feat-visual__icon">&#128270;</div>
+        <div class="feat-visual__flow">
+          <span class="feat-visual__step">Scan lokation</span>
+          <span class="feat-visual__arrow">&rarr;</span>
+          <span class="feat-visual__step">Scan vare</span>
+          <span class="feat-visual__arrow">&rarr;</span>
+          <span class="feat-visual__step">N&aelig;ste pluk</span>
         </div>
-        <div class="feat-card__title">Se alt i &eacute;n liste</div>
-        <div class="feat-card__desc">Alle ordrer fra alle shops, i &eacute;n liste. Filtr&eacute;r p&aring; status, dato, butik. Du ved hvad der venter og hvad der er afsendt.</div>
+        <div class="feat-visual__sub">Guidet. Verificeret. Hver gang.</div>
       </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="feat-card__title">Ordrer fordeles automatisk</div>
-        <div class="feat-card__desc">Nye ordrer hentes og tildeles plukopgaver uden du g&oslash;r noget. S&aelig;t regler: hasteordrer &oslash;verst, store ordrer til bestemte folk.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
-        <div class="feat-card__title">Retur? Scan den ind igen.</div>
-        <div class="feat-card__desc">Tilbage p&aring; hylden, kasseres eller karant&aelig;ne. Lagerbeholdningen opdateres med det samme. Kreditnota sendes automatisk.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M4 4l17 17"/></svg>
-        </div>
-        <div class="feat-card__title">Split ordrer uden b&oslash;vl</div>
-        <div class="feat-card__desc">Del ordrer automatisk n&aring;r det giver mening. Restordre, dropship eller flere lokationer. Systemet holder styr p&aring; det hele.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <div class="feat-card__title">Status der faktisk giver mening</div>
-        <div class="feat-card__desc">Se hvor ordren er. Lige nu. Ikke bare &ldquo;plukket&rdquo; eller &ldquo;sendt&rdquo;. Du ved hvad der sker.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 7h10M7 11h6"/></svg>
-        </div>
-        <div class="feat-card__title">Se hvem der plukkede hvad, og hvorn&aring;r</div>
-        <div class="feat-card__desc">Fuld historik p&aring; hver ordre. Hvem plukkede, hvorn&aring;r blev den pakket, hvilken label. Brugbart ved reklamationer og kvalitetskontrol.</div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- KATEGORI 3: INTEGRATIONER -->
-<section class="feat-category" id="integrationer">
+
+<!-- B: F&Aring; STYR P&Aring; LAGERET -->
+<section class="feat-section feat-section--alt">
   <div class="container">
-    <div class="feat-category__header reveal">
-      <div class="feat-category__label">
-        <span class="feat-category__label-dot"></span>
-        Integrationer
+    <div class="feat-section__inner feat-section__inner--reverse reveal">
+      <div>
+        <div class="feat-section__label"><span class="feat-section__label-dot"></span> Lagerstyring</div>
+        <h2 class="feat-section__title">F&aring; styr p&aring; lageret<br>(uden at lede)</h2>
+        <p class="feat-section__quote">&quot;Vi har den p&aring; lager... tror jeg&quot;</p>
+        <p class="feat-section__desc">Den s&aelig;tning forsvinder.<br><br>Med SmartPack ved du hvad du har, hvor det ligger, og hvad der er p&aring; vej.</p>
+        <ul class="feat-benefits">
+          <li><span class="feat-benefits__dot"></span> Ingen g&aelig;t</li>
+          <li><span class="feat-benefits__dot"></span> Ingen dobbeltarbejde</li>
+          <li><span class="feat-benefits__dot"></span> Ingen &quot;vi m&aring; lige tjekke&quot;</li>
+        </ul>
       </div>
-      <h2 class="feat-category__title">Forbind webshop, fragt og ERP. Uden projekt.</h2>
-      <p class="feat-category__desc">Det virker med det I allerede har. Typisk sat op p&aring; under 2 minutter pr. integration.</p>
-    </div>
-    <div class="feat-grid reveal">
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        </div>
-        <div class="feat-card__title">Minutter, ikke uger</div>
-        <div class="feat-card__desc">Shopify, WooCommerce, Magento, PrestaShop. GLS, PostNord, DAO, DHL. Klar ud af boksen. Har du noget specielt? Sp&oslash;rg.</div>
-        <span class="feat-card__tag">Popul&aelig;r</span>
+      <div class="feat-visual">
+        <div class="feat-visual__icon">&#128230;</div>
+        <ul class="feat-visual__list">
+          <li>Hvad du har</li>
+          <li>Hvor det ligger</li>
+          <li>Hvad der er p&aring; vej</li>
+          <li>Hvad der skal genbestilles</li>
+        </ul>
+        <div class="feat-visual__sub">Realtid. Ikke et ark fra i g&aring;r.</div>
       </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        </div>
-        <div class="feat-card__title">ERP synkroniserer automatisk</div>
-        <div class="feat-card__desc">Ordrer, lagerstatus og fakturaer synkroniseres med dit ERP. De mest brugte danske systemer er klar. Har du noget eget? &Aring;ben API.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-        </div>
-        <div class="feat-card__title">Scan med hvad du har</div>
-        <div class="feat-card__desc">Telefon eller h&aring;ndterminal. Ingen speciel hardware kr&aelig;vet. Foretr&aelig;kker du en dedikeret scanner? Den virker ogs&aring;.</div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- KATEGORI 4: RAPPORTERING -->
-<section class="feat-category feat-category--alt" id="rapportering">
+
+<!-- C: PAK HURTIGT -->
+<section class="feat-section">
   <div class="container">
-    <div class="feat-category__header reveal">
-      <div class="feat-category__label">
-        <span class="feat-category__label-dot"></span>
-        Rapportering
+    <div class="feat-section__inner reveal">
+      <div>
+        <div class="feat-section__label"><span class="feat-section__label-dot"></span> Pakning</div>
+        <h2 class="feat-section__title">Pak hurtigt - ogs&aring; n&aring;r det br&aelig;nder p&aring;</h2>
+        <p class="feat-section__desc">N&aring;r ordrene v&aelig;lter ind, er det ikke systemet der m&aring; v&aelig;re flaskehalsen.<br><br>SmartPack g&oslash;r pakningen simpel:<br>Scan &rarr; pak &rarr; print label. F&aelig;rdig.</p>
+        <ul class="feat-benefits">
+          <li><span class="feat-benefits__dot"></span> Hurtigere ekspedition</li>
+          <li><span class="feat-benefits__dot"></span> Mindre stress</li>
+          <li><span class="feat-benefits__dot"></span> Samme flow - ogs&aring; p&aring; Black Friday</li>
+        </ul>
       </div>
-      <h2 class="feat-category__title">Data du faktisk kan bruge til noget</h2>
-      <p class="feat-category__desc">Se hvad der fungerer, hvad der bremser, og hvorn&aring;r du er ved at l&oslash;be t&oslash;r. Uden at eksportere noget f&oslash;rst.</p>
-    </div>
-    <div class="feat-grid feat-grid--2col reveal">
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <div class="feat-visual">
+        <div class="feat-visual__icon">&#9889;</div>
+        <div class="feat-visual__flow">
+          <span class="feat-visual__step">Scan</span>
+          <span class="feat-visual__arrow">&rarr;</span>
+          <span class="feat-visual__step">Pak</span>
+          <span class="feat-visual__arrow">&rarr;</span>
+          <span class="feat-visual__step">Print label</span>
         </div>
-        <div class="feat-card__title">Live dashboard</div>
-        <div class="feat-card__desc">Ordrer i k&oslash;, pakket, afsendt. Pluktid, fejlrate, medarbejderpraestationer. Alt opdateres l&oslash;bende. Ingen eksport.</div>
+        <div class="feat-visual__sub">3 trin. Ingen tvivl. Ingen flaskehals.</div>
       </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        </div>
-        <div class="feat-card__title">Se pr&aelig;cis hvad der er p&aring; lager</div>
-        <div class="feat-card__desc">Beholdning pr. lokation. Filtr&eacute;r p&aring; kategori, leverand&oslash;r, minimum. Systemet advarer n&aring;r en vare er ved at l&oslash;be t&oslash;r.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        </div>
-        <div class="feat-card__title">Rapporter og eksport</div>
-        <div class="feat-card__desc">Uge, m&aring;ned eller custom interval. Eksport&eacute;r til Excel eller send til mail. Brugbart til bogf&oslash;ring og opf&oslash;lgning.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <div class="feat-card__title">T&aelig;l lageret uden at stoppe driften</div>
-        <div class="feat-card__desc">Opt&aelig;lling direkte fra scanneren. Systemet markerer hvad der er talt og finder afvigelser automatisk.</div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- KATEGORI 5: SUPPORT -->
-<section class="feat-category" id="support">
+
+<!-- D: INTEGRATIONER -->
+<section class="feat-section feat-section--alt">
   <div class="container">
-    <div class="feat-category__header reveal">
-      <div class="feat-category__label">
-        <span class="feat-category__label-dot"></span>
-        Support
+    <div class="feat-section__inner feat-section__inner--reverse reveal">
+      <div>
+        <div class="feat-section__label"><span class="feat-section__label-dot"></span> Integrationer</div>
+        <h2 class="feat-section__title">Integrationer der virker<br>i praksis</h2>
+        <p class="feat-section__desc">Shopify, WooCommerce, fragt, betaling...<br>Det skal bare spille.<br><br>SmartPack er bygget til at passe ind i dit setup - ikke omvendt. Og vi har gjort det mange gange f&oslash;r.</p>
+        <ul class="feat-benefits">
+          <li><span class="feat-benefits__dot"></span> Hurtig ops&aelig;tning</li>
+          <li><span class="feat-benefits__dot"></span> F&aelig;rre overraskelser</li>
+          <li><span class="feat-benefits__dot"></span> Det virker fra start</li>
+        </ul>
       </div>
-      <h2 class="feat-category__title">Du kan ringe. Ogs&aring; kl. 3 om natten.</h2>
-      <p class="feat-category__desc">Vi kender dit setup, fordi vi var med til at s&aelig;tte det op.<br>Hvis det br&aelig;nder p&aring;, v&aelig;kker du os. Vi g&oslash;r hvad vi kan.</p>
-    </div>
-    <div class="feat-grid reveal">
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <div class="feat-visual">
+        <div class="feat-visual__icon">&#128279;</div>
+        <div class="feat-visual__tags">
+          <span class="feat-visual__tag feat-visual__tag--accent">Shopify</span>
+          <span class="feat-visual__tag feat-visual__tag--accent">WooCommerce</span>
+          <span class="feat-visual__tag">Magento</span>
+          <span class="feat-visual__tag">DanDomain</span>
+          <span class="feat-visual__tag feat-visual__tag--accent">PostNord</span>
+          <span class="feat-visual__tag feat-visual__tag--accent">GLS</span>
+          <span class="feat-visual__tag">DAO</span>
+          <span class="feat-visual__tag">Bring</span>
+          <span class="feat-visual__tag feat-visual__tag--accent">e-conomic</span>
+          <span class="feat-visual__tag">Dinero</span>
+          <span class="feat-visual__tag">REST API</span>
         </div>
-        <div class="feat-card__title">SOS-support 24/7</div>
-        <div class="feat-card__desc">Ring midt om natten under Black Friday. Vi svarer. Vi har en SOS-linje til kritiske situationer. Vores folk kender systemet, ikke bare et script.</div>
-        <span class="feat-card__tag">Altid inkluderet</span>
+        <div class="feat-visual__sub">40+ integrationer. <a href="integrationer.html" style="color:var(--accent)">Se dem alle &rarr;</a></div>
       </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        </div>
-        <div class="feat-card__title">Dansk support. P&aring; dansk.</div>
-        <div class="feat-card__desc">Ingen udenlandsk helpdesk. Vores folk sidder i Danmark og taler dit sprog.</div>
-      </div>
-
-      <div class="feat-card">
-        <div class="feat-card__icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </div>
-        <div class="feat-card__title">Vi sidder med dig til det virker</div>
-        <div class="feat-card__desc">Vi importerer varer, s&aelig;tter lokationer op og forbinder systemer. De fleste er i gang inden for &eacute;n dag.</div>
-      </div>
-
     </div>
   </div>
 </section>
+
+
+<!-- E: OVERBLIK -->
+<section class="feat-section">
+  <div class="container">
+    <div class="feat-section__inner reveal">
+      <div>
+        <div class="feat-section__label"><span class="feat-section__label-dot"></span> Overblik</div>
+        <h2 class="feat-section__title">Overblik uden Excel-kaos</h2>
+        <p class="feat-section__desc">Du beh&oslash;ver ikke 5 systemer og 3 ark for at f&oslash;lge med.<br><br>SmartPack giver dig et klart billede af ordrer, lager og flow.</p>
+        <ul class="feat-benefits">
+          <li><span class="feat-benefits__dot"></span> Tag beslutninger hurtigt</li>
+          <li><span class="feat-benefits__dot"></span> Se problemer f&oslash;r de vokser</li>
+          <li><span class="feat-benefits__dot"></span> Slip for manuelle hacks</li>
+        </ul>
+      </div>
+      <div class="feat-visual">
+        <div class="feat-visual__icon">&#128202;</div>
+        <ul class="feat-visual__list">
+          <li>Ordrer i realtid</li>
+          <li>Lagerstatus pr. lokation</li>
+          <li>Plukperformance</li>
+          <li>Forsendelser og tracking</li>
+        </ul>
+        <div class="feat-visual__sub">&Eacute;t dashboard. Ikke fem faner.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- F: BYGGET TIL MENNESKER -->
+<section class="feat-section feat-section--alt">
+  <div class="container">
+    <div class="feat-section__inner feat-section__inner--reverse reveal">
+      <div>
+        <div class="feat-section__label"><span class="feat-section__label-dot"></span> Brugervenlighed</div>
+        <h2 class="feat-section__title">Bygget til mennesker<br>- ikke kun systemer</h2>
+        <p class="feat-section__desc">Et godt system er ikke noget, du skal l&aelig;re at leve med. Det skal bare fungere.<br><br>SmartPack er lavet, s&aring; nye medarbejdere kan v&aelig;re i gang hurtigt - og s&aring; hverdagen bare glider.</p>
+        <ul class="feat-benefits">
+          <li><span class="feat-benefits__dot"></span> Kort opl&aelig;ring</li>
+          <li><span class="feat-benefits__dot"></span> F&aelig;rre sp&oslash;rgsm&aring;l</li>
+          <li><span class="feat-benefits__dot"></span> Mere selvk&oslash;rende drift</li>
+        </ul>
+      </div>
+      <div class="feat-visual">
+        <div class="feat-visual__big">&lt; 1 dag</div>
+        <div class="feat-visual__sub">Gennemsnitlig opl&aelig;ringstid.<br>De fleste er i gang p&aring; f&aring; timer.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- CTA -->
 <section class="cta-section" id="cta">
   <div class="container">
     <div class="cta-section__inner reveal">
       <div class="eyebrow">Klar til en snak?</div>
-      <h2>Se om det virker med jeres setup.</h2>
+      <h2>Vil du se hvordan det ville fungere hos jer?</h2>
       <p>Vi kigger p&aring; jeres flow, s&aelig;tter det op og s&oslash;rger for det k&oslash;rer. De fleste er i gang p&aring; &eacute;n dag.</p>
       <div class="cta-section__actions">
-        <a href="kontakt.html" class="btn btn--primary btn--xl">Sp&oslash;rg os om jeres flow</a>
+        <a href="kontakt.html" class="btn btn--primary btn--xl">Lad os se p&aring; dit setup &rarr;</a>
         <a href="tel:+4588202019" class="btn btn--ghost btn--xl js-phone-cta" style="display:none">Ring til os</a>
         <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--ghost btn--xl">Send en mail</a>
       </div>
       <div class="cta-section__reassurance">
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
-        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Akut? Tast 9.</span>
       </div>
     </div>
   </div>
@@ -699,7 +542,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <p>&copy; 2026 SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p>
+      <p>&copy; <span id="copy-year">2026</span> SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p>
       <div class="footer__badges">
         <span class="footer__badge">E-handel siden 2005</span>
         <span class="footer__badge">Medlem af Dansk Erhverv</span>
@@ -716,4 +559,3 @@
 
 </body>
 </html>
-
