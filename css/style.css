@@ -3006,9 +3006,14 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   }
 }
 
-/* Integration logos – light: keep logos visible, no blackout */
-:root:not([data-theme="dark"]) .int-logo img,
-:root:not([data-theme="dark"]) .int-hub__card img {
+/* Integration logos – light mode */
+:root:not([data-theme="dark"]) .int-logo--dark,
+:root:not([data-theme="dark"]) .int-hub__card--dark {
+  background: #1a2230;
+  border-color: rgba(255,255,255,.08);
+}
+:root:not([data-theme="dark"]) .int-logo--dark img,
+:root:not([data-theme="dark"]) .int-hub__card--dark img {
   filter: none;
 }
 :root:not([data-theme="dark"]) .int-logo {
