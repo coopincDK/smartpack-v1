@@ -2924,6 +2924,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 :root:not([data-theme="dark"]) .footer .text-accent { color: #3ecf8e; }
 :root:not([data-theme="dark"]) .footer__badge {
+  background: #1d2530;
   border-color: rgba(255,255,255,.1);
   color: rgba(255,255,255,.6);
 }
@@ -2946,9 +2947,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 :root:not([data-theme="dark"]) .selfstart::before { opacity: 0.5; }
 
-/* Case card featured visual – light */
+/* Case card featured visual – keep dark in both modes */
 :root:not([data-theme="dark"]) .case-card__featured-visual {
-  background: #f0f4f2;
+  background: #060e0a;
+}
+:root:not([data-theme="dark"]) .case-card__featured-stat {
+  background: rgba(6,14,10,.92);
+  color: #fff;
+}
+:root:not([data-theme="dark"]) .case-card__featured-stat strong {
+  color: #3ecf8e;
+}
+:root:not([data-theme="dark"]) .case-card__featured-stat span {
+  color: rgba(255,255,255,.7);
 }
 
 /* Solution mockup – light */
