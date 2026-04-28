@@ -44,17 +44,6 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css?v=2">
-  <style>
-    /* Hero shrinks to fit trust-bar in viewport */
-    .hero { min-height: calc(100svh - 140px) !important; }
-    .trust-bar { padding: .75rem 0 !important; }
-    @media (max-width: 860px) {
-      .proof-metrics [style*="grid-template-columns"] { grid-template-columns: repeat(2, 1fr) !important; gap: 1.5rem !important; }
-    }
-    @media (max-width: 480px) {
-      .proof-metrics [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
-    }
-  </style>
 
   <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
   <script type="application/ld+json">
@@ -181,31 +170,6 @@ Du vokser.<br>
         <a href="kontakt.html" class="btn btn--primary btn--lg">Lad os se p&aring; dit setup &rarr;</a>
         <a href="#solution" class="btn btn--ghost btn--lg">Se hvad det kan</a>
       </div>
-      <div class="hero__proof">
-        <div class="hero__proof-item">
-          <strong class="text-accent">42%</strong>
-          <span>flere ordrer</span>
-          <em>Black Friday &middot; Batteribyen</em>
-        </div>
-        <div class="hero__proof-divider"></div>
-        <div class="hero__proof-item">
-          <strong class="text-accent">4x</strong>
-          <span>hurtigere pluk</span>
-          <em>Maya Freya</em>
-        </div>
-        <div class="hero__proof-divider"></div>
-        <div class="hero__proof-item">
-          <strong class="text-accent">~0</strong>
-          <span>pakkefejl</span>
-          <em>Totteland</em>
-        </div>
-        <div class="hero__proof-divider"></div>
-        <div class="hero__proof-item">
-          <strong class="text-accent">~7 dage</strong>
-<span>typisk go-live</span>
-           <em>Standard B2C setup</em>
-        </div>
-      </div>
     </div>
     <div class="hero__visual reveal reveal--delay">
       <div class="hero__composition">
@@ -272,6 +236,31 @@ Du vokser.<br>
       </div>
     </div>
   </div>
+  <div class="hero__proof" style="justify-content:center;margin-top:2rem;margin-bottom:2.5rem">
+    <div class="hero__proof-item" style="text-align:center">
+      <strong class="text-accent">42%</strong>
+      <span>flere ordrer</span>
+      <em>Black Friday &middot; Batteribyen</em>
+    </div>
+    <div class="hero__proof-divider"></div>
+    <div class="hero__proof-item" style="text-align:center">
+      <strong class="text-accent">4x</strong>
+      <span>hurtigere pluk</span>
+      <em>Maya Freya</em>
+    </div>
+    <div class="hero__proof-divider"></div>
+    <div class="hero__proof-item" style="text-align:center">
+      <strong class="text-accent">~0</strong>
+      <span>pakkefejl</span>
+      <em>Totteland</em>
+    </div>
+    <div class="hero__proof-divider"></div>
+    <div class="hero__proof-item" style="text-align:center">
+      <strong class="text-accent">~7 dage</strong>
+      <span>typisk go-live</span>
+      <em>Standard B2C setup</em>
+    </div>
+  </div>
 <!-- LOGO KARUSEL -->
 <div class="hero__logos-wrap">
     <div class="logo-carousel">
@@ -300,6 +289,7 @@ Du vokser.<br>
         <img src="assets/Pitaya-logo--400x225.png"        alt="Pitaya"            class="hero__logo-img">
         <img src="assets/littleunbox-logo.png"            alt="Little Unbox"      class="hero__logo-img">
         <img src="assets/batteribyen-logo.png"     alt="Batteribyen"       class="hero__logo-img">
+        <img src="assets/ume-asian-supermarket-logo.png" alt="Ume Asian Supermarket" class="hero__logo-img">
         <!-- S&aelig;t 2 (kopi for seamless loop) -->
         <img src="assets/totteland-removebg.png"                      alt=""  class="hero__logo-img" aria-hidden="true">
         <img src="assets/Maya_Freya_Logo_Sort-2.svg"                  alt=""  class="hero__logo-img" aria-hidden="true">
@@ -324,14 +314,15 @@ Du vokser.<br>
         <img src="assets/Pitaya-logo--400x225.png"                     alt="" class="hero__logo-img" aria-hidden="true">
         <img src="assets/littleunbox-logo.png"                         alt="" class="hero__logo-img" aria-hidden="true">
         <img src="assets/batteribyen-logo.png"                  alt="" class="hero__logo-img" aria-hidden="true">
+        <img src="assets/ume-asian-supermarket-logo.png"          alt="" class="hero__logo-img" aria-hidden="true">
       </div>
     </div>
-
 </div>
 </section>
 
+
 <!-- TRUST BAR -->
-<section class="trust-bar" style="padding:clamp(1rem,2vw,1.5rem) 0">
+<section class="trust-bar">
   <div class="container">
     <div class="trust-bar__inner">
       <div class="trust-bar__item reveal"><svg class="trust-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg><div><strong>E-handel siden 2005</strong><span>Ikke teori. Praksis.</span></div></div>
@@ -391,7 +382,6 @@ Du vokser.<br>
     </div>
   </div>
 </section>
-
 
 <!-- SOLUTION -->
 <section class="solution" id="solution">
