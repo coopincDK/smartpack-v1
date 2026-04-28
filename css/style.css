@@ -2947,9 +2947,11 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 :root:not([data-theme="dark"]) .selfstart::before { opacity: 0.5; }
 
-/* Case card featured visual – keep dark in both modes */
+/* Case card featured visual – keep dark, soften edges in light */
 :root:not([data-theme="dark"]) .case-card__featured-visual {
   background: #060e0a;
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
+  margin: -1px -1px -1px 0;
 }
 :root:not([data-theme="dark"]) .case-card__featured-stat {
   background: rgba(6,14,10,.92);
