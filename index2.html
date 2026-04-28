@@ -44,6 +44,80 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css?v=2">
+  <style>
+    /* ========== LIGHT THEME ========== */
+    :root {
+      --bg:           #ffffff;
+      --bg-2:         #f8faf9;
+      --bg-3:         #f0f4f2;
+      --surface:      #f5f7f6;
+      --surface-2:    #edf0ee;
+      --border:       rgba(0,0,0,0.08);
+      --border-2:     rgba(0,0,0,0.12);
+      --accent:       #1a8a5a;
+      --accent-dark:  #15734b;
+      --accent-glow:  rgba(26,138,90,0.1);
+      --accent-glow2: rgba(26,138,90,0.05);
+      --text-1:       #1a1f25;
+      --text-2:       #4a5568;
+      --text-3:       #718096;
+    }
+    body { background: #fff; color: var(--text-1); }
+
+    /* Nav */
+    .site-header { background: rgba(255,255,255,0.92) !important; backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav__link { color: var(--text-1) !important; }
+    .btn--cta-nav { background: var(--accent) !important; color: #fff !important; }
+
+    /* Hero */
+    .hero { background: linear-gradient(180deg, #f0f7f3 0%, #fff 100%) !important; }
+    .hero__bg { opacity: 0.04 !important; }
+    .eyebrow { background: rgba(26,138,90,0.1) !important; color: var(--accent) !important; border-color: rgba(26,138,90,0.2) !important; }
+    .btn--primary { background: var(--accent) !important; color: #fff !important; }
+    .btn--primary:hover { background: var(--accent-dark) !important; }
+    .btn--ghost { background: transparent !important; border: 2px solid var(--border-2) !important; color: var(--text-1) !important; }
+
+    /* Logo carousel */
+    .hero__logos-wrap { border-top: 1px solid var(--border) !important; background: var(--bg-2) !important; }
+    .hero__logo-img { filter: brightness(0) opacity(0.45) !important; }
+
+    /* Trust bar */
+    .trust-bar { background: var(--bg-2) !important; border-color: var(--border) !important; }
+    .trust-bar__icon { color: var(--accent) !important; }
+
+    /* Problem cards */
+    .problem__card { background: var(--bg-2) !important; border-color: var(--border) !important; }
+    .problem__icon { opacity: 0.8; }
+
+    /* Solution */
+    .solution { background: var(--bg-2) !important; }
+    .solution__step { background: #fff !important; border: 1px solid var(--border) !important; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+
+    /* Cases */
+    .case-card { background: var(--bg-2) !important; border-color: var(--border) !important; }
+
+    /* Feature overview */
+    .feat-group { background: var(--bg-2) !important; border-color: var(--border) !important; }
+
+    /* CTA */
+    .cta-section { background: var(--bg-2) !important; }
+
+    /* Footer stays dark */
+    .footer { background: #1a1f25 !important; color: #94a3b8 !important; }
+    .footer * { color: inherit !important; }
+    .footer .text-accent { color: #3ecf8e !important; }
+    .footer__badge { border-color: rgba(255,255,255,.1) !important; color: rgba(255,255,255,.6) !important; }
+
+    /* Buttons */
+    .btn--outline { border-color: var(--accent) !important; color: var(--accent) !important; }
+
+    /* Hero badges */
+    .hero__badge { background: rgba(26,138,90,0.1) !important; color: var(--accent) !important; border-color: rgba(26,138,90,0.2) !important; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar-track { background: var(--bg-2); }
+    ::-webkit-scrollbar-thumb { background: var(--border-2); }
+  </style>
 
   <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
   <script type="application/ld+json">
