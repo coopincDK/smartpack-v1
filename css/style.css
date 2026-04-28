@@ -2982,6 +2982,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   }
 }
 
+/* Integration logos – light: invert white logos to dark */
+:root:not([data-theme="dark"]) .int-logo img,
+:root:not([data-theme="dark"]) .int-hub__card img {
+  filter: brightness(0) opacity(0.7);
+}
+:root:not([data-theme="dark"]) .int-logo {
+  background: var(--bg-2);
+}
+:root:not([data-theme="dark"]) .int-logo:hover {
+  background: var(--bg-3);
+  border-color: var(--accent);
+}
+
 /* Dark mode nav (matches original) */
 [data-theme="dark"] .site-header {
   background: rgba(9,12,15,.97);
