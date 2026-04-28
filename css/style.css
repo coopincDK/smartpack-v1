@@ -2934,6 +2934,43 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
 
+/* Flow knæk – light */
+:root:not([data-theme="dark"]) .flow-break {
+  background: linear-gradient(180deg, var(--bg) 0%, #e8f0ec 50%, var(--bg) 100%);
+}
+:root:not([data-theme="dark"]) .flow-break::before { opacity: 0.3; }
+
+/* Selvstart / CTA – light */
+:root:not([data-theme="dark"]) .selfstart {
+  background: linear-gradient(135deg, #edf2f0 0%, #e8eff0 50%, #edf2f0 100%);
+}
+:root:not([data-theme="dark"]) .selfstart::before { opacity: 0.5; }
+
+/* Case card featured visual – light */
+:root:not([data-theme="dark"]) .case-card__featured-visual {
+  background: #f0f4f2;
+}
+
+/* Solution mockup – light */
+:root:not([data-theme="dark"]) .solution__mockup {
+  background: #f0f4f2;
+  border-color: var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,.08);
+}
+
+/* Site header scrolled – light */
+:root:not([data-theme="dark"]) .site-header.scrolled {
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+/* Mobile nav – light */
+@media (max-width: 860px) {
+  :root:not([data-theme="dark"]) .nav__menu {
+    background: #fff;
+  }
+}
+
 /* Dark mode nav (matches original) */
 [data-theme="dark"] .site-header {
   background: rgba(9,12,15,.97);
