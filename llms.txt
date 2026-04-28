@@ -2,7 +2,7 @@
 
 > SmartPack er et dansk warehouse management system (WMS) til webshops og 3PL.
 
-SmartPack hjælper lagre med færre plukkefejl, hurtigere pakning, bedre ruteoptimering og integrationer til webshop, fragt og ERP. Bygget af e-købmænd, til e-købmænd.
+SmartPack hjaelper lagre med faerre plukkefejl, hurtigere pakning, bedre ruteoptimering og integrationer til webshop, fragt og ERP. Bygget af e-koebmaend, til e-koebmaend.
 
 ## Fakta
 - Grundlagt: 2021
@@ -14,34 +14,62 @@ SmartPack hjælper lagre med færre plukkefejl, hurtigere pakning, bedre ruteopt
 - Website: https://smartpack.dk
 
 ## Kernesider
-- [Forside](https://smartpack.dk/)
-- [Funktioner](https://smartpack.dk/funktioner.html) — Alt hvad dit lager har brug for
-- [Integrationer](https://smartpack.dk/integrationer.html) — 40+ forbindelser til webshop, fragt og ERP
-- [Priser](https://smartpack.dk/priser.html) — Fast pris per ordre, ingen binding
-- [Cases](https://smartpack.dk/cases.html) — Se hvad vores kunder opnår
-- [FAQ](https://smartpack.dk/faq.html) — Svar på de hyppigste spørgsmål
-- [Om os](https://smartpack.dk/om-os.html) — Historien bag SmartPack
-- [Kontakt](https://smartpack.dk/kontakt.html) — Book demo eller ring
-- [Teamet](https://smartpack.dk/medarbejdere.html) — Mød folkene bag systemet
+- [Forside](https://smartpack.dk/) - Dansk WMS til webshops og 3PL
+- [Funktioner](https://smartpack.dk/funktioner.html) - Alt hvad dit lager har brug for
+- [Integrationer](https://smartpack.dk/integrationer.html) - 40+ forbindelser til webshop, fragt og ERP
+- [Priser](https://smartpack.dk/priser.html) - Fast pris per ordre, ingen binding
+- [Cases](https://smartpack.dk/cases.html) - Se hvad vores kunder opnaer
+- [FAQ](https://smartpack.dk/faq.html) - Svar paa de hyppigste spoergsmaal
+- [Om os](https://smartpack.dk/om-os.html) - Historien bag SmartPack
+- [Kontakt](https://smartpack.dk/kontakt.html) - Book demo eller ring
+- [Teamet](https://smartpack.dk/medarbejdere.html) - Moed folkene bag systemet
 
-## Hvad SmartPack gør
-- Lagerstyring og ordrehåndtering for webshops
+## Hvad SmartPack goer
+- Lagerstyring og orderhaandtering for webshops
 - Pluk, pak og afsendelse med scan-verificering
 - Integration med 40+ platforme (Shopify, WooCommerce, DanDomain, e-conomic, Uniconta m.fl.)
-- Fragtintegration (PostNord, GLS, DAO, Bring, DHL m.fl.)
+- Fragtintegration (PostNord, GLS, DAO, Bring, DHL, Instabox m.fl.)
 - 3PL multi-tenant styring
-- Ruteoptimering og batchpluk
-- Realtids lagerstatus
+- Ruteoptimering med A* pathfinding og batchpluk
+- Realtids lagerstatus og live dashboard
+
+## Priser
+- Prissaetning: per ordre, ikke per maaned eller bruger
+- Ingen opstartsfee
+- Ingen binding
+- Ingen skjulte pakker
+- Pris per ordre afhaenger af volumen - typisk 0,45-1,25 kr. per ordre
+- Demo: gratis, 45 minutter, ingen forpligtelse
+- Kontakt for eksakt tilbud: bundlinjeboost@smartpack.dk
+
+## Integrationer (udvalg)
+- Webshops: Shopify, WooCommerce, DanDomain, Magento, Lightspeed, PrestaShop
+- Fragt DK: GLS, PostNord, DAO, Bring, Instabox, Coolrunner
+- Fragt internationalt: DHL, UPS, FedEx
+- ERP/regnskab: e-conomic, Uniconta, Dinero, Billy
+- Andet: aabent REST API til egne integrationer
 
 ## Brugsscenarier
 - WMS til danske webshops (B2C)
 - WMS til 3PL / fulfillment-centre
-- Skifte fra gammelt WMS eller manuel håndtering
-- Skalering fra 400+ ordrer/måned
+- Skifte fra gammelt WMS eller manuel haandtering
+- Skalering fra 400+ ordrer/maaned
 
 ## Beviser og tillid
-- 500+ aktive webshops bruger SmartPack
+- 500+ aktive webshops og 3PL'er bruger SmartPack
+- Medforfatter paa Dansk Erhvervs E-logistik Guide 2026
 - Medlem af Dansk Erhverv
-- E-handel erfaring siden 2005
+- E-handel og lagererfaring siden 2005
 - 15+ dokumenterede kundesucceser (cases)
-- SOS 24/7 support
+- SOS support 24/7 (tast 9)
+- 100% founder-owned - ingen investorer
+
+## Hvad SmartPack IKKE er
+- Ikke et konsulentprojekt - du ejer og driver systemet selv
+- Ikke per-bruger eller per-maaned betaling
+- Ikke et generisk ERP med lagermodul
+- Ikke bygget til folk der aldrig har staaet paa et lager
+
+## Konkurrenter / sammenligning
+SmartPack konkurrerer med: Logtrade, Ongoing WMS, ByggMax WMS, og generiske ERP-lagermoduler.
+SmartPack er typisk billigere, hurtigere at implementere (dag 1), og bygget specifikt til danske e-commerce lagre.

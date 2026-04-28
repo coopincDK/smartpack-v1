@@ -6,24 +6,25 @@
 
   <!-- Primary SEO -->
   <title>Priser | SmartPack WMS uden binding og opstartsfee</title>
-  <meta name="description" content="SmartPack fakturerer per ordre – ikke per måned eller bruger. Ingen opstartsfee, ingen skjulte pakker, ingen binding. Alt er inkluderet. Få et prisestimat på 45 minutter.">
+  <meta name="description" content="SmartPack fakturerer per ordre - ikke per maaned eller bruger. Ingen opstartsfee, ingen skjulte pakker, ingen binding. Alt er inkluderet. Få et prisestimat på 45 minutter.">
   <link rel="canonical" href="https://smartpack.dk/priser.html">
   <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0c1117">
   <meta name="author" content="SmartPack">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://smartpack.dk/priser/">
+  <meta property="og:url" content="https://smartpack.dk/priser.html">
   <meta property="og:site_name" content="SmartPack">
   <meta property="og:locale" content="da_DK">
-  <meta property="og:title" content="Priser – SmartPack WMS | Ingen binding, ingen overraskelser">
+  <meta property="og:title" content="Priser - SmartPack WMS | Ingen binding, ingen overraskelser">
   <meta property="og:description" content="Betaler per ordre. Ingen opstartsfee. Ingen faste pakker du ikke bruger. Alt inkluderet fra dag ét.">
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@SmartPackWMS">
-  <meta name="twitter:title" content="SmartPack priser – betaler per ordre">
+  <meta name="twitter:title" content="SmartPack priser - betaler per ordre">
   <meta name="twitter:description" content="Ingen binding, ingen skjulte overraskelser. Du betaler for det der giver værdi.">
   <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
 
@@ -40,17 +41,38 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
           {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
-          {"@type": "ListItem", "position": 2, "name": "Priser", "item": "https://smartpack.dk/priser/"}
+          {"@type": "ListItem", "position": 2, "name": "Priser", "item": "https://smartpack.dk/priser.html"}
         ]
       },
       {
         "@type": "WebPage",
-        "@id": "https://smartpack.dk/priser/",
-        "url": "https://smartpack.dk/priser/",
-        "name": "Priser på SmartPack WMS",
+        "@id": "https://smartpack.dk/priser.html",
+        "url": "https://smartpack.dk/priser.html",
+        "name": "Priser paa SmartPack WMS",
         "description": "SmartPack fakturerer per ordre. Ingen opstartsfee, ingen skjulte pakker, ingen binding.",
         "isPartOf": {"@id": "https://smartpack.dk/#website"},
         "publisher": {"@id": "https://smartpack.dk/#organization"}
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://smartpack.dk/#software",
+        "name": "SmartPack WMS",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Dansk WMS til webshops og 3PL. Per-ordre prissaetning, ingen binding.",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "DKK",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "0.45",
+            "priceCurrency": "DKK",
+            "unitText": "per ordre",
+            "minPrice": "0.45",
+            "maxPrice": "1.25"
+          },
+          "description": "Per-ordre betaling. Ingen opstartsfee. Ingen binding. Alt inkluderet."
+        }
       }
     ]
   }
@@ -59,6 +81,8 @@
   <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=2">
   <script src="js/theme-toggle.js"></script>
