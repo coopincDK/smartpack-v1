@@ -2947,11 +2947,34 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 :root:not([data-theme="dark"]) .selfstart::before { opacity: 0.5; }
 
-/* Case card featured visual – keep dark, soften edges in light */
+/* Case card featured visual – lighter in light mode */
 :root:not([data-theme="dark"]) .case-card__featured-visual {
-  background: #060e0a;
+  background: #e8ede9;
   border-radius: 0 var(--r-lg) var(--r-lg) 0;
   margin: -1px -1px -1px 0;
+}
+:root:not([data-theme="dark"]) .case-card__featured-visual::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(232,237,233,.3) 0%,
+    rgba(232,237,233,.5) 50%,
+    rgba(232,237,233,.85) 80%,
+    rgba(232,237,233,.95) 100%
+  );
+}
+:root:not([data-theme="dark"]) .case-card__featured-photo {
+  opacity: .5;
+  filter: saturate(.7);
+}
+:root:not([data-theme="dark"]) .case-card__featured-stat {
+  background: rgba(20,60,40,.9);
+  color: #fff;
+}
+:root:not([data-theme="dark"]) .case-card__featured-stat strong {
+  color: #3ecf8e;
+}
+:root:not([data-theme="dark"]) .case-card__featured-stat span {
+  color: rgba(255,255,255,.7);
 }
 :root:not([data-theme="dark"]) .case-card__featured-stat {
   background: rgba(6,14,10,.92);
