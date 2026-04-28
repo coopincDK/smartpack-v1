@@ -1,13 +1,64 @@
 /* ===========================================
    SMARTPACK.DK — STYLESHEET
-   Dark theme · e-commerce WMS
+   Light/Dark theme · e-commerce WMS
 =========================================== */
 
 /* --- RESET & BASE --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* --- LIGHT THEME (default) --- */
 :root {
-  /* Colors */
+  --bg:           #ffffff;
+  --bg-2:         #f8faf9;
+  --bg-3:         #f0f4f2;
+  --surface:      #f5f7f6;
+  --surface-2:    #edf0ee;
+  --border:       rgba(0,0,0,0.08);
+  --border-2:     rgba(0,0,0,0.12);
+
+  --accent:       #1a8a5a;
+  --accent-dark:  #15734b;
+  --accent-glow:  rgba(26,138,90,0.1);
+  --accent-glow2: rgba(26,138,90,0.05);
+
+  --red:          #e11d48;
+  --yellow:       #d97706;
+  --orange:       #ea580c;
+  --blue:         #2563eb;
+
+  --text-1:       #1a1f25;
+  --text-2:       #4a5568;
+  --text-3:       #718096;
+
+  --logo-filter:  brightness(0) opacity(0.5);
+
+  /* Typography */
+  --font:         'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --section-py:   clamp(4rem, 8vw, 7rem);
+  --gap:          2rem;
+
+  /* Radius */
+  --r-sm:  8px;
+  --r-md:  12px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+
+  /* Shadows */
+  --shadow-sm:   0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:   0 4px 20px rgba(0,0,0,.08);
+  --shadow-lg:   0 12px 48px rgba(0,0,0,.1);
+  --shadow-accent: 0 0 30px rgba(26,138,90,.15);
+
+  /* Transitions */
+  --t-fast:  .15s ease;
+  --t-mid:   .25s ease;
+  --t-slow:  .4s ease;
+}
+
+/* --- DARK THEME --- */
+[data-theme="dark"] {
   --bg:           #090c0f;
   --bg-2:         #0f1318;
   --bg-3:         #141920;
@@ -30,29 +81,12 @@
   --text-2:       #94a3b8;
   --text-3:       #64748b;
 
-  /* Typography */
-  --font:         'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --logo-filter:  none;
 
-  /* Spacing */
-  --section-py:   clamp(4rem, 8vw, 7rem);
-  --gap:          2rem;
-
-  /* Radius */
-  --r-sm:  8px;
-  --r-md:  12px;
-  --r-lg:  20px;
-  --r-xl:  28px;
-
-  /* Shadows */
   --shadow-sm:   0 1px 3px rgba(0,0,0,.4);
   --shadow-md:   0 4px 20px rgba(0,0,0,.5);
   --shadow-lg:   0 12px 48px rgba(0,0,0,.6);
   --shadow-accent: 0 0 30px rgba(62,207,142,.25);
-
-  /* Transitions */
-  --t-fast:  .15s ease;
-  --t-mid:   .25s ease;
-  --t-slow:  .4s ease;
 }
 
 html {
@@ -692,7 +726,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   width: auto;
   flex-shrink: 0;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  filter: var(--logo-filter, brightness(0) opacity(0.5));
   opacity: .75;
   transition: opacity var(--t-mid);
 }
@@ -2856,4 +2890,86 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   /* Authority book on small screens */
   .authority__img--book { max-width: 220px; max-height: 300px; }
   /* Video section */
+}
+
+/* ===========================================
+   THEME-SPECIFIC OVERRIDES
+=========================================== */
+
+/* Light mode nav */
+:root:not([data-theme="dark"]) .site-header {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+:root:not([data-theme="dark"]) .hero {
+  background: linear-gradient(180deg, #f0f7f3 0%, #fff 100%);
+}
+:root:not([data-theme="dark"]) .hero__bg { opacity: 0.04; }
+:root:not([data-theme="dark"]) .hero__badge {
+  background: rgba(26,138,90,0.1);
+  border-color: rgba(26,138,90,0.2);
+}
+:root:not([data-theme="dark"]) .footer {
+  background: #1a1f25;
+}
+:root:not([data-theme="dark"]) .footer,
+:root:not([data-theme="dark"]) .footer a,
+:root:not([data-theme="dark"]) .footer span,
+:root:not([data-theme="dark"]) .footer p,
+:root:not([data-theme="dark"]) .footer h4 {
+  color: #94a3b8;
+}
+:root:not([data-theme="dark"]) .footer .text-accent { color: #3ecf8e; }
+:root:not([data-theme="dark"]) .footer__badge {
+  border-color: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.6);
+}
+:root:not([data-theme="dark"]) .solution__step,
+:root:not([data-theme="dark"]) .problem__card,
+:root:not([data-theme="dark"]) .case-card,
+:root:not([data-theme="dark"]) .feat-group {
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+/* Dark mode nav (matches original) */
+[data-theme="dark"] .site-header {
+  background: rgba(9,12,15,.97);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+[data-theme="dark"] .hero__badge {
+  border-color: rgba(62,207,142,.25);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-2);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-2);
+  transition: color var(--t-mid), border-color var(--t-mid), background var(--t-mid);
+}
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+.theme-toggle svg { width: 18px; height: 18px; }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+/* Smooth theme transition */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease, filter .3s ease !important;
 }
