@@ -738,19 +738,21 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
     gap: 2.5rem;
     padding-top: 3rem;
   }
-  .hero { overflow-x: visible; overflow: visible; }
-  .hero__inner { overflow: visible; }
+  .hero { overflow: visible; position: relative; }
+  .hero__inner { padding-top: calc(60vw - 68px + 2rem); }
   .hero__visual {
-    order: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100vw;
-    margin-left: calc(-1 * clamp(1.5rem, 5vw, 2.5rem));
+    z-index: 0;
   }
   .hero__demo-img { max-width: 100%; }
   .hero__screen-badge { display: none; }
   .hero__headline { font-size: clamp(2.2rem, 8vw, 3.5rem); }
   .hero__composition {
     width: 100%;
-    margin-top: -68px;
     min-height: 60vw;
     overflow: hidden;
     position: relative;
