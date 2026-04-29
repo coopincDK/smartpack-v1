@@ -738,13 +738,15 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
     gap: 2.5rem;
     padding-top: 3rem;
   }
-  .hero__visual { order: -1; }
+  .hero__visual { order: -1; max-height: 280px; overflow: hidden; }
   .hero__demo-img { max-width: 100%; }
   .hero__screen-badge { display: none; }
   .hero__headline { font-size: clamp(2.2rem, 8vw, 3.5rem); }
-  .hero__composition { height: 300px; overflow: hidden; }
-  .hero__phone { position: relative; left: 0; top: 0; width: 55%; margin: 0 auto; }
-  .hero__dashboard { position: absolute; right: -5%; top: 10%; width: 55%; }
+  .hero__composition { height: 280px; }
+  .hero__phone { position: absolute; left: 8%; top: 0; width: 42%; z-index: 4; }
+  .hero__dashboard { position: absolute; right: 2%; top: 5%; width: 55%; }
+  .hero__glow { display: none; }
+  .hero__flow-line { display: none; }
   .hero__badge { display: none; }
   /* Proof bar: wrap on mobile */
   .hero__proof {
