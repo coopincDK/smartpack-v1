@@ -746,7 +746,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__composition {
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
+    margin-left: -50vw;
     width: 100vw;
     margin-top: -68px;
     min-height: 60vw;
