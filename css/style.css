@@ -2401,17 +2401,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   background: var(--bg-1);
   overflow: hidden;
 }
-/* Collapse Elfsight widget internal whitespace */
-.elfsight-app-591fcfd4-5dc3-4006-ae39-2bc36113b501 {
-  overflow: hidden !important;
-  height: auto !important;
-  max-height: none !important;
-}
-.elfsight-app-591fcfd4-5dc3-4006-ae39-2bc36113b501 > div,
-.elfsight-app-591fcfd4-5dc3-4006-ae39-2bc36113b501 iframe {
-  height: auto !important;
-  min-height: 0 !important;
-}
+/* Elfsight widget – let it manage its own sizing */
 .li-feed__header {
   display: flex;
   align-items: flex-end;
