@@ -2898,9 +2898,21 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 
 /* Light mode nav */
 :root:not([data-theme="dark"]) .site-header {
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
+}
+:root:not([data-theme="dark"]) .nav__logo-text {
+  color: #111;
+}
+:root:not([data-theme="dark"]) .nav__hamburger span {
+  background: #222;
+}
+:root:not([data-theme="dark"]) .nav__link {
+  color: #333;
+}
+:root:not([data-theme="dark"]) .theme-toggle {
+  color: #333;
 }
 :root:not([data-theme="dark"]) .hero {
   background: linear-gradient(180deg, #f0f7f3 0%, #fff 100%);
@@ -3028,6 +3040,12 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 @media (max-width: 860px) {
   :root:not([data-theme="dark"]) .nav__menu {
     background: #fff;
+  }
+  :root:not([data-theme="dark"]) .nav__menu .nav__link {
+    color: #222;
+  }
+  :root:not([data-theme="dark"]) .site-header {
+    background: rgba(255,255,255,0.97);
   }
 }
 
