@@ -777,12 +777,13 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__badge--3 { bottom: 25%; left: auto; right: 15%; }
   /* Proof bar: 2×2 grid on mobile */
   .hero__proof {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
     gap: .75rem 1rem;
     text-align: center;
     justify-items: center;
   }
+  .hero__proof-divider { display: none; }
   .hero__proof-item { align-items: center; }
   .hero__proof-item strong { font-size: clamp(1.3rem, 5vw, 1.8rem); }
   .hero__proof-item span { font-size: .65rem; }
@@ -2437,6 +2438,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .ww-badge:hover { animation: none; transform: rotate(-6deg) scale(1.12); }
 .ww-badge img { width: 100%; height: auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,.5)); }
+:root:not([data-theme="dark"]) .ww-badge img { filter: drop-shadow(0 2px 8px rgba(0,0,0,.15)); }
 
 /* ============================================
    LINKEDIN FEED
