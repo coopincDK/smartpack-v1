@@ -739,14 +739,17 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
     padding-top: 3rem;
   }
   .hero { overflow-x: visible; overflow: visible; }
-  .hero__visual { order: -1; }
+  .hero__inner { overflow: visible; }
+  .hero__visual {
+    order: -1;
+    width: 100vw;
+    margin-left: calc(-1 * clamp(1.5rem, 5vw, 2.5rem));
+  }
   .hero__demo-img { max-width: 100%; }
   .hero__screen-badge { display: none; }
   .hero__headline { font-size: clamp(2.2rem, 8vw, 3.5rem); }
   .hero__composition {
-    margin-left: calc(-1 * clamp(1.5rem, 5vw, 2.5rem));
-    margin-right: calc(-1 * clamp(1.5rem, 5vw, 2.5rem));
-    width: auto;
+    width: 100%;
     margin-top: -68px;
     min-height: 60vw;
     overflow: hidden;
