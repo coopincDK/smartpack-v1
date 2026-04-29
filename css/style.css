@@ -672,16 +672,16 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__phone { width: 55%; left: -5%; top: -5%; }
 }
 @media (max-width: 768px) {
-  .hero__composition { height: 540px; }
-  .hero__phone { width: 65%; left: -12%; top: 30%; }
-  .hero__dashboard { width: 100%; right: -1%; bottom: -5%; }
+  .hero__composition { height: 400px; }
+  .hero__phone { width: 55%; left: -8%; top: 8%; }
+  .hero__dashboard { width: 95%; right: 0; bottom: -3%; }
   .hero__badge--2 { right: 15%; }
   .hero__badge--3 { display: none; }
 }
 @media (max-width: 480px) {
-  .hero__composition { height: 540px; }
-  .hero__phone { width: 70%; left: -10%; top: 19%; }
-  .hero__dashboard { width: 100%; right: -1%; bottom: -7%; }
+  .hero__composition { height: 380px; }
+  .hero__phone { width: 55%; left: -8%; top: 5%; }
+  .hero__dashboard { width: 95%; right: 0; bottom: -5%; }
   .hero__badge--2 { right: 27%; }
   .hero__badge { font-size: .62rem; padding: .3em .7em; }
   .hero__badge--3 { display: none; }
