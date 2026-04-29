@@ -585,12 +585,13 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   pointer-events: none;
 }
 
-/* Telefon */
+/* PDA */
 .hero__phone {
   position: absolute;
-  left: -2%;
-  top: -2%;
-  width: 68%;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45%;
   z-index: 4;
   filter: drop-shadow(0 28px 56px rgba(0,0,0,.7));
 }
@@ -669,10 +670,11 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 @media (max-width: 1024px) { .hero__composition { height: 460px; } }
 @media (max-width: 768px) {
   .hero__composition { height: 320px; }
-  .hero__phone { width: 42%; }
+  .hero__phone { width: 38%; }
 }
 @media (max-width: 480px) {
-  .hero__composition { height: 260px; }
+  .hero__composition { height: 280px; }
+  .hero__phone { width: 35%; }
   .hero__dashboard { width: 72%; }
   .hero__badge { font-size: .62rem; padding: .3em .7em; }
   .hero__badge--3 { display: none; }
