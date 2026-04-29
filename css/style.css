@@ -2401,6 +2401,16 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   background: var(--bg-1);
   overflow: hidden;
 }
+/* Anti-bullshit cards */
+.antibull__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+@media (max-width: 768px) {
+  .antibull__grid { grid-template-columns: 1fr; gap: 1.25rem; }
+}
+
 /* Elfsight widget – let it manage its own sizing */
 .li-feed__header {
   display: flex;
