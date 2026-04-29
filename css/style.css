@@ -672,15 +672,17 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__phone { width: 55%; left: -5%; top: -5%; }
 }
 @media (max-width: 768px) {
-  .hero__composition { height: 320px; }
-  .hero__phone { width: 50%; left: -5%; top: -3%; }
-  .hero__dashboard { width: 75%; }
+  .hero__composition { height: 540px; }
+  .hero__phone { width: 65%; left: -12%; top: 30%; }
+  .hero__dashboard { width: 100%; right: -1%; bottom: -5%; }
+  .hero__badge--2 { right: 15%; }
   .hero__badge--3 { display: none; }
 }
 @media (max-width: 480px) {
-  .hero__composition { height: 260px; }
-  .hero__phone { width: 45%; left: -3%; top: 0; }
-  .hero__dashboard { width: 72%; }
+  .hero__composition { height: 540px; }
+  .hero__phone { width: 70%; left: -10%; top: 19%; }
+  .hero__dashboard { width: 100%; right: -1%; bottom: -7%; }
+  .hero__badge--2 { right: 27%; }
   .hero__badge { font-size: .62rem; padding: .3em .7em; }
   .hero__badge--3 { display: none; }
 }
@@ -754,24 +756,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__headline { font-size: clamp(2.2rem, 8vw, 3.5rem); }
   .hero__composition {
     width: 100%;
-    min-height: 60vw;
-    overflow: hidden;
+    height: 540px;
+    overflow: visible;
     position: relative;
   }
   .hero__dashboard {
-    position: relative;
+    position: absolute;
+    right: -1%;
+    bottom: -2%;
     width: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-  }
-  .hero__dashboard-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 0;
-    min-height: 60vw;
-    object-fit: cover;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.7);
+    border: 1px solid rgba(62,207,142,.12);
   }
   /* Light overlay only in light mode */
   :root:not([data-theme="dark"]) .hero__composition::after {
@@ -784,9 +781,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   }
   .hero__phone {
     position: absolute;
-    left: -5%;
-    top: -5%;
-    width: 50%;
+    left: -15%;
+    top: 47%;
+    width: 59%;
     max-width: none;
     z-index: 4;
   }
