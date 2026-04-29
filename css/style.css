@@ -1147,7 +1147,18 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 @media (max-width: 860px) {
   .case-card--featured { grid-template-columns: 1fr; }
-  .case-card__featured-visual { height: 260px; }
+  .case-card__featured-visual {
+    height: 340px;
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+  }
+  .case-card__featured-photo {
+    object-position: center top;
+  }
+  .case-card__featured-stat {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 1.5rem;
+  }
 }
 .case-card__tag {
   display: inline-flex;
