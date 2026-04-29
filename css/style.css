@@ -588,10 +588,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* PDA */
 .hero__phone {
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 45%;
+  left: -10%;
+  top: -9%;
+  width: 70%;
   z-index: 4;
   filter: drop-shadow(0 28px 56px rgba(0,0,0,.7));
 }
@@ -654,9 +653,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .hero__badge svg { flex-shrink: 0; }
 /* badge 1: øverst – over telefon */
-.hero__badge--1 { top: 38%;   left: 34%;  animation-delay: .6s,  1.0s; }
-.hero__badge--2 { top: 53%;   right: 2%;  animation-delay: .85s, 1.4s; }
-.hero__badge--3 { bottom: 32%; left: 28%; animation-delay: 1.1s, 1.8s; }
+.hero__badge--1 { top: 4%;    left: 30%;  animation-delay: .6s,  1.0s; }
+.hero__badge--2 { top: 38%;   right: -2%; animation-delay: .85s, 1.4s; }
+.hero__badge--3 { bottom: 15%; left: 55%; animation-delay: 1.1s, 1.8s; }
 
 @keyframes badgePop {
   from { opacity: 0; transform: scale(.8) translateY(8px); }
@@ -667,14 +666,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   50%       { transform: translateY(-5px); }
 }
 
-@media (max-width: 1024px) { .hero__composition { height: 460px; } }
+@media (max-width: 1024px) {
+  .hero__composition { height: 420px; }
+  .hero__phone { width: 55%; left: -5%; top: -5%; }
+}
 @media (max-width: 768px) {
   .hero__composition { height: 320px; }
-  .hero__phone { width: 38%; }
+  .hero__phone { width: 50%; left: -5%; top: -3%; }
+  .hero__dashboard { width: 75%; }
+  .hero__badge--3 { display: none; }
 }
 @media (max-width: 480px) {
-  .hero__composition { height: 280px; }
-  .hero__phone { width: 35%; }
+  .hero__composition { height: 260px; }
+  .hero__phone { width: 45%; left: -3%; top: 0; }
   .hero__dashboard { width: 72%; }
   .hero__badge { font-size: .62rem; padding: .3em .7em; }
   .hero__badge--3 { display: none; }
