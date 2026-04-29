@@ -1688,6 +1688,24 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   color: var(--text-2);
 }
 .fov__footer strong { color: var(--text-1); }
+
+/* Teaser mode: hide bottom row, show fade */
+.fov__grid--teaser {
+  max-height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+.fov__grid--teaser::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+  z-index: 1;
+}
 @media (max-width: 1100px) {
   .fov__grid { grid-template-columns: repeat(3, 1fr); }
 }
