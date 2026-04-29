@@ -3037,15 +3037,23 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 
 /* Mobile nav – light */
-@media (max-width: 860px) {
-  :root:not([data-theme="dark"]) .nav__menu {
-    background: #fff;
+@media (max-width: 1080px) {
+  :root:not([data-theme="dark"]) .site-header {
+    background: #fff !important;
+    border-bottom-color: rgba(0,0,0,.08);
   }
-  :root:not([data-theme="dark"]) .nav__menu .nav__link {
+  :root:not([data-theme="dark"]) .nav__links {
+    background: #fff;
+    border-bottom-color: rgba(0,0,0,.08);
+  }
+  :root:not([data-theme="dark"]) .nav__link {
     color: #222;
   }
-  :root:not([data-theme="dark"]) .site-header {
-    background: rgba(255,255,255,0.97);
+  :root:not([data-theme="dark"]) .nav__mega-item strong {
+    color: #111;
+  }
+  :root:not([data-theme="dark"]) .nav__mega-item span {
+    color: #666;
   }
 }
 
