@@ -748,16 +748,18 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__glow { display: none; }
   .hero__flow-line { display: none; }
   .hero__badge { display: none; }
-  /* Proof bar: wrap on mobile */
+  /* Proof bar: 2×2 grid on mobile */
   .hero__proof {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem 1rem;
     text-align: center;
+    justify-items: center;
   }
-  .hero__proof-item strong { font-size: clamp(1.4rem, 6vw, 2rem); }
-  .hero__proof-item span { font-size: .7rem; }
-  .hero__proof-item > em { font-size: .65rem; }
+  .hero__proof-item { align-items: center; }
+  .hero__proof-item strong { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .hero__proof-item span { font-size: .65rem; }
+  .hero__proof-item > em { font-size: .6rem; }
 }
 
 /* ============================================
