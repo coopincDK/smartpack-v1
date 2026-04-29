@@ -744,13 +744,13 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__screen-badge { display: none; }
   .hero__headline { font-size: clamp(2.2rem, 8vw, 3.5rem); }
   .hero__composition {
-    position: relative;
-    left: 50%;
-    margin-left: -50vw;
-    width: 100vw;
+    margin-left: calc(-1 * clamp(1.5rem, 5vw, 2.5rem));
+    margin-right: calc(-1 * clamp(1.5rem, 5vw, 2.5rem));
+    width: auto;
     margin-top: -68px;
     min-height: 60vw;
     overflow: hidden;
+    position: relative;
   }
   .hero__dashboard {
     position: relative;
