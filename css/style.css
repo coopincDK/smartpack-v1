@@ -742,6 +742,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__demo-img { max-width: 100%; }
   .hero__screen-badge { display: none; }
   .hero__headline { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+  .hero__composition { height: auto; max-height: 360px; overflow: hidden; }
+  .hero__phone { position: relative; left: 0; top: 0; width: 60%; margin: 0 auto; }
+  .hero__badge { display: none; }
 }
 
 /* ============================================
@@ -2889,6 +2892,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .signature__quote-icon { top: -2.5rem; font-size: 3.5rem; }
   /* Authority book on small screens */
   .authority__img--book { max-width: 220px; max-height: 300px; }
+  .ww-badge { left: 0; bottom: 5%; width: 120px; }
   /* Video section */
 }
 
