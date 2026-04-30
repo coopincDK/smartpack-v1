@@ -589,9 +589,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* PDA */
 .hero__phone {
   position: absolute;
-  left: -33%;
-  top: 21%;
-  width: 70%;
+  left: -38%;
+  top: 24%;
+  width: 71%;
   z-index: 4;
   filter: drop-shadow(0 28px 56px rgba(0,0,0,.7));
 }
@@ -606,9 +606,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* Warehouse GIF */
 .hero__dashboard {
   position: absolute;
-  right: 4%;
-  bottom: 20%;
-  width: 96%;
+  right: 9%;
+  bottom: 15%;
+  width: 99%;
   z-index: 2;
   border-radius: var(--r-lg);
   overflow: hidden;
@@ -624,7 +624,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* Flow-linje */
 .hero__flow-line {
   position: absolute;
-  left: 28%;
+  left: -5%;
   top: 42%;
   width: 180px;
   height: 120px;
@@ -654,9 +654,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .hero__badge svg { flex-shrink: 0; }
 /* badge 1: øverst – over telefon */
-.hero__badge--1 { top: 53%;   left: 45%;  animation-delay: .6s,  1.0s; }
-.hero__badge--2 { top: 42%;   right: 4%;  animation-delay: .85s, 1.4s; }
-.hero__badge--3 { bottom: 22%; left: 78%;  animation-delay: 1.1s, 1.8s; }
+.hero__badge--1 { top: 33%;   left: 45%;  animation-delay: .6s,  1.0s; }
+.hero__badge--2 { top: 69%;   right: 50%; animation-delay: .85s, 1.4s; }
+.hero__badge--3 { top: 54%; bottom: auto; left: 63%;  animation-delay: 1.1s, 1.8s; }
 
 @keyframes badgePop {
   from { opacity: 0; transform: scale(.8) translateY(8px); }
@@ -800,19 +800,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 @media (max-width: 768px) {
   .hero__composition { height: 400px; }
-  .hero__phone { width: 79%; left: -27%; top: 17%; }
+  .hero__phone { width: 55%; left: -8%; top: 8%; }
   .hero__dashboard { width: 95%; right: 0; bottom: -3%; }
-  .hero__badge--1 { top: 35%; left: 60%; }
-  .hero__badge--2 { top: 56%; right: 30%; }
-  .hero__badge--3 { bottom: 1%; left: 77%; }
+  .hero__badge--1 { top: 20%; left: 60%; }
+  .hero__badge--2 { top: 40%; right: 8%; }
+  .hero__badge--3 { top: 80%; bottom: auto; left: 60%; }
 }
 @media (max-width: 480px) {
   .hero__composition { height: 340px; }
-  .hero__phone { width: 79%; left: -29%; top: -12%; }
-  .hero__dashboard { width: 95%; right: 0; bottom: 57%; }
-  .hero__badge--1 { top: 1%; left: 60%; }
-  .hero__badge--2 { top: 15%; right: 20%; }
-  .hero__badge--3 { bottom: 22%; left: 36%; }
+  .hero__phone { width: 50%; left: -5%; top: 5%; }
+  .hero__dashboard { width: 95%; right: 0; bottom: -5%; }
+  .hero__badge--1 { top: 18%; left: 55%; }
+  .hero__badge--2 { top: 38%; right: 5%; }
+  .hero__badge--3 { top: 70%; bottom: auto; left: 55%; }
   .hero__badge { font-size: .55rem; padding: .25em .6em; }
 }
 
