@@ -734,7 +734,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
     gap: 2.5rem;
     padding-top: 3rem;
   }
-  .hero { overflow: visible; padding-top: 1.5rem; }
+  .hero { overflow: visible; padding-top: 2rem; }
 
   .hero__inner { padding-top: 1.5rem; }
   .hero__demo-img { max-width: 100%; }
