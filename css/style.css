@@ -799,12 +799,13 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .hero__proof-item > em { font-size: .6rem; }
 }
 @media (max-width: 768px) {
-  .hero__composition { height: 400px; }
-  .hero__phone { width: 55%; left: -8%; top: 8%; }
-  .hero__dashboard { width: 95%; right: 0; bottom: -3%; }
-  .hero__badge--1 { top: 20%; left: 60%; }
-  .hero__badge--2 { top: 40%; right: 8%; }
-  .hero__badge--3 { top: 80%; bottom: auto; left: 60%; }
+  .hero__composition { height: 410px; }
+  .hero__phone { width: 84%; left: -35%; top: -10%; }
+  .hero__dashboard { width: 100%; right: 0; bottom: 24%; }
+  .hero__badge--1 { top: 14%; left: 54%; }
+  .hero__badge--2 { top: 49%; right: 49%; }
+  .hero__badge--3 { top: 62%; bottom: auto; left: 58%; }
+  .hero__flow-line { left: 9%; top: 18%; }
 }
 @media (max-width: 480px) {
   .hero__composition { height: 340px; }
