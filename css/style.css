@@ -2216,12 +2216,19 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .int-banner__grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: .5rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
+.int-banner__grid .int-logo:nth-child(n+13) { display: none; }
 @media (max-width: 768px) {
-  .int-banner__grid { grid-template-columns: repeat(5, 1fr); }
-  .int-banner__grid .int-logo:nth-child(n+11) { display: none; }
+  .int-banner__grid { grid-template-columns: repeat(4, 1fr); max-width: 400px; }
+  .int-banner__grid .int-logo:nth-child(n+9) { display: none; }
+}
+@media (max-width: 480px) {
+  .int-banner__grid { grid-template-columns: repeat(4, 1fr); max-width: 320px; }
+  .int-banner__grid .int-logo:nth-child(n+5) { display: none; }
 }
 .int-logo {
   background: rgba(255,255,255,.04);
