@@ -589,9 +589,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* PDA */
 .hero__phone {
   position: absolute;
-  left: -38%;
-  top: 24%;
-  width: 71%;
+  left: -50%;
+  top: 19%;
+  width: 90%;
   z-index: 4;
   filter: drop-shadow(0 28px 56px rgba(0,0,0,.7));
 }
@@ -809,12 +809,13 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 @media (max-width: 480px) {
   .hero__composition { height: 340px; }
-  .hero__phone { width: 50%; left: -5%; top: 5%; }
-  .hero__dashboard { width: 95%; right: 0; bottom: -5%; }
-  .hero__badge--1 { top: 18%; left: 55%; }
-  .hero__badge--2 { top: 38%; right: 5%; }
-  .hero__badge--3 { top: 70%; bottom: auto; left: 55%; }
+  .hero__phone { width: 72%; left: -31%; top: -15%; }
+  .hero__dashboard { width: 100%; right: 1%; bottom: 61%; }
+  .hero__badge--1 { top: 13%; left: 60%; }
+  .hero__badge--2 { top: 32%; right: 27%; }
+  .hero__badge--3 { top: -5%; bottom: auto; left: 45%; }
   .hero__badge { font-size: .55rem; padding: .25em .6em; }
+  .hero__flow-line { left: 0; top: 0; }
 }
 
 /* ============================================
