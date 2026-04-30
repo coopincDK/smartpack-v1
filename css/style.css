@@ -722,8 +722,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   width: auto;
   flex-shrink: 0;
   object-fit: contain;
-  filter: var(--logo-filter, brightness(0) opacity(0.5));
-  opacity: .75;
+  filter: var(--logo-filter, brightness(0) opacity(0.7));
+  opacity: .9;
   transition: opacity var(--t-mid);
 }
 .hero__logo-img:hover { opacity: 1; }
