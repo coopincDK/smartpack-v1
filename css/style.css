@@ -169,12 +169,17 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 .btn--primary {
   background: var(--accent);
-  color: #060f09;
+  color: #fff;
   border-color: var(--accent);
 }
 .btn--primary:hover {
   background: #4de0a0;
   border-color: #4de0a0;
+  color: #fff;
+}
+[data-theme="dark"] .btn--primary { color: #060f09; }
+[data-theme="dark"] .btn--primary:hover {
+  color: #060f09;
   box-shadow: var(--shadow-accent);
   transform: translateY(-1px);
 }
