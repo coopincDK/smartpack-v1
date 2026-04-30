@@ -1064,13 +1064,13 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 900;
   line-height: 1;
-  color: #060f09;
+  color: #fff;
   letter-spacing: -.03em;
 }
 .stats__unit {
   font-size: 1.5rem;
   font-weight: 900;
-  color: #060f09;
+  color: #fff;
   opacity: .7;
   line-height: 1;
   margin-top: .1rem;
@@ -1079,7 +1079,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   margin-top: .65rem;
   font-size: .8rem;
   font-weight: 600;
-  color: #060f09;
+  color: #fff;
   line-height: 1.4;
 }
 .stats__label span {
@@ -1098,6 +1098,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .stats__item:nth-child(2) { border-right: none; }
   .stats__item:nth-child(4) { border-bottom: none; border-right: none; }
 }
+[data-theme="dark"] .stats__number,
+[data-theme="dark"] .stats__unit,
+[data-theme="dark"] .stats__label { color: #060f09; }
 
 /* ============================================
    CASES
