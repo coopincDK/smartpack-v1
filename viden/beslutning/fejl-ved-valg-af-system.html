@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>9 typiske fejl ved valg af WMS – og hvad de koster dig | SmartPack</title>
-  <meta name="description" content="En forkert WMS-beslutning koster typisk 150.000–400.000 kr. og 6–12 måneder. Her er de 9 fejl der går igen – og hvordan du undgår dem.">
+  <title>9 typiske fejl ved valg af WMS, og hvad de koster dig | SmartPack</title>
+  <meta name="description" content="En forkert WMS-beslutning koster typisk 150.000-400.000 kr. og 6-12 maneder. Her er de 9 fejl der gar igen, og hvad du konkret gor i stedet.">
   <link rel="canonical" href="https://smartpack.dk/viden/beslutning/fejl-ved-valg-af-system.html">
   <link rel="stylesheet" href="../../css/style.css?v=4">
   <link rel="icon" href="../../assets/favicon-smartpack0.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
   <script src="../../js/theme-toggle.js"></script>
 </head>
 <body>
@@ -45,52 +44,259 @@
   <main>
     <div class="article-page"><div class="article-wrap">
       <div class="article-header">
-        <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Beslutning</a><span>&rsaquo;</span><span>9 typiske fejl ved valg af WMS – og hvad de koster dig</span></nav>
+        <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Beslutning</a><span>&rsaquo;</span><span>9 typiske fejl ved valg af WMS, og hvad de koster dig</span></nav>
     <span class="article-cat-badge">Beslutning</span>
       </div>
 
-      <h1 class="article-title">9 typiske fejl ved valg af WMS – og hvad de koster dig</h1>
+      <h1 class="article-title">9 typiske fejl ved valg af WMS, og hvad de koster dig</h1>
     <div class="article-body">
 
-      <p>En forkert WMS-beslutning koster ikke bare penge. Den koster tid, fokus, medarbejderfrustrationer og kunder.</p>
-      <p>Gennemsnitlig "WMS-fejl-omkostning" for en dansk webshop: <strong>150.000–400.000 kr.</strong> og <strong>6–12 måneders</strong> forsinkelse.</p>
-      <p>Her er de 9 fejl der går igen – og hvad du konkret gør i stedet.</p>
+      <p>En webshop med 180 ordrer/dag valgte WMS baseret p&aring; en imponerende demo. 4 m&aring;neder senere: fragtintegrationen virker kun 60% af tiden, medarbejderne hader systemet, og fejlraten er steget fra 2% til 8%. Regnestykket: 180 ordrer &times; 30 dage &times; 8% fejl &times; 350 kr./fejl = <strong>151.200 kr./m&aring;ned</strong> i direkte fejlomkostninger. Plus 3 m&aring;neders implementering spildt. Plus ny leverand&oslash;r-evaluering.</p>
+      <p>Her er de 9 fejl der koster flest penge, og hvordan du undg&aring;r dem.</p>
 
-      <h2>Fejl 1: Køber baseret på features, ikke på fit</h2>
-      <p>Systemet har 200 features. Du har brug for 15. Og de 15 er ikke nødvendigvis de samme som de 15 der får dem til at se bedst ud i demoen.</p>
-      <p><strong>Hvad du gør i stedet:</strong> Skriv dine top 10 use cases ned FØR du ser en demo. Test præcist disse i demoen. Ignorer alt andet.</p>
+      <h2>Fejl 1: Valgte det billigste</h2>
+      <p>Et WMS til 1.200 kr./m&aring;ned ser billigt ud. Men:</p>
+      <ul>
+        <li>Fragtintegration mangler, og manuel booking koster 8 min/ordre &times; 180 ordrer &times; 400 kr./time = <strong>14.400 kr./m&aring;ned</strong> i spildt tid</li>
+        <li>Support er email-only med 24-48 timers responstid n&aring;r systemet fejler</li>
+        <li>Ingen API, s&aring; du kan ikke automatisere returh&aring;ndtering</li>
+      </ul>
+      <p><strong>Real cost over 12 m&aring;neder:</strong></p>
+      <table>
+        <thead>
+          <tr><th>Post</th><th>Billigt WMS</th><th>Rigtigt WMS</th><th>Forskel</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Abonnement</td><td>14.400 kr.</td><td>36.000 kr.</td><td>+21.600 kr.</td></tr>
+          <tr><td>Spildt tid (manuel fragt)</td><td>172.800 kr.</td><td>0 kr.</td><td>-172.800 kr.</td></tr>
+          <tr><td>Fejlomkostninger (6% vs 2%)</td><td>453.600 kr.</td><td>151.200 kr.</td><td>-302.400 kr.</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>640.800 kr.</strong></td><td><strong>187.200 kr.</strong></td><td><strong>-453.600 kr.</strong></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Fix:</strong> Beregn total cost inkl. spildt tid og fejl. Det billigste abonnement er sj&aelig;ldent billigst.</p>
 
-      <h2>Fejl 2: Underestimerer implementeringstiden</h2>
-      <p>Leverandøren siger 6 uger. Du planlægger 6 uger. Det tager 16. Fordi I ikke vidste hvad I ikke vidste.</p>
-      <p class="inline-cta">&#x1F449; Har du samme udfordring? <a href="../../kontakt.html">Se hvordan SmartPack l&oslash;ser det i praksis</a></p>
+      <h2>Fejl 2: Fokuserede kun p&aring; features</h2>
+      <p>Systemet havde 247 features. Lagermedarbejderne bruger 11 af dem. De 11 fungerer d&aring;rligt.</p>
+      <p><strong>Hvad der faktisk sker:</strong> En feature-liste p&aring; 200+ punkter betyder ofte:</p>
+      <ul>
+        <li>Kompleks brugergr&aelig;nseflade med 5-7 klik for at printe en label</li>
+        <li>Langsom performance fordi systemet loader 200 features du aldrig bruger</li>
+        <li>Dyr licens fordi du betaler for features du ikke kender</li>
+      </ul>
+      <p><strong>Fix:</strong> Test systemet med 100 reelle ordrer over 2 uger. M&aring;l gennemsnitlig tid fra ordre til label printet, antal klik per pakke, og antal gange medarbejdere sp&oslash;rger &quot;hvordan g&oslash;r jeg...&quot;. Hvis gennemsnitstid er over 3 min/ordre eller over 8 klik, er systemet for komplekst.</p>
 
-      
+      <p class="inline-cta">&#x1F449; Overvejer du WMS-skifte? <a href="../../kontakt.html">Se hvordan SmartPack l&oslash;ser det i praksis</a></p>
+
+      <h2>Fejl 3: Involverede ikke medarbejderne</h2>
+      <p>IT-chef valgte system baseret p&aring; teknisk arkitektur. Lagermedarbejderne fik det 3 dage f&oslash;r go-live.</p>
+      <p><strong>Hvad der skete:</strong></p>
+      <ul>
+        <li>Uge 1: Produktivitet faldt 60% fordi medarbejderne l&aelig;rte systemet</li>
+        <li>Uge 4: 2 af 5 medarbejdere sagde op</li>
+        <li>M&aring;ned 3: Stadig 30% langsommere end f&oslash;r</li>
+      </ul>
+      <p><strong>Cost:</strong> 2 opsigelser &times; 40.000 kr. rekruttering = 80.000 kr. + 3 m&aring;neders tabt produktivitet = <strong>180.000 kr.</strong></p>
+      <p><strong>Fix:</strong> Lad 2 lagermedarbejdere teste systemet i pilotfasen. Deres veto vejer tungere end IT-chefens godkendelse.</p>
+
+      <h2>Fejl 4: Ignorerede onboarding-kompleksiteten</h2>
+      <p>Leverand&oslash;ren sagde: &quot;Onboarding tager 1 uge&quot;. Virkeligheden:</p>
+      <ul>
+        <li>Uge 1-2: Datamigration fra Excel, fordi produktdata var rodet</li>
+        <li>Uge 3-4: Fragtintegration virkede ikke med GLS Business</li>
+        <li>Uge 5-8: Medarbejdertræning og fejlretning</li>
+        <li>M&aring;ned 3: Stadig ikke 100% live</li>
+      </ul>
+      <p><strong>Cost:</strong> 3 m&aring;neders parallel drift (gammelt + nyt system) = <strong>90.000 kr.</strong> i ekstra arbejdstimer.</p>
+      <p><strong>Fix:</strong> Sp&oslash;rg: &quot;Hvad er jeres <strong>90. percentil</strong> implementeringstid for virksomheder som os?&quot; Ikke gennemsnit, da det skjuler de lange cases.</p>
+
+      <h2>Fejl 5: Valgte on-premise</h2>
+      <p>On-premise WMS kr&aelig;vede:</p>
+      <ul>
+        <li>Windows Server licens: 15.000 kr./&aring;r</li>
+        <li>IT-konsulent til setup: 25.000 kr.</li>
+        <li>M&aring;nedlig backup og vedligeholdelse: 3.000 kr./m&aring;ned</li>
+        <li>Manuel opdatering hver 6. m&aring;ned: 8.000 kr./gang</li>
+      </ul>
+      <p><strong>Total over 3 &aring;r:</strong> 15.000 &times; 3 + 25.000 + 3.000 &times; 36 + 8.000 &times; 6 = <strong>241.000 kr.</strong></p>
+      <p>Cloud-alternativ: 0 kr. (inkluderet i abonnement).</p>
+      <p><strong>Fix:</strong> V&aelig;lg cloud. Der er ingen god grund til on-premise i 2025 for en webshop under 2.000 ordrer/dag.</p>
+
+      <h2>Fejl 6: Glemte integrationerne</h2>
+      <p>Systemet s&aring; perfekt ud. Men:</p>
+      <ul>
+        <li>GLS-integration virkede kun med private labels, ikke GLS Business</li>
+        <li>Shopify-integration synkroniserede lager hver 15. minut, ikke realtid</li>
+        <li>Ingen integration til &oslash;konomisystem, s&aring; fakturering var manuel</li>
+      </ul>
+      <p><strong>Hvad der skete:</strong> 3 m&aring;neders udvikling af custom integration = <strong>120.000 kr.</strong> ekstra.</p>
+      <p><strong>Fix:</strong> Test <strong>alle</strong> integrationer i pilotfasen med reelle ordrer, ikke demo-data. Sp&oslash;rg: &quot;Kan jeg se en live ordre fra Shopify blive til en GLS Business label p&aring; under 2 minutter?&quot;</p>
+
+      <h2>Fejl 7: Sprang referencetjekket over</h2>
+      <p>Leverand&oslash;ren gav 3 referencer. Alle var positive. Problemet: leverand&oslash;ren valgte dem selv.</p>
+      <p><strong>Hvad egne referencer afsl&oslash;rede:</strong></p>
+      <ul>
+        <li>Support er langsom efter kl. 15</li>
+        <li>Systemet crasher ved mere end 500 ordrer/dag</li>
+        <li>Prismodel &aelig;ndrede sig efter 12 m&aring;neder (skjult i kontrakt)</li>
+      </ul>
+      <p><strong>Fix:</strong> Find 2-3 egne referencer via LinkedIn, branchegrupper eller netv&aelig;rk. Stil h&aring;rde sp&oslash;rgsm&aring;l:</p>
+      <ul>
+        <li>&quot;Hvad ville I g&oslash;re anderledes?&quot;</li>
+        <li>&quot;Hvad er den v&aelig;rste uge I har haft med systemet?&quot;</li>
+        <li>&quot;Hvad kostede implementeringen REELT?&quot;</li>
+      </ul>
+
+      <h2>Fejl 8: Valgte til nutidig st&oslash;rrelse</h2>
+      <p>Webshop havde 100 ordrer/dag. Systemet var perfekt til 100 ordrer/dag.</p>
+      <p>12 m&aring;neder senere: 380 ordrer/dag. Systemet:</p>
+      <ul>
+        <li>Blev 3&times; dyrere fordi prismodel var per ordre over 200/dag</li>
+        <li>Kunne ikke h&aring;ndtere 2 samtidige brugere</li>
+        <li>Crashede hver Black Friday</li>
+      </ul>
+      <p><strong>Cost:</strong> Nyt system efter 18 m&aring;neder = 80.000 kr. implementering + 6 m&aring;neders tabt produktivitet = <strong>180.000 kr.</strong></p>
+      <p><strong>Fix:</strong> Beregn pris ved 3&times; dit nuv&aelig;rende volumen. Sp&oslash;rg: &quot;Hvad koster systemet ved 300 ordrer/dag? Ved 500?&quot; Hvis prisen mere end fordobles, er det forkert prismodel.</p>
+
+      <h2>Fejl 9: Undlod at definere succeskriterier</h2>
+      <p>Der var ingen definition p&aring; &quot;hvorn&aring;r er vi live?&quot;. Resultat: 6 m&aring;neders &quot;implementering&quot; uden klart m&aring;l.</p>
+      <p><strong>Fix:</strong> Definer inden go-live:</p>
+      <ul>
+        <li>Fejlrate under 2% (m&aring;l dagligt i 2 uger)</li>
+        <li>Gennemsnitlig pakketid under 2 min/ordre</li>
+        <li>Lageropt&aelig;lling afviger under 1%</li>
+        <li>Support-responstid under 4 timer</li>
+      </ul>
+      <p>Hvis ikke opfyldt efter 4 uger, aktiver exit-klausul.</p>
+
+      <h2>Det opdager de fleste for sent</h2>
+      <ol>
+        <li><strong>Prismodellen &aelig;ndrer sig ved v&aelig;kst.</strong> &quot;Per ordre&quot;-modeller ser billige ud ved 50 ordrer/dag. Ved 400 ordrer/dag koster de 4&times; mere end &quot;per bruger&quot;-modeller.</li>
+        <li><strong>Support er kun god i salgsfasen.</strong> Responstid i demofasen: 2 timer. Responstid efter kontrakt: 24-48 timer. Tjek support f&oslash;r du k&oslash;ber ved at ringe med et teknisk sp&oslash;rgsm&aring;l som potentiel kunde.</li>
+        <li><strong>Systemet kan ikke h&aring;ndtere spidsbelastning.</strong> Virker fint til 180 ordrer/dag. Black Friday med 600 ordrer? Crasher kl. 11. Test: send 3&times; normalt volumen i pilotfasen.</li>
+      </ol>
+
+      <h2>Konsekvenserne af at v&aelig;lge forkert</h2>
+      <table>
+        <thead>
+          <tr><th>Konsekvens</th><th>Cost (12 m&aring;neder)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Implementering spildt</td><td>50.000-120.000 kr.</td></tr>
+          <tr><td>H&oslash;jere fejlrate (6% vs 2%)</td><td>302.400 kr. (ved 180 ordrer/dag)</td></tr>
+          <tr><td>Spildt medarbejdertid</td><td>80.000-200.000 kr.</td></tr>
+          <tr><td>Medarbejder-opsigelser</td><td>40.000-80.000 kr. per person</td></tr>
+          <tr><td>Nyt valgforl&oslash;b</td><td>30.000-60.000 kr.</td></tr>
+          <tr><td>Ny implementering</td><td>50.000-120.000 kr.</td></tr>
+          <tr><td><strong>Total</strong></td><td><strong>552.400-882.400 kr.</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Ved 180 ordrer/dag svarer det til <strong>3.068-4.902 kr. per ordre</strong> over 12 m&aring;neder.</p>
+
+      <h2>Best practice: S&aring;dan v&aelig;lger du rigtigt</h2>
+      <p><strong>F&oslash;r f&oslash;rste demo:</strong></p>
+      <ol>
+        <li>Skriv 10 konkrete use cases med specifikke detaljer som produktantal, SKU-varianter, gaveindpakning og fragttype</li>
+        <li>Defin&eacute;r max acceptable fejlrate (fx 2%)</li>
+        <li>Defin&eacute;r max acceptable tid per ordre (fx 2 min)</li>
+      </ol>
+      <p><strong>Under evaluering:</strong></p>
+      <ol start="4">
+        <li>Test 3 systemer med 100 reelle ordrer over 2 uger</li>
+        <li>Lad 2 lagermedarbejdere score hvert system (1-10) p&aring; brugervenlighed</li>
+        <li>Ring til 2 egne referencer per system</li>
+        <li>Beregn TCO over 36 m&aring;neder ved 1&times;, 2&times; og 3&times; nuv&aelig;rende volumen</li>
+      </ol>
+      <p><strong>F&oslash;r kontrakt:</strong></p>
+      <ol start="8">
+        <li>Test alle integrationer med reelle ordrer</li>
+        <li>Test support ved at ringe med teknisk sp&oslash;rgsm&aring;l og m&aring;le responstid</li>
+        <li>L&aelig;s kontrakt for bindingsperiode, opsigelsesvarsel, pris&aelig;ndringer, dataejerskab og exit-klausul</li>
+      </ol>
+      <p><strong>G&oslash;r IKKE:</strong></p>
+      <ul>
+        <li>V&aelig;lg baseret p&aring; demo (demos er scripted)</li>
+        <li>V&aelig;lg baseret p&aring; features-liste (90% bruger du aldrig)</li>
+        <li>V&aelig;lg det billigste (du betaler forskellen i fejl)</li>
+        <li>V&aelig;lg uden at teste med reelle ordrer</li>
+      </ul>
+
+      <h2>SmartPack: Hvorn&aring;r giver det mening?</h2>
+      <p><strong>SmartPack passer til dig hvis:</strong></p>
+      <ul>
+        <li>Du har 50-800 ordrer/dag</li>
+        <li>Du bruger GLS, PostNord, Bring, DAO eller Burd</li>
+        <li>Du er p&aring; Shopify, WooCommerce eller Magento</li>
+        <li>Du vil have 1 uges onboarding (ikke 3 m&aring;neder)</li>
+        <li>Du vil have transparent pris (per label, ikke per ordre)</li>
+      </ul>
+      <p><strong>SmartPack passer IKKE hvis:</strong></p>
+      <ul>
+        <li>Du har under 30 ordrer/dag (Excel er billigere)</li>
+        <li>Du har over 1.000 ordrer/dag (du har brug for enterprise-features)</li>
+        <li>Du har komplekse krav som serienumre, batch-tracking eller multi-warehouse</li>
+        <li>Du vil have on-premise (SmartPack er cloud-only)</li>
+      </ul>
+      <p><strong>Real cost-sammenligning (180 ordrer/dag):</strong></p>
+      <table>
+        <thead>
+          <tr><th>Post</th><th>Uden WMS</th><th>SmartPack</th><th>Enterprise WMS</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Abonnement (12 mdr)</td><td>0 kr.</td><td>36.000 kr.</td><td>120.000 kr.</td></tr>
+          <tr><td>Implementering</td><td>0 kr.</td><td>0 kr. (inkl.)</td><td>150.000 kr.</td></tr>
+          <tr><td>Spildt tid (manuel)</td><td>172.800 kr.</td><td>0 kr.</td><td>0 kr.</td></tr>
+          <tr><td>Fejlomkostninger</td><td>453.600 kr.</td><td>151.200 kr.</td><td>151.200 kr.</td></tr>
+          <tr><td><strong>Total (12 mdr)</strong></td><td><strong>626.400 kr.</strong></td><td><strong>187.200 kr.</strong></td><td><strong>421.200 kr.</strong></td></tr>
+          <tr><td><strong>Besparelse vs ingen WMS</strong></td><td>-</td><td><strong>439.200 kr.</strong></td><td><strong>205.200 kr.</strong></td></tr>
+        </tbody>
+      </table>
+      <p>Breakeven: m&aring;ned 2.</p>
+
+      <h2>Brug denne artikel</h2>
+      <ul>
+        <li>Gennemg&aring; de 9 fejl og s&aelig;t kryds ved dem du er i risiko for</li>
+        <li>Beregn din fejlomkostning: ordrer/dag &times; 30 &times; fejl% &times; 350 kr. = kr./m&aring;ned</li>
+        <li>Hvis over 100.000 kr./&aring;r, book demo med 3 systemer denne uge</li>
+        <li>Hvis du allerede har valgt forkert, beregn cost of staying vs cost of switching</li>
+      </ul>
+
+      </div>
     <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
 
         <details>
-          <summary>Hvad er den hyppigste årsag til WMS-implementeringsfejl?</summary>
-          <p>Undervurdering af datakvalitet og integrationsomfang. De fleste implementeringer forsinkes ikke af systemet – men af dårlige data og u-dokumenterede integrationer.</p>
+          <summary>Hvad er den hyppigste fejl ved valg af WMS?</summary>
+          <p>At v&aelig;lge til nutidig st&oslash;rrelse frem for v&aelig;kstplan. 60% skifter system inden 18 m&aring;neder fordi prismodellen ikke skalerer.</p>
         </details>
 
         <details>
-          <summary>Kan man undgå alle 9 fejl?</summary>
-          <p>De fleste ja. Den vigtigste forebyggelse: brug 3–4 uger på kravspecifikation og evalueringsprocess før demoen. Don't rush the decision.</p>
+          <summary>Hvad koster det at skifte WMS bagefter?</summary>
+          <p>50.000-120.000 kr. i implementering + 2-4 m&aring;neders tabt produktivitet (30-50% langsommere under overgang) = samlet 150.000-300.000 kr. total cost.</p>
         </details>
 
         <details>
-          <summary>Hvad er et realistisk tidsestimat for WMS-valgsprocess?</summary>
-          <p>4–8 uger fra start til kontraktsignering er realistisk for en grundig process: kravspec (1 uge), demos (2 uger), reference-check og kontrakt (1–3 uger).</p>
+          <summary>Kan jeg fortryde kontrakten?</summary>
+          <p>Kun hvis der er en exit-klausul. L&aelig;s kontrakt for bindingsperiode (typisk 12-36 m&aring;neder), opsigelsesvarsel (typisk 3-6 m&aring;neder), dataejerskab (kan du eksportere alt?) og performance-garanti.</p>
+        </details>
+
+        <details>
+          <summary>Er dyre systemer bedre?</summary>
+          <p>Nej. Pris afspejler ofte markedspositionering og salgsinvestering, ikke produktkvalitet. Et system til 10.000 kr./m&aring;ned kan v&aelig;re d&aring;rligere end et til 3.000 kr./m&aring;ned. Test selv.</p>
+        </details>
+
+        <details>
+          <summary>Hvorn&aring;r skal jeg handle?</summary>
+          <p>Nu, hvis din fejlrate er over 3%, du bruger mere end 2 min per ordre, medarbejderne klager over systemet ugentligt, eller du vokser mere end 20% per kvartal. Hver m&aring;ned du venter koster dig 350 kr. &times; ordrer/dag &times; 30 &times; fejl% i direkte tab.</p>
         </details>
       </div>
 
       <div class="article-disclaimer">
-        <p><em>Tal og estimater i denne artikel er vejledende og baseret på branchedata fra dansk e-handel. Dine faktiske resultater afhænger af din specifikke situation, produktkompleksitet og eksisterende processer.</em></p>
+        <p><em>Tal og estimater i denne artikel er vejledende og baseret p&aring; branchedata fra dansk e-handel. Dine faktiske resultater afh&aelig;nger af din specifikke situation, produktkompleksitet og eksisterende processer.</em></p>
       </div>
     </div></div>
 
     <div class="bottom-cta">
       <h2>Vil du se hvad det betyder i dit setup?</h2>
-      <p>Book en gratis gennemgang med SmartPack-teamet og få konkrete tal på, hvad det koster dig ikke at handle.</p>
+      <p>Book en gratis gennemgang med SmartPack-teamet og f&aring; konkrete tal p&aring;, hvad det koster dig ikke at handle.</p>
       <a href="../../kontakt.html" class="cta-knap">Kontakt os</a>
     </div>
 
@@ -98,8 +304,8 @@
       <h2>Relaterede artikler</h2>
       <ul>
         <li><a href="bedste-wms-til-webshop.html">Bedste WMS til webshop: Hvad du skal kigge efter i 2026</a></li>
-        <li><a href="hvordan-vælger-du-lager-software.html">Hvordan vælger du det rigtige lager-software?</a></li>
-        <li><a href="hvornår-skifte-system.html">Hvornår skal du skifte system? 7 klare tegn</a></li>
+        <li><a href="hvordan-v&aelig;lger-du-lager-software.html">Hvordan v&aelig;lger du det rigtige lager-software?</a></li>
+        <li><a href="hvorn&aring;r-skifte-system.html">Hvorn&aring;r skal du skifte system? 7 klare tegn</a></li>
       </ul>
     </div>
   </main>
@@ -111,7 +317,7 @@
 
   
   <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den hyppigste årsag til WMS-implementeringsfejl?","acceptedAnswer":{"@type":"Answer","text":"Se artiklen."}},{"@type":"Question","name":"Kan man undgå alle 9 fejl?","acceptedAnswer":{"@type":"Answer","text":"Se artiklen."}},{"@type":"Question","name":"Hvad er et realistisk tidsestimat for WMS-valgsprocess?","acceptedAnswer":{"@type":"Answer","text":"Se artiklen."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"9 typiske fejl ved valg af WMS – og hvad de koster dig","dateModified":"2026-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den hyppigste fejl ved valg af WMS?","acceptedAnswer":{"@type":"Answer","text":"At vaelge til nutidig storrelse frem for vaekstplan. 60% skifter system inden 18 maneder fordi prismodellen ikke skalerer."}},{"@type":"Question","name":"Hvad koster det at skifte WMS bagefter?","acceptedAnswer":{"@type":"Answer","text":"50.000-120.000 kr. i implementering plus 2-4 maneders tabt produktivitet = samlet 150.000-300.000 kr. total cost."}},{"@type":"Question","name":"Kan jeg fortryde kontrakten?","acceptedAnswer":{"@type":"Answer","text":"Kun hvis der er en exit-klausul. Laes kontrakt for bindingsperiode, opsigelsesvarsel, dataejerskab og performance-garanti."}},{"@type":"Question","name":"Er dyre systemer bedre?","acceptedAnswer":{"@type":"Answer","text":"Nej. Pris afspejler ofte markedspositionering og salgsinvestering, ikke produktkvalitet. Test selv."}},{"@type":"Question","name":"Hvornaar skal jeg handle?","acceptedAnswer":{"@type":"Answer","text":"Nu, hvis din fejlrate er over 3%, du bruger mere end 2 min per ordre, medarbejderne klager ugentligt, eller du vokser mere end 20% per kvartal."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"9 typiske fejl ved valg af WMS, og hvad de koster dig","dateModified":"2026-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body>
 </html>
