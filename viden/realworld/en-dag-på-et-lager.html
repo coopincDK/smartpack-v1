@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>En dag på et lager: Fra morgenmødet til fragtleverandørens afhentning | SmartPack</title>
-  <meta name="description" content="Hvad sker der egentlig på et webshop-lager fra kl. 07:00 til GLS henter kl. 16:30? Her er den reelle dag – med de rigtige tidspunkter, fejl og beslutninger.">
+  <meta name="description" content="Hvad sker der egentlig på et webshop-lager fra kl. 07:00 til GLS henter kl. 16:30? Her er den reelle dag , med de rigtige tidspunkter, fejl og beslutninger.">
   <link rel="canonical" href="https://smartpack.dk/viden/realworld/en-dag-på-et-lager.html">
   <link rel="stylesheet" href="../../css/style.css?v=4">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
@@ -53,10 +53,10 @@
 
       <p>Kl. 07:52. Plukkeren scanner hylde 7C. Systemet siger 8 stk. Fysisk: 3 stk.</p>
       <p>Missing pick. Ordren stopper. Kunden venter.</p>
-      <p>Det opdages nu – ikke når pakken er lukket. Det er forskellen mellem en god dag og en dyr dag.</p>
-      <p>Her er hvad der rent faktisk sker på et webshop-lager en tirsdag – fra morgenmødet kl. 07:00 til GLS henter kl. 16:30. Med de rigtige tidspunkter. De rigtige fejl. Og de beslutninger der holder cut-off.</p>
+      <p>Det opdages nu , ikke når pakken er lukket. Det er forskellen mellem en god dag og en dyr dag.</p>
+      <p>Her er hvad der rent faktisk sker på et webshop-lager en tirsdag , fra morgenmødet kl. 07:00 til GLS henter kl. 16:30. Med de rigtige tidspunkter. De rigtige fejl. Og de beslutninger der holder cut-off.</p>
 
-      <h2>07:00 – Morgen-briefing og dagsoverblik</h2>
+      <h2>07:00 , Morgen-briefing og dagsoverblik</h2>
       <p>Lagerchefen starter med at åbne WMS-dashboardet. Hurtig gennemgang:</p>
       <ul>
         <li>Ordrer modtaget i går aftes og natten over: 47 ordrer klar til pluk</li>
@@ -72,23 +72,23 @@
         <li>Pakke og klar til afhentning 16:00</li>
       </ol>
 
-      <h2>07:30 – Pluk-runden starter</h2>
+      <h2>07:30 , Pluk-runden starter</h2>
       <p>Et team på to plukkere starter med dagens plukjobs. WMS har oprettet batch-picks: 12 ordrer samles på første runde, 10 på anden.</p>
-      <p>Plukkerens håndholdte scanner viser ruten: systemet har optimeret gangtiden. Det er ikke den tur køberen valgte – det er den tur der minimerer gangtid.</p>
+      <p>Plukkerens håndholdte scanner viser ruten: systemet har optimeret gangtiden. Det er ikke den tur køberen valgte , det er den tur der minimerer gangtid.</p>
       <p><strong>Lille problem kl. 07:52:</strong> Plukkeren scanner hylde 7C. Systemet siger 8 stk. Fysisk: 3 stk. Missing pick. Registreres i systemet. Cycle count trigges automatisk. Ordren sættes midlertidigt på hold.</p>
 
-      <h2>09:15 – Leverance ankommer</h2>
+      <h2>09:15 , Leverance ankommer</h2>
       <p>Den første leverance fra leverandøren ankommer med 4 paller. Modtagelsesflow:</p>
       <ol>
         <li>Chaufføren klarer ind med afhentningstidspunkt</li>
         <li>Palle oplyst mod PO-nummer i WMS</li>
         <li>Scan hvert kolliantal vs. PO: discrepancy på én SKU (15 stk. leveret, 20 stk. bestilt)</li>
-        <li>Registrer discrepancy i WMS – trigger notifikation til indkøb</li>
+        <li>Registrer discrepancy i WMS , trigger notifikation til indkøb</li>
         <li>Godkend modtagelse og indsæt på lager-lokationer med scan</li>
       </ol>
       <p>Resultat: de 15 stk. tilgængelige på lager. Leverandøren skal følge op på de 5 resterende.</p>
 
-      <h2>11:00 – Pakkestationen er i fuld sving</h2>
+      <h2>11:00 , Pakkestationen er i fuld sving</h2>
       <p>Når pluk er afsluttet, går varerne til pakkestationen. Her sker:</p>
       <ol>
         <li>Scanner bekræfter at plukket svarer til ordren</li>
@@ -96,26 +96,26 @@
         <li>Varer pakkes med korrekt beskyttelse</li>
         <li>Vægt registreres</li>
         <li>Label printes</li>
-        <li>Label scannes mod pakken – match bekræftes</li>
+        <li>Label scannes mod pakken , match bekræftes</li>
         <li>Pakken flyttes til afgangsmrådet</li>
       </ol>
       <p><strong>Kl. 11:23:</strong> Printeren stopper. Papirstop. Procedure aktiveres: rens printer, genstart. 4 minutter forsinket. Buffer holder.</p>
 
-      <h2>13:00 – Cycle count og korrektioner</h2>
+      <h2>13:00 , Cycle count og korrektioner</h2>
       <p>De 5 planlagte SKU'er tælles. Plus den ene der trigede missing pick tidligt på morgenen.</p>
       <p>Resultat:</p>
       <ul>
-        <li>4 SKU'er: OK – saldo matcher</li>
-        <li>1 SKU: 3 stk. diskrepancy – korrektering og root-cause undersøges</li>
+        <li>4 SKU'er: OK , saldo matcher</li>
+        <li>1 SKU: 3 stk. diskrepancy , korrektering og root-cause undersøges</li>
         <li>Missing-pick SKU: 3 stk. fundet på naboplacering (forkert indsætning). Registrering rettes.</li>
       </ul>
 
-      <h2>15:00 – Cut-off nærmer sig</h2>
+      <h2>15:00 , Cut-off nærmer sig</h2>
       <p>Cut-off er 15:00 (intern). Fragtleverandørens afhentning er 16:30.</p>
       <p>Status kl. 14:45: 43 ordrer afsendt-klar. 4 ordrer i gang. 1 backorder stadig på hold.</p>
       <p>Rush: de 4 ordrer prioriteres. Backorder: kunden notificeres proaktivt om forsinkelse.</p>
 
-      <h2>16:30 – GLS henter</h2>
+      <h2>16:30 , GLS henter</h2>
       <p>Chaufføren ankommer. Afstemning:</p>
       <ul>
         <li>Antal pakker i systemet: 43</li>
@@ -124,14 +124,14 @@
       </ul>
       <p>Fragtleverandøren kører. Dagens afsendelse er afsluttet.</p>
 
-      <h2>17:00 – Afslutning</h2>
+      <h2>17:00 , Afslutning</h2>
       <p><strong>Dagsrapport:</strong></p>
       <ul>
         <li>43 ordrer afsendt (100% af målet)</li>
         <li>1 backorder kommunikeret til kunde</li>
         <li>1 leverance modtaget med discrepancy dokumenteret</li>
         <li>Inventory accuracy: 99,2% (5 af 6 SKU'er korrekte)</li>
-        <li>Printer-nedbrud: 4 min – ingen konsekvens for cut-off</li>
+        <li>Printer-nedbrud: 4 min , ingen konsekvens for cut-off</li>
       </ul>
       <p><strong>Overordnet:</strong> en god dag. Systemet fangede fejl før de ramte kunden. Processerne holdt.</p>
 
@@ -153,18 +153,18 @@
       </div>
 
       <h2>SmartPack understøttelse</h2>
-      <p>SmartPack's dashboard viser den daglige status fra morgen-briefing til afslutning. Alle de hændelser der er beskrevet her – missing picks, cycle counts, leverance-modtagelse, fragtafstemning – er integrerede workflows i systemet.</p>
+      <p>SmartPack's dashboard viser den daglige status fra morgen-briefing til afslutning. Alle de hændelser der er beskrevet her , missing picks, cycle counts, leverance-modtagelse, fragtafstemning , er integrerede workflows i systemet.</p>
 
       <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
 
         <details class="faq-item">
-          <summary>Hvor mange ordrer håndterer et lille lager per dag?</summary><div class="faq-item__body"><p>Typisk 20–200 ordrer per dag med 1–3 medarbejdere. Det afhænger af ordrenes kompleksitet og pakkestørrelse.</p></div></details>
+          <summary>Hvor mange ordrer håndterer et lille lager per dag?</summary><div class="faq-item__body"><p>Typisk 20,200 ordrer per dag med 1,3 medarbejdere. Det afhænger af ordrenes kompleksitet og pakkestørrelse.</p></div></details>
 
         <details class="faq-item">
-          <summary>Hvor lang tid tager det at pakke en ordre?</summary><div class="faq-item__body"><p>Gennemsnitlig: 2–5 minutter per ordre ved scan-baseret flow med ordentlig workstation-opsætning.</p></div></details>
+          <summary>Hvor lang tid tager det at pakke en ordre?</summary><div class="faq-item__body"><p>Gennemsnitlig: 2,5 minutter per ordre ved scan-baseret flow med ordentlig workstation-opsætning.</p></div></details>
 
         <details class="faq-item">
-          <summary>Er det nødvendigt med daglig cycle count?</summary><div class="faq-item__body"><p>Ikke fuld optælling dagligt – men de 5–10 SKU'er der er i planen for dagen er best practice.</p></div></details>
+          <summary>Er det nødvendigt med daglig cycle count?</summary><div class="faq-item__body"><p>Ikke fuld optælling dagligt , men de 5,10 SKU'er der er i planen for dagen er best practice.</p></div></details>
 
         <details class="faq-item">
           <summary>Hvordan ved man at fragtleverandøren har hentet det rigtige antal?</summary><div class="faq-item__body"><p>Fragtafstemning: antal scannet ud af WMS skal matche antal overleveret til fragtleverandør. Kvittering er dokumentation.</p></div></details>
@@ -197,6 +197,6 @@
     <p><a href="../../privatlivspolitik.html">Privatlivspolitik</a> | <a href="../../handelsbetingelser.html">Handelsbetingelser</a></p>
   </footer>
   <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvor mange ordrer håndterer et lille lager per dag?","acceptedAnswer":{"@type":"Answer","text":"Typisk 20–200 ordrer per dag med 1–3 medarbejdere. Det afhænger af ordrenes kompleksitet og pakkestørrelse."}},{"@type":"Question","name":"Hvor lang tid tager det at pakke en ordre?","acceptedAnswer":{"@type":"Answer","text":"Gennemsnitlig: 2–5 minutter per ordre ved scan-baseret flow med ordentlig workstation-opsætning."}},{"@type":"Question","name":"Er det nødvendigt med daglig cycle count?","acceptedAnswer":{"@type":"Answer","text":"Ikke fuld optælling dagligt – men de 5–10 SKU'er der er i planen for dagen er best practice."}},{"@type":"Question","name":"Hvordan ved man at fragtleverandøren har hentet det rigtige antal?","acceptedAnswer":{"@type":"Answer","text":"Fragtafstemning: antal scannet ud af WMS skal matche antal overleveret til fragtleverandør. Kvittering er dokumentation."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvor mange ordrer håndterer et lille lager per dag?","acceptedAnswer":{"@type":"Answer","text":"Typisk 20,200 ordrer per dag med 1,3 medarbejdere. Det afhænger af ordrenes kompleksitet og pakkestørrelse."}},{"@type":"Question","name":"Hvor lang tid tager det at pakke en ordre?","acceptedAnswer":{"@type":"Answer","text":"Gennemsnitlig: 2,5 minutter per ordre ved scan-baseret flow med ordentlig workstation-opsætning."}},{"@type":"Question","name":"Er det nødvendigt med daglig cycle count?","acceptedAnswer":{"@type":"Answer","text":"Ikke fuld optælling dagligt , men de 5,10 SKU'er der er i planen for dagen er best practice."}},{"@type":"Question","name":"Hvordan ved man at fragtleverandøren har hentet det rigtige antal?","acceptedAnswer":{"@type":"Answer","text":"Fragtafstemning: antal scannet ud af WMS skal matche antal overleveret til fragtleverandør. Kvittering er dokumentation."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"En dag på et lager: Fra morgenmødet til fragtleverandørens afhentning","dateModified":"2026-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script></body>
 </html>

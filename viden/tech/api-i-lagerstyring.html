@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API i lagerstyring , sådan henter og sender dit WMS data | SmartPack Viden</title>
+  <meta name="description" content="Forstå API-integrationer i lagerstyring: REST API, polling-intervaller, access tokens og fejlhåndtering. Undgå pagination-fejl og token-udløb.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/api-i-lagerstyring.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>API i lagerstyring</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">API i lagerstyring , sådan henter og sender dit WMS data</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Mandag morgen kl. 08:34. Din Shopify-integration holder op med at hente ordrer. Access token er udløbet. 47 ordrer sidder i Shopify. WMS ved intet. Kl. 11:00 opdager lagerchefen det, fordi ingen pluklister er kommet. 3 timer tabt. 47 ordrer forsinket. Det er konsekvensen af manglende token-refresh.</p>
+
+    <h2>Hvad er et API?</h2>
+    <p>API (Application Programming Interface) er en defineret måde for to systemer at kommunikere på. I lagerstyringssammenhæng er det primært REST API'er over HTTPS, der bruges.</p>
+    <p>Et REST API fungerer på request/response-princippet:</p>
+    <ul>
+      <li>Dit WMS sender en HTTP-forespørgsel til et endpoint (en URL)</li>
+      <li>Systemet på den anden side behandler forespørgslen og sender data tilbage</li>
+      <li>Data returneres typisk som JSON</li>
+    </ul>
+    <p>Eksempel: WMS kalder Shopify for at hente nye ordrer:</p>
+    <pre><code>GET /admin/api/2024-01/orders.json?status=open&amp;updated_at_min=2024-01-15T10:00:00Z
+Authorization: Bearer {access_token}</code></pre>
+
+    <h2>Autentificering: AppId og AccessToken</h2>
+    <p>De fleste API'er kræver autentificering for at verificere, at kaldet kommer fra et autoriseret system. I lagerstyringsintegrationer bruges typisk:</p>
+    <p><strong>AppId + AccessToken:</strong> Et par af en app-identifikator og et adgangstoken. AppId identificerer din applikation, AccessToken beviser, at du er autoriseret. Begge sendes med hvert API-kald, typisk i HTTP-headeren.</p>
+    <p><strong>OAuth2 client credentials:</strong> Bruges af Business Central og Azure-baserede systemer. Her veksles AppId + client secret til et adgangstoken med begrænset levetid (typisk 1 time). Tokenet genopfriskes automatisk. Client secret har en maksimal levetid på 2 år, udløber det, holder integrationen op med at virke.</p>
+    <p><strong>Grant Token:</strong> Bruges af e-conomic. En engangs-autorisationsprocess, der resulterer i et persistent token, der kan bruges til alle efterfølgende kald.</p>
+
+    <h2>Hvad koster API-fejl reelt?</h2>
+    <table>
+      <thead><tr><th>Scenarie</th><th>Direkte omkostning</th><th>LTV-tab</th><th>Total omkostning</th></tr></thead>
+      <tbody>
+        <tr><td>Access token udløber (3 timer downtime)</td><td>0 kr. (ordrer venter)</td><td>Forsinkelse: ~8.000 kr. (kundeservice)</td><td><strong>8.000 kr. per episode</strong></td></tr>
+        <tr><td>Rate limiting ramt (429) uden retry</td><td>25% af ordrer tabes i 1 time</td><td>12 ordrer × 350 kr. = 4.200 kr.</td><td><strong>4.200 kr. per time</strong></td></tr>
+        <tr><td>Pagination ikke implementeret</td><td>750+ ordrer hentes ikke (kun første 250)</td><td>500 ordrer × 0,43 × 2.400 = 516.000 kr.</td><td><strong>516.000 kr. per episode</strong></td></tr>
+        <tr><td>Hardkodet token i kode (udløber efter 90 dage)</td><td>0 kr. (ordrer venter)</td><td>Downtime 1 dag: ~40.000 kr.</td><td><strong>40.000 kr. per episode</strong></td></tr>
+      </tbody>
+    </table>
+    <p><strong>Konklusion:</strong> Pagination-fejl er den dyreste. Rate limiting uden retry er den hyppigste.</p>
+
+    <h2>API polling , hvornår og hvor tit?</h2>
+    <p>API polling er periodisk hentning af data. WMS spørger Shopify: "Er der nye ordrer siden sidst?" og gør det hvert N. minut.</p>
+    <p>Optimale polling-intervaller:</p>
+    <ul>
+      <li><strong>Ordrer:</strong> hvert 2-5. minut (lav latency, kritisk for pluktid)</li>
+      <li><strong>Produktstamdata:</strong> hvert 15-30. minut (ændres sjældent)</li>
+      <li><strong>Lagertal til webshop:</strong> hvert 5-15. minut (balancer latency vs. API-belastning)</li>
+      <li><strong>Fakturaer (e-conomic):</strong> hvert 5. minut (e-conomic standardinterval)</li>
+    </ul>
+    <p>For hyppig polling giver rate limiting. De fleste platforme har grænser:</p>
+    <ul>
+      <li>Shopify: 2 calls/sekund (standard), 40 calls/sekund (Plus)</li>
+      <li>e-conomic: 100 requests/minut</li>
+    </ul>
+    <p>Overskrides grænsen, returneres HTTP 429 (Too Many Requests). Dit system skal håndtere dette gracefully med retry og backoff.</p>
+
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+
+    <h2>Hvad API bruges til i lagerdrift</h2>
+    <p><strong>Ordrehentning:</strong> WMS henter åbne ordrer fra webshop med filter på dato/status. Typisk pull hvert 2-5. minut som supplement til webhooks.</p>
+    <p><strong>Lageropslag:</strong> WMS slår varestamdata op i ERP/webshop, pris, beskrivelse, stregkode.</p>
+    <p><strong>Beholdningsopdatering:</strong> WMS sender aktuelle lagertal til webshop. Shopify opdaterer visning for kunder.</p>
+    <p><strong>Fulfillment-bekræftelse:</strong> WMS sender "ordre afsendt" med tracking til webshop via API-kald (POST til /fulfillments.json).</p>
+    <p><strong>Fragtbestilling:</strong> WMS kalder fragtmand-API (GLS, PostNord, Bring) for at booke forsendelse og hente label som PDF.</p>
+
+    <h2>Fejlhåndtering i API-kald</h2>
+    <p>API-kald kan fejle på mange måder. Din integration skal håndtere alle:</p>
+    <table>
+      <thead><tr><th>HTTP Status</th><th>Betydning</th><th>Handling</th></tr></thead>
+      <tbody>
+        <tr><td>200 OK</td><td>Succes</td><td>Behandl data</td></tr>
+        <tr><td>201 Created</td><td>Oprettet</td><td>Registrér ID</td></tr>
+        <tr><td>400 Bad Request</td><td>Ugyldig forespørgsel</td><td>Log og undersøg payload</td></tr>
+        <tr><td>401 Unauthorized</td><td>Token ugyldig/udløbet</td><td>Refresh token, alert</td></tr>
+        <tr><td>404 Not Found</td><td>Ressource findes ikke</td><td>Log, skip eller alert</td></tr>
+        <tr><td>429 Too Many Requests</td><td>Rate limit ramt</td><td>Backoff og retry</td></tr>
+        <tr><td>500 Server Error</td><td>Fjernserver fejl</td><td>Retry med backoff</td></tr>
+        <tr><td>503 Service Unavailable</td><td>Fjernserver utilgængelig</td><td>Retry med backoff</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Det opdager de fleste for sent</h2>
+    <ul>
+      <li><strong>At Shopify returnerer max 250 resultater pr. kald:</strong> du implementerer ordrehentning. Tester med 50 ordrer. Virker perfekt. Black Friday: 1.200 ordrer. Du henter kun de første 250. 950 ordrer behandles aldrig. Opdages først når kunder ringer.</li>
+      <li><strong>At access token udløber midt i arbejdsdagen:</strong> token har 90 dages levetid. Du glemmer at implementere auto-refresh. Dag 91, kl. 08:34: alle API-kald fejler med 401. Ordrer hentes ikke. Opdages efter 3 timer.</li>
+      <li><strong>At rate limiting rammer dig uden varsel:</strong> du poller Shopify hvert 30. sekund. Virker fint ved 50 ordrer/dag. Ved 500 ordrer/dag: 429 Too Many Requests. Ingen retry-logik. 25% af ordrer tabes.</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <ol>
+      <li><strong>Ingen håndtering af rate limiting.</strong> System poller for hyppigt, rammer 429, og fejler stiltiende. Løsning: implementér exponential backoff og respektér Retry-After-header.</li>
+      <li><strong>Hardkodet access token.</strong> Token gemmes direkte i konfigurationsfil eller kode. Udløber tokenet, fejler integrationen. Gem tokens sikkert (Azure Key Vault, environment variables) og implementér automatisk refresh.</li>
+      <li><strong>Ingen pagination-håndtering.</strong> API'er returnerer typisk max 250 resultater pr. kald (Shopify-standard). Har du 1.000 nye ordrer, kræver det 4 kald med pagination. Springer du dette over, mister du ordrer.</li>
+    </ol>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <ol>
+      <li><strong>Implementér circuit breaker:</strong> Hvis et API fejler 5 gange i træk, "sluk" for kald i 5 minutter. Det beskytter mod at bombardere et system, der er nede, og giver det tid til at komme sig.</li>
+      <li><strong>Brug API som fallback for webhooks:</strong> Webhooks er realtid, men kan miste events. API-polling hvert 5. minut som fallback sikrer, at ingen ordrer går tabt selv ved webhook-fejl.</li>
+      <li><strong>Log alle API-kald med request og response:</strong> Ved fejlfinding er det guld at se præcist, hvad der blev sendt og hvad der kom tilbage. Gem logfiler i minimum 14 dage.</li>
+    </ol>
+
+    <h2>Tjekliste</h2>
+    <ul>
+      <li>Er access tokens gemt sikkert (ikke i kode)?</li>
+      <li>Håndterer du HTTP 429 med retry og backoff?</li>
+      <li>Er pagination implementeret på alle list-endpoints?</li>
+      <li>Er API polling sat til passende interval (ikke for hyppigt)?</li>
+      <li>Logger du alle API-kald med status?</li>
+    </ul>
+
+    <h2>SmartPack: Ja eller nej?</h2>
+    <p><strong>Ja,</strong> hvis du vil undgå pagination-fejl og token-udløb.</p>
+    <p>SmartPack har implementeret pagination på alle list-endpoints (Shopify, WooCommerce, e-conomic, Business Central). Access tokens håndteres sikkert med auto-refresh. Rate limiting håndteres automatisk med exponential backoff (1 min, 5 min, 30 min). Alle API-kald logges med request/response og vises i integrationspanelet.</p>
+    <p><strong>Alternativet:</strong> Bygge egen API-integration: 60.000-120.000 kr. udvikling + 15.000 kr./år vedligehold. Ingen pagination: risiko for 516.000 kr. tab ved Black Friday. Hardkodet token: risiko for 40.000 kr. tab ved udløb. Ingen rate limiting-håndtering: 25% ordretab ved spidslast.</p>
+    <p><strong>SmartPack-omkostning:</strong> 60.000 kr./år (inkl. alle integrationer + monitoring). <strong>Breakeven:</strong> Hvis SmartPack forhindrer én pagination-fejl (516.000 kr.) = 456.000 kr. sparet, ROI: 760%.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er forskellen på API og webhook i lagerstyring?</summary><div class="faq-item__body"><p>API er pull: dit system spørger aktivt. Webhook er push: det eksterne system fortæller dig, når noget sker. Begge bruges typisk i kombination.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis access token udløber midt i arbejdsdagen?</summary><div class="faq-item__body"><p>Alle API-kald fejler med HTTP 401. Ordrer hentes ikke, lager opdateres ikke. Systemet bør automatisk forsøge token-refresh og sende alert, hvis det fejler.</p></div></details>
+    <details class="faq-item"><summary>Hvad er pagination, og hvorfor er det vigtigt?</summary><div class="faq-item__body"><p>API'er returnerer data i sider (f.eks. 250 resultater ad gangen). Uden pagination-håndtering henter du kun den første side og mister resten. Kritisk ved ordreimport.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg bruge samme API-token til flere systemer?</summary><div class="faq-item__body"><p>Teknisk set ja i nogle platforme, men det er en sikkerhedsrisiko. Et kompromitteret token giver adgang til alle systemer. Brug separate tokens pr. integration.</p></div></details>
+    <details class="faq-item"><summary>Hvad er et REST API?</summary><div class="faq-item__body"><p>Et API baseret på HTTP-protokollen og standardmetoder (GET, POST, PUT, DELETE). Det mest udbredte API-design i e-handel og lagerstyring. Data udveksles typisk som JSON.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på API og webhook i lagerstyring?","acceptedAnswer":{"@type":"Answer","text":"API er pull: dit system spørger aktivt. Webhook er push: det eksterne system fortæller dig, når noget sker. Begge bruges typisk i kombination."}},{"@type":"Question","name":"Hvad sker der, hvis access token udløber midt i arbejdsdagen?","acceptedAnswer":{"@type":"Answer","text":"Alle API-kald fejler med HTTP 401. Ordrer hentes ikke, lager opdateres ikke. Systemet bør automatisk forsøge token-refresh og sende alert, hvis det fejler."}},{"@type":"Question","name":"Hvad er pagination, og hvorfor er det vigtigt?","acceptedAnswer":{"@type":"Answer","text":"API'er returnerer data i sider (f.eks. 250 resultater ad gangen). Uden pagination-håndtering henter du kun den første side og mister resten. Kritisk ved ordreimport."}},{"@type":"Question","name":"Hvad er et REST API?","acceptedAnswer":{"@type":"Answer","text":"Et API baseret på HTTP-protokollen og standardmetoder (GET, POST, PUT, DELETE). Det mest udbredte API-design i e-handel og lagerstyring. Data udveksles typisk som JSON."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"API i lagerstyring , sådan henter og sender dit WMS data","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

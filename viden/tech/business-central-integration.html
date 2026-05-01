@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Central integration med WMS , hvad du skal kende inden opsætning | SmartPack Viden</title>
+  <meta name="description" content="Business Central integration med WMS via OAuth2 og Azure App Registration. Undgå client secret-udløb efter 2 år og integrations-nedbrud.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/business-central-integration.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>Business Central integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Business Central integration med WMS , hvad du skal kende inden opsætning</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Business Central (BC) er Microsofts ERP-løsning og den mest udbredte ERP i Danmark til SMV-segmentet. Integrationen med et WMS er teknisk velfungerende, men har én gotcha, der rammer næsten alle virksomheder på samme måde: client secret udløber efter 2 år, og ingen advarer dig. En dag holder din integration simpelthen op med at virke, og du ved ikke hvorfor.</p>
+
+    <h2>Hvad er Business Central integration?</h2>
+    <p>Business Central-WMS-integration er en tovejs dataforbindelse, der typisk dækker:</p>
+    <p><strong>BC til WMS:</strong></p>
+    <ul>
+      <li>Salgsordrer: ordrer oprettet i BC sendes til WMS til behandling</li>
+      <li>Varestamdata: artikler, stregkoder, priser</li>
+      <li>Kundestamdata: leveringsadresser, betalingsbetingelser</li>
+    </ul>
+    <p><strong>WMS til BC:</strong></p>
+    <ul>
+      <li>Afsendelsesbekræftelse: ordren er afsendt, tracking-nummer</li>
+      <li>Beholdningsopdatering: aktuelle lagertal pr. lokation</li>
+      <li>Returnering: returnerede varer og lagerregulering</li>
+    </ul>
+
+    <h2>Autentificering: OAuth2 og Azure App Registration</h2>
+    <p>Business Central bruger OAuth2 client credentials flow. Det kræver:</p>
+    <ol>
+      <li><strong>Azure App Registration</strong> i Microsoft Entra ID (tidligere Azure Active Directory)</li>
+      <li><strong>Client ID</strong> (Application ID), den offentlige identifikator</li>
+      <li><strong>Client Secret,</strong> den hemmelige nøgle. Udløber. Det er her, det går galt.</li>
+      <li><strong>Tenant ID,</strong> din Microsoft 365-organisations ID</li>
+      <li><strong>BC API-tilladelser</strong> tildelt i App Registration: <code>Financials.ReadWrite.All</code> eller specifikke BC API-scopes</li>
+    </ol>
+    <p><strong>Det kritiske problem:</strong> Client secret kan oprettes med maksimal levetid på 2 år. Udløber det, returnerer Microsoft 401 Unauthorized. Alt stopper. WMS henter ikke ordrer, BC modtager ikke afsendelsesbekræftelser. Det er den hyppigste årsag til Business Central-integrationsnedbrud, og det er fuldstændigt forebyggeligt.</p>
+
+    <h2>Hvad koster et BC client secret-udløb?</h2>
+    <table>
+      <thead><tr><th>Downtime-varighed</th><th>Tabte ordrer</th><th>Direkte tab</th><th>LTV-tab</th><th>Total omkostning</th></tr></thead>
+      <tbody>
+        <tr><td>4 timer (opdages hurtigt)</td><td>83 ordrer</td><td>0 kr.</td><td>Forsinkelse: ~5.000 kr.</td><td><strong>5.000 kr.</strong></td></tr>
+        <tr><td>1 dag (opdages næste morgen)</td><td>500 ordrer</td><td>0 kr.</td><td>Tabt salg: ~20.000 kr.</td><td><strong>20.000 kr.</strong></td></tr>
+        <tr><td>2 dage (weekend)</td><td>1.000 ordrer</td><td>Tabt salg: ~40.000 kr.</td><td>Churn: 1.000 × 0,08 × 2.400 = 192.000 kr.</td><td><strong>232.000 kr.</strong></td></tr>
+        <tr><td>1 uge (opdages ved månedsafslutning)</td><td>3.500 ordrer</td><td>Tabt salg: ~140.000 kr.</td><td>Churn: 3.500 × 0,15 × 2.400 = 1.260.000 kr.</td><td><strong>1.400.000 kr.</strong></td></tr>
+      </tbody>
+    </table>
+    <p><strong>Konklusion:</strong> Et client secret-udløb opdaget efter 2 dage koster 232.000 kr. Opdaget efter en uge: 1,4 mio. kr. Og det sker altid efter præcis 2 år. Microsoft sender ingen advarsel.</p>
+
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+
+    <h2>Opsætning trin for trin</h2>
+    <h3>Trin 1: Opret App Registration i Azure</h3>
+    <ol>
+      <li>Azure Portal, Microsoft Entra ID, App Registrations, New Registration</li>
+      <li>Navngiv: "WMS Integration"</li>
+      <li>Supported account type: Single tenant</li>
+      <li>Gem Application (client) ID og Tenant ID</li>
+    </ol>
+    <h3>Trin 2: Opret Client Secret</h3>
+    <ol>
+      <li>Certificates &amp; Secrets, New client secret</li>
+      <li>Sæt udløb: 24 måneder (maksimum)</li>
+      <li>Gem secret value straks, den vises kun én gang</li>
+      <li><strong>Sæt kalenderreminder 30 og 60 dage før udløb</strong></li>
+    </ol>
+    <h3>Trin 3: Tildel API-tilladelser</h3>
+    <ol>
+      <li>API permissions, Add permission, Dynamics 365 Business Central</li>
+      <li>Vælg <code>Financials.ReadWrite.All</code> (eller mindste privilegium)</li>
+      <li>Grant admin consent</li>
+    </ol>
+    <h3>Trin 4: Konfigurér i Business Central</h3>
+    <ol>
+      <li>BC Admin Center, API setup</li>
+      <li>Tildel service-bruger til App Registration</li>
+      <li>Test med: <code>GET /api/v2.0/companies</code></li>
+    </ol>
+    <h3>Trin 5: Hent ordrer</h3>
+    <pre><code>GET /api/v2.0/companies({companyId})/salesOrders?$filter=status eq 'Open'
+Authorization: Bearer {access_token}</code></pre>
+
+    <h2>Det opdager de fleste for sent</h2>
+    <ul>
+      <li><strong>At client secret udløber altid efter 2 år,</strong> uanset om du husker det eller ej. Microsoft sender ingen email, ingen notifikation, ingen advarsel. Integrationen stopper bare. Første tegn: ordrer synkroniseres ikke.</li>
+      <li><strong>At den person der oprettede App Registration er stoppet,</strong> og ingen andre har adgang til Azure Portal. Når secret udløber, kan I ikke forny det. I skal oprette en ny App Registration fra bunden.</li>
+      <li><strong>At BC API-tilladelser kan ændres af en anden admin,</strong> en kollega "rydder op" i Azure og fjerner tilladelser. Integrationen fejler med 403 Forbidden. Ingen ved hvorfor.</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <ol>
+      <li><strong>Client secret udløber uden advarsel.</strong> Hyppigste årsag til BC-nedbrud. Microsoft sender ingen notifikation. Sæt reminder 30-60 dage inden udløb og dokumentér hvem der har adgang til Azure Portal.</li>
+      <li><strong>For brede API-tilladelser.</strong> <code>Financials.ReadWrite.All</code> giver adgang til alt. Brug mindste privilegium-princippet.</li>
+      <li><strong>Service-bruger slettet i BC.</strong> Hvis den BC-bruger, der er konfigureret i App Registration, slettes, fejler integration med 403. Brug en dedikeret service-bruger, der aldrig slettes.</li>
+    </ol>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <ol>
+      <li><strong>Dokumentér alle credentials med udløbsdatoer:</strong> Opret et dokument (eller password manager entry) med Client ID, Tenant ID, secret-udløbsdato og hvem der har adgang.</li>
+      <li><strong>Rotér secret proaktivt hvert 18. måned:</strong> Vent ikke på de 2 år. Rotér ved 18 måneder, så du aldrig er tæt på udløb i produktion.</li>
+      <li><strong>Test token-refresh i integration:</strong> Implementér og test, at din integration korrekt håndterer token-refresh hvert 60. minut.</li>
+    </ol>
+
+    <h2>Tjekliste</h2>
+    <ul>
+      <li>Er client secret-udløbsdato dokumenteret?</li>
+      <li>Er kalenderreminder sat 30 og 60 dage inden udløb?</li>
+      <li>Bruges dedikeret service-bruger (ikke personlig BC-bruger)?</li>
+      <li>Er API-tilladelser minimale (mindste privilegium)?</li>
+      <li>Er pagination implementeret på alle list-kald?</li>
+    </ul>
+
+    <h2>SmartPack: Ja eller nej?</h2>
+    <p><strong>Ja,</strong> hvis du vil undgå client secret-katastrofen. SmartPack har præ-konfigureret Business Central integration via OAuth2. SmartPack advarer i admin-panelet, når client secret nærmer sig udløb (60 dage varsel + 30 dage varsel + 7 dage varsel). Ordrer hentes automatisk fra BC, behandles i WMS-flow, og afsendelsesbekræftelse med tracking sendes tilbage til BC.</p>
+    <p><strong>SmartPack-omkostning:</strong> 60.000 kr./år (inkl. BC + alle andre integrationer). <strong>Breakeven:</strong> Hvis SmartPack forhindrer én client secret-episode (232.000 kr. ved 2 dages downtime) = 172.000 kr. sparet i første år.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er client secret i Business Central integration?</summary><div class="faq-item__body"><p>En hemmelig nøgle tilknyttet din Azure App Registration, brugt til at autentificere API-kald. Har en levetid på maksimalt 2 år. Udløber den, fejler alle BC API-kald.</p></div></details>
+    <details class="faq-item"><summary>Hvordan ved jeg, hvornår client secret udløber?</summary><div class="faq-item__body"><p>I Azure Portal, App Registrations, din app, Certificates &amp; secrets. Udløbsdatoen vises. Microsoft sender ingen automatisk advarsel.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg bruge Business Central uden App Registration?</summary><div class="faq-item__body"><p>Nej, til API-integration. BC kræver OAuth2-autentificering via Azure App Registration. Basic auth er ikke understøttet til API.</p></div></details>
+    <details class="faq-item"><summary>Hvad er OData, og hvad har det at gøre med BC?</summary><div class="faq-item__body"><p>OData (Open Data Protocol) er det query-format BC bruger til sit REST API. Det muliggør avanceret filtrering, sortering og pagination direkte i URL-parametrene.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis BC er offline?</summary><div class="faq-item__body"><p>API-kald fejler med connection error eller timeout. WMS skal håndtere dette med retry og circuit breaker. BC-nedbrud er sjældne men forekommer ved Microsoft-opdateringer.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er client secret i Business Central integration?","acceptedAnswer":{"@type":"Answer","text":"En hemmelig nøgle tilknyttet din Azure App Registration, brugt til at autentificere API-kald. Har en levetid på maksimalt 2 år. Udløber den, fejler alle BC API-kald."}},{"@type":"Question","name":"Hvordan ved jeg, hvornår client secret udløber?","acceptedAnswer":{"@type":"Answer","text":"I Azure Portal, App Registrations, din app, Certificates og secrets. Udløbsdatoen vises. Microsoft sender ingen automatisk advarsel."}},{"@type":"Question","name":"Kan jeg bruge Business Central uden App Registration?","acceptedAnswer":{"@type":"Answer","text":"Nej, til API-integration. BC kræver OAuth2-autentificering via Azure App Registration. Basic auth er ikke understøttet til API."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Business Central integration med WMS , hvad du skal kende inden opsætning","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

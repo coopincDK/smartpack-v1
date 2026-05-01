@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WMS ERP integration: naar lageret og regnskabet skal tale samme sprog | SmartPack Viden</title>
+  <meta name="description" content="WMS ERP integration eliminerer manuel dobbeltstastning og forsinket fakturering. Laer hvad det koster uden integration, og hvad de standard ERP-systemer kraever.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/wms-erp-integration.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>WMS ERP integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">WMS-ERP integration: naar lageret og regnskabet skal tale samme sprog</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~6 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Mandag morgen kl. 09:15. Modtagelse af 4 paller fra leverandoer. Scanner ind i WMS. Kl. 11:00: bogholder ringer. &quot;Hvor er varemodtagelsen? Jeg skal bogfoere.&quot; WMS og ERP taler ikke sammen. Manuel dobbeltregistrering. 45 minutter spildt. Sker 3 gange/uge. 135 min/uge x 200 kr./time = 27.000 kr./maaned = 324.000 kr./aar i spildt tid.</p>
+    <p>Det er den direkte og maalbare omkostning ved manglende WMS-ERP integration. Og det er kun den synlige del.</p>
+
+    <h2>Hvad er WMS-ERP integration?</h2>
+    <p>ERP (Enterprise Resource Planning) haandterer oekonomi, indkob, HR og salg. WMS haandterer lager-operationer. Integration sikrer at de to systemer deler data automatisk:</p>
+
+    <h3>Fra WMS til ERP</h3>
+    <ul>
+      <li>Varetilgang (modtagelse): ERP registrerer lagertilvaekst og gaeld til leverandoer</li>
+      <li>Pluk/forsendelse: ERP registrerer lagerreduktion og udloser fakturering</li>
+      <li>Returmodtagelse: ERP registrerer lagerforogelse og kreditnota-grundlag</li>
+    </ul>
+
+    <h3>Fra ERP til WMS</h3>
+    <ul>
+      <li>Indkoebsordrer: WMS modtager forventet vareankomst</li>
+      <li>Kundeordrer: WMS modtager ordrer til behandling</li>
+      <li>Produktdata (nyt produkt, ny pris): WMS opdateres</li>
+    </ul>
+
+    <h2>Hvad koster manglende WMS-ERP integration?</h2>
+    <p class="inline-cta">&#x1F449; SmartPack har forudbyggede integrationer til e-conomic, Uniconta og Dynamics 365. <a href="../../kontakt.html">Se SmartPacks ERP-integrationer</a></p>
+    <table>
+      <thead><tr><th>Scenarie</th><th>Total aarlig</th></tr></thead>
+      <tbody>
+        <tr><td>Manuel dobbeltstastning (100% af ordrer)</td><td>780.000 kr./aar</td></tr>
+        <tr><td>Forsinket fakturering (10% af ordrer)</td><td>315.000 kr./aar</td></tr>
+        <tr><td>Varenummer-mismatch (5% af ordrer)</td><td>2.737.500 kr./aar</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Konklusion:</strong> Varenummer-mismatch er den dyreste fejl. Manuel dobbeltstastning er den hyppigste.</p>
+
+    <h2>Hvad sker der uden integration?</h2>
+    <ul>
+      <li><strong>Manuel dobbeltstastning:</strong> Modtagelse registreres i WMS, medarbejder gentaster i ERP med 1-3% fejlrate i datatransfer.</li>
+      <li><strong>Forsinket regnskab:</strong> Lager-bevaegelser registreres i ERP dagen efter eller ugen efter. Realtids-beholdning og P&amp;L er aldrig synkroniserede.</li>
+      <li><strong>Manglende fakturering:</strong> Forsendelse i WMS udloser ikke fakturering i ERP automatisk.</li>
+    </ul>
+    <p>For 500 ordrer/dag: Manuel synkronisering = 1-2 timers dagligt dobbeltarbejde = <strong>130.000-260.000 kr./aar i lonkostning</strong>.</p>
+
+    <h2>Standard ERP-systemer og WMS-integration</h2>
+    <table>
+      <thead><tr><th>ERP-system</th><th>Integrationsmetode</th><th>Kompleksitet</th></tr></thead>
+      <tbody>
+        <tr><td>e-conomic</td><td>REST API</td><td>Lav</td></tr>
+        <tr><td>Microsoft Dynamics 365</td><td>API og connector</td><td>Medium</td></tr>
+        <tr><td>SAP Business One</td><td>API og connector</td><td>Medium-hoj</td></tr>
+        <tr><td>Navision/BC</td><td>API</td><td>Medium</td></tr>
+        <tr><td>Uniconta</td><td>API</td><td>Lav</td></tr>
+        <tr><td>Odoo</td><td>Native eller API</td><td>Lav (Odoo har WMS-modul)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Typiske fejl</h2>
+    <ul>
+      <li><strong>Bruger een-vejs integration:</strong> Ordrer fra ERP til WMS, men beholdning og forsendelse ikke tilbage til ERP.</li>
+      <li><strong>Ignorerer varenummer-mismatch:</strong> ERP bruger interne varenumre. WMS bruger EAN. Ingen mapping = ingen integration.</li>
+      <li><strong>Ingen test i production-lignende miljo:</strong> Integration der virker i test fejler ofte under reel volumen.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Definer data-ejerskab:</strong> Hvem er master for produktdata? ERP (typisk) eller WMS? Definer det klart fra start.</li>
+      <li><strong>Start med een-vejs og byg ud:</strong> Ordrer fra ERP til WMS som foerste trin. Derefter beholdnings-sync og forsendelsesbekraeftelse.</li>
+      <li><strong>Kraev forudbygget connector:</strong> Custom ERP-integration er dyrt. Forudbyggede connectors til e-conomic, Dynamics m.fl. er standard for moderne WMS.</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack har forudbyggede integrationer til e-conomic, Uniconta og Microsoft Dynamics 365. Integration opsaettes typisk paa 2-4 timer og er bi-direktionel: ordrer, beholdning og forsendelsesbekraeftelse synkroniseres automatisk. Fejlede synk-forsoeg alarmerer automatisk.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du eliminere manuel dobbeltstastning mellem WMS og ERP?</p><a href="../../kontakt.html" class="btn">Se SmartPacks ERP-integrationer</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./wms-vs-erp.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">WMS vs. ERP</span></a>
+    <a href="./integrationer-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Integrationer forklaret</span></a>
+    <a href="./typiske-integrationsfejl.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Skal WMS og ERP have samme varenummerstruktur?</summary><div class="faq-item__body"><p>Ikke nodvendigt, men mapping-tabellen er kritisk. Saet tid af til at sikre korrekt mapping inden go-live.</p></div></details>
+    <details class="faq-item"><summary>Hvad er bedst: WMS-modul i ERP eller separat WMS?</summary><div class="faq-item__body"><p>ERP-WMS-modul (fx SAP, Dynamics, Odoo): god integration men typisk lavere lager-funktionalitet. Separat best-of-breed WMS: bedre lager-funktionalitet, kraever integration. SMV under 500 ordrer/dag: separat cloud-WMS er typisk bedst.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster custom ERP-integration?</summary><div class="faq-item__body"><p>50.000-200.000 kr. afhaengigt af systemers kompleksitet.</p></div></details>
+    <details class="faq-item"><summary>Kan integration haandtere multi-currency og multi-company?</summary><div class="faq-item__body"><p>Ja, for ERP-systemer der understoetter det (SAP, Dynamics). Kraever specifik konfiguration.</p></div></details>
+    <details class="faq-item"><summary>Hvad er typisk implementeringstid for WMS-ERP integration?</summary><div class="faq-item__body"><p>Med forudbygget connector: 1-3 uger. Custom-integration: 2-6 maaneder.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Skal WMS og ERP have samme varenummerstruktur?","acceptedAnswer":{"@type":"Answer","text":"Ikke nodvendigt, men mapping-tabellen er kritisk og skal verificeres inden go-live."}},{"@type":"Question","name":"Hvad koster custom ERP-integration?","acceptedAnswer":{"@type":"Answer","text":"50.000-200.000 kr. afhaengigt af systemers kompleksitet."}},{"@type":"Question","name":"Hvad er typisk implementeringstid for WMS-ERP integration?","acceptedAnswer":{"@type":"Answer","text":"Med forudbygget connector: 1-3 uger. Custom-integration: 2-6 maaneder."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WMS-ERP integration: naar lageret og regnskabet skal tale samme sprog","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

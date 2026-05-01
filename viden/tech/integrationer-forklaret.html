@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrationer forklaret: saadan taler dine systemer sammen | SmartPack Viden</title>
+  <meta name="description" content="Forstaa API, webhooks og filintegration i lagerstyring. Laer hvad det koster naar integrationer fejler, og hvordan du bygger robuste forbindelser.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/integrationer-forklaret.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Integrationer forklaret</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Integrationer forklaret: saadan taler dine systemer sammen</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Mandag morgen kl. 08:47. Lagerchefen aabner WMS. 0 nye ordrer. Underligt, normalt 47 ordrer om natten. Tjekker Shopify: 52 ordrer. Webhook-integration fejlet kl. 23:34 soendag. Ingen alarm. 52 ordrer sidder i Shopify. WMS ved intet. Stille fejl. Opdages efter 9 timer.</p>
+    <p>Det er integrationsfejlenes natur: de sker oftest usynligt, opdages sent og koster dyrt. Her er hvad du skal vide om integrationer i lagerstyring.</p>
+
+    <h2>Hvad er en integration?</h2>
+    <p>En integration er en automatiseret forbindelse mellem to systemer, der goer det muligt for dem at udveksle data uden manuel indgriben. I lagerstyringssammenhaeng er de vigtigste integrationer:</p>
+    <ul>
+      <li><strong>Webshop til WMS:</strong> Ordrer sendes til WMS til behandling</li>
+      <li><strong>WMS til Webshop:</strong> Fulfillment-status og tracking sendes tilbage</li>
+      <li><strong>WMS til ERP:</strong> Beholdning, afsendelse og eventuel fakturering</li>
+      <li><strong>WMS til Fragtmand:</strong> Fragttransport bestilles, labels genereres</li>
+      <li><strong>WMS til Indkoebssystem:</strong> Genbestilling ved minimum-lager</li>
+    </ul>
+
+    <h2>Integrationstyper: API vs. Webhook</h2>
+    <p class="inline-cta">&#x1F449; SmartPack bruger event-drevet integration med fuld webhook-support. <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+    <p>De to dominerende teknologier er <strong>API (pull)</strong> og <strong>Webhook (push)</strong>. De er ikke konkurrenter, de loser forskellige problemer og bruges ofte i kombination.</p>
+
+    <h3>API, du spoerger, systemet svarer</h3>
+    <p>API (Application Programming Interface) fungerer som et spoergsmaal-svar-system. Dit WMS sender en foresprorgsel til fx Shopify: &quot;Vis mig alle ubehandlede ordrer fra de seneste 10 minutter.&quot; Shopify svarer med en liste.</p>
+    <p>Det kraever: AppId og AccessToken (autentifikation), et endpoint (URL til APIet), og en planlagt hentning (polling), typisk hvert 1-5. minut. API egner sig godt til periodisk synkronisering, opslag og opdatering af lagertal.</p>
+
+    <h3>Webhook, systemet fortaeller dig, naar noget sker</h3>
+    <p>En webhook er en push-notifikation. Shopify sender dig automatisk en besked, naar en ordre oprettes, du behoever ikke spoerge. Det sker i realtid. Webhooks egner sig godt til: ordremodtagelse, betalingsbekraeftelse og statusopdateringer.</p>
+    <p>Krav til webhook-modtagelse:</p>
+    <ul>
+      <li>HTTPS-endpoint (usikrede HTTP accepteres ikke)</li>
+      <li>Svartid under 30 sekunder (ellers timeout og retry)</li>
+      <li>HMAC-SHA256 signaturvalidering (bekraefter at beskeden er aegte)</li>
+    </ul>
+
+    <h3>Filintegration, det tredje alternativ</h3>
+    <p>Aeldre systemer bruger stadig filbaseret integration: CSV- eller XML-filer udveksles via FTP/SFTP. Det er langsomt, fejlprone og svaert at monitorere, men det eksisterer saerligt i ERP-sammenhaeng.</p>
+
+    <h2>Hvad koster integrationsfejl reelt?</h2>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Direkte omkostning</th><th>Total aarlig</th></tr></thead>
+      <tbody>
+        <tr><td>Webhook-tab uden retry (5% af ordrer)</td><td>8.750 kr./dag</td><td>12.605.625 kr./aar</td></tr>
+        <tr><td>Ingen HMAC-validering, svindel</td><td>8.000 kr./episode</td><td>96.000 kr./aar</td></tr>
+        <tr><td>Ingen retry-logik (3% API-kald fejler)</td><td>5.250 kr./dag</td><td>7.566.750 kr./aar</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Stille fejl er farligst</h2>
+    <p>Integrationer fejler ikke spektakulaert. De fejler stille. Det er det farligste scenarie:</p>
+    <ul>
+      <li>En ordre modtages i Shopify, men webhook leveres ikke til WMS, og ingen opdager det</li>
+      <li>Lagertal opdateres i WMS, men API-synkronisering til Shopify er fejlet i 2 timer</li>
+      <li>Fragtbestilling sendes, men fragtmand-API returnerer fejl, der ikke logges</li>
+    </ul>
+    <p>En haaard fejl stopper systemet og opdages. En stille fejl fortsaetter usynligt og opbygger data, der afviger fra virkeligheden.</p>
+
+    <h2>Integrationsmoenstre i e-handel</h2>
+    <p><strong>Synkron integration:</strong> System A kalder System B og venter paa svar, foer det fortsaetter. Simpelt, men saarbart, hvis B er langsom bremser det A.</p>
+    <p><strong>Asynkron integration:</strong> System A sender beskeden og fortsaetter. Beskeden lander i en koe og behandles, naar B er klar. Mere robust, men kraever fejlhaandtering i koen.</p>
+    <p><strong>Event-drevet integration:</strong> Haendelser som ordre oprettet, vare plukket og pakke afsendt trigger automatisk alle relevante systemer. Det er den mest skalerbare arkitektur.</p>
+
+    <h2>Typiske fejl</h2>
+    <ul>
+      <li><strong>Ingen retry-logik:</strong> Webhooks og API-kald fejler. Netvaerket fejler. Servere er nede. Uden automatisk retry mister du data. Implementer eksponentiel backoff: prrov igen efter 1 min, 5 min, 30 min.</li>
+      <li><strong>Manglende signaturvalidering:</strong> Webhooks fra Shopify indeholder en HMAC-SHA256-signatur. Validerer du den ikke, kan hvem som helst sende falske ordre-events til dit endpoint.</li>
+      <li><strong>Polling for hyppigt eller for sjaeldent:</strong> API-polling hvert 30. sekund giver unodvendig belastning. Polling hvert 30. minut giver for lang forsinkelse. Juster interval til faktisk behov.</li>
+      <li><strong>Ignorer integration health monitoring:</strong> Uden monitoring ved du ikke, hvornaar en integration sidst koerte succesfuldt.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Log alt:</strong> Hvert API-kald og webhook-modtagelse boer logges med timestamp, payload og respons-kode.</li>
+      <li><strong>Brug idempotente endpoints:</strong> Hvis samme webhook leveres to gange, maa systemet ikke oprette to ordrer.</li>
+      <li><strong>Adskil systemer med en message queue:</strong> En koe beskytter mod spikes og giver buffer ved kortvarige nedbrud.</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack bruger event-drevet integration med webhook-support og periodisk API-polling. Alle webhooks valideres med HMAC-SHA256. Integrationer til Shopify, WooCommerce, e-conomic og Business Central er praekonfigurerede. SmartPack logger alle integrationshaendelser og viser integration health i administrationspanelet.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du have stabile integrationer der virker?</p><a href="../../kontakt.html" class="btn">Se SmartPacks integrationer</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./webhooks-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Webhooks forklaret</span></a>
+    <a href="./typiske-integrationsfejl.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
+    <a href="./lager-api-integration.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">API-integration i lagersystemet</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Hvad er forskellen paa API og webhook?</summary><div class="faq-item__body"><p>API er pull: du spoerger og faar svar. Webhook er push: systemet fortaeller dig, naar noget sker. Brug webhook til realtidshaendelser, API til periodiske opslag.</p></div></details>
+    <details class="faq-item"><summary>Skal min webhook have HTTPS?</summary><div class="faq-item__body"><p>Ja, uden undtagelse. Shopify, WooCommerce og alle moderne platforme afviser HTTP-endpoints.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg have for mange integrationer?</summary><div class="faq-item__body"><p>Teknisk set nej, men kompleksiteten stiger. Hvert integrationspunkt er et potentielt fejlpunkt. Prioriter integrationer med hoj forretningsvaerdi.</p></div></details>
+    <details class="faq-item"><summary>Hvad er idempotency i integration?</summary><div class="faq-item__body"><p>At det samme kald kan gentages uden at skabe duplikat-data. En ordre-webhook der leveres to gange maa ikke skabe to ordrer i WMS. Det sikres via idempotency-nogler, typisk ordre-ID.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster en integrationsnedbrud?</summary><div class="faq-item__body"><p>Direkte: ordrer der ikke behandles, manuelt arbejde. Indirekte: forsinkede leverancer, utilfredse kunder, tabt tillid. Nedbrud i 2 timer kan betyde 30-50 forsinkede ordrer.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen paa API og webhook?","acceptedAnswer":{"@type":"Answer","text":"API er pull: du spoerger og faar svar. Webhook er push: systemet fortaeller dig, naar noget sker."}},{"@type":"Question","name":"Skal min webhook have HTTPS?","acceptedAnswer":{"@type":"Answer","text":"Ja, uden undtagelse. Alle moderne platforme afviser HTTP-endpoints."}},{"@type":"Question","name":"Hvad er idempotency i integration?","acceptedAnswer":{"@type":"Answer","text":"At det samme kald kan gentages uden at skabe duplikat-data. Sikres via idempotency-nogler baseret paa ordre-ID."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Integrationer forklaret: saadan taler dine systemer sammen","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

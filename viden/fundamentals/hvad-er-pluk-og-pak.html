@@ -1,100 +1,138 @@
 ﻿<!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hvad er pluk og pak? | SmartPack Viden</title>
-  <meta name="description" content="Pluk og pak er det dyreste led i dit lager. En fejl koster 350 kr. direkte. 0,5% fejlrate = 157.500 kr./år i undgået tab. Sådan optimerer du begge dele.">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er pluk og pak, og hvorfor er det det dyreste led i dit lager? | SmartPack Viden</title>
+  <meta name="description" content="Pluk og pak (pick and pack) er processen fra varen hentes på lageret til pakken afsendes. En fejl koster 350 kr. direkte. Lær hvordan du reducerer fejlraten.">
   <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-pluk-og-pak.html">
-  <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style.css?v=4">
-  
   <script src="../../js/theme-toggle.js"></script>
 </head>
 <body>
-<header class="site-header" id="site-header">
-  <nav class="nav container">
-    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
-    <ul class="nav__links" id="nav-links">
-      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
-      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
-      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
-      <li><a href="../" class="nav__link">Viden</a></li>
-    </ul>
-    <div class="nav__actions">
-      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
-      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
-      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
-      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-</header>
-
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
-
-  <nav class="article-breadcrumb" aria-label="Brødkrumme">
-    <a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>Pluk og pak</span>
-  </nav>
-
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>Hvad er pluk og pak?</span></nav>
   <header class="article-header">
     <span class="article-cat-badge">Fundamentals</span>
     <h1 class="article-title">Hvad er pluk og pak, og hvorfor er det det dyreste led i dit lager?</h1>
-    <div class="article-meta"><time datetime="2025-04-30">Opdateret: 30. april 2025</time><span>Læsetid: ~5 min</span></div>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
   </header>
-
   <div class="article-body">
-
-    <p>Plukkeren tager forkert vare. Ingen scanning. Ingen kontrol. Pakken sendes. Kunden modtager forkert. Du sender ny pakke. Du refunderer.</p>
-    <p><strong>350 kr. direkte tab</strong>, per fejl.<br>
-    Ved 0,5% fejlrate på 500 ordrer/dag = <strong>157.500 kr./år</strong> i undgået tab ved scanning.</p>
+    <p>Plukkeren tager forkert vare. Ingen scanning. Ingen kontrol. Pakken sendes.</p>
+    <p>Kunden modtager forkert. Du sender ny pakke. Du refunderer.</p>
+    <p><strong>350 kr. direkte tab</strong> per fejl. Ved 0,5% fejlrate = <strong>157.500 kr./år</strong> i undgået tab ved scanning.</p>
 
     <h2>Hvad er pluk og pak?</h2>
     <p><strong>Pluk og pak</strong> (pick and pack) er processen, hvor en medarbejder finder de bestilte varer i lageret (pluk), og pakker dem klar til forsendelse (pak). Det er det fysiske led, der binder ordren i systemet til pakken på transportbåndet.</p>
-      <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
-
     <p>Processen opdeles typisk i:</p>
     <ul>
       <li><strong>Pluk</strong>: Bevægelse gennem lageret, scanning og afhentning af varer</li>
       <li><strong>Pak</strong>: Kontrol, emballagevalg, pakning og labeludskrivning</li>
     </ul>
 
-    <!-- Inline CTA -->
-    
+    <h2>Hvornår er det et problem?</h2>
+    <p>Pluk og pak er et problem, når:</p>
+    <ul>
+      <li>Fejlraten er over 0,5% (1 fejl per 200 ordrer)</li>
+      <li>Plukterne bruger mere tid på at finde varer end at plukke dem</li>
+      <li>Der er ingen standardprocedure for pakningstype, medarbejderne beslutter selv</li>
+      <li>Afsendelse er en flaskehals, der stopper flow</li>
+      <li>Nye medarbejdere tager over en uge at lære processerne</li>
+    </ul>
 
+    <p class="inline-cta">👉 Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
+
+    <h2>Hvorfor det er vigtigt, i kroner</h2>
+    <p>En pakkefejl koster <strong>~350 kr. direkte</strong>: returfragt (~80 kr.), ny forsendelse (~80 kr.), genpakning og kontrol (~60 kr.), kundeservice-tid (~130 kr.). Regn du LTV-tab med, er det <strong>~450-850 kr. per fejl</strong>.</p>
+    <p>Lønomkostningen ved ineffektivt pluk er mindst ligeså stor. En plukker, der gennemsnitligt plukker 60 linjer/time i stedet for 110, koster ved 8 timers arbejde og 250 kr./time:</p>
+    <ul>
+      <li>60 linjer/time × 8 timer = 480 linjer</li>
+      <li>110 linjer/time × 8 timer = 880 linjer</li>
+      <li><strong>400 linjer tabt per medarbejder per dag</strong>, eller alternativt en ekstra ansat for at nå samme output.</li>
+    </ul>
+
+    <h2>Hvordan fungerer pluk og pak i praksis?</h2>
+
+    <h3>Plukprocessen trin for trin</h3>
+    <ol>
+      <li><strong>Ordremodtagelse</strong>: WMS modtager ordren og genererer en plukopgave</li>
+      <li><strong>Ruteberegning</strong>: Systemet beregner optimal plukrute (A* pathfinding)</li>
+      <li><strong>Pluk</strong>: Medarbejder scanner vare og bekræfter antal ved hvert stop</li>
+      <li><strong>Fejlhåndtering</strong>: Hvis vare ikke er på plads: systemet eskalerer og foreslår alternativ</li>
+      <li><strong>Transport til pakkestation</strong>: Tote/vogn med plukkede varer køres til pak</li>
+    </ol>
+
+    <h3>Pakprocessen trin for trin</h3>
+    <ol>
+      <li><strong>Modtagelse fra pluk</strong>: Scanner tote-ID og tilknytter ordren</li>
+      <li><strong>Emballagevalg</strong>: System anbefaler korrekt æskestørrelse baseret på varens mål og vægt</li>
+      <li><strong>Indpakning</strong>: Varer pakkes, filling-materiale tilsættes efter standard</li>
+      <li><strong>Scanning og kontrol</strong>: Hver vare scannes ud igen for dobbelt-bekræftelse</li>
+      <li><strong>Labeludskrivning</strong>: Fragtlabel udskrives og påsættes</li>
+      <li><strong>Afsendelse</strong>: Pakke scannes ud af lageret</li>
+    </ol>
+
+    <h2>Typiske fejl</h2>
+    <p><strong>1. Ingen scanning ved pluk</strong><br>Medarbejderen plukker &ldquo;efter hukommelse&rdquo;. Fungerer fint for erfarne medarbejdere, til den dag de tager fejl. Scanning er ikke kontrol, det er dokumentation.</p>
+    <p><strong>2. Plukruten er tilfældig</strong><br>Uden systemstyret rute kører plukkerne frem og tilbage i lageret. Undersøgelser viser 20-40% spildt gangdistance ved fri rute vs. optimeret rute.</p>
+    <p><strong>3. Pakkestationen er en flaskehals</strong><br>Hvis pakstationen ikke kan følge med plukket, hober ordrer sig op og flow stopper. Ratio er typisk 1 pakker per 2-3 plukkere afhængigt af sortiment.</p>
+    <p><strong>4. Emballage vælges frit</strong><br>For store kasser = dyrere fragt og spildt filling-materiale. For små kasser = beskadiget vare og returnering. Standardisér emballagestørrelser.</p>
+    <p><strong>5. Ingen kvalitetskontrol</strong><br>Pakken lukkes uden dobbeltkontrol. En simpel vej-kontrol (pakken vejer hvad den skal) fanger 60-80% af fejlpakningerne.</p>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <p><strong>1. Scan alt, altid</strong><br>Alle varer scannes ved pluk og ved pak. Det giver sporbarhed, fanger fejl to gange og gør oplæring af nye medarbejdere langt nemmere.</p>
+    <p><strong>2. Standardiser emballagestørrelser til 4-6 kasser</strong><br>De fleste sortimenter kan dækkes med 4-6 standardstørrelser. WMS vælger kassen, medarbejderen pakker den.</p>
+    <p><strong>3. Brug batch picking til ordrer under 3 linjer</strong><br>Samle 5-10 ordrer i én tur sparer 60-70% af gangdistancen vs. enkeltordre-pluk. SmartPack benchmark: <strong>110 linjer/time</strong> ved batch picking.</p>
+    <p><strong>4. Adskil pluk og pak fysisk</strong><br>Separat pakkestation holder flow, giver bedre arbejdsstillinger og gør det nemt at måle KPI separat for pluk og pak.</p>
+    <p><strong>5. Mål linjer per time per medarbejder ugentligt</strong><br>Det er den vigtigste KPI i lagerets daglige drift. Det afslører træningsbehov, flaskehalse og layoutproblemer.</p>
+
+    <h2>Hvornår du skal handle</h2>
+    <ul>
+      <li>Fejlraten er over 0,5%</li>
+      <li>Linjer per time er under 70 (for sortiment uden mange specialkrav)</li>
+      <li>Nye medarbejdere tager mere end 3 dage at nå acceptable hastigheder</li>
+      <li>Pakstationen er flaskehals mere end 20% af dagene</li>
+      <li>Du kan ikke spore, hvem der plukkede en fejlpakket ordre</li>
+    </ul>
+
+    <h2>Sådan understøtter SmartPack det</h2>
+    <p>SmartPack genererer systemstyrede plukruter via A* pathfinding og understøtter batch picking med totes. Systemet viser medarbejderen næste placering på håndterminalen, kræver scanning-bekræftelse ved hvert stop, og foreslår optimal emballage ved pakstationen. Linjer per time logges per medarbejder og vises i realtids KPI-dashboard.</p>
+
+    <h2>Tjekliste, brug denne artikel</h2>
+    <ul>
+      <li>✓ Mål din aktuelle fejlrate: fejl per uge ÷ total ordrer × 100, er du over 0,5%?</li>
+      <li>✓ Tæl gennemsnitlige linjer per time for din bedste og dårligste plukker</li>
+      <li>✓ Identificér om pakstationen er flaskehals: er der ordrer i kø ved pak mens pluk er ledig?</li>
+      <li>✓ Næste skridt: Indfør scanning ved pluk inden for 30 dage og mål fejlraten igen</li>
+    </ul>
   </div>
-
-  <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt.html" class="btn">Se dit setup</a></div>
-  <div class="article-disclaimer">Denne artikel er baseret på vores erfaring og bedste viden på tidspunktet for skrivning. Indholdet er vejledende og kan ikke erstatte professionel rådgivning.</div>
-
-  <div class="article-related">
-    <div class="article-related__title">Relateret viden</div>
-    <div class="article-related__grid">
-      <a href="hvad-er-batch-picking.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er batch picking?</span></a>
-      <a href="hvad-er-zone-picking.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er zone picking?</span></a>
-      <a href="hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
-    </div>
+  <div class="bottom-cta"><p>Vil du se det i dit lager?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Vejledende information baseret på dansk e-handelspraksis.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="./hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er pick and pack på dansk?</summary><div class="faq-item__body"><p>Pick and pack hedder pluk og pak på dansk, det er processen, hvor man finder varer på lageret og pakker dem til forsendelse.</p></div></details>
+    <details class="faq-item"><summary>Hvad er en god linjer-per-time rate?</summary><div class="faq-item__body"><p>For standardsortiment med batch picking er 90-120 linjer/time et godt benchmark. Under 60 linjer/time indikerer optimerings-potentiale i ruter, layout eller træning.</p></div></details>
+    <details class="faq-item"><summary>Hvornår skal jeg skifte fra enkeltordre-pluk til batch picking?</summary><div class="faq-item__body"><p>Når over 50% af dine ordrer har 1-3 ordrelinjer. Batch picking giver størst gevinst på høj-volumen, lavlinje-ordrer.</p></div></details>
+    <details class="faq-item"><summary>Skal pakning og pluk gøres af samme medarbejder?</summary><div class="faq-item__body"><p>Ikke nødvendigvis. Mange lagre adskiller rollerne for bedre flow og lettere KPI-måling. Ved lavt volumen er kombineret rolle OK.</p></div></details>
+    <details class="faq-item"><summary>Hvad er den nemmeste måde at reducere plukkefejl på?</summary><div class="faq-item__body"><p>Stregkodescanning ved pluk. Det er den single investering, der reducerer fejlraten mest, hurtigst, typisk fra 2-3% ned til under 0,5%.</p></div></details>
   </div>
-
-  <div class="article-faq">
-    <h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
-    <details class="faq-item"><summary>Hvad er pick and pack på dansk?</summary><div class="faq-item__body">Pick and pack hedder pluk og pak på dansk, det er processen, hvor man finder varer på lageret og pakker dem til forsendelse.</div></details>
-    <details class="faq-item"><summary>Hvad er en god linjer-per-time rate?</summary><div class="faq-item__body">For standardsortiment med batch picking er 90-120 linjer/time et godt benchmark. Under 60 linjer/time indikerer optimerings-potentiale i ruter, layout eller træning.</div></details>
-    <details class="faq-item"><summary>Hvornår skal jeg skifte fra enkeltordre-pluk til batch picking?</summary><div class="faq-item__body">Når over 50% af dine ordrer har 1-3 ordrelinjer. Batch picking giver størst gevinst på høj-volumen, lavlinje-ordrer.</div></details>
-    <details class="faq-item"><summary>Skal pakning og pluk gøres af samme medarbejder?</summary><div class="faq-item__body">Ikke nødvendigvis. Mange lagre adskiller rollerne for bedre flow og lettere KPI-måling. Ved lavt volumen er kombineret rolle OK.</div></details>
-    <details class="faq-item"><summary>Hvad er den nemmeste måde at reducere plukkefejl på?</summary><div class="faq-item__body">Stregkodescanning ved pluk. Det er den single investering, der reducerer fejlraten mest, hurtigst, typisk fra 2-3% ned til under 0,5%.</div></details>
-  </div>
-
 </div></div>
 </main>
-
-<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;"><div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack · <a href="../../vilkaar.html" style="color:var(--text-3);text-decoration:none;">Vilkår</a></div><div style="display:flex;gap:1.5rem;"><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a><a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a></div></div></footer>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a></div></footer>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er pick and pack på dansk?","acceptedAnswer":{"@type":"Answer","text":"Pick and pack hedder pluk og pak på dansk, processen hvor man finder varer på lageret og pakker dem til forsendelse."}},{"@type":"Question","name":"Hvad er en god linjer-per-time rate?","acceptedAnswer":{"@type":"Answer","text":"90-120 linjer/time er et godt benchmark. Under 60 linjer/time indikerer optimeringspotentiale."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er pluk og pak","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
-</body>
-</html>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er pluk og pak, og hvorfor er det det dyreste led i dit lager?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

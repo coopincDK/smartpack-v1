@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typiske integrationsfejl i lagerstyring: og hvordan du undgaar dem | SmartPack Viden</title>
+  <meta name="description" content="Integrationsfejl i WMS sker oftest usynligt og opdages sent. Laer om stille fejl, BC client secret, leveringsmetode-mapping og hvordan du undgaar dem.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/typiske-integrationsfejl.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Typiske integrationsfejl</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Typiske integrationsfejl i lagerstyring: og hvordan du undgaar dem</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Integrationen virker. Ordrer flyder ind, lager opdateres, pakker sendes. Og saa en dag opdager I, at 47 ordrer ikke er behandlet siden i gaar morges, og ingen vidste det. Det er integrationsfejlenes natur: de sker oftest usynligt, opdages sent og koster dyrt.</p>
+    <p>Her er de mest typiske fejl, hvad der forarsager dem, og hvad du goer ved det.</p>
+
+    <h2>Hvad er integrationsfejl?</h2>
+    <p>En integrationsfejl opstaar, naar to systemer ikke kan kommunikere som forventet. Det kan skyldes tekniske problemer (server nede, netvaerksfejl, timeout), datamassige problemer (forkert format, manglende felt) eller logiske problemer (mapping-fejl, duplikater, timing-konflikter).</p>
+    <p>Integrationsfejl har fire grundlaeggende former:</p>
+    <ul>
+      <li><strong>Stille fejl (silent failure):</strong> Systemet fejler, men rapporterer det ikke. Den farligste type, fordi den er usynlig.</li>
+      <li><strong>Haard fejl (hard fail):</strong> Systemet fejler og stopper. Ubehageligt, men lettere at opdage.</li>
+      <li><strong>Delvis synkronisering:</strong> Kun dele af dataen overfoeres korrekt. Systemet tror alt er OK.</li>
+      <li><strong>Timing-fejl:</strong> Data ankom i forkert raekkefolgel. Resulterer i &quot;orphaned&quot; data.</li>
+    </ul>
+
+    <h2>Hvad koster integrationsfejl reelt?</h2>
+    <p class="inline-cta">&#x1F449; SmartPack monitorerer alle integrationsforbindelser aktivt. <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+    <table>
+      <thead><tr><th>Scenarie</th><th>Total aarlig</th></tr></thead>
+      <tbody>
+        <tr><td>BC client secret udloeber (2 dage downtime)</td><td>40.000 kr. per episode</td></tr>
+        <tr><td>Stille fejl (47 ordrer, opdages efter 24 timer)</td><td>64.002 kr. per episode</td></tr>
+        <tr><td>Webhook-tab uden retry (5% af ordrer)</td><td>3.182.200 kr./aar</td></tr>
+        <tr><td>Leveringsmetode-mapping fejl (10% af ordrer)</td><td>2.281.250 kr./aar</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Gennemgang af de mest typiske fejl</h2>
+
+    <h3>1. Webhook leveres ikke/ignoreres</h3>
+    <p><strong>Hvad sker:</strong> Shopify sender webhook-event, men dit WMS er utilgaengeligt i det oejeblik (deployment, server-restart, netvaerksfejl). Eventet forsvinder.</p>
+    <p><strong>Aarsag:</strong> Manglende retry-haandtering, timeout under deployment, ingen koe som buffer.</p>
+    <p><strong>Losning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra koen, ikke direkte fra webhook.</p>
+
+    <h3>2. BC client secret udloeber</h3>
+    <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
+    <p><strong>Aarsag:</strong> Business Central bruger OAuth2 med client secret der har maksimal levetid paa 2 aar. Det er den hyppigste aarsag til BC-integrationsnedbrud. De fleste virksomheder saetter det op og glemmer det.</p>
+    <p><strong>Losning:</strong> Saet kalenderreminder 30 og 60 dage foer udloeb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. maaned.</p>
+
+    <h3>3. Leveringsmetode-mapping fejler</h3>
+    <p><strong>Hvad sker:</strong> Kunden vaelger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
+    <p><strong>Aarsag:</strong> Shopify bruger interne nogler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
+    <p><strong>Losning:</strong> Gennemgaa og test alle leveringsmetode-mappings i staging-miljo inden go-live.</p>
+
+    <h3>4. Delvis synkronisering af ordrelinjer</h3>
+    <p><strong>Hvad sker:</strong> En ordre med 5 varelinjer importeres, men kun 4 linjer med. Den femte linje mangler fordi varen ikke findes i WMS-produktkatalog.</p>
+    <p><strong>Losning:</strong> Implementer validering ved ordreimport. Ordrer med ukendte varenumre skal holdes i fejlkoe, ikke stiltiende delvis importeres.</p>
+
+    <h3>5. Timing-fejl ved lageroprettelse</h3>
+    <p><strong>Hvad sker:</strong> En ny vare tilfoejes i Shopify og bestilles straks. Webhook for ordren ankommer til WMS inden varestamdata er synkroniseret. WMS kender ikke varen og fejler.</p>
+    <p><strong>Losning:</strong> WMS skal kunne haandtere &quot;ukendt vare&quot; gracefully, ved at placere ordren i manuelt review-koe og hente varestamdata on-demand.</p>
+
+    <h3>6. e-conomic Grant Token er trukket tilbage</h3>
+    <p><strong>Hvad sker:</strong> e-conomic-integration holder op med at virke. Ordrer hentes ikke, fakturakladder oprettes ikke.</p>
+    <p><strong>Aarsag:</strong> e-conomic bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratraadt medarbejder), invalideres tokenet.</p>
+    <p><strong>Losning:</strong> Brug en servicebruger/systembruger i e-conomic til integration, ikke en personlig bruger.</p>
+
+    <h2>Det opdager de fleste for sent</h2>
+    <ul>
+      <li><strong>At BC client secret udloeber praecis 2 aar efter oprettelse:</strong> Microsoft sender INGEN advarsel. Foerste tegn: kunder ringer og spoerger hvorfor ordren ikke er afsendt.</li>
+      <li><strong>At webhook-tab er usynlige:</strong> Shopify sender webhook, men dit system er nede i 12 sekunder under deployment. Webhook forsvinder. Ingen alarm. Ordren behandles aldrig.</li>
+      <li><strong>At e-conomic Grant Token invalideres naar brugeren slettes:</strong> Den medarbejder der oprettede integrationen er stoppet for 6 maaneder siden. Fakturaer oprettes ikke laengere. Bogholderiet opdager det ved maanedsafslutning.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Implementer integration health dashboard:</strong> Vis, hvornaar hver integration sidst koerte succesfuldt, antal behandlede events og eventuelle fejl.</li>
+      <li><strong>Alert ved ingen aktivitet:</strong> Hvis en integration ikke har modtaget events i 30 minutter i arbejdstiden, send alert. Fravaeret af data er i sig selv et signal.</li>
+      <li><strong>Test alle fejlscenarier eksplicit:</strong> Unit test og integrationstests skal inkludere fejlscenarier: webhook med ugyldig signatur, ordre med ukendt varenummer, API-timeout, delvis payload.</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack monitorerer alle integrationsforbindelser aktivt og viser status i administrationspanelet. Ved integrationsfejl logges detaljer med payload og fejlkode. Ordrer der fejler ved import, placeres i manuelt review, de forsvinder aldrig stille. SmartPack advarer om kommende token-udloeb (60 dage foer BC client secret udloeber) og har built-in retry-logik paa alle webhook- og API-kald.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du undgaa stille fejl og token-udloeb?</p><a href="../../kontakt.html" class="btn">Se SmartPacks integration-monitoring</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./integrationer-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Integrationer forklaret</span></a>
+    <a href="./webhooks-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Webhooks forklaret</span></a>
+    <a href="./shopify-integration.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Shopify integration</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Hvad er den farligste type integrationsfejl?</summary><div class="faq-item__body"><p>Stille fejl. Systemet rapporterer intet, men data overfoeres ikke. Det opdages typisk af kunder eller ved manuel optellingel. Dage kan gaa inden nogen opdager det.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor udloeber BC client secret?</summary><div class="faq-item__body"><p>Microsoft kraever rotation af client secrets i Azure AD/Entra ID. Maksimal levetid er 2 aar. Det er en sikkerhedsforanstaltning der sniger sig op paa dig uden reminder.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis en webhook sendes to gange?</summary><div class="faq-item__body"><p>Shopify sender retries ved manglende kvittering. Hvis dit system ikke er idempotent, oprettes der duplikat-ordrer. Implementer idempotency-nogler baseret paa ordre-ID.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg teste integrationer uden rigtige ordrer?</summary><div class="faq-item__body"><p>Ja. Shopify har &quot;Send test notification&quot; for webhooks. Business Central og e-conomic kan testes med testmiljoeer/sandbox. Brug altid sandbox ved opsaetning.</p></div></details>
+    <details class="faq-item"><summary>Hvad er delvis synkronisering, og hvad goer jeg ved det?</summary><div class="faq-item__body"><p>Kun dele af data overfoeres, fx ordren importeres men adresse mangler. Detekteres via validering ved import og fejlkoe med notifikation.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den farligste type integrationsfejl?","acceptedAnswer":{"@type":"Answer","text":"Stille fejl. Systemet rapporterer intet men data overfoeres ikke. Opdages typisk af kunder."}},{"@type":"Question","name":"Hvorfor udloeber BC client secret?","acceptedAnswer":{"@type":"Answer","text":"Microsoft kraever rotation af client secrets med maksimal levetid paa 2 aar."}},{"@type":"Question","name":"Hvad sker der, hvis en webhook sendes to gange?","acceptedAnswer":{"@type":"Answer","text":"Uden idempotency oprettes duplikat-ordrer. Implementer idempotency-nogler baseret paa ordre-ID."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Typiske integrationsfejl i lagerstyring: og hvordan du undgaar dem","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

@@ -1,95 +1,154 @@
 ﻿<!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hvad er demand planning? | SmartPack Viden</title>
-  <meta name="description" content="Demand planning forudsiger fremtidigt salg for at optimere indkøb og lagerhøjde. Få 15-25% lavere lageromkostning og færre stockouts med datadreven efterspørgselsplanlægning.">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er demand planning, og hvordan undgår du at købe for meget eller for lidt? | SmartPack Viden</title>
+  <meta name="description" content="Demand planning er at forudsige fremtidig efterspørgsel med data, ikke mavefølelse. Lær ABC-analyse, sæsonindeks og forecast-modeller til dit lager.">
   <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-demand-planning.html">
-  <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style.css?v=4">
-  
   <script src="../../js/theme-toggle.js"></script>
 </head>
 <body>
-<header class="site-header" id="site-header">
-  <nav class="nav container">
-    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
-    <ul class="nav__links" id="nav-links">
-      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
-      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
-      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
-      <li><a href="../" class="nav__link">Viden</a></li>
-    </ul>
-    <div class="nav__actions">
-      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
-      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
-      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
-      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-</header>
-
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
-
-  <nav class="article-breadcrumb" aria-label="Brødkrumme">
-    <a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>Demand planning</span>
-  </nav>
-
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>Hvad er demand planning?</span></nav>
   <header class="article-header">
     <span class="article-cat-badge">Fundamentals</span>
-    <h1 class="article-title">Hvad er demand planning, og hvorfor er mavefølelse din dyreste indkøbsmetode?</h1>
-    <div class="article-meta"><time datetime="2025-04-30">Opdateret: 30. april 2025</time><span>Læsetid: ~6 min</span></div>
+    <h1 class="article-title">Hvad er demand planning, og hvordan undgår du at købe for meget eller for lidt?</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
   </header>
-
   <div class="article-body">
-
-    <p>Du bestiller 500 stk., fordi det er sådan det plejer at være. Du sælger 620 stk. Du er udsolgt 3 uger før leveringen. Tabte salg: 120 stk. × 150 kr. margin = <strong>18.000 kr.</strong><br>Næste gang bestiller du 700, "for at være sikker". Du sælger 390. De resterende 310 stk. binder 24.800 kr. i kapital i 6 måneder. Dette er demand planning-problemet. Og løsningen er ikke mere mavefølelse, det er data.</p>
+    <p>Du bestiller 200 stk. Du sælger 47. De resterende 153 ligger i 8 måneder. 500.000 kr. bundet kapital × 6% = <strong>30.000 kr./år tabt</strong>.</p>
+    <p>Du bestiller for lidt af bestselleren. 3 dages stockout × 20 stk./dag × 200 kr. margin = <strong>12.000 kr. tabt</strong>.</p>
+    <p>Demand planning er forskellen. Forecast baseret på data, ikke mavefølelse. <strong>748.200 kr./år</strong> i undgået over- og underbeholdning.</p>
 
     <h2>Hvad er demand planning?</h2>
-    <p><strong>Demand planning</strong> (efterspørgselsplanlægning) er processen med at forudsige fremtidig kundefterspjørgsel baseret på historiske data, markedstrends og kendte kommende begivenheder, og tilpasse indkøb og lagerbeholdning derefter.</p>
-    <p>Målet er at minimere både stockouts og overbeholdning simultant: <strong>det rigtige antal, på det rigtige tidspunkt, til den lavest mulige lageromkostning.</strong></p>
-      <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
+    <p><strong>Demand planning</strong> (efterspørgselsplanlægning) er processen med at forudsige fremtidig efterspørgsel på varer baseret på historisk salg, sæsonudsving, kampagner og markedsforhold, og derefter tilpasse lager- og indkøbsplaner til den forventede efterspørgsel.</p>
+    <p>Demand planning er ikke gisning. Det er systematisk brug af data til at træffe bedre indkøbsbeslutninger.</p>
+    <p>Kerneredskaber:</p>
+    <ul>
+      <li><strong>ABC-analyse</strong>: Prioriter indkøbsfokus på de varer, der driver omsætningen</li>
+      <li><strong>Sæsonindeks</strong>: Identificer, hvornår efterspørgslen stiger og falder</li>
+      <li><strong>Lageromstætning</strong>: Mål, hvor hurtigt beholdningen omsættes (mål: 4-8 gange/år)</li>
+      <li><strong>Forecast-modeller</strong>: Glidende gennemsnit, eksponentiel glætning, eller regel-baserede beregninger</li>
+    </ul>
 
+    <h2>Hvornår er det et problem?</h2>
+    <p>Demand planning er et problem, når:</p>
+    <ul>
+      <li>Du regelmæssigt er udsolgt på bestsellere, men har for meget på slow-movers</li>
+      <li>Indkøb sker baseret på mavefølelse frem for data</li>
+      <li>Sæsonskift overrasker dig (du har for lidt til jul, for meget i januar)</li>
+      <li>Lageromstætningen er under 3 gange om året</li>
+      <li>Du ikke har overblik over, hvilke varer der driver 80% af omsætningen</li>
+    </ul>
 
-    <!-- Inline CTA -->
-    
+    <p class="inline-cta">👉 Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
 
+    <h2>Hvorfor det er vigtigt, i kroner</h2>
+    <p><strong>For meget på lager:</strong></p>
+    <ul>
+      <li>Bundet kapital: 500.000 kr. overbeholdning × 6% kapitalomkostning = 30.000 kr./år tabt</li>
+      <li>Spild ved udløb eller foreldelse</li>
+      <li>Lagerpladsomkostning på overbeholdning</li>
+    </ul>
+    <p><strong>For lidt på lager:</strong></p>
+    <ul>
+      <li>Tabt salg: Udsolgt A-vare i 3 dage × 20 stk./dag × 200 kr. margin = 12.000 kr. tabt</li>
+      <li>Ekspresordrer til leverandør: premium-fragt og højere indkøbspriser</li>
+      <li>Kundetab: kunder, der køber hos konkurrenten og måske ikke vender tilbage</li>
+    </ul>
+    <p>En pakkefejl grundet forkert beholdning koster ~350 kr. direkte. Men en manglende vare, der tvinger kunden væk, koster potentielt ~450-850 kr. i LTV-tab.</p>
+
+    <h2>Hvordan fungerer demand planning i praksis?</h2>
+
+    <h3>Trin 1: ABC-analyse</h3>
+    <p>Klassificér sortimentet:</p>
+    <ul>
+      <li><strong>A-varer</strong>: Top 20% SKU'er, 80% af omsætning. Forecast med høj præcision.</li>
+      <li><strong>B-varer</strong>: Midterfelt. Månedlig gennemgang.</li>
+      <li><strong>C-varer</strong>: Lavt volumen. Simpel min/max-styring.</li>
+    </ul>
+
+    <h3>Trin 2: Sæsonanalyse</h3>
+    <p>Sammenlign omsætning per uge/måned over de seneste 2 år. Identificér:</p>
+    <ul>
+      <li>Højsæson (Black Friday, jul, sommer)</li>
+      <li>Lavsæson (januar, august)</li>
+      <li>Interne kampagneeffekter</li>
+    </ul>
+
+    <h3>Trin 3: Forecast per SKU</h3>
+    <p>For A-varer: beregn forventet salg per uge baseret på historik justeret for trend og sæsonindex.</p>
+    <p>Forenkling: <strong>Forecast = gennemsnitligt ugentligt salg × sæsonindex × trend-faktor</strong></p>
+
+    <h3>Trin 4: Beregn indkøbsbehov</h3>
+    <p><strong>Indkøbsbehov = (forecast × lead time i uger) + safety stock - nuværende beholdning - åbne ordrer</strong></p>
+
+    <h3>Trin 5: Indkøbsordre og opfølgning</h3>
+    <p>Generer indkøbsforslag per leverandør. Sammenlign modtaget vs. forventet. Juster forecast baseret på afvigelser.</p>
+
+    <h2>Typiske fejl</h2>
+    <p><strong>1. Forecast baseret på årsgennemsnit, ikke sæson</strong><br>Du bestiller 4 ugers forventet salg. Men det er november og næste 4 uger er Black Friday. Du er udsolgt 3 dage inde.</p>
+    <p><strong>2. Ingen opfølgning på forecast-nøjagtighed</strong><br>Du forecaster, men måler aldrig, om du ramte rigtigt. Fejlmønstre gentages år efter år.</p>
+    <p><strong>3. Alle SKU'er behandles ens</strong><br>Samme forecast-logik på A-vare som på C-vare. A-varer kræver høj præcision, C-varer kan klares med simple min/max-regler.</p>
+    <p><strong>4. Lead time indregnes ikke</strong><br>Du bestiller, når du er ved at løbe tør. Men leveringstid er 3 uger. Du er udsolgt i 2 uger.</p>
+    <p><strong>5. Kampagner kommunikeres ikke til indkøb</strong><br>Marketing kører Black Friday-kampagne. Indkøb er ikke orienteret. Lager er tomt på dag 2.</p>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <p><strong>1. ABC-analyse er startpunktet for alt</strong><br>Du kan ikke forecaste 500 SKU'er med samme nøjagtighed. Prioriter de 20%, der driver 80% af omsætningen.</p>
+    <p><strong>2. Brug 13 måneders historik som baseline</strong><br>13 måneder inkluderer fuld årscyklus + én måned overlæg. Det fanger sæsoneffekter uden at gammel data overvægter.</p>
+    <p><strong>3. Mål forecast accuracy månedligt</strong><br>MAE (Mean Absolute Error) eller MAPE (Mean Absolute Percentage Error). Under 20% MAPE er godt for de fleste sortimenter.</p>
+    <p><strong>4. Sæt kampagnekalender i dit planlægningsredskab</strong><br>Marketingkampagner bør være synlige i indkøbsplanlægningen. Minimum 4 uger forvarsel til leverandør.</p>
+    <p><strong>5. Lageromstætning er dit sundhedsmål</strong><br>Mål lageromstætning månedligt. Mål: 4-8 gange/år. Under 3 gange: for meget på lager. Over 10 gange: risiko for udsolgt.</p>
+
+    <h2>Hvornår du skal handle</h2>
+    <ul>
+      <li>Din lageromstætning er under 3 gange/år</li>
+      <li>Du har været udsolgt på A-varer de seneste 2 måneder</li>
+      <li>Indkøbsbeslutninger tages uden datagrundlag</li>
+      <li>Du har aldrig lavet en ABC-analyse af dit sortiment</li>
+      <li>Black Friday/jul overraskede dig med for lidt på lager</li>
+    </ul>
+
+    <h2>Sådan understøtter SmartPack det</h2>
+    <p>SmartPack indeholder ABC-analyse og lageromstætningsrapporter som standardfunktioner. Systemet viser salgshistorik per SKU og signalerer automatisk, når reorder point nås. Kombiner SmartPacks salgsdata med et forecast-redskab eller Excel til komplet demand planning-opsætning.</p>
+
+    <h2>Tjekliste, brug denne artikel</h2>
+    <ul>
+      <li>✓ Kør en ABC-analyse: sorter alle SKU'er efter omsætning de seneste 12 måneder</li>
+      <li>✓ Beregn din lageromstætning: vareforbrug 12 mdr. / gennemsnitlig lagerværdi</li>
+      <li>✓ Identificér de 5 SKU'er, du var udsolgt på de seneste 3 måneder</li>
+      <li>✓ Næste skridt: Sæt individuelle reorder points for dine top 10 A-varer baseret på lead time + safety stock</li>
+    </ul>
   </div>
-
-  <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt.html" class="btn">Se dit setup</a></div>
-  <div class="article-disclaimer">Denne artikel er baseret på vores erfaring og bedste viden på tidspunktet for skrivning. Indholdet er vejledende og kan ikke erstatte professionel rådgivning.</div>
-
-  <div class="article-related">
-    <div class="article-related__title">Relateret viden</div>
-    <div class="article-related__grid">
-      <a href="hvad-er-safety-stock.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er safety stock?</span></a>
-      <a href="hvad-er-reorder-point.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er reorder point?</span></a>
-      <a href="hvad-er-lead-time.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lead time?</span></a>
-    </div>
+  <div class="bottom-cta"><p>Vil du se det i dit lager?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Vejledende information baseret på dansk e-handelspraksis.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="./hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er demand planning på dansk?</summary><div class="faq-item__body"><p>Demand planning hedder efterspørgselsplanlægning på dansk, det er processen med at forudsige fremtidig efterspørgsel og tilpasse indkøb og lagerbeholdning derefter.</p></div></details>
+    <details class="faq-item"><summary>Hvad er en god lageromstætning?</summary><div class="faq-item__body"><p>For de fleste e-commerce virksomheder er 4-8 gange/år sundt. Under 3 gange indikerer overbeholdning; over 10-12 gange er der risiko for for mange stockouts.</p></div></details>
+    <details class="faq-item"><summary>Hvad er ABC-analyse i lagerstyring?</summary><div class="faq-item__body"><p>ABC-analyse klassificerer sortimentet i tre grupper: A-varer (20% af SKU'er, 80% af omsætning), B-varer (midterfelt) og C-varer (mange SKU'er, lille omsætning). Bruges til at prioritere indkøb og plads.</p></div></details>
+    <details class="faq-item"><summary>Hvornår skal jeg forecaste og hvornår skal jeg bare bestille mere?</summary><div class="faq-item__body"><p>For A-varer: forecast. For C-varer: min/max regler (bestil X når beholdning er under Y) er billigere og godt nok.</p></div></details>
+    <details class="faq-item"><summary>Hvor langt frem skal jeg forecaste?</summary><div class="faq-item__body"><p>Mindst én lead time frem, typisk 2-8 uger. For sæsonvarer: 8-12 uger før sæson for at sikre leverandørkapacitet.</p></div></details>
   </div>
-
-  <div class="article-faq">
-    <h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
-    <details class="faq-item"><summary>Hvad er demand planning på dansk?</summary><div class="faq-item__body">Demand planning oversættes til efterspørgselsplanlægning på dansk, processen med at forudsige fremtidigt salg og tilpasse indkøb og lagerbeholdning derefter.</div></details>
-    <details class="faq-item"><summary>Hvad er forskellen på demand planning og sales forecasting?</summary><div class="faq-item__body">Sales forecasting forudsiger salget. Demand planning oversætter forecast til konkrete indkøbs- og lagerbeslutninger. Demand planning er den operationelle konsekvens af forecast.</div></details>
-    <details class="faq-item"><summary>Hvad er MAPE?</summary><div class="faq-item__body">MAPE (Mean Absolute Percentage Error) måler forecast-nøjagtighed: gennemsnitlig absolut procentforskel mellem forecast og faktisk salg. Under 20% på A-varer er målet.</div></details>
-    <details class="faq-item"><summary>Hvornår har jeg brug for demand planning software?</summary><div class="faq-item__body">Når du har over 100 aktive SKU'er og MAPE over 25% på dine vigtigste varer, er dedikeret demand planning software værd at overveje. Til det tidspunkt er Excel og WMS-historik et godt udgangspunkt.</div></details>
-  </div>
-
 </div></div>
 </main>
-
-<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;"><div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack · <a href="../../vilkaar.html" style="color:var(--text-3);text-decoration:none;">Vilkår</a></div><div style="display:flex;gap:1.5rem;"><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a><a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a></div></div></footer>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a></div></footer>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er demand planning","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er demand planning på dansk?","acceptedAnswer":{"@type":"Answer","text":"Se artiklen."}},{"@type":"Question","name":"Hvad er forskellen på demand planning og sales forecasting?","acceptedAnswer":{"@type":"Answer","text":"Se artiklen."}},{"@type":"Question","name":"Hvad er MAPE?","acceptedAnswer":{"@type":"Answer","text":"Se artiklen."}},{"@type":"Question","name":"Hvornår har jeg brug for demand planning software?","acceptedAnswer":{"@type":"Answer","text":"Se artiklen."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er demand planning, og hvorfor er mavefølelse din dyreste indkøbsmetode?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
-</body>
-</html>
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er demand planning, og hvordan undgår du at købe for meget eller for lidt?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

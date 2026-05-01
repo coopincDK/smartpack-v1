@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time beholdning: hvad det er og hvad det koster dig ikke at have det | SmartPack Viden</title>
+  <meta name="description" content="Real-time lagerbeholdning opdateres oejeblikkeligt ved hvert salg, modtagelse og retur. Laer hvad 2% beholdningsafvigelse koster, og hvad der kraeves for at naae 99%+ nojagtighed.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/real-time-beholdning.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Real-time beholdning</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Real-time beholdning: hvad det er og hvad det koster dig ikke at have det</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Beholdningen der er registreret i dit system, og den beholdning der fysisk er paa hylden, er to forskellige ting, med mindre du har real-time tracking. Her er forskellen i tal.</p>
+    <p>De fleste lager opererer med en afvigelse paa 2-4% mellem system og virkelighed. Paa et varelager paa 2 mio. kr. er det 40.000-80.000 kr. i &quot;ghost inventory&quot;, varer systemet tror du har, men du ikke har.</p>
+
+    <h2>Hvad er real-time beholdning?</h2>
+    <p>Real-time beholdning er en digital registrering af din fysiske beholdning, der opdateres i det oejeblik en haendelse sker:</p>
+    <ul>
+      <li>En vare modtages: beholdning stiger oejeblikkeligt</li>
+      <li>En vare plukkes: beholdning falder oejeblikkeligt</li>
+      <li>En retur ankommer: beholdning opdateres oejeblikkeligt</li>
+    </ul>
+    <p><strong>Modsaetning: Batch-opdatering</strong> (periodisk synkronisering, fx daglig eller ugentlig). Her er der altid forsinkelse, og risiko for at saelge varer du ikke har.</p>
+
+    <h2>Hvad sker der uden real-time beholdning?</h2>
+    <p class="inline-cta">&#x1F449; SmartPack opdaterer beholdning real-time ved alle haendelser. <a href="../../kontakt.html">Se SmartPacks lager-funktioner</a></p>
+
+    <p><strong>Problem 1: Oversolgte varer.</strong> Webshop viser 5 paa lager. Lageret har 0 (de blev solgt, men systemer er ikke synkroniseret). Kunden bestiller, du kan ikke levere. Konsekvens: kundeservice-kontakt, forsinkelse, annullering, refusion og en skuffet kunde.</p>
+
+    <p><strong>Problem 2: Forsinket genbestilling.</strong> Du tror du har 50 enheder. Du har 30 (systemet er forsinket). Du bestiller for sent og loeber toer.</p>
+
+    <p><strong>Problem 3: Falsk tryghed.</strong> &quot;Vi har styr paa lageret&quot;, men reelt er der 2-4% afvigelse mellem system og virkelighed.</p>
+
+    <h2>Beholdningsnojagtighed</h2>
+    <table>
+      <thead><tr><th>System</th><th>Typisk nojagtighed</th></tr></thead>
+      <tbody>
+        <tr><td>Manuel og papirlister</td><td>90-95%</td></tr>
+        <tr><td>Excel med daglig opdatering</td><td>93-97%</td></tr>
+        <tr><td>WMS med batch-scanning</td><td>97-99%</td></tr>
+        <tr><td>WMS med real-time scanning</td><td>99-99,9%</td></tr>
+      </tbody>
+    </table>
+    <p><strong>2% beholdningsafvigelse paa 2 mio. kr. varelager = 40.000 kr. i ghost inventory.</strong></p>
+
+    <h2>Hvad kraever real-time beholdning?</h2>
+    <ol>
+      <li><strong>WMS med real-time registrering:</strong> Systemet skal opdatere ved haendelse, ikke batch</li>
+      <li><strong>Scanning ved alle bevaegelser:</strong> Modtagelse, pluk, pack, retur</li>
+      <li><strong>Integration med webshop:</strong> Beholdning skal synkroniseres til salgskanal i real-time</li>
+      <li><strong>Cyklisk optellingel:</strong> Loebende stikprovetellingel for at validere systemets nojagtighed</li>
+    </ol>
+
+    <h2>Hvornaar er real-time kritisk?</h2>
+    <p>Real-time er kritisk, naar:</p>
+    <ul>
+      <li>Du saelger paa tvaers af kanaler (webshop og marketplace)</li>
+      <li>Du har hurtigomsaettende varer med lav sikkerhedsstock</li>
+      <li>Du driver kampagner der udloser spike i ordrervolumen</li>
+      <li>Forsinket beholdningsopdatering historisk har skabt oversalg</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <ul>
+      <li><strong>Opdaterer kun beholdning dagligt:</strong> Det er nok til at skabe oversalg ved kampagner.</li>
+      <li><strong>Stoler paa system uden verifikation:</strong> Real-time data er kun valid, hvis alle bevaegelser registreres. En vare der plukkes uden scanning opdaterer ikke systemet.</li>
+      <li><strong>Glemmer returner:</strong> Returnerede varer boer opdatere beholdning oejeblikkeligt, men lander ofte i karantaene og opdaterer systemet dage/uger efter.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Kraev real-time synkronisering i webshop-integrationen:</strong> Ikke batch. Ikke &quot;hvert 15. minut&quot;. Real-time.</li>
+      <li><strong>Indfoor cyklisk optellingel:</strong> Tael 10-20% af sortimentet ugentligt, roter over 6 uger. Giver loebende validering uden stor aarsopgorelse.</li>
+      <li><strong>Maal beholdningsnojagtighed maanedligt:</strong> KPI: system-beholdning vs. fysisk taelling. Maal: over 99%.</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack opdaterer beholdning real-time ved alle haendelser: modtagelse, pluk, pack og retur. Webshop-integration synkroniserer oejeblikkeligt. Cyklisk optellingel-modul giver loebende validering. Du kan altid stole paa det tal, systemet viser.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du have beholdningsnojagtighed over 99%?</p><a href="../../kontakt.html" class="btn">Book demo</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./real-time-inventory.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Real-time inventory</span></a>
+    <a href="./stregkode-scanning-lager.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Stregkode-scanning paa lageret</span></a>
+    <a href="./multi-channel-lager.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Multi-channel lagerstyring</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Hvad er cyklisk optellingel?</summary><div class="faq-item__body"><p>En metode, hvor en del af sortimentet taelles loebende (fx 5% per uge over 20 uger), frem for een stor aarsopgorelse.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster det at saelge en vare du ikke har?</summary><div class="faq-item__body"><p>Direkte: refusion og kundeservice-tid. Indirekte: kundetilfredshed og LTV. Estimat: 200-500 kr. per haendelse.</p></div></details>
+    <details class="faq-item"><summary>Kan real-time beholdning integrere med multiple salgskanaler?</summary><div class="faq-item__body"><p>Ja. Multi-channel real-time synkronisering er standard i moderne WMS.</p></div></details>
+    <details class="faq-item"><summary>Hvad er ghost inventory?</summary><div class="faq-item__body"><p>Beholdning der eksisterer i systemet men ikke fysisk. Skabt af registreringsfejl, tyveri eller svind uden registrering.</p></div></details>
+    <details class="faq-item"><summary>Hvad er acceptabel beholdningsafvigelse?</summary><div class="faq-item__body"><p>Under 0,5% for A-varer. Under 1% total. Over 2% er et systemisk problem.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er cyklisk optellingel?","acceptedAnswer":{"@type":"Answer","text":"En metode hvor en del af sortimentet taelles loebende, frem for een stor aarsopgorelse."}},{"@type":"Question","name":"Hvad er ghost inventory?","acceptedAnswer":{"@type":"Answer","text":"Beholdning der eksisterer i systemet men ikke fysisk. Skabt af registreringsfejl eller svind."}},{"@type":"Question","name":"Hvad er acceptabel beholdningsafvigelse?","acceptedAnswer":{"@type":"Answer","text":"Under 0,5% for A-varer. Under 1% total. Over 2% er et systemisk problem."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Real-time beholdning: hvad det er og hvad det koster dig ikke at have det","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

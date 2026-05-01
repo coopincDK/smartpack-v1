@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API-integration i lagersystemet: forbindelsen der eliminerer manuelle opdateringer | SmartPack Viden</title>
+  <meta name="description" content="Lager API integration forbinder din webshop, ERP og fragtmand automatisk. Laer hvad det koster at mangle integration, og hvad du faar med forudbyggede connectors.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/lager-api-integration.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Lager API integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">API-integration i lagersystemet: forbindelsen der eliminerer manuelle opdateringer</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Hvert minut der gaar med manuel opdatering mellem din webshop og dit lager, er et minut med risiko for fejl. API-integration eliminerer det. Her er hvad det er, hvad det koster, og hvad du mister uden det.</p>
+
+    <h2>Hvad er API-integration i lager-kontekst?</h2>
+    <p>En API (Application Programming Interface) er en digital forbindelse, der lader systemer kommunikere automatisk. I lager-kontekst betyder det:</p>
+
+    <h3>Webshop til WMS</h3>
+    <ul>
+      <li>Ny ordre i webshop sendes automatisk til WMS inden for sekunder</li>
+      <li>Ordrestatus opdateres i webshop, naar WMS behandler den</li>
+      <li>Beholdning i webshop opdateres automatisk ved pluk og modtagelse</li>
+    </ul>
+
+    <h3>WMS til Transportoer</h3>
+    <ul>
+      <li>Fragtlabel genereres automatisk</li>
+      <li>Track and trace-link sendes til kunde automatisk</li>
+      <li>Sporingsstatus importeres til WMS og webshop</li>
+    </ul>
+
+    <h3>WMS til ERP</h3>
+    <ul>
+      <li>Lagerbevaegelser synkroniseres til regnskab</li>
+      <li>Fakturering udloeses automatisk ved forsendelse</li>
+      <li>Indkoebsordrer opdateres ved modtagelse</li>
+    </ul>
+
+    <p class="inline-cta">&#x1F449; SmartPack har forudbyggede connectors til alle stoerre systemer. <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+
+    <h2>Hvad sker der uden API-integration?</h2>
+    <p><strong>Manuelt flow:</strong> Ordre oprettes i webshop, medarbejder kopierer til WMS, WMS behandler, medarbejder opdaterer webshop manuelt.</p>
+    <p>Problemet ved 200 ordrer/dag:</p>
+    <ul>
+      <li>15-20 min/dag til manuel kopiering og opdatering</li>
+      <li>1-3% fejlrate fra manuel datatransfer</li>
+      <li>Webshop viser forkert beholdning, oversalg og skuffede kunder</li>
+    </ul>
+
+    <h2>Standard integrationer for dansk e-commerce</h2>
+    <table>
+      <thead><tr><th>System</th><th>Integration</th></tr></thead>
+      <tbody>
+        <tr><td>Shopify</td><td>API, App</td></tr>
+        <tr><td>WooCommerce</td><td>Plugin/API</td></tr>
+        <tr><td>Magento</td><td>API</td></tr>
+        <tr><td>Microsoft Dynamics</td><td>API/AX</td></tr>
+        <tr><td>e-conomic</td><td>API</td></tr>
+        <tr><td>PostNord</td><td>API</td></tr>
+        <tr><td>GLS</td><td>API</td></tr>
+        <tr><td>DAO</td><td>API</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Hvornaar er integration kritisk?</h2>
+    <p>Integration er kritisk, naar:</p>
+    <ul>
+      <li>Du har over 50 ordrer/dag (manuelt er ikke skalerbart)</li>
+      <li>Du saelger paa tvaers af kanaler (webshop og marketplace og B2B)</li>
+      <li>Dit WMS ikke automatisk opdaterer webshop-beholdning</li>
+      <li>Kunder ikke modtager automatisk tracking information</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <ul>
+      <li><strong>Vaelger WMS uden forudbygget integration:</strong> Custom API-integration koster 50.000-200.000 kr. Forudbygget connector koster 0-5.000 kr.</li>
+      <li><strong>Tester ikke integrationen grundigt:</strong> En API-fejl under Black Friday kan lamme ordreflow. Test under simuleret spidsbelastning.</li>
+      <li><strong>Ignorerer to-vejs synkronisering:</strong> Mange systemer sender ordrer til WMS men glemmer at opdatere webshop-beholdning ved lager-aendringer.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Kraev forudbyggede connectors:</strong> Til dine top-5 systemer som standard i WMS-kravsspecifikationen.</li>
+      <li><strong>Definer fejlhaandtering:</strong> Hvad sker der, hvis API-kaldet fejler? Retry-logik og alarm til operations-team.</li>
+      <li><strong>Monitorer integrationsstatus:</strong> Daglig check paa at synkronisering fungerer. En stille fejl i API-integration opdages typisk forst ved fejl-ordre.</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack har forudbyggede integrationer til de mest udbredte danske e-commerce systemer: Shopify, WooCommerce, Magento, e-conomic, Microsoft Dynamics og alle stoerre transportoerer. To-vejs synkronisering er standard, saa din webshop altid viser korrekt beholdning, og alle ordrer lander automatisk i WMS.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du undgaa manuel ordrekopiering og oversolgte varer?</p><a href="../../kontakt.html" class="btn">Book demo</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./integrationer-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Integrationer forklaret</span></a>
+    <a href="./wms-integration-webshop.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">WMS-integration med webshop</span></a>
+    <a href="./typiske-integrationsfejl.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Hvad er en webhook vs. en polling-integration?</summary><div class="faq-item__body"><p>Webhook: Systemet sender data ved haendelse, fx ny ordre. Polling: WMS checker regelmaessigt for nye ordrer. Webhook er hurtigere og foretrukket.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg integrere med flere webshops?</summary><div class="faq-item__body"><p>Ja. Multi-channel integration er standard i moderne WMS. Alle ordrer samles i ét system uanset kanal.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster custom API-integration?</summary><div class="faq-item__body"><p>50.000-200.000 kr. for en ny integration, afhaengigt af systemers kompleksitet. Plus loebende vedligehold. Det er grunden til at kraeve forudbyggede connectors.</p></div></details>
+    <details class="faq-item"><summary>Hvad er EDI vs. API?</summary><div class="faq-item__body"><p>EDI er aeldre standard-baseret dataudveksling, primaert B2B. API er moderne, fleksibel og bedre til B2C e-commerce.</p></div></details>
+    <details class="faq-item"><summary>Hvad er real-time vs. batch-synkronisering?</summary><div class="faq-item__body"><p>Real-time opdaterer oejeblikkeligt. Batch opdaterer med intervaller, fx hvert 15. minut. Til ordrer og beholdning boer real-time foretraekkes.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook vs. en polling-integration?","acceptedAnswer":{"@type":"Answer","text":"Webhook: Systemet sender data ved haendelse. Polling: WMS checker regelmaessigt for nye ordrer. Webhook er hurtigere."}},{"@type":"Question","name":"Hvad koster custom API-integration?","acceptedAnswer":{"@type":"Answer","text":"50.000-200.000 kr. for en ny integration afhaengigt af kompleksitet, plus loebende vedligehold."}},{"@type":"Question","name":"Kan jeg integrere med flere webshops?","acceptedAnswer":{"@type":"Answer","text":"Ja. Multi-channel integration er standard i moderne WMS. Alle ordrer samles i ét system."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"API-integration i lagersystemet: forbindelsen der eliminerer manuelle opdateringer","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

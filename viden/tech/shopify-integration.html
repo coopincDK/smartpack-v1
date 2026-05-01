@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopify integration med WMS: komplet opsaetningsguide | SmartPack Viden</title>
+  <meta name="description" content="Shopify WMS integration kraever webhooks, HMAC-validering og korrekt leveringsmetode-mapping. Laer de gotchas du ikke finder foer du er i produktion.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/shopify-integration.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Shopify integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Shopify integration med WMS: komplet opsaetningsguide</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Shopify er det nemmeste sted at starte. Det er ogsaa det sted, hvor integrationen har flest gotchas du ikke stoeder paa, foer du er i produktion. Custom shipping-metoder, leveringsmetode-mapping, HMAC-validering, fulfillment-flow, det er detaljer, der sender dit system i groeften, hvis du ikke kender dem.</p>
+    <p>Her er det du rent faktisk skal vide, inklusive de fejl der koster mest naar de opdages i produktion.</p>
+
+    <h2>Hvad er Shopify-integration med WMS?</h2>
+    <p>Shopify-WMS-integration er en tovejsforbindelse:</p>
+    <ul>
+      <li><strong>Shopify til WMS:</strong> Ordrer, kundeoplysninger, valgt fragtmetode, betalingsstatus</li>
+      <li><strong>WMS til Shopify:</strong> Fulfillment-bekraeftelse med tracking-nummer, lagertals-opdatering, evt. ordreannullering</li>
+    </ul>
+    <p>Integrationen bruger to mekanismer: Webhooks (push, Shopify sender ordre-events til WMS i realtid) og REST API (pull, WMS henter periodisk ordrer og opdaterer lager).</p>
+
+    <h2>Opsaetning trin for trin</h2>
+    <p class="inline-cta">&#x1F449; SmartPack har praekonfigureret Shopify-integration klar til opsaetning paa minutter. <a href="../../kontakt.html">Book demo</a></p>
+
+    <h3>Trin 1: Opret Custom App i Shopify</h3>
+    <p>I Shopify Admin, Apps, App and sales channel settings, Develop apps: Opret ny custom app og tildel scopes: <code>read_orders</code>, <code>write_fulfillments</code>, <code>read_inventory</code>, <code>write_inventory</code>. Generer API-nogler: Admin API access token bruges som AccessToken.</p>
+
+    <h3>Trin 2: Konfigurer webhooks</h3>
+    <p>Registrer webhooks for relevante events: <code>orders/create</code>, <code>orders/cancelled</code>, <code>orders/updated</code>, <code>app/uninstalled</code>. Endpoint skal vaere HTTPS. Test webhook-levering via Shopify Admin: Send test notification.</p>
+
+    <h3>Trin 3: HMAC-validering i WMS</h3>
+    <p>Shopify webhook-secret genereres i app-konfigurationen. WMS skal validere hvert indkommende webhook: <code>computed = Base64(HMAC-SHA256(raw_body, webhook_secret))</code>. Hvis computed ikke matcher request-headeren <code>X-Shopify-Hmac-Sha256</code>, returner 401. Aldrig skip denne validering i produktion.</p>
+
+    <h3>Trin 4: Leveringsmetode-mapping</h3>
+    <p>Dette er den mest oversete gotcha i Shopify-integration. Shopify bruger interne nogler til at identificere leveringsmetoder. Custom shipping rates refereres med praefikset <code>shopify_custom_dk</code> som leveringsmetode-identifikator.</p>
+    <p>Fejl i denne mapping resulterer i: forkert fragtprodukt bestilles, fulfillment kan ikke oprettes (fragtprofil matcher ikke), og ordren strander i WMS. Verificer praecist, hvilken nogle Shopify sender i <code>shipping_lines[0].code</code> i webhook-payloaden.</p>
+
+    <h3>Trin 5: Fulfillment-endpoint</h3>
+    <p>WMS sender fulfillment til Shopify ved afsendelse via <code>POST /admin/api/2024-01/orders/{id}/fulfillments.json</code> med <code>location_id</code>, <code>tracking_number</code>, <code>tracking_company</code> og <code>notify_customer: true</code>. <code>location_id</code> skal matche Shopify-lagerlokationen.</p>
+
+    <h3>Trin 6: Lageropdatering</h3>
+    <p>Lagertal sendes til Shopify via inventory levels API: <code>POST /admin/api/2024-01/inventory_levels/set.json</code> med <code>location_id</code>, <code>inventory_item_id</code> og <code>available</code>. <code>inventory_item_id</code> er Shopifys interne ID for varen, ikke dit varenummer.</p>
+
+    <h2>Hvad koster forkert Shopify-mapping?</h2>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Total aarlig</th></tr></thead>
+      <tbody>
+        <tr><td>Leveringsmetode-mapping fejl</td><td>2.281.250 kr./aar</td></tr>
+        <tr><td>location_id mangler (total stop)</td><td>10.000 kr. per episode</td></tr>
+        <tr><td>HMAC-validering skippet</td><td>96.000 kr./aar</td></tr>
+        <tr><td>Webhook-tab uden retry</td><td>12.605.625 kr./aar</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Det opdager de fleste for sent</h2>
+    <ul>
+      <li><strong>At <code>shopify_custom_dk</code> IKKE er en fejl:</strong> Det er Shopifys interne reference for custom shipping rates. Mange tror det er en bug. Resultatet: mapping fejler, ordrer strander.</li>
+      <li><strong>At location_id aendrer sig naar du flytter fra staging til produktion:</strong> Du hardkoder location_id fra test-shop. Gaar live. Alle fulfillments fejler med &quot;location not found&quot;.</li>
+      <li><strong>At Shopify API-versioner udfases efter 12 maaneder:</strong> Integrationen bryder naar Shopify udfaser versionen. Det opdages naar ordrer ikke laengere importeres.</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <ul>
+      <li><strong>Custom shipping-metode matcher ikke i WMS:</strong> Shopify custom shipping-metoder bruger interne identifikatorer der skal konfigureres eksplicit og testes.</li>
+      <li><strong>location_id mangler eller er forkert ved fulfillment:</strong> Hent altid location_id dynamisk eller konfigurer det eksplicit pr. installation.</li>
+      <li><strong>API-version ikke specificeret:</strong> Shopify APIer versioneres. Bruger du ikke versioneret endpoint, kan breaking changes ramme din integration uden varsel.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Brug Shopifys sandbox:</strong> Test altid ny opsaetning i en development store inden produktion.</li>
+      <li><strong>Abonner paa Shopify changelog:</strong> Shopify udfaser API-versioner hvert aar. Hold styr paa deprecation-datoer.</li>
+      <li><strong>Implementer order reconciliation:</strong> Koer daglig sammenligning: har alle Shopify-ordrer fra i gaar en tilsvarende WMS-ordre?</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack har praekonfigureret Shopify-integration med webhook-modtagelse, HMAC-validering, automatisk fulfillment og lageropdatering. Leveringsmetode-mapping konfigureres i SmartPack admin panel, inklusive haandtering af custom shipping-metoder (<code>shopify_custom_dk</code> til <code>Pickup</code> er praekonfigureret). Alle Shopify API-kald bruger versionerede endpoints og opdateres automatisk ved Shopify API-udfasninger.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du undgaa leveringsmetode-mapping-fejl og webhook-tab?</p><a href="../../kontakt.html" class="btn">Se SmartPack Shopify-integration</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./webhooks-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Webhooks forklaret</span></a>
+    <a href="./wms-vs-shopify.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">WMS vs. Shopify</span></a>
+    <a href="./typiske-integrationsfejl.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Hvad kraeves for at integrere Shopify med et WMS?</summary><div class="faq-item__body"><p>En custom app i Shopify med korrekte API-scopes, webhook-konfiguration med HMAC-validering, leveringsmetode-mapping og fulfillment-endpoint.</p></div></details>
+    <details class="faq-item"><summary>Hvad er shopify_custom_dk?</summary><div class="faq-item__body"><p>Den interne Shopify-reference for brugerdefinerede leveringsmetoder (custom shipping rates). Skal mappes korrekt i WMS til den tilsvarende fragtprofil.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg integrere Shopify uden webhook og kun bruge API-polling?</summary><div class="faq-item__body"><p>Ja, men det giver forsinkelse paa ordrebehandling. Webhooks er staerkt anbefalet for ordrehaendelser. API-polling kan bruges som fallback.</p></div></details>
+    <details class="faq-item"><summary>Hvad er Shopify API-versioner?</summary><div class="faq-item__body"><p>Shopify versionerer sit API kvartalsvis (fx 2024-01). Aeldre versioner udfases med 12 maaneders varsel. Brug altid versionerede endpoints.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis min Shopify custom app slettes?</summary><div class="faq-item__body"><p>Access token invalideres oejeblikkeligt. Alle integrationer holder op med at virke. Gem app-credentials sikkert og hav procedure for geoprettelse.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er shopify_custom_dk?","acceptedAnswer":{"@type":"Answer","text":"Den interne Shopify-reference for brugerdefinerede leveringsmetoder. Skal mappes korrekt i WMS."}},{"@type":"Question","name":"Hvad kraeves for at integrere Shopify med et WMS?","acceptedAnswer":{"@type":"Answer","text":"En custom app med korrekte scopes, webhook-konfiguration med HMAC-validering og leveringsmetode-mapping."}},{"@type":"Question","name":"Hvad er Shopify API-versioner?","acceptedAnswer":{"@type":"Answer","text":"Shopify versionerer sit API kvartalsvis. Aeldre versioner udfases med 12 maaneders varsel."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Shopify integration med WMS: komplet opsaetningsguide","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

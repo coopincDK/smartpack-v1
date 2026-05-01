@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dataflow i e-handel , fra ordre til forsendelse trin for trin | SmartPack Viden</title>
+  <meta name="description" content="Dataflowet i e-handel: fra kundeklik til forsendelsesbekræftelse. Se alle 8 trin, brudpunkter og hvad de koster i reelle kroner.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/dataflow-i-ecommerce.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>Dataflow i e-handel</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Dataflow i e-handel , fra ordre til forsendelse trin for trin</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Torsdag kl. 14:23. En kunde klikker "Køb". Ordren oprettes i Shopify. Webhook sendes til WMS. WMS modtager ingenting. Webhook-endpoint var nede i 12 sekunder under deployment. Ordren forsvinder. Stille fejl. Opdages først fredag morgen når kunden ringer: "Hvorfor er min ordre ikke afsendt?"</p>
+
+    <h2>Hvad er dataflow i e-handel?</h2>
+    <p>Dataflow beskriver, hvordan information bevæger sig mellem systemer i håndteringen af en ordre. Fra kundens klik i webshopen til pakken er afleveret hos fragtmanden involverer en moderne e-handelsoperation typisk 4-7 systemer, der udveksler data med hinanden.</p>
+    <p>De primære systemer:</p>
+    <ul>
+      <li><strong>Webshop</strong> (Shopify, WooCommerce): ordremodtagelse, kundekommunikation</li>
+      <li><strong>WMS:</strong> lageroperationer, pluk, pak, forsendelse</li>
+      <li><strong>ERP:</strong> økonomi, fakturering, indkøb (e-conomic, Business Central)</li>
+      <li><strong>Fragtmand:</strong> transportbestilling, label-generering, tracking</li>
+      <li><strong>Betalingsgateway:</strong> betalingsverifikation (Stripe, Quickpay, Nets)</li>
+    </ul>
+
+    <h2>Det fulde dataflow , trin for trin</h2>
+    <h3>Trin 1: Ordre modtages i webshop</h3>
+    <p>Kunden gennemfører checkout. Webshop opretter ordre og bekræfter betaling via betalingsgateway, sender ordrebekræftelse til kunden og trigger webhook <code>orders/create</code> til WMS.</p>
+    <h3>Trin 2: WMS modtager og validerer ordre</h3>
+    <p>WMS modtager webhook, validerer HMAC-signatur og opretter intern ordre. Validering: kendes alle varenumre? Er der tilstrækkelig beholdning? Er leveringsadresse komplet? Matcher fragtmetode en konfigureret fragtprofil? Fejler validering: ordre placeres i review-kø med fejlårsag.</p>
+    <h3>Trin 3: Plukopgave genereres</h3>
+    <p>WMS opretter plukopgave, beregner TSP-optimeret rute for plukkeren, konsoliderer eventuelt med andre ordrer i batch pick og tildeler til ledig medarbejder via håndterminal.</p>
+    <h3>Trin 4: Pluk udføres</h3>
+    <p>Plukker modtager opgave på håndterminal. Rute vises trin for trin. Hvert pluk bekræftes med scanning (stregkode/QR). WMS opdaterer reserveret lager i realtid.</p>
+    <h3>Trin 5: Pakning</h3>
+    <p>Plukker ankommer til pakkestation. Pakkeseddel printes. Varer pakkes og vejes. WMS kalder fragtmand-API og booker forsendelse. Fragtlabel modtages og printes. Pakke scannes og afsendelse registreres.</p>
+    <p><strong>Kritisk data til fragtAPI:</strong></p>
+    <ul>
+      <li>GLS: metode-nøgle (<code>gls_private_droppoint</code>, <code>gls_business_delivery</code>, <code>gls_flex_delivery</code>), pakkedata</li>
+      <li>PostNord: MISKOS-nummer (9-cifret, obligatorisk)</li>
+      <li>Bring: telefonnummer i format +47 efterfulgt af 9 eller 4 cifre</li>
+    </ul>
+    <h3>Trin 6: Fulfillment-status sendes til webshop</h3>
+    <p>WMS sender fulfillment-bekræftelse til Shopify/WooCommerce. Ordre markeres som fulfilled. Tracking-nummer registreres. Shopify sender automatisk forsendelsesmail til kunden.</p>
+    <h3>Trin 7: ERP opdateres</h3>
+    <p><strong>e-conomic:</strong> fakturakladde oprettes ved pakning, godkendes til faktura. <strong>Business Central:</strong> afsendelsespost oprettes, lagerpostering bogføres.</p>
+    <h3>Trin 8: Lagertal synkroniseres til webshop</h3>
+    <p>WMS opdaterer lagerbeholdning i webshop: fratrukket det solgte antal plus eventuel ny beholdning fra varemodtagelse. Webshop viser korrekt antal for kunder.</p>
+
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+
+    <h2>Hvad koster dataflow-brud reelt?</h2>
+    <table>
+      <thead><tr><th>Brudpunkt</th><th>Hyppighed (ved 500 ordrer/dag)</th><th>Direkte omkostning</th><th>LTV-tab</th><th>Total årlig omkostning</th></tr></thead>
+      <tbody>
+        <tr><td>Webhook leveres ikke (Trin 1 til 2)</td><td>5% af ordrer = 25/dag</td><td>25 × 350 kr. = 8.750 kr./dag</td><td>25 × 0,43 × 2.400 = 25.800 kr./dag</td><td><strong>12.605.625 kr./år</strong></td></tr>
+        <tr><td>Varenummer matcher ikke (Trin 2)</td><td>2% af ordrer = 10/dag</td><td>10 × 350 kr. = 3.500 kr./dag</td><td>Manuel review: 1.500 kr./dag</td><td><strong>1.825.000 kr./år</strong></td></tr>
+        <tr><td>Fragtmand-API fejler (Trin 5)</td><td>1% af ordrer = 5/dag</td><td>Manuel bestilling: 500 kr./dag</td><td>Forsinkelse: 2.000 kr./dag</td><td><strong>912.500 kr./år</strong></td></tr>
+        <tr><td>Fulfillment sendes ikke (Trin 6)</td><td>3% af ordrer = 15/dag</td><td>Kundeservice: 1.500 kr./dag</td><td>15 × 0,22 × 2.400 = 7.920 kr./dag</td><td><strong>3.438.000 kr./år</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Det opdager de fleste for sent</h2>
+    <ul>
+      <li><strong>At webhook-tab er usynlige:</strong> Shopify sender webhook kl. 14:23. Dit WMS er nede i 12 sekunder under deployment. Webhook forsvinder. Ingen alarm. Ordren behandles aldrig. Opdages først når kunden ringer fredag morgen.</li>
+      <li><strong>At varenummer-mismatch strander ordrer stille:</strong> ny vare tilføjes i Shopify torsdag. Første kunde bestiller fredag morgen. Ordre placeres i review-kø. Ingen alarm. Opdages mandag morgen.</li>
+      <li><strong>At fragtmand-API-fejl ikke altid giver alarm:</strong> GLS API returnerer 500 Internal Server Error. WMS logger fejlen. Ingen alarm sendes. Pakke står klar, men label mangler. Opdages først ved cut-off.</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <ol>
+      <li><strong>Antage at data flyder automatisk uden monitorering.</strong> Dataflow er ikke sæt-og-glem. Det kræver aktiv monitorering af hvert trin.</li>
+      <li><strong>Ingen end-to-end test på nye varer.</strong> Nye produkter testes ikke i det fulde flow. Opdages ved første rigtigt salg.</li>
+      <li><strong>Mangle fallback ved fragtAPI-fejl.</strong> Hvis fragtbestilling fejler, bør der være en manuel backup-procedure.</li>
+    </ol>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <ol>
+      <li><strong>Visualisér flowet:</strong> Tegn det præcist. Hvem sender hvad til hvem, hvornår? Identificér alle integrationspunkter.</li>
+      <li><strong>Test med edge cases:</strong> Ordre med 20 varelinjer, ordre med ukendt fragtmetode, ordre til udlandet, ordre der annulleres midt i plukket.</li>
+      <li><strong>Hav en plan for partielle fejl:</strong> Hvad sker der, hvis trin 5 fejler? Trin 7? Definer fallback-procedure for hvert kritisk trin.</li>
+    </ol>
+
+    <h2>Tjekliste</h2>
+    <ul>
+      <li>Er det fulde dataflow dokumenteret (systemkort)?</li>
+      <li>Monitoreres hvert integrationspunkt aktivt?</li>
+      <li>Er fragtmand-API testet med alle brugte fragtprodukter?</li>
+      <li>Er fulfillment-tilbagekald til webshop verificeret?</li>
+      <li>Er der fallback-procedure ved fragtAPI-fejl?</li>
+    </ul>
+
+    <h2>SmartPack understøttelse</h2>
+    <p>SmartPack implementerer hele dataflowet fra ordremodtagelse til fulfillment-bekræftelse. Webhooks modtages, valideres og behandles asynkront. TSP-optimerede plukruter beregnes automatisk. Fragtintegrationer (GLS, PostNord, Bring og andre) er præ-konfigurerede. Fulfillment sendes automatisk til Shopify/WooCommerce ved afsendelse. Lagertal opdateres via SignalR i realtid.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er det vigtigste trin i e-handels dataflowet?</summary><div class="faq-item__body"><p>Trin 6, fulfillment-bekræftelse til webshop, overses hyppigst og har direkte kundesynlig effekt. Glemmes dette, tror kunden, at ordren ikke er afsendt.</p></div></details>
+    <details class="faq-item"><summary>Kan et WMS køre uden ERP-integration?</summary><div class="faq-item__body"><p>Ja. WMS kan håndtere lagerdriften selvstændigt. ERP-integrationen er nødvendig for bogføring og fakturering, men ikke for selve pluk/pak/forsendelse.</p></div></details>
+    <details class="faq-item"><summary>Hvad er realtidslager, og hvornår er det kritisk?</summary><div class="faq-item__body"><p>Realtidslager er, at webshopen altid viser den faktiske beholdning. Det er kritisk ved kampagner, Black Friday og for varer med lav lagerbeholdning, hvor oversalg er en reel risiko.</p></div></details>
+    <details class="faq-item"><summary>Hvor lang tid tager det fulde flow?</summary><div class="faq-item__body"><p>I et godt integreret system: ordre modtaget til plukopgave klar: under 2 minutter. Pluk og pak: 5-15 minutter pr. ordre. Fulfillment tilbage til webshop: sekunder efter afsendelse.</p></div></details>
+    <details class="faq-item"><summary>Hvad er TSP-optimering?</summary><div class="faq-item__body"><p>Travelling Salesman Problem-algoritme der beregner den korteste rute for at besøge alle plukpunkter i et lager. Reducerer gangtid med 20-35%.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er det vigtigste trin i e-handels dataflowet?","acceptedAnswer":{"@type":"Answer","text":"Trin 6, fulfillment-bekræftelse til webshop, overses hyppigst og har direkte kundesynlig effekt."}},{"@type":"Question","name":"Hvad er TSP-optimering?","acceptedAnswer":{"@type":"Answer","text":"Travelling Salesman Problem-algoritme der beregner den korteste rute for at besøge alle plukpunkter i et lager. Reducerer gangtid med 20-35%."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Dataflow i e-handel , fra ordre til forsendelse trin for trin","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

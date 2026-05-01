@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>e-conomic integration med WMS , ordrer, fakturaer og Grant Token | SmartPack Viden</title>
+  <meta name="description" content="e-conomic integration med WMS: ordrehentning hvert 5. minut, fakturakladder ved pakning og Grant Token. Undgå token-invalidering ved medarbejderskift.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/economic-integration.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>e-conomic integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">e-conomic integration med WMS , ordrer, fakturaer og Grant Token</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Mandag morgen kl. 08:12. e-conomic-integration holder op med at virke. Ordrer hentes ikke. Fakturakladder oprettes ikke. Årsag: Grant Token invalideret. Hvorfor? Den medarbejder der autoriserede integrationen for 18 måneder siden er stoppet. IT slettede hendes e-conomic-konto fredag eftermiddag. Token invalideret øjeblikkeligt. Ingen advarsel.</p>
+
+    <h2>Hvad er e-conomic integration?</h2>
+    <p>e-conomic-WMS-integration dækker typisk:</p>
+    <p><strong>e-conomic til WMS:</strong></p>
+    <ul>
+      <li>Ordrer hentes fra e-conomic (typisk B2B-ordrer oprettet manuelt i e-conomic)</li>
+      <li>Kundeoplysninger og leveringsadresser</li>
+      <li>Varenumre og priser</li>
+    </ul>
+    <p><strong>WMS til e-conomic:</strong></p>
+    <ul>
+      <li>Fakturakladde oprettes ved pakning</li>
+      <li>Beholdningsopdatering</li>
+      <li>Eventuelt: automatisk fakturagodkendelse og afsendelse til kunden</li>
+    </ul>
+
+    <h2>Autentificering: Grant Token</h2>
+    <p>e-conomic bruger ikke OAuth2 eller API-nøgler som de fleste moderne systemer. Det bruger en <strong>Grant Token,</strong> et persistent autoriseringstoken, der genereres ved en engangs-autorisationsproces.</p>
+    <p><strong>Sådan fungerer det:</strong></p>
+    <ol>
+      <li>En e-conomic-bruger med rettigheder autoriserer din applikation i e-conomic (via e-conomics Developer Portal)</li>
+      <li>Autorisationsprocessen genererer et <strong>Grant Token,</strong> en lang tekststreng</li>
+      <li>Grant Token gemmes i WMS-konfigurationen</li>
+      <li>WMS bruger Grant Token + App Secret Key til alle API-kald</li>
+    </ol>
+    <p>Grant Token udløber ikke automatisk. Men det invalideres, hvis brugeren der autoriserede slettes i e-conomic, eller administratoren trækker applikationens adgang tilbage.</p>
+    <p><strong>Det kritiske scenarie:</strong> En medarbejder fratræder. IT-afdelingen sletter brugerens e-conomic-konto. Grant Token invalideres øjeblikkeligt. e-conomic-integration holder op med at virke, næste morgen, midt i en arbejdsdag, uden varsel. <strong>Løsning:</strong> Brug altid en dedikeret systembruger til Grant Token-autorisering. Aldrig en personlig bruger.</p>
+
+    <h2>Hvad koster Grant Token-invalidering?</h2>
+    <table>
+      <thead><tr><th>Downtime-varighed</th><th>Tabte ordrer</th><th>Direkte tab</th><th>LTV-tab</th><th>Total omkostning</th></tr></thead>
+      <tbody>
+        <tr><td>4 timer (opdages hurtigt)</td><td>0 (ordrer venter i e-conomic)</td><td>0 kr.</td><td>Forsinkelse: ~5.000 kr.</td><td><strong>5.000 kr.</strong></td></tr>
+        <tr><td>1 dag (opdages næste morgen)</td><td>0 (ordrer venter)</td><td>0 kr.</td><td>Tabt salg: ~20.000 kr.</td><td><strong>20.000 kr.</strong></td></tr>
+        <tr><td>1 uge (opdages ved månedsafslutning)</td><td>0 (ordrer venter)</td><td>Fakturaer mangler: ~140.000 kr.</td><td>Cashflow-tab: ukvantificerbar</td><td><strong>140.000 kr.+</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+
+    <h2>Ordrehentning , hvert 5. minut</h2>
+    <p>e-conomic-ordrer hentes via polling (ikke webhook). SmartPack og de fleste WMS-systemer poller e-conomic API hvert 5. minut for nye ordrer.</p>
+    <pre><code>GET /invoices/drafts?skippages=0&amp;pagesize=25
+X-AppSecretToken: {app_secret}
+X-AgreementGrantToken: {grant_token}</code></pre>
+    <p>e-conomic returnerer fakturakladder med status "draft", det er ordrer klar til behandling.</p>
+
+    <h2>Fakturakladde ved pakning</h2>
+    <p>En central del af e-conomic-integrationen: WMS opretter fakturakladde i e-conomic ved pakning, ikke ved ordremodtagelse, ikke ved afsendelse, men ved det præcise tidspunkt, pakken forsegles.</p>
+    <p>Hvorfor ved pakning? Det er det tidspunkt, du ved præcist, hvad der er med i forsendelsen (delvis pakning, substitutioner). Det stemmer overens med regnskabsprincipper: varen forlader lageret og transaktion oprettes.</p>
+    <p>Workflow:</p>
+    <ol>
+      <li>Plukker plukker varer og ankommer til pakkestation</li>
+      <li>Pakker bekræfter indhold og pakker</li>
+      <li>WMS opretter fakturakladde i e-conomic via API med præcist indhold</li>
+      <li>Fragtlabel genereres, pakke forsegles og afsendes</li>
+      <li>Fakturakladden kan evt. godkendes automatisk til endelig faktura</li>
+    </ol>
+
+    <h2>Typiske fejl</h2>
+    <ol>
+      <li><strong>Grant Token autoriseret af personlig bruger.</strong> Fratræder medarbejderen, invalideres token. Brug altid servicebruger.</li>
+      <li><strong>Fakturakladde oprettes ved ordremodtagelse.</strong> Varen er måske ikke pakket endnu. Delvis pakning eller substitution er ikke reflekteret. Vent til pakningstidspunktet.</li>
+      <li><strong>Varenummer matcher ikke.</strong> e-conomic varenumre skal matche WMS varenumre præcist.</li>
+    </ol>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <ol>
+      <li><strong>Brug servicebruger til Grant Token:</strong> Opret en dedikeret e-conomic-bruger (f.eks. "WMS Service") udelukkende til integration. Sørg for, at den bruger aldrig slettes.</li>
+      <li><strong>Dokumentér Grant Token og App Secret Key sikkert:</strong> Gem dem i password manager med noter om, hvem der har adgang og hvilken e-conomic-bruger der autoriserede.</li>
+      <li><strong>Opsæt alert ved e-conomic API-fejl:</strong> Fejler hentning af ordrer fra e-conomic 3 gange i træk, sendes alert til driftsansvarlig.</li>
+    </ol>
+
+    <h2>Tjekliste</h2>
+    <ul>
+      <li>Er Grant Token autoriseret af servicebruger (ikke personlig)?</li>
+      <li>Er App Secret Key og Grant Token gemt sikkert?</li>
+      <li>Oprettes fakturakladde ved pakning (ikke ordremodtagelse)?</li>
+      <li>Er varenumre synkroniserede mellem WMS og e-conomic?</li>
+      <li>Er alert konfigureret ved API-fejl?</li>
+    </ul>
+
+    <h2>SmartPack understøttelse</h2>
+    <p>SmartPack henter ordrer fra e-conomic hvert 5. minut via polling. Grant Token og App Secret Key konfigureres i SmartPack admin. Fakturakladde oprettes automatisk ved pakning med præcist indhold. SmartPack sender alert, hvis e-conomic API fejler gentagne gange. Integration testes med e-conomic demo-miljø inden go-live.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er et Grant Token i e-conomic?</summary><div class="faq-item__body"><p>Et persistent autoriseringstoken, der genereres ved en engangs-autorisationsproces af en e-conomic-bruger. Bruges af WMS til alle API-kald. Invalideres, hvis den autoriserende bruger slettes.</p></div></details>
+    <details class="faq-item"><summary>Hvornår hentes ordrer fra e-conomic?</summary><div class="faq-item__body"><p>I SmartPack hentes ordrer fra e-conomic hvert 5. minut via API-polling. e-conomic understøtter ikke webhooks.</p></div></details>
+    <details class="faq-item"><summary>Hvad er en fakturakladde i e-conomic?</summary><div class="faq-item__body"><p>En ufærdig faktura, der kan redigeres. I WMS-sammenhæng oprettes en fakturakladde ved pakning med det præcise ordreindhold. Den godkendes derefter til endelig faktura.</p></div></details>
+    <details class="faq-item"><summary>Kan e-conomic-integration bruges med Shopify-ordrer?</summary><div class="faq-item__body"><p>Ja. Ordrer fra Shopify behandles i WMS, og e-conomic opdateres via WMS-integration med bogføring og faktura. Shopify er ikke direkte forbundet til e-conomic i dette setup.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis e-conomic er nede?</summary><div class="faq-item__body"><p>API-kald fejler. Ordrer hentes ikke. WMS skal have retry-logik og alert-mekanisme. Ordrer kan behandles manuelt, men fakturakladder oprettes ikke, før forbindelsen er genoprettet.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er et Grant Token i e-conomic?","acceptedAnswer":{"@type":"Answer","text":"Et persistent autoriseringstoken genereret ved en engangs-autorisationsproces. Invalideres, hvis den autoriserende bruger slettes."}},{"@type":"Question","name":"Hvornår hentes ordrer fra e-conomic?","acceptedAnswer":{"@type":"Answer","text":"I SmartPack hentes ordrer fra e-conomic hvert 5. minut via API-polling. e-conomic understøtter ikke webhooks."}},{"@type":"Question","name":"Hvad er en fakturakladde i e-conomic?","acceptedAnswer":{"@type":"Answer","text":"En ufærdig faktura, der kan redigeres. I WMS-sammenhæng oprettes en fakturakladde ved pakning med det præcise ordreindhold."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"e-conomic integration med WMS , ordrer, fakturaer og Grant Token","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

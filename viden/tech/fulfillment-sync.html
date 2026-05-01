@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fulfillment sync , fra plukket ordre til bekræftet forsendelse | SmartPack Viden</title>
+  <meta name="description" content="Fulfillment sync sender tracking til Shopify ved afsendelse og udløser forsendelsesmailen til kunden. Se fejltyper, retry-logik og best practices.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/fulfillment-sync.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>Fulfillment sync</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Fulfillment sync , fra plukket ordre til bekræftet forsendelse</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Torsdag kl. 15:34. Pakken er forseglet. Fragtlablen er printet. Scanner pakken ved afsendelse. WMS registrerer: "Afsendt". Fulfillment-API-kald til Shopify, timeout. Retry, fejler. Pakken er afsendt. Shopify ved intet. Kunden modtager ingen forsendelsesmail. Fredag morgen: "Hvorfor er min ordre ikke afsendt?" Pakken er allerede hos GLS.</p>
+
+    <h2>Hvad er fulfillment sync?</h2>
+    <p>Fulfillment sync er processen, hvor WMS bekræfter til webshopen, at en ordre er plukket, pakket og afsendt, komplet med tracking-nummer og fragtinformation. Det er den sidste del af ordreflowet, der lukker cirklen og fortæller kunden: "Pakken er på vej."</p>
+    <p>I teknisk forstand: WMS sender en POST-request til webshopens fulfillment-API med:</p>
+    <ul>
+      <li>Ordre-ID</li>
+      <li>Tracking-nummer</li>
+      <li>Fragtmand-kode</li>
+      <li>Pakkens vægt og dimensioner (i nogle systemer)</li>
+      <li>Tidsstempler for pluk og afsendelse</li>
+    </ul>
+    <p>Webshop markerer ordren fulfilled, gemmer tracking, og sender automatisk forsendelsesmail til kunden.</p>
+
+    <h2>Hvad koster fulfillment-sync-fejl?</h2>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Hyppighed (ved 500 ordrer/dag)</th><th>Direkte omkostning</th><th>LTV-tab</th><th>Total årlig</th></tr></thead>
+      <tbody>
+        <tr><td>Fulfillment-API timeout (ingen retry)</td><td>5% af ordrer = 25/dag</td><td>Kundeservice: 2.500 kr./dag</td><td>25 × 0,22 × 2.400 = 13.200 kr./dag</td><td><strong>5.737.500 kr./år</strong></td></tr>
+        <tr><td>notify_customer=false</td><td>10% af ordrer = 50/dag</td><td>Kundeservice: 5.000 kr./dag</td><td>50 × 0,15 × 2.400 = 18.000 kr./dag</td><td><strong>8.395.000 kr./år</strong></td></tr>
+        <tr><td>Tracking-nummer format fejler</td><td>3% af ordrer = 15/dag</td><td>Kundeservice: 1.500 kr./dag</td><td>15 × 0,10 × 2.400 = 3.600 kr./dag</td><td><strong>1.862.500 kr./år</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Fulfillment-processen i detaljer</h2>
+    <h3>Trin 1: Afsendelse registreres i WMS</h3>
+    <p>Plukker/pakker scanner pakken ved afsendelse. WMS registrerer tidsstempler (plukket, pakket, afsendt), bekræfter at fragtlabel er genereret og opdaterer intern ordrestatus til "Afsendt".</p>
+    <h3>Trin 2: WMS kalder webshop-API</h3>
+    <p>WMS sender fulfillment til Shopify:</p>
+    <pre><code>POST /admin/api/2024-01/orders/{order_id}/fulfillments.json
+{
+  "fulfillment": {
+    "tracking_number": "GLS-1234567890",
+    "tracking_company": "GLS",
+    "notify_customer": true
+  }
+}</code></pre>
+    <p><code>notify_customer: true</code> er kritisk, det trigger forsendelsesmailen.</p>
+    <h3>Trin 3: Shopify bekræfter</h3>
+    <p>Shopify returnerer 201 Created med fulfillment-objekt. WMS gemmer fulfillment-ID fra Shopify som kvittering.</p>
+    <h3>Trin 4: Fejlhåndtering</h3>
+    <p>Fejler API-kaldet: WMS gemmer afventende fulfillment i retry-kø, forsøger igen med eksponentiel backoff og sender alert efter N fejlede forsøg.</p>
+
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+
+    <h2>Specielle tilfælde</h2>
+    <p><strong>Delvis fulfillment:</strong> En ordre på 3 varer, men kun 2 er på lager. WMS sender delvis fulfillment for de 2 varer. Shopify opretter delforsendelse. Den resterende linje forbliver open.</p>
+    <p><strong>Multi-pakke forsendelse:</strong> En stor ordre pakkes i 2 kasser med separate tracking-numre. WMS sender to fulfillment-objekter til Shopify, begge tilknyttet samme ordre.</p>
+    <p><strong>Retur:</strong> Kunden returnerer varen. WMS registrerer returnering, lager opdateres. I Shopify oprettes evt. refund/return-objekt via API.</p>
+
+    <h2>Typiske fejl</h2>
+    <ol>
+      <li><strong>notify_customer udelades eller sættes til false.</strong> Kunden modtager ikke forsendelsesmail. Verificér altid at notify_customer er true i produktionsopsætning.</li>
+      <li><strong>Tracking-nummer formatteres forkert.</strong> GLS, PostNord og Bring har specifikke tracking-nummer-formater. Forkert format medfører, at Shopify ikke kan vise tracking korrekt.</li>
+      <li><strong>Ingen retry ved fulfillment-fejl.</strong> API-kald til Shopify fejler (timeout, 500-fejl). Uden retry forbliver ordren "Unfulfilled" for evigt.</li>
+    </ol>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <ol>
+      <li><strong>Log fulfillment-ID fra Shopify:</strong> Gem Shopify's fulfillment-ID i WMS ved succesfuldt kald. Det er din kvittering.</li>
+      <li><strong>Verificér fulfillment næste dag:</strong> Daglig kontrol: har alle "afsendt" ordrer i WMS en tilsvarende fulfilled-status i Shopify? Afvigelser er fejlsignal.</li>
+      <li><strong>Test med alle fragtmænd:</strong> Fulfillment-sync varierer lidt pr. fragtmand. Test eksplicit med GLS, PostNord, Bring og eventuelt med delvise forsendelser.</li>
+    </ol>
+
+    <h2>Tjekliste</h2>
+    <ul>
+      <li>Sendes fulfillment automatisk til webshop ved afsendelse?</li>
+      <li>Er notify_customer sat til true?</li>
+      <li>Gemmes Shopify fulfillment-ID i WMS?</li>
+      <li>Er retry-logik implementeret på fulfillment-API-kald?</li>
+      <li>Verificeres dagligt at alle afsendte ordrer er fulfilled i webshop?</li>
+    </ul>
+
+    <h2>SmartPack understøttelse</h2>
+    <p>SmartPack sender automatisk fulfillment til Shopify og WooCommerce i det øjeblik en pakke afscannes ved afsendelse. Tracking-nummer, fragtmand og tidsstempler inkluderes. notify_customer er altid aktiveret. Fejlede fulfillment-kald placeres i retry-kø og kan genafspilles manuelt. SmartPack dashboard viser live-status på alle afventende fulfillments.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er fulfillment i Shopify?</summary><div class="faq-item__body"><p>En fulfillment er en registrering i Shopify om, at (dele af) en ordre er afsendt. Den indeholder tracking-nummer, fragtmand og tidsstempler. Oprettelse af fulfillment trigger forsendelsesmailen til kunden.</p></div></details>
+    <details class="faq-item"><summary>Hvornår sendes forsendelsesmailen til kunden?</summary><div class="faq-item__body"><p>Shopify sender forsendelsesmailen automatisk, når en fulfillment oprettes med <code>notify_customer: true</code>. Det sker typisk inden for sekunder.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg sende fulfillment manuelt?</summary><div class="faq-item__body"><p>Ja, direkte i Shopify admin. Men i et WMS-setup bør det ske automatisk. Manuel fulfillment er fejlbehæftet og ikke skalerbart.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis jeg sender fulfillment to gange til samme ordre?</summary><div class="faq-item__body"><p>Shopify vil typisk returnere fejl (ordre er allerede fully fulfilled). Implementér idempotency-check i WMS baseret på Shopify fulfillment-ID.</p></div></details>
+    <details class="faq-item"><summary>Kan fulfillment-sync bruges til dropshipping?</summary><div class="faq-item__body"><p>Ja. Dropshipping-leverandørens system sender fulfillment-bekræftelse til WMS/webshop, når varen er afsendt fra leverandørens lager.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er fulfillment i Shopify?","acceptedAnswer":{"@type":"Answer","text":"En registrering i Shopify om at en ordre er afsendt. Indeholder tracking-nummer, fragtmand og tidsstempler. Trigger forsendelsesmailen til kunden."}},{"@type":"Question","name":"Hvornår sendes forsendelsesmailen til kunden?","acceptedAnswer":{"@type":"Answer","text":"Shopify sender forsendelsesmailen automatisk, når en fulfillment oprettes med notify_customer: true. Det sker typisk inden for sekunder."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fulfillment sync , fra plukket ordre til bekræftet forsendelse","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

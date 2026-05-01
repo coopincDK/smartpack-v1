@@ -1,106 +1,206 @@
 ﻿<!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hvad er 3PL? | SmartPack Viden</title>
-  <meta name="description" content="3PL er outsourcing af dit lager til en tredjepart. Når det er rigtig timing, og hvad det koster at vælge 3PL for tidligt eller for sent. Komplet guide.">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er 3PL, og hvornår mister du kontrollen? | SmartPack Viden</title>
+  <meta name="description" content="3PL (tredjepartslogistik) er outsourcet lager og distribution. Lær hvornår det giver mening, hvornår det koster dig kontrollen, og hvad break-even er.">
   <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-3pl.html">
-  <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style.css?v=4">
-  
   <script src="../../js/theme-toggle.js"></script>
 </head>
 <body>
-<header class="site-header" id="site-header">
-  <nav class="nav container">
-    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
-    <ul class="nav__links" id="nav-links">
-      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
-      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
-      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
-      <li><a href="../" class="nav__link">Viden</a></li>
-    </ul>
-    <div class="nav__actions">
-      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
-      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
-      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
-      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-</header>
-
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
-
-  <nav class="article-breadcrumb" aria-label="Brødkrumme">
-    <a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>3PL</span>
-  </nav>
-
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>Hvad er 3PL?</span></nav>
   <header class="article-header">
     <span class="article-cat-badge">Fundamentals</span>
-    <h1 class="article-title">Hvad er 3PL, og hvornår er det den rigtige beslutning?</h1>
-    <div class="article-meta"><time datetime="2025-04-30">Opdateret: 30. april 2025</time><span>Læsetid: ~6 min</span></div>
+    <h1 class="article-title">Hvad er 3PL, og hvornår mister du kontrollen?</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
   </header>
-
   <div class="article-body">
-
-    <p>Du betaler for lagerplads du ikke bruger. Du ansætter folk til peak, og afskædiger dem igen. Du bruger ledertid på lagerproblemer, ikke på vækst. En 3PL-leverandør kan overtage det hele. Men det er ikke altid løsningen, og det er aldrig gratis.</p>
+    <p>Du overvejer 3PL fordi det lyder lettere. Ingen lagerhusleje. Ingen medarbejdere at lede. Bare send varerne afsted og lad nogen andre pakke. Men uge 48, 2024, opdagede en dansk webshop at deres 3PL-partner havde scannet 847 pakker ud, men kun afsendt 291. Black Friday-ordrerne sad på en palle i Vojens. Kunden ringede. 3PL'en svarede ikke. Det kostede 340.000 kr. i refusioner og tabt goodwill.</p>
+    <p>3PL er ikke &ldquo;nogen, der opbevarer dine varer&rdquo;. Det er en strategisk beslutning om, hvad din kerneforretning er. Outsourcer du for tidligt, mister du kontrol og margin. Gør du det for sent, kvæler logistik din vækst. Her er, hvornår det giver mening, og hvornår det ikke gør.</p>
 
     <h2>Hvad er 3PL?</h2>
-    <p><strong>3PL</strong> (Third-Party Logistics / tredjepartslogistik) betyder, at du outsourcer en eller flere logistikfunktioner til en ekstern leverandør. I e-commerce kontekst betyder det typisk, at 3PL-leverandøren overtager lager, pluk, pak og forsendelse på dine vegne.</p>
+    <p><strong>3PL</strong> (Third Party Logistics / tredjepartslogistik) betyder, at du outsourcer hele eller dele af din lager- og distributionsoperation til en ekstern leverandør. 3PL-leverandøren håndterer modtagelse, oplagring, pluk, pak og afsendelse på dine vegne.</p>
+    <p>Du ejer stadig varerne og styrer hvad der bestilles, men den fysiske håndtering sker i deres lager, med deres medarbejdere, på din regning.</p>
+
+    <h3>Forskellen på 1PL, 2PL og 3PL</h3>
+    <ul>
+      <li><strong>1PL</strong>: Du håndterer alt selv</li>
+      <li><strong>2PL</strong>: Du bruger en ekstern fragtleverandør (GLS, PostNord)</li>
+      <li><strong>3PL</strong>: Ekstern leverandør håndterer lagring + distribution</li>
+      <li><strong>4PL</strong>: Ekstern leverandør koordinerer hele supply chain inkl. andre leverandører</li>
+    </ul>
+
+    <h2>Det opdager de fleste for sent</h2>
+
+    <h3>1. Du kan ikke skifte 3PL uden 4-6 måneders kaos</h3>
+    <p>Din data sidder i deres system. Dine varer sidder i deres lager. Dine processer er bygget til deres API. At flytte kræver datamigration, fysisk flytning og re-integration. De fleste opdager først hvor låst de er, når de vil væk.</p>
+
+    <h3>2. 3PL'ens fejl er dine fejl, over for kunden</h3>
+    <p>Kunden ser dit brand på pakken (hvis du er heldig). Når 3PL'en sender forkert, forsinker eller glemmer en ordre, klager kunden til dig. Du har ingen direkte kontrol. Du kan eskalere, bede, true, men du kan ikke gå ned på lageret og fikse det.</p>
+
+    <h3>3. &ldquo;Realtidsintegration&rdquo; betyder ofte &ldquo;opdateres hver nat kl. 02&rdquo;</h3>
+    <p>Du får solgt en vare kl. 14. Kunden betaler. Kl. 15 får du besked fra 3PL: &ldquo;udsolgt&rdquo;. Deres lagersync kører kun om natten. Du refunderer. Kunden er sur. Det sker ikke én gang, det sker strukturelt.</p>
+
+    <h3>4. Skjulte gebyrer dukker op efter 6 måneder</h3>
+    <p>&ldquo;Håndteringsgebyr: 12 kr./ordre&rdquo; lyder fint. Men der er også: modtagelsesgebyr, returgebyr, specialemballagegebyr, ekstra scanningsgebyr, pakkegebyr over 2 kg, gebyr for ordrer med +3 linjer. Den reelle pris er 40-60% højere end tilbuddet.</p>
+
+    <p class="inline-cta">👉 Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
+
+    <h2>Hvornår er det et problem?</h2>
+    <p><strong>Eget lager er et problem, når:</strong></p>
+    <ul>
+      <li>Lagerplads er den primære begrænsning for vækst</li>
+      <li>Sæsonudsving kræver dobbelt kapacitet i 2-3 måneder</li>
+      <li>Logistik tager ledelsestid der burde gå til produkt og marketing</li>
+      <li>Fixed costs på lager (husleje, medarbejdere) spiser margin</li>
+    </ul>
+    <p><strong>3PL er et problem, når:</strong></p>
+    <ul>
+      <li>Du mister kontrol over kvalitet og fejlrate</li>
+      <li>3PL ikke kan integrere med dit system og du mister sporbarhed</li>
+      <li>Kunderne oplever forsinkelser, du ikke kan forklare</li>
+      <li>Prismodellen er uigennemsigtig og skjulte gebyrer spiser fortjenesten</li>
+      <li>Du skalerer til +500 ordrer/dag og 3PL-prisen per ordre nu er dyrere end eget lager ville være</li>
+    </ul>
+
+    <h2>Hvorfor det er vigtigt, i kroner og konsekvenser</h2>
+
+    <h3>Eget lager, fixed cost eksempel (300 ordrer/dag):</h3>
     <table>
-      <thead><tr><th>Model</th><th>Du ejer</th><th>3PL ejer</th></tr></thead>
+      <thead><tr><th>Post</th><th>Kr./md</th></tr></thead>
       <tbody>
-        <tr><td>Eget lager</td><td>Alt: lager, folk, systemer</td><td>, </td></tr>
-        <tr><td>Hybrid</td><td>WMS, stamdata, KPI-styring</td><td>Fysisk lager og personale</td></tr>
-        <tr><td>Fuld 3PL</td><td>Produkter og kundeforhold</td><td>Lager, pluk, pak, fragt</td></tr>
+        <tr><td>Leje 200 m²</td><td>25.000</td></tr>
+        <tr><td>2 lagermedarbejdere</td><td>50.000</td></tr>
+        <tr><td>Systemer, forsikring, udstyr</td><td>10.000</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>85.000</strong></td></tr>
+        <tr><td><strong>Per ordre</strong></td><td><strong>~9,50 kr.</strong></td></tr>
       </tbody>
     </table>
 
-    <!-- Inline CTA -->
-    
+    <h3>3PL, variable cost eksempel (300 ordrer/dag):</h3>
+    <table>
+      <thead><tr><th>Post</th><th>Kr./md</th></tr></thead>
+      <tbody>
+        <tr><td>Håndteringsgebyr: 18 kr. × 6.000 ordrer</td><td>108.000</td></tr>
+        <tr><td>Opbevaringsgebyr: 8 paller × 250 kr.</td><td>2.000</td></tr>
+        <tr><td>Modtagelsesgebyr: 4 leveringer × 150 kr.</td><td>600</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>110.600</strong></td></tr>
+        <tr><td><strong>Per ordre</strong></td><td><strong>~18,50 kr.</strong></td></tr>
+      </tbody>
+    </table>
 
+    <p><strong>Break-even ligger typisk ved 400-600 ordrer/dag</strong>, afhængigt af ordrestørrelse og sortimentskompleksitet. Under det er 3PL billigere (hvis du tæller ALLE skjulte gebyrer med). Over det er eget lager billigere per ordre.</p>
+    <p><strong>Men:</strong> Ved 200 ordrer/dag med 3% 3PL-fejlrate = 6 fejl/dag × 350 kr. = <strong>2.100 kr./dag</strong> = <strong>47.250 kr./md</strong> i direkte tab du ikke kan forhindre.</p>
+    <p><strong>Regnestykke, total cost per måned (200 ordrer/dag, 3% fejlrate):</strong></p>
+    <ul>
+      <li>3PL: 110.600 kr. + 47.250 kr. fejlomkostning = <strong>157.850 kr./md</strong></li>
+      <li>Eget lager: 85.000 kr. + 10.500 kr. fejlomkostning (1% fejl) = <strong>95.500 kr./md</strong></li>
+    </ul>
+    <p><strong>Forskel: 62.350 kr./md = 748.200 kr./år</strong></p>
+
+    <h2>Hvordan fungerer 3PL i praksis?</h2>
+
+    <h3>Onboarding-fase (4-8 uger)</h3>
+    <ol>
+      <li>Aftale om priser, SLA og ansvarsfordeling</li>
+      <li>Systemintegration: 3PL WMS til din webshop</li>
+      <li>Overflytning af lagerbeholdning</li>
+      <li>Oplæring i produktkrav (skrøbelige varer, temperatur, etc.)</li>
+    </ol>
+
+    <h3>Løbende drift</h3>
+    <ol>
+      <li>Du lægger ordrer i din webshop</li>
+      <li>Ordrer synkroniseres automatisk til 3PL</li>
+      <li>3PL plukker, pakker og afsender</li>
+      <li>Tracking-data sendes til kunde og til dig</li>
+      <li>Du modtager månedlig faktura baseret på volumen</li>
+    </ol>
+
+    <h3>Krav til 3PL-integration (IKKE VALGFRIT)</h3>
+    <ul>
+      <li>Realtids lagersynkronisering (du skal kunne se beholdning)</li>
+      <li>Automatisk ordreoverførsel (ingen manuel batch-upload)</li>
+      <li>Tracking-retur til din webshop</li>
+      <li>Adgang til fejlrapport og KPI-data</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <p><strong>1. Manglende SLA på fejlrate</strong><br>Aftalen siger ikke, hvilken plukkefejlrate der er acceptabel. 3PL-leverandøren har dermed intet incitament til at forbedre sig. Kræv under 0,5% fejl og definer konsekvenser.</p>
+    <p><strong>2. Ingen systemintegration</strong><br>Du sender en fil med ordrer én gang om dagen. Det er ikke 3PL, det er outsourced Excel. Kræv API-integration.</p>
+    <p><strong>3. For tidlig outsourcing</strong><br>Du outsourcer, fordi det føles lettere, men du har ikke styr på processerne selv. 3PL kopierer dine kaotiske processer og gør dem lidt dyrere.</p>
+    <p><strong>4. Vendor lock-in</strong><br>Du vælger 3PL uden en exitplan. 2 år inde er det en magtfuld leverandør, du ikke kan skifte fra uden 6 måneders opsigelse og datamigration.</p>
+    <p><strong>5. Ingen visibilitet i realtid</strong><br>Du kan ikke se, hvad der er på lager, hvad der er under pluk, eller hvad der er afsendt, før 3PL rapporterer. Det er uacceptabelt i e-commerce.</p>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <p><strong>1. Definer KPI'er i kontrakten</strong><br>Fejlrate (&lt; 0,5%), order-to-ship tid (&lt; 4 timer på hverdage), lagernøjagtighed (&gt; 98%). Med SLA og kompensationsmodel.</p>
+    <p><strong>2. Kræv realtids systemadgang</strong><br>Du skal til enhver tid kunne se din beholdning, ordrestatus og fejllog. Ikke via email, men via API eller portal.</p>
+    <p><strong>3. Start med hybrid-model</strong><br>Behold kontrol over et lille lokalt lager til rush-ordrer, prøver og specials. Outsource standardvolumen til 3PL.</p>
+    <p><strong>4. Evaluer kvartalsvis</strong><br>Sammenlign KPI, pris og kvalitet med benchmark. 3PL-markedet er konkurrencepræget, du har forhandlingsstyrke.</p>
+    <p><strong>5. Byg en exitplan fra dag 1</strong><br>Hvad skal til for at flytte? Datamigration, lagerflytning, ny integration. Kend svaret, det giver forhandlingsstyrke og ro.</p>
+
+    <h2>Hvornår du skal handle</h2>
+    <ul>
+      <li>Du overvejer at leje mere lagerplads, men ordrevolumet er ikke stabilt nok</li>
+      <li>Logistik fylder mere end 20% af ledelsestiden</li>
+      <li>Din peak-sæson kræver mere end 50% ekstra kapacitet</li>
+      <li>Lageromkostninger udgør over 15% af omsætningen</li>
+      <li>Du vil ekspandere til nye markeder uden at bygge lokale lagre</li>
+    </ul>
+
+    <h2>SmartPack: JA eller NEJ?</h2>
+    <p><strong>NEJ til 3PL, JA til SmartPack, hvis:</strong></p>
+    <ul>
+      <li>Du har 100-800 ordrer/dag</li>
+      <li>Du vil beholde kontrol over kvalitet og processer</li>
+      <li>Du kan drive eget lager (plads + bemanding)</li>
+    </ul>
+    <p><strong>JA til 3PL, SmartPack kan stadig hjælpe, hvis:</strong></p>
+    <ul>
+      <li>Du har under 100 ordrer/dag og ingen lagerplads</li>
+      <li>Du ekspanderer internationalt og har brug for lokal 3PL</li>
+      <li>SmartPack kan integrere med 3PL'ens API og give dig ét dashboard</li>
+    </ul>
+    <p>SmartPack understøtter multi-lager opsætning, du kan drive eget lager via SmartPack og have fuld synlighed, selvom dele af fulfillment håndteres eksternt. Systemet understøtter API-integration til 3PL-platforme og giver dig realtids lagerindsigt uanset, om varen sidder i dit lager eller hos en 3PL-partner.</p>
+
+    <h2>Tjekliste, brug denne artikel</h2>
+    <ul>
+      <li>✓ Beregn din faktiske cost per ordre (inkl. alle gebyrer) hos nuværende 3PL</li>
+      <li>✓ Sammenlign med break-even-kalkulen: 400-600 ordrer/dag</li>
+      <li>✓ Tjek om du har realtids lagersynkronisering i dag</li>
+      <li>✓ Næste skridt: Definer SLA-krav (fejlrate, order-to-ship, lagernøjagtighed) og mål, om din 3PL lever op</li>
+    </ul>
   </div>
-
-  <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p>
-      <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
-<a href="../../kontakt.html" class="btn">Se dit setup</a></div>
-  <div class="article-disclaimer">Denne artikel er baseret på vores erfaring og bedste viden på tidspunktet for skrivning. Indholdet er vejledende og kan ikke erstatte professionel rådgivning.</div>
-
-  <div class="article-related">
-    <div class="article-related__title">Relateret viden</div>
-    <div class="article-related__grid">
-      <a href="hvad-er-fulfillment.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er fulfillment?</span></a>
-      <a href="hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
-      <a href="hvad-er-dropshipping.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er dropshipping?</span></a>
-    </div>
+  <div class="bottom-cta"><p>Vil du se det i dit lager?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Vejledende information baseret på dansk e-handelspraksis.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="./hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er 3PL på dansk?</summary><div class="faq-item__body"><p>3PL er forkortelse for Third Party Logistics, på dansk tredjepartslogistik. Det betyder, at en ekstern leverandør håndterer lagring og distribution på dine vegne.</p></div></details>
+    <details class="faq-item"><summary>Hvornår er 3PL billigere end eget lager?</summary><div class="faq-item__body"><p>Typisk under 400-600 daglige ordrer, afhængigt af ordrestørrelse. Over det er fixed costs ved eget lager lavere per ordre. Men husk: 3PL-fejl koster dig det samme som egne fejl, forskellen er, du ikke kan fikse dem selv.</p></div></details>
+    <details class="faq-item"><summary>Mister jeg kontrollen, hvis jeg bruger 3PL?</summary><div class="faq-item__body"><p>Ja, medmindre du har realtids-API, klare KPI'er i kontrakten og en exitplan. Uden det er du afhængig af deres processer, deres hastighed og deres prioritering.</p></div></details>
+    <details class="faq-item"><summary>Kan 3PL håndtere B2B og B2C ordrer?</summary><div class="faq-item__body"><p>Ja, men krav er meget forskellige. B2B kræver typisk palleforsendelse, specifikke labels og EDI-integration. Tjek, at 3PL har erfaring med begge.</p></div></details>
+    <details class="faq-item"><summary>Hvad er en god 3PL-fejlrate?</summary><div class="faq-item__body"><p>Under 0,5% plukkefejl er branchestandard for velfungerende 3PL. Over 1% er uacceptabelt og bør udløse eskalering eller leverandørskift.</p></div></details>
   </div>
-
-  <div class="article-faq">
-    <h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
-    <details class="faq-item"><summary>Hvad er forskellen på 3PL og 4PL?</summary><div class="faq-item__body">3PL udfører logistikfunktioner (lager, pluk, fragt). 4PL koordinerer og optimerer hele supply chain, herunder styring af 3PL-leverandører. 4PL er typisk relevant for større virksomheder med kompleks supply chain.</div></details>
-    <details class="faq-item"><summary>Hvornår er 3PL for tidligt?</summary><div class="faq-item__body">Under 50-75 ordrer om dagen. Prisen per ordre fra 3PL er typisk højere end intern håndtering ved låv volumen. Derudover mister du fleksibilitet og direkte kontrol.</div></details>
-    <details class="faq-item"><summary>Kan jeg bruge SmartPack som WMS hos min 3PL-leverandør?</summary><div class="faq-item__body">Ja. SmartPack kan anvendes som dit kontrollag med realtidsbeholdning, SLA-måling og automatisk ordresynkronisering, selvom 3PL'en har sit eget interne system.</div></details>
-    <details class="faq-item"><summary>Hvad skal jeg kræve i SLA med en 3PL?</summary><div class="faq-item__body">Minimum: 99,5% order accuracy, under 24 timers order-to-ship tid på hverdage, målelig kompensation ved brud på SLA, og månedlig rapportering på alle KPI'er.</div></details>
-  </div>
-
 </div></div>
 </main>
-
-<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;">
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
-    <div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack · <a href="../../vilkaar.html" style="color:var(--text-3);text-decoration:none;">Vilkår</a></div>
-    <div style="display:flex;gap:1.5rem;"><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a><a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a></div>
-  </div>
-</footer>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a></div></footer>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på 3PL og 4PL?","acceptedAnswer":{"@type":"Answer","text":"3PL udfører logistikfunktioner. 4PL koordinerer hele supply chain inkl. styring af 3PL-leverandører."}},{"@type":"Question","name":"Hvornår er 3PL for tidligt?","acceptedAnswer":{"@type":"Answer","text":"Under 50-75 ordrer om dagen er prisen per ordre fra 3PL typisk højere end intern håndtering."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er 3PL, og hvornår er det den rigtige beslutning?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
-</body>
-</html>
-
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er 3PL på dansk?","acceptedAnswer":{"@type":"Answer","text":"3PL er forkortelse for Third Party Logistics, på dansk tredjepartslogistik."}},{"@type":"Question","name":"Hvornår er 3PL billigere end eget lager?","acceptedAnswer":{"@type":"Answer","text":"Typisk under 400-600 daglige ordrer, afhængigt af ordrestørrelse."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er 3PL, og hvornår mister du kontrollen?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

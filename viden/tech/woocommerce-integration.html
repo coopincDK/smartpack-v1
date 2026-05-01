@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WooCommerce integration med WMS: opsaetning og gotchas | SmartPack Viden</title>
+  <meta name="description" content="WooCommerce WMS integration via REST API og Webhooks. Laer om betalingsstatus-haandtering, order-status mapping, lageropdatering og de fejl der koster mest.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/woocommerce-integration.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>WooCommerce integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">WooCommerce integration med WMS: opsaetning og gotchas</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~6 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>WooCommerce er open source og fleksibelt. Det er ogsaa det, der goer integration mere komplekst end med Shopify. Ingen hosted infrastruktur, ingen API-rate limits fra Shopify, men heller ingen standard webhook-forvaltning. Her er hvad du skal vide.</p>
+    <p>Den haardeste sandhed: WooCommerce-sites varierer enormt. Et WooCommerce site med 50 plugins og et custom tema er et andet dyr end et rent WooCommerce-site. Integrationens stabilitet afhaenger delvist af WordPress-setup.</p>
+
+    <h2>Hvad er WooCommerce-WMS integration?</h2>
+    <p>WooCommerce-WMS integration er en bi-direktionel forbindelse:</p>
+    <p><strong>WooCommerce til WMS:</strong></p>
+    <ul>
+      <li>Nye betalte ordrer sendes automatisk til WMS</li>
+      <li>Ordreannulleringer og refusioner propageres til WMS</li>
+      <li>Produktstamdata (nyt produkt, aendret SKU) synkroniseres</li>
+    </ul>
+    <p><strong>WMS til WooCommerce:</strong></p>
+    <ul>
+      <li>Beholdnings-opdateringer sendes til WooCommerce i realtid</li>
+      <li>Ordrestatus opdateres (processing, shipped, completed)</li>
+      <li>Tracking-nummer tilfojes ordre automatisk</li>
+    </ul>
+
+    <h2>Teknisk opsaetning</h2>
+    <p class="inline-cta">&#x1F449; SmartPack har praekonfigureret WooCommerce-integration. <a href="../../kontakt.html">Se SmartPacks WooCommerce-connector</a></p>
+
+    <h3>REST API-autentifikation</h3>
+    <p>WooCommerce bruger Consumer Key og Consumer Secret genereret i WooCommerce admin under Settings, Advanced, REST API. Tilladte metoder: read/write for orders og products. Gem keys sikkert, de vises kun een gang.</p>
+
+    <h3>Webhooks i WooCommerce</h3>
+    <p>WooCommerce webhooks konfigureres i Settings, Advanced, Webhooks. Registrer events: Order created, Order updated, Order deleted. Endpoint-URL: dit WMS webhook-endpoint (HTTPS paakraevet). WooCommerce genererer webhook-secret automatisk, gem og brug til HMAC-validering.</p>
+    <p><strong>WooCommerce webhook-validering:</strong> WooCommerce signerer webhooks med <code>X-WC-Webhook-Signature</code> header. Signeringsmetoden er HMAC-SHA256 af payload med webhook-secret.</p>
+
+    <h3>Betalingsstatus-haandtering</h3>
+    <p>Den vigtigste gotcha i WooCommerce-integration: WooCommerce bruger ordre-status <code>processing</code> til betalte ordrer. WMS maa kun importere ordrer der er <code>processing</code> eller <code>completed</code>, aldrig <code>pending</code> eller <code>on-hold</code>.</p>
+    <p>En <code>pending</code> ordre er ikke betalt endnu. Behandler WMS den, sender I en vare ud for en ordre der aldrig betales. Det er den nemmeste maade at miste penge i WooCommerce-integration.</p>
+
+    <h3>Lageropdatering via REST API</h3>
+    <p>Lagertal opdateres via <code>PUT /wp-json/wc/v3/products/{id}</code> med <code>stock_quantity</code>. For produktvarianter bruges <code>PUT /wp-json/wc/v3/products/{id}/variations/{id}</code>. SKU bruges til at matche WMS-vare med WooCommerce-produkt. Uden korrekt SKU-mapping: ingen lageropdatering.</p>
+
+    <h2>Hvad koster fejl i WooCommerce-integration?</h2>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Total aarlig</th></tr></thead>
+      <tbody>
+        <tr><td>Behandler pending ordre (ikke betalt)</td><td>380.000 kr./aar</td></tr>
+        <tr><td>SKU-mismatch (ingen lageropdatering)</td><td>10.037.500 kr./aar</td></tr>
+        <tr><td>Webhook-tab (WordPress-plugin opdatering)</td><td>12.605.625 kr./aar</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Typiske fejl</h2>
+    <ul>
+      <li><strong>Importerer alle ordre uanset betalingsstatus:</strong> WMS maa kun importere <code>processing</code>-ordrer. Pending-ordrer maa aldrig behandles.</li>
+      <li><strong>SKU-mismatch:</strong> WooCommerce-SKU og WMS-varenummer matcher ikke. Lageropdatering fejler stille. Beholdning i WooCommerce afviger gradvist fra WMS.</li>
+      <li><strong>WordPress-plugin opdateringer bryder webhooks:</strong> En plugin-opdatering paa WooCommerce-siden kan aeendre webhook-signering eller endpoints. Test efter alle plugin-opdateringer.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Filtrer altid paa betalingsstatus:</strong> Kun ordrer med status <code>processing</code> eller <code>completed</code> importeres til WMS.</li>
+      <li><strong>Etabler kanonisk SKU-standard:</strong> Saet en klar standard for SKU-format paa tvaers af WooCommerce og WMS inden go-live. Ingen undtagelser.</li>
+      <li><strong>Haendt plugin-opdateringer proaktivt:</strong> Implementer integration-health monitoring der alarmerer, naar ingen webhook-events er modtaget i X minutter i arbejdstiden.</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack har praekonfigureret WooCommerce-integration via REST API og Webhooks. Betalingsstatus-filtret er standard: kun <code>processing</code>-ordrer importeres. Webhook-signaturvalidering med HMAC-SHA256 er aktiveret som standard. SKU-mapping konfigureres i SmartPack admin-panelet.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du have en stabil WooCommerce-integration fra dag et?</p><a href="../../kontakt.html" class="btn">Se SmartPacks WooCommerce-connector</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./shopify-integration.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Shopify integration</span></a>
+    <a href="./wms-integration-webshop.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">WMS integration webshop</span></a>
+    <a href="./typiske-integrationsfejl.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Hvad er forskellen paa WooCommerce og Shopify integration?</summary><div class="faq-item__body"><p>Shopify er hosted og standardiseret. WooCommerce kjoerer paa WordPress og varierer per installation. WooCommerce koeraever mere opmærksomhed paa plugin-kompatibilitet og betalingsstatus-haandtering.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg bruge WooCommerce API uden plugin?</summary><div class="faq-item__body"><p>Ja. WooCommerce REST API er bygget ind og kraever ikke ekstra plugin. Du skal kun aktivere API-adgang og generere Consumer Key/Secret.</p></div></details>
+    <details class="faq-item"><summary>Hvad er WooCommerce Consumer Key?</summary><div class="faq-item__body"><p>En API-nogle der bruges til autentificering. Genereres i WooCommerce admin, Settings, Advanced, REST API. Bruges som username i HTTP Basic Auth.</p></div></details>
+    <details class="faq-item"><summary>Hvornaar er ordre-status &quot;processing&quot; i WooCommerce?</summary><div class="faq-item__body"><p>Naar betaling er bekraeftet. Det er standardstatus for succesfulde betalte ordrer. &quot;Pending&quot; er ikke betalt endnu.</p></div></details>
+    <details class="faq-item"><summary>Kan WooCommerce haandtere variable produkter i WMS-integration?</summary><div class="faq-item__body"><p>Ja. Variable produkter (stoerrelse, farve) har separate variation-IDs og SKUs. Mapping i WMS er paa variation-niveau, ikke produkt-niveau.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen paa WooCommerce og Shopify integration?","acceptedAnswer":{"@type":"Answer","text":"Shopify er hosted og standardiseret. WooCommerce varierer per installation og kraever mere opmærksomhed."}},{"@type":"Question","name":"Hvornaar er ordre-status processing i WooCommerce?","acceptedAnswer":{"@type":"Answer","text":"Naar betaling er bekraeftet. Det er standardstatus for betalte ordrer. Pending er ikke betalt."}},{"@type":"Question","name":"Hvad er WooCommerce Consumer Key?","acceptedAnswer":{"@type":"Answer","text":"En API-nogle til autentificering, genereret i WooCommerce admin under Settings, Advanced, REST API."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WooCommerce integration med WMS: opsaetning og gotchas","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

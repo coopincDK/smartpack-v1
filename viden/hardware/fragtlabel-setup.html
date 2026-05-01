@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fragtlabel setup: printer, placering og flow | SmartPack Viden</title>
+  <meta name="description" content="Printerplacering, label-størrelse og WMS-integration kan ændre din pakketid markant. Se hvad der typisk går galt med fragtlabel-setups, og hvad det koster dig per dag.">
+  <link rel="canonical" href="https://smartpack.dk/viden/hardware/fragtlabel-setup.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Hardware &amp; Setup</a><span>&rsaquo;</span><span>Fragtlabel setup</span></nav>
+
+  <header class="article-header">
+    <span class="article-cat-badge">Hardware &amp; Setup</span>
+    <h1 class="article-title">Fragtlabel setup: printer, placering og flow</h1>
+    <div class="article-meta"><time datetime="2025-05-01">1. maj 2025</time><span>~7 min</span></div>
+  </header>
+
+  <div class="article-body">
+    <p>Fragtlabelen er det sidste element der påføres pakken inden den forlader dit lager. Den er også et af de steder der oftest er suboptimalt sat op, og det koster tid, fejl og frustrationer for både pakker og kunden.</p>
+    <p>Den typiske situation: en printer der står 2-3 meter fra pakkebordet fordi den stod der da lageret blev sat op. Pakkeren pakker kassen, går hen til printeren, henter labelen, går tilbage, påsætter labelen. Det er 4-6 skridt per pakke. Med 100 pakker om dagen er det 400-600 skridt, eller 3-6 minutters vandring, per dag. Over et år med to pakkere: 22-44 timer i spildtid.</p>
+    <p>Label-setup handler ikke om én stor beslutning. Det handler om mange små valg: printertype, placering, label-størrelse, integration med system, og hvad der sker når noget går galt. Denne artikel giver dig overblikket.</p>
+
+    <h2>Printertype: termisk vs. laser</h2>
+    <p>De to dominerende typer til fragtlabels er termiske label-printere og laser-printere (inkl. inkjet).</p>
+    <p><strong>Termisk label-printer</strong> er standarden på professionelle pakkebordet. Fordele: hurtig print (2-4 sekunder per label), ingen blæk eller toner der skal skiftes, labels sidder fast på en rulle og er nemme at påsætte. Ulempe: højere anskaffelsespris (800-4.000 kr. afhængigt af model) og løbende omkostning til label-ruller (typisk 0,30-0,80 kr. per label).</p>
+    <p><strong>Laser- eller inkjet-printer</strong> er billigere i anskaffelse men dyrere og langsommere i drift til fragtlabels. Hvert print kræver at labelen skares fra et A4-ark og hæftes på pakken. Det er 5-15 sekunder ekstra per pakke sammenlignet med termisk print. For lagre med over 40 daglige forsendelser er den termiske printer økonomisk overlegen inden for 3-6 måneder.</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack integrerer direkte med din label-printer og printer automatisk når ordren kvitteres. <a href="../../kontakt.html">Se hvordan det virker</a></p>
+
+    <h2>Printerplacering: de rigtige mål</h2>
+    <p>Printer-placering er den faktor der oftest er forkert, og den der lettest kan rettes uden ny investering.</p>
+    <p>Reglen er simpel: printeren skal være inden for 50 cm af pakkerens position når kassen er pakket og klar til label. Det betyder typisk at printeren er placeret på en hylde eller stander ved siden af pakkebordet, ikke på et sidebord 2 meter væk.</p>
+    <p>Beregn det konkret: en printer placeret 2 meter væk kræver 4-6 skridt per pakke (frem og tilbage). Med 100 daglige pakker er det 400-600 skridt. En pakker går typisk 80-100 skridt per minut. Det er 4-7 minutters vandring per dag per pakker. Med to pakkere og 220 arbejdsdage er det 29-51 timer per år. Ved 350 kr./time: <strong>10.000-17.000 kr.</strong> per år i spildtid alene på printer-afstand.</p>
+    <p>Flyt printeren. Det koster en forlængelse-kabel eller et ekstra netværksudtag. Det er en af de billigste og hurtigste forbedringer du kan gøre på pakkebordet.</p>
+
+    <h2>Label-størrelse: hvad der virker</h2>
+    <p>Fragtlabels kommer i forskellige størrelser. De mest udbredte standarder i Danmark er:</p>
+    <ul>
+      <li><strong>100x150 mm:</strong> Standard for de fleste danske fragtførere inkl. PostNord, GLS og DAO. Passer til termiske label-printere med 4" bredde. Er den klare førstel-valg.</li>
+      <li><strong>A4 (halvt A4 = 105x148 mm):</strong> Bruges når der printes på laser-printer. Upraktisk til højvolumen-pakning. Egnet til lav volumen hvor termisk printer ikke er lønsom.</li>
+      <li><strong>102x210 mm:</strong> Bruges af visse fragtførere til større pakker med ekstra information. Tjæk med din fragtaftale hvad der er standard.</li>
+    </ul>
+    <p>Den vigtigste regel: brug den label-størrelse din fragtfører foretrækker og din printer kan håndtere uden manuel tilpasning. Forkert størrelse går forkert afskuaering, skalering eller fejl i scanning hos fragtfører.</p>
+
+    <h2>Integration med WMS og system</h2>
+    <p>Label-printning i 2025 bør være integreret med dit ordresystem eller <a href="../fundamentals/hvad-er-wms.html">WMS</a>. Manuelt label-print, dvs. at logge ind på fragtførers hjemmeside, udfylde adressefelter og printe, er en massiv tidstyv og en væsentlig fejlkilde.</p>
+    <p>Med integration printer systemet automatisk den korrekte label med korrekt adresse og fragttype når pakkeren kvitterer ordren. Det eliminerer:</p>
+    <ul>
+      <li>Manuel tastning af modtageradresse (fejlrisiko + 20-40 sek. per pakke)</li>
+      <li>Valg af fragtprodukt (forkert valg = for dyr fragt eller forkert leveringstid)</li>
+      <li>Dobbelthåndtering af ordrenummer (fra system til fragtførers webinterface)</li>
+    </ul>
+    <p>Tidsbesparelse ved integration sammenlignet med manuelt print: typisk 30-60 sekunder per pakke. Med 100 daglige pakker er det 50-100 minutter per dag. Over 220 dage: 183-367 timer per år. Ved 350 kr./time: <strong>64.000-128.000 kr.</strong> per år i frigjort kapacitet. Det er det største enkelt-potentiale i fragtlabel-setuppet.</p>
+
+    <h2>Hvad der typisk går galt</h2>
+    <p>De mest udbredte fejl i fragtlabel-setups:</p>
+    <ul>
+      <li><strong>Printer langt fra pakkebordet:</strong> Som beskrevet ovenfor. Flyt den. Nu.</li>
+      <li><strong>Label-ruller der løber tør på de værste tidspunkter:</strong> Ingen buffer-ruller på pakkebordet. Sæt en fast genopfyldnings-rutine og hold to-tre ruller i reserve ved hvert pakkebord.</li>
+      <li><strong>Printer uden netværksforbindelse:</strong> USB-tilsluttede printere binder pakkeren til én computer. En netværks-printer gør det muligt at printe fra mobile enheder og tablets, hvilket giver langt mere fleksibelt flow.</li>
+      <li><strong>Forkert label-størrelse i systemet:</strong> Systemet er opsæt til at printe A4, men printeren bruger 100x150 mm ruller. Resultatet er fejlskalerede labels der ikke kan scannes eller må genprintes.</li>
+      <li><strong>Ingen backup-procedure:</strong> Når printeren fejler eller systemet er nede, er der ingen klar procedure. Pakke-flowet stopper. Hav en klar procedure for hvad der gøres når det sker.</li>
+    </ul>
+    <p>Se også vores artikel om <a href="../fundamentals/hvad-er-batch-picking.html">batch picking</a>: i batch-picking-setups er label-print på den rigtige kasse den afgørende post-batch-opgave, og et godt integreret label-flow eliminerer de fejl der ellers opstår når mange ordrer behandles tæt på hinanden.</p>
+
+    <table>
+      <thead><tr><th>Printertype</th><th>Anskaffelse</th><th>Print-tid per label</th><th>Løbende påsætning</th></tr></thead>
+      <tbody>
+        <tr><td>Termisk label-printer</td><td>800-4.000 kr.</td><td>2-4 sek.</td><td>Nem (rulle)</td></tr>
+        <tr><td>Laser-printer (A4)</td><td>500-2.000 kr.</td><td>10-20 sek.</td><td>Kræver skaring og hæftning</td></tr>
+        <tr><td>Inkjet (A4)</td><td>300-800 kr.</td><td>15-30 sek.</td><td>Kræver skaring, blæk kan sløres</td></tr>
+      </tbody>
+    </table>
+    <p><em>Estimater for typiske modeller. Faktisk print-tid afhænger af printermodel og print-indstillinger.</em></p>
+  </div>
+
+  <div class="bottom-cta">
+    <p>Vil du integrere fragtlabel-print direkte i dit ordreflow og eliminere manuel håndtering?</p>
+    <a href="../../kontakt.html" class="btn">Book en gratis gennemgang med SmartPack</a>
+  </div>
+
+  <div class="article-disclaimer">
+    <p>Besparelsesestimater er vejledende og baseret på typiske operationer. Faktiske tal afhænger af ordrefordeling, fragtførere og eksisterende systemopsaetning.</p>
+  </div>
+
+  <div class="article-related">
+    <div class="article-related__title">Relateret viden</div>
+    <div class="article-related__grid">
+      <a href="./pakkestation-setup.html" class="article-related__item"><span class="article-related__item-cat">Hardware &amp; Setup</span><span class="article-related__item-title">Pakkestation setup: hvad skal der være på bordet?</span></a>
+      <a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
+      <a href="../fundamentals/hvad-er-batch-picking.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er batch picking?</span></a>
+    </div>
+  </div>
+
+  <div class="article-faq">
+    <h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvilken printertype er bedst til fragtlabels?</summary><div class="faq-item__body"><p>En termisk label-printer er standarden på professionelle pakkebordet. Den printer på 2-4 sekunder, kræver ikke blæk eller toner, og labels er nemme at påsaette fra rullen. Fra 40+ forsendelser per dag er den hurtigst lønsom sammenlignet med laser-printing på A4.</p></div></details>
+    <details class="faq-item"><summary>Hvad er den rigtige label-størrelse til danske fragtførere?</summary><div class="faq-item__body"><p>100x150 mm er standard for PostNord, GLS og DAO. Det er den klare førstel-valg til termisk printer med 4" bredde. Tjek med din specifikke fragtaftale, da visse produkter eller fragtførere har andre krav.</p></div></details>
+    <details class="faq-item"><summary>Hvad sparer jeg ved at integrere label-print med mit ordresystem?</summary><div class="faq-item__body"><p>Typisk 30-60 sekunder per pakke sammenlignet med manuelt print. Med 100 daglige pakker er det 50-100 minutter per dag. Over et år med to pakkere er det 183-367 timer, svarende til 64.000-128.000 kr. ved 350 kr./time.</p></div></details>
+    <details class="faq-item"><summary>Hvor tæt på pakkebordet skal printeren placeres?</summary><div class="faq-item__body"><p>Inden for 50 cm af pakkerens position når kassen er klar. En printer placeret 2 meter væk koster 4-7 minutters vandring per pakker per dag, svarende til 10.000-17.000 kr. per år med to pakkere.</p></div></details>
+    <details class="faq-item"><summary>Hvad gør jeg når fragtlabel-printeren fejler?</summary><div class="faq-item__body"><p>Hav en klar backup-procedure: en reserve-rulle label klar, en backup-computer med adgang til fragtførers webinterface, og viden om hvordan man genspejler systemet på fejlsituationen. Uden en backup-procedure stopper pakke-flowet når printeren fejler.</p></div></details>
+  </div>
+</div></div>
+</main>
+
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvilken printertype er bedst til fragtlabels?","acceptedAnswer":{"@type":"Answer","text":"En termisk label-printer er standarden. Den printer p\u00e5 2-4 sekunder, kr\u00e6ver ikke bl\u00e6k og labels er nemme at p\u00e5s\u00e6tte. L\u00f8nsom fra 40+ forsendelser per dag."}},{"@type":"Question","name":"Hvad sparer jeg ved at integrere label-print med mit ordresystem?","acceptedAnswer":{"@type":"Answer","text":"Typisk 30-60 sekunder per pakke. Med 100 daglige pakker og to pakkere er det 64.000-128.000 kr. per \u00e5r ved 350 kr./time."}},{"@type":"Question","name":"Hvor t\u00e6t p\u00e5 pakkebordet skal printeren placeres?","acceptedAnswer":{"@type":"Answer","text":"Inden for 50 cm. En printer 2 meter v\u00e6k koster 10.000-17.000 kr. per \u00e5r med to pakkere i spildtid."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fragtlabel setup: printer, placering og flow","dateModified":"2025-05-01","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

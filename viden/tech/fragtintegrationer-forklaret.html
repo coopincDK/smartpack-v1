@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fragtintegrationer forklaret , GLS, PostNord, Bring og hvad der skiller dem | SmartPack Viden</title>
+  <meta name="description" content="GLS metode-nøgler, PostNord MISKOS-nummer og Bring telefonnummer-format. Den tekniske guide til fragtintegrationer i dit WMS.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/fragtintegrationer-forklaret.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>Fragtintegrationer</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Fragtintegrationer forklaret , GLS, PostNord, Bring og hvad der skiller dem</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Torsdag kl. 13:47. Pakkestation. Scanner pakken. WMS kalder GLS API. Fejl: "Invalid service code". Årsag: <code>gls_droppoint</code> i stedet for <code>gls_private_droppoint</code>. Mapping-fejl. Pakken kan ikke sendes. 47 pakker klar. Alle samme fejl. Cut-off om 1 time. Opdager fejlen. Retter mapping. Genbestiller alle 47 labels. Kl. 14:52. Cut-off nået, lige akkurat.</p>
+
+    <h2>Hvad er fragtintegration?</h2>
+    <p>Fragtintegration er WMS'ets forbindelse til fragtmænds systemer. Når en pakke er klar til afsendelse, kalder WMS fragtmand-API'et og:</p>
+    <ol>
+      <li>Sender pakkedata (modtageradresse, vægt, dimensioner, valgt fragtprodukt)</li>
+      <li>Modtager tracking-nummer og forsendelsesID</li>
+      <li>Henter fragtlabel som PDF eller ZPL (til labelprinter)</li>
+      <li>Printer label og klæber på pakken</li>
+    </ol>
+    <p>Alt sker typisk inden for 1-3 sekunder fra scanning af pakken.</p>
+
+    <h2>Fragtmænd og deres integration</h2>
+    <h3>GLS</h3>
+    <p>GLS er den mest brugte fragtmand i dansk e-handel. GLS-API'et er relativt simpelt, men metode-nøglerne er kritiske.</p>
+    <p><strong>Metode-nøgler (skal matche præcist):</strong></p>
+    <ul>
+      <li><code>gls_private_droppoint</code>, levering til GLS-pakkeshop/droppoint</li>
+      <li><code>gls_business_delivery</code>, erhvervslevering direkte til virksomhed</li>
+      <li><code>gls_flex_delivery</code>, privat hjemmelevering med fleksibel levering</li>
+    </ul>
+    <p>Nøglerne matches mod den leveringsmetode, kunden valgte i webshopen. Fejl i mapping giver enten forkert fragtprodukt eller mislykket label-generering.</p>
+
+    <h3>PostNord</h3>
+    <p>PostNord kræver et ekstra registrerings-element sammenlignet med GLS: <strong>MISKOS-nummer.</strong></p>
+    <p>MISKOS-nummer er et 9-cifret kundenummer hos PostNord. Det er din virksomheds PostNord-kundeidentifikator og skal inkluderes i hvert API-kald. Uden det afviser PostNord API-kaldet. MISKOS-nummeret udleveres af PostNord ved kundeaftaleindgåelse.</p>
+    <pre><code>POST /rest/logistics/order/v1/{MISKOS}
+Authorization: Bearer {access_token}
+{
+  "shipment": {
+    "sender": {...},
+    "receiver": {...},
+    "consignor": {"quickId": "{MISKOS}"},
+    "parcels": [{"weight": {"value": 1500, "unit": "GRM"}}]
+  }
+}</code></pre>
+
+    <h3>Bring</h3>
+    <p>Bring (PostNord Norge) bruges primært til norske leverancer. Bring-integration har ét specifikt krav til telefonnummer-format, der giver overraskende mange fejl.</p>
+    <p><strong>Telefonnummer-format:</strong> Bring kræver at modtagerens telefonnummer starter med <code>+47</code> efterfulgt af enten 9 cifre (mobilnummer) eller 4 cifre (fastnetnummer). Format: <code>+479XXXXXXXX</code> (mobil).</p>
+    <p>Et telefonnummer uden <code>+47</code>-præfiks, med spaces, med bindestreger eller med forkert cifre-antal afvises af Bring API.</p>
+
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+
+    <h2>Hvad koster fragtintegration-fejl?</h2>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Hyppighed</th><th>Direkte omkostning</th><th>LTV-tab</th><th>Total årlig</th></tr></thead>
+      <tbody>
+        <tr><td>Forkert GLS metode-nøgle</td><td>10% af ordrer = 50/dag</td><td>50 × 85 kr. = 4.250 kr./dag</td><td>Kundeservice: 2.000 kr./dag</td><td><strong>2.281.250 kr./år</strong></td></tr>
+        <tr><td>MISKOS-nummer mangler (PostNord)</td><td>100% af ordrer (total stop)</td><td>0 kr.</td><td>Downtime 4 timer: ~10.000 kr.</td><td><strong>10.000 kr. per episode</strong></td></tr>
+        <tr><td>Bring telefonnummer-format fejler</td><td>15% af ordrer til Norge = 8/dag</td><td>Manuel korrektion: 800 kr./dag</td><td>Forsinkelse: 1.600 kr./dag</td><td><strong>876.000 kr./år</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Fragtvalg og mapping</h2>
+    <p>Flowet fra kundeklik til fragtlabel:</p>
+    <ol>
+      <li>Kunden vælger "GLS Pakkeshop" i Shopify-checkout</li>
+      <li>Shopify gemmer valget som shipping_line med metodenøgle</li>
+      <li>WMS modtager ordren og mapper metodenøgle til intern fragtprofil</li>
+      <li>Intern fragtprofil mapper til GLS API-produktkode: <code>gls_private_droppoint</code></li>
+      <li>WMS sender bookingforespørgsel til GLS API</li>
+      <li>GLS returnerer tracking-nummer og label-PDF</li>
+      <li>Label printes på pakkestationen</li>
+    </ol>
+    <p>Fejl opstår typisk i trin 3-4: mapping mellem webshop-metodenøgle og WMS-fragtprofil.</p>
+
+    <h2>Typiske fejl</h2>
+    <ol>
+      <li><strong>Forkert GLS metode-nøgle.</strong> <code>gls_droppoint</code> i stedet for <code>gls_private_droppoint</code>. Brug altid de præcise nøgler fra GLS integration-dokumentation.</li>
+      <li><strong>MISKOS-nummer mangler for PostNord.</strong> API-kald sendes uden MISKOS. PostNord returnerer 403 Forbidden eller 400 Bad Request.</li>
+      <li><strong>Bring telefonnummer-format fejler.</strong> Kunden har indtastet "20 12 34 56". WMS sender <code>+4720123456</code>, 8 cifre efter +47. Bring afviser. Implementér telefonnummer-validering og -formatering i ordreimport.</li>
+    </ol>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <ol>
+      <li><strong>Test alle fragtprodukter explicit:</strong> GLS privat, GLS erhverv, PostNord hjemmelevering, PostNord pakkeboks, Bring, test hvert enkelt med en testorder inden go-live.</li>
+      <li><strong>Gem fragtmand-svar som log:</strong> Track-nummer, booking-ID og evt. fejlbesked gemmes pr. ordre.</li>
+      <li><strong>Implementér fragtmand-fallback:</strong> Hvis primær fragtmand API er nede, er der alternativ procedure (manuel bestilling).</li>
+    </ol>
+
+    <h2>Tjekliste</h2>
+    <ul>
+      <li>Er alle GLS metode-nøgler konfigureret og testet?</li>
+      <li>Er PostNord MISKOS-nummer konfigureret i WMS?</li>
+      <li>Valideres Bring-telefonnumre til +47-format inden afsendelse?</li>
+      <li>Er fragtmand-svar (track-nummer) gemt pr. ordre?</li>
+      <li>Er alle fragtprodukter testet med rigtige testadrasser?</li>
+    </ul>
+
+    <h2>SmartPack understøttelse</h2>
+    <p>SmartPack understøtter GLS, PostNord og Bring med præ-konfigurerede integrationer. GLS metode-nøgler konfigureres i fragtopsætning og matches mod webshop-leveringsmetoder. PostNord MISKOS-nummer konfigureres i fragtprofilen. Bring-telefonnummervalidering er built-in. Fragtlabels genereres og printes automatisk ved pakning. Tracking-numre gemmes på ordreniveau og videresendes til webshop ved fulfillment.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er MISKOS-nummer og hvem har det?</summary><div class="faq-item__body"><p>Et 9-cifret PostNord-kundenummer, der identificerer din virksomhed i PostNords system. Det udleveres af PostNord ved aftaleoprettelse. Det er obligatorisk i alle API-kald til PostNord.</p></div></details>
+    <details class="faq-item"><summary>Hvad er GLS metode-nøgler?</summary><div class="faq-item__body"><p>Interne identifikatorer for GLS-fragtprodukter brugt i API-integration. De tre primære: <code>gls_private_droppoint</code>, <code>gls_business_delivery</code>, <code>gls_flex_delivery</code>. Skal matches præcist mod webshop-leveringsmetoder.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis fragtmand-API er nede?</summary><div class="faq-item__body"><p>Pakkens label kan ikke genereres. WMS bør have alert ved API-fejl og procedure for manuel bestilling som backup.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg sende med flere fragtmænd fra samme WMS?</summary><div class="faq-item__body"><p>Ja. WMS konfigureres med fragtprofiler pr. fragtmand. Valg af fragtmand sker automatisk baseret på ordrekriterierne: leveringsland, fragtmetode valgt af kunden, pakke-dimensioner.</p></div></details>
+    <details class="faq-item"><summary>Hvad er ZPL-format til fragtlabels?</summary><div class="faq-item__body"><p>Zebra Programming Language, et printerspecifikt format til thermallabel-printere. Hurtigere og mere præcis end PDF til høj-volumen labelprint. Understøttes af de fleste fragtmænd.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er MISKOS-nummer og hvem har det?","acceptedAnswer":{"@type":"Answer","text":"Et 9-cifret PostNord-kundenummer, der identificerer din virksomhed i PostNords system. Udleveres af PostNord ved aftaleoprettelse og er obligatorisk i alle API-kald."}},{"@type":"Question","name":"Hvad er GLS metode-nøgler?","acceptedAnswer":{"@type":"Answer","text":"Interne identifikatorer for GLS-fragtprodukter brugt i API-integration: gls_private_droppoint, gls_business_delivery, gls_flex_delivery."}},{"@type":"Question","name":"Kan jeg sende med flere fragtmænd fra samme WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja. WMS konfigureres med fragtprofiler pr. fragtmand. Valg sker automatisk baseret på leveringsland, fragtmetode og pakke-dimensioner."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fragtintegrationer forklaret , GLS, PostNord, Bring og hvad der skiller dem","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webhooks forklaret: realtidsnotifikationer til dit lagersystem | SmartPack Viden</title>
+  <meta name="description" content="Hvad er webhooks? Laer forskellen paa API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/webhooks-forklaret.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar pa de hyppigste sporgsmaal</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Webhooks forklaret</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">Webhooks forklaret: realtidsnotifikationer til dit lagersystem</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Forestil dig at du hele dagen ringer til postvaesenet og spoerger: &quot;Er der breve til mig?&quot; Det er API-polling. En webhook er det modsatte: postvaesenet ringer til dig, naar der er et brev. Det er ikke en lille forskel, det er fundamentalt anderledes i e-handelssammenhaeng.</p>
+    <p>Her er alt du skal vide om webhooks: tekniske krav, hvad de koster naar de fejler, og hvordan du bygger en robust webhook-modtager.</p>
+
+    <h2>Hvad er en webhook?</h2>
+    <p>En webhook er en HTTP-anmodning, som et eksternt system (Shopify, WooCommerce, e-conomic) sender til dit system, naar en bestemt haendelse sker. Det er push-notifikationer til software.</p>
+    <p>Typiske webhook-events i e-handel:</p>
+    <ul>
+      <li><code>orders/create</code>: ny ordre modtaget</li>
+      <li><code>orders/cancelled</code>: ordre annulleret</li>
+      <li><code>orders/updated</code>: ordre aendret</li>
+      <li><code>fulfillments/create</code>: forsendelse oprettet</li>
+      <li><code>inventory_levels/update</code>: lagertal opdateret</li>
+      <li><code>products/create</code>: nyt produkt oprettet</li>
+    </ul>
+
+    <h2>Tekniske krav til en webhook-modtager</h2>
+    <p class="inline-cta">&#x1F449; SmartPack modtager webhooks med fuld HMAC-SHA256 validering og asynkron behandling. <a href="../../kontakt.html">Se SmartPacks webhook-haandtering</a></p>
+    <p>For at modtage webhooks korrekt er der tre ufravigelige krav:</p>
+
+    <h3>1. HTTPS er obligatorisk</h3>
+    <p>Shopify og alle andre moderne platforme afviser HTTP-endpoints. Du skal have et gyldigt SSL-certifikat. Self-signed certifikater accepteres ikke i produktionsmiljoeer.</p>
+
+    <h3>2. Svartid under 30 sekunder</h3>
+    <p>Shopify forventer HTTP 200 inden for 30 sekunder. Overskrides det, anses leveringen som mislykket, og Shopify forsoeger retry. Tunge processer boer aldrig ske synkront i webhook-handleren, put jobbet i en koe og returner 200 straks.</p>
+
+    <h3>3. HMAC-SHA256 signaturvalidering</h3>
+    <p>Shopify inkluderer en header <code>X-Shopify-Hmac-Sha256</code> med en hash af payload, signeret med dit webhook secret. Du skal validere denne signatur foer du behandler payload. Goer du det ikke, accepterer du potentielt falske requests.</p>
+
+    <h2>Hvad koster webhook-fejl?</h2>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Total aarlig</th></tr></thead>
+      <tbody>
+        <tr><td>Timeout (&gt;30 sek svartid), webhook deaktiveres</td><td>40.000 kr. per episode</td></tr>
+        <tr><td>Ingen HMAC-validering, svindel-ordre</td><td>96.000 kr./aar</td></tr>
+        <tr><td>Webhook-tab uden retry-logik</td><td>12.605.625 kr./aar</td></tr>
+        <tr><td>Ikke-idempotent handler, duplikat-ordrer</td><td>1.825.000 kr./aar</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Konklusion:</strong> Webhook-tab uden retry er den dyreste fejl. HMAC-skip er den farligste. Begge er 100% forebyggelige.</p>
+
+    <h2>Webhook retry-mekanisme</h2>
+    <p>Shopify sender webhooks i realtid. Hvis leveringen fejler, forsoeger Shopify igen:</p>
+    <ul>
+      <li>Retry 1: efter ca. 1 minut</li>
+      <li>Retry 2-N: med eksponentiel backoff</li>
+      <li>Total periode: op til 5 dage</li>
+      <li>Efter 5 dage: webhook-abonnementet deaktiveres og du modtager en notifikation</li>
+    </ul>
+
+    <h2>Idempotency, den usynlige fejlkilde</h2>
+    <p>Fordi Shopify kan sende samme webhook flere gange, skal din handler vaere idempotent: behandling af samme event to gange maa ikke resultere i to ordrer, to fragtlabels eller to lagerafjusteringer.</p>
+    <p>Implementering: Gem <code>webhook_id</code> eller ordre-ID i en processed_events-tabel. Tjek ved modtagelse: er dette event allerede behandlet? Returner 200 OK, ikke 409 eller fejl, saa Shopify stopper med at gensende.</p>
+
+    <h2>Webhooks vs. API polling</h2>
+    <table>
+      <thead><tr><th>Situation</th><th>Brug webhook</th><th>Brug API polling</th></tr></thead>
+      <tbody>
+        <tr><td>Ny ordre modtaget</td><td>Ja</td><td>For langsomt</td></tr>
+        <tr><td>Lagertal synkronisering</td><td>For mange events</td><td>Ja</td></tr>
+        <tr><td>Aendring i kundeprofil</td><td>Ja</td><td>Ja, begge virker</td></tr>
+        <tr><td>Batch-import af produkter</td><td>Nej</td><td>Ja</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Det opdager de fleste for sent</h2>
+    <ul>
+      <li><strong>At Shopify deaktiverer webhook-abonnement efter 5 dage med fejl:</strong> Dit system er nede i 12 timer. Shopify proever retry. Efter 5 dage: webhook deaktiveret. Ingen alarm blev sendt.</li>
+      <li><strong>At en webhook kan sendes FLERE gange:</strong> I bygger ikke idempotent handler. Shopify sender samme ordre to gange. I opretter to ordrer, sender to pakker.</li>
+      <li><strong>At HTTPS ikke er det samme som HMAC-validering:</strong> I har HTTPS men validerer ikke HMAC. Enhver kan sende falske webhooks til jeres endpoint.</li>
+    </ul>
+
+    <h2>Typiske fejl</h2>
+    <ul>
+      <li><strong>Behandle tunge opgaver synkront i webhook-handler:</strong> Svartid overskrider 30 sekunder. Shopify anser leveringen som fejlet og sender retry. Ordren behandles to gange.</li>
+      <li><strong>Skippe HMAC-validering midlertidigt:</strong> Under udvikling springes validering over. Det glider ind i produktion. Resultatet: enhver kan sende fabricerede ordre-events.</li>
+      <li><strong>Ikke haandtere webhook-deaktivering:</strong> Systemet koerer videre men modtager ingen events. Ordrer behandles ikke.</li>
+    </ul>
+
+    <h2>Saadan goer du det rigtigt</h2>
+    <ol>
+      <li><strong>Returner 200 straks, behandl asynkront:</strong> Webhook-handler gemmer event i koe og returnerer 200. Baggrundsjob behandler fra koen.</li>
+      <li><strong>Log raat payload ved modtagelse:</strong> Gem det raa JSON-payload ved modtagelse inden det behandles. Hvis behandling fejler, har du payloaden til re-behandling.</li>
+      <li><strong>Monitorer webhook-abonnementsstatus:</strong> Tjek regelmaessigt at dine webhook-abonnementer er aktive hos Shopify.</li>
+    </ol>
+
+    <h2>SmartPack</h2>
+    <p>SmartPack modtager webhooks fra Shopify, WooCommerce og andre platforme med fuld HMAC-SHA256 validering. Alle webhooks puttes i en intern event-koe og behandles asynkront. Svartid til platform er typisk under 200ms. Systemet er fuldt idempotent paa ordre-ID-niveau. Webhook-aktivitet vises i SmartPack administrationspanel med status, tidsstempler og eventuelle fejl.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du undgaa webhook-tab og sikkerhedsbrud?</p><a href="../../kontakt.html" class="btn">Se SmartPacks webhook-haandtering</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./integrationer-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Integrationer forklaret</span></a>
+    <a href="./shopify-integration.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Shopify integration</span></a>
+    <a href="./typiske-integrationsfejl.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
+    <details class="faq-item"><summary>Hvad er en webhook?</summary><div class="faq-item__body"><p>En push-notifikation fra et eksternt system (fx Shopify) til dit system. Shopify sender automatisk en HTTP POST til din URL, naar en ordre oprettes, aendres eller annulleres.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor kraever webhooks HTTPS?</summary><div class="faq-item__body"><p>Uden HTTPS kan data aflyttes, og HMAC-signaturen kan ikke betros. Alle seriose platforme kraever HTTPS-endpoints.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis min webhook-handler er for langsom?</summary><div class="faq-item__body"><p>Shopify anser leveringen som fejlet og forsoeger retry. Hvis din handler er langsom, risikerer du at modtage og behandle samme event to gange.</p></div></details>
+    <details class="faq-item"><summary>Hvad er HMAC-SHA256, og hvorfor er det vigtigt?</summary><div class="faq-item__body"><p>En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke er manipuleret undervejs. Uden validering kan hvem som helst sende falske events.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg teste webhooks lokalt?</summary><div class="faq-item__body"><p>Ja, med tunneling-vaerktoejer som ngrok eller Tailscale Funnel. De giver et offentligt HTTPS-endpoint der tunneler til din lokale server. Brug til udvikling, aldrig i produktion.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En push-notifikation fra et eksternt system. Shopify sender automatisk en HTTP POST naar en ordre oprettes."}},{"@type":"Question","name":"Hvad er HMAC-SHA256?","acceptedAnswer":{"@type":"Answer","text":"En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke manipuleret."}},{"@type":"Question","name":"Hvad sker der, hvis min webhook-handler er for langsom?","acceptedAnswer":{"@type":"Answer","text":"Shopify anser leveringen som fejlet og forsoeger retry. Du risikerer at behandle samme event to gange."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Webhooks forklaret: realtidsnotifikationer til dit lagersystem","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
