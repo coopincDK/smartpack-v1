@@ -413,36 +413,6 @@
             </div>
           </div>
         </div>
-        <!-- Labelprint block -->
-        <div data-labelprint style="margin-top:1.5rem;background:linear-gradient(135deg,rgba(62,207,142,.13) 0%,rgba(62,207,142,.05) 100%);border:2px solid rgba(62,207,142,.5);border-radius:14px;padding:1.5rem 1.75rem">
-          <!-- HUSK badge -->
-          <div style="display:inline-flex;align-items:center;gap:.45rem;background:var(--accent);color:var(--bg);font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;padding:.35em 1em;border-radius:99px;margin-bottom:1.1rem">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
-            HUSK
-          </div>
-          <h4 style="font-size:clamp(1.15rem,2vw,1.5rem);font-weight:900;color:var(--text-1);line-height:1.2;margin-bottom:.8rem">
-            Vores priser inkluderer <em style="font-style:normal;color:var(--accent)">labelprint</em>
-          </h4>
-          <p style="font-size:.87rem;color:var(--text-2);line-height:1.7;margin-bottom:1rem">
-            Direkte integration til PostNord, GLS, DAO, BFT, Danske Fragtm&aelig;nd og 30+ fragtfirmaer &mdash; ingen fragtportal n&oslash;dvendig.
-          </p>
-          <!-- Carrier pills -->
-          <div style="display:flex;flex-wrap:wrap;gap:.35rem .45rem;margin-bottom:1.1rem">
-            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">PostNord</span>
-            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">GLS</span>
-            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">DAO</span>
-            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">BFT</span>
-            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">Fragtml&aelig;nd</span>
-            <span style="font-size:.74rem;font-weight:700;color:var(--text-3);background:var(--bg-2);border:1px solid var(--border);border-radius:99px;padding:.25em .85em">30+ mfl.</span>
-          </div>
-          <!-- Checks -->
-          <div class="lp-checks-grid">
-            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Ingen fragtportal-fee</span></div>
-            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Ingen per-label-pris</span></div>
-            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Brug egne fragtaftaler</span></div>
-            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Printer direkte fra WMS</span></div>
-          </div>
-        </div>
       </div>
 
       <!-- Højre: beregner -->
@@ -501,13 +471,32 @@
       </p>
       <a href="#cta" class="calc-cta">F&aring; et pr&aelig;cist tilbud &rarr;</a>
 
-      <!-- Labelprint card footer -->
-      <div style="margin:.75rem -2.75rem -2.5rem;padding:.7rem 2.75rem;background:rgba(62,207,142,.07);border-top:1px solid rgba(62,207,142,.2);border-radius:0 0 var(--r-lg) var(--r-lg);display:flex;align-items:center;justify-content:center;gap:.5rem">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--accent);flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>
-        <span style="font-size:.78rem;font-weight:700;color:var(--accent)">Labelprint inkluderet &mdash; ingen fragtportal n&oslash;dvendig</span>
-      </div>
 
     </div><!-- /pricing-calc -->
+
+        <!-- Labelprint block (under beregner) -->
+        <div style="margin-top:1.25rem;background:linear-gradient(135deg,rgba(62,207,142,.13) 0%,rgba(62,207,142,.05) 100%);border:2px solid rgba(62,207,142,.5);border-radius:14px;padding:1.5rem 1.75rem">
+          <div style="display:inline-flex;align-items:center;gap:.45rem;background:var(--accent);color:var(--bg);font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;padding:.35em 1em;border-radius:99px;margin-bottom:1rem">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+            HUSK
+          </div>
+          <h4 style="font-size:clamp(1.1rem,2vw,1.4rem);font-weight:900;color:var(--text-1);line-height:1.2;margin-bottom:.75rem">Vores priser inkluderer <em style="font-style:normal;color:var(--accent)">labelprint</em></h4>
+          <p style="font-size:.85rem;color:var(--text-2);line-height:1.7;margin-bottom:.9rem">Direkte integration til PostNord, GLS, DAO, BFT, Fragtml&aelig;nd og 30+ fragtfirmaer &mdash; ingen fragtportal n&oslash;dvendig.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:.3rem .4rem;margin-bottom:.9rem">
+            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">PostNord</span>
+            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">GLS</span>
+            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">DAO</span>
+            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">BFT</span>
+            <span style="font-size:.74rem;font-weight:700;color:var(--accent);background:rgba(62,207,142,.12);border:1px solid rgba(62,207,142,.3);border-radius:99px;padding:.25em .85em">Fragtml&aelig;nd</span>
+            <span style="font-size:.74rem;font-weight:700;color:var(--text-3);background:var(--bg-2);border:1px solid var(--border);border-radius:99px;padding:.25em .85em">30+ mfl.</span>
+          </div>
+          <div class="lp-checks-grid">
+            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Ingen fragtportal-fee</span></div>
+            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Ingen per-label-pris</span></div>
+            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Brug egne fragtaftaler</span></div>
+            <div class="labelprint-callout__saving-item"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span style="font-size:.82rem">Printer direkte fra WMS</span></div>
+          </div>
+        </div>
       </div><!-- /pricing-hero-right -->
 
     </div><!-- /pricing-hero-grid -->
