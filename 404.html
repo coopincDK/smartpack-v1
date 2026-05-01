@@ -57,7 +57,12 @@ const redirects = {
   '/funktioner/':        '/funktioner.html',
 };
 const dest = redirects[path];
-if (dest) { window.location.replace(dest); }
+if (dest) {
+  window.location.replace(dest);
+} else if (!path.endsWith('.html') && !path.endsWith('/') && path.length > 1) {
+  // Generisk fallback: forsøg at tilføje .html
+  window.location.replace(path + '.html');
+}
 </script>
 </head>
 <body>
