@@ -110,6 +110,15 @@
         tipsEl.style.display = this.value.length > 0 ? 'none' : '';
       });
     }
+    // Laes ?q= fra URL og start soegning automatisk
+    var urlQ = new URLSearchParams(window.location.search).get('q');
+    if (urlQ) {
+      tipsEl.style.display = 'none';
+      setTimeout(function() {
+        var pf = document.querySelector('.pagefind-ui__search-input');
+        if (pf) { pf.value = urlQ; pf.dispatchEvent(new Event('input', {bubbles:true})); pf.focus(); }
+      }, 80);
+    }
   });
 </script>
 </body>
