@@ -71,35 +71,7 @@
       <p class="viden-hub__lead">Ikke teori, bare det der virker p&aring; lageret.</p>
     </div>
 
-    <!-- Søgewidget -->
-    <div style="max-width:560px;margin:0 0 2.5rem;">
-      <div style="display:flex;gap:.5rem;align-items:center;" role="search">
-        <input type="search" id="hub-search" placeholder="S&oslash;g i 190+ artikler om lager og logistik&hellip;" aria-label="S&oslash;g i vidensdatabasen"
-          style="flex:1;padding:.7rem 1rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);color:var(--text-1);font-family:inherit;font-size:.95rem;"
-          autocomplete="off">
-        <button onclick="document.getElementById('hub-search').dispatchEvent(new Event('go'))" class="btn btn--primary" style="white-space:nowrap;">S&oslash;g</button>
-      </div>
-      <p style="font-size:.8rem;color:var(--text-3);margin:.5rem 0 0;">S&oslash;ger i artiklernes fulde indhold, ikke kun titler. <a href="./sok.html" style="color:var(--text-3);">Alle resultater &rarr;</a></p>
-    </div>
-    <script>
-    (function(){
-      var inp = document.getElementById('hub-search');
-      var timer;
-      function go(q){
-        if(q && q.trim().length > 1){
-          window.location.href = './sok.html?q=' + encodeURIComponent(q.trim());
-        }
-      }
-      inp.addEventListener('input', function(){
-        clearTimeout(timer);
-        timer = setTimeout(function(){ go(inp.value); }, 350);
-      });
-      inp.addEventListener('keydown', function(e){
-        if(e.key === 'Enter'){ clearTimeout(timer); go(inp.value); }
-      });
-      inp.addEventListener('go', function(){ go(inp.value); });
-    })();
-    </script>
+
 
     <div class="viden-categories">
       <a href="./fundamentals/" class="viden-cat">
