@@ -163,8 +163,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 //   2. Tilføj en Email Service (Gmail / Outlook) → kopiCr Service ID herunder
 //   3. Opret et Email Template med variabel {{user_email}} → kopier Template ID
 //   4. Sæt din Public Key i priser.html (se kommentar der)
-const EMAILJS_SERVICE_ID  = 'DIN_SERVICE_ID';   // emailjs.com > Email Services
-const EMAILJS_TEMPLATE_ID = 'DIN_TEMPLATE_ID';  // emailjs.com > Email Templates
+const EMAILJS_SERVICE_ID  = 'service_0yr0oxq';
+const EMAILJS_TEMPLATE_ID = 'template_wencp8m';
 
 window.handleSignup = function(e) {
   e.preventDefault();
