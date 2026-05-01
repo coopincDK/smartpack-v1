@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tjekliste: Er du klar til WMS-implementering? | SmartPack Viden</title>
+  <meta name="description" content="De fleste WMS-implementeringer fejler ikke p.g.a. systemet, men fordi virksomheden ikke var klar. Brug denne tjekliste til at v&aelig;re klar dag 1.">
+  <link rel="canonical" href="https://smartpack.dk/viden/beslutning/tjekliste-foer-wms.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Beslutning</a><span>&rsaquo;</span><span>Tjekliste f&oslash;r WMS</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Beslutning</span>
+    <h1 class="article-title">Tjekliste: Er du klar til WMS-implementering?</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~6 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>Du k&oslash;ber et WMS. Go-live er planlagt om 6 uger. Uge 4: I opdager at 40% af jeres produkter mangler stregkoder. Lagerlokaliteter er ikke defineret. Medarbejderne ved ikke hvad scanning betyder.</p>
+    <p>Resultat: go-live uds&aelig;ttes 3 m&aring;neder. I betaler licens uden at bruge systemet. Regnestykket: 3 m&aring;neders forsinkelse = 24.000 kr. i spildt licens + 150.000 kr. i tabt effektivitet.</p>
+    <p>De fleste implementeringsfejl sker IKKE p.g.a. systemet. De sker fordi virksomheden ikke var klar.</p>
+
+    <h2>Del 1: Data-tjekliste</h2>
+    <ul>
+      <li>&#10003; Komplet og valideret produktkatalog (varenummer, navn, stregkode, dimensioner, v&aelig;gt)</li>
+      <li>&#10003; Opdateret lagerbeholdning per lokation</li>
+      <li>&#10003; Leverand&oslash;rliste med kontaktoplysninger og leveringstider</li>
+      <li>&#10003; Historiske ordredata fra seneste 12 m&aring;neder (til prognose)</li>
+      <li>&#10003; Lagerlokalitetsliste (hylde-ID'er, gangbetegnelser, zoner)</li>
+    </ul>
+    <p><strong>Tip:</strong> Mangelfuld data er den hyppigste &aring;rsag til forsinkede implementeringer. Brug 1-2 uger p&aring; at rydde op i data inden go-live.</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack hj&aelig;lper med datavalidering som del af onboarding. <a href="../../kontakt.html">Se onboarding-processen</a></p>
+
+    <h2>Del 2: Processer-tjekliste</h2>
+    <ul>
+      <li>&#10003; Dokumenteret flow fra ordremodtagelse til afsendelse</li>
+      <li>&#10003; Dokumenterede modtagelses-processer</li>
+      <li>&#10003; Returh&aring;ndteringsproces defineret</li>
+      <li>&#10003; Undtagelsesh&aring;ndtering defineret (beskadiget vare, fejlleverance)</li>
+      <li>&#10003; Roller og ansvar defineret per medarbejder</li>
+    </ul>
+
+    <h2>Del 3: Hardware-tjekliste</h2>
+    <ul>
+      <li>&#10003; H&aring;ndscannere (1 per aktiv lagermedarbejder + 1 reserve)</li>
+      <li>&#10003; Label-printer til fragtlabels (Zebra eller tilsvarende termisk printer)</li>
+      <li>&#10003; Stabilt Wi-Fi i hele lageromr&aring;det</li>
+      <li>&#10003; Computere/tablets til pakkestationer</li>
+      <li>&#10003; Backup-printer (kritisk under peak)</li>
+    </ul>
+    <p><strong>Budgetestimat hardware:</strong> 10.000-30.000 kr. afh&aelig;ngigt af st&oslash;rrelse.</p>
+
+    <h2>Del 4: Integration-tjekliste</h2>
+    <ul>
+      <li>&#10003; Webshop API-adgang konfigureret (Shopify, WooCommerce osv.)</li>
+      <li>&#10003; Fragtleverand&oslash;r API-n&oslash;gler klar (GLS, PostNord, Bring, DAO)</li>
+      <li>&#10003; ERP-integration afklaret (hvis relevant)</li>
+      <li>&#10003; Testmilj&oslash; for integrationerne tilg&aelig;ngeligt</li>
+      <li>&#10003; Fallback-plan ved integrationssvigt</li>
+    </ul>
+
+    <h2>Del 5: Mennesker-tjekliste</h2>
+    <ul>
+      <li>&#10003; Projektleder udpeget (intern ansvarlig for implementeringen)</li>
+      <li>&#10003; Lagermedarbejdere informeret og forberedt p&aring; &aelig;ndringer</li>
+      <li>&#10003; Tr&aelig;ningsplan klar (hvem tr&aelig;ner hvorn&aring;r)</li>
+      <li>&#10003; Backup-person der kender systemet (ikke kun &eacute;n medarbejder)</li>
+    </ul>
+  </div>
+  <div class="bottom-cta"><p>Vil du have hj&aelig;lp til at g&oslash;re jer klar?</p><a href="../../kontakt.html" class="btn">Book gratis implementeringsgennemgang</a></div>
+  <div class="article-disclaimer"><p>Tjeklisten er vejledende. Specifikke krav varierer afh&aelig;ngigt af system og forretning.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./wms-pris.html" class="article-related__item"><span class="article-related__item-cat">Beslutning</span><span class="article-related__item-title">WMS pris</span></a>
+    <a href="./lagerstyring-system-danmark.html" class="article-related__item"><span class="article-related__item-cat">Beslutning</span><span class="article-related__item-title">Lagerstyring system i Danmark</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+    <details class="faq-item"><summary>Hvor lang tid tager en WMS-implementering?</summary><div class="faq-item__body"><p>Typisk 2-8 uger for et SMB WMS med standard integrationer. SmartPack sigter efter go-live p&aring; 1 uge for simple setups.</p></div></details>
+    <details class="faq-item"><summary>Hvad er den hyppigste fejl ved implementering?</summary><div class="faq-item__body"><p>Mangelfuld produktdata. 40% af produkter mangler typisk stregkode eller korrekte dimensioner n&aring;r implementeringen starter.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster hardware til WMS?</summary><div class="faq-item__body"><p>Typisk 10.000-30.000 kr. for et lager med 2-5 medarbejdere. Inkluderer h&aring;ndscannere, label-printere og eventuelt tablets.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvor lang tid tager en WMS-implementering?","acceptedAnswer":{"@type":"Answer","text":"Typisk 2-8 uger for et SMB WMS. SmartPack sigter efter go-live p\u00e5 1 uge for simple setups."}},{"@type":"Question","name":"Hvad er den hyppigste fejl?","acceptedAnswer":{"@type":"Answer","text":"Mangelfuld produktdata. 40% af produkter mangler typisk stregkode eller korrekte dimensioner."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tjekliste: Er du klar til WMS-implementering?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
