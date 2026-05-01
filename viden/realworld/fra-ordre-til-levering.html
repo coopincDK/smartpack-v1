@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fra ordre til levering: De 12 trin en pakke gennemløber | SmartPack</title>
+  <meta name="description" content="Mellem kundens klik og levering er der 12 trin – og hvert trin kan fejle. Her er det fulde flow med de faktiske risici på hvert trin.">
+  <link rel="canonical" href="https://smartpack.dk/viden/realworld/fra-ordre-til-levering.html">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <script src="../../js/theme-toggle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo">
+      <img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown">
+        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="nav__megamenu">
+          <a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
+          <a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
+          <a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a>
+          <a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
+        </div>
+      </li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
+      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+  <main>
+    <div class="article-page"><div class="article-wrap">
+      
+        <nav class="article-breadcrumb" aria-label="Brodkrumme"><a href="../../">SmartPack</a><span>></span><a href="../">Viden</a><span>></span><a href="./">Real-world</a><span>></span><span>Fra ordre til levering: De 12 trin en pakke gennemløber</span></nav>
+    <span class="article-cat-badge">Real-world</span>
+
+      <h1 class="article-title">Fra ordre til levering: De 12 trin en pakke gennemløber</h1>
+    <div class="article-body">
+
+      <p>Kunden har trykket køb. De forventer pakken om 2 dage.</p>
+      <p>Mellem klik og levering: 12 trin. Hvert trin kan fejle.</p>
+      <p>API'en timeoutet. Varen er ikke på hylden. Printeren stopper. Chaufføren scanner ikke pakken.</p>
+      <p>Det ser enkelt ud fra kundens side. Fra din er det 12 potentielle fejlpunkter – og hvert koster penge eller tilfredshed.</p>
+      <p>Her er det fulde flow. Ærligt. Med de faktiske risici.</p>
+
+      <h2>Trin 1: Ordremodtagelse og validering (0–1 min)</h2>
+      <p>Kunden bekræfter købet. Webshopen:</p>
+      <ul>
+        <li>Modtager ordren</li>
+        <li>Verificerer betaling</li>
+        <li>Validerer adresse</li>
+        <li>Sender ordrebekræftelse til kunden</li>
+      </ul>
+      <p><strong>Risici:</strong> Betaling falder igennem. Adresse er ugyldig. Svindel-alert trigges.</p>
+
+      <h2>Trin 2: Ordreoverførsel til WMS (1–5 min)</h2>
+      <p>Ordren sendes fra webshop til lagersystemet via API.</p>
+      <p><strong>Risici:</strong> API-integration fejler. Ordren sidder i webshop men når ikke WMS.</p>
+
+      <h2>Trin 3: Ordrevalidering i WMS (5–10 min)</h2>
+      <p>WMS verificerer at varen er på lager, at ordren er komplet og korrekt mappet.</p>
+      <p><strong>Risici:</strong> Varen er udsolgt (phantom inventory). Mapping-fejl – forkert SKU.</p>
+
+      <h2>Trin 4: Plukjob-generering og -prioritering (10–20 min)</h2>
+      <p>WMS opretter plukjob og tildeler det til en plukkere. Prioritet: backordre først, så FIFO.</p>
+      <p><strong>Risici:</strong> Plukjob frigivet til optaget plukkere. Suboptimal rute = langsom pluk.</p>
+
+      <h2>Trin 5: Pluk (20–60 min)</h2>
+      <p>Plukkeren går til hylde og henter varen. Scanner vare og bekræfter.</p>
+      <p><strong>Risici:</strong> Vare ikke på registreret placering. Forkert vare plukket. Saldofejl opdages.</p>
+
+      <h2>Trin 6: Kvalitetskontrol (60–80 min)</h2>
+      <p>Varen tjekkes: korrekt? Intakt? Komplet antal?</p>
+      <p><strong>Risici:</strong> Beskadiget vare plukket og pakket. Forkert antal.</p>
+
+      <h2>Trin 7: Pakning (80–100 min)</h2>
+      <p>Varen pakkes i korrekt kasse med beskyttelse. Faktura/packing slip inkluderes.</p>
+      <p><strong>Risici:</strong> For stor/lille kasse = volumevægt-konsekvens eller skaderisiko. Manglende dokumenter.</p>
+
+      <h2>Trin 8: Etikettering (100–110 min)</h2>
+      <p>Label printes og klistres på. Scan-verify bekræfter match.</p>
+      <p><strong>Risici:</strong> Forkert label. Printer fejler. Scan-verify ikke gennemført.</p>
+
+      <h2>Trin 9: Fragtoverlevering (110–120 min)</h2>
+      <p>Pakken flyttes til fragtzone. Afstemning: antal labels = antal pakker.</p>
+      <p><strong>Risici:</strong> Pakke glemmes på lageret. Forkert fragtzone.</p>
+
+      <h2>Trin 10: Fragtleverandørens afhentning (cut-off)</h2>
+      <p>Chaufføren henter og scanner alle pakker ind i systemet.</p>
+      <p><strong>Risici:</strong> Pakke scannes ikke af chauffør. For sen afsendelse (forbi cut-off).</p>
+
+      <h2>Trin 11: Fragtleverandørens hubs og ruter</h2>
+      <p>Pakken kører til lokalt depot og sorteres til lastmileleveringen.</p>
+      <p><strong>Risici:</strong> Sorteret forkert. Forsinkelse i hub. Pakkeskade ved håndtering.</p>
+
+      <h2>Trin 12: Levering til kunden (last mile)</h2>
+      <p>Chaufføren leverer til adresse eller pakkeshop.</p>
+      <p><strong>Risici:</strong> Ingen hjemme. Forkert adresse. Pakkeshop fuldt.</p>
+
+      <p class="inline-cta">👉 Har du samme udfordring? <a href="../../kontakt.html">Se hvordan SmartPack løser det i praksis</a></p>
+      </div>
+
+      <h2>De kritiske milepæle</h2>
+      <table>
+        <thead>
+          <tr><th>Milepæl</th><th>Tidsmål</th><th>Alarm når</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ordre i WMS</td><td>&lt; 5 min</td><td>&gt; 15 min</td></tr>
+          <tr><td>Pluk startet</td><td>&lt; 30 min</td><td>&gt; 60 min</td></tr>
+          <tr><td>Label printet</td><td>&lt; 2 timer</td><td>&gt; 4 timer</td></tr>
+          <tr><td>Overleveret til fragt</td><td>Inden cut-off</td><td>After cut-off</td></tr>
+          <tr><td>Leveret</td><td>D+1 (pakkeshop) D+2 (hjem)</td><td>D+3+</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Hvad adskiller de bedste</h2>
+      <p>Top-performende webshops adskiller sig på fire parametre:</p>
+      <ol>
+        <li><strong>API-overvågning:</strong> de opdager integration-stop inden kunden klager</li>
+        <li><strong>Scan-baseret flow:</strong> fejlrate under 0,3% vs. 3%+ manuelt</li>
+        <li><strong>Proaktiv kommunikation:</strong> kunden får tracking før de spørger</li>
+        <li><strong>Cut-off-disciplin:</strong> de når cut-off 99% af dage uanset volumen</li>
+      </ol>
+
+      <h2>SmartPack understøttelse</h2>
+      <p>SmartPack styrer alle 12 trin med automatiske overgangsregler, alarmer ved forsinkelse og proaktiv kundekommunikation. Hvert trin er logget – du kan til enhver tid se statusen for en konkret ordre.</p>
+
+      <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+
+        <details class="faq-item">
+          <summary>Hvor lang tid tager det fra ordre til afsendelse?</summary><div class="faq-item__body"><p>For velfungerende lager: under 4 timer. Best-in-class: under 2 timer.</p></div></details>
+
+        <details class="faq-item">
+          <summary>Hvad er det hyppigste fejltrin?</summary><div class="faq-item__body"><p>Trin 5 (pluk) og trin 8 (etikettering) har de højeste fejlrater. Begge løses med scan-baseret flow.</p></div></details>
+
+        <details class="faq-item">
+          <summary>Hvordan måler man sin OTD?</summary><div class="faq-item__body"><p>Fra ordrebekræftelse til faktisk levering. Ikke fra afsendelse – det er bare halvvejen.</p></div></details>
+
+        <details class="faq-item">
+          <summary>Kan en kunde se hvad der sker med sin ordre?</summary><div class="faq-item__body"><p>Med moderne WMS og fragtleverandør-integration: ja – fra pluk-start til levering. Tracking-link er standard.</p></div></details>
+      </div>
+
+      <div class="article-disclaimer">
+        <p><em>Tal og estimater i denne artikel er vejledende og baseret på branchedata fra dansk e-handel. Dine faktiske resultater afhænger af din specifikke situation, produktkompleksitet og eksisterende processer.</em></p>
+      </div>
+    </div></div>
+
+    </div>
+    <div class="bottom-cta">
+      <h2>Vil du se hvad det betyder i dit setup?</h2>
+      <p>Book en gratis gennemgang med SmartPack-teamet og få konkrete tal på, hvad det koster dig ikke at handle.</p>
+      <a href="../../kontakt.html" class="btn">Kontakt os</a>
+    </div>
+
+    <div class="article-related">
+      <h2>Relaterede artikler</h2>
+      <ul>
+        <li><a href="en-dag-på-et-lager.html">En dag på et lager: Fra morgenmødet til fragtleverandørens afhentning</a></li>
+        <li><a href="hvad-gør-de-bedste-anderledes.html">Hvad gør de bedste anderledes? 10 observationer fra top-performende webshops</a></li>
+        <li><a href="kampagner-vs-drift.html">Kampagner vs. drift: Hvordan overlever du Black Friday på lageret?</a></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="aar"></span> SmartPack. Alle rettigheder forbeholdes.</p>
+    <p><a href="../../privatlivspolitik.html">Privatlivspolitik</a> | <a href="../../handelsbetingelser.html">Handelsbetingelser</a></p>
+  </footer>
+  <script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvor lang tid tager det fra ordre til afsendelse?","acceptedAnswer":{"@type":"Answer","text":"For velfungerende lager: under 4 timer. Best-in-class: under 2 timer."}},{"@type":"Question","name":"Hvad er det hyppigste fejltrin?","acceptedAnswer":{"@type":"Answer","text":"Trin 5 (pluk) og trin 8 (etikettering) har de højeste fejlrater. Begge løses med scan-baseret flow."}},{"@type":"Question","name":"Hvordan måler man sin OTD?","acceptedAnswer":{"@type":"Answer","text":"Fra ordrebekræftelse til faktisk levering. Ikke fra afsendelse – det er bare halvvejen."}},{"@type":"Question","name":"Kan en kunde se hvad der sker med sin ordre?","acceptedAnswer":{"@type":"Answer","text":"Med moderne WMS og fragtleverandør-integration: ja – fra pluk-start til levering. Tracking-link er standard."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fra ordre til levering: De 12 trin en pakke gennemløber","dateModified":"2026-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script></body>
+</html>

@@ -263,3 +263,10 @@ staggerGroups.forEach(selector => {
     child.style.transitionDelay = `${i * 0.08}s`;
   });
 });
+
+// --- Dynamic copyright year ---
+(function () {
+  document.querySelectorAll('#aar').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
+  });
+})();

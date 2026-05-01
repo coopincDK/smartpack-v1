@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er safety stock? | SmartPack Viden</title>
+  <meta name="description" content="Safety stock er beregnet forsikring mod stockout. Formel: Z × standardafvigelse dagligt salg × sqrt(lead time). Lær at beregne det korrekt og undgå 45.000 kr./måned i tabt margin.">
+  <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-safety-stock.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
+      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+
+  <nav class="article-breadcrumb" aria-label="Brødkrumme">
+    <a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>Safety stock</span>
+  </nav>
+
+  <header class="article-header">
+    <span class="article-cat-badge">Fundamentals</span>
+    <h1 class="article-title">Hvad er safety stock, og hvordan beregner du det korrekt?</h1>
+    <div class="article-meta"><time datetime="2025-04-30">Opdateret: 30. april 2025</time><span>Læsetid: ~5 min</span></div>
+  </header>
+
+  <div class="article-body">
+
+    <p>Leverandøren lover 7 dage. Den leverer dag 11. Du har ingen buffer. Du er udsolgt i 4 dage.</p>
+    <p>15 stk./dag × 4 dage × 200 kr. = <strong>12.000 kr. tabt</strong>.</p>
+    <p>Safety stock er ikke "for meget på lager". Det er <strong>beregnet forsikring</strong> mod stockout, og billigere end tabet.</p>
+
+    <h2>Hvad er safety stock?</h2>
+    <p><strong>Safety stock</strong> (sikkerhedslager eller bufferlager) er en ekstra beholdning ud over den forventede salgsbeholdning, der holdes som buffer mod to former for usikkerhed:</p>
+    <ol>
+      <li><strong>Efterspørgselsusikkerhed</strong>: Salget er højere end forecastet i leveringstidsperioden</li>
+      <li><strong>Lead time-usikkerhed</strong>: Leverandøren leverer senere end forventet</li>
+    </ol>
+    <p>Safety stock er ikke dead stock. Det er ikke "for meget på lager". Det er en bevidst investering i servicegrad.</p>
+
+    <!-- Inline CTA -->
+    <p class="inline-cta">👉 Har du samme udfordring? <a href="../../kontakt.html">Se hvordan SmartPack løser det i praksis</a></p>
+
+    <h2>Hvornår er det et problem?</h2>
+    <p><strong>For lidt safety stock:</strong></p>
+    <ul>
+      <li>Stockouts når efterspørgslen topper eller leveringen forsinkes</li>
+      <li>Ekspresordrer til leverandør til højere priser</li>
+      <li>Tabte kunder</li>
+    </ul>
+    <p><strong>For meget safety stock:</strong></p>
+    <ul>
+      <li>Kapital bundet unyttigt i varer der ikke sælger</li>
+      <li>Lagerplads brugt på buffer, der aldrig trigges</li>
+      <li>Dyrere for slow-movers og varer med kort holdbarhed</li>
+    </ul>
+    <p><strong>Safety stock på 0:</strong> Du gætter på, at efterspørgsel og leveringstid altid er præcis som planlagt. Det er de ikke.</p>
+
+    <h2>Hvorfor det er vigtigt, i kroner</h2>
+    <p>En stockout på en A-vare i 3 dage:</p>
+    <ul>
+      <li>Tabt salg: 15 stk./dag × 3 dage × 200 kr. margin = <strong>9.000 kr.</strong></li>
+      <li>Ekspresordre: +40% på indkøbspris af 45 stk. × 100 kr. = 1.800 kr. ekstra</li>
+      <li>Kundetab: estimat ~450-850 kr. per tabt kunderelation</li>
+    </ul>
+    <p>Ved 5 stockouts per måned på A-varer: <strong>45.000 kr./måned i tabt margin</strong> alene.</p>
+
+    <h2>Hvordan beregner du safety stock i praksis?</h2>
+
+    <h3>Simpel metode (god til at komme i gang)</h3>
+    <p><strong>Safety stock = Z × standardafvigelse af dagligt salg × &radic;(lead time i dage)</strong></p>
+    <p>Z-værdier for servicegrad:</p>
+    <ul>
+      <li>90% servicegrad: Z = 1,28</li>
+      <li>95% servicegrad: Z = 1,65</li>
+      <li>99% servicegrad: Z = 2,33</li>
+    </ul>
+    <p><strong>Eksempel:</strong></p>
+    <ul>
+      <li>Produkt X: gennemsnitligt dagligt salg = 10 stk.</li>
+      <li>Standardafvigelse af dagligt salg = 3 stk.</li>
+      <li>Lead time = 7 dage</li>
+      <li>Ønsket servicegrad: 95% (Z = 1,65)</li>
+    </ul>
+    <p>Safety stock = 1,65 × 3 × &radic;7 = 1,65 × 3 × 2,65 = <strong>~13 stk.</strong></p>
+
+    <h3>Udvidet metode (inkl. lead time-variation)</h3>
+    <p><strong>Safety stock = Z × &radic;(lead time × varians af dagligt salg + (dagligt salg)&sup2; × varians af lead time)</strong></p>
+    <p>Denne formel er vigtig, når leverandørens leveringstid varierer meget.</p>
+
+    <h3>Simpel tommelfingerregel</h3>
+    <p>For hurtig opsætning: <strong>Safety stock = gennemsnitligt dagligt salg × (halv lead time)</strong><br>
+    Eksempel: 10 stk./dag × (7/2) = <strong>35 stk.</strong></p>
+
+    <h2>Typiske fejl</h2>
+    <p><strong>1. Samme safety stock hele året</strong><br>Sæsonændringer ændrer både salg og variation. Safety stock under Black Friday bør være højere end i januar.</p>
+    <p><strong>2. Safety stock beregnes på gennemsnit, ikke variation</strong><br>Den simple tommelfingerregel ignorerer, at variation er det safety stock skal dække. To varer med samme gennemsnit kan have vidt forskellig variation.</p>
+    <p><strong>3. For høj servicegrad på alle SKU'er</strong><br>99% servicegrad på en C-vare er dyrt og unyttig. Sæt højere servicegrad på A-varer, lavere på C-varer.</p>
+    <p><strong>4. Safety stock opdateres aldrig</strong><br>Du beregnede safety stock for 2 år siden. Sortimentet, salgsniveauet og leverandørerne har ændret sig. Genberegn kvartalsvis.</p>
+    <p><strong>5. Safety stock og reorder point forveksles</strong><br>Safety stock er bufferbeholdningen. Reorder point inkluderer safety stock PLUS forventet forbrug i lead time-perioden. De er ikke det samme.</p>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <p><strong>1. Beregn, gæt ikke</strong><br>Brug formlen. Selv den simple tommelfingerregel er bedre end mavefølelse.</p>
+    <p><strong>2. Differentier servicegrad per ABC-kategori</strong></p>
+    <ul>
+      <li>A-varer: 95-99% servicegrad</li>
+      <li>B-varer: 90-95%</li>
+      <li>C-varer: 80-90%</li>
+    </ul>
+    <p><strong>3. Juster for saisonudsving</strong><br>Forøg safety stock 4-6 uger før højsæson. Sænk den gradvist i lavsæson for at frigive kapital.</p>
+    <p><strong>4. Revidér kvartalsvis</strong><br>Salgsmønstre og lead times ændrer sig. Kvartalsvise genberegninger er minimum, månedlig for A-varer.</p>
+    <p><strong>5. Mål actual service level</strong><br>Hvor tit var du faktisk udsolgt per SKU per måned? Det mål fortæller, om din safety stock holder.</p>
+
+    <h2>Sådan understøtter SmartPack det</h2>
+    <p>SmartPack registrerer salgshistorik og lead time per SKU, der danner databæren for safety stock-beregning. Systemet viser aktuel beholdning vs. reorder point og kan konfigureres til automatisk advarsel, når safety stock nærmes.</p>
+
+    <div class="article-use">
+      <h3>Brug denne artikel</h3>
+      <ul>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Find standardafvigelsen på dagligt salg for dine top 5 A-varer (brug 90 dages salgsdata)</li>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Beregn safety stock for én A-vare: Z × stdev(dagligt salg) × sqrt(lead time)</li>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Sammenlign med din nuværende faktiske buffer-beholdning, er der forskel?</li>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Næste skridt: Opsæt differentieret servicegrad per ABC-kategori og genberegn safety stock</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt.html" class="btn">Se dit setup</a></div>
+  <div class="article-disclaimer">Denne artikel er baseret på vores erfaring og bedste viden på tidspunktet for skrivning. Indholdet er vejledende og kan ikke erstatte professionel rådgivning.</div>
+
+  <div class="article-related">
+    <div class="article-related__title">Relateret viden</div>
+    <div class="article-related__grid">
+      <a href="hvad-er-reorder-point.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er reorder point?</span></a>
+      <a href="hvad-er-lead-time.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lead time?</span></a>
+      <a href="hvad-er-demand-planning.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er demand planning?</span></a>
+    </div>
+  </div>
+
+  <div class="article-faq">
+    <h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er safety stock på et lager?</summary><div class="faq-item__body">Safety stock er en ekstra bufferbeholdning ud over forventet salgsbeholdning, der holdes for at undgå stockout når efterspørgslen overstiger forecast eller leveringen forsinkes.</div></details>
+    <details class="faq-item"><summary>Hvordan beregner jeg safety stock?</summary><div class="faq-item__body">Simplest: Safety stock = Z-værdi (servicegrad) × standardafvigelse dagligt salg × kvadratrod af lead time. For 95% servicegrad: Z = 1,65.</div></details>
+    <details class="faq-item"><summary>Hvad er forskellen på safety stock og reorder point?</summary><div class="faq-item__body">Safety stock er bufferbeholdningen. Reorder point = (dagligt salg × lead time) + safety stock. Reorder point inkluderer safety stock som en del af beregningen.</div></details>
+    <details class="faq-item"><summary>Hvornår skal jeg øge safety stock?</summary><div class="faq-item__body">Før højsæson, når lead time-variation stiger, når salgsvariation stiger, eller når du skifter leverandør.</div></details>
+    <details class="faq-item"><summary>Koster safety stock ikke bare penge?</summary><div class="faq-item__body">Ja, og det er en bevidst investering i servicegrad. Kapitalomkostningen af safety stock er lavere end kostprisen på stockout og tabte kunder. Beregn break-even: hvad koster stockout vs. hvad koster bufferbeholdningen?</div></details>
+  </div>
+
+</div></div>
+</main>
+
+<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;"><div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack · <a href="../../vilkaar.html" style="color:var(--text-3);text-decoration:none;">Vilkår</a></div><div style="display:flex;gap:1.5rem;"><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a><a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a></div></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvordan beregner jeg safety stock?","acceptedAnswer":{"@type":"Answer","text":"Safety stock = Z-værdi × standardafvigelse dagligt salg × kvadratrod af lead time. For 95% servicegrad: Z = 1,65."}},{"@type":"Question","name":"Hvad er forskellen på safety stock og reorder point?","acceptedAnswer":{"@type":"Answer","text":"Safety stock er bufferbeholdningen. Reorder point = (dagligt salg × lead time) + safety stock."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er safety stock","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarifkoder forklaret: HS, CN og TARIC komplet guide | SmartPack Viden</title>
+  <meta name="description" content="Forkert tarifkode på UK-forsendelse og pakken stoppes i tolden. Kunden betaler 25% told i stedet for 0%. Guide til HS, CN og TARIC-koder.">
+  <link rel="canonical" href="https://smartpack.dk/viden/drift/tarifkoder-forklaret.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page">
+  <div class="article-wrap">
+    <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Drift &amp; Compliance</a><span>›</span><span>Tarifkoder</span></nav>
+    <header class="article-header">
+      <span class="article-cat-badge">Compliance</span>
+      <h1 class="article-title">Tarifkoder forklaret: HS, CN og TARIC komplet guide</h1>
+      <div class="article-meta"><time datetime="2025-04-30">Opdateret: 30. april 2025</time><span>Læsetid: ~5 min</span></div>
+    </header>
+    <div class="article-body">
+      <p>Forkert tarifkode på UK-forsendelse. Pakken stoppes i tolden.</p>
+      <p>Kunden skal betale 25% told i stedet for 0%. Kunden returnerer ordren.</p>
+      <p>Du taber: 1.800 kr. i fragt + varer + kunden.</p>
+      <p>Tarifkoder (HS, CN, TARIC) identificerer varer i international handel. Forkert kode = forkert told = stop i tolden. Her er hvad du skal vide.</p>
+
+      <h2>Hierarkiet: Fra HS til TARIC</h2>
+      <p>Kodesystemet er opbygget i lag, fra globalt til nationalt:</p>
+      <pre style="background:var(--surface-2);padding:1rem;border-radius:6px;overflow-x:auto;"><code>6-cifret HS-kode    &rarr;  Globalt (WCO, bruges i 200+ lande)
+         &darr;
+8-cifret CN-kode    &rarr;  EU (Kombineret Nomenklatur)
+         &darr;
+10-cifret TARIC     &rarr;  EU's interne handelsregulering</code></pre>
+
+      <h2>Niveau 1: HS-koden (6 cifre) – det globale fundament</h2>
+      <p><strong>HS</strong> står for <em>Harmonized System</em> og administreres af World Customs Organization (WCO). Det er det internationale grundlag som alle landes toldsystemer bygger på.</p>
+      <ul>
+        <li><strong>6 cifre:</strong> Kapitel (2) + position (2) + underposition (2)</li>
+        <li><strong>Eksempel:</strong> <code>6204.62</code> = Damers bukser af syntetiske tekstilfibre</li>
+        <li><strong>Bruges til:</strong> Toldberegning ved handel med tredjelande, Intrastat-indberetning (de 6 første cifre)</li>
+      </ul>
+
+      <p class="inline-cta">👉 Har du samme udfordring? <a href="../../kontakt.html">Se hvordan SmartPack løser det i praksis</a></p>
+
+      <h2>Niveau 2: CN-koden (8 cifre) – EU's kombinerede nomenklatur</h2>
+      <p><strong>CN</strong> (<em>Combined Nomenclature</em>) er EU's udvidelse af HS. De 2 ekstra cifre specificerer varen yderligere inden for EU.</p>
+      <ul>
+        <li><strong>8 cifre:</strong> HS (6) + 2 EU-specifikke cifre</li>
+        <li><strong>Eksempel:</strong> <code>6204.62.31</code> = Damers bukser af syntetiske tekstilfibre, af syntetiske fibre</li>
+        <li><strong>Bruges til:</strong> Intrastat-indberetning (obligatorisk 8-cifret), EU-toldangivelser</li>
+        <li><strong>Opdateres:</strong> Hvert år pr. 1. januar</li>
+      </ul>
+
+      <h2>Niveau 3: TARIC-koden (10 cifre) – EU's handelspolitik</h2>
+      <p><strong>TARIC</strong> (<em>Tarif Intégré Communautaire</em>) er EU's 10-cifrede kode der indeholder yderligere handelspolitiske foranstaltninger.</p>
+      <ul>
+        <li><strong>10 cifre:</strong> CN (8) + 2 TARIC-cifre</li>
+        <li><strong>Eksempel:</strong> <code>6204.62.31.10</code></li>
+        <li><strong>Bruges til:</strong> Toldangivelser ved import til EU fra tredjelande, anti-dumping-foranstaltninger, kvoter</li>
+        <li><strong>Vigtig:</strong> TARIC bestemmer den faktiske toldsats ved import til EU</li>
+      </ul>
+      <p>Find TARIC-koder på: <strong>ec.europa.eu/taxation_customs/dds2/taric</strong></p>
+
+      <h2>UK: Commodity Code (10 cifre) efter Brexit</h2>
+      <ul>
+        <li><strong>10-cifret UK commodity code</strong> (svarer til TARIC, men er Storbritanniens eget)</li>
+        <li><strong>Database:</strong> trade.gov.uk/tariff/lookup</li>
+        <li><strong>Bruges til:</strong> Alle forsendelser til UK, uanset om de er B2C eller B2B</li>
+      </ul>
+      <p>Den kritiske &pound;135-grænse:</p>
+      <table>
+        <thead><tr><th>Forsendelsesværdi</th><th>Hvad sker der</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Under &pound;135</strong></td><td>Moms (VAT) opkræves ved salg, du skal have UK VAT-nummer og opkræve 20% UK VAT ved checkout</td></tr>
+          <tr><td><strong>Over &pound;135</strong></td><td>Tolden betales ved import, køber betaler told og moms ved levering (eller du vælger DDP)</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Praktisk: Sådan finder du den rigtige kode</h2>
+      <h3>Metode 1: EU TARIC-databasen</h3>
+      <ol>
+        <li>Gå til <strong>ec.europa.eu/taxation_customs/dds2/taric</strong></li>
+        <li>Søg på varens beskrivelse (engelsk anbefales)</li>
+        <li>Naviger ned i hierarkiet til korrekte underposition</li>
+        <li>Notér den 10-cifrede TARIC-kode</li>
+      </ol>
+
+      <h3>Metode 2: Toldstyrelsen (Danmark)</h3>
+      <ol>
+        <li>Gå til <strong>toldst.dk</strong></li>
+        <li>Under &ldquo;Tariffer og varekoder&rdquo;</li>
+        <li>Brug søgefunktionen til at finde din vare</li>
+      </ol>
+
+      <h3>Metode 3: Bindende tariferingsoplysning (BTO)</h3>
+      <p>Er du i tvivl, kan du ansøge om <strong>bindende tariferingsoplysning</strong> hos Toldstyrelsen. Du får et juridisk bindende svar der gælder i 3 år. Anbefales ved produkter i gråzoner.</p>
+
+      <h2>Eksempler på kodesæt</h2>
+      <table>
+        <thead><tr><th>Vare</th><th>HS</th><th>CN</th><th>TARIC</th><th>UK commodity</th></tr></thead>
+        <tbody>
+          <tr><td>Plastiklegetøj</td><td>950300</td><td>95030099</td><td>9503009900</td><td>9503009900</td></tr>
+          <tr><td>Strikket damegenser</td><td>611020</td><td>61102010</td><td>6110201000</td><td>6110201000</td></tr>
+          <tr><td>Lithium-ion batteri</td><td>850650</td><td>85065010</td><td>8506501000</td><td>8506501000</td></tr>
+          <tr><td>Kaffekopper (keramik)</td><td>691110</td><td>69111090</td><td>6911109000</td><td>6911109000</td></tr>
+        </tbody>
+      </table>
+      <p><em>Eksempler til illustration, verificér altid koder for dine specifikke produkter.</em></p>
+
+      <h2>Typiske fejl</h2>
+      <ul>
+        <li><strong>Bruger 6-cifret HS-kode til toldangivelse:</strong> EU-angivelser kræver 10-cifret TARIC</li>
+        <li><strong>Kopierer konkurrenters koder blindt:</strong> Forkert klassificering er dit ansvar, ikke konkurrentens</li>
+        <li><strong>Glemmer at opdatere koder 1. januar:</strong> CN opdateres hvert år</li>
+        <li><strong>Bruger samme kode til EU og UK:</strong> UK har sit eget system, søg specifikt</li>
+        <li><strong>Undervurderer konsekvenser:</strong> Forkert klassificering kan medføre efteropkrævning af told + renter</li>
+      </ul>
+
+      <h2>SmartPack og tarifkoder</h2>
+      <p>SmartPack har <strong>to separate felter i produktdata:</strong></p>
+      <ol>
+        <li><strong>Tarifkode:</strong> Primær HS/CN/TARIC-kode for produktet (bruges til EU-forsendelser og Intrastat)</li>
+        <li><strong>Lande-tarifkoder:</strong> Lande-specifikke koder, fx UK commodity code for britiske forsendelser</li>
+      </ol>
+      <p>Disse felter følger automatisk med i forsendelsesdokumenter og toldangivelser.</p>
+
+      <div class="article-use"><h3>Brug denne artikel</h3><ul>
+        <li>✓ Tjek at alle produkter har en 8-cifret CN-kode (EU-handel)</li>
+        <li>✓ Tjek at produkter der sendes til UK har en 10-cifret UK commodity code</li>
+        <li>✓ Registrér koder i SmartPack under Tarifkode + Lande-tarifkoder</li>
+        <li>✓ Sæt kalenderreminder til at opdatere CN-koder hvert år pr. 1. januar</li>
+      </ul></div>
+    </div>
+    <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt.html" class="btn">Se dit setup</a></div>
+    <div class="article-disclaimer">Denne artikel er vejledende. Regler og praksis kan ændre sig, verificer altid aktuelle krav i din kontekst.</div>
+    <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="intrastat-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Compliance</span><span class="article-related__item-title">Intrastat forklaret</span></a><a href="dokumentation-ved-fragt.html" class="article-related__item"><span class="article-related__item-cat">Compliance</span><span class="article-related__item-title">Dokumentation ved fragt</span></a><a href="uk-compliance-post-brexit.html" class="article-related__item"><span class="article-related__item-cat">Compliance</span><span class="article-related__item-title">UK-handel post-Brexit</span></a></div></div>
+    <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+      <details class="faq-item"><summary>Hvad er konsekvensen af en forkert tarifkode?</summary><p>Forkert klassificering kan medføre: efteropkrævning af told, bøder, forsinkelse af varer i toldklarering, i værste fald konfiskering.</p></details>
+      <details class="faq-item"><summary>Skal jeg altid bruge 10 cifre?</summary><p>Ved EU-import fra tredjelande: ja, 10-cifret TARIC. Ved Intrastat: 8-cifret CN er tilstrækkeligt. Ved UK-forsendelser: 10-cifret UK commodity code.</p></details>
+      <details class="faq-item"><summary>Er TARIC og UK commodity code altid identiske?</summary><p>Oftest identiske de første 6 cifre (HS-niveau). De kan afvige på 7.-10. cifre. Tjek altid UK's database separat.</p></details>
+      <details class="faq-item"><summary>Hvem er ansvarlig for korrekt klassificering?</summary><p>Afsender (eksportør) er ansvarlig ved eksport. Importør er ansvarlig ved import. Ved DDP-aftaler overtager sælger ansvaret.</p></details>
+      <details class="faq-item"><summary>Ændrer tarifkoderne sig?</summary><p>HS opdateres hvert 5. år. CN opdateres hvert år. UK commodity codes kan opdateres løbende.</p></details>
+    </div>
+  </div>
+</div>
+</main>
+<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;"><div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</div><div style="display:flex;gap:1.5rem;"><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a><a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a></div></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er konsekvensen af en forkert tarifkode?","acceptedAnswer":{"@type":"Answer","text":"Efteropkrævning af told, bøder, forsinkelse, i værste fald konfiskering."}},{"@type":"Question","name":"Skal jeg altid bruge 10 cifre?","acceptedAnswer":{"@type":"Answer","text":"Ved EU-import fra tredjelande: ja, 10-cifret TARIC. Ved Intrastat: 8-cifret CN. Ved UK: 10-cifret UK commodity code."}},{"@type":"Question","name":"Hvem er ansvarlig for korrekt klassificering?","acceptedAnswer":{"@type":"Answer","text":"Afsender er ansvarlig ved eksport. Importør er ansvarlig ved import. Ved DDP-aftaler overtager sælger ansvaret."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tarifkoder forklaret: HS, CN og TARIC komplet guide","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body>
+</html>

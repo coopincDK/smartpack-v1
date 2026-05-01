@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intrastat-indberetning: Step-by-step guide til IDEP 2025 | SmartPack Viden</title>
+  <meta name="description" content="Komplet guide til Intrastat-indberetning via IDEP. Tærskelværdier 2025, frister, CN-koder og typiske fejl. Undgå bøder ved manglende indberetning.">
+  <link rel="canonical" href="https://smartpack.dk/viden/drift/intrastat-indberetning.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+  </nav>
+</header>
+<main id="main-content">
+<div class="article-page">
+  <div class="article-wrap">
+    <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Drift &amp; Compliance</a><span>›</span><span>Intrastat-indberetning</span></nav>
+    <header class="article-header">
+      <span class="article-cat-badge">Compliance</span>
+      <h1 class="article-title">Intrastat-indberetning: Step-by-step guide til IDEP 2025</h1>
+      <div class="article-meta"><time datetime="2025-04-30">Opdateret: 30. april 2025</time><span>Læsetid: ~5 min</span></div>
+    </header>
+    <div class="article-body">
+      <p>Du har indberettet til IDEP i 8 måneder. Så opdager Danmarks Statistik en fejl i varekoden.</p>
+      <p>De kræver korrigering af alle 8 måneder. Manuelt. Frist: 14 dage. Alternativ: 5.000 kr. i bøde per manglende måned.</p>
+      <p>Intrastat-indberetning er obligatorisk ved &gt;11,3 mio. kr. EU-eksport. Men systemet er uforgivende: forkert varekode, forkert land, forkert værdi = bøde.</p>
+
+      <h2>Hvad er Intrastat?</h2>
+      <p>Intrastat erstatter den tolddeklaration, der tidligere fulgte EU-intern handel. Da varer frit kan bevæge sig inden for EU, indsamles statistik i stedet via virksomhedernes indberetninger. Der er to strømme:</p>
+      <ul>
+        <li><strong>Udførsel (eksport):</strong> Varer du sender fra Danmark til andre EU-lande</li>
+        <li><strong>Indførsel (import):</strong> Varer du modtager i Danmark fra andre EU-lande</li>
+      </ul>
+
+      <h2>Tærskelværdier 2025</h2>
+      <table>
+        <thead><tr><th>Strøm</th><th>Tærskel 2025</th></tr></thead>
+        <tbody>
+          <tr><td>Udførsel (eksport til EU)</td><td>&gt; 11,3 mio. kr./år</td></tr>
+          <tr><td>Indførsel (import fra EU)</td><td>&gt; 41 mio. kr./år</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Vigtigt:</strong> Tærsklerne opgøres pr. kalenderår og gælder uanset antal transaktioner. Overskrider du grænsen, er du indberetningspligtig fra den måned, overskridelsen sker, og resten af det år + det følgende kalenderår.</p>
+
+      <p class="inline-cta">👉 Har du samme udfordring? <a href="../../kontakt.html">Se hvordan SmartPack løser det i praksis</a></p>
+
+      <h2>Frister: Gruppe 1 og Gruppe 2</h2>
+      <table>
+        <thead><tr><th>Gruppe</th><th>Hvem</th><th>Indberetningsfrist</th></tr></thead>
+        <tbody>
+          <tr><td>Gruppe 1</td><td>Store indberettere (Danmarks Statistik tildeler)</td><td>10. hverdag i måneden efter referenceperioden</td></tr>
+          <tr><td>Gruppe 2</td><td>Øvrige indberettere</td><td>Samme frist som momsindberetningen</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Hvad skal indberettes?</h2>
+      <p>For hver transaktion skal du indberette:</p>
+      <ol>
+        <li><strong>Referencemåned:</strong> Den måned varerne afsendes/modtages</li>
+        <li><strong>Varekode (CN-kode):</strong> 8-cifret kombineret nomenklatur</li>
+        <li><strong>Partnerlandets ISO-kode:</strong> Fx DE (Tyskland), SE (Sverige)</li>
+        <li><strong>Statistisk værdi:</strong> Transaktionsværdi i DKK, inkl. forsikring og fragt til grænsen</li>
+        <li><strong>Nettovægt:</strong> Varernes vægt i kg uden emballage</li>
+        <li><strong>Mængde i supplerende enhed:</strong> Fx antal styk, liter, kvadratmeter (hvis krævet for varen)</li>
+        <li><strong>Transaktionskode:</strong> 2-cifret kode for type af transaktion (fx 11 = køb/salg)</li>
+      </ol>
+
+      <h2>Step-by-step: Indberetning via IDEP</h2>
+
+      <h3>Trin 1: Opret adgang til IDEP</h3>
+      <ol>
+        <li>Gå til <strong>idep.dst.dk</strong></li>
+        <li>Log ind med NemID/MitID erhverv</li>
+        <li>Første gang: registrer din virksomhed under &ldquo;Opret bruger&rdquo;</li>
+        <li>Vælg de strømme du skal indberette (udførsel og/eller indførsel)</li>
+      </ol>
+
+      <h3>Trin 2: Forbered data fra dit system</h3>
+      <p>Saml dine fakturaer og forsendelsesdokumenter for referenceperioden. Du skal bruge:</p>
+      <ul>
+        <li>Fakturanummer og dato</li>
+        <li>Varebeskrivelse og CN-kode</li>
+        <li>Modtagerland (EU-land)</li>
+        <li>Fakturabeløb i DKK</li>
+        <li>Vægt i kg</li>
+      </ul>
+      <p><strong>Tip:</strong> Er dine varer registreret med korrekte CN-koder i dit WMS/ERP, kan du trække en rapport direkte. Har du SmartPack, er Tarifkode og Lande-tarifkoder to separate felter i produktdata, brug dem her.</p>
+
+      <h3>Trin 3: Vælg indberetningsmetode</h3>
+      <p>IDEP tilbyder tre metoder:</p>
+      <ul>
+        <li><strong>A) Manuel online-indberetning:</strong> Egner sig til virksomheder med få transaktioner (&lt;20 pr. måned). Udfyld direkte i IDEP's webformular.</li>
+        <li><strong>B) CSV/Excel-upload:</strong> Egner sig til 20-500 transaktioner pr. måned. Download IDEP's skabelon, udfyld i Excel, upload som CSV-fil.</li>
+        <li><strong>C) XML-fil eller automatisk API:</strong> Egner sig til store mængder. Eksporter XML fra dit ERP/WMS og upload eller send via API-integration.</li>
+      </ul>
+
+      <h3>Trin 4: Udfyld og validér</h3>
+      <ol>
+        <li>Opret ny indberetning i IDEP</li>
+        <li>Vælg periode (år + måned)</li>
+        <li>Vælg strøm (udførsel eller indførsel)</li>
+        <li>Indtast eller upload data</li>
+        <li>Klik <strong>Validér,</strong> IDEP tjekker om CN-koder eksisterer og om felter er korrekt udfyldt</li>
+        <li>Ret eventuelle fejl</li>
+      </ol>
+
+      <h3>Trin 5: Indsend</h3>
+      <ol>
+        <li>Klik <strong>Send indberetning</strong></li>
+        <li>Du modtager en kvittering med sagsnummer</li>
+        <li>Gem kvitteringen (dokumentation for rettidig indberetning)</li>
+      </ol>
+
+      <h3>Trin 6: Nulindberetning (hvis ingen handel)</h3>
+      <p>Har du ingen transaktioner i referenceperioden, skal du stadig indberette, en <strong>nulindberetning</strong>. Dette gøres i IDEP ved at sende en tom periode.</p>
+
+      <h2>Typiske fejl</h2>
+      <ul>
+        <li><strong>Forkerte CN-koder:</strong> Brug TARIC-databasen (ec.europa.eu/taxation_customs/dds2/taric) for at verificere</li>
+        <li><strong>Statistisk værdi vs. fakturabeløb:</strong> Statistisk værdi inkluderer fragt og forsikring til dansk grænse</li>
+        <li><strong>Glemmer nulindberetning:</strong> Pligten ophører ikke, selvom du ikke har haft handel</li>
+        <li><strong>Forkert transaktionskode:</strong> Gratis prøver er kode 31, ikke 11</li>
+        <li><strong>Bruger toldkode i stedet for CN-kode:</strong> Intrastat bruger 8-cifret CN, ikke 10-cifret TARIC</li>
+      </ul>
+
+      <h2>SmartPack og Intrastat</h2>
+      <p>SmartPack registrerer Tarifkode (CN/HS) og Lande-tarifkoder som separate felter på hvert produkt. Det gør det let at trække de nødvendige data til Intrastat-indberetningen.</p>
+
+      <div class="article-use"><h3>Brug denne artikel</h3><ul>
+        <li>✓ Kontrollér om din virksomhed overskrider tærskelværdierne for 2025</li>
+        <li>✓ Bekræft din gruppe (1 eller 2) hos Danmarks Statistik</li>
+        <li>✓ Opret adgang til IDEP på idep.dst.dk</li>
+        <li>✓ Tjek om dine produkter er registreret med korrekte CN-koder</li>
+      </ul></div>
+    </div>
+    <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt.html" class="btn">Se dit setup</a></div>
+    <div class="article-disclaimer">Denne artikel er vejledende. Regler og praksis kan ændre sig, verificer altid aktuelle krav i din kontekst.</div>
+    <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="intrastat-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Compliance</span><span class="article-related__item-title">Intrastat forklaret</span></a><a href="tarifkoder-forklaret.html" class="article-related__item"><span class="article-related__item-cat">Compliance</span><span class="article-related__item-title">Tarifkoder forklaret</span></a></div></div>
+    <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+      <details class="faq-item"><summary>Hvad er forskellen på Intrastat og toldangivelse?</summary><p>Toldangivelse bruges ved handel med lande UDEN FOR EU (tredjelande). Intrastat er statistisk rapportering for handel inden for EU, hvor der ikke er toldgrænse.</p></details>
+      <details class="faq-item"><summary>Skal jeg indberette for varer jeg sender til UK?</summary><p>Nej, UK er ikke længere EU. UK-forsendelser håndteres via toldangivelse.</p></details>
+      <details class="faq-item"><summary>Kan min revisor indberette på mine vegne?</summary><p>Ja, du kan give fuldmagt i IDEP til en ekstern part.</p></details>
+      <details class="faq-item"><summary>Hvad sker der, hvis jeg opdager en fejl i en gammel indberetning?</summary><p>Du kan korrigere indberetninger i IDEP. Klik på den pågældende periode og vælg &ldquo;Ret indberetning&rdquo;.</p></details>
+      <details class="faq-item"><summary>Er der forskel på Intrastat og EU Salg uden moms (ESL)?</summary><p>Ja, ESL er en momsrapportering for ydelser og varesalg til momsregistrerede EU-kunder. Intrastat er statistisk rapportering for fysiske varer. Begge kan være relevante.</p></details>
+    </div>
+  </div>
+</div>
+</main>
+<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;"><div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</div><div style="display:flex;gap:1.5rem;"><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a><a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a></div></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på Intrastat og toldangivelse?","acceptedAnswer":{"@type":"Answer","text":"Toldangivelse bruges ved handel med lande uden for EU. Intrastat er statistisk rapportering for handel inden for EU."}},{"@type":"Question","name":"Kan min revisor indberette på mine vegne?","acceptedAnswer":{"@type":"Answer","text":"Ja, du kan give fuldmagt i IDEP til en ekstern part."}},{"@type":"Question","name":"Hvad sker der, hvis jeg opdager en fejl i en gammel indberetning?","acceptedAnswer":{"@type":"Answer","text":"Du kan korrigere indberetninger i IDEP. Klik på den pågældende periode og vælg Ret indberetning."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Intrastat-indberetning: Step-by-step guide til IDEP 2025","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body>
+</html>

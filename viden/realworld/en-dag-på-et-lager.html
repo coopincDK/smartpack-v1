@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>En dag på et lager: Fra morgenmødet til fragtleverandørens afhentning | SmartPack</title>
+  <meta name="description" content="Hvad sker der egentlig på et webshop-lager fra kl. 07:00 til GLS henter kl. 16:30? Her er den reelle dag – med de rigtige tidspunkter, fejl og beslutninger.">
+  <link rel="canonical" href="https://smartpack.dk/viden/realworld/en-dag-på-et-lager.html">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <script src="../../js/theme-toggle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo">
+      <img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown">
+        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="nav__megamenu">
+          <a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
+          <a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
+          <a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a>
+          <a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
+        </div>
+      </li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
+      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+  <main>
+    <div class="article-page"><div class="article-wrap">
+      
+        <nav class="article-breadcrumb" aria-label="Brodkrumme"><a href="../../">SmartPack</a><span>></span><a href="../">Viden</a><span>></span><a href="./">Real-world</a><span>></span><span>En dag på et lager: Fra morgenmødet til fragtleverandørens afhentning</span></nav>
+    <span class="article-cat-badge">Real-world</span>
+
+      <h1 class="article-title">En dag på et lager: Fra morgenmødet til fragtleverandørens afhentning</h1>
+    <div class="article-body">
+
+      <p>Kl. 07:52. Plukkeren scanner hylde 7C. Systemet siger 8 stk. Fysisk: 3 stk.</p>
+      <p>Missing pick. Ordren stopper. Kunden venter.</p>
+      <p>Det opdages nu – ikke når pakken er lukket. Det er forskellen mellem en god dag og en dyr dag.</p>
+      <p>Her er hvad der rent faktisk sker på et webshop-lager en tirsdag – fra morgenmødet kl. 07:00 til GLS henter kl. 16:30. Med de rigtige tidspunkter. De rigtige fejl. Og de beslutninger der holder cut-off.</p>
+
+      <h2>07:00 – Morgen-briefing og dagsoverblik</h2>
+      <p>Lagerchefen starter med at åbne WMS-dashboardet. Hurtig gennemgang:</p>
+      <ul>
+        <li>Ordrer modtaget i går aftes og natten over: 47 ordrer klar til pluk</li>
+        <li>Kritiske backordre: 2 (kunder der har ventet over 3 dage)</li>
+        <li>Lagertælling planlagt: 5 SKU'er i cycle count-planen for i dag</li>
+        <li>Varer på vej fra leverandør: 2 leverancer forventet før kl. 12</li>
+      </ul>
+      <p><strong>Prioritering for dagen:</strong></p>
+      <ol>
+        <li>Backordre-ordrer først</li>
+        <li>Modtag og registrer leverancer så snart de ankommer</li>
+        <li>Pluk alle dagens ordrer inden cut-off (15:00)</li>
+        <li>Pakke og klar til afhentning 16:00</li>
+      </ol>
+
+      <h2>07:30 – Pluk-runden starter</h2>
+      <p>Et team på to plukkere starter med dagens plukjobs. WMS har oprettet batch-picks: 12 ordrer samles på første runde, 10 på anden.</p>
+      <p>Plukkerens håndholdte scanner viser ruten: systemet har optimeret gangtiden. Det er ikke den tur køberen valgte – det er den tur der minimerer gangtid.</p>
+      <p><strong>Lille problem kl. 07:52:</strong> Plukkeren scanner hylde 7C. Systemet siger 8 stk. Fysisk: 3 stk. Missing pick. Registreres i systemet. Cycle count trigges automatisk. Ordren sættes midlertidigt på hold.</p>
+
+      <h2>09:15 – Leverance ankommer</h2>
+      <p>Den første leverance fra leverandøren ankommer med 4 paller. Modtagelsesflow:</p>
+      <ol>
+        <li>Chaufføren klarer ind med afhentningstidspunkt</li>
+        <li>Palle oplyst mod PO-nummer i WMS</li>
+        <li>Scan hvert kolliantal vs. PO: discrepancy på én SKU (15 stk. leveret, 20 stk. bestilt)</li>
+        <li>Registrer discrepancy i WMS – trigger notifikation til indkøb</li>
+        <li>Godkend modtagelse og indsæt på lager-lokationer med scan</li>
+      </ol>
+      <p>Resultat: de 15 stk. tilgængelige på lager. Leverandøren skal følge op på de 5 resterende.</p>
+
+      <h2>11:00 – Pakkestationen er i fuld sving</h2>
+      <p>Når pluk er afsluttet, går varerne til pakkestationen. Her sker:</p>
+      <ol>
+        <li>Scanner bekræfter at plukket svarer til ordren</li>
+        <li>Kassen vælges (system foreslår den optimale størrelse)</li>
+        <li>Varer pakkes med korrekt beskyttelse</li>
+        <li>Vægt registreres</li>
+        <li>Label printes</li>
+        <li>Label scannes mod pakken – match bekræftes</li>
+        <li>Pakken flyttes til afgangsmrådet</li>
+      </ol>
+      <p><strong>Kl. 11:23:</strong> Printeren stopper. Papirstop. Procedure aktiveres: rens printer, genstart. 4 minutter forsinket. Buffer holder.</p>
+
+      <h2>13:00 – Cycle count og korrektioner</h2>
+      <p>De 5 planlagte SKU'er tælles. Plus den ene der trigede missing pick tidligt på morgenen.</p>
+      <p>Resultat:</p>
+      <ul>
+        <li>4 SKU'er: OK – saldo matcher</li>
+        <li>1 SKU: 3 stk. diskrepancy – korrektering og root-cause undersøges</li>
+        <li>Missing-pick SKU: 3 stk. fundet på naboplacering (forkert indsætning). Registrering rettes.</li>
+      </ul>
+
+      <h2>15:00 – Cut-off nærmer sig</h2>
+      <p>Cut-off er 15:00 (intern). Fragtleverandørens afhentning er 16:30.</p>
+      <p>Status kl. 14:45: 43 ordrer afsendt-klar. 4 ordrer i gang. 1 backorder stadig på hold.</p>
+      <p>Rush: de 4 ordrer prioriteres. Backorder: kunden notificeres proaktivt om forsinkelse.</p>
+
+      <h2>16:30 – GLS henter</h2>
+      <p>Chaufføren ankommer. Afstemning:</p>
+      <ul>
+        <li>Antal pakker i systemet: 43</li>
+        <li>Antal pakker fysisk på pallen: 43 ✓</li>
+        <li>Scanningskvittering modtages fra chauffør</li>
+      </ul>
+      <p>Fragtleverandøren kører. Dagens afsendelse er afsluttet.</p>
+
+      <h2>17:00 – Afslutning</h2>
+      <p><strong>Dagsrapport:</strong></p>
+      <ul>
+        <li>43 ordrer afsendt (100% af målet)</li>
+        <li>1 backorder kommunikeret til kunde</li>
+        <li>1 leverance modtaget med discrepancy dokumenteret</li>
+        <li>Inventory accuracy: 99,2% (5 af 6 SKU'er korrekte)</li>
+        <li>Printer-nedbrud: 4 min – ingen konsekvens for cut-off</li>
+      </ul>
+      <p><strong>Overordnet:</strong> en god dag. Systemet fangede fejl før de ramte kunden. Processerne holdt.</p>
+
+      <h2>Hvad en god dag vs. en dårlig dag adskiller</h2>
+      <table>
+        <thead>
+          <tr><th>God dag</th><th>Dårlig dag</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Missing pick opdages ved pluk, ikke ved pakning</td><td>Missing pick opdages når pakken er lukket</td></tr>
+          <tr><td>Printer-fejl løst på 4 min med procedure</td><td>Printer-fejl giver 30 min kaos</td></tr>
+          <tr><td>Leverance-discrepancy registreret</td><td>Leverance modtaget uden optælling</td></tr>
+          <tr><td>Backorder kommunikeret proaktivt</td><td>Kunden klager selv</td></tr>
+          <tr><td>Fragtafstemning på stedet</td><td>Pakker "forsvinder"</td></tr>
+        </tbody>
+      </table>
+
+      <p class="inline-cta">👉 Har du samme udfordring? <a href="../../kontakt.html">Se hvordan SmartPack løser det i praksis</a></p>
+      </div>
+
+      <h2>SmartPack understøttelse</h2>
+      <p>SmartPack's dashboard viser den daglige status fra morgen-briefing til afslutning. Alle de hændelser der er beskrevet her – missing picks, cycle counts, leverance-modtagelse, fragtafstemning – er integrerede workflows i systemet.</p>
+
+      <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+
+        <details class="faq-item">
+          <summary>Hvor mange ordrer håndterer et lille lager per dag?</summary><div class="faq-item__body"><p>Typisk 20–200 ordrer per dag med 1–3 medarbejdere. Det afhænger af ordrenes kompleksitet og pakkestørrelse.</p></div></details>
+
+        <details class="faq-item">
+          <summary>Hvor lang tid tager det at pakke en ordre?</summary><div class="faq-item__body"><p>Gennemsnitlig: 2–5 minutter per ordre ved scan-baseret flow med ordentlig workstation-opsætning.</p></div></details>
+
+        <details class="faq-item">
+          <summary>Er det nødvendigt med daglig cycle count?</summary><div class="faq-item__body"><p>Ikke fuld optælling dagligt – men de 5–10 SKU'er der er i planen for dagen er best practice.</p></div></details>
+
+        <details class="faq-item">
+          <summary>Hvordan ved man at fragtleverandøren har hentet det rigtige antal?</summary><div class="faq-item__body"><p>Fragtafstemning: antal scannet ud af WMS skal matche antal overleveret til fragtleverandør. Kvittering er dokumentation.</p></div></details>
+      </div>
+
+      <div class="article-disclaimer">
+        <p><em>Tal og estimater i denne artikel er vejledende og baseret på branchedata fra dansk e-handel. Dine faktiske resultater afhænger af din specifikke situation, produktkompleksitet og eksisterende processer.</em></p>
+      </div>
+    </div></div>
+
+    </div>
+    <div class="bottom-cta">
+      <h2>Vil du se hvad det betyder i dit setup?</h2>
+      <p>Book en gratis gennemgang med SmartPack-teamet og få konkrete tal på, hvad det koster dig ikke at handle.</p>
+      <a href="../../kontakt.html" class="btn">Kontakt os</a>
+    </div>
+
+    <div class="article-related">
+      <h2>Relaterede artikler</h2>
+      <ul>
+        <li><a href="fra-ordre-til-levering.html">Fra ordre til levering: De 12 trin en pakke gennemløber</a></li>
+        <li><a href="typisk-lager-evolution.html">Den typiske lager-evolution for en voksende webshop</a></li>
+        <li><a href="hvad-gør-de-bedste-anderledes.html">Hvad gør de bedste anderledes? 10 observationer fra top-performende webshops</a></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="aar"></span> SmartPack. Alle rettigheder forbeholdes.</p>
+    <p><a href="../../privatlivspolitik.html">Privatlivspolitik</a> | <a href="../../handelsbetingelser.html">Handelsbetingelser</a></p>
+  </footer>
+  <script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvor mange ordrer håndterer et lille lager per dag?","acceptedAnswer":{"@type":"Answer","text":"Typisk 20–200 ordrer per dag med 1–3 medarbejdere. Det afhænger af ordrenes kompleksitet og pakkestørrelse."}},{"@type":"Question","name":"Hvor lang tid tager det at pakke en ordre?","acceptedAnswer":{"@type":"Answer","text":"Gennemsnitlig: 2–5 minutter per ordre ved scan-baseret flow med ordentlig workstation-opsætning."}},{"@type":"Question","name":"Er det nødvendigt med daglig cycle count?","acceptedAnswer":{"@type":"Answer","text":"Ikke fuld optælling dagligt – men de 5–10 SKU'er der er i planen for dagen er best practice."}},{"@type":"Question","name":"Hvordan ved man at fragtleverandøren har hentet det rigtige antal?","acceptedAnswer":{"@type":"Answer","text":"Fragtafstemning: antal scannet ud af WMS skal matche antal overleveret til fragtleverandør. Kvittering er dokumentation."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"En dag på et lager: Fra morgenmødet til fragtleverandørens afhentning","dateModified":"2026-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script></body>
+</html>

@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er en SKU? | SmartPack Viden</title>
+  <meta name="description" content="En SKU er din unikke varekode. Ghost-SKU'er og duplikater koster ~180.000 kr./år. Lær hvad en SKU er, hvordan du strukturerer dem korrekt og undgår de dyre fejl.">
+  <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-sku.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Hvad er en SKU? | SmartPack">
+  <meta property="og:url" content="https://smartpack.dk/viden/fundamentals/hvad-er-sku.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo">
+      <img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown">
+        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="nav__megamenu">
+          <a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
+          <a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
+          <a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a>
+          <a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
+        </div>
+      </li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
+      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+<div class="article-page">
+  <div class="article-wrap">
+
+    <nav class="article-breadcrumb" aria-label="Brødkrumme">
+      <a href="../../">SmartPack</a>
+      <span>›</span>
+      <a href="../">Viden</a>
+      <span>›</span>
+      <a href="./">Fundamentals</a>
+      <span>›</span>
+      <span>Hvad er en SKU?</span>
+    </nav>
+
+    <header class="article-header">
+      <span class="article-cat-badge">Fundamentals</span>
+      <h1 class="article-title">Hvad er en SKU, og hvorfor koster dine "ghost-SKU'er" dig 180.000 kr./år?</h1>
+      <div class="article-meta">
+        <time datetime="2025-04-30">Opdateret: 30. april 2025</time>
+        <span>Læsetid: ~5 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <p>En dansk webshop med 4.200 aktive SKU'er i systemet. De kører en analyse: 520 SKU'er (12%) har haft 0 salg i 18 måneder. 340 SKU'er er duplikater, samme vare, to koder. 89 SKU'er eksisterer i systemet men ikke fysisk. Konsekvens: lageroptælling tager 3× længere tid. Indkøb bestiller dobbelt. Rapporter er ubrugelige. Estimeret årlig omkostning: <strong>~180.000 kr.</strong> i spildt tid, fejlindkøb og phantom inventory.</p>
+      <p>SKU, Stock Keeping Unit, er den unikke identifikator for én specifik lagervare. Ingen professionel lagerstyring fungerer uden det.</p>
+
+      <h2>Hvad er en SKU?</h2>
+      <p>En SKU (Stock Keeping Unit, udtales "skju") er en unik kode, der identificerer én specifik variant af en vare i dit lager. En SKU er ikke bare et produktnavn, det er den mindste lagerenhed, der kan håndteres selvstændigt.</p>
+      <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
+
+      <p><strong>Eksempel:</strong></p>
+      <ul>
+        <li>Produkt: T-shirt, mærke X</li>
+        <li>SKU 1: TX-TSHIRT-S-RØD (small, rød)</li>
+        <li>SKU 2: TX-TSHIRT-M-RØD (medium, rød)</li>
+        <li>SKU 3: TX-TSHIRT-M-BLÅ (medium, blå)</li>
+      </ul>
+      <p>Hver variant med forskellig størrelse, farve, pakningsstørrelse eller konfiguration er en separat SKU, selvom det er "samme produkt".</p>
+      <p><strong>SKU vs. andre identifikatorer:</strong></p>
+      <ul>
+        <li><strong>SKU</strong> = intern kode, defineret af din virksomhed, bruges i WMS og lager</li>
+        <li><strong>EAN/stregkode</strong> = ekstern standardkode, bruges på emballage og ved handel</li>
+        <li><strong>Varenummer</strong> = kan svare til SKU, men er ikke altid unikt pr. variant</li>
+      </ul>
+
+      <!-- Inline CTA -->
+      
+
+    </div><!-- /article-body -->
+
+    <div class="bottom-cta">
+      <p>Vil du se hvad det betyder i dit setup?</p>
+      <a href="../../kontakt.html" class="btn">Se dit setup</a>
+    </div>
+
+    <div class="article-disclaimer">
+      Denne artikel er baseret på vores erfaring og bedste viden på tidspunktet for skrivning. Indholdet er vejledende og kan ikke erstatte professionel rådgivning.
+    </div>
+
+    <div class="article-related">
+      <div class="article-related__title">Relateret viden</div>
+      <div class="article-related__grid">
+        <a href="hvad-er-lagerstyring.html" class="article-related__item">
+          <span class="article-related__item-cat">Fundamentals</span>
+          <span class="article-related__item-title">Hvad er lagerstyring?</span>
+        </a>
+        <a href="hvad-er-inventory-accuracy.html" class="article-related__item">
+          <span class="article-related__item-cat">Fundamentals</span>
+          <span class="article-related__item-title">Hvad er inventory accuracy?</span>
+        </a>
+        <a href="hvad-er-wms.html" class="article-related__item">
+          <span class="article-related__item-cat">Fundamentals</span>
+          <span class="article-related__item-title">Hvad er et WMS?</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="article-faq">
+      <h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+
+      <details class="faq-item">
+        <summary>Hvad er forskellen på en SKU og en EAN-kode?</summary>
+        <div class="faq-item__body">SKU er din interne varekode, defineret af dig, bruges i dit WMS. EAN (European Article Number) er en global standardkode printet på emballagen. En SKU kan have én eller flere EAN-koder tilknyttet.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Hvor mange SKU'er er for mange?</summary>
+        <div class="faq-item__body">Det afhænger af virksomhedstype. Problemet opstår ikke ved antal, men ved kontrol: over 15% inaktive eller duplikerede SKU'er er et signal om rydningsbehov.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Hvad sker der, hvis jeg sletter en SKU?</summary>
+        <div class="faq-item__body">Du mister historiske lager- og salgsdata tilknyttet koden. Arkivér altid frem for at slette, arkiverede SKU'er vises ikke i aktive lister men bevarer al historik.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Kan samme produkt have flere SKU'er?</summary>
+        <div class="faq-item__body">Ja, og det er korrekt praksis: én SKU pr. unik kombination af attributter. Et produkt i 3 størrelser og 4 farver har 12 SKU'er.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Hvad er et ghost-SKU?</summary>
+        <div class="faq-item__body">En SKU i systemet, der ingen fysisk beholdning har og ingen aktivitet har haft i 12+ måneder. Ghost-SKU'er forurener lageroptælling, rapporter og indkøbslister. De bør arkiveres.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Hvordan strukturerer jeg SKU-navne korrekt?</summary>
+        <div class="faq-item__body">Brug en fast struktur: [BRAND]-[KATEGORI]-[FARVE]-[STØRRELSE]. Eksempel: NK-SHOE-BLK-42. Undgå mellemrum, specialtegn og blanding af store/små bogstaver.</div>
+      </details>
+    </div>
+
+  </div>
+</div>
+</main>
+
+<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack · <a href="../../vilkaar.html" style="color:var(--text-3);text-decoration:none;">Vilkår</a></div>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a>
+      <a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a>
+    </div>
+  </div>
+</footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Hvad er forskellen på en SKU og en EAN-kode?","acceptedAnswer":{"@type":"Answer","text":"SKU er din interne varekode. EAN er en global standardkode printet på emballagen."}},
+    {"@type":"Question","name":"Hvad er et ghost-SKU?","acceptedAnswer":{"@type":"Answer","text":"En SKU i systemet der ingen fysisk beholdning har og ingen aktivitet har haft i 12+ måneder."}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Hvad er en SKU, og hvorfor koster dine ghost-SKU'er dig 180.000 kr./år?",
+  "dateModified": "2025-04-30",
+  "publisher": { "@type": "Organization", "name": "SmartPack" }
+}
+</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er en SKU, og hvorfor koster dine 'ghost-SKU'er' dig 180.000 kr./år?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body>
+</html>
+

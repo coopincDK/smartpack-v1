@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<title>Hero Designer – Desktop / Tablet / Mobil</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#111; color:#ccc; font-family: system-ui, sans-serif; font-size:13px; }
+.top { display:flex; align-items:center; gap:1rem; padding:10px 16px; background:#0a0a0a; border-bottom:1px solid #333; position:sticky; top:0; z-index:100; }
+.top h1 { color:#3ecf8e; font-size:15px; }
+.top button { padding:6px 16px; border:none; border-radius:6px; cursor:pointer; font-size:12px; font-weight:700; }
+.btn-copy { background:#3ecf8e; color:#06100a; }
+.btn-reset { background:#333; color:#ccc; }
+.feedback { color:#3ecf8e; font-size:11px; min-width:150px; }
+.views { display:flex; gap:12px; padding:12px; height:calc(100vh - 46px); overflow:auto; }
+.view { display:flex; flex-direction:column; gap:6px; min-width:0; }
+.view-label { text-align:center; font-weight:700; color:#3ecf8e; font-size:14px; padding:6px; background:#0a1410; border:1px solid rgba(62,207,142,.3); border-radius:6px; }
+.view--desktop { flex: 0 0 45%; }
+.view--tablet { flex: 0 0 30%; }
+.view--mobile { flex: 0 0 22%; }
+.iframe-wrap { flex:1; border:1px solid #333; border-radius:8px; overflow:hidden; position:relative; background:#fff; }
+.iframe-wrap iframe { width:100%; height:100%; border:none; transform-origin:top left; }
+.controls { max-height:45vh; overflow-y:auto; background:#0a1410; border:1px solid rgba(62,207,142,.2); border-radius:8px; padding:8px; }
+.ctrl { margin-bottom:6px; }
+.ctrl label { display:flex; justify-content:space-between; font-size:11px; margin-bottom:2px; }
+.ctrl label span:last-child { color:#3ecf8e; }
+.ctrl input[type=range] { width:100%; accent-color:#3ecf8e; cursor:pointer; height:16px; }
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>🎨 Hero Designer</h1>
+  <button class="btn-copy" onclick="copyAllCSS()">📋 Kopier alle breakpoints</button>
+  <button class="btn-reset" onclick="resetAll()">Reset</button>
+  <span class="feedback" id="fb"></span>
+</div>
+<div class="views">
+  <!-- DESKTOP -->
+  <div class="view view--desktop">
+    <div class="view-label">💻 Desktop (1200px)</div>
+    <div class="iframe-wrap" id="wrap-desktop"></div>
+    <div class="controls" id="ctrl-desktop"></div>
+  </div>
+  <!-- TABLET -->
+  <div class="view view--tablet">
+    <div class="view-label">📱 Tablet (768px)</div>
+    <div class="iframe-wrap" id="wrap-tablet"></div>
+    <div class="controls" id="ctrl-tablet"></div>
+  </div>
+  <!-- MOBILE -->
+  <div class="view view--mobile">
+    <div class="view-label">📱 Mobil (390px)</div>
+    <div class="iframe-wrap" id="wrap-mobile"></div>
+    <div class="controls" id="ctrl-mobile"></div>
+  </div>
+</div>
+
+<script>
+const VIEWPORTS = [
+  { id:'desktop', width:1200, label:'Desktop' },
+  { id:'tablet',  width:768,  label:'Tablet' },
+  { id:'mobile',  width:390,  label:'Mobil' },
+];
+
+const CONTROLS = [
+  { label:'PDA venstre',  css:'left',   target:'.hero__phone',     min:-50, max:80,  step:1, unit:'%' },
+  { label:'PDA top',      css:'top',    target:'.hero__phone',     min:-50, max:100, step:1, unit:'%' },
+  { label:'PDA bredde',   css:'width',  target:'.hero__phone',     min:10,  max:120, step:1, unit:'%' },
+  { label:'GIF højre',    css:'right',  target:'.hero__dashboard', min:-50, max:50,  step:1, unit:'%' },
+  { label:'GIF bund',     css:'bottom', target:'.hero__dashboard', min:-50, max:80,  step:1, unit:'%' },
+  { label:'GIF bredde',   css:'width',  target:'.hero__dashboard', min:20,  max:150, step:1, unit:'%' },
+  { label:'H\u00f8jde',        css:'height', target:'.hero__composition',min:150,max:900, step:10,unit:'px' },
+  { label:'Badge1 top',   css:'top',    target:'.hero__badge--1',  min:-20, max:100, step:1, unit:'%' },
+  { label:'Badge1 left',  css:'left',   target:'.hero__badge--1',  min:-20, max:100, step:1, unit:'%' },
+  { label:'Badge2 top',   css:'top',    target:'.hero__badge--2',  min:-20, max:100, step:1, unit:'%' },
+  { label:'Badge2 right', css:'right',  target:'.hero__badge--2',  min:-50, max:100, step:1, unit:'%' },
+  { label:'Badge3 top',   css:'top',    target:'.hero__badge--3',  min:-20, max:100, step:1, unit:'%' },
+  { label:'Badge3 left',  css:'left',   target:'.hero__badge--3',  min:-20, max:100, step:1, unit:'%' },
+  { label:'Pil venstre',   css:'left',   target:'.hero__flow-line', min:-20, max:100, step:1, unit:'%' },
+  { label:'Pil top',       css:'top',    target:'.hero__flow-line', min:-20, max:100, step:1, unit:'%' },
+  { label:'Pil opacity',   css:'opacity', target:'.hero__flow-line',min:0,   max:10,  step:1, unit:'', factor:0.1 },
+];
+
+// Defaults per viewport (from current CSS)
+const DEFAULTS = {
+  desktop: [-10, 21, 70,  4,  20, 68, 480,  53, 45, 42, 4, 75, 78,  28, 42, 8],
+  tablet:  [-8,  8,  55,  0,  -3, 95, 400,  20, 60, 40, 8, 80, 60,  28, 42, 8],
+  mobile:  [-5,  5,  50,  0,  -5, 95, 340,  18, 55, 38, 5, 70, 55,  28, 42, 8],
+};
+
+const state = {};
+const iframes = {};
+
+VIEWPORTS.forEach(vp => {
+  state[vp.id] = [...DEFAULTS[vp.id]];
+  
+  // Create scaled iframe
+  const wrap = document.getElementById('wrap-' + vp.id);
+  const iframe = document.createElement('iframe');
+  iframe.src = 'index.html';
+  iframe.style.width = vp.width + 'px';
+  wrap.appendChild(iframe);
+  iframes[vp.id] = iframe;
+  
+  // Scale iframe to fit container
+  function scaleIframe() {
+    const containerW = wrap.clientWidth;
+    const scale = containerW / vp.width;
+    iframe.style.transform = `scale(${scale})`;
+    iframe.style.height = (wrap.clientHeight / scale) + 'px';
+  }
+  iframe.onload = () => { scaleIframe(); applyCSS(vp.id); };
+  new ResizeObserver(scaleIframe).observe(wrap);
+  
+  // Build controls
+  const ctrlDiv = document.getElementById('ctrl-' + vp.id);
+  CONTROLS.forEach((c, i) => {
+    const val = state[vp.id][i];
+    const div = document.createElement('div');
+    div.className = 'ctrl';
+    div.innerHTML = `<label><span>${c.label}</span><span id="val-${vp.id}-${i}">${val}${c.unit}</span></label>
+      <input type="range" min="${c.min}" max="${c.max}" step="${c.step}" value="${val}" data-vp="${vp.id}" data-idx="${i}">`;
+    ctrlDiv.appendChild(div);
+  });
+  
+  ctrlDiv.addEventListener('input', e => {
+    if (e.target.type !== 'range') return;
+    const vpId = e.target.dataset.vp;
+    const idx = parseInt(e.target.dataset.idx);
+    const val = parseFloat(e.target.value);
+    state[vpId][idx] = val;
+    document.getElementById(`val-${vpId}-${idx}`).textContent = val + CONTROLS[idx].unit;
+    applyCSS(vpId);
+  });
+});
+
+function applyCSS(vpId) {
+  const iframe = iframes[vpId];
+  if (!iframe.contentDocument) return;
+  const doc = iframe.contentDocument;
+  
+  let style = doc.getElementById('hero-designer-inject');
+  if (!style) {
+    style = doc.createElement('style');
+    style.id = 'hero-designer-inject';
+    doc.head.appendChild(style);
+  }
+  
+  const vals = state[vpId];
+  style.textContent = `
+    .hero__phone { left:${vals[0]}% !important; top:${vals[1]}% !important; width:${vals[2]}% !important; transform:none !important; max-width:none !important; }
+    .hero__dashboard { right:${vals[3]}% !important; bottom:${vals[4]}% !important; width:${vals[5]}% !important; position:absolute !important; }
+    .hero__composition { height:${vals[6]}px !important; overflow:visible !important; }
+    .hero__badge--1 { top:${vals[7]}% !important; left:${vals[8]}% !important; }
+    .hero__badge--2 { top:${vals[9]}% !important; right:${vals[10]}% !important; }
+    .hero__badge--3 { top:${vals[11]}% !important; bottom:auto !important; left:${vals[12]}% !important; display:flex !important; }
+    .hero__flow-line { left:${vals[13]}% !important; top:${vals[14]}% !important; opacity:${vals[15]*0.1} !important; display:block !important; }
+  `;
+}
+
+function buildCSSForViewport(vpId) {
+  const vals = state[vpId];
+  let css = '';
+  css += `.hero__phone { left:${vals[0]}%; top:${vals[1]}%; width:${vals[2]}%; }\n`;
+  css += `.hero__dashboard { right:${vals[3]}%; bottom:${vals[4]}%; width:${vals[5]}%; }\n`;
+  css += `.hero__composition { height:${vals[6]}px; }\n`;
+  css += `.hero__badge--1 { top:${vals[7]}%; left:${vals[8]}%; }\n`;
+  css += `.hero__badge--2 { top:${vals[9]}%; right:${vals[10]}%; }\n`;
+  css += `.hero__badge--3 { top:${vals[11]}%; bottom:auto; left:${vals[12]}%; }\n`;
+  css += `.hero__flow-line { left:${vals[13]}%; top:${vals[14]}%; opacity:${(vals[15]*0.1).toFixed(1)}; }\n`;
+  return css;
+}
+
+function copyAllCSS() {
+  let out = '/* === DESKTOP === */\n';
+  out += buildCSSForViewport('desktop') + '\n';
+  out += '/* === TABLET (≤768px) === */\n';
+  out += buildCSSForViewport('tablet') + '\n';
+  out += '/* === MOBILE (≤480px) === */\n';
+  out += buildCSSForViewport('mobile') + '\n';
+  
+  navigator.clipboard.writeText(out).then(() => {
+    document.getElementById('fb').textContent = '✓ Alle breakpoints kopieret!';
+    setTimeout(() => document.getElementById('fb').textContent = '', 3000);
+  });
+}
+
+function resetAll() {
+  VIEWPORTS.forEach(vp => {
+    state[vp.id] = [...DEFAULTS[vp.id]];
+    CONTROLS.forEach((c, i) => {
+      const input = document.querySelector(`input[data-vp="${vp.id}"][data-idx="${i}"]`);
+      input.value = DEFAULTS[vp.id][i];
+      document.getElementById(`val-${vp.id}-${i}`).textContent = DEFAULTS[vp.id][i] + c.unit;
+    });
+    applyCSS(vp.id);
+  });
+}
+</script>
+</body>
+</html>

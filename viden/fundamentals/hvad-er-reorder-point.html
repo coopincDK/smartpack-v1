@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er reorder point? | SmartPack Viden</title>
+  <meta name="description" content="Reorder point er det lagerniveau der trigges en genbestilling. Formel: dagligt salg × lead time + safety stock. Lær at beregne det korrekt og undgå stockouts.">
+  <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-reorder-point.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+      <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+      <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+      <li><a href="../" class="nav__link">Viden</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
+      <a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+
+  <nav class="article-breadcrumb" aria-label="Brødkrumme">
+    <a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Fundamentals</a><span>›</span><span>Reorder point</span>
+  </nav>
+
+  <header class="article-header">
+    <span class="article-cat-badge">Fundamentals</span>
+    <h1 class="article-title">Hvad er reorder point, og hvordan ved du præcis, hvornår du skal genbestille?</h1>
+    <div class="article-meta"><time datetime="2025-04-30">Opdateret: 30. april 2025</time><span>Læsetid: ~5 min</span></div>
+  </header>
+
+  <div class="article-body">
+
+    <p>Du bestiller når du "husker det". Du glemmer det. Du er udsolgt i 3 dage.</p>
+    <p>3 dage × 20 stk. × 180 kr. = <strong>10.800 kr. tabt</strong>.</p>
+    <p>Reorder point er ikke gætteri. Det er: dagligt salg × lead time + safety stock. <strong>Automatisk alarm</strong>, før du løber tør.</p>
+
+    <h2>Hvad er reorder point?</h2>
+    <p><strong>Reorder point</strong> (ROP / bestillingspunkt / genbestillingspunkt) er det specifikke beh oldningsniveau, der trigger en ny indkøbsordre. Når lagerniveauet falder til eller under reorder point, skal der bestilles.</p>
+    <p>Formlen er:</p>
+    <blockquote><strong>Reorder Point = (Dagligt gennemsnitssalg × Lead time i dage) + Safety stock</strong></blockquote>
+    <p><strong>Eksempel:</strong></p>
+    <ul>
+      <li>Dagligt salg: 15 stk.</li>
+      <li>Lead time: 10 dage</li>
+      <li>Safety stock: 30 stk.</li>
+      <li><strong>ROP = 15 × 10 + 30 = 180 stk.</strong></li>
+    </ul>
+    <p>Når beholdningen rammer 180 stk., bestilles der. Ordren ankommer (forhåbentlig) før safety stock tæres op.</p>
+
+    <!-- Inline CTA -->
+    <p class="inline-cta">👉 Har du samme udfordring? <a href="../../kontakt.html">Se hvordan SmartPack løser det i praksis</a></p>
+
+    <h2>Hvornår er det et problem?</h2>
+    <p>Reorder point er et problem, når:</p>
+    <ul>
+      <li>Det ikke er defineret, du bestiller, når du "husker" det</li>
+      <li>Det er defineret, men aldrig opdateret siden opsætningen</li>
+      <li>Safety stock er 0 i formlen</li>
+      <li>Lead time er leverandørens estimat, ikke faktisk målt tid</li>
+      <li>Du har ét reorder point for alle SKU'er uanset lead time og salgsvolumen</li>
+    </ul>
+
+    <h2>Hvorfor det er vigtigt, i kroner</h2>
+    <p>For sen genbestilling på en A-vare:</p>
+    <ul>
+      <li>3 dages stockout × 20 stk./dag × 180 kr. margin = <strong>10.800 kr.</strong> i tabt margin</li>
+      <li>Ekspresordre: +35% på 60 stk. × 80 kr. indkøbspris = 1.680 kr. ekstra</li>
+    </ul>
+    <p>For tidlig genbestilling:</p>
+    <ul>
+      <li>30 stk. overbeholdning × 80 kr. indkøbspris × 6% kapitalomkostning / 12 måneder = <strong>12 kr./måned</strong> pr. SKU, ganget med 200 SKU'er = 2.400 kr./måned i overkostning</li>
+    </ul>
+    <p>Dårlige reorder points er et systemisk tab. Korrekte reorder points er et systemisk værn.</p>
+
+    <h2>Hvordan beregnes og opsættes reorder point i praksis?</h2>
+
+    <h3>Trin 1: Find dagligt gennemsnitssalg</h3>
+    <p>Brug de seneste 90 dages salgsdata. For saisonvarer: brug data fra tilsvarende sæson.</p>
+    <p><strong>Dagligt salg = total salg de seneste 90 dage / 90</strong></p>
+
+    <h3>Trin 2: Mål faktisk lead time</h3>
+    <p>Brug WMS/ERP-data: hvornår blev ordren afsendt, hvornår ankom varen. Gennemsnit over de seneste 10 leverancer.</p>
+
+    <h3>Trin 3: Beregn safety stock</h3>
+    <p>Se artiklen om safety stock for fuld formel. Simplificeret:<br>
+    <strong>Safety stock = 1,65 × standardafvigelse(dagligt salg) × &radic;(lead time)</strong></p>
+
+    <h3>Trin 4: Beregn ROP</h3>
+    <p><strong>ROP = dagligt salg × lead time + safety stock</strong></p>
+    <p><strong>Eksempel, fuldt udregnet:</strong></p>
+    <ul>
+      <li>Dagligt salg: 8 stk. (gennemsnit 90 dage)</li>
+      <li>Lead time: 12 dage (målt)</li>
+      <li>Safety stock: 18 stk. (beregnet)</li>
+      <li><strong>ROP = 8 × 12 + 18 = 114 stk.</strong></li>
+    </ul>
+
+    <h3>Trin 5: Opsæt i WMS</h3>
+    <p>Indtast ROP per SKU. WMS genererer alarm (eller automatisk bestillingsforslag) når beholdning rammer ROP.</p>
+
+    <h3>Trin 6: Revidér kvartalsvis</h3>
+    <p>Salgsmønstre og lead times ændrer sig. Revidér top-20 SKU'er kvartalsvis, resten halvarsvis.</p>
+
+    <h2>Typiske fejl</h2>
+    <p><strong>1. ROP er ikke defineret, der bestilles ad hoc</strong><br>Den mest udbredte fejl. Indkøb sker, når nogen husker det. Ingen systemisk sikring.</p>
+    <p><strong>2. Safety stock er 0 i formlen</strong><br>ROP = salg × lead time. Ingen buffer. Første forsinkede levering = stockout.</p>
+    <p><strong>3. ROP beregnet på årsgennemsnit, ikke aktuelle 90 dage</strong><br>Januars lave salg trækker ROP ned. Decembers høje salg er ikke afspejlet. ROP er for lav om jul.</p>
+    <p><strong>4. ét samlet ROP for alle varianter</strong><br>ROP på "T-shirt" i stedet for per SKU. Størrelse L løber tør, mens størrelse XS har overbeholdning.</p>
+    <p><strong>5. ROP opsættes én gang og glemmes</strong><br>Opsætning i 2022 med dengang-lead time og dengang-salg. Ingen revision. Tallene er forældede.</p>
+
+    <h2>Sådan gør du det rigtigt</h2>
+    <p><strong>1. ROP per SKU, altid</strong><br>Ingen aggregerede ROP'er. Hvert varenummer har sin egen beregning baseret på faktisk salg og faktisk lead time.</p>
+    <p><strong>2. Automatisk alarm i WMS</strong><br>Når beholdning rammer ROP: automatisk besked til indkøber. Ikke daglig manuel tjek.</p>
+    <p><strong>3. Differentiér både ROP og ordremængde</strong><br>ROP afgør hvornår du bestiller. Ordremængden afgør, hvor meget du bestiller (Economic Order Quantity). Begge dele bør være beregnet.</p>
+    <p><strong>4. Juster ROP sæsonmæssigt</strong><br>4-6 uger før højsæson: hæv ROP (mere buffer). 4-6 uger efter: sænk ROP (slip overbeholdning).</p>
+    <p><strong>5. Mål, om ROP virker</strong><br>Antal stockouts per måned: er de nulstillet? Antal ekspresordrer: er de reduceret?</p>
+
+    <h2>Sådan understøtter SmartPack det</h2>
+    <p>SmartPack understøtter reorder point-opsætning per SKU og genererer automatisk alarm når beholdning når ROP. Systemet viser salgshistorik og aktuel lead time per leverandør, så du har datagrundlaget til beregningen. Reorder point kan eksporteres og genberegnes kvartalsvis baseret på opdaterede tal.</p>
+
+    <div class="article-use">
+      <h3>Brug denne artikel</h3>
+      <ul>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Beregn ROP for din vigtigste A-vare: dagligt salg × lead time + safety stock</li>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Tjek, om dit WMS i dag har definerede ROP'er for dine top-10 SKU'er</li>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Identificer, hvornår dine nuværende ROP'er sidst blev opdateret</li>
+        <li><span style="color:var(--accent);margin-right:.4rem;">&#10003;</span> Næste skridt: Opsæt automatisk ROP-alarm i WMS for de 20 SKU'er med højest salgsvolumen</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt.html" class="btn">Se dit setup</a></div>
+  <div class="article-disclaimer">Denne artikel er baseret på vores erfaring og bedste viden på tidspunktet for skrivning. Indholdet er vejledende og kan ikke erstatte professionel rådgivning.</div>
+
+  <div class="article-related">
+    <div class="article-related__title">Relateret viden</div>
+    <div class="article-related__grid">
+      <a href="hvad-er-safety-stock.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er safety stock?</span></a>
+      <a href="hvad-er-lead-time.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lead time?</span></a>
+      <a href="hvad-er-lagerstyring.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerstyring?</span></a>
+    </div>
+  </div>
+
+  <div class="article-faq">
+    <h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er reorder point på dansk?</summary><div class="faq-item__body">Reorder point hedder bestillingspunkt eller genbestillingspunkt på dansk. Det er den beholdningsmængde, der trigger en ny indkøbsordre.</div></details>
+    <details class="faq-item"><summary>Hvordan beregner jeg reorder point?</summary><div class="faq-item__body">ROP = dagligt gennemsnitssalg × lead time i dage + safety stock. Eksempel: 10 stk./dag × 7 dage + 20 stk. safety stock = 90 stk. ROP.</div></details>
+    <details class="faq-item"><summary>Hvad er forskellen på reorder point og safety stock?</summary><div class="faq-item__body">Safety stock er bufferbeholdningen alene. Reorder point inkluderer både salgsdækning i lead time-perioden og safety stock. Safety stock er en del af ROP-beregningen.</div></details>
+    <details class="faq-item"><summary>Hvornår skal reorder point opdateres?</summary><div class="faq-item__body">Minimum kvartalsvis for A-varer. Halvarsvis for B/C-varer. Altid når lead time ændrer sig væsentligt eller salgsniveauet skifter.</div></details>
+    <details class="faq-item"><summary>Kan jeg sætte reorder point automatisk i et WMS?</summary><div class="faq-item__body">Ja, alle professionelle WMS-løsninger understøtter ROP per SKU med automatisk alarm eller bestillingsforslag når beholdningen rammer niveauet.</div></details>
+  </div>
+
+</div></div>
+</main>
+
+<footer style="padding:3rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;"><div style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack · <a href="../../vilkaar.html" style="color:var(--text-3);text-decoration:none;">Vilkår</a></div><div style="display:flex;gap:1.5rem;"><a href="../" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Viden</a><a href="../../kontakt.html" style="font-size:.85rem;color:var(--text-3);text-decoration:none;">Kontakt</a></div></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvordan beregner jeg reorder point?","acceptedAnswer":{"@type":"Answer","text":"ROP = dagligt gennemsnitssalg × lead time i dage + safety stock."}},{"@type":"Question","name":"Hvad er forskellen på reorder point og safety stock?","acceptedAnswer":{"@type":"Answer","text":"Safety stock er bufferbeholdningen. Reorder point inkluderer både salgsdækning i lead time-perioden og safety stock."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er reorder point","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body>
+</html>
