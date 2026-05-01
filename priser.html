@@ -130,20 +130,20 @@
     .pricing-philosophy__promise svg { flex-shrink: 0; color: var(--accent); }
 
     /* Filosofi + beregner side-by-side */
-    .pricing-hero-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 4rem; align-items: stretch; padding: var(--section-py) 0 2rem; }
+    .pricing-hero-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 3rem; align-items: stretch; padding: var(--section-py) 0 2rem; }
     .pricing-hero-left { padding-top: 1rem; display: flex; flex-direction: column; }
-    .pricing-hero-right { display: flex; flex-direction: column; }
+    .pricing-hero-right { display: flex; flex-direction: column; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem 2.5rem; }
     @media (max-width: 900px) { .pricing-hero-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 0; } }
 
     /* Pricing calculator */
     .pricing-calc-section { padding: 0; background: var(--bg-2); }
     .pricing-calc {
-      background: var(--bg-3);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 2.5rem 2.75rem;
-      max-width: 680px;
-      margin: 3rem auto 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      max-width: 100%;
+      margin: 1.25rem 0 0;
     }
     .calc-field { margin-bottom: 1.75rem; }
     .calc-field__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; }
@@ -481,7 +481,7 @@
     </div><!-- /pricing-calc -->
 
         <!-- Labelprint block (under beregner) -->
-        <div style="margin-top:1.25rem;background:linear-gradient(135deg,rgba(62,207,142,.13) 0%,rgba(62,207,142,.05) 100%);border:2px solid rgba(62,207,142,.5);border-radius:14px;padding:1.5rem 1.75rem">
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);background:transparent;border-radius:0;">
           <div style="display:inline-flex;align-items:center;gap:.45rem;background:var(--accent);color:var(--bg);font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;padding:.35em 1em;border-radius:99px;margin-bottom:1rem">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
             HUSK
