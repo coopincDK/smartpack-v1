@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8">
@@ -36,7 +36,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~6 min</span></div>
   </header>
   <div class="article-body">
-    <p>Torsdag kl. 14:23. Kunde bestiller. Webshop viser &quot;5 paa lager&quot;. Ordre oprettes. Kl. 14:47: plukker gaar til hylde. 0 stk. De 5 blev solgt via anden kanal for 2 timer siden. Lager-sync koerer hvert 15. minut. Sidste sync: kl. 14:00. Oversalg. Ringer til kunden fredag morgen: &quot;Vi kan ikke levere.&quot; Kunde annullerer. LTV-tab: 2.400 kr.</p>
+    <p>Torsdag kl. 14:23. Kunde bestiller. Webshop viser &quot;5 p&aring; lager&quot;. Ordre oprettes. Kl. 14:47: plukker gaar til hylde. 0 stk. De 5 blev solgt via anden kanal for 2 timer siden. Lager-sync koerer hvert 15. minut. Sidste sync: kl. 14:00. Oversalg. Ringer til kunden fredag morgen: &quot;Vi kan ikke levere.&quot; Kunde annullerer. LTV-tab: 2.400 kr.</p>
     <p>Det er konsekvensen af polling-baseret lagersync. Her er hvad der kraeves for at undgaa det.</p>
 
     <h2>Hvad er real-time inventory?</h2>
@@ -45,7 +45,7 @@
     <ul>
       <li>Salg modtaget (reservation)</li>
       <li>Salg bekraeftet/plukket (forbrug)</li>
-      <li>Vare modtaget paa lager (tilgang)</li>
+      <li>Vare modtaget p&aring; lager (tilgang)</li>
       <li>Vare returneret (tilgang)</li>
       <li>Lagerregulering (korrektion)</li>
       <li>Kassation (fragang)</li>
@@ -66,15 +66,15 @@
     <h2>Teknologien bag: SignalR og push-arkitektur</h2>
     <p>Traditionel polling: WMS beder webshopen &quot;vis mig lagertallet&quot; hvert 15. minut. Real-time push: WMS sender &quot;lagertallet er aendret&quot; oejeblikkeligt til alle tilsluttede systemer.</p>
     <p><strong>SignalR</strong> er Microsofts teknologi til realtidskommunikation. Det muliggoer push-notifikationer fra server til klient via WebSocket. I lagerstyringssammenhaeng bruges SignalR til at opdatere badge-taellere, de tal der viser lagerantal i UIet, oejeblikkeligt, uden at nogen behoever at trykke &quot;Genindlaes&quot;.</p>
-    <p>Naar en plukker scanner en vare, opdateres lagervisningen paa webshop (Shopify, WooCommerce) via API-kald, WMS interne dashboard via SignalR, og evt. ERP via integration. Alt sker inden for sekunder af scanningen.</p>
+    <p>Naar en plukker scanner en vare, opdateres lagervisningen p&aring; webshop (Shopify, WooCommerce) via API-kald, WMS interne dashboard via SignalR, og evt. ERP via integration. Alt sker inden for sekunder af scanningen.</p>
 
     <h2>Hvornaar er det kritisk?</h2>
-    <p><strong>Kampagner og flash sales:</strong> Naar du saetter en vare paa tilbud med begraenset antal, kan oversalg ske i minuttet. Polling-baserede systemer er for langsomme.</p>
+    <p><strong>Kampagner og flash sales:</strong> Naar du saetter en vare p&aring; tilbud med begraenset antal, kan oversalg ske i minuttet. Polling-baserede systemer er for langsomme.</p>
     <p><strong>Black Friday og spidsbelastning:</strong> Hundredvis af samtidige ordrer. Hvert sekund taeller. Selv 5 minutters forsinkelse i lageroppdatering kan give 10-50 oversalg.</p>
     <p><strong>Multi-channel:</strong> Shopify og WooCommerce saelger samme vare. Uden realtids reservation opdateres den anden kanal ikke hurtigt nok.</p>
 
     <h2>Reservation vs. faktisk beholdning</h2>
-    <p><strong>Faktisk lager:</strong> Hvad der fysisk er paa hylderne.</p>
+    <p><strong>Faktisk lager:</strong> Hvad der fysisk er p&aring; hylderne.</p>
     <p><strong>Reserveret lager:</strong> Allerede bestilt, men ikke plukket endnu.</p>
     <p><strong>Disponibelt lager</strong> = Faktisk minus Reserveret. Det er det disponible lager webshopen skal vise kunderne. Mange systemer viser faktisk lager, og det foerer til oversalg.</p>
     <p>Eksempel: Faktisk lager: 5 enheder. Reserveret (aabne ordrer): 3 enheder. Disponibelt: 2 enheder, det er hvad webshoppen boer vise.</p>
@@ -85,18 +85,18 @@
       <li>Webhook sendes til WMS (11:34:23, 1 sekund)</li>
       <li>WMS reserverer 1 enhed (11:34:23)</li>
       <li>WMS sender disponibelt lagertal til Shopify via API (11:34:24, 2 sekunder)</li>
-      <li>Shopify opdaterer produktsiden: &quot;2 paa lager&quot; (11:34:25, 3 sekunder)</li>
+      <li>Shopify opdaterer produktsiden: &quot;2 p&aring; lager&quot; (11:34:25, 3 sekunder)</li>
     </ol>
-    <p>Med polling ville trin 4-5 ske ved naeste polling-interval: op til 15 minutter senere.</p>
+    <p>Med polling ville trin 4-5 ske ved n&aelig;ste polling-interval: op til 15 minutter senere.</p>
 
     <h2>Typiske fejl</h2>
     <ul>
       <li><strong>Opdatere lager ved afsendelse, ikke ved reservering:</strong> Det faktiske lager falder kun naar pakken forlader lageret. Kunder ser lagertallet der ikke tager hoejde for aabne ordrer.</li>
       <li><strong>Asynkron opdatering med lang forsinkelse:</strong> Lageroppdatering saettes i koe og behandles med lav prioritet.</li>
-      <li><strong>Ikke opdatere alle kanaler:</strong> Lager opdateres i Shopify, men WooCommerce glemmes. Oversalg paa den glemte kanal.</li>
+      <li><strong>Ikke opdatere alle kanaler:</strong> Lager opdateres i Shopify, men WooCommerce glemmes. Oversalg p&aring; den glemte kanal.</li>
     </ul>
 
-    <h2>Saadan goer du det rigtigt</h2>
+    <h2>S&aring;dan goer du det rigtigt</h2>
     <ol>
       <li><strong>Implementer reservation ved ordremodtagelse:</strong> Fra det oejeblik ordren modtages i WMS, registreres en reservation.</li>
       <li><strong>Brug push-teknologi (webhooks/SignalR) til aendringer:</strong> Push er hurtigere og mere effektivt end polling.</li>
@@ -113,16 +113,16 @@
     <a href="./wms-vs-shopify.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">WMS vs. Shopify</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
-    <details class="faq-item"><summary>Hvad er real-time inventory?</summary><div class="faq-item__body"><p>Lagertal der opdateres inden for sekunder af enhver aendring, salg, modtagelse, regulering. Modsaetningen er polling-baserede systemer med forsinkelse paa minutter.</p></div></details>
+    <details class="faq-item"><summary>Hvad er real-time inventory?</summary><div class="faq-item__body"><p>Lagertal der opdateres inden for sekunder af enhver aendring, salg, modtagelse, regulering. Modsaetningen er polling-baserede systemer med forsinkelse p&aring; minutter.</p></div></details>
     <details class="faq-item"><summary>Hvad er SignalR, og hvad bruges det til?</summary><div class="faq-item__body"><p>Microsofts bibliotek til realtidskommunikation. Brugt i SmartPack til at opdatere lagervisning oejeblikkeligt i WMS UI, uden at brugeren behoever genindlaese.</p></div></details>
-    <details class="faq-item"><summary>Hvad er forskel paa faktisk og disponibelt lager?</summary><div class="faq-item__body"><p>Faktisk lager er det der fysisk er paa hylden. Disponibelt lager er faktisk minus reserveret (aabne ordrer). Webshopen skal vise disponibelt for at undgaa oversalg.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskel p&aring; faktisk og disponibelt lager?</summary><div class="faq-item__body"><p>Faktisk lager er det der fysisk er p&aring; hylden. Disponibelt lager er faktisk minus reserveret (aabne ordrer). Webshopen skal vise disponibelt for at undgaa oversalg.</p></div></details>
     <details class="faq-item"><summary>Hvornaar er forsinkelse i lageropdatering acceptabel?</summary><div class="faq-item__body"><p>For lavrotationsvarer med god beholdning: op til 15 minutters forsinkelse er ok. For bestsellere, kampagnevarer og multi-channel: aldrig.</p></div></details>
     <details class="faq-item"><summary>Kan jeg aktivere real-time inventory efterfoelgende?</summary><div class="faq-item__body"><p>Ja, forudsat WMS understoetter reservation og push-integration. Det kraever konfigurations-aendring og test.</p></div></details>
   </div>
 </div></div>
 </main>
-<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><a href="../../" class="footer__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img"><span>SmartPack</span></a><p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd.<br>Til dig der er tr&aelig;t af lagerb&oslash;vl.</p><p class="footer__sub">Har du styr p&aring; lageret?</p><a href="../../kontakt.html" class="footer__cta-btn">Lad os kigge p&aring; det sammen &rarr;</a></div><div class="footer__nav"><div class="footer__nav-col"><h4>Produkt</h4><ul><li><a href="../../funktioner.html">Funktioner</a></li><li><a href="../../integrationer.html">Integrationer</a></li><li><a href="../../cases.html">Kundecases</a></li><li><a href="../../priser.html">Priser</a></li></ul></div><div class="footer__nav-col"><h4>Virksomhed</h4><ul><li><a href="../../om-os.html">Om os</a></li><li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li><li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li><li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li></ul></div><div class="footer__nav-col"><h4>Support</h4><ul><li><a href="../../faq.html">FAQ</a></li><li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li><li><a href="tel:+4588202019">+45 88 20 20 19 &middot; Tast 2</a></li><li><a href="tel:+4588202019">Akut? Tast 9. Selv hvis vi sover.</a></li></ul></div></div></div><div class="footer__bottom"><p>&copy; <span id="copy-year">2026</span> SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p><div class="footer__badges"><span class="footer__badge">E-handel siden 2005</span><span class="footer__badge">Medlem af Dansk Erhverv</span><span class="footer__badge">Bygget til lageret</span></div><div class="footer__quicksupport"><a href="../../vilkaar.html">Vilk&aring;r</a> &middot; Fjernsupport: <a href="https://download.teamviewer.com/download/TeamViewerQS.exe" target="_blank" rel="noopener">QuickSupport PC</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" target="_blank" rel="noopener">QuickSupport Mac</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.apk" target="_blank" rel="noopener">QuickSupport Android</a></div></div></div></footer>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er real-time inventory?","acceptedAnswer":{"@type":"Answer","text":"Lagertal der opdateres inden for sekunder af enhver aendring. Modsaetningen er polling-baserede systemer."}},{"@type":"Question","name":"Hvad er forskel paa faktisk og disponibelt lager?","acceptedAnswer":{"@type":"Answer","text":"Faktisk lager er hvad der fysisk er paa hylden. Disponibelt er faktisk minus reserveret. Webshopen skal vise disponibelt."}},{"@type":"Question","name":"Hvad er SignalR?","acceptedAnswer":{"@type":"Answer","text":"Microsofts bibliotek til realtidskommunikation. Bruges til at opdatere lagervisning oejeblikkeligt i WMS UI."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er real-time inventory?","acceptedAnswer":{"@type":"Answer","text":"Lagertal der opdateres inden for sekunder af enhver aendring. Modsaetningen er polling-baserede systemer."}},{"@type":"Question","name":"Hvad er forskel p&aring; faktisk og disponibelt lager?","acceptedAnswer":{"@type":"Answer","text":"Faktisk lager er hvad der fysisk er p&aring; hylden. Disponibelt er faktisk minus reserveret. Webshopen skal vise disponibelt."}},{"@type":"Question","name":"Hvad er SignalR?","acceptedAnswer":{"@type":"Answer","text":"Microsofts bibliotek til realtidskommunikation. Bruges til at opdatere lagervisning oejeblikkeligt i WMS UI."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Real-time inventory: hvorfor lagertal aldrig maa vaere forsinket","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8">
@@ -50,7 +50,7 @@
     <p><strong>Beholdningsflow (WMS til webshop):</strong></p>
     <ul>
       <li>Beholdning opdateres i webshop ved pluk, modtagelse og retur</li>
-      <li>Webshop viser aldrig varer paa lager, som faktisk er udsolgt</li>
+      <li>Webshop viser aldrig varer p&aring; lager, som faktisk er udsolgt</li>
       <li>Oversalg elimineres</li>
     </ul>
 
@@ -68,7 +68,7 @@
 
     <h2>Uden integration: hvad sker der?</h2>
     <p><strong>Scenarie 1:</strong> 200 ordrer/dag. Medarbejder kopierer ordrer manuelt fra webshop til WMS. 1-3% fejl i kopiering. 2-4 fejlordrer per dag x 500 kr. = 365.000-730.000 kr./aar.</p>
-    <p><strong>Scenarie 2:</strong> Webshop opdateres dagligt med beholdning. I loobet af dagen saelger WMS ned. Webshop viser stadig 5 paa lager. Kunden bestiller. Varen er udsolgt. Oversalg og kundefrustration.</p>
+    <p><strong>Scenarie 2:</strong> Webshop opdateres dagligt med beholdning. I loobet af dagen saelger WMS ned. Webshop viser stadig 5 p&aring; lager. Kunden bestiller. Varen er udsolgt. Oversalg og kundefrustration.</p>
     <p><strong>Scenarie 3:</strong> Tracking-numre kopieres manuelt. eet glemmes. Kunden har ikke modtaget pakken men finder ikke tracking-info. Kontakter support. Unodvendig support-haandtering: 30 min x 250 kr./time = 125 kr. per tilfaelde.</p>
 
     <h2>Standard webshop-platforme og integration</h2>
@@ -105,7 +105,7 @@
       <li><strong>Tester ikke under spidsbelastning:</strong> Integration der virker ved 50 ordrer/dag kan fejle ved 500.</li>
     </ul>
 
-    <h2>Saadan goer du det rigtigt</h2>
+    <h2>S&aring;dan goer du det rigtigt</h2>
     <ol>
       <li><strong>Kraev webhook-baseret integration:</strong> Real-time kommunikation, ikke polling hvert 15. minut.</li>
       <li><strong>Implementer monitoring:</strong> En alarm naar en ordre fejler i API-kald er afgoerengle. Uden det opdager du det kun via kundeklager.</li>
@@ -122,16 +122,16 @@
     <a href="./typiske-integrationsfejl.html" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
-    <details class="faq-item"><summary>Hvad er forskellen paa App og API-integration?</summary><div class="faq-item__body"><p>App (fx Shopify App Store): Forudbygget, hurtig opsaetning, begraenset tilpasning. API: Fuld fleksibilitet, kraever mere teknisk setup.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen p&aring; App og API-integration?</summary><div class="faq-item__body"><p>App (fx Shopify App Store): Forudbygget, hurtig opsaetning, begraenset tilpasning. API: Fuld fleksibilitet, kraever mere teknisk setup.</p></div></details>
     <details class="faq-item"><summary>Kan jeg integrere med Shopify og en B2B-platform simultant?</summary><div class="faq-item__body"><p>Ja. Multi-channel integration er standard i moderne WMS. Alle ordrer samles og behandles i eet system.</p></div></details>
     <details class="faq-item"><summary>Hvad koster custom webshop-integration?</summary><div class="faq-item__body"><p>50.000-200.000 kr. for en robust custom-integration. Det er en af de vigtigste grunde til at vaelge standard-platforme.</p></div></details>
     <details class="faq-item"><summary>Hvad sker der med ordre der fejler i API-kald?</summary><div class="faq-item__body"><p>De boer havne i en fejlkoe med alarm til operations-team. Uden dette er de usynlige, og kunden venter forgaeves.</p></div></details>
-    <details class="faq-item"><summary>Kan integration haandtere returns automatisk?</summary><div class="faq-item__body"><p>Ja. Mange integrationer understoetter automatisk returregistrering: kunden logger retur paa webshop, WMS modtager automatisk og opretter returordre.</p></div></details>
+    <details class="faq-item"><summary>Kan integration h&aring;ndtere returns automatisk?</summary><div class="faq-item__body"><p>Ja. Mange integrationer understoetter automatisk returregistrering: kunden logger retur p&aring; webshop, WMS modtager automatisk og opretter returordre.</p></div></details>
   </div>
 </div></div>
 </main>
-<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><a href="../../" class="footer__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img"><span>SmartPack</span></a><p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd.<br>Til dig der er tr&aelig;t af lagerb&oslash;vl.</p><p class="footer__sub">Har du styr p&aring; lageret?</p><a href="../../kontakt.html" class="footer__cta-btn">Lad os kigge p&aring; det sammen &rarr;</a></div><div class="footer__nav"><div class="footer__nav-col"><h4>Produkt</h4><ul><li><a href="../../funktioner.html">Funktioner</a></li><li><a href="../../integrationer.html">Integrationer</a></li><li><a href="../../cases.html">Kundecases</a></li><li><a href="../../priser.html">Priser</a></li></ul></div><div class="footer__nav-col"><h4>Virksomhed</h4><ul><li><a href="../../om-os.html">Om os</a></li><li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li><li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li><li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li></ul></div><div class="footer__nav-col"><h4>Support</h4><ul><li><a href="../../faq.html">FAQ</a></li><li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li><li><a href="tel:+4588202019">+45 88 20 20 19 &middot; Tast 2</a></li><li><a href="tel:+4588202019">Akut? Tast 9. Selv hvis vi sover.</a></li></ul></div></div></div><div class="footer__bottom"><p>&copy; <span id="copy-year">2026</span> SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p><div class="footer__badges"><span class="footer__badge">E-handel siden 2005</span><span class="footer__badge">Medlem af Dansk Erhverv</span><span class="footer__badge">Bygget til lageret</span></div><div class="footer__quicksupport"><a href="../../vilkaar.html">Vilk&aring;r</a> &middot; Fjernsupport: <a href="https://download.teamviewer.com/download/TeamViewerQS.exe" target="_blank" rel="noopener">QuickSupport PC</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" target="_blank" rel="noopener">QuickSupport Mac</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.apk" target="_blank" rel="noopener">QuickSupport Android</a></div></div></div></footer>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad koster custom webshop-integration?","acceptedAnswer":{"@type":"Answer","text":"50.000-200.000 kr. for en robust custom-integration."}},{"@type":"Question","name":"Kan integration haandtere returns automatisk?","acceptedAnswer":{"@type":"Answer","text":"Ja. Kunden logger retur paa webshop, WMS modtager automatisk og opretter returordre."}},{"@type":"Question","name":"Hvad sker der med ordre der fejler i API-kald?","acceptedAnswer":{"@type":"Answer","text":"De boer havne i en fejlkoe med alarm til operations-team. Uden det er de usynlige."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad koster custom webshop-integration?","acceptedAnswer":{"@type":"Answer","text":"50.000-200.000 kr. for en robust custom-integration."}},{"@type":"Question","name":"Kan integration h&aring;ndtere returns automatisk?","acceptedAnswer":{"@type":"Answer","text":"Ja. Kunden logger retur p&aring; webshop, WMS modtager automatisk og opretter returordre."}},{"@type":"Question","name":"Hvad sker der med ordre der fejler i API-kald?","acceptedAnswer":{"@type":"Answer","text":"De boer havne i en fejlkoe med alarm til operations-team. Uden det er de usynlige."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WMS-integration med webshop: fundamentet for fejlfri ordrebehandling","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

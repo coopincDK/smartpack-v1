@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8">
@@ -48,7 +48,7 @@
     <p>Integrationen bruger to mekanismer: Webhooks (push, Shopify sender ordre-events til WMS i realtid) og REST API (pull, WMS henter periodisk ordrer og opdaterer lager).</p>
 
     <h2>Opsaetning trin for trin</h2>
-    <p class="inline-cta">&#x1F449; SmartPack har praekonfigureret Shopify-integration klar til opsaetning paa minutter. <a href="../../kontakt.html">Book demo</a></p>
+    <p class="inline-cta">&#x1F449; SmartPack har praekonfigureret Shopify-integration klar til opsaetning p&aring; minutter. <a href="../../kontakt.html">Book demo</a></p>
 
     <h3>Trin 1: Opret Custom App i Shopify</h3>
     <p>I Shopify Admin, Apps, App and sales channel settings, Develop apps: Opret ny custom app og tildel scopes: <code>read_orders</code>, <code>write_fulfillments</code>, <code>read_inventory</code>, <code>write_inventory</code>. Generer API-nogler: Admin API access token bruges som AccessToken.</p>
@@ -94,10 +94,10 @@
       <li><strong>API-version ikke specificeret:</strong> Shopify APIer versioneres. Bruger du ikke versioneret endpoint, kan breaking changes ramme din integration uden varsel.</li>
     </ul>
 
-    <h2>Saadan goer du det rigtigt</h2>
+    <h2>S&aring;dan goer du det rigtigt</h2>
     <ol>
       <li><strong>Brug Shopifys sandbox:</strong> Test altid ny opsaetning i en development store inden produktion.</li>
-      <li><strong>Abonner paa Shopify changelog:</strong> Shopify udfaser API-versioner hvert aar. Hold styr paa deprecation-datoer.</li>
+      <li><strong>Abonner p&aring; Shopify changelog:</strong> Shopify udfaser API-versioner hvert aar. Hold styr p&aring; deprecation-datoer.</li>
       <li><strong>Implementer order reconciliation:</strong> Koer daglig sammenligning: har alle Shopify-ordrer fra i gaar en tilsvarende WMS-ordre?</li>
     </ol>
 
@@ -113,13 +113,13 @@
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
     <details class="faq-item"><summary>Hvad kraeves for at integrere Shopify med et WMS?</summary><div class="faq-item__body"><p>En custom app i Shopify med korrekte API-scopes, webhook-konfiguration med HMAC-validering, leveringsmetode-mapping og fulfillment-endpoint.</p></div></details>
     <details class="faq-item"><summary>Hvad er shopify_custom_dk?</summary><div class="faq-item__body"><p>Den interne Shopify-reference for brugerdefinerede leveringsmetoder (custom shipping rates). Skal mappes korrekt i WMS til den tilsvarende fragtprofil.</p></div></details>
-    <details class="faq-item"><summary>Kan jeg integrere Shopify uden webhook og kun bruge API-polling?</summary><div class="faq-item__body"><p>Ja, men det giver forsinkelse paa ordrebehandling. Webhooks er staerkt anbefalet for ordrehaendelser. API-polling kan bruges som fallback.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg integrere Shopify uden webhook og kun bruge API-polling?</summary><div class="faq-item__body"><p>Ja, men det giver forsinkelse p&aring; ordrebehandling. Webhooks er staerkt anbefalet for ordrehaendelser. API-polling kan bruges som fallback.</p></div></details>
     <details class="faq-item"><summary>Hvad er Shopify API-versioner?</summary><div class="faq-item__body"><p>Shopify versionerer sit API kvartalsvis (fx 2024-01). Aeldre versioner udfases med 12 maaneders varsel. Brug altid versionerede endpoints.</p></div></details>
     <details class="faq-item"><summary>Hvad sker der, hvis min Shopify custom app slettes?</summary><div class="faq-item__body"><p>Access token invalideres oejeblikkeligt. Alle integrationer holder op med at virke. Gem app-credentials sikkert og hav procedure for geoprettelse.</p></div></details>
   </div>
 </div></div>
 </main>
-<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><a href="../../" class="footer__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img"><span>SmartPack</span></a><p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd.<br>Til dig der er tr&aelig;t af lagerb&oslash;vl.</p><p class="footer__sub">Har du styr p&aring; lageret?</p><a href="../../kontakt.html" class="footer__cta-btn">Lad os kigge p&aring; det sammen &rarr;</a></div><div class="footer__nav"><div class="footer__nav-col"><h4>Produkt</h4><ul><li><a href="../../funktioner.html">Funktioner</a></li><li><a href="../../integrationer.html">Integrationer</a></li><li><a href="../../cases.html">Kundecases</a></li><li><a href="../../priser.html">Priser</a></li></ul></div><div class="footer__nav-col"><h4>Virksomhed</h4><ul><li><a href="../../om-os.html">Om os</a></li><li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li><li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li><li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li></ul></div><div class="footer__nav-col"><h4>Support</h4><ul><li><a href="../../faq.html">FAQ</a></li><li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li><li><a href="tel:+4588202019">+45 88 20 20 19 &middot; Tast 2</a></li><li><a href="tel:+4588202019">Akut? Tast 9. Selv hvis vi sover.</a></li></ul></div></div></div><div class="footer__bottom"><p>&copy; <span id="copy-year">2026</span> SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p><div class="footer__badges"><span class="footer__badge">E-handel siden 2005</span><span class="footer__badge">Medlem af Dansk Erhverv</span><span class="footer__badge">Bygget til lageret</span></div><div class="footer__quicksupport"><a href="../../vilkaar.html">Vilk&aring;r</a> &middot; Fjernsupport: <a href="https://download.teamviewer.com/download/TeamViewerQS.exe" target="_blank" rel="noopener">QuickSupport PC</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" target="_blank" rel="noopener">QuickSupport Mac</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.apk" target="_blank" rel="noopener">QuickSupport Android</a></div></div></div></footer>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er shopify_custom_dk?","acceptedAnswer":{"@type":"Answer","text":"Den interne Shopify-reference for brugerdefinerede leveringsmetoder. Skal mappes korrekt i WMS."}},{"@type":"Question","name":"Hvad kraeves for at integrere Shopify med et WMS?","acceptedAnswer":{"@type":"Answer","text":"En custom app med korrekte scopes, webhook-konfiguration med HMAC-validering og leveringsmetode-mapping."}},{"@type":"Question","name":"Hvad er Shopify API-versioner?","acceptedAnswer":{"@type":"Answer","text":"Shopify versionerer sit API kvartalsvis. Aeldre versioner udfases med 12 maaneders varsel."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Shopify integration med WMS: komplet opsaetningsguide","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>

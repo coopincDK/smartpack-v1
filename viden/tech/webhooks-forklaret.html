@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webhooks forklaret: realtidsnotifikationer til dit lagersystem | SmartPack Viden</title>
-  <meta name="description" content="Hvad er webhooks? Laer forskellen paa API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.">
+  <meta name="description" content="Hvad er webhooks? Laer forskellen p&aring; API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.">
   <link rel="canonical" href="https://smartpack.dk/viden/tech/webhooks-forklaret.html">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
@@ -111,10 +111,10 @@
     <ul>
       <li><strong>Behandle tunge opgaver synkront i webhook-handler:</strong> Svartid overskrider 30 sekunder. Shopify anser leveringen som fejlet og sender retry. Ordren behandles to gange.</li>
       <li><strong>Skippe HMAC-validering midlertidigt:</strong> Under udvikling springes validering over. Det glider ind i produktion. Resultatet: enhver kan sende fabricerede ordre-events.</li>
-      <li><strong>Ikke haandtere webhook-deaktivering:</strong> Systemet koerer videre men modtager ingen events. Ordrer behandles ikke.</li>
+      <li><strong>Ikke h&aring;ndtere webhook-deaktivering:</strong> Systemet koerer videre men modtager ingen events. Ordrer behandles ikke.</li>
     </ul>
 
-    <h2>Saadan goer du det rigtigt</h2>
+    <h2>S&aring;dan goer du det rigtigt</h2>
     <ol>
       <li><strong>Returner 200 straks, behandl asynkront:</strong> Webhook-handler gemmer event i koe og returnerer 200. Baggrundsjob behandler fra koen.</li>
       <li><strong>Log raat payload ved modtagelse:</strong> Gem det raa JSON-payload ved modtagelse inden det behandles. Hvis behandling fejler, har du payloaden til re-behandling.</li>
@@ -122,7 +122,7 @@
     </ol>
 
     <h2>SmartPack</h2>
-    <p>SmartPack modtager webhooks fra Shopify, WooCommerce og andre platforme med fuld HMAC-SHA256 validering. Alle webhooks puttes i en intern event-koe og behandles asynkront. Svartid til platform er typisk under 200ms. Systemet er fuldt idempotent paa ordre-ID-niveau. Webhook-aktivitet vises i SmartPack administrationspanel med status, tidsstempler og eventuelle fejl.</p>
+    <p>SmartPack modtager webhooks fra Shopify, WooCommerce og andre platforme med fuld HMAC-SHA256 validering. Alle webhooks puttes i en intern event-koe og behandles asynkront. Svartid til platform er typisk under 200ms. Systemet er fuldt idempotent p&aring; ordre-ID-niveau. Webhook-aktivitet vises i SmartPack administrationspanel med status, tidsstempler og eventuelle fejl.</p>
   </div>
   <div class="bottom-cta"><p>Vil du undgaa webhook-tab og sikkerhedsbrud?</p><a href="../../kontakt.html" class="btn">Se SmartPacks webhook-haandtering</a></div>
   <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
@@ -139,7 +139,7 @@
   </div>
 </div></div>
 </main>
-<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">&#169; 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<footer class="footer"><div class="container"><div class="footer__top"><div class="footer__brand"><a href="../../" class="footer__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img"><span>SmartPack</span></a><p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd.<br>Til dig der er tr&aelig;t af lagerb&oslash;vl.</p><p class="footer__sub">Har du styr p&aring; lageret?</p><a href="../../kontakt.html" class="footer__cta-btn">Lad os kigge p&aring; det sammen &rarr;</a></div><div class="footer__nav"><div class="footer__nav-col"><h4>Produkt</h4><ul><li><a href="../../funktioner.html">Funktioner</a></li><li><a href="../../integrationer.html">Integrationer</a></li><li><a href="../../cases.html">Kundecases</a></li><li><a href="../../priser.html">Priser</a></li></ul></div><div class="footer__nav-col"><h4>Virksomhed</h4><ul><li><a href="../../om-os.html">Om os</a></li><li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li><li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li><li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li></ul></div><div class="footer__nav-col"><h4>Support</h4><ul><li><a href="../../faq.html">FAQ</a></li><li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li><li><a href="tel:+4588202019">+45 88 20 20 19 &middot; Tast 2</a></li><li><a href="tel:+4588202019">Akut? Tast 9. Selv hvis vi sover.</a></li></ul></div></div></div><div class="footer__bottom"><p>&copy; <span id="copy-year">2026</span> SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p><div class="footer__badges"><span class="footer__badge">E-handel siden 2005</span><span class="footer__badge">Medlem af Dansk Erhverv</span><span class="footer__badge">Bygget til lageret</span></div><div class="footer__quicksupport"><a href="../../vilkaar.html">Vilk&aring;r</a> &middot; Fjernsupport: <a href="https://download.teamviewer.com/download/TeamViewerQS.exe" target="_blank" rel="noopener">QuickSupport PC</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" target="_blank" rel="noopener">QuickSupport Mac</a> &middot; <a href="https://download.teamviewer.com/download/TeamViewerQS.apk" target="_blank" rel="noopener">QuickSupport Android</a></div></div></div></footer>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En push-notifikation fra et eksternt system. Shopify sender automatisk en HTTP POST naar en ordre oprettes."}},{"@type":"Question","name":"Hvad er HMAC-SHA256?","acceptedAnswer":{"@type":"Answer","text":"En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke manipuleret."}},{"@type":"Question","name":"Hvad sker der, hvis min webhook-handler er for langsom?","acceptedAnswer":{"@type":"Answer","text":"Shopify anser leveringen som fejlet og forsoeger retry. Du risikerer at behandle samme event to gange."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Webhooks forklaret: realtidsnotifikationer til dit lagersystem","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
