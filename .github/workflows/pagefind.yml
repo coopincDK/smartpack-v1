@@ -1,0 +1,39 @@
+name: Rebuild Pagefind Index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'viden/**/*.html'
+      - '!viden/**/index.html'
+  workflow_dispatch:
+
+jobs:
+  pagefind:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Pagefind
+        run: npx pagefind --site . --output-path pagefind
+
+      - name: Commit pagefind index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pagefind/
+          git diff --staged --quiet && echo "No changes to pagefind index" || (
+            git commit -m "chore: rebuild pagefind search index [skip ci]"
+            git push
+          )
