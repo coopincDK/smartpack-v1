@@ -180,6 +180,7 @@ window.handleSignup = function(e) {
 
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
     user_email:  email,
+    email:       email,          // matcher {{email}} i template To Email-feltet
     signup_type: 'V2 Wizard — tidlig adgang',
     timestamp:   new Date().toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })
   })
