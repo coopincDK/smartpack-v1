@@ -3423,6 +3423,25 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .article-use ul { padding-left: 1.25rem; }
 .article-use li { font-size: .9rem; color: var(--text-2); margin-bottom: .4rem; }
 
+/* Viden nørde CTA */
+.viden-norde-cta {
+  background: var(--bg-2);
+  border-top: 1px solid var(--border);
+  padding: 3.5rem 0;
+  text-align: center;
+}
+.viden-norde-cta h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 .5rem;
+  letter-spacing: -.02em;
+}
+.viden-norde-cta p {
+  font-size: .95rem;
+  color: var(--text-2);
+  margin: 0 0 1.5rem;
+}
+
 /* Disclaimer */
 .article-disclaimer {
   margin-top: 2.5rem;

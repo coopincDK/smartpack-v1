@@ -66,21 +66,6 @@
   <script src="js/theme-toggle.js"></script>
 
   <style>
-    /* --- Hero --- */
-    .page-hero { padding: 130px 0 80px; }
-    .page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.12; margin: .75rem 0 1.25rem; }
-    .page-hero__sub { font-size: 1.05rem; color: var(--text-2); max-width: 540px; line-height: 1.7; margin-bottom: 2rem; }
-    .page-hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-    .page-hero__content { max-width: 540px; position: relative; z-index: 2; }
-    /* Contain the hero composition */
-    .page-hero .hero__visual { position: relative; z-index: 1; }
-    .page-hero .hero__composition { transform: scale(.85); transform-origin: center right; }
-    @media (max-width: 960px) {
-      .page-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .page-hero__content { max-width: 100%; }
-      .page-hero .hero__composition { transform: scale(.75); transform-origin: center center; }
-    }
-
     /* --- Feature sections --- */
     .feat-section { padding: clamp(3.5rem, 6vw, 5rem) 0; }
     .feat-section--alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: clamp(3.5rem, 6vw, 5rem) 0; }
@@ -314,7 +299,7 @@
 
 
 <!-- A: PLUK UDEN FEJL -->
-<section class="feat-section feat-section--alt">
+<section class="feat-section feat-section--alt" id="features">
   <div class="container">
     <div class="feat-section__inner reveal">
       <div>
