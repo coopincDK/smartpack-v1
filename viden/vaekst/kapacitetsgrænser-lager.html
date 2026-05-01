@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapacitetsgrænser på lageret | SmartPack Viden</title>
+  <meta name="description" content="De fleste opdager kapacitetsgrænsen ved at ramme den. Her er formlen til at beregne dit max, og hvad det koster ikke at kende det tal.">
+  <link rel="canonical" href="https://smartpack.dk/viden/vaekst/kapacitetsgrænser-lager.html">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+</head>
+<body>
+<header class="site-header" id="site-header"><nav class="nav container">
+  <a href="../../" class="nav__logo"><img src="../../assets/cropped-favicon-smartpack.png" alt="SmartPack" class="nav__logo-img"><span class="nav__logo-text">SmartPack</span></a>
+  <ul class="nav__links" id="nav-links">
+    <li class="nav__item--has-dropdown"><button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor"><path d="M0 0l5 6 5-6z"/></svg></button><div class="nav__megamenu"><a href="../../funktioner.html" class="nav__mega-item"><strong>Funktioner</strong></a><a href="../../integrationer.html" class="nav__mega-item"><strong>Integrationer</strong></a><a href="../../faq.html" class="nav__mega-item"><strong>FAQ</strong></a><a href="../../om-os.html" class="nav__mega-item"><strong>Om os</strong></a></div></li>
+    <li><a href="../../priser.html" class="nav__link">Priser</a></li>
+    <li><a href="../../cases.html" class="nav__link">Cases</a></li>
+    <li><a href="../" class="nav__link">Viden</a></li>
+  </ul>
+  <div class="nav__actions"><a href="../../kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a><a href="../../kontakt.html" class="btn btn--primary nav__cta">Book demo</a><button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button><button class="nav__hamburger" id="nav-hamburger" aria-label="Åbn menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Vækst</a><span>›</span><span>Kapacitetsgrænser lager</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Vækst</span>
+    <h1 class="article-title">Kapacitetsgrænser på lageret, kend dem før du rammer dem</h1>
+    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body">
+    <p>De fleste opdager deres kapacitetsgrænse ved at ramme den. Typisk en tirsdag i uge 46. Black Friday-ordrerne tikker ind. Systemet knækker. Dag 1: 680 ordrer sendt, 760 i backlog. Dag 3: Fejlrate 4,8%. 1.413.600 kr. tabt på 5 dage. Det er ikke Black Friday der kostede dig pengene. Det er det tal du aldrig beregnede.</p>
+    <h2>Hvad er kapacitetsgrænser?</h2>
+    <p>Kapacitetsgrænsen er det punkt, hvor lageret ikke kan behandle flere ordrer uden at kvaliteten eller hastigheden falder. Det er et system af tre flaskehalse:</p>
+    <ol>
+      <li><strong>Fysisk kapacitet</strong>, kvadratmeter, reoler, plukkegange</li>
+      <li><strong>Personalekapacitet</strong>, antal medarbejdere × picks/time</li>
+      <li><strong>Systemkapacitet</strong>, WMS-kapacitet, integrationshastighed, scanningsudstyr</li>
+    </ol>
+    <p class="inline-cta">👉 Skalerer din webshop? <a href="../../kontakt.html">Se hvordan SmartPack understøtter vækst</a></p>
+    <h2>De tre kritiske breakpoints</h2>
+    <table>
+      <thead><tr><th>Grænse</th><th>Tegn</th><th>Løsning</th></tr></thead>
+      <tbody>
+        <tr><td>50 ordrer/dag</td><td>Manuelt system fejler</td><td>Implementér WMS</td></tr>
+        <tr><td>200 ordrer/dag</td><td>Enkelt plukrute utilstrækkelig</td><td>Batch picking, zoneinddeling</td></tr>
+        <tr><td>500 ordrer/dag</td><td>Enkelt WMS utilstrækkeligt</td><td>Automatisering, fuld tech-stack</td></tr>
+      </tbody>
+    </table>
+    <h2>Beregn din personalekapacitet</h2>
+    <pre><code>Max ordrer/dag = Antal plukmedarbejdere × 102 picks/time × 7 arbejdstimer ÷ Gennemsnitlig linjer per ordre</code></pre>
+    <p><strong>Eksempel:</strong> 3 plukmedarbejdere × 102 picks/time × 7 timer = 2.142 picks/dag. Gennemsnit 2 linjer per ordre = 2.142 ÷ 2 = <strong>1.071 ordrer/dag kapacitet</strong>. Realistisk (med 20% buffer): <strong>857 ordrer/dag</strong>.</p>
+    <h2>Det opdager de fleste for sent</h2>
+    <p><strong>Scenarie 1: Kører på 100% kapacitet som normal, uden buffer</strong><br>Webshop ved 380 ordrer/dag. Kapacitet: 385 ordrer/dag. Marketingkampagne. Ordrer stiger til 480/dag. Totalt sammenbrud. Backlog 95 ordrer dag 1. Fejlrate 3,8%. <strong>367.000 kr. tabt på 4 dage</strong>. Normal kapacitetsudnyttelse skal være 75%, ikke 100%.</p>
+    <p><strong>Scenarie 2: Kender ikke kapaciteten</strong><br>Webshop ved 220 ordrer/dag. Black Friday: 1.320 ordrer (6×). Reel kapacitet: 280 ordrer/dag max. 5 dages backlog. Fejlrate 4,2%. Cost: 420.000 kr. Hvis de havde kendt kapaciteten: 3PL-overløb for 800 ordrer. Cost: 22 kr./ordre × 800 = 17.600 kr. <strong>Forskel: 402.400 kr.</strong></p>
+    <p><strong>Scenarie 3: Systemet er flaskehalsen, ikke personalet</strong><br>WMS kan kun håndtere 350 ordrer/dag. Plukkere venter 2-3 minutter mellem hver batch. 500 minutter spildt/dag = 8,3 timer/dag = <strong>415.000 kr./år</strong>. Server-upgrade: 45.000 kr. ROI: 39 dage.</p>
+    <h2>Typiske fejl</h2>
+    <ol>
+      <li><strong>Aldrig beregnet kapacitetsgrænsen</strong>, brug formlen ovenfor. Det tager 10 minutter.</li>
+      <li><strong>Fokuserer kun på areal</strong>, lager der ikke er tæt på arealmaksimum kan sagtens have nået personale- eller systemkapaciteten.</li>
+      <li><strong>Ingen buffer</strong>, planlæg til 80% kapacitetsudnyttelse som normal. De sidste 20% er buffer til peak og variation.</li>
+    </ol>
+    <h2>Sådan gør du det rigtigt</h2>
+    <ol>
+      <li><strong>Kend dit tal</strong>, beregn din teoretiske max-kapacitet for alle tre led en gang om kvartalet.</li>
+      <li><strong>Sæt alarm ved 75%</strong>, når du konsistent er over 75% af kapaciteten i en uge, er det tid til at planlægge udvidelse.</li>
+      <li><strong>Plan B klar</strong>, hvad aktiverer du, når du rammer 90%? 3PL-overløb, hasteansættelse, midlertidig pausering af kampagner?</li>
+    </ol>
+    <h2>SmartPack understøttelse</h2>
+    <p>SmartPack viser hvilken af de tre kapacitetsled (fysisk, personale, system) der er flaskehalsen, så I ved hvor I skal handle. Dashboard viser realtid picks/time vs. kapacitet og advarer når I nærmer jer grænsen.</p>
+  </div>
+  <div class="bottom-cta"><p>Klar til næste vækststep?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Vejledende tal baseret på dansk e-handelspraksis.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er normal kapacitetsudnyttelse?</summary><div class="faq-item__body"><p>60-75% i normalperiode, op til 90% under peak (med forberedelse). Over 90% er et krisetegn.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg øge kapaciteten uden at ansætte?</summary><div class="faq-item__body"><p>Ja. Batch picking alene kan øge picks/time med 20-30%. Layout-optimering og WMS-forbedringer giver yderligere 10-15%.</p></div></details>
+    <details class="faq-item"><summary>Hvad er industri-benchmark for picks/time?</summary><div class="faq-item__body"><p>102 picks/time (2025). SmartPack-optimerede lagre rammer 110+.</p></div></details>
+    <details class="faq-item"><summary>Hvornår er det tid til at flytte til større lager?</summary><div class="faq-item__body"><p>Når du konsistent er over 85% af det fysiske areals kapacitet, og alle andre optimeringsmuligheder er udtømt.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster det at overskride kapaciteten i en uge?</summary><div class="faq-item__body"><p>Estimeret 15-30% stigning i cost per order, plus LTV-tab fra kunder der oplever forringet service.</p></div></details>
+  </div>
+</div></div>
+</main>
+<footer style="padding:2rem 0;border-top:1px solid var(--border);margin-top:3rem;"><div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;"><span style="font-size:.85rem;color:var(--text-3);">© 2025 SmartPack</span><a href="../" style="font-size:.85rem;color:var(--text-3);">Viden</a></div></footer>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er normal kapacitetsudnyttelse?","acceptedAnswer":{"@type":"Answer","text":"60-75% i normalperiode, op til 90% under peak. Over 90% er et krisetegn."}},{"@type":"Question","name":"Kan jeg øge kapaciteten uden at ansætte?","acceptedAnswer":{"@type":"Answer","text":"Ja. Batch picking alene kan øge picks/time med 20-30%."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Kapacitetsgrænser på lageret, kend dem før du rammer dem","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

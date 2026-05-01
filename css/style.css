@@ -3473,3 +3473,43 @@ html.theme-transition *::after {
   transform: none;
   box-shadow: none;
 }
+/* ============================================
+   KATEGORI INDEX SIDER (viden/kategori/)
+   ============================================ */
+.cat-index__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .75rem;
+}
+@media (min-width: 640px) {
+  .cat-index__grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+.cat-index__item {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+}
+.cat-index__item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
+.cat-index__cat {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.cat-index__title {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--text-1);
+  line-height: 1.4;
+}
