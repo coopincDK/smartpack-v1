@@ -817,6 +817,13 @@
     }
     document.addEventListener('DOMContentLoaded', calculatePrice);
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // EmailJS init — hent din Public Key på: emailjs.com > Account > API Keys
+    (function(){
+      emailjs.init({ publicKey: 'DIN_PUBLIC_KEY_HER' });
+    })();
+  </script>
   <script src="js/main.js?v=2" defer></script>
 
 

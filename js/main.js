@@ -157,23 +157,43 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// --- SELF-ONBOARD: Email signup ---
+// --- SELF-ONBOARD: Email signup via EmailJS ---
+// Opsætning (3 trin):
+//   1. Gå til emailjs.com og opret gratis konto
+//   2. Tilføj en Email Service (Gmail / Outlook) → kopiCr Service ID herunder
+//   3. Opret et Email Template med variabel {{user_email}} → kopier Template ID
+//   4. Sæt din Public Key i priser.html (se kommentar der)
+const EMAILJS_SERVICE_ID  = 'DIN_SERVICE_ID';   // emailjs.com > Email Services
+const EMAILJS_TEMPLATE_ID = 'DIN_TEMPLATE_ID';  // emailjs.com > Email Templates
+
 window.handleSignup = function(e) {
   e.preventDefault();
   const form  = e.target;
   const email = form.querySelector('input[type="email"]').value;
   const btn   = form.querySelector('button');
+  const input = form.querySelector('input');
 
-  // Visual feedback
-  btn.textContent = 'Du er skrevet op ✓';
-  btn.style.background = 'var(--accent)';
-  btn.style.color = '#060f09';
+  // Optimistic UI — vis feedback med det samme
+  btn.textContent = 'Sender...';
   btn.disabled = true;
-  form.querySelector('input').disabled = true;
+  input.disabled = true;
 
-  // TODO: Replace with actual API call / Mailchimp / ConvertKit etc.
-  // fetch('/api/signup', { method: 'POST', body: JSON.stringify({ email }) })
-  console.log('Signup:', email);
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    user_email:  email,
+    signup_type: 'V2 Wizard — tidlig adgang',
+    timestamp:   new Date().toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })
+  })
+  .then(function() {
+    btn.textContent = 'Du er på listen \u2713';
+    btn.style.background = 'var(--accent)';
+    btn.style.color = '#060f09';
+  })
+  .catch(function(err) {
+    console.error('EmailJS fejl:', err);
+    btn.textContent = 'Prøv igen';
+    btn.disabled = false;
+    input.disabled = false;
+  });
 };
 
 // --- HERO LOGOS: auto-scroll on mobile ---
