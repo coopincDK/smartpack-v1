@@ -66,8 +66,8 @@
   <script src="js/theme-toggle.js"></script>
 
   <style>
-    /* --- Hero override: trim luft --- */
-    .hero { min-height: auto; padding: 6rem 0 4rem; }
+    /* --- Hero override --- */
+    .hero { min-height: auto; padding: 9rem 0 7rem; }
 
     /* --- Feature sections --- */
     .feat-section { padding: clamp(3.5rem, 6vw, 5rem) 0; }
@@ -270,6 +270,20 @@
           <img src="assets/aerial view of a dark warehouse grid.gif" alt="SmartPack ruteoptimering" class="hero__dashboard-img">
         </div>
 
+        <div class="hero__flow-line" aria-hidden="true">
+          <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0 0 L6 3 L0 6 Z" fill="rgba(62,207,142,.7)"/>
+              </marker>
+            </defs>
+            <path d="M30 10 C30 60 140 60 160 110" stroke="rgba(62,207,142,.35)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowhead)"/>
+            <circle cx="30" cy="10" r="3" fill="rgba(62,207,142,.6)">
+              <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
         <div class="hero__badge hero__badge--1">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="20 6 9 17 4 12"/></svg>
           Pluk godkendt
