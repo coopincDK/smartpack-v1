@@ -81,21 +81,41 @@
     var y = document.getElementById('copy-year');
     if (y) y.textContent = new Date().getFullYear();
 
-    // Tidsstyret telefon i footer
+    // Tidsstyret support-status i footer (fuld tidsplan)
     (function() {
       var now  = new Date();
       var day  = now.getDay();   // 0=son, 1=man...6=lor
-      var hour = now.getHours(); // dansk lokal tid
-      var erAabent = day >= 1 && day <= 5 && hour >= 9 && hour < 16;
-      var phoneEl  = document.getElementById('footer-phone-ctx');
+      var h    = now.getHours();
+      var phoneEl = document.getElementById('footer-phone-ctx');
       if (!phoneEl) return;
-      if (erAabent) {
-        phoneEl.innerHTML = '<a href="tel:+4588202019" style="color:inherit">Ring til os nu &middot; +45 88 20 20 19 &middot; Tast 2</a>';
+
+      // dot farver
+      var G = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#3ecf8e;margin-right:5px;vertical-align:middle"></span>';
+      var Y = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f0b429;margin-right:5px;vertical-align:middle"></span>';
+      var R = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e53e3e;margin-right:5px;vertical-align:middle"></span>';
+
+      var dot, label, msg;
+      var erWeekend = (day === 0 || day === 6);
+
+      if (erWeekend) {
+        // Weekend (lor+son)
+        if (h >= 0 && h < 8)  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
+        else if (h < 16)      { dot=Y; label='Weekend'; msg='KUN ved reel driftstop &ndash; tast 9. Ellers ses vi mandag igen.'; }
+        else if (h < 20)      { dot=R; label='Weekend'; msg='Akut? Tast 9. KUN ved reel driftstop. Vi holder weekend.'; }
+        else                  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
       } else {
-        var erWeekend = day === 0 || day === 6;
-        var label = erWeekend ? 'Weekend' : 'Aften';
-        phoneEl.innerHTML = '<a href="tel:+4588202019" style="color:inherit">' + label + '? Tast 9 &middot; vi er p&aring; vagt</a>';
+        // Hverdag (man-fre)
+        if (h >= 0 && h < 6)  { dot=R; label='Vi sover';     msg='KUN driftstop &ndash; tast 9. Vi sover. Overvej om det kan vente til kl.&nbsp;9.'; }
+        else if (h < 9)       { dot=Y; label='&Aring;bner kl. 9'; msg='KUN driftstop: tast 9. Ellers er vi klar om lidt.'; }
+        else if (h < 16)      { dot=G; label='Support &aring;ben'; msg='Ring til os &ndash; vi tager telefonen nu. &middot; Tast 2'; }
+        else if (h < 20)      { dot=Y; label='Ulvetimen';    msg='Akut? Tast 9. KUN ved reel driftstop &ndash; vi har gang i ulvetimen.'; }
+        else if (h < 23)      { dot=R; label='Sent';         msg='Akut? Tast 9. KUN driftstop &ndash; vi sover muligvis, hav t&aring;lmodighed.'; }
+        else                  { dot=R; label='Vi sover';     msg='KUN driftstop &ndash; tast 9. Vi sover. Overvej om det kan vente til kl.&nbsp;9.'; }
       }
+
+      // Ved aaben support: link er tast-2, ellers tast-9
+      var href = (label === 'Support &aring;ben') ? 'tel:+4588202019' : 'tel:+4588202019';
+      phoneEl.innerHTML = dot + '<strong style="color:var(--text-1)">' + label + '</strong> &middot; <a href="' + href + '" style="color:inherit">' + msg + '</a>';
     })();
 
     /* ============================================================
