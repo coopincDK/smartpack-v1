@@ -1342,14 +1342,14 @@ function beregn() {
   var hint = '';
   var hintType = 'neutral';
 
-  if (pakkerPrMedarb > 8000) {
-    hint = '? Det svarer til ' + Math.round(pakkerPrMedarb/22) + ' pakker pr. medarbejder pr. dag. Selv med SmartPack er det i den høje ende. Er tallene rigtige?';
+  if (pakkerPrMedarb > 20000) {
+    hint = '? Det svarer til ' + Math.round(pakkerPrMedarb/22) + ' pakker pr. mand om dagen. Det er urealistisk selv med SmartPack. Er det rigtigt?';
     hintType = 'question';
-  } else if (pakkerPrMedarb < 50 && pakker > 100) {
-    hint = '? Det er under 50 pakker pr. medarbejder pr. måned. Er det et deltidslager eller sæsonlager?';
+  } else if (pakkerPrMedarb < 10 && medarb > 0) {
+    hint = '? Færre end 10 pakker pr. mand om måneden. Er det en fejlindtastning?';
     hintType = 'question';
-  } else if (pakkerPrMedarb >= 500 && pakkerPrMedarb <= 3000) {
-    hint = '✓ Det ser realistisk ud for en lageroperation af den størrelse.';
+  } else if (pakkerPrMedarb >= 200 && pakkerPrMedarb <= 10000) {
+    hint = '✓ Det har vi set hos webshops i den størrelse. Tallene giver mening.';
     hintType = 'ok';
   }
 
