@@ -413,6 +413,38 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   z-index: 1100;
 }
 .nav__item--has-dropdown.open .nav__megamenu { display: block; }
+
+/* Desktop: hover åbner megamenu med delay på luk så musen når frem */
+@media (min-width: 1081px) {
+  /* Altid renderet på desktop — brug visibility/opacity i stedet for display */
+  .nav__megamenu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity .15s ease, visibility .15s ease, transform .15s ease;
+    transition-delay: .2s; /* 200ms før luk — tid til at nå ned i menuen */
+  }
+  .nav__item--has-dropdown:hover .nav__megamenu,
+  .nav__item--has-dropdown.open .nav__megamenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition-delay: 0s; /* åben med det samme */
+  }
+  /* Usynlig bro udfylder gap mellem nav-knap og megamenu */
+  .nav__item--has-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    right: -20px;
+    height: 1rem;
+  }
+  .nav__item--has-dropdown:hover .nav__chevron { transform: rotate(180deg); }
+}
 .nav__mega-item {
   display: flex; flex-direction: column; gap: .1rem;
   padding: .65rem 1rem; border-radius: var(--r-sm);

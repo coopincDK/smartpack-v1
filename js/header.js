@@ -131,20 +131,8 @@
       if (header && !header.contains(e.target)) closeNav();
     });
 
-    // Theme toggle — wire op her fordi theme-toggle.js kører før header er injiceret
-    var themeBtn = document.querySelector('.theme-toggle');
-    if (themeBtn) {
-      themeBtn.addEventListener('click', function () {
-        var html = document.documentElement;
-        html.classList.add('theme-transition');
-        var isDark = html.getAttribute('data-theme') === 'dark';
-        var next = isDark ? 'light' : 'dark';
-        if (next === 'dark') html.setAttribute('data-theme', 'dark');
-        else html.removeAttribute('data-theme');
-        try { localStorage.setItem('sp-theme', next); } catch(e) {}
-        setTimeout(function () { html.classList.remove('theme-transition'); }, 350);
-      });
-    }
+    // Theme toggle håndteres af theme-toggle.js (DOMContentLoaded)
+    // Ingen duplicate listener her — det får toggle til at skifte 2x og går i nul
 
     // Markér aktiv side
     var path = window.location.pathname;
