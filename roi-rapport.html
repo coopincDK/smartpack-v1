@@ -311,6 +311,25 @@
       font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--green);
     }
 
+    /* Support status badge */
+    .cta-status { text-align: right; min-width: 180px; }
+    .cta-status-badge { display: inline-flex; align-items: center; gap: 5px; margin-bottom: 3px; }
+    .cta-status-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .cta-status-dot.sp-green  { background: var(--green); box-shadow: 0 0 0 0 var(--green); animation: sp-pulse-green 2s infinite; }
+    .cta-status-dot.sp-yellow { background: #f9c74f; }
+    .cta-status-dot.sp-red    { background: #e74c3c; }
+    @keyframes sp-pulse-green {
+      0%   { box-shadow: 0 0 0 0 rgba(62,207,142,0.7); }
+      70%  { box-shadow: 0 0 0 5px rgba(62,207,142,0); }
+      100% { box-shadow: 0 0 0 0 rgba(62,207,142,0); }
+    }
+    .cta-status-lbl  { font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; }
+    .cta-status-msg  { font-size: 10px; color: rgba(255,255,255,0.72); margin-bottom: 5px; max-width: 210px; text-align: right; line-height: 1.45; }
+    .cta-status-phone { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--green); }
+    .cta-status-email { font-family: var(--mono); font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.45); margin-top: 1px; }
+
     /* Misc */
     .accent-bar { height: 3px; background: var(--green); margin-bottom: 5mm; }
     .divider { border: none; border-top: 1px solid var(--border); margin: 5mm 0; }
@@ -583,10 +602,14 @@
       <div class="cta-text">Klar til at komme i gang?</div>
       <div class="cta-sub">Book en gratis gennemgang &ndash; vi gennemg&aring;r tallene sammen</div>
     </div>
-    <div class="cta-contact">
-      <div class="cta-contact-label">Kontakt</div>
-      <div class="cta-contact-value">88 20 20 19 tryk 1</div>
-      <div class="cta-contact-value">bundlinjeboost@smartpack.dk</div>
+    <div class="cta-status" id="cta-status-block">
+      <div class="cta-status-badge">
+        <div class="cta-status-dot sp-yellow" id="cta-dot"></div>
+        <div class="cta-status-lbl" id="cta-status-lbl">Support</div>
+      </div>
+      <div class="cta-status-msg" id="cta-status-msg"></div>
+      <div class="cta-status-phone">88 20 20 19 tryk 2</div>
+      <div class="cta-status-email">bundlinjeboost@smartpack.dk</div>
     </div>
   </div>
 
@@ -723,6 +746,54 @@
   var swBes = wmsNu > r.spPrisMd ? wmsNu - r.spPrisMd : 0;
   set('sw-bes', swBes > 0 ? '+' + fmtKr(swBes) : '–');
 
+})();
+
+// ── Dynamic support status ──
+(function() {
+  var now    = new Date();
+  var day    = now.getDay();   // 0=Sun … 6=Sat
+  var h      = now.getHours();
+  var isWeekend = (day === 0 || day === 6);
+
+  var dot = document.getElementById('cta-dot');
+  var lbl = document.getElementById('cta-status-lbl');
+  var msg = document.getElementById('cta-status-msg');
+  if (!dot || !lbl || !msg) return;
+
+  var s;
+  if (isWeekend) {
+    if (h >= 8 && h < 16) {
+      s = { cls: 'sp-yellow', lbl: 'Weekend',
+            msg: 'KUN ved reel driftstop – tast 9. Ellers ses vi mandag igen.' };
+    } else if (h >= 16 && h < 20) {
+      s = { cls: 'sp-red', lbl: 'Weekend',
+            msg: 'Akut? Tast 9. KUN ved reel driftstop. Vi holder weekend.' };
+    } else {
+      s = { cls: 'sp-red', lbl: 'Weekend · vi sover',
+            msg: 'KUN driftstop – tast 9. Vi sover. Mandag åbner normal support igen.' };
+    }
+  } else {
+    if (h >= 6 && h < 9) {
+      s = { cls: 'sp-yellow', lbl: 'Åbner kl. 9',
+            msg: 'KUN driftstop: tast 9. Ellers er vi klar om lidt.' };
+    } else if (h >= 9 && h < 16) {
+      s = { cls: 'sp-green', lbl: 'Support åben',
+            msg: 'Ring til os – vi tager telefonen nu.' };
+    } else if (h >= 16 && h < 20) {
+      s = { cls: 'sp-yellow', lbl: 'Ulvetimen',
+            msg: 'Akut? Tast 9. KUN ved reel driftstop – vi har gang i ulvetimen.' };
+    } else if (h >= 20 && h < 23) {
+      s = { cls: 'sp-red', lbl: 'Sent',
+            msg: 'Akut? Tast 9. KUN driftstop – vi sover muligvis, hav tålmodighed.' };
+    } else {
+      s = { cls: 'sp-red', lbl: 'Vi sover',
+            msg: 'KUN driftstop – tast 9. Vi sover. Overvej om det kan vente til kl. 9.' };
+    }
+  }
+
+  dot.className = 'cta-status-dot ' + s.cls;
+  lbl.textContent = s.lbl;
+  msg.textContent = s.msg;
 })();
 </script>
 
