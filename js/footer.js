@@ -8,6 +8,8 @@
   function url(path) { return _base + path; }
 
   function injectFooter() {
+    // Telefon-placeholder: tekst sættes dynamisk efter DOM-indsættelse
+    var phoneHtml = '            <li id="footer-phone-ctx"><a href="tel:+4588202019" style="color:inherit">+45 88 20 20 19</a></li>';
     var placeholder = document.getElementById('sp-footer');
     if (!placeholder) return;
 
@@ -50,8 +52,7 @@
       '          <ul>',
       '            <li><a href="' + url('/faq.html') + '">FAQ</a></li>',
       '            <li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li>',
-      '            <li><a href="tel:+4588202019">+45 88 20 20 19 &middot; Tast 2</a></li>',
-      '            <li><a href="tel:+4588202019">Akut? Tast 9. Selv hvis vi sover.</a></li>',
+      phoneHtml,
       '          </ul>',
       '        </div>',
       '      </div>',
@@ -79,6 +80,23 @@
 
     var y = document.getElementById('copy-year');
     if (y) y.textContent = new Date().getFullYear();
+
+    // Tidsstyret telefon i footer
+    (function() {
+      var now  = new Date();
+      var day  = now.getDay();   // 0=son, 1=man...6=lor
+      var hour = now.getHours(); // dansk lokal tid
+      var erAabent = day >= 1 && day <= 5 && hour >= 8 && hour < 17;
+      var phoneEl  = document.getElementById('footer-phone-ctx');
+      if (!phoneEl) return;
+      if (erAabent) {
+        phoneEl.innerHTML = '<a href="tel:+4588202019" style="color:inherit">Ring til os nu &middot; +45 88 20 20 19 &middot; Tast 2</a>';
+      } else {
+        var erWeekend = day === 0 || day === 6;
+        var label = erWeekend ? 'Weekend' : 'Aften';
+        phoneEl.innerHTML = '<a href="tel:+4588202019" style="color:inherit">' + label + '? Tast 9 &middot; vi er p&aring; vagt</a>';
+      }
+    })();
 
     /* ============================================================
        TRACKING — indsæt scripts her
