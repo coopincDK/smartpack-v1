@@ -1,5 +1,5 @@
-/* ============================================================
-   SmartPack — Centraliseret header
+﻿/* ============================================================
+   SmartPack , Centraliseret header
    Virker på alle domæner og subdirectory-deployments.
    ============================================================ */
 (function () {
@@ -132,7 +132,7 @@
     });
 
     // Theme toggle håndteres af theme-toggle.js (DOMContentLoaded)
-    // Ingen duplicate listener her — det får toggle til at skifte 2x og går i nul
+    // Ingen duplicate listener her , det får toggle til at skifte 2x og går i nul
 
     // Markér aktiv side
     var path = window.location.pathname;
@@ -148,7 +148,7 @@
     });
   }
 
-  // Kør synkront — placeholder er i DOM på dette tidspunkt.
+  // Kør synkront , placeholder er i DOM på dette tidspunkt.
   // Fallback til DOMContentLoaded (fx hvis scriptet flyttes til <head>).
   if (document.getElementById('sp-header')) {
     injectHeader();
