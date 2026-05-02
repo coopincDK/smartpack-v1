@@ -616,7 +616,8 @@
             <span class="inp-label">Pakker sendt pr. måned</span>
             <span class="inp-val" data-sid="pakker" title="Klik for at indtaste" id="v-pakker">1.500</span>
           </div>
-          <input type="range" class="roi-range" id="pakker" min="100" max="250000" step="100" value="1500">
+          <input type="range" class="roi-range" id="pakker" min="100" max="100000" step="100" value="1500">
+          <div class="inp-note">Op til 100.000 pakker. Sender I mere? Klik på tallet ovenfor og indtast direkte.</div>
         </div>
 
         <div class="inp-field">
@@ -1645,6 +1646,7 @@ function updateCharts(r) {
 // --- QC → Beregner sync ---
 // Når Quick Calc opdateres, sættes de tilsvarende slidere i den detaljerede beregner også.
 var _syncingFromBeregner = false;
+var _pakkerTouched = false;
 function syncQCToBeregner() {
   if (_syncingFromBeregner) return;
   var ordrer  = Math.max(100,   +document.getElementById('qc-ordrer').value || 1500);
@@ -1666,7 +1668,7 @@ function syncQCToBeregner() {
     syncSlider(s);
   }
 
-  // setSlider('pakker', pakker);
+  if (!_pakkerTouched) { var ps = document.getElementById('pakker'); if(ps){ ps.value = Math.min(100000, Math.max(100, pakker)); syncSlider(ps); } }
   setSlider('medarb', medarbV);
   setSlider('lon',    lonTime);
   setSlider('fejl',   fejlV);
@@ -1707,6 +1709,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initCharts();
   document.querySelectorAll('.roi-range').forEach(s => {
     syncSlider(s);
+    if (s.id === 'pakker') { s.addEventListener('input', function() { _pakkerTouched = true; }); }
     s.addEventListener('input', update);
   });
   document.getElementById('branche').addEventListener('change', update);
