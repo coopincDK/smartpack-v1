@@ -186,6 +186,7 @@
 .sanity-box{display:none;font-size:.72rem;color:#9a6800;background:rgba(250,180,0,.09);border:1px solid rgba(250,180,0,.35);border-radius:var(--r-sm);padding:.5rem .8rem;margin-top:.35rem;line-height:1.55}
 .sanity-box.visible{display:block}
 .sanity-box--info{color:var(--text-2);background:var(--bg-2);border-color:var(--border)}
+.sanity-box--overcap{color:#c0392b;background:rgba(192,57,43,.07);border-color:rgba(192,57,43,.35)}
 .eff-score{display:flex;align-items:center;gap:.5rem;margin:.5rem 0;font-size:.67rem;color:var(--text-3)}
 .eff-score__bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
 .eff-score__fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s ease}
@@ -265,7 +266,7 @@
 .formula-result{display:flex;align-items:center;justify-content:space-between;background:rgba(62,207,142,.08);border:1px solid rgba(62,207,142,.25);border-radius:var(--r-sm);padding:.85rem 1.1rem}
 .formula-result__lbl{font-size:.88rem;font-weight:700;color:var(--text-2)}
 .formula-result__num{font-size:1.35rem;font-weight:900;color:var(--accent)}
-.payback-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--text-1);color:var(--accent);font-size:.85rem;font-weight:800;padding:.55em 1.2em;border-radius:99px;margin-top:1rem}
+.payback-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;font-size:.85rem;font-weight:800;padding:.55em 1.2em;border-radius:99px;margin-top:1rem}
 
 /* Gevinst-sektion */
 .gevinst-strip{background:var(--bg-1);border-bottom:1px solid var(--border);padding:4rem 0}
@@ -425,6 +426,7 @@
           <div class="sanity-box" id="san-auto">Det lyder som et setup med h&oslash;j automatisering. Her b&oslash;r vi lave en konkret vurdering frem for en standardberegning.</div>
           <div class="sanity-box" id="san-lon">Det l&oslash;nniveau virker lavt inkl. feriepenge og arbejdsgiverudgifter. Tjek om tallet er realistisk &ndash; ellers bliver ROI for lav.</div>
           <div class="sanity-box sanity-box--info" id="san-pluk">Det er allerede ekstremt hurtigt. SmartPack skaber typisk v&aelig;rdi via kontrol, fragt og integrationer frem for ren plukhastighed.</div>
+          <div class="sanity-box sanity-box--overcap" id="san-overcap">Jeres volumen overstiger hvad <span id="san-overcap-stab">3</span> medarbejdere kan h&aring;ndtere &mdash; selv med SmartPack. Beregningen er baseret p&aring; realistisk kapacitet (<span id="san-overcap-kapnu">0</span> pakker/md). For det fulde potentiale: book en snak.</div>
         </div>
 
         <div class="qc-cta">
@@ -440,10 +442,10 @@
 <!-- BRUTAL REALITET -->
 <section style="background:var(--accent);padding:2.75rem 0;border-bottom:3px solid var(--text-1)">
   <div class="container" style="text-align:center">
-    <div style="font-size:clamp(1.35rem,3vw,1.9rem);font-weight:900;color:var(--text-1);line-height:1.25;margin-bottom:.7rem">
+    <div style="font-size:clamp(1.35rem,3vw,1.9rem);font-weight:900;color:#fff;line-height:1.25;margin-bottom:.7rem">
       De fleste lagre er 20-40% overbemandet.
     </div>
-    <div style="font-size:.95rem;color:rgba(0,0,0,.6);line-height:1.8;max-width:480px;margin:0 auto">
+    <div style="font-size:.95rem;color:rgba(255,255,255,.85);line-height:1.8;max-width:480px;margin:0 auto">
       Ikke fordi de er dårlige.<br>Men fordi systemerne er det.
     </div>
   </div>
@@ -560,7 +562,7 @@
       <div>
         <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:.35rem">Detaljeret beregner</div>
         <div style="font-size:1.05rem;font-weight:800;color:var(--text-1);margin-bottom:.35rem">Vil du nørde tallene?</div>
-        <div style="font-size:.88rem;color:var(--text-2);line-height:1.6">Vi har allerede taget udgangspunkt i dine tal ovenfor. Her kan du justere alle detaljer: branche, vækstrate, returhåndtering, software-udgifter og saisonudsving &ndash; og se det samlede regnskab i realtid.</div>
+        <div style="font-size:.88rem;color:var(--text-2);line-height:1.6">Vi har allerede taget udgangspunkt i dine tal ovenfor. Her kan du justere alle detaljer: branche, vækstrate, returhåndtering, software-udgifter og sæsonudsving &ndash; og se det samlede regnskab i realtid.</div>
       </div>
     </div>
   </div>
@@ -803,7 +805,7 @@
         <div class="stat-card__val" id="r-timer">0</div>
         <div class="stat-card__sub">ved uændret volumen</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" id="noedv-card">
         <div class="stat-card__label">Nødv. medarbejdere</div>
         <div class="stat-card__val" id="r-noedv">0</div>
         <div class="stat-card__sub" id="r-noedv-sub">vs. 3 i dag</div>
@@ -818,6 +820,11 @@
         <div class="stat-card__val" id="r-payback">0 mdr.</div>
         <div class="stat-card__sub">fra første faktura</div>
       </div>
+    </div>
+
+    <!-- OVERCAPACITY ADVARSEL -->
+    <div id="res-overcap" style="display:none;margin:.75rem 0;padding:.85rem 1.1rem;background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.35);border-radius:var(--r-md);font-size:.78rem;color:#c0392b;line-height:1.6">
+      <strong>&#9888; Volumen overstiger kapacitet:</strong> Med <span id="res-overcap-stab">3</span> medarbejdere kan I h&aring;ndtere <span id="res-overcap-kapnu">0</span> pakker/md med SmartPack. Besparelsen er beregnet p&aring; den reelle kapacitet. For <span id="res-overcap-pakker">0</span> pakker/md skal I bruge <span id="res-overcap-noedv">0</span> medarbejdere &mdash; personaleomkostning er <em>ikke</em> inkluderet i denne beregning.
     </div>
 
     <!-- KAPACITETSGRAF -->
@@ -1085,6 +1092,16 @@
     sanityShow('san-auto', medarb <= 1 && pakker_md > 50000);
     sanityShow('san-lon',  lon < 20000);
     sanityShow('san-pluk', pluk < 15);
+    // Overcapacity: volumen kræver flere medarbejdere end angivet
+    var MEDIAN_QC   = 25; // gennemsnit på tværs af brancher (pkgs/time)
+    var noedvQC     = pakker_md / (TIMER_PR_MND * MEDIAN_QC);
+    var overcapQC   = noedvQC > medarb;
+    var kapnuQC     = Math.round(medarb * TIMER_PR_MND * MEDIAN_QC);
+    sanityShow('san-overcap', overcapQC);
+    if (overcapQC) {
+      var el1 = document.getElementById('san-overcap-stab');  if (el1) el1.textContent = medarb;
+      var el2 = document.getElementById('san-overcap-kapnu'); if (el2) el2.textContent = kapnuQC.toLocaleString('da-DK');
+    }
 
     // --- EXTREME CASE ---
     var isExtreme = eff.key === 'extreme';
@@ -1269,7 +1286,12 @@ function beregn() {
   const frigivneRaw    = Math.max(0, timerIAlt - timerMedSP);
   const frigivne       = Math.min(frigivneRaw, timerIAlt);   // max = hvad de bruger i dag
   const noedvendige    = Math.max(0.1, timerMedSP / TIMER_PR_MND);
-  const antalFejl      = pakker * (fejl / 100);
+
+  // OVERCAPACITY: Brugeren har angivet et volumen der kræver FLERE medarbejdere end de har.
+  // besFejl og ekstrakapacitet cappas til det realistiske (kapNu = hvad nuv. stab kan med SP).
+  const overcapacity   = noedvendige > medarb;
+  const pakkerEff      = overcapacity ? Math.min(pakker, kapNu) : pakker;
+  const antalFejl      = pakkerEff * (fejl / 100);
 
   // CLAMP: lønbesparelse max = faktisk lønudgift
   const besArbRaw      = frigivne * lon;
@@ -1279,7 +1301,8 @@ function beregn() {
   // Kapacitet
   const kapNu          = b.median * timerIAlt;  // Hvad kan de sende MED SP ved nuv. timer
   const kapUden        = pakkerPrTimeNu * timerIAlt; // = pakker (nuv. kapacitetsloft)
-  const ekstraOrdrer   = Math.max(0, kapNu - pakker);
+  // Ekstra kapacitet: kun relevant når vi IKKE er overcapacity
+  const ekstraOrdrer   = overcapacity ? 0 : Math.max(0, kapNu - pakker);
 
   // Omsætning
   const avancePrOrdre  = ordrevaerdi * (avance / 100);
@@ -1308,6 +1331,7 @@ function beregn() {
   const wmsForskell    = wms > 0 ? wms - spPrisMd : 0;
 
   // Total besparelse
+  // NB: ekstra kapacitet (ekstraOrdrer/extraOms) nulstilles ved overcapacity
   const totalBes       = besArb + besFejl + checkout + Math.max(0, wmsForskell) + besRetur + besKS;
   const netto          = totalBes - spPrisMd;
   const totalAar       = totalBes * 12;
@@ -1327,7 +1351,7 @@ function beregn() {
   return {
     medarb, pakker, lon, fejl, fejlomk, vaekst, ordrevaerdi, avance, wms, checkout,
     returrate, fragtRetur, peak, ksMin, branche,
-    b, timerIAlt, pakkerPrTimeNu, frigivne, noedvendige, antalFejl,
+    b, timerIAlt, pakkerPrTimeNu, frigivne, noedvendige, antalFejl, overcapacity, pakkerEff,
     besArb, besFejl, ekstraOrdrer, extraOms, extraAvance,
     besRetur, reduceredeRetur, besKS, ksTiMd,
     besPeak, peakPakker, vikarTimerUden, vikarTimerMed,
@@ -1349,6 +1373,20 @@ function updateDOM(r) {
   el('r-timer').textContent  = fmtN(r.frigivne, 1);
   el('r-noedv').textContent  = fmtN(r.noedvendige, 1);
   el('r-noedv-sub').textContent = 'vs. ' + r.medarb + ' i dag';
+
+  // Overcapacity: vis advarsel og farv kortet rødt
+  var resOvercap = document.getElementById('res-overcap');
+  var noedvCard  = document.getElementById('noedv-card');
+  if (resOvercap) resOvercap.style.display = r.overcapacity ? '' : 'none';
+  if (noedvCard)  noedvCard.style.border   = r.overcapacity ? '1px solid rgba(192,57,43,.5)' : '';
+  if (r.overcapacity) {
+    var kapnuFmt = Math.round(r.kapNu).toLocaleString('da-DK');
+    var setOC = function(id, val) { var e = document.getElementById(id); if(e) e.textContent = val; };
+    setOC('res-overcap-stab',   r.medarb);
+    setOC('res-overcap-kapnu',  kapnuFmt);
+    setOC('res-overcap-pakker', Math.round(r.pakker).toLocaleString('da-DK'));
+    setOC('res-overcap-noedv',  fmtN(r.noedvendige, 1));
+  }
   el('r-roi').textContent    = r.roi > 0   ? '+' + fmtN(r.roi, 0) + '%'
                               : r.roi > -30 ? 'Tæt på break-even'
                               : 'I klarer det allerede godt';
