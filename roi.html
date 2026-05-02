@@ -1142,7 +1142,7 @@
     sanityShow('san-pluk', pluk < 15);
     // Overcapacity: volumen kræver flere medarbejdere end angivet
     var MEDIAN_QC    = 25;  // fallback-median på tværs af brancher (pkgs/time)
-    var MAX_PKG_TIME = 750; // absolut maksimum ved meget lette ordrer
+    var MAX_PKG_TIME = 100; // absolut maksimum ved meget lette ordrer (100 pkgs/time ≅ 17.600 pkgs/md)
     var _brancheEl   = document.getElementById('branche');
     var _brancheVal  = _brancheEl ? _brancheEl.value : '';
     var _brancheData = (typeof BRANCHE !== 'undefined' && BRANCHE[_brancheVal]) ? BRANCHE[_brancheVal] : null;
@@ -1271,7 +1271,7 @@ const BRANCHE = {
   'Elektronik':          { min:21, max:36, median:28 },
   'Bolig & isenkram':   { min:15, max:34, median:23 },
   'M\u00f8bler':           { min:9,  max:17, median:13 },
-  'Lette ordrer (h\u00f8j vol.)': { min:150, max:750, median:300 },
+  'Lette ordrer (h\u00f8j vol.)': { min:60,  max:100, median:80  },
   'Andet':               { min:15, max:35, median:23 },
 };
 
