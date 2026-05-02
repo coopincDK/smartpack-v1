@@ -615,7 +615,7 @@
             <span class="inp-label">Pakker sendt pr. måned</span>
             <span class="inp-val" data-sid="pakker" title="Klik for at indtaste" id="v-pakker">1.500</span>
           </div>
-          <input type="range" class="roi-range" id="pakker" min="100" max="250000" step="100" value="1500">
+          <input type="range" class="roi-range" id="pakker" min="0" max="1000" step="1" value="318">
         </div>
 
         <div class="inp-field">
@@ -1230,6 +1230,17 @@ function fmtN(n, dec=0) {
 function fmtKr(n) { return fmtN(Math.round(n)) + '\u00a0kr.'; }
 function fmtPct(n, dec=1) { return fmtN(n,dec).replace('.',',') + '%'; }
 
+// --- Log-scale helpers til pakker-slider (100–500.000) ---
+// Slider kører 0–1000 internt; konverteres til rigtig pakketal via log-skala
+var _LOG_MIN = Math.log(100);
+var _LOG_MAX = Math.log(500000);
+function _sliderToPakker(v) {
+  return Math.round(Math.exp(_LOG_MIN + (v / 1000) * (_LOG_MAX - _LOG_MIN)) / 100) * 100;
+}
+function _pakkerToSlider(p) {
+  return Math.round((Math.log(Math.max(100, p)) - _LOG_MIN) / (_LOG_MAX - _LOG_MIN) * 1000);
+}
+
 // --- Slider sync ---
 function syncSlider(el) {
   const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
@@ -1261,7 +1272,7 @@ function stepPrev() { if(_step>0) goStep(_step-1); }
 // --- Beregning ---
 function beregn() {
   const medarb     = +document.getElementById('medarb').value;
-  const pakker     = +document.getElementById('pakker').value;
+  const pakker     = _sliderToPakker(+document.getElementById('pakker').value);
   const lon        = +document.getElementById('lon').value;
   const fejl       = +document.getElementById('fejl').value;
   const fejlomk    = +document.getElementById('fejlomk').value;
@@ -1653,7 +1664,7 @@ function syncQCToBeregner() {
   function setSlider(id, val) {
     var s = document.getElementById(id);
     if (!s) return;
-    s.value = val;
+    s.value = (id === 'pakker') ? _pakkerToSlider(val) : val;
     syncSlider(s);
   }
 
@@ -1672,7 +1683,7 @@ function syncBeregnerToQC() {
     var el = document.getElementById(id);
     if (el && document.activeElement !== el) el.value = val;
   }
-  var pakker = +document.getElementById('pakker').value || 1500;
+  var pakker = _sliderToPakker(+document.getElementById('pakker').value || 318);
   var medarb = +document.getElementById('medarb').value || 3;
   var lon    = +document.getElementById('lon').value    || 200;
   var fejl   = +document.getElementById('fejl').value  || 1.1;
@@ -1710,11 +1721,13 @@ document.addEventListener('DOMContentLoaded', function() {
       var slider = document.getElementById(sid);
       if (!slider) return;
       var origVal = +slider.value;
+      var isLogPakker = (sid === 'pakker');
+      var displayVal = isLogPakker ? _sliderToPakker(origVal) : origVal;
       var inp = document.createElement('input');
       inp.type = 'number';
-      inp.value = origVal;
-      inp.min = slider.min;
-      inp.step = slider.step || 1;
+      inp.value = displayVal;
+      inp.min = isLogPakker ? '100' : slider.min;
+      inp.step = isLogPakker ? '100' : (slider.step || 1);
       inp.style.cssText = 'width:90px;text-align:right;font-weight:800;color:var(--accent);font-size:.9rem;background:transparent;border:0;border-bottom:2px solid var(--accent);outline:none;font-variant-numeric:tabular-nums;';
       span.style.display = 'none';
       span.after(inp);
@@ -1724,10 +1737,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (applied) return;
         applied = true;
         var v = parseFloat(inp.value);
-        if (isNaN(v)) v = origVal;
-        v = Math.max(+(slider.min) || 0, v);
-        if (v > +slider.max) slider.max = Math.ceil(v / (+slider.step || 100)) * (+slider.step || 100);
-        slider.value = v;
+        if (isNaN(v)) v = displayVal;
+        if (isLogPakker) {
+          v = Math.max(100, v);
+          slider.value = _pakkerToSlider(v);
+        } else {
+          v = Math.max(+(slider.min) || 0, v);
+          if (v > +slider.max) slider.max = Math.ceil(v / (+slider.step || 100)) * (+slider.step || 100);
+          slider.value = v;
+        }
         syncSlider(slider);
         inp.remove();
         span.style.display = '';
