@@ -278,11 +278,20 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   position: fixed;
   top: var(--announce-h); left: 0; right: 0;
   z-index: 1000;
+  overflow: visible;
   background: rgba(9,12,15,.97);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(255,255,255,.08);
   transition: background var(--t-slow), box-shadow var(--t-slow);
+}
+/* Blur-effekten på ::before frigiver megamenu fra headerens stacking context */
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  z-index: -1;
+  pointer-events: none;
 }
 .site-header.scrolled {
   background: rgb(9,12,15);
@@ -442,6 +451,10 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
     -webkit-backdrop-filter: none !important;
     background: rgb(9,12,15) !important;
     overflow: visible !important;
+  }
+  .site-header::before {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
   .nav { overflow: visible !important; position: relative !important; }
 
@@ -3079,8 +3092,11 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* Light mode nav */
 :root:not([data-theme="dark"]) .site-header {
   background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
+}
+:root:not([data-theme="dark"]) .site-header::before {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 :root:not([data-theme="dark"]) .nav__logo-text {
   color: #111;
@@ -3360,7 +3376,10 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* Dark mode nav (matches original) */
 [data-theme="dark"] .site-header {
   background: rgba(9,12,15,.97);
+}
+[data-theme="dark"] .site-header::before {
   backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 [data-theme="dark"] .hero__badge {
   border-color: rgba(62,207,142,.25);
