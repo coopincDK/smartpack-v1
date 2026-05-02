@@ -177,6 +177,42 @@
 @media(max-width:600px) {
   .stat-strip { grid-template-columns:repeat(2,1fr); }
 }
+    /* Pricing calculator */
+    .pricing-hero-grid { display:grid; grid-template-columns:5fr 7fr; gap:3rem; align-items:stretch; padding:var(--section-py) 0 2rem; }
+    .pricing-hero-left { padding-top:1rem; display:flex; flex-direction:column; }
+    .pricing-hero-right { display:flex; flex-direction:column; background:var(--bg-3); border:1px solid var(--border); border-radius:var(--r-lg); padding:2rem 2.5rem; }
+    @media (max-width:900px) { .pricing-hero-grid { grid-template-columns:1fr; gap:2.5rem; padding:3rem 0; } }
+    .pricing-philosophy__promises { display:flex; flex-direction:column; gap:.75rem; margin-top:2rem; }
+    .pricing-philosophy__promise { display:flex; align-items:center; gap:.6rem; font-size:.9rem; color:var(--text-2); }
+    .pricing-philosophy__promise svg { flex-shrink:0; color:var(--accent); }
+    .pricing-calc { background:transparent; border:none; border-radius:0; padding:0; max-width:100%; margin:1.25rem 0 0; }
+    .calc-field { margin-bottom:1.75rem; }
+    .calc-field__header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.6rem; }
+    .calc-field__lbl { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); }
+    .calc-field__input { font-size:1.2rem; font-weight:800; color:var(--accent); background:rgba(62,207,142,.08); border:1px solid rgba(62,207,142,.25); border-radius:8px; padding:.2em .6em; width:120px; text-align:right; transition:border-color var(--t-fast),background var(--t-fast); }
+    .calc-field__input:focus { outline:none; border-color:var(--accent); background:rgba(62,207,142,.13); }
+    .calc-field__input::-webkit-outer-spin-button,.calc-field__input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+    .calc-field__input[type=number] { -moz-appearance:textfield; }
+    .calc-field input[type="range"] { width:100%; accent-color:var(--accent); cursor:pointer; height:4px; }
+    .calc-field__minmax { display:flex; justify-content:space-between; font-size:.65rem; color:var(--text-3); margin-top:.35rem; opacity:.6; }
+    .calc-result-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; background:rgba(62,207,142,.06); border:1px solid rgba(62,207,142,.2); border-radius:var(--r-md); margin-top:1.5rem; overflow:hidden; }
+    .calc-res { padding:1.4rem 1.5rem; border-right:1px solid rgba(62,207,142,.15); }
+    .calc-res:last-child { border-right:none; }
+    .calc-res__lbl { font-size:.65rem; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); margin-bottom:.5rem; }
+    .calc-res__num { font-size:2rem; font-weight:900; color:var(--accent); letter-spacing:-.03em; line-height:1; }
+    .calc-res__num span { font-size:.9rem; color:var(--text-2); font-weight:700; margin-left:.15em; }
+    .calc-res--total .calc-res__num { color:var(--text-1); }
+    .calc-note { font-size:.73rem; color:var(--text-3); margin-top:1.25rem; line-height:1.65; border-top:1px solid var(--border); padding-top:1rem; }
+    .calc-note strong { color:var(--text-2); }
+    .calc-cta { display:block; text-align:center; background:var(--accent); color:var(--bg) !important; font-weight:800; font-size:.9rem; padding:.9rem 1.5rem; border-radius:var(--r-sm); text-decoration:none; transition:opacity var(--t-fast); margin-top:1.5rem; }
+    .calc-cta:hover { opacity:.88; }
+    @media (max-width:640px) {
+      .pricing-calc { padding:1.25rem 1rem; margin-top:0; }
+      .calc-result-row { grid-template-columns:1fr; }
+      .calc-res { border-right:none; border-bottom:1px solid rgba(62,207,142,.15); }
+      .calc-res:last-child { border-bottom:none; }
+      .calc-field__input { width:90px; font-size:1rem; }
+    }
 </style>
 </head>
 <body>
@@ -319,6 +355,116 @@
     </div>
 
     <p style="font-size:.8rem;color:var(--text-3);margin-top:1.5rem;text-align:center">Alle priser er ekskl. moms &middot; Tilpasninger uden for standardrammen afregnes efter s&aelig;rskilt tilbud og accept fra lagerhotellet</p>
+  </div>
+</section>
+
+<!-- PRISBEREGNER -->
+<section class="pricing-calc-section" style="background:var(--bg-2);position:relative">
+  <div class="container">
+    <div class="pricing-hero-grid reveal">
+
+      <!-- Venstre: tekst -->
+      <div class="pricing-hero-left">
+        <div class="eyebrow">S&aring;dan afregner vi</div>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;line-height:1.15;margin:.5rem 0 1.5rem">I betaler for det der sendes.<br>Ikke for det der st&aring;r stille.</h2>
+        <p style="color:var(--text-2);line-height:1.75;font-size:1rem;margin-bottom:1.5rem">
+          SmartPack afregner lagerhotellet per pakke, ikke per m&aring;ned og ikke per bruger. Jo mere jeres kunder sender, jo lavere stykpris &mdash; og jo bedre s&oslash;mmer tallet for alle parter.
+        </p>
+        <div class="pricing-philosophy__promises">
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen faste m&aring;nedlige platformsafgifter</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Ingen skjulte overraskelser</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Fri support til jeres superbrugere</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>I betaler for det, der giver v&aelig;rdi</span>
+          </div>
+          <div class="pricing-philosophy__promise">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>SmartPack fakturerer kun lagerhotellet</span>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(62,207,142,.06);border:1px solid rgba(62,207,142,.2);border-radius:12px">
+          <p style="font-size:.82rem;font-weight:800;color:var(--text-1);margin-bottom:.4rem">Hvad med vores robotter og h&aring;ndscannere?</p>
+          <p style="font-size:.78rem;color:var(--text-3);line-height:1.7">Der er intet m&aring;nedligt fee p&aring;, at jeres lagerrobot eller scannerudstyr snakker med SmartPack. Vi ser hardwaren som en del af driften, ikke som en ekstra abonnementslinje.</p>
+        </div>
+      </div>
+
+      <!-- H&oslash;jre: beregner -->
+      <div class="pricing-hero-right">
+        <div class="eyebrow" style="margin-bottom:.5rem">Hvad koster det dit lager?</div>
+        <h3 style="font-size:clamp(1.9rem,3vw,2.5rem);font-weight:900;margin-bottom:.5rem">Beregn jeres m&aring;nedlige pris.</h3>
+        <p style="font-size:.85rem;color:var(--text-3);margin-bottom:1.5rem">Stykprisen falder automatisk jo flere pakker I sender samlet.</p>
+    <div class="pricing-calc">
+
+      <!-- Slider: pakker -->
+      <div class="calc-field">
+        <div class="calc-field__header">
+          <span class="calc-field__lbl">Pakker / m&aring;ned</span>
+          <div style="display:flex;align-items:center;gap:.4rem">
+            <input type="number" class="calc-field__input" id="pkgInput" min="0" max="999999" value="1500" oninput="syncFromInput('packages','pkgInput')">
+            <span style="font-size:.85rem;font-weight:700;color:var(--text-3)">stk.</span>
+          </div>
+        </div>
+        <input type="range" id="packages" min="0" max="100000" step="50" value="1500" oninput="syncFromSlider('packages','pkgInput')">
+        <div class="calc-field__minmax"><span>0 pakker</span><span>100.000 pakker</span></div>
+      </div>
+
+      <!-- Slider: returprocent -->
+      <div class="calc-field" style="margin-bottom:1rem">
+        <div class="calc-field__header">
+          <span class="calc-field__lbl">Returprocent</span>
+          <div style="display:flex;align-items:center;gap:.4rem;margin-left:auto">
+            <input type="number" class="calc-field__input" id="retPctInput" min="0" max="100" step="0.5" value="3" oninput="syncFromInput('retPct','retPctInput')" style="width:80px">
+            <span style="font-size:1.1rem;font-weight:800;color:var(--text-1)">%</span>
+          </div>
+        </div>
+        <input type="range" id="retPct" min="0" max="50" step="0.5" value="3" oninput="syncFromSlider('retPct','retPctInput')">
+        <div class="calc-field__minmax"><span>0%</span><span>50%</span></div>
+      </div>
+
+      <!-- Resultat -->
+      <div class="calc-result-row">
+        <div class="calc-res">
+          <div class="calc-res__lbl">Per pakke</div>
+          <div class="calc-res__num" id="outPkg">&ndash; <span>kr.</span></div>
+        </div>
+        <div class="calc-res calc-res--total">
+          <div class="calc-res__lbl">Total / m&aring;ned</div>
+          <div class="calc-res__num" id="outTotal">&ndash; <span>kr.</span></div>
+        </div>
+        <div class="calc-res">
+          <div class="calc-res__lbl">Returpakker</div>
+          <div class="calc-res__num" id="outReturns">0 <span>stk.</span></div>
+        </div>
+      </div>
+
+      <p class="calc-note">
+        Prisen justeres automatisk m&aring;ned for m&aring;ned, ingen binding.<br>
+        <strong>Minimumsafregning: 3.000 kr./m&aring;ned.</strong> Laveste stykpris: 0,69 kr. ved 95.000+ pakker.
+      </p>
+      <a href="/kontakt.html" class="calc-cta">F&aring; et pr&aelig;cist tilbud &rarr;</a>
+
+    </div><!-- /pricing-calc -->
+
+        <!-- Betingelser -->
+        <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:.35rem">
+          <p style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3)">Betingelser for beregning</p>
+          <p style="font-size:.67rem;color:var(--text-3);line-height:1.6"><span style="color:var(--accent);font-weight:700">*</span> Returordre, interne ordrer samt opdeling eller flere plukkeruter &oslash;ger antallet af pakker pr. ordre.</p>
+          <p style="font-size:.67rem;color:var(--text-3);line-height:1.6"><span style="color:var(--accent);font-weight:700">*</span> Minimumsafregning: <strong style="color:var(--text-2)">3.000 DKK/m&aring;ned</strong> pr. lager.</p>
+        </div>
+      </div><!-- /pricing-hero-right -->
+
+    </div><!-- /pricing-hero-grid -->
   </div>
 </section>
 
@@ -646,5 +792,34 @@
 <script src="/js/footer.js"></script>
 
 <script src="js/main.js?v=2" defer></script>
+<script>
+  const priceTiers = [
+    { min: 1, max: 99, price: 3.00 },{ min: 100, max: 199, price: 2.96 },{ min: 200, max: 299, price: 2.93 },{ min: 300, max: 399, price: 2.89 },{ min: 400, max: 499, price: 2.85 },{ min: 500, max: 599, price: 2.82 },{ min: 600, max: 699, price: 2.78 },{ min: 700, max: 799, price: 2.74 },{ min: 800, max: 899, price: 2.71 },{ min: 900, max: 999, price: 2.67 },{ min: 1000, max: 1099, price: 2.63 },{ min: 1100, max: 1199, price: 2.60 },{ min: 1200, max: 1299, price: 2.56 },{ min: 1300, max: 1399, price: 2.53 },{ min: 1400, max: 1499, price: 2.49 },{ min: 1500, max: 1599, price: 2.46 },{ min: 1600, max: 1699, price: 2.42 },{ min: 1700, max: 1799, price: 2.39 },{ min: 1800, max: 1899, price: 2.35 },{ min: 1900, max: 1999, price: 2.32 },{ min: 2000, max: 2099, price: 2.29 },{ min: 2100, max: 2199, price: 2.25 },{ min: 2200, max: 2299, price: 2.22 },{ min: 2300, max: 2399, price: 2.19 },{ min: 2400, max: 2499, price: 2.15 },{ min: 2500, max: 2599, price: 2.12 },{ min: 2600, max: 2699, price: 2.09 },{ min: 2700, max: 2799, price: 2.06 },{ min: 2800, max: 2899, price: 2.03 },{ min: 2900, max: 2999, price: 2.00 },{ min: 3000, max: 3099, price: 1.97 },{ min: 3100, max: 3199, price: 1.94 },{ min: 3200, max: 3299, price: 1.91 },{ min: 3300, max: 3399, price: 1.89 },{ min: 3400, max: 3499, price: 1.86 },{ min: 3500, max: 3599, price: 1.83 },{ min: 3600, max: 3699, price: 1.81 },{ min: 3700, max: 3799, price: 1.78 },{ min: 3800, max: 3899, price: 1.76 },{ min: 3900, max: 3999, price: 1.73 },{ min: 4000, max: 4099, price: 1.71 },{ min: 4100, max: 4199, price: 1.68 },{ min: 4200, max: 4299, price: 1.66 },{ min: 4300, max: 4399, price: 1.64 },{ min: 4400, max: 4499, price: 1.62 },{ min: 4500, max: 4599, price: 1.60 },{ min: 4600, max: 4699, price: 1.58 },{ min: 4700, max: 4799, price: 1.56 },{ min: 4800, max: 4899, price: 1.54 },{ min: 4900, max: 4999, price: 1.52 },{ min: 5000, max: 5099, price: 1.50 },{ min: 5100, max: 5199, price: 1.49 },{ min: 5200, max: 5299, price: 1.47 },{ min: 5300, max: 5399, price: 1.46 },{ min: 5400, max: 5499, price: 1.44 },{ min: 5500, max: 5599, price: 1.43 },{ min: 5600, max: 5699, price: 1.41 },{ min: 5700, max: 5799, price: 1.40 },{ min: 5800, max: 5899, price: 1.39 },{ min: 5900, max: 5999, price: 1.37 },{ min: 6000, max: 6099, price: 1.36 },{ min: 6100, max: 6199, price: 1.35 },{ min: 6200, max: 6299, price: 1.34 },{ min: 6300, max: 6399, price: 1.33 },{ min: 6400, max: 6499, price: 1.32 },{ min: 6500, max: 6599, price: 1.31 },{ min: 6600, max: 6699, price: 1.30 },{ min: 6700, max: 6799, price: 1.29 },{ min: 6800, max: 6899, price: 1.28 },{ min: 6900, max: 6999, price: 1.27 },{ min: 7000, max: 7499, price: 1.25 },{ min: 7500, max: 7999, price: 1.22 },{ min: 8000, max: 8999, price: 1.16 },{ min: 9000, max: 9999, price: 1.10 },{ min: 10000, max: 12099, price: 1.04 },{ min: 12100, max: 14999, price: 0.96 },{ min: 15000, max: 19999, price: 0.90 },{ min: 20000, max: 29999, price: 0.83 },{ min: 30000, max: 44999, price: 0.76 },{ min: 45000, max: 94899, price: 0.72 },{ min: 94900, max: Infinity, price: 0.69 }
+  ];
+  function syncFromSlider(sliderId, inputId) {
+    document.getElementById(inputId).value = document.getElementById(sliderId).value;
+    calculatePrice();
+  }
+  function syncFromInput(sliderId, inputId) {
+    var v = parseFloat(document.getElementById(inputId).value) || 0;
+    var slider = document.getElementById(sliderId);
+    slider.value = Math.min(v, parseFloat(slider.max));
+    calculatePrice();
+  }
+  function calculatePrice() {
+    var packages = parseInt(document.getElementById('pkgInput').value) || 0;
+    var retPct   = parseFloat(document.getElementById('retPctInput').value) || 0;
+    var returns  = Math.round(packages * retPct / 100);
+    var total    = packages + returns;
+    var ppp      = total > 0 ? (priceTiers.find(function(t){ return total >= t.min && total <= t.max; }) || {price:0}).price : 0;
+    var rawTotal = ppp * total;
+    var billable = total > 0 ? Math.max(Math.round(rawTotal / 100) * 100, 3000) : 0;
+    var isMin    = total > 0 && rawTotal < 3000;
+    document.getElementById('outPkg').innerHTML    = total > 0 ? ppp.toFixed(2).replace('.',',') + ' <span>kr.</span>' : '&ndash; <span>kr.</span>';
+    document.getElementById('outTotal').innerHTML  = total > 0 ? Math.round(billable).toLocaleString('da-DK') + ' <span>kr.' + (isMin ? '&thinsp;<small style="font-size:.6rem;opacity:.6">(min)</small>' : '') + '</span>' : '&ndash; <span>kr.</span>';
+    document.getElementById('outReturns').innerHTML = returns.toLocaleString('da-DK') + ' <span>stk.</span>';
+  }
+  document.addEventListener('DOMContentLoaded', calculatePrice);
+</script>
 </body>
 </html>
