@@ -308,6 +308,22 @@
 /* Klik-for-at-indtaste på slider-værdier */
 .inp-val[data-sid]{cursor:pointer;border-bottom:1px dashed transparent;transition:border-color .15s}
 .inp-val[data-sid]:hover{border-bottom-color:var(--accent)}
+
+/* === TRUST BLOCK === */
+.trust-block { background: var(--bg-2, #f5f5f5); border-left: 3px solid var(--accent, #3ecf8e); padding: 1.25rem 1.5rem; border-radius: 6px; margin: 2rem 0; font-size: .9rem; line-height: 1.7; color: var(--text-2); }
+.trust-block p { margin: 0 0 .6rem; }
+.trust-block p:last-child { margin: 0; }
+
+/* === REALITY EXAMPLES === */
+.reality-examples { margin: 2.5rem 0; }
+.reality-examples h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; }
+.reality-item { display: flex; gap: 1.25rem; align-items: baseline; padding: .75rem 0; border-bottom: 1px solid var(--border); }
+.reality-item:last-child { border-bottom: none; }
+.reality-num { font-size: 1.4rem; font-weight: 900; color: var(--accent); min-width: 90px; flex-shrink: 0; }
+.reality-text { font-size: .9rem; color: var(--text-2); line-height: 1.5; }
+
+/* === ROI NUANCE === */
+.roi-nuance-text { font-size: .85rem; color: var(--text-2); margin-top: .5rem; font-style: italic; }
 </style>
 </head>
 <body>
@@ -318,8 +334,8 @@
 <section class="roi-hero">
   <div class="container">
     <div class="roi-hero__eye">ROI Beregner &middot; Lageroptimering &middot; WMS business case</div>
-    <h1 class="roi-hero__h1">Hvad koster dit lager<br>dig <em>egentlig?</em></h1>
-    <p class="roi-hero__sub">Indtast 3 tal og se svaret på 10 sekunder. Live, ingen tilmelding.</p>
+    <h1 class="roi-hero__h1">Hvad koster jeres lager<br><em>egentlig?</em></h1>
+    <p class="roi-hero__sub">Ikke et løfte. Et estimat — baseret på det vi typisk ser på lagre som jeres.</p>
     <div style="margin-top:1.5rem;font-size:.88rem;font-weight:700;color:var(--accent);letter-spacing:.04em">&#128071; Prøv selv</div>
   </div>
 </section>
@@ -784,7 +800,7 @@
     <!-- Top 3 tal -->
     <div class="res-hero">
       <div class="res-hero__cell res-hero__cell--main">
-        <div class="res-hero__label">Årlig besparelse</div>
+        <div class="res-hero__label">Typisk årligt potentiale</div>
         <div class="res-hero__num" id="r-aar">0 kr.</div>
         <div class="res-hero__sub" id="r-md-sub">0 kr. pr. måned</div>
       </div>
@@ -816,6 +832,7 @@
         <div class="stat-card__label">ROI</div>
         <div class="stat-card__val" id="r-roi">0%</div>
         <div class="stat-card__sub">ift. abonnement</div>
+        <p id="roi-nuance" class="roi-nuance-text"></p>
       </div>
       <div class="stat-card">
         <div class="stat-card__label">Tilbagebetalingstid</div>
@@ -853,7 +870,7 @@
 
     <!-- BESPARELSE BREAKDOWN -->
     <div class="breakdown">
-      <div class="breakdown__title">Besparelse pr. måned</div>
+      <div class="breakdown__title">Potentiale pr. måned</div>
       <div class="breakdown__row breakdown__row--pos">
         <span class="breakdown__lbl">💪 Frigivne timer (arbejdskraft)</span>
         <span class="breakdown__amt" id="r-arb">0 kr.</span>
@@ -890,6 +907,14 @@
         <span class="breakdown__lbl">Netto pr. måned</span>
         <span class="breakdown__amt" id="r-netto">0 kr.</span>
       </div>
+    </div>
+
+    <!-- TRUST BLOCK -->
+    <div class="trust-block">
+      <p>Det her er et estimat. Ikke et løfte.</p>
+      <p>Tallene er baseret på det vi typisk ser på lagre som jeres. Den reelle effekt afhænger af jeres setup, flow og volumen.</p>
+      <p>Nogle ligger allerede tæt på. Andre har markant mere at hente.</p>
+      <p>Vi lover ikke besparelser på forhånd — men vi kan vise, hvor de typisk opstår.</p>
     </div>
 
     <!-- OMSÆTNINGSPOTENTIALE -->
@@ -1400,6 +1425,19 @@ function updateDOM(r) {
   el('r-roi').textContent    = r.roi > 0   ? '+' + fmtN(r.roi, 0) + '%'
                               : r.roi > -30 ? 'Tæt på break-even'
                               : 'I klarer det allerede godt';
+
+  // Nuancering baseret på ROI
+  var nuanceEl = document.getElementById('roi-nuance');
+  if (nuanceEl) {
+    var roi = r.roi;
+    if (roi < 200) {
+      nuanceEl.textContent = 'I gør allerede meget rigtigt. Det her viser, hvor der stadig kan være noget at hente.';
+    } else if (roi < 500) {
+      nuanceEl.textContent = 'Her ser vi typisk et klart potentiale. Mest i fejlreduktion og tid sparet pr. ordre.';
+    } else {
+      nuanceEl.textContent = 'Stort potentiale. Det ser vi oftest når lagerflow ikke er optimeret endnu.';
+    }
+  }
   el('r-payback').textContent = r.payback < 1   ? 'Under 1 mdr.'
                               : r.payback < 50  ? fmtN(r.payback, 1) + ' mdr.'
                               : 'Kræver konkret vurdering';
