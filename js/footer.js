@@ -104,25 +104,25 @@
       if (erWeekend) {
         // 🔴 Rød: hele weekenden
         color = CLR_R;
-        label = 'Vi sover';
-        msg   = 'KUN ring ved driftstop: 88&nbsp;20&nbsp;20&nbsp;19, tast 9. &Aring;bner mandag.';
+        label = 'Vi sover. KUN driftstop';
+        msg   = 'Ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9. &Aring;bner mandag.';
       } else {
         // Hverdag (man-fre)
-        if (h >= 8 && h < 16) {
+        if (h >= 8 && h < 17) {
           // 🟢 Grøn: 08-17
           color = CLR_G;
           label = 'Support &aring;ben';
-          msg   = 'Ring 88&nbsp;20&nbsp;20&nbsp;19 og tast 2.';
+          msg   = 'Ring til os &ndash; vi tager telefonen. Tast 2.';
         } else if ((h >= 6 && h < 8) || (h >= 17 && h < 22)) {
           // 🟡 Gul: 06-08 + 17-22
           color = CLR_Y;
-          label = 'Ulvetime';
-          msg   = 'Ring kun ved driftstop: 88&nbsp;20&nbsp;20&nbsp;19, tast 9.';
+          label = 'Begr&aelig;nset support &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19';
+          msg   = 'KUN ved akut driftstop &ndash; tast 9.';
         } else {
           // 🔴 Rød: 22-06
           color = CLR_R;
-          label = 'Vi sover';
-          msg   = 'KUN ring ved driftstop: 88&nbsp;20&nbsp;20&nbsp;19, tast 9. &Aring;bner kl.&nbsp;8.';
+          label = 'Vi sover. KUN driftstop';
+          msg   = 'Tast 9. &Aring;bner igen kl.&nbsp;8.';
         }
       }
 
