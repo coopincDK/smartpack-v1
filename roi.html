@@ -1715,7 +1715,10 @@ document.addEventListener('DOMContentLoaded', function() {
       span.style.display = 'none';
       span.after(inp);
       inp.focus(); inp.select();
+      var applied = false;
       function apply() {
+        if (applied) return;
+        applied = true;
         var v = parseFloat(inp.value);
         if (isNaN(v)) v = origVal;
         v = Math.max(+(slider.min) || 0, v);
@@ -1729,7 +1732,7 @@ document.addEventListener('DOMContentLoaded', function() {
       inp.addEventListener('blur', apply);
       inp.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') { e.preventDefault(); apply(); }
-        if (e.key === 'Escape') { inp.remove(); span.style.display = ''; }
+        if (e.key === 'Escape') { applied = true; inp.remove(); span.style.display = ''; }
       });
     });
   });
