@@ -1734,8 +1734,10 @@ function updateCharts(r) {
 // Når Quick Calc opdateres, sættes de tilsvarende slidere i den detaljerede beregner også.
 var _syncingFromBeregner = false;
 var _pakkerTouched = false;
+var _beregnTouched = false; // sættes true første gang brugeren rører en slider
 function syncQCToBeregner() {
   if (_syncingFromBeregner) return;
+  if (_beregnTouched) return; // bruger har styret selv — stop al QC-overwrite
   var ordrer  = Math.max(100,   (isNaN(+document.getElementById('qc-ordrer').value) ? 1500 : +document.getElementById('qc-ordrer').value));
   var medarbQ = Math.max(1,     (isNaN(+document.getElementById('qc-medarb').value) ? 3 : +document.getElementById('qc-medarb').value));
   var lonMd   = Math.max(10000, (isNaN(+document.getElementById('qc-lon').value) ? 32000 : +document.getElementById('qc-lon').value));
@@ -1745,7 +1747,7 @@ function syncQCToBeregner() {
   var pakker  = Math.min(500000, Math.max(100, Math.round(ordrer / 100) * 100));
   // Månedsløn ÷ 160,33 = timeløn, afrund til nærmeste 5
   var lonTime = Math.min(600, Math.max(100, Math.round(lonMd / 160.33 / 5) * 5));
-  var medarbV = Math.min(100, Math.max(1,   Math.round(medarbQ)));
+  var medarbV = Math.min(500, Math.max(1,   Math.round(medarbQ)));
   var fejlV   = Math.min(15,  Math.max(0,   Math.round(fejlQ * 10) / 10));
 
   function setSlider(id, val) {
@@ -1796,12 +1798,8 @@ document.addEventListener('DOMContentLoaded', function() {
   initCharts();
   document.querySelectorAll('.roi-range').forEach(s => {
     syncSlider(s);
-    s.addEventListener('input', update);
+    s.addEventListener('input', function() { _beregnTouched = true; _pakkerTouched = true; update(); });
   });
-  var pakkerInput = document.getElementById('pakker');
-  if (pakkerInput) {
-    pakkerInput.addEventListener('input', function() { _pakkerTouched = true; update(); });
-  }
   document.getElementById('branche').addEventListener('change', update);
   update();
 
