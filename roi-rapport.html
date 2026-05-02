@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartPack ROI Rapport</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:   #0f0f0f;
+      --white:  #ffffff;
+      --green:  #3ecf8e;
+      --green-dark: #1a7a4a;
+      --green-light: #edf7f2;
+      --mid:    #555555;
+      --muted:  #888888;
+      --border: #e8e8e8;
+      --bg:     #f7f6f3;
+      --mono:   'JetBrains Mono', monospace;
+      --sans:   'Inter', sans-serif;
+      --display: 'Syne', sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--white);
+      color: var(--dark);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    @media screen {
+      .page { box-shadow: 0 4px 40px rgba(0,0,0,0.12); margin: 2rem auto; }
+      body { background: #e8e7e4; padding: 1rem 0; }
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page { margin: 0; box-shadow: none; page-break-after: always; }
+      .no-print { display: none !important; }
+    }
+
+    /* ── COVER ── */
+    .page-cover { background: var(--dark); display: flex; flex-direction: column; padding: 0; }
+    .cover-top { padding: 14mm 16mm 0; flex: 1; }
+
+    .cover-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 44mm; }
+    .cover-logo-text {
+      font-family: var(--display); font-size: 20px; font-weight: 800;
+      color: var(--white); letter-spacing: -0.5px;
+    }
+    .cover-logo-text span { color: var(--green); }
+
+    .cover-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 10px;
+    }
+
+    .cover-headline {
+      font-family: var(--display); font-size: 44px; font-weight: 800;
+      color: var(--white); line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 6mm;
+    }
+    .cover-headline em { color: var(--green); font-style: normal; }
+
+    .cover-sub {
+      font-size: 13px; color: rgba(255,255,255,0.55);
+      line-height: 1.6; max-width: 120mm; margin-bottom: 12mm;
+    }
+
+    .cover-hero-number {
+      display: flex; align-items: flex-end; gap: 16px;
+      padding: 10mm 0 8mm;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 10mm;
+    }
+    .cover-hero-main {
+      font-family: var(--mono); font-size: 60px; font-weight: 700;
+      color: var(--green); line-height: 1; letter-spacing: -2px;
+    }
+    .cover-hero-side { padding-bottom: 6px; }
+    .cover-hero-side .label {
+      font-size: 10px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px;
+    }
+    .cover-hero-side .sub {
+      font-family: var(--mono); font-size: 20px; font-weight: 600;
+      color: rgba(255,255,255,0.7); letter-spacing: -0.5px;
+    }
+
+    .cover-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .cover-chip {
+      display: flex; flex-direction: column; gap: 2px;
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .cover-chip .chip-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .cover-chip .chip-value {
+      font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--white);
+    }
+
+    .cover-footer {
+      background: var(--green); padding: 6mm 16mm;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .cover-footer-company {
+      font-family: var(--display); font-size: 16px; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.3px;
+    }
+    .cover-footer-meta {
+      font-size: 10px; color: rgba(0,0,0,0.6);
+      text-align: right; line-height: 1.5;
+    }
+
+    /* ── CONTENT PAGES ── */
+    .page-content { padding: 12mm 16mm; }
+
+    .page-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding-bottom: 6mm; border-bottom: 2px solid var(--dark); margin-bottom: 8mm;
+    }
+    .page-header-logo {
+      font-family: var(--display); font-size: 14px; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.3px;
+    }
+    .page-header-logo span { color: var(--green); }
+    .page-header-meta { font-size: 9px; color: var(--muted); text-align: right; line-height: 1.6; }
+
+    .section-label {
+      font-size: 9px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--green-dark); margin-bottom: 4px;
+    }
+    .section-title {
+      font-family: var(--display); font-size: 22px; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.5px; margin-bottom: 6mm; line-height: 1.1;
+    }
+
+    /* Total blok */
+    .total-block {
+      background: var(--dark); padding: 8mm 10mm; margin-bottom: 6mm;
+      display: flex; justify-content: space-between; align-items: center; gap: 8mm;
+    }
+    .total-block-main .label {
+      font-size: 9px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px;
+    }
+    .total-block-main .value {
+      font-family: var(--mono); font-size: 48px; font-weight: 700;
+      color: var(--green); letter-spacing: -2px; line-height: 1;
+    }
+    .total-block-main .unit { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    .total-block-side { display: flex; flex-direction: column; gap: 6mm; min-width: 55mm; }
+    .total-block-side-item .label {
+      font-size: 9px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 3px;
+    }
+    .total-block-side-item .value {
+      font-family: var(--mono); font-size: 20px; font-weight: 600;
+      color: var(--white); letter-spacing: -0.5px;
+    }
+
+    /* KPI grid */
+    .kpi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 4mm; margin-bottom: 6mm; }
+    .kpi-card {
+      padding: 5mm; border-left: 3px solid var(--green); background: var(--bg);
+    }
+    .kpi-card.gd { border-left-color: var(--green-dark); }
+    .kpi-card.dk { border-left-color: var(--dark); }
+    .kpi-card .kpi-label {
+      font-size: 8px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 4px;
+    }
+    .kpi-card .kpi-value {
+      font-family: var(--mono); font-size: 18px; font-weight: 700;
+      color: var(--dark); letter-spacing: -0.5px; line-height: 1.1;
+    }
+    .kpi-card .kpi-sub { font-size: 9px; color: var(--muted); margin-top: 3px; }
+
+    /* Breakdown tabel */
+    .breakdown-table { width: 100%; border-collapse: collapse; margin-bottom: 6mm; }
+    .breakdown-table thead tr { background: var(--dark); }
+    .breakdown-table thead th {
+      font-size: 8px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.6);
+      padding: 4mm; text-align: left;
+    }
+    .breakdown-table thead th:not(:first-child) { text-align: right; }
+    .breakdown-table tbody tr { border-bottom: 1px solid var(--border); }
+    .breakdown-table tbody tr:nth-child(even) { background: var(--bg); }
+    .breakdown-table tbody td { font-size: 10px; color: var(--mid); padding: 3.5mm 4mm; }
+    .breakdown-table tbody td:not(:first-child) {
+      font-family: var(--mono); font-size: 10px; font-weight: 600;
+      color: var(--dark); text-align: right;
+    }
+    .breakdown-table tbody td.pos { color: var(--green-dark); }
+    .breakdown-table tfoot tr { background: var(--dark); }
+    .breakdown-table tfoot td {
+      font-size: 10px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(255,255,255,0.7); padding: 4mm;
+    }
+    .breakdown-table tfoot td:not(:first-child) {
+      font-family: var(--mono); font-size: 13px; font-weight: 700;
+      color: var(--green); text-align: right;
+    }
+
+    /* Indfasning */
+    .ramp-section { background: var(--bg); padding: 5mm 6mm; margin-bottom: 6mm; }
+    .ramp-title {
+      font-size: 9px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 4mm;
+    }
+    .ramp-bars { display: flex; flex-direction: column; gap: 3mm; }
+    .ramp-row { display: flex; align-items: center; gap: 4mm; }
+    .ramp-row-label { font-size: 9px; color: var(--mid); width: 22mm; flex-shrink: 0; }
+    .ramp-bar-track { flex: 1; height: 6px; background: var(--border); position: relative; }
+    .ramp-bar-fill { height: 100%; background: var(--green); }
+    .ramp-bar-fill.full { background: var(--dark); }
+    .ramp-row-value {
+      font-family: var(--mono); font-size: 10px; font-weight: 600;
+      color: var(--dark); width: 28mm; text-align: right; flex-shrink: 0;
+    }
+
+    /* Break-even badge */
+    .breakeven-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--dark); color: var(--white);
+      padding: 3mm 5mm; font-size: 10px; font-weight: 600; margin-bottom: 6mm;
+    }
+    .breakeven-badge .be-number {
+      font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--green);
+    }
+
+    /* To-kolonne detaljer */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-bottom: 6mm; }
+    .detail-block { background: var(--bg); padding: 5mm; }
+    .detail-block-title {
+      font-family: var(--display); font-size: 12px; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.2px;
+      margin-bottom: 4mm; padding-bottom: 3mm; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .detail-block-title .dot { width: 8px; height: 8px; background: var(--green); flex-shrink: 0; }
+    .detail-block-title .dot.gd { background: var(--green-dark); }
+    .detail-block-title .dot.dk { background: var(--dark); }
+    .detail-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 2mm 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-row .dr-label { font-size: 9px; color: var(--mid); }
+    .detail-row .dr-value { font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--dark); }
+    .detail-row .dr-value.g { color: var(--green); }
+    .detail-row .dr-value.gd { color: var(--green-dark); }
+
+    /* Software sammenligning */
+    .software-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-bottom: 5mm; }
+    .sw-block { padding: 4mm 5mm; }
+    .sw-block.current { background: #fff5f2; border: 1px solid #ffd5c5; }
+    .sw-block.smartpack { background: var(--green-light); border: 1px solid #b8e6d0; }
+    .sw-block-label {
+      font-size: 8px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 3mm;
+    }
+    .sw-block-total {
+      font-family: var(--mono); font-size: 22px; font-weight: 700;
+      letter-spacing: -0.5px; margin-bottom: 3mm;
+    }
+    .sw-block.current .sw-block-total { color: #c0392b; }
+    .sw-block.smartpack .sw-block-total { color: var(--green-dark); }
+    .sw-line {
+      display: flex; justify-content: space-between;
+      padding: 1.5mm 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .sw-line:last-child { border-bottom: none; }
+    .sw-line .sw-name { font-size: 9px; color: var(--mid); }
+    .sw-line .sw-val { font-family: var(--mono); font-size: 9px; font-weight: 600; color: var(--dark); }
+
+    /* CTA */
+    .cta-block {
+      background: var(--dark); padding: 6mm 8mm;
+      display: flex; justify-content: space-between; align-items: center; margin-top: 4mm;
+    }
+    .cta-block .cta-text {
+      font-family: var(--display); font-size: 16px; font-weight: 800;
+      color: var(--white); letter-spacing: -0.3px;
+    }
+    .cta-block .cta-sub { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    .cta-block .cta-contact { text-align: right; }
+    .cta-block .cta-contact-label {
+      font-size: 9px; color: rgba(255,255,255,0.5);
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .cta-block .cta-contact-value {
+      font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--green);
+    }
+
+    /* Misc */
+    .accent-bar { height: 3px; background: var(--green); margin-bottom: 5mm; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 5mm 0; }
+    .disclaimer {
+      font-size: 8px; color: var(--muted); line-height: 1.5;
+      margin-top: 4mm; padding-top: 3mm; border-top: 1px solid var(--border);
+    }
+
+    /* No-data banner */
+    .no-data-banner {
+      display: none; text-align: center; padding: 3rem 2rem;
+      background: #fff8ec; border: 1px solid #ffd590; border-radius: 8px;
+      margin: 2rem auto; max-width: 480px;
+    }
+    .no-data-banner h2 { font-family: var(--display); font-size: 20px; margin-bottom: 1rem; }
+    .no-data-banner p { font-size: 14px; color: var(--mid); margin-bottom: 1.5rem; line-height: 1.6; }
+    .no-data-banner a {
+      display: inline-block; background: var(--dark); color: var(--white);
+      padding: 12px 24px; font-size: 13px; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.5px;
+    }
+    .no-data-banner a:hover { background: var(--green-dark); }
+
+    /* Print knap */
+    .print-btn {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--dark); color: var(--white);
+      border: none; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      transition: background 0.15s; z-index: 100;
+    }
+    .print-btn:hover { background: var(--green-dark); color: var(--white); }
+    @media print { .print-btn { display: none; } }
+  </style>
+</head>
+<body>
+
+<!-- No-data fallback -->
+<div class="no-data-banner" id="no-data">
+  <h2>Ingen beregning fundet</h2>
+  <p>Udfyld ROI-beregneren f&oslash;rst &ndash; s&aring; genererer vi din personlige rapport automatisk.</p>
+  <a href="roi.html">G&aring; til beregneren &rarr;</a>
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">&#8595; Gem som PDF</button>
+
+<!-- ══ PAGE 1: FORSIDE ══ -->
+<div class="page page-cover" id="page-cover">
+  <div class="cover-top">
+    <div class="cover-logo">
+      <div class="cover-logo-text">Smart<span>Pack</span></div>
+    </div>
+    <div class="cover-label">ROI Analyse &middot; Baseret p&aring; dine tal</div>
+    <h1 class="cover-headline">
+      Hvad koster det dig<br /><em>ikke</em> at optimere?
+    </h1>
+    <p class="cover-sub">
+      Denne rapport viser det samlede potentiale ved at implementere SmartPack i jeres lager- og pakkeproces &ndash; baseret p&aring; jeres egne tal.
+    </p>
+    <div class="cover-hero-number">
+      <div class="cover-hero-main" id="c-totalmd">0 kr.</div>
+      <div class="cover-hero-side">
+        <div class="label">Samlet potentiale</div>
+        <div class="sub">pr. m&aring;ned</div>
+      </div>
+    </div>
+    <div class="cover-chips">
+      <div class="cover-chip">
+        <span class="chip-label">Pr. &aring;r</span>
+        <span class="chip-value" id="c-totalaar">0 kr.</span>
+      </div>
+      <div class="cover-chip">
+        <span class="chip-label">Break-even</span>
+        <span class="chip-value" id="c-payback">&ndash;</span>
+      </div>
+      <div class="cover-chip">
+        <span class="chip-label">ROI</span>
+        <span class="chip-value" id="c-roi">&ndash;</span>
+      </div>
+      <div class="cover-chip">
+        <span class="chip-label">Frigivne timer/md</span>
+        <span class="chip-value" id="c-timer">&ndash;</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div>
+      <div class="cover-footer-company" id="c-branche">Din virksomhed</div>
+    </div>
+    <div class="cover-footer-meta">
+      Udarbejdet af SmartPack<br />
+      <span id="c-dato"></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ PAGE 2: OVERBLIK ══ -->
+<div class="page page-content" id="page-overview">
+  <div class="page-header">
+    <div>
+      <div class="page-header-logo">Smart<span>Pack</span></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">ROI Analyse &middot; Side 2 af 3</div>
+    </div>
+    <div class="page-header-meta" id="ph-meta"></div>
+  </div>
+
+  <div class="section-label">Overblik</div>
+  <div class="section-title">Samlet potentiale</div>
+
+  <div class="total-block">
+    <div class="total-block-main">
+      <div class="label">Potentiale pr. m&aring;ned</div>
+      <div class="value" id="t-totalmd">0 kr.</div>
+      <div class="unit" id="t-netto-unit"></div>
+    </div>
+    <div class="total-block-side">
+      <div class="total-block-side-item">
+        <div class="label">Pr. &aring;r</div>
+        <div class="value" id="t-totalaar">0 kr.</div>
+      </div>
+      <div class="total-block-side-item">
+        <div class="label">ROI</div>
+        <div class="value" id="t-roi">&ndash;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Frigivne timer/md</div>
+      <div class="kpi-value" id="k-timer">0 t</div>
+      <div class="kpi-sub" id="k-timer-sub"></div>
+    </div>
+    <div class="kpi-card gd">
+      <div class="kpi-label">Pakker/time nu &rarr; efter</div>
+      <div class="kpi-value" id="k-tempo">&ndash;</div>
+      <div class="kpi-sub" id="k-tempo-sub"></div>
+    </div>
+    <div class="kpi-card dk">
+      <div class="kpi-label">Break-even</div>
+      <div class="kpi-value" id="k-payback">&ndash;</div>
+      <div class="kpi-sub">SmartPack pris: <span id="k-sppris">0</span> kr./md</div>
+    </div>
+  </div>
+
+  <table class="breakdown-table">
+    <thead>
+      <tr>
+        <th>Besparelseskategori</th>
+        <th>Pr. m&aring;ned</th>
+        <th>Pr. &aring;r</th>
+        <th>Andel</th>
+      </tr>
+    </thead>
+    <tbody id="breakdown-body">
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Samlet potentiale</td>
+        <td id="tf-md">0 kr.</td>
+        <td id="tf-aar">0 kr.</td>
+        <td>100%</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="ramp-section">
+    <div class="ramp-title">Forventet indfasning</div>
+    <div class="ramp-bars">
+      <div class="ramp-row">
+        <div class="ramp-row-label">Efter 3 m&aring;neder</div>
+        <div class="ramp-bar-track"><div class="ramp-bar-fill" id="ramp-3-bar" style="width:30%"></div></div>
+        <div class="ramp-row-value" id="ramp-3-val">0 kr./md</div>
+      </div>
+      <div class="ramp-row">
+        <div class="ramp-row-label">Efter 12 m&aring;neder</div>
+        <div class="ramp-bar-track"><div class="ramp-bar-fill full" style="width:100%"></div></div>
+        <div class="ramp-row-value" id="ramp-12-val">0 kr./md</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="breakeven-badge">
+    <span>Break-even opn&aring;s i</span>
+    <span class="be-number" id="be-text">&ndash;</span>
+    <span style="color:rgba(255,255,255,0.5)">&mdash; herefter er alt nettopotentiale</span>
+  </div>
+
+  <div class="disclaimer">
+    Beregningerne er vejledende og baseret p&aring; medianer fra SmartPack-kunder samt de oplyste tal. Faktiske resultater kan variere. SmartPack-prisen er beregnet ud fra trappemodel: 3,00 kr./pakke ved lav volumen til 0,65 kr./pakke ved h&oslash;j volumen, minimum 3.000 kr./md.
+  </div>
+</div>
+
+
+<!-- ══ PAGE 3: DETALJER ══ -->
+<div class="page page-content" id="page-details">
+  <div class="page-header">
+    <div>
+      <div class="page-header-logo">Smart<span>Pack</span></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">ROI Analyse &middot; Side 3 af 3</div>
+    </div>
+    <div class="page-header-meta" id="ph-meta2"></div>
+  </div>
+
+  <div class="section-label">Detaljer</div>
+  <div class="section-title">Lager, &oslash;konomi &amp; software</div>
+
+  <div class="two-col">
+    <div class="detail-block">
+      <div class="detail-block-title"><div class="dot"></div>Lager &amp; Drift</div>
+      <div class="detail-row"><span class="dr-label">Medarbejdere</span><span class="dr-value" id="d-medarb">0</span></div>
+      <div class="detail-row"><span class="dr-label">Pakker pr. m&aring;ned</span><span class="dr-value" id="d-pakker">0</span></div>
+      <div class="detail-row"><span class="dr-label">Branche</span><span class="dr-value" id="d-branche">0</span></div>
+      <div class="detail-row"><span class="dr-label">Timer i alt pr. md</span><span class="dr-value" id="d-timer">0</span></div>
+      <div class="detail-row"><span class="dr-label">Pakker/time nu</span><span class="dr-value" id="d-tempo-nu">0</span></div>
+      <div class="detail-row"><span class="dr-label">Pakker/time med SmartPack</span><span class="dr-value g" id="d-tempo-sp">0</span></div>
+      <div class="detail-row"><span class="dr-label">Frigivne timer</span><span class="dr-value g" id="d-frigivne">0</span></div>
+      <div class="detail-row"><span class="dr-label">N&oslash;dvendige medarbj.</span><span class="dr-value gd" id="d-noedv">0</span></div>
+      <div class="detail-row"><span class="dr-label">Timel&oslash;n inkl. feriepenge</span><span class="dr-value" id="d-lon">0</span></div>
+      <div class="detail-row"><span class="dr-label">Fejlrate</span><span class="dr-value" id="d-fejl">0</span></div>
+    </div>
+    <div class="detail-block">
+      <div class="detail-block-title"><div class="dot gd"></div>&Oslash;konomi &amp; Kapacitet</div>
+      <div class="detail-row"><span class="dr-label">Gns. omsaetning pr. ordre</span><span class="dr-value" id="d-ordrevaerdi">0</span></div>
+      <div class="detail-row"><span class="dr-label">Bruttoavance</span><span class="dr-value" id="d-avance">0</span></div>
+      <div class="detail-row"><span class="dr-label">Potentiel kapacitet/md</span><span class="dr-value g" id="d-kapnu">0</span></div>
+      <div class="detail-row"><span class="dr-label">Ekstra ordrer mulige</span><span class="dr-value g" id="d-ekstraordrer">0</span></div>
+      <div class="detail-row"><span class="dr-label">Yderligere omsaetning/md</span><span class="dr-value gd" id="d-extraoms">0</span></div>
+      <div class="detail-row"><span class="dr-label">Yderligere avance/md</span><span class="dr-value gd" id="d-extraavance">0</span></div>
+      <div class="detail-row"><span class="dr-label">SmartPack pris/md</span><span class="dr-value" id="d-sppris">0</span></div>
+      <div class="detail-row"><span class="dr-label">Pris pr. pakke</span><span class="dr-value" id="d-ppp">0</span></div>
+      <div class="detail-row"><span class="dr-label">Peak-faktor</span><span class="dr-value" id="d-peak">0</span></div>
+      <div class="detail-row"><span class="dr-label">Returrate</span><span class="dr-value" id="d-retur">0</span></div>
+    </div>
+  </div>
+
+  <div class="accent-bar"></div>
+  <div class="section-label" style="margin-bottom:3mm">Software</div>
+
+  <div class="software-compare">
+    <div class="sw-block current">
+      <div class="sw-block-label">Nuvaerende software pr. md</div>
+      <div class="sw-block-total" id="sw-nu-total">0 kr.</div>
+      <div class="sw-line">
+        <span class="sw-name">Nuvaerende WMS/systemer</span>
+        <span class="sw-val" id="sw-nu-wms">0 kr.</span>
+      </div>
+      <div class="sw-line">
+        <span class="sw-name">Inkl. support &amp; integrationer</span>
+        <span class="sw-val">Ikke inkluderet</span>
+      </div>
+    </div>
+    <div class="sw-block smartpack">
+      <div class="sw-block-label">SmartPack pr. md</div>
+      <div class="sw-block-total" id="sw-sp-total">0 kr.</div>
+      <div class="sw-line"><span class="sw-name">WMS + labelprint + indkob</span><span class="sw-val">Inkluderet</span></div>
+      <div class="sw-line"><span class="sw-name">Track &amp; trace notifikationer</span><span class="sw-val">Inkluderet</span></div>
+      <div class="sw-line"><span class="sw-name">Support</span><span class="sw-val">Inkluderet</span></div>
+      <div class="sw-line" style="margin-top:3mm;padding-top:3mm;border-top:1px solid #b8e6d0">
+        <span class="sw-name" style="font-weight:600;color:var(--green-dark)">Maanedlig besparelse</span>
+        <span class="sw-val" style="color:var(--green-dark)" id="sw-bes">0 kr.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div>
+      <div class="cta-text">Klar til at komme i gang?</div>
+      <div class="cta-sub">Book en gratis gennemgang &ndash; vi gennemg&aring;r tallene sammen</div>
+    </div>
+    <div class="cta-contact">
+      <div class="cta-contact-label">Kontakt</div>
+      <div class="cta-contact-value">smartpack.dk</div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    * Yderligere avance er beregnet p&aring; baggrund af den frigivne kapacitet og antager, at eftersp&oslash;rgslen kan absorbere den &oslash;gede kapacitet. Faktiske resultater afh&aelig;nger af markedsforhold. Alle tal er baseret p&aring; oplysninger afgivet i beregneren og branchegennemsnit fra SmartPacks brugerdata.
+  </div>
+</div>
+
+
+<script>
+(function() {
+  // ── Helpers ──
+  function fmtKr(v) {
+    if (v === undefined || v === null) return '–';
+    return Math.round(v).toLocaleString('da-DK') + ' kr.';
+  }
+  function fmtN(v, dec) {
+    if (v === undefined || v === null) return '–';
+    return v.toLocaleString('da-DK', { minimumFractionDigits: dec||0, maximumFractionDigits: dec||0 });
+  }
+  function fmtPct(v, dec) {
+    if (v === undefined || v === null) return '–';
+    return fmtN(v, dec !== undefined ? dec : 1) + '%';
+  }
+  function el(id) { return document.getElementById(id); }
+  function set(id, txt) { var e = el(id); if (e) e.textContent = txt; }
+
+  // ── Load data ──
+  var raw;
+  try { raw = JSON.parse(localStorage.getItem('smartpack_roi')); } catch(e) {}
+
+  if (!raw || !raw.totalBes) {
+    el('no-data').style.display = 'block';
+    el('page-cover').style.display = 'none';
+    el('page-overview').style.display = 'none';
+    el('page-details').style.display = 'none';
+    document.querySelector('.print-btn').style.display = 'none';
+    return;
+  }
+
+  var r = raw;
+
+  // ── Page 1: Cover ──
+  set('c-totalmd',  fmtKr(r.totalBes));
+  set('c-totalaar', fmtKr(r.totalAar));
+  set('c-payback',  r.payback < 1 ? 'Under 1 md.' : r.payback < 50 ? 'Md. ' + Math.round(r.payback) : 'Vurdering');
+  set('c-roi',      r.roi > 0 ? '+' + fmtN(r.roi, 0) + '%' : 'Se rapport');
+  set('c-timer',    fmtN(r.frigivne, 1) + ' t');
+  set('c-branche',  r.branche || 'Jeres virksomhed');
+  set('c-dato',     r.savedAt || new Date().toLocaleDateString('da-DK'));
+
+  // ── Page 2: Overview ──
+  var metaTxt = (r.branche || '–') + ' · ' + r.medarb + ' medarbj. · ' + Math.round(r.pakker).toLocaleString('da-DK') + ' pakker/md';
+  set('ph-meta', metaTxt);
+  set('ph-meta2', metaTxt);
+
+  set('t-totalmd',   fmtKr(r.totalBes));
+  set('t-totalaar',  fmtKr(r.totalAar));
+  set('t-roi',       r.roi > 0 ? '+' + fmtN(r.roi, 0) + '%' : r.roi > -30 ? 'Tæt på break-even' : 'Se detaljer');
+  el('t-netto-unit').textContent = '+' + fmtKr(r.netto) + ' netto efter SmartPack (' + fmtKr(r.spPrisMd) + '/md)';
+
+  set('k-timer',      fmtN(r.frigivne, 1) + ' timer');
+  set('k-timer-sub',  'Svarende til ' + fmtN(r.frigivne / 160.33, 1) + ' fuldtidsstilling');
+  set('k-tempo',      fmtN(r.pakkerPrTimeNu, 1) + ' → ' + fmtN(r.brancheMedian, 0));
+  set('k-tempo-sub',  'Branchemedian: ' + r.brancheMin + '–' + r.brancheMax + ' pkk/time');
+  set('k-payback',    r.payback < 1 ? 'Under 1 mdr.' : r.payback < 50 ? 'Måned ' + Math.round(r.payback) : 'Kræver vurdering');
+  set('k-sppris',     Math.round(r.spPrisMd).toLocaleString('da-DK'));
+
+  // Breakdown tabel
+  var rows = [];
+  if (r.besArb > 0)       rows.push(['Frigivne timer (arbejdskraft)', r.besArb]);
+  if (r.besFejl > 0)      rows.push(['Pakkefejl & besparelse',        r.besFejl]);
+  if (r.besRetur > 0)     rows.push(['Returhåndtering',               r.besRetur]);
+  if (r.checkout_bes > 0) rows.push(['Ekstra avance (kapacitet)',      r.checkout_bes]);
+  if (r.wmsForskell > 0)  rows.push(['Software-besparelse',           r.wmsForskell]);
+  if (r.besKS > 0)        rows.push(['Kundeservice / ordrehenvendelser', r.besKS]);
+  if (r.besPeak > 0)      rows.push(['Peak-besparelse (vikarer)',     r.besPeak]);
+
+  var total = r.totalBes || 1;
+  var tbody = el('breakdown-body');
+  tbody.innerHTML = rows.map(function(row) {
+    var pct = total > 0 ? Math.round((row[1] / total) * 100) : 0;
+    return '<tr>' +
+      '<td>' + row[0] + '</td>' +
+      '<td class="pos">' + fmtKr(row[1]) + '</td>' +
+      '<td class="pos">' + fmtKr(row[1] * 12) + '</td>' +
+      '<td>' + pct + '%</td>' +
+      '</tr>';
+  }).join('');
+
+  set('tf-md',  fmtKr(r.totalBes));
+  set('tf-aar', fmtKr(r.totalAar));
+
+  // Ramp
+  var v3  = Math.max(0, r.val3mdr);
+  var v12 = Math.max(0, r.val12mdr);
+  var rampPct = v12 > 0 ? Math.round((v3 / v12) * 100) : 30;
+  el('ramp-3-bar').style.width = Math.max(5, rampPct) + '%';
+  set('ramp-3-val',  fmtKr(v3) + '/md');
+  set('ramp-12-val', fmtKr(v12) + '/md');
+
+  // Break-even
+  var beStr = r.payback < 1 ? 'under måned 1' : r.payback < 50 ? 'måned ' + Math.round(r.payback) : 'kræver vurdering';
+  set('be-text', beStr);
+
+  // ── Page 3: Details ──
+  set('d-medarb',      r.medarb + ' pers.');
+  set('d-pakker',      Math.round(r.pakker).toLocaleString('da-DK') + ' stk.');
+  set('d-branche',     r.branche || '–');
+  set('d-timer',       fmtN(r.timerIAlt, 0) + ' timer');
+  set('d-tempo-nu',    fmtN(r.pakkerPrTimeNu, 1) + ' pkk/t');
+  set('d-tempo-sp',    fmtN(r.brancheMedian, 0) + ' pkk/t');
+  set('d-frigivne',    fmtN(r.frigivne, 1) + ' timer/md');
+  set('d-noedv',       fmtN(r.noedvendige, 1) + ' fuldtid');
+  set('d-lon',         Math.round(r.lon).toLocaleString('da-DK') + ' kr./time');
+  set('d-fejl',        fmtPct(r.fejl) + ' fejlrate');
+
+  set('d-ordrevaerdi', r.ordrevaerdi > 0 ? fmtKr(r.ordrevaerdi) : '–');
+  set('d-avance',      r.avance > 0 ? fmtPct(r.avance, 0) : '–');
+  set('d-kapnu',       r.kapNu > 0 ? Math.round(r.kapNu).toLocaleString('da-DK') + ' pakker' : '–');
+  set('d-ekstraordrer', r.ekstraOrdrer > 0 ? '+' + Math.round(r.ekstraOrdrer).toLocaleString('da-DK') + ' stk.' : '–');
+  set('d-extraoms',    r.extraOms > 0 ? fmtKr(r.extraOms) : '–');
+  set('d-extraavance', r.extraAvance > 0 ? fmtKr(r.extraAvance) : '–');
+  set('d-sppris',      fmtKr(r.spPrisMd));
+  set('d-ppp',         fmtN(r.ppp, 2).replace('.', ',') + ' kr./pakke');
+  set('d-peak',        r.peak > 0 ? '+' + r.peak + '% i topperiode' : 'Ikke angivet');
+  set('d-retur',       r.returrate > 0 ? fmtPct(r.returrate) : 'Ikke angivet');
+
+  // Software
+  var wmsNu = r.wms || 0;
+  set('sw-nu-total',  fmtKr(wmsNu));
+  set('sw-nu-wms',    fmtKr(wmsNu));
+  set('sw-sp-total',  fmtKr(r.spPrisMd));
+  var swBes = wmsNu > r.spPrisMd ? wmsNu - r.spPrisMd : 0;
+  set('sw-bes', swBes > 0 ? '+' + fmtKr(swBes) : '–');
+
+})();
+</script>
+
+</body>
+</html>
