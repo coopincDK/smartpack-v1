@@ -186,7 +186,10 @@
 .sanity-box{display:none;font-size:.72rem;color:#9a6800;background:rgba(250,180,0,.09);border:1px solid rgba(250,180,0,.35);border-radius:var(--r-sm);padding:.5rem .8rem;margin-top:.35rem;line-height:1.55}
 .sanity-box.visible{display:block}
 .sanity-box--info{color:var(--text-2);background:var(--bg-2);border-color:var(--border)}
-.sanity-box--overcap{color:#c0392b;background:rgba(192,57,43,.07);border-color:rgba(192,57,43,.35)}
+.sanity-box--overcap{background:#fff8e1;border-left:3px solid #f59e0b;color:#78350f;border-radius:6px;padding:.75rem 1rem;font-size:.875rem;margin-top:1rem}
+.pakker-hint{font-size:.8rem;margin:.25rem 0 .5rem;padding:.4rem .6rem;border-radius:4px}
+.pakker-hint--question{color:#92400e;background:#fef3c7}
+.pakker-hint--ok{color:#065f46;background:#d1fae5}
 .eff-score{display:flex;align-items:center;gap:.5rem;margin:.5rem 0;font-size:.67rem;color:var(--text-3)}
 .eff-score__bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
 .eff-score__fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s ease}
@@ -653,10 +656,10 @@
             <span class="inp-label">Pakker sendt pr. måned</span>
             <span class="inp-val" data-sid="pakker" title="Klik for at indtaste" id="v-pakker">1.500</span>
           </div>
-          <input type="number" id="pakker" class="roi-number-input"
-            min="100" max="999999" step="100" value="5000"
-            placeholder="fx 5.000">
-          <div class="inp-note">Antal pakker I sender pr. måned. Skriv jeres eget tal.</div>
+          <input type="range" class="roi-range" id="pakker"
+            min="100" max="100000" step="100" value="5000">
+          <p id="pakker-hint" class="pakker-hint" style="display:none"></p>
+          <div class="inp-note">Træk slideren eller klik på tallet for at taste direkte. Over 100.000? Klik på tallet.</div>
         </div>
 
         <div class="inp-field">
@@ -1333,6 +1336,29 @@ function beregn() {
   const peak       = +document.getElementById('peak').value;
   const ksMin      = +document.getElementById('ksMin').value;
   const branche    = document.getElementById('branche').value;
+
+  // Bluff-kald logik
+  var pakkerPrMedarb = medarb > 0 ? pakker / medarb : 0;
+  var hint = '';
+  var hintType = 'neutral';
+
+  if (pakkerPrMedarb > 8000) {
+    hint = '? Det svarer til ' + Math.round(pakkerPrMedarb/22) + ' pakker pr. medarbejder pr. dag. Selv med SmartPack er det i den høje ende. Er tallene rigtige?';
+    hintType = 'question';
+  } else if (pakkerPrMedarb < 50 && pakker > 100) {
+    hint = '? Det er under 50 pakker pr. medarbejder pr. måned. Er det et deltidslager eller sæsonlager?';
+    hintType = 'question';
+  } else if (pakkerPrMedarb >= 500 && pakkerPrMedarb <= 3000) {
+    hint = '✓ Det ser realistisk ud for en lageroperation af den størrelse.';
+    hintType = 'ok';
+  }
+
+  var hintEl = document.getElementById('pakker-hint');
+  if (hintEl) {
+    hintEl.textContent = hint;
+    hintEl.className = 'pakker-hint pakker-hint--' + hintType;
+    hintEl.style.display = hint ? 'block' : 'none';
+  }
 
   const b = BRANCHE[branche] || BRANCHE['Andet'];
 
