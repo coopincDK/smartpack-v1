@@ -71,6 +71,15 @@
       '</footer>'
     ].join('\n');
 
+    // GitHub Pages subdirectory fix: rewrite absolute paths with base
+    var _base = (location.hostname.indexOf('github.io') !== -1)
+      ? '/' + location.pathname.split('/').filter(Boolean)[0]
+      : '';
+    if (_base) {
+      html = html.replace(/href="(\/[^"]+)"/g, 'href="' + _base + '$1"');
+      html = html.replace(/src="(\/[^"]+)"/g, 'src="' + _base + '$1"');
+    }
+
     // Mere kompatibel injection end outerHTML
     placeholder.insertAdjacentHTML('beforebegin', html);
     placeholder.parentNode.removeChild(placeholder);
