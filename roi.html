@@ -287,9 +287,10 @@
 <!-- HERO -->
 <section class="roi-hero">
   <div class="container">
-    <div class="roi-hero__eye">ROI Beregner</div>
-    <h1 class="roi-hero__h1">Hvad koster det dig <em>ikke</em><br>at have SmartPack?</h1>
-    <p class="roi-hero__sub">Indtast dine lagertal og se din besparelse, vækstpotentiale og hvornår du rammer kapacitetsloftet &mdash; live og uden tilmelding.</p>
+    <div class="roi-hero__eye">ROI Beregner &middot; Lageroptimering &middot; WMS business case</div>
+    <h1 class="roi-hero__h1">Hvad koster dit lager<br>dig <em>egentlig?</em></h1>
+    <p class="roi-hero__sub">Indtast 3 tal og se svaret på 10 sekunder. Live, ingen tilmelding.</p>
+    <div style="margin-top:1.5rem;font-size:.88rem;font-weight:700;color:var(--accent);letter-spacing:.04em">&#128071; Prøv selv</div>
   </div>
 </section>
 
@@ -300,9 +301,9 @@
 
       <!-- INPUTS -->
       <div>
-        <div class="qc-head__eye">ROI Lagerstyring</div>
-        <h2 class="qc-head__h2">Hvad betyder det<br><em>for dig?</em></h2>
-        <p class="qc-head__sub">Indtast dine tal &ndash; se svaret med det samme. Ingen tilmelding, ingen salg.</p>
+        <div class="qc-head__eye">ROI lagerstyring &middot; Fulfillment effektivisering</div>
+        <h2 class="qc-head__h2">Hvad koster det<br><em>at vente?</em></h2>
+        <p class="qc-head__sub">Typiske lagre er 20-40% overbemandet. Ind med tallene, se hvad det koster dig.</p>
 
         <div class="qc-fields">
           <div>
@@ -367,6 +368,18 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- BRUTAL REALITET -->
+<section style="background:var(--text-1);padding:2.75rem 0;border-bottom:3px solid var(--accent)">
+  <div class="container" style="text-align:center">
+    <div style="font-size:clamp(1.35rem,3vw,1.9rem);font-weight:900;color:#fff;line-height:1.25;margin-bottom:.7rem">
+      De fleste lagre er 20-40% overbemandet.
+    </div>
+    <div style="font-size:.95rem;color:rgba(255,255,255,.55);line-height:1.8;max-width:480px;margin:0 auto">
+      Ikke fordi de er dårlige.<br>Men fordi systemerne er det.
     </div>
   </div>
 </section>
@@ -905,7 +918,10 @@
   function init() {
     IDS.forEach(function(id) {
       var el = document.getElementById(id);
-      if (el) el.addEventListener('input', calc);
+      if (el) el.addEventListener('input', function() {
+        calc();
+        if (typeof syncQCToBeregner === 'function') syncQCToBeregner();
+      });
     });
     calc();
   }
@@ -1333,6 +1349,36 @@ function updateCharts(r) {
   chartROI.data.datasets[1].data = spData;
   chartROI.data.datasets[2].data = netData;
   chartROI.update('none');
+}
+
+// --- QC → Beregner sync ---
+// Når Quick Calc opdateres, sættes de tilsvarende slidere i den detaljerede beregner også.
+function syncQCToBeregner() {
+  var ordrer  = Math.max(1,     +document.getElementById('qc-ordrer').value || 150);
+  var medarbQ = Math.max(1,     +document.getElementById('qc-medarb').value || 5);
+  var lonMd   = Math.max(10000, +document.getElementById('qc-lon').value   || 28000);
+  var fejlQ   = Math.max(0,     +document.getElementById('qc-fejl').value  || 1.1);
+
+  // Konverter: ordrer/dag × 22 = pakker/md
+  var pakker  = Math.min(60000, Math.max(100, Math.round(ordrer * 22 / 100) * 100));
+  // Månedslon ÷ 160,33 = timelon, afrund til nærmeste 5
+  var lonTime = Math.min(450, Math.max(100, Math.round(lonMd / 160.33 / 5) * 5));
+  var medarbV = Math.min(30,  Math.max(1,   Math.round(medarbQ)));
+  var fejlV   = Math.min(5,   Math.max(0,   Math.round(fejlQ * 10) / 10));
+
+  function setSlider(id, val) {
+    var s = document.getElementById(id);
+    if (!s) return;
+    s.value = val;
+    syncSlider(s);
+  }
+
+  setSlider('pakker', pakker);
+  setSlider('medarb', medarbV);
+  setSlider('lon',    lonTime);
+  setSlider('fejl',   fejlV);
+
+  if (typeof update === 'function') update();
 }
 
 // --- Main update loop ---
