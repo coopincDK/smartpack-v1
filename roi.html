@@ -33,14 +33,46 @@
   background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);
   overflow:hidden;
 }
-.inp-tabs { display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border) }
-.inp-tab {
-  padding:.75rem .5rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-  text-align:center;cursor:pointer;color:var(--text-3);border:none;background:transparent;
-  transition:color .15s,background .15s;
+
+/* Step indicators */
+.wizard-steps { display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border) }
+.wizard-step {
+  display:flex;flex-direction:column;align-items:center;gap:.3rem;
+  padding:.8rem .25rem;cursor:pointer;border:none;background:transparent;
+  transition:background .15s;
 }
-.inp-tab.active { color:var(--accent);background:rgba(62,207,142,.07);border-bottom:2px solid var(--accent) }
-.inp-tab:hover:not(.active){color:var(--text-1);background:var(--bg-2)}
+.wizard-step:hover:not(.active){background:var(--bg-2)}
+.wizard-step.active { background:var(--text-1) }
+.wizard-step__num {
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:800;
+  background:var(--border);color:var(--text-3);
+  transition:background .15s,color .15s;
+}
+.wizard-step.active .wizard-step__num { background:var(--accent);color:var(--bg-1) }
+.wizard-step.done .wizard-step__num { background:rgba(62,207,142,.2);color:var(--accent) }
+.wizard-step__lbl { font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);transition:color .15s }
+.wizard-step.active .wizard-step__lbl { color:var(--accent) }
+.wizard-step.done .wizard-step__lbl { color:var(--accent);opacity:.7 }
+
+/* Step header inside content */
+.step-header { display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border) }
+.step-header__num { width:28px;height:28px;border-radius:4px;background:var(--text-1);color:var(--accent);font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0 }
+.step-header__title { font-size:.95rem;font-weight:800;color:var(--text-1);margin-bottom:.15rem }
+.step-header__sub { font-size:.7rem;color:var(--accent);line-height:1.4 }
+
+/* Nav buttons */
+.wizard-nav { display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:1rem 1.5rem;border-top:1px solid var(--border) }
+.wizard-nav__btn {
+  padding:.6rem .75rem;border:1px solid var(--border);border-radius:var(--r-sm);
+  font-size:.78rem;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s;
+  background:var(--bg-2);color:var(--text-2);
+}
+.wizard-nav__btn:hover{background:var(--bg-1);color:var(--text-1)}
+.wizard-nav__btn--next { background:var(--text-1);color:var(--accent);border-color:var(--text-1) }
+.wizard-nav__btn--next:hover { background:var(--text-2);color:var(--accent) }
+.wizard-nav__btn:disabled { opacity:.3;cursor:default }
 
 .inp-body { padding:1.5rem }
 .inp-section { display:none }
@@ -66,8 +98,12 @@
 .roi-select{width:100%;padding:.5rem .8rem;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg-1);color:var(--text-1);font-size:.88rem;cursor:pointer}
 .roi-select:focus{outline:2px solid var(--accent);outline-offset:2px}
 
-.branche-hint{font-size:.68rem;color:var(--text-3);margin-top:.4rem}
+.branche-hint{font-size:.68rem;color:var(--text-3);margin-top:.4rem;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
 .branche-hint span{color:var(--accent);font-weight:700}
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--text-3);font-size:.6rem;font-weight:800;color:var(--text-3);cursor:help;flex-shrink:0;position:relative}
+.info-icon:hover .info-tooltip{display:block}
+.info-tooltip{display:none;position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);background:var(--text-1);color:var(--bg-1);font-size:.7rem;font-weight:400;line-height:1.5;padding:.5rem .75rem;border-radius:6px;width:240px;z-index:99;pointer-events:none}
+.info-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--text-1)}
 
 /* Disclaimer */
 .inp-disc{font-size:.67rem;color:var(--text-3);line-height:1.55;padding:1rem 1.5rem;border-top:1px solid var(--border);background:var(--bg-2)}
@@ -179,7 +215,9 @@
             <option value="M&oslash;bler">M&oslash;bler</option>
             <option value="Andet">Andet</option>
           </select>
-          <div class="branche-hint">Med SmartPack: <span id="b-range">15&ndash;34 pakker/time</span> &middot; median <span id="b-median">23</span></div>
+          <div class="branche-hint">Med SmartPack: <span id="b-range">15&ndash;34 pakker/time</span> &middot; median <span id="b-median">23</span>
+            <span class="info-icon">i<span class="info-tooltip">Tallene er baseret p&aring; reelle SmartPack-kunder inden for branchen og d&aelig;kker <strong>hele arbejdsdagen</strong> &mdash; inkl. modtagelse, opfyldning, returh&aring;ndtering og andre lageropgaver. Faktisk pakker/time kan variere afh&aelig;ngig af lagerets layout, sortiment og ops&aelig;tning.</span></span>
+          </div>
         </div>
 
         <div class="inp-field">
