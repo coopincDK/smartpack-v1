@@ -3257,6 +3257,106 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   border-color: var(--accent);
 }
 
+/* ============================================
+   LIGHT MODE – EXTENDED OVERRIDES
+   (All remaining dark-mode-only elements)
+============================================ */
+
+/* ---- Nav link hover + support link – light ---- */
+:root:not([data-theme="dark"]) .nav__link:hover {
+  background: rgba(0,0,0,.05);
+}
+:root:not([data-theme="dark"]) .nav__support-link {
+  background: transparent;
+  border-color: rgba(0,0,0,.15);
+  color: var(--text-2);
+}
+:root:not([data-theme="dark"]) .nav__support-link:hover {
+  background: rgba(0,0,0,.04);
+  border-color: var(--text-3);
+  color: var(--text-1);
+}
+
+/* ---- Hero bg overlay – neutralise dark gradients in light ---- */
+:root:not([data-theme="dark"]) .hero__bg-overlay {
+  background:
+    linear-gradient(to bottom, rgba(240,247,243,.5) 0%, rgba(240,247,243,0) 25%, rgba(255,255,255,0) 70%, rgba(255,255,255,.3) 100%),
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(26,138,90,.04) 0%, transparent 70%);
+}
+
+/* ---- Hero headline gradient – readable on white ---- */
+:root:not([data-theme="dark"]) .hero__headline {
+  background: linear-gradient(135deg, var(--text-1) 0%, #3d5a70 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Hero logos wrap + trust bar hero – light ---- */
+:root:not([data-theme="dark"]) .hero__logos-wrap {
+  background: rgba(0,0,0,.025);
+  border-top-color: var(--border);
+}
+:root:not([data-theme="dark"]) .trust-bar--hero {
+  border-bottom-color: var(--border);
+}
+
+/* ---- Case card avatar logo – light ---- */
+:root:not([data-theme="dark"]) .case-card__avatar--logo {
+  background: var(--surface-2);
+  filter: none;
+  opacity: 1;
+}
+
+/* ---- Selfstart input – light ---- */
+:root:not([data-theme="dark"]) .selfstart__input {
+  background: rgba(255,255,255,.9);
+  border-color: rgba(0,0,0,.15);
+}
+:root:not([data-theme="dark"]) .selfstart__input:focus {
+  background: #fff;
+  border-color: var(--accent);
+}
+
+/* ---- Partner options (inside selfstart) – light ---- */
+:root:not([data-theme="dark"]) .partner-option {
+  background: rgba(0,0,0,.025);
+}
+:root:not([data-theme="dark"]) .partner-option:hover {
+  background: rgba(26,138,90,.04);
+}
+:root:not([data-theme="dark"]) .partner-option--primary {
+  background: rgba(26,138,90,.05);
+}
+:root:not([data-theme="dark"]) .partner-option__icon--muted {
+  background: rgba(0,0,0,.06);
+}
+
+/* ---- Integration pills – light ---- */
+:root:not([data-theme="dark"]) .int-pills span {
+  background: var(--surface);
+}
+
+/* ---- Integration logo img filter – light ---- */
+/* .int-logo--dark already handled; fix non-dark logos too */
+:root:not([data-theme="dark"]) .integration-logo img {
+  filter: none;
+  opacity: .9;
+}
+
+/* ---- LinkedIn cards – light ---- */
+:root:not([data-theme="dark"]) .li-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+:root:not([data-theme="dark"]) .li-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,.1);
+  border-color: var(--border-2);
+}
+:root:not([data-theme="dark"]) .li-card__engagement {
+  border-top-color: var(--border);
+}
+
 /* Dark mode nav (matches original) */
 [data-theme="dark"] .site-header {
   background: rgba(9,12,15,.97);
