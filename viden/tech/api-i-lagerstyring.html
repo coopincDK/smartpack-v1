@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="/js/header.js"></script>
+<script src="../../js/header.js"></script>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
   <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>API i lagerstyring</span></nav>
@@ -147,7 +147,7 @@ Authorization: Bearer {access_token}</code></pre>
 
 </main>
 <div id="sp-footer"></div>
-<script src="/js/footer.js"></script>
+<script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på API og webhook i lagerstyring?","acceptedAnswer":{"@type":"Answer","text":"API er pull: dit system spørger aktivt. Webhook er push: det eksterne system fortæller dig, når noget sker. Begge bruges typisk i kombination."}},{"@type":"Question","name":"Hvad sker der, hvis access token udløber midt i arbejdsdagen?","acceptedAnswer":{"@type":"Answer","text":"Alle API-kald fejler med HTTP 401. Ordrer hentes ikke, lager opdateres ikke. Systemet bør automatisk forsøge token-refresh og sende alert, hvis det fejler."}},{"@type":"Question","name":"Hvad er pagination, og hvorfor er det vigtigt?","acceptedAnswer":{"@type":"Answer","text":"API'er returnerer data i sider (f.eks. 250 resultater ad gangen). Uden pagination-håndtering henter du kun den første side og mister resten. Kritisk ved ordreimport."}},{"@type":"Question","name":"Hvad er et REST API?","acceptedAnswer":{"@type":"Answer","text":"Et API baseret på HTTP-protokollen og standardmetoder (GET, POST, PUT, DELETE). Det mest udbredte API-design i e-handel og lagerstyring. Data udveksles typisk som JSON."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"API i lagerstyring , sådan henter og sender dit WMS data","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>

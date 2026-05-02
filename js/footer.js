@@ -1,9 +1,12 @@
 /* ============================================================
    SmartPack — Centraliseret footer
-   Rediger KUN denne fil for at opdatere footer på ALLE sider.
-   Tilføj tracking-scripts i "TRACKING" sektionen nedenfor.
+   Virker på alle domæner og subdirectory-deployments.
    ============================================================ */
 (function () {
+  var _src  = (document.currentScript || {}).src || '';
+  var _base = _src ? _src.replace(/\/js\/footer\.js.*$/, '') : '';
+  function url(path) { return _base + path; }
+
   function injectFooter() {
     var placeholder = document.getElementById('sp-footer');
     if (!placeholder) return;
@@ -13,30 +16,30 @@
       '  <div class="container">',
       '    <div class="footer__top">',
       '      <div class="footer__brand">',
-      '        <a href="/" class="footer__logo">',
-      '          <img src="/assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">',
+      '        <a href="' + url('/') + '" class="footer__logo">',
+      '          <img src="' + url('/assets/cropped-favicon-smartpack.png') + '" alt="SmartPack" class="footer__logo-img">',
       '          <span>SmartPack</span>',
       '        </a>',
       '        <p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd.<br>Til dig der er tr&aelig;t af lagerb&oslash;vl.</p>',
       '        <p class="footer__sub">Har du styr p&aring; lageret?</p>',
-      '        <a href="/kontakt.html" class="footer__cta-btn">Lad os kigge p&aring; det sammen &rarr;</a>',
+      '        <a href="' + url('/kontakt.html') + '" class="footer__cta-btn">Lad os kigge p&aring; det sammen &rarr;</a>',
       '      </div>',
       '      <div class="footer__nav">',
       '        <div class="footer__nav-col">',
       '          <h4>Produkt</h4>',
       '          <ul>',
-      '            <li><a href="/funktioner.html">Funktioner</a></li>',
-      '            <li><a href="/integrationer.html">Integrationer</a></li>',
-      '            <li><a href="/cases.html">Kundecases</a></li>',
-      '            <li><a href="/priser.html">Priser</a></li>',
-      '            <li><a href="/viden/">Vidensdatabase</a></li>',
-      '            <li><a href="/3pl.html">3PL &amp; Lagerhoteller</a></li>',
+      '            <li><a href="' + url('/funktioner.html') + '">Funktioner</a></li>',
+      '            <li><a href="' + url('/integrationer.html') + '">Integrationer</a></li>',
+      '            <li><a href="' + url('/cases.html') + '">Kundecases</a></li>',
+      '            <li><a href="' + url('/priser.html') + '">Priser</a></li>',
+      '            <li><a href="' + url('/viden/') + '">Vidensdatabase</a></li>',
+      '            <li><a href="' + url('/3pl.html') + '">3PL &amp; Lagerhoteller</a></li>',
       '          </ul>',
       '        </div>',
       '        <div class="footer__nav-col">',
       '          <h4>Virksomhed</h4>',
       '          <ul>',
-      '            <li><a href="/om-os.html">Om os</a></li>',
+      '            <li><a href="' + url('/om-os.html') + '">Om os</a></li>',
       '            <li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li>',
       '            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>',
       '            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>',
@@ -45,7 +48,7 @@
       '        <div class="footer__nav-col">',
       '          <h4>Support</h4>',
       '          <ul>',
-      '            <li><a href="/faq.html">FAQ</a></li>',
+      '            <li><a href="' + url('/faq.html') + '">FAQ</a></li>',
       '            <li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li>',
       '            <li><a href="tel:+4588202019">+45 88 20 20 19 &middot; Tast 2</a></li>',
       '            <li><a href="tel:+4588202019">Akut? Tast 9. Selv hvis vi sover.</a></li>',
@@ -61,7 +64,7 @@
       '        <span class="footer__badge">Bygget til lageret</span>',
       '      </div>',
       '      <div class="footer__quicksupport">',
-      '        <a href="/vilkaar.html">Vilk&aring;r</a> &middot; Fjernsupport:',
+      '        <a href="' + url('/vilkaar.html') + '">Vilk&aring;r</a> &middot; Fjernsupport:',
       '        <a href="https://download.teamviewer.com/download/TeamViewerQS.exe" target="_blank" rel="noopener">QuickSupport PC</a> &middot;',
       '        <a href="https://download.teamviewer.com/download/TeamViewerQS.dmg" target="_blank" rel="noopener">QuickSupport Mac</a> &middot;',
       '        <a href="https://download.teamviewer.com/download/TeamViewerQS.apk" target="_blank" rel="noopener">QuickSupport Android</a>',
@@ -71,32 +74,17 @@
       '</footer>'
     ].join('\n');
 
-    // GitHub Pages subdirectory fix: rewrite absolute paths with base
-    var _base = (location.hostname.indexOf('github.io') !== -1)
-      ? '/' + location.pathname.split('/').filter(Boolean)[0]
-      : '';
-    if (_base) {
-      html = html.replace(/href="(\/[^"]+)"/g, 'href="' + _base + '$1"');
-      html = html.replace(/src="(\/[^"]+)"/g, 'src="' + _base + '$1"');
-    }
-
-    // Mere kompatibel injection end outerHTML
     placeholder.insertAdjacentHTML('beforebegin', html);
     placeholder.parentNode.removeChild(placeholder);
 
-    // Sæt årstal dynamisk
     var y = document.getElementById('copy-year');
     if (y) y.textContent = new Date().getFullYear();
 
     /* ============================================================
-       TRACKING — indsæt scripts her, fx:
-       var s = document.createElement('script');
-       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX';
-       document.head.appendChild(s);
+       TRACKING — indsæt scripts her
        ============================================================ */
   }
 
-  // Kør straks hvis DOM er klar, ellers vent
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectFooter);
   } else {
