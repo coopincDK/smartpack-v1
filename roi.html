@@ -936,7 +936,7 @@
       <p>En 20-minutters snak giver dig et konkret estimat baseret på jeres faktiske tal, lager og ordremix.</p>
       <div class="roi-cta__btns">
         <a href="kontakt.html" class="btn btn--primary">Book gratis gennemgang &rarr;</a>
-        <a href="assets/smartpack-roi-guide.pdf" download class="btn btn--ghost">&#128196; Download ROI-guide</a>
+        <a href="roi-rapport.html" target="_blank" class="btn btn--ghost">&#128196; Se din ROI-rapport</a>
         <a href="priser.html" class="btn btn--ghost">Se priser</a>
       </div>
     </div>
@@ -1446,6 +1446,31 @@ function updateDOM(r) {
   el('v-avance').textContent   = fmtPct(r.avance, 0);
   el('v-wms').textContent      = fmtN(r.wms) + ' kr.';
   el('v-checkout').textContent = fmtN(r.checkout) + ' kr.';
+
+  // Gem til PDF-rapport
+  try {
+    localStorage.setItem('smartpack_roi', JSON.stringify({
+      savedAt: new Date().toLocaleDateString('da-DK'),
+      medarb: r.medarb, pakker: r.pakker, lon: r.lon,
+      fejl: r.fejl, fejlomk: r.fejlomk, ordrevaerdi: r.ordrevaerdi,
+      avance: r.avance, wms: r.wms, checkout: r.checkout,
+      returrate: r.returrate, fragtRetur: r.fragtRetur,
+      peak: r.peak, ksMin: r.ksMin, branche: r.branche,
+      brancheMin: r.b.min, brancheMax: r.b.max, brancheMedian: r.b.median,
+      timerIAlt: r.timerIAlt, pakkerPrTimeNu: r.pakkerPrTimeNu,
+      frigivne: r.frigivne, noedvendige: r.noedvendige,
+      besArb: r.besArb, besFejl: r.besFejl, besRetur: r.besRetur,
+      besKS: r.besKS, besPeak: r.besPeak, checkout_bes: r.checkout,
+      wmsForskell: r.wmsForskell, ekstraOrdrer: r.ekstraOrdrer,
+      extraOms: r.extraOms, extraAvance: r.extraAvance,
+      spPrisMd: r.spPrisMd, ppp: r.ppp,
+      totalBes: r.totalBes, netto: r.netto,
+      totalAar: r.totalAar, nettoAar: r.nettoAar,
+      roi: r.roi, payback: r.payback,
+      val3mdr: r.val3mdr, val12mdr: r.val12mdr,
+      kapNu: r.kapNu
+    }));
+  } catch(e) {}
 }
 
 function el(id) { return document.getElementById(id); }
