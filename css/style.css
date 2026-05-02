@@ -3163,6 +3163,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 :root:not([data-theme="dark"]) .footer,
 :root:not([data-theme="dark"]) .footer a,
 :root:not([data-theme="dark"]) .footer span,
+:root:not([data-theme="dark"]) .footer strong,
 :root:not([data-theme="dark"]) .footer p,
 :root:not([data-theme="dark"]) .footer h4 {
   color: #94a3b8;

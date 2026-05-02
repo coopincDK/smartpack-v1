@@ -92,17 +92,17 @@
       // dot farver
       var G = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#3ecf8e;margin-right:5px;vertical-align:middle"></span>';
       var Y = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f0b429;margin-right:5px;vertical-align:middle"></span>';
-      var R = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e53e3e;margin-right:5px;vertical-align:middle"></span>';
+      var R = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--text-3);margin-right:5px;vertical-align:middle"></span>';
 
       var dot, label, msg;
       var erWeekend = (day === 0 || day === 6);
 
       if (erWeekend) {
         // Weekend (lor+son)
-        if (h >= 0 && h < 8)  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
-        else if (h < 16)      { dot=Y; label='Weekend'; msg='KUN ved reel driftstop &ndash; tast 9. Ellers ses vi mandag igen.'; }
-        else if (h < 20)      { dot=R; label='Weekend'; msg='Akut? Tast 9. KUN ved reel driftstop. Vi holder weekend.'; }
-        else                  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
+        if (h >= 0 && h < 8)  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19, tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
+        else if (h < 16)      { dot=Y; label='Weekend'; msg='KUN driftstop &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19, tast 9. Ellers ses vi mandag igen.'; }
+        else if (h < 20)      { dot=R; label='Weekend'; msg='Akut driftstop? Ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9. Vi holder weekend.'; }
+        else                  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19, tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
       } else {
         // Hverdag (man-fre)
         if (h >= 0 && h < 6)  { dot=R; label='Vi sover';     msg='KUN driftstop &ndash; tast 9. Vi sover. Overvej om det kan vente til kl.&nbsp;9.'; }
@@ -115,7 +115,7 @@
 
       // Ved aaben support: link er tast-2, ellers tast-9
       var href = (label === 'Support &aring;ben') ? 'tel:+4588202019' : 'tel:+4588202019';
-      phoneEl.innerHTML = dot + '<strong style="color:var(--text-1)">' + label + '</strong> &middot; <a href="' + href + '" style="color:inherit">' + msg + '</a>';
+      phoneEl.innerHTML = dot + '<strong style="color:inherit">' + label + '</strong> &middot; <a href="' + href + '" style="color:inherit">' + msg + '</a>';
     })();
 
     /* ============================================================
