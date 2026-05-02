@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
 <meta charset="UTF-8">
@@ -196,15 +196,17 @@
 
   <!-- INPUT PANEL -->
   <div class="inp-panel">
-    <div class="inp-tabs">
-      <button class="inp-tab active" onclick="switchTab(0)">&#9881; Lagerdata</button>
-      <button class="inp-tab" onclick="switchTab(1)">&#128200; Forretning</button>
-      <button class="inp-tab" onclick="switchTab(2)">&#128269; Ekstra</button>
+    <div class="wizard-steps">
+      <button class="wizard-step active" onclick="goStep(0)"><div class="wizard-step__num">1</div><div class="wizard-step__lbl">Lager</div></button>
+      <button class="wizard-step" onclick="goStep(1)"><div class="wizard-step__num">2</div><div class="wizard-step__lbl">&Oslash;konomi</div></button>
+      <button class="wizard-step" onclick="goStep(2)"><div class="wizard-step__num">3</div><div class="wizard-step__lbl">Software</div></button>
+      <button class="wizard-step" onclick="goStep(3)"><div class="wizard-step__num">4</div><div class="wizard-step__lbl">Ekstra</div></button>
     </div>
 
     <div class="inp-body">
-      <!-- TAB 0: LAGER -->
+      <!-- TRIN 1: LAGER -->
       <div class="inp-section active" id="tab0">
+        <div class="step-header"><div class="step-header__num">1</div><div><div class="step-header__title">Lager</div><div class="step-header__sub">Medarbejdere, pakker og pakkefejl &mdash; grundlaget for beregningen</div></div></div>
 
         <div class="inp-field">
           <div class="inp-row"><span class="inp-label">Branche</span></div>
@@ -275,8 +277,9 @@
 
       </div>
 
-      <!-- TAB 1: FORRETNING -->
+      <!-- TRIN 2: OKONOMI -->
       <div class="inp-section" id="tab1">
+        <div class="step-header"><div class="step-header__num">2</div><div><div class="step-header__title">&Oslash;konomi</div><div class="step-header__sub">Oms&aelig;tning og avance &mdash; beregner potentiel meromsaetning med frigivne timer</div></div></div>
 
         <div class="inp-field">
           <div class="inp-row">
@@ -295,7 +298,11 @@
           <input type="range" class="roi-range" id="avance" min="5" max="80" step="1" value="35">
           <div class="inp-note">Typisk 25&ndash;50% i e-handel</div>
         </div>
+      </div>
 
+      <!-- TRIN 3: SOFTWARE -->
+      <div class="inp-section" id="tab2">
+        <div class="step-header"><div class="step-header__num">3</div><div><div class="step-header__title">Software &amp; fragt</div><div class="step-header__sub">Nuv&aelig;rende WMS-udgifter sammenlignet med SmartPack</div></div></div>
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Nuv. WMS + support pr. md</span>
@@ -314,8 +321,9 @@
           <div class="inp-note">Fragtoptimering via Shipmondo/Webshipper-integration. 0 hvis uklar</div>
         </div>
 
-      <!-- TAB 2: EKSTRA -->
-      <div class="inp-section" id="tab2">
+      <!-- TRIN 4: EKSTRA -->
+      <div class="inp-section" id="tab3">
+        <div class="step-header"><div class="step-header__num">4</div><div><div class="step-header__title">Ekstra</div><div class="step-header__sub">Returh&aring;ndtering, s&aelig;sonudsving og kundeservice &mdash; de skjulte omkostninger</div></div></div>
 
         <div class="inp-field">
           <div class="inp-row"><span class="inp-label">Returrate</span><span class="inp-val" id="v-returrate">8%</span></div>
@@ -345,6 +353,10 @@
       </div>
     </div>
 
+    <div class="wizard-nav">
+      <button class="wizard-nav__btn wizard-nav__btn--prev" id="btn-prev" onclick="stepPrev()" disabled>&larr; Forrige</button>
+      <button class="wizard-nav__btn wizard-nav__btn--next" id="btn-next" onclick="stepNext()">N&aelig;ste &rarr;</button>
+    </div>
     <div class="inp-disc">
       Beregningen er vejledende baseret på medianer fra SmartPack-kunder. Faktisk pris beregnes ud fra den faktiske pakketabel &mdash; minimum 3.000 kr./måned.
     </div>
@@ -605,11 +617,27 @@ function syncSlider(el) {
   el.style.setProperty('--pct', pct + '%');
 }
 
-// --- Tab switch ---
-function switchTab(i) {
-  document.querySelectorAll('.inp-tab').forEach((t,idx) => t.classList.toggle('active', idx===i));
-  document.querySelectorAll('.inp-section').forEach((s,idx) => s.classList.toggle('active', idx===i));
+// --- Wizard navigation ---
+var _step = 0;
+var STEPS = ['tab0','tab1','tab2','tab3'];
+function goStep(i) {
+  _step = Math.max(0, Math.min(3, i));
+  STEPS.forEach(function(id,idx){
+    var s=document.getElementById(id);
+    if(s) s.classList.toggle('active', idx===_step);
+  });
+  document.querySelectorAll('.wizard-step').forEach(function(b,idx){
+    b.classList.toggle('active', idx===_step);
+    b.classList.toggle('done', idx<_step);
+  });
+  document.getElementById('btn-prev').disabled = (_step===0);
+  var isLast = (_step===3);
+  var nb = document.getElementById('btn-next');
+  nb.textContent = isLast ? 'Se resultater \u2713' : 'N\u00e6ste \u2192';
+  nb.disabled = false;
 }
+function stepNext() { if(_step<3) goStep(_step+1); }
+function stepPrev() { if(_step>0) goStep(_step-1); }
 
 // --- Beregning ---
 function beregn() {
