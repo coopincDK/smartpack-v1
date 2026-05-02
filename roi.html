@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROI Beregner – Hvad sparer du med SmartPack? | SmartPack</title>
+<meta name="description" content="Beregn din besparelse med SmartPack WMS. Indtast dine lagertal og se hvad du kan spare på arbejdskraft, pakkefejl og checkout – live.">
+<link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
+<link rel="stylesheet" href="css/style.css?v=3">
+<script src="js/theme-toggle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+/* ============================
+   ROI BEREGNER LAYOUT
+============================== */
+.roi-hero { padding: clamp(5rem,10vw,8rem) 0 3rem; background: var(--bg-1); }
+.roi-hero__eyebrow { font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:.75rem }
+.roi-hero__title { font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:1rem }
+.roi-hero__sub { font-size:1.05rem;color:var(--text-2);max-width:560px;line-height:1.7 }
+
+.roi-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  padding: 3rem 0 5rem;
+}
+@media(max-width:960px){ .roi-grid { grid-template-columns:1fr } }
+
+/* --- Inputs --- */
+.roi-panel {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 2rem;
+  position: sticky;
+  top: 5rem;
+}
+.roi-panel__title { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:1.5rem }
+
+.roi-field { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.roi-field:last-child { border-bottom: none; }
+.roi-field__header { display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem }
+.roi-field__label { font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-2) }
+.roi-field__value { font-size:.95rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums }
+.roi-field__note { font-size:.73rem;color:var(--text-3);margin-top:.4rem;line-height:1.5 }
+
+/* Slider */
+.roi-slider { width:100%;height:4px;border-radius:2px;appearance:none;-webkit-appearance:none;outline:none;cursor:pointer;
+  background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct,50%), var(--border) var(--pct,50%), var(--border) 100%);
+}
+.roi-slider::-webkit-slider-thumb { appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:2px solid var(--bg-1);box-shadow:0 1px 4px rgba(0,0,0,.15);cursor:pointer }
+.roi-slider::-moz-range-thumb { width:18px;height:18px;border-radius:50%;background:var(--accent);border:2px solid var(--bg-1);box-shadow:0 1px 4px rgba(0,0,0,.15);cursor:pointer }
+
+/* Select */
+.roi-select { width:100%;padding:.55rem .9rem;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg-1);color:var(--text-1);font-size:.9rem;cursor:pointer }
+.roi-select:focus { outline:2px solid var(--accent);outline-offset:2px }
+
+/* Industry range hint */
+.roi-range-hint { font-size:.7rem;color:var(--text-3);margin-top:.35rem }
+.roi-range-hint span { color:var(--accent);font-weight:700 }
+
+/* --- Results --- */
+.roi-results { display:flex;flex-direction:column;gap:1.5rem }
+
+.roi-highlight {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 2rem;
+  text-align: center;
+  border-top: 3px solid var(--accent);
+}
+.roi-highlight__label { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:.5rem }
+.roi-highlight__number { font-size:clamp(2.4rem,5vw,3.8rem);font-weight:900;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums }
+.roi-highlight__sub { font-size:.85rem;color:var(--text-3);margin-top:.4rem }
+
+.roi-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+.roi-stat {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 1.25rem 1.5rem;
+}
+.roi-stat__label { font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.3rem }
+.roi-stat__value { font-size:1.45rem;font-weight:900;color:var(--text-1);font-variant-numeric:tabular-nums }
+.roi-stat__sub { font-size:.72rem;color:var(--text-3);margin-top:.2rem }
+.roi-stat--accent .roi-stat__value { color:var(--accent) }
+
+/* Breakdown */
+.roi-breakdown {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 1.5rem 2rem;
+}
+.roi-breakdown__title { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:1.25rem }
+.roi-breakdown__row { display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.9rem }
+.roi-breakdown__row:last-child { border-bottom:none;padding-top:.75rem;font-weight:800;font-size:1rem }
+.roi-breakdown__label { color:var(--text-2) }
+.roi-breakdown__amount { font-weight:700;color:var(--text-1);font-variant-numeric:tabular-nums }
+.roi-breakdown__row--total .roi-breakdown__amount { color:var(--accent) }
+
+/* Charts */
+.roi-chart-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 1.5rem 2rem;
+}
+.roi-chart-card__title { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:1.25rem }
+.roi-chart-card canvas { display:block }
+
+/* Break-even badge */
+.breakeven-badge { display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:700;padding:.3em .8em;border-radius:99px;background:rgba(62,207,142,.12);color:var(--accent);border:1px solid rgba(62,207,142,.3) }
+
+/* Capacity bar */
+.cap-bar-track { height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin:.5rem 0 }
+.cap-bar-fill { height:100%;border-radius:4px;transition:width .5s ease;background:var(--accent) }
+
+/* CTA */
+.roi-cta { background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);padding:2rem;text-align:center }
+.roi-cta h3 { font-size:1.2rem;font-weight:800;margin-bottom:.5rem }
+.roi-cta p { color:var(--text-2);margin-bottom:1.25rem;font-size:.9rem }
+
+/* Disclaimer */
+.roi-disclaimer { font-size:.72rem;color:var(--text-3);border-top:1px solid var(--border);padding-top:1rem;margin-top:.5rem;line-height:1.6 }
+</style>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="js/header.js"></script>
+
+<!-- HERO -->
+<section class="roi-hero">
+  <div class="container">
+    <div class="roi-hero__eyebrow">Konsekvensberegner</div>
+    <h1 class="roi-hero__title">Hvad koster det dig<br><em style="font-style:normal;color:var(--accent)">ikke</em> at have SmartPack?</h1>
+    <p class="roi-hero__sub">Indtast dine lagertal og se din estimerede besparelse live. Ingen tilmelding, ingen forpligtelse.</p>
+  </div>
+</section>
+
+<!-- BEREGNER -->
+<section style="background:var(--bg-2)">
+  <div class="container">
+    <div class="roi-grid">
+
+      <!-- VENSTRE: INPUTS -->
+      <div class="roi-panel">
+        <div class="roi-panel__title">Dine lagertal</div>
+
+        <!-- Branche -->
+        <div class="roi-field">
+          <div class="roi-field__header">
+            <span class="roi-field__label">Branche</span>
+          </div>
+          <select class="roi-select" id="branche">
+            <option value="Tøj &amp; mode">Tøj &amp; mode</option>
+            <option value="Elektronik">Elektronik</option>
+            <option value="Bolig &amp; isenkram" selected>Bolig &amp; isenkram</option>
+            <option value="Møbler">Møbler</option>
+            <option value="Andet">Andet</option>
+          </select>
+          <div class="roi-range-hint" id="branche-hint">Med SmartPack: <span id="branche-range">15–34 pakker/time</span> &middot; median <span id="branche-median">23</span></div>
+        </div>
+
+        <!-- Medarbejdere -->
+        <div class="roi-field">
+          <div class="roi-field__header">
+            <span class="roi-field__label">Lagermedarbejdere (FTE)</span>
+            <span class="roi-field__value" id="val-medarbejdere">3</span>
+          </div>
+          <input type="range" class="roi-slider" id="medarbejdere" min="1" max="30" step="1" value="3">
+          <div class="roi-field__note">Antal fuldtidsækvivalente på lageret</div>
+        </div>
+
+        <!-- Pakker pr. måned -->
+        <div class="roi-field">
+          <div class="roi-field__header">
+            <span class="roi-field__label">Pakker pr. måned</span>
+            <span class="roi-field__value" id="val-pakker">1.500</span>
+          </div>
+          <input type="range" class="roi-slider" id="pakker" min="200" max="60000" step="100" value="1500">
+        </div>
+
+        <!-- Timeløn -->
+        <div class="roi-field">
+          <div class="roi-field__header">
+            <span class="roi-field__label">Timeløn inkl. feriepenge</span>
+            <span class="roi-field__value" id="val-timelonn">160 kr.</span>
+          </div>
+          <input type="range" class="roi-slider" id="timelonn" min="100" max="450" step="5" value="160">
+          <div class="roi-field__note">Typisk 140–200 kr/t inkl. feriepenge og arbejdsgiverudgifter</div>
+        </div>
+
+        <!-- Fejlprocent -->
+        <div class="roi-field">
+          <div class="roi-field__header">
+            <span class="roi-field__label">Pakkefejl</span>
+            <span class="roi-field__value" id="val-fejlpct">1,1%</span>
+          </div>
+          <input type="range" class="roi-slider" id="fejlpct" min="0" max="5" step="0.1" value="1.1">
+          <div class="roi-field__note">Branchegennemsnit: 1–2%. SmartPack-kunder typisk under 0,4%</div>
+        </div>
+
+        <!-- Fejlomkostning -->
+        <div class="roi-field">
+          <div class="roi-field__header">
+            <span class="roi-field__label">Omkostning pr. fejl</span>
+            <span class="roi-field__value" id="val-fejlomk">400 kr.</span>
+          </div>
+          <input type="range" class="roi-slider" id="fejlomk" min="50" max="2000" step="50" value="400">
+          <div class="roi-field__note">Returfragt + kundeservice + kreditnota + tabt tid. 300–600 kr. er realistisk</div>
+        </div>
+
+        <!-- Checkout-besparelse -->
+        <div class="roi-field">
+          <div class="roi-field__header">
+            <span class="roi-field__label">Checkout-besparelse pr. md</span>
+            <span class="roi-field__value" id="val-checkout">0 kr.</span>
+          </div>
+          <input type="range" class="roi-slider" id="checkout" min="0" max="8000" step="100" value="0">
+          <div class="roi-field__note">Besparelse via Shipmondo/Webshipper-integration (labelprint, fragtoptimering). Sæt 0 hvis du ikke ved det.</div>
+        </div>
+
+        <div class="roi-disclaimer">
+          Beregningen er vejledende og baseret på medianer fra SmartPack-kunder. Faktisk besparelse afhænger af jeres specifikke opsætning. SmartPack-pris sat til 2.995 kr./md (startpakke).
+        </div>
+      </div>
+
+      <!-- HØJRE: RESULTATER -->
+      <div class="roi-results">
+
+        <!-- Stor besparelse-tal -->
+        <div class="roi-highlight">
+          <div class="roi-highlight__label">Estimeret årlig besparelse</div>
+          <div class="roi-highlight__number" id="res-aar">0 kr.</div>
+          <div class="roi-highlight__sub" id="res-maaned-sub">svarer til 0 kr. pr. måned</div>
+        </div>
+
+        <!-- Stats grid -->
+        <div class="roi-stats">
+          <div class="roi-stat roi-stat--accent">
+            <div class="roi-stat__label">Frigivne timer/md</div>
+            <div class="roi-stat__value" id="res-timer">0</div>
+            <div class="roi-stat__sub">ved samme volumen</div>
+          </div>
+          <div class="roi-stat">
+            <div class="roi-stat__label">Nødvendige medarb.</div>
+            <div class="roi-stat__value" id="res-medarb">0</div>
+            <div class="roi-stat__sub" id="res-medarb-sub">vs. <span id="res-medarb-nu">0</span> i dag</div>
+          </div>
+          <div class="roi-stat">
+            <div class="roi-stat__label">Ekstra kapacitet/md</div>
+            <div class="roi-stat__value" id="res-kapacitet">0</div>
+            <div class="roi-stat__sub">pakker uden ekstra folk</div>
+          </div>
+          <div class="roi-stat">
+            <div class="roi-stat__label">ROI</div>
+            <div class="roi-stat__value" id="res-roi">0%</div>
+            <div class="roi-stat__sub">ift. SmartPack-abonnement</div>
+          </div>
+        </div>
+
+        <!-- Besparelse-breakdown -->
+        <div class="roi-breakdown">
+          <div class="roi-breakdown__title">Besparelse pr. måned fordelt</div>
+          <div class="roi-breakdown__row">
+            <span class="roi-breakdown__label">💪 Arbejdskraft (frigivne timer)</span>
+            <span class="roi-breakdown__amount" id="res-arb">0 kr.</span>
+          </div>
+          <div class="roi-breakdown__row">
+            <span class="roi-breakdown__label">📦 Pakkefejl reduceret</span>
+            <span class="roi-breakdown__amount" id="res-fejl">0 kr.</span>
+          </div>
+          <div class="roi-breakdown__row" id="checkout-row" style="display:none">
+            <span class="roi-breakdown__label">🔖 Checkout &amp; fragt</span>
+            <span class="roi-breakdown__amount" id="res-checkout-disp">0 kr.</span>
+          </div>
+          <div class="roi-breakdown__row roi-breakdown__row--total">
+            <span class="roi-breakdown__label">Total pr. måned</span>
+            <span class="roi-breakdown__amount" id="res-total-md">0 kr.</span>
+          </div>
+        </div>
+
+        <!-- Kapacitetsmåler -->
+        <div class="roi-breakdown">
+          <div class="roi-breakdown__title">Nuværende kapacitetsudnyttelse</div>
+          <div style="display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.4rem">
+            <span style="color:var(--text-2)" id="cap-label">Lavt udnyttet</span>
+            <span style="font-weight:800;color:var(--accent)" id="cap-pct">0%</span>
+          </div>
+          <div class="cap-bar-track"><div class="cap-bar-fill" id="cap-bar" style="width:0%"></div></div>
+          <div style="font-size:.75rem;color:var(--text-3);margin-top:.4rem" id="cap-text">
+            I sender 0 pakker/time nu &middot; med SmartPack forventes 23
+          </div>
+        </div>
+
+        <!-- Søjlediagram -->
+        <div class="roi-chart-card">
+          <div class="roi-chart-card__title">Besparelse fordelt (kr./md)</div>
+          <canvas id="chart-bar" height="120"></canvas>
+        </div>
+
+        <!-- Break-even diagram -->
+        <div class="roi-chart-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
+            <div class="roi-chart-card__title" style="margin:0">Akkumuleret besparelse – 12 måneder</div>
+            <span class="breakeven-badge" id="breakeven-badge" style="display:none">★ Break-even: md <span id="breakeven-md">?</span></span>
+          </div>
+          <canvas id="chart-line" height="160"></canvas>
+          <div style="display:flex;gap:1.25rem;margin-top:.75rem;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-3)">
+              <div style="width:24px;height:2px;background:var(--accent)"></div>Besparelse
+            </div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-3)">
+              <div style="width:24px;height:2px;background:var(--border);border-top:2px dashed var(--border)"></div>SmartPack-pris
+            </div>
+            <div style="display:flex;align-items:center;gap:.4rem;font-size:.72rem;color:var(--text-3)">
+              <div style="width:24px;height:2px;background:var(--text-1)"></div>Netto
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="roi-cta">
+          <h3>Vil du se det reelle tal for din virksomhed?</h3>
+          <p>En gratis 20-minutters gennemgang giver dig et konkret estimat baseret på jeres faktiske opsætning, ordrer og lagerstruktur.</p>
+          <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">
+            <a href="kontakt.html" class="btn btn--primary">Book gratis gennemgang &rarr;</a>
+            <a href="priser.html" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="sp-footer"></div>
+<script src="js/footer.js"></script>
+<script src="js/main.js?v=2" defer></script>
+<script>
+/* ============================================================
+   SmartPack ROI Beregner – Vanilla JS
+   Port af roiCalc.ts
+   ============================================================ */
+
+const TIMER_PR_MAANED = 160.33;
+const SP_PRIS = 2995;
+
+const BRANCHE = {
+  'Tøj & mode':       { min:24, max:49, median:36 },
+  'Elektronik':         { min:21, max:36, median:28 },
+  'Bolig & isenkram':  { min:15, max:34, median:23 },
+  'Møbler':            { min:9,  max:17, median:13 },
+  'Andet':              { min:15, max:35, median:23 },
+};
+
+function fmt(n, dec=0) {
+  return new Intl.NumberFormat('da-DK',{minimumFractionDigits:dec,maximumFractionDigits:dec}).format(n);
+}
+function fmtKr(n) {
+  return fmt(Math.round(n)) + ' kr.';
+}
+
+function beregn(inputs) {
+  const { medarbejdere, pakker, timelonn, fejlpct, fejlomk, checkout, branche } = inputs;
+  const b = BRANCHE[branche] || BRANCHE['Andet'];
+
+  const timerIAlt       = medarbejdere * TIMER_PR_MAANED;
+  const pakkerPrTimeNu  = timerIAlt > 0 ? pakker / timerIAlt : 0;
+  const antalFejl       = pakker * (fejlpct / 100);
+
+  const forventet       = b.median;
+  const timerMedSP      = forventet > 0 ? pakker / forventet : timerIAlt;
+  const frigivne        = Math.max(0, timerIAlt - timerMedSP);
+  const noedvendige     = timerMedSP / TIMER_PR_MAANED;
+
+  const besArb          = frigivne * timelonn;
+  const besFejl         = antalFejl * fejlomk;
+  const totalMd         = besArb + besFejl + checkout;
+  const totalAar        = totalMd * 12;
+
+  const potKap          = forventet * timerIAlt;
+  const ekstraKap       = Math.max(0, potKap - pakker);
+
+  const netto           = totalMd - SP_PRIS;
+  const roi             = SP_PRIS > 0 ? ((totalMd - SP_PRIS) / SP_PRIS) * 100 : 0;
+  const tilbagebetaling = netto > 0 ? SP_PRIS / netto : 999;
+  const capPct          = Math.min(100, (pakkerPrTimeNu / forventet) * 100);
+
+  return { timerIAlt, pakkerPrTimeNu, forventet, frigivne, noedvendige,
+           besArb, besFejl, totalMd, totalAar, ekstraKap, roi,
+           tilbagebetaling, capPct, netto };
+}
+
+/* Charts */
+let barChart = null;
+let lineChart = null;
+
+function getChartColors() {
+  const style = getComputedStyle(document.documentElement);
+  return {
+    accent:  '#3ECF8E',
+    text3:   style.getPropertyValue('--text-3').trim() || '#888',
+    border:  style.getPropertyValue('--border').trim() || '#e0e0e0',
+    text1:   style.getPropertyValue('--text-1').trim() || '#111',
+    surface: style.getPropertyValue('--surface-1').trim() || '#fff',
+  };
+}
+
+function initCharts() {
+  const c = getChartColors();
+
+  barChart = new Chart(document.getElementById('chart-bar'), {
+    type: 'bar',
+    data: {
+      labels: ['Arbejdskraft', 'Pakkefejl', 'Checkout'],
+      datasets: [{ data: [0,0,0],
+        backgroundColor: ['#3ECF8E','rgba(62,207,142,.55)','rgba(62,207,142,.3)'],
+        borderRadius: 3, borderSkipped: false }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:(ctx)=> fmtKr(ctx.raw) } } },
+      scales:{
+        x:{ grid:{display:false}, ticks:{ color:c.text3, font:{size:11} } },
+        y:{ grid:{color:c.border}, ticks:{ color:c.text3, font:{size:10},
+            callback:(v)=> v>=1000?(v/1000).toFixed(0)+'k':v } }
+      }
+    }
+  });
+
+  const labels = Array.from({length:12},(_,i)=>'Md '+(i+1));
+  lineChart = new Chart(document.getElementById('chart-line'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label:'Besparelse', data:Array(12).fill(0), borderColor:'#3ECF8E', borderWidth:2, pointRadius:0, tension:.3, fill:false },
+        { label:'SmartPack-pris', data:Array.from({length:12},(_,i)=>SP_PRIS*(i+1)),
+          borderColor:c.border, borderWidth:1.5, borderDash:[4,3], pointRadius:0, tension:.3, fill:false },
+        { label:'Netto', data:Array(12).fill(0), borderColor:c.text1, borderWidth:2, pointRadius:0, tension:.3, fill:false },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{ label:(ctx)=> ctx.dataset.label+': '+fmtKr(ctx.raw) } } },
+      scales:{
+        x:{ grid:{display:false}, ticks:{ color:c.text3, font:{size:10} } },
+        y:{ grid:{color:c.border}, ticks:{ color:c.text3, font:{size:10},
+            callback:(v)=> v>=1000?(v/1000).toFixed(0)+'k':v } }
+      }
+    }
+  });
+}
+
+function updateCharts(r, inputs) {
+  if (!barChart || !lineChart) return;
+
+  // Søjlediagram
+  barChart.data.datasets[0].data = [Math.round(r.besArb), Math.round(r.besFejl), Math.round(inputs.checkout)];
+  barChart.update('none');
+
+  // Linjechart
+  const bData = [], oData = [], nData = [];
+  for (let i=1; i<=12; i++) {
+    bData.push(Math.round(r.totalMd * i));
+    oData.push(SP_PRIS * i);
+    nData.push(Math.round(r.totalMd * i - SP_PRIS * i));
+  }
+  lineChart.data.datasets[0].data = bData;
+  lineChart.data.datasets[1].data = oData;
+  lineChart.data.datasets[2].data = nData;
+  lineChart.update('none');
+
+  // Break-even badge
+  const beIdx = nData.findIndex(n => n >= 0);
+  const badge = document.getElementById('breakeven-badge');
+  if (beIdx >= 0) {
+    document.getElementById('breakeven-md').textContent = beIdx + 1;
+    badge.style.display = 'inline-flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+/* Slider helper */
+function updateSlider(el) {
+  const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+  el.style.setProperty('--pct', pct + '%');
+}
+
+/* Main update */
+function update() {
+  const inputs = {
+    medarbejdere: +document.getElementById('medarbejdere').value,
+    pakker:       +document.getElementById('pakker').value,
+    timelonn:     +document.getElementById('timelonn').value,
+    fejlpct:      +document.getElementById('fejlpct').value,
+    fejlomk:      +document.getElementById('fejlomk').value,
+    checkout:     +document.getElementById('checkout').value,
+    branche:      document.getElementById('branche').value,
+  };
+
+  // Display input values
+  document.getElementById('val-medarbejdere').textContent = inputs.medarbejdere;
+  document.getElementById('val-pakker').textContent = fmt(inputs.pakker);
+  document.getElementById('val-timelonn').textContent = fmt(inputs.timelonn) + ' kr.';
+  document.getElementById('val-fejlpct').textContent = fmt(inputs.fejlpct,1).replace('.',',') + '%';
+  document.getElementById('val-fejlomk').textContent = fmt(inputs.fejlomk) + ' kr.';
+  document.getElementById('val-checkout').textContent = fmt(inputs.checkout) + ' kr.';
+
+  // Branche hint
+  const b = BRANCHE[inputs.branche] || BRANCHE['Andet'];
+  document.getElementById('branche-range').textContent = b.min + '\u2013' + b.max + ' pakker/time';
+  document.getElementById('branche-median').textContent = b.median;
+
+  // Beregn
+  const r = beregn(inputs);
+
+  // Results
+  document.getElementById('res-aar').textContent = fmtKr(r.totalAar);
+  document.getElementById('res-maaned-sub').textContent = 'svarer til ' + fmtKr(r.totalMd) + ' pr. m\u00e5ned';
+  document.getElementById('res-timer').textContent = fmt(r.frigivne, 1);
+  document.getElementById('res-medarb').textContent = fmt(r.noedvendige, 1);
+  document.getElementById('res-medarb-nu').textContent = inputs.medarbejdere;
+  document.getElementById('res-kapacitet').textContent = fmt(Math.round(r.ekstraKap));
+  document.getElementById('res-roi').textContent = (r.roi > 0 ? '+' : '') + fmt(r.roi, 0) + '%';
+
+  // Breakdown
+  document.getElementById('res-arb').textContent = fmtKr(r.besArb);
+  document.getElementById('res-fejl').textContent = fmtKr(r.besFejl);
+  document.getElementById('res-total-md').textContent = fmtKr(r.totalMd);
+  const checkoutRow = document.getElementById('checkout-row');
+  if (inputs.checkout > 0) {
+    document.getElementById('res-checkout-disp').textContent = fmtKr(inputs.checkout);
+    checkoutRow.style.display = '';
+  } else {
+    checkoutRow.style.display = 'none';
+  }
+
+  // Kapacitet
+  const capPct = Math.round(r.capPct);
+  document.getElementById('cap-pct').textContent = capPct + '%';
+  document.getElementById('cap-bar').style.width = capPct + '%';
+  const capLabel = capPct < 50 ? 'Lavt udnyttet – stort potentiale' : capPct < 80 ? 'Moderat udnyttet' : 'Godt udnyttet';
+  document.getElementById('cap-label').textContent = capLabel;
+  document.getElementById('cap-text').innerHTML =
+    'I sender ' + fmt(r.pakkerPrTimeNu,1) + ' pakker/time nu &middot; med SmartPack forventes ' + r.forventet + ' (' + inputs.branche + ' median)';
+
+  updateCharts(r, inputs);
+}
+
+/* Init */
+document.addEventListener('DOMContentLoaded', function() {
+  initCharts();
+
+  // Wire sliders
+  ['medarbejdere','pakker','timelonn','fejlpct','fejlomk','checkout'].forEach(id => {
+    const el = document.getElementById(id);
+    updateSlider(el);
+    el.addEventListener('input', function() { updateSlider(this); update(); });
+  });
+  document.getElementById('branche').addEventListener('change', update);
+
+  update();
+});
+</script>
+</body>
+</html>
