@@ -33,7 +33,7 @@
   background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);
   overflow:hidden;
 }
-.inp-tabs { display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border) }
+.inp-tabs { display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border) }
 .inp-tab {
   padding:.75rem .5rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
   text-align:center;cursor:pointer;color:var(--text-3);border:none;background:transparent;
@@ -163,6 +163,7 @@
     <div class="inp-tabs">
       <button class="inp-tab active" onclick="switchTab(0)">&#9881; Lagerdata</button>
       <button class="inp-tab" onclick="switchTab(1)">&#128200; Forretning</button>
+      <button class="inp-tab" onclick="switchTab(2)">&#128269; Ekstra</button>
     </div>
 
     <div class="inp-body">
@@ -275,6 +276,34 @@
           <div class="inp-note">Fragtoptimering via Shipmondo/Webshipper-integration. 0 hvis uklar</div>
         </div>
 
+      <!-- TAB 2: EKSTRA -->
+      <div class="inp-section" id="tab2">
+
+        <div class="inp-field">
+          <div class="inp-row"><span class="inp-label">Returrate</span><span class="inp-val" id="v-returrate">8%</span></div>
+          <input type="range" class="roi-range" id="returrate" min="0" max="40" step="0.5" value="8">
+          <div class="inp-note">Andel af ordrer der returneres. SP reducerer fejlbetingede returner markant (branchegennemsnit 8&ndash;15%)</div>
+        </div>
+
+        <div class="inp-field">
+          <div class="inp-row"><span class="inp-label">Fragtpris pr. returnering</span><span class="inp-val" id="v-fragtRetur">85 kr.</span></div>
+          <input type="range" class="roi-range" id="fragtRetur" min="0" max="300" step="5" value="85">
+          <div class="inp-note">Hvad koster det at modtage en returforsendelse? (ekskl. h&aring;ndteringstid)</div>
+        </div>
+
+        <div class="inp-field">
+          <div class="inp-row"><span class="inp-label">Peak-faktor (s&aelig;sonudsving)</span><span class="inp-val" id="v-peak">0%</span></div>
+          <input type="range" class="roi-range" id="peak" min="0" max="300" step="5" value="0">
+          <div class="inp-note">Hvor mange % stiger I i jeres travleste m&aring;ned? (80% = Black Friday/jul). Beregner sparede vikarudgifter</div>
+        </div>
+
+        <div class="inp-field">
+          <div class="inp-row"><span class="inp-label">KS: ordresp&oslash;rgsm&aring;l pr. dag</span><span class="inp-val" id="v-ksMin">0 min.</span></div>
+          <input type="range" class="roi-range" id="ksMin" min="0" max="180" step="5" value="0">
+          <div class="inp-note">Minutter/dag p&aring; &ldquo;Hvor er min pakke?&rdquo;. SP reducerer disse med ~70% via automatiske notifikationer</div>
+        </div>
+
+      </div>
       </div>
     </div>
 
@@ -369,6 +398,18 @@
       <div class="breakdown__row breakdown__row--pos" id="row-wms" style="display:none">
         <span class="breakdown__lbl">🖥️ Software-besparelse (nuv. WMS &minus; SP)</span>
         <span class="breakdown__amt" id="r-wmsbes">0 kr.</span>
+      </div>
+      <div class="breakdown__row breakdown__row--pos" id="row-retur" style="display:none">
+        <span class="breakdown__lbl">&#8617; F&aelig;rre fejlbetingede returneringer</span>
+        <span class="breakdown__amt" id="r-returbes">0 kr.</span>
+      </div>
+      <div class="breakdown__row breakdown__row--pos" id="row-peak" style="display:none">
+        <span class="breakdown__lbl">&#127975; Peak: sparede vikarudgifter</span>
+        <span class="breakdown__amt" id="r-peakbes">0 kr.</span>
+      </div>
+      <div class="breakdown__row breakdown__row--pos" id="row-ks" style="display:none">
+        <span class="breakdown__lbl">&#128222; Kundeservice-timer frigivet</span>
+        <span class="breakdown__amt" id="r-ksbes">0 kr.</span>
       </div>
       <div class="breakdown__row breakdown__row--neg">
         <span class="breakdown__lbl">💳 SmartPack abonnement</span>
@@ -544,6 +585,10 @@ function beregn() {
   const avance     = +document.getElementById('avance').value;
   const wms        = +document.getElementById('wms').value;
   const checkout   = +document.getElementById('checkout').value;
+  const returrate  = +document.getElementById('returrate').value;
+  const fragtRetur = +document.getElementById('fragtRetur').value;
+  const peak       = +document.getElementById('peak').value;
+  const ksMin      = +document.getElementById('ksMin').value;
   const branche    = document.getElementById('branche').value;
 
   const b = BRANCHE[branche] || BRANCHE['Andet'];
@@ -569,12 +614,29 @@ function beregn() {
   const extraOms       = ordrevaerdi * ekstraOrdrer;
   const extraAvance    = avancePrOrdre * ekstraOrdrer;
 
+  // Returbesparelse: fejlbetingede returner reduceres
+  // SP bringer fejlpct ned til ~0.4% — sparede returner = diff × fragtRetur
+  const SP_FEJL_EFTER  = 0.4;
+  const reducFejlPct   = Math.max(0, fejl - SP_FEJL_EFTER);
+  const reduceredeRetur= (reducFejlPct / 100) * pakker;
+  const besRetur       = reduceredeRetur * fragtRetur;
+
+  // Peak-besparelse: sparede vikartimer i topperiode
+  const peakPakker     = pakker * (1 + peak / 100);
+  const vikarTimerUden = pakkerPrTimeNu > 0 ? Math.max(0, peakPakker - pakker) / pakkerPrTimeNu : 0;
+  const vikarTimerMed  = b.median > 0 ? Math.max(0, peakPakker - kapNu) / b.median : 0;
+  const besPeak        = Math.max(0, vikarTimerUden - vikarTimerMed) * lon * 1.2;
+
+  // Kundeservice: SP reducerer ordrehenvendelser med 70%
+  const ksTiMd         = (ksMin * 30.5) / 60;
+  const besKS          = ksTiMd * lon * 0.70;
+
   // SmartPack pris
   const { pris: spPrisMd, ppp } = spPris(pakker);
   const wmsForskell    = wms > 0 ? wms - spPrisMd : 0;
 
   // Total besparelse
-  const totalBes       = besArb + besFejl + checkout + Math.max(0, wmsForskell);
+  const totalBes       = besArb + besFejl + checkout + Math.max(0, wmsForskell) + besRetur + besKS;
   const netto          = totalBes - spPrisMd;
   const totalAar       = totalBes * 12;
   const nettoAar       = netto * 12;
@@ -584,13 +646,15 @@ function beregn() {
   const payback        = netto > 0 ? spPrisMd / netto : 999;
 
   // Indfasning
-  const val3mdr        = (frigivne * 0.3) * lon + besFejl - spPrisMd;
-  const val12mdr       = frigivne * lon + besFejl + checkout + Math.max(0,wmsForskell) - spPrisMd;
+  const val3mdr  = (frigivne * 0.3) * lon + besFejl - spPrisMd;
+  const val12mdr = frigivne * lon + besFejl + checkout + Math.max(0,wmsForskell) + besRetur + besKS - spPrisMd;
 
   return {
-    medarb, pakker, lon, fejl, fejlomk, vaekst, ordrevaerdi, avance, wms, checkout, branche,
+    medarb, pakker, lon, fejl, fejlomk, vaekst, ordrevaerdi, avance, wms, checkout,
+    returrate, fragtRetur, peak, ksMin, branche,
     b, timerIAlt, pakkerPrTimeNu, frigivne, noedvendige, antalFejl,
     besArb, besFejl, ekstraOrdrer, extraOms, extraAvance,
+    besRetur, reduceredeRetur, besKS, ksTiMd, besPeak,
     spPrisMd, ppp, wmsForskell, totalBes, netto, totalAar, nettoAar,
     roi, payback, kapNu, val3mdr, val12mdr
   };
@@ -623,6 +687,20 @@ function updateDOM(r) {
 
   show('row-wms', r.wmsForskell > 0);
   if (r.wmsForskell > 0) el('r-wmsbes').textContent = fmtKr(r.wmsForskell);
+
+  show('row-retur', r.besRetur > 0);
+  if (r.besRetur > 0) el('r-returbes').textContent = fmtKr(r.besRetur);
+
+  show('row-peak', r.besPeak > 0);
+  if (r.besPeak > 0) el('r-peakbes').textContent = fmtKr(r.besPeak);
+
+  show('row-ks', r.besKS > 0);
+  if (r.besKS > 0) el('r-ksbes').textContent = fmtKr(r.besKS);
+
+  el('v-returrate').textContent  = fmtPct(r.returrate);
+  el('v-fragtRetur').textContent = fmtN(r.fragtRetur) + ' kr.';
+  el('v-peak').textContent       = fmtPct(r.peak, 0);
+  el('v-ksMin').textContent      = fmtN(r.ksMin) + ' min.';
 
   // Omsætning
   const showOms = r.ordrevaerdi > 0 && r.ekstraOrdrer > 0;
