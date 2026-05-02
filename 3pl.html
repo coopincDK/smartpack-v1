@@ -81,7 +81,7 @@
 .pl-hero__sub { font-size:1.1rem; color:var(--text-2); max-width:620px; line-height:1.75; margin-bottom:2rem; }
 .pl-hero__ctas { display:flex; gap:1rem; flex-wrap:wrap; }
 
-.pl-section { padding:5rem 0; }
+.pl-section { padding:6.5rem 0; }
 .pl-section--alt { background:var(--bg-2); }
 .pl-section--dark { background:var(--surface-1); }
 
@@ -90,12 +90,12 @@
 .pl-lead { font-size:1rem; color:var(--text-2); line-height:1.8; max-width:680px; }
 
 /* ── Audience split ── */
-.audience-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
-.audience-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2.5rem; }
+.audience-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3.5rem; }
+.audience-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:3rem; }
 .audience-card--hotel { border-top:3px solid var(--accent); }
 .audience-card--shop { border-top:3px solid #3b82f6; }
 .audience-card h3 { font-size:1.25rem; font-weight:800; margin:.5rem 0 1rem; }
-.audience-card ul { list-style:none; display:flex; flex-direction:column; gap:.65rem; }
+.audience-card ul { list-style:none; display:flex; flex-direction:column; gap:.85rem; }
 .audience-card li { font-size:.9rem; color:var(--text-2); padding-left:1.5rem; position:relative; line-height:1.5; }
 .audience-card li::before { content:'\2713'; position:absolute; left:0; color:var(--accent); font-weight:800; }
 .audience-card--shop li::before { color:#3b82f6; }
@@ -105,7 +105,7 @@
 
 /* ── Pricing cards ── */
 .price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
-.price-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2rem; position:relative; }
+.price-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2.5rem; position:relative; }
 .price-card--featured { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent),var(--shadow-md); }
 .price-card__badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--accent); color:#060f09; font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; padding:.3rem .9rem; border-radius:999px; white-space:nowrap; }
 .price-card__name { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); margin-bottom:.5rem; }
@@ -118,15 +118,15 @@
 
 /* ── Included grid ── */
 .included-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; margin-top:2.5rem; }
-.included-item { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md); padding:1.5rem; }
+.included-item { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md); padding:2rem; }
 .included-item__icon { font-size:1.4rem; margin-bottom:.75rem; }
 .included-item h4 { font-size:.95rem; font-weight:700; margin-bottom:.4rem; }
 .included-item p { font-size:.85rem; color:var(--text-2); line-height:1.6; margin:0; }
 
 /* ── Future features ── */
-.future-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; margin-top:2.5rem; }
-.future-item { background:var(--surface-1); border:1px solid var(--border); border-radius:var(--r-md); padding:1.75rem; }
-.future-item__tag { display:inline-block; font-size:.68rem; font-weight:700; background:rgba(62,207,142,.12); color:var(--accent); padding:.2rem .6rem; border-radius:4px; margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.08em; }
+.future-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; margin-top:3rem; }
+.future-item { background:var(--surface-1); border:1px solid var(--border); border-radius:var(--r-md); padding:2.25rem; }
+.future-item__tag { display:inline-block; font-size:.68rem; font-weight:700; background:rgba(62,207,142,.15); color:var(--accent); padding:.3rem .75rem; border-radius:999px; margin-bottom:1rem; text-transform:uppercase; letter-spacing:.08em; border:1px solid rgba(62,207,142,.3); }
 .future-item h4 { font-size:1rem; font-weight:800; margin-bottom:.5rem; }
 .future-item p { font-size:.85rem; color:var(--text-2); line-height:1.65; margin:0; }
 
@@ -432,9 +432,9 @@
 <!-- KOMMENDE: DYNAMISKE PRISMODELLER -->
 <section class="pl-section pl-section--alt">
   <div class="container">
-    <div class="pl-label">Kommende i SmartPack v1</div>
+    <div class="pl-label">Tilg&aelig;ngeligt i SmartPack</div>
     <h2 class="pl-h2">Dynamiske afregningsmodeller &mdash; fair begge veje</h2>
-    <p class="pl-lead">Vi arbejder p&aring; en r&aelig;kke nye prisberegningsmuligheder der g&oslash;r afregningen mellem lagerhotel og butik langt mere gennemsigtig, fleksibel og automatiseret.</p>
+    <p class="pl-lead">SmartPack underst&oslash;tter en r&aelig;kke fleksible prismodeller der g&oslash;r afregningen mellem lagerhotel og butik gennemsigtig og automatiseret. Hvad der kan aktiveres afh&aelig;nger af den individuelle serviceaftale.</p>
 
     <div class="future-grid">
       <div class="future-item">
@@ -516,8 +516,8 @@
   <div class="container" style="max-width:780px">
     <div class="pl-label">S&aelig;rlig prismodel</div>
     <h2 class="pl-h2">Over 100.000 pakker &aring;rligt?<br>Vi har noget til jer.</h2>
-    <p style="color:var(--text-2);line-height:1.8;font-size:1rem">Vi har en meget attraktiv prismodel for lagre med over 100.000 pakker &aring;rligt &mdash; ogs&aring; selvom vi i starten m&aring;ske kun h&aring;ndterer en br&oslash;kdel af dem via 3PL-rammeaftalen uden komplekse tilrettelser.</p>
-    <p style="color:var(--text-2);line-height:1.8;font-size:1rem;margin-top:1rem">Vi satser nemlig p&aring;, at n&aring;r I f&oslash;rst har pr&oslash;vet SmartPack, kommer vi ind p&aring; hele lageret. Det ved vi fra erfaring. Og s&aring; giver det mening at v&aelig;re generøs fra start.</p>
+    <p style="color:var(--text-2);line-height:1.8;font-size:1rem">Vi har en meget attraktiv prismodel for lagre med over 100.000 pakker &aring;rligt &mdash; ogs&aring; selvom 3PL-rammeaftalen i starten kun d&aelig;kker en del af dem. Ingen komplekse tilrettelser n&oslash;dvendige.</p>
+    <p style="color:var(--text-2);line-height:1.8;font-size:1rem;margin-top:1.25rem">Erfaringen viser, at n&aring;r f&oslash;rst lagerhotellet og deres kunder har pr&oslash;vet SmartPack, ryger hele lageret med. S&aring; vi priorsætter at v&aelig;re generøse fra start.</p>
     <div style="margin-top:2rem">
       <a href="kontakt.html" class="btn btn--primary">F&aring; et tilbud &rarr;</a>
     </div>
