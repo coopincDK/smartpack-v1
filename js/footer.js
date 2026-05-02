@@ -52,6 +52,7 @@
       '          <ul>',
       '            <li><a href="' + url('/faq.html') + '">FAQ</a></li>',
       '            <li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li>',
+      '            <li><a href="https://support.smartpack.dk" target="_blank" rel="noopener">Helpdesk &amp; tickets</a></li>',
       phoneHtml,
       '          </ul>',
       '        </div>',
@@ -107,7 +108,7 @@
         msg   = 'KUN ring ved driftstop: 88&nbsp;20&nbsp;20&nbsp;19, tast 9. &Aring;bner mandag.';
       } else {
         // Hverdag (man-fre)
-        if (h >= 8 && h < 17) {
+        if (h >= 8 && h < 16) {
           // 🟢 Grøn: 08-17
           color = CLR_G;
           label = 'Support &aring;ben';
