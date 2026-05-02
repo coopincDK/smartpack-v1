@@ -16,9 +16,7 @@
     var html = [
       '<div class="site-announce" id="site-announce">',
       '  <span class="site-announce__inner">',
-      '    <span>&#128222; Ring til os: <a href="tel:88202019" class="site-announce__link">88 20 20 19 tryk 1</a></span>',
-      '    <span class="site-announce__sep">&#xb7;</span>',
-      '    <a href="mailto:bundlinjeboost@smartpack.dk" class="site-announce__link">bundlinjeboost@smartpack.dk</a>',
+      '    <span>Brug for et Bundlinjeboost? Skriv til <a href="mailto:bundlinjeboost@smartpack.dk" class="site-announce__link">bundlinjeboost@smartpack.dk</a></span>',
       '  </span>',
       '  <button class="site-announce__close" id="site-announce-close" aria-label="Luk">&#x2715;</button>',
       '</div>',
