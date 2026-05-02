@@ -770,7 +770,7 @@
       <button class="wizard-nav__btn wizard-nav__btn--next" id="btn-next" onclick="stepNext()">N&aelig;ste &rarr;</button>
     </div>
     <div class="inp-disc">
-      Beregningen er vejledende baseret på medianer fra SmartPack-kunder. Faktisk pris beregnes ud fra den faktiske pakketabel &mdash; minimum 3.000 kr./måned.
+      Beregningen er vejledende baseret på medianer fra SmartPack-kunder. Tilbagebetaling inkluderer engangsomkostninger ved opstart. Pris aftales individuelt.
     </div>
   </div>
 
@@ -1063,9 +1063,10 @@
     // Fejlreduktion: kun positiv - hvis fejl allerede er under SP's niveau, vis 0
     var fejlRedPct   = fejl > fejlAfter ? Math.round((1 - fejlAfter / fejl) * 100) : 0;
 
-    // Payback clamping
+    // Payback clamping (inkl. opstartsinvestering - vises ikke som pris)
+    var opstartEst = 40000 + medarb * 4000;
     var payback = (spMd > 0 && totalBes > 0)
-      ? spMd / (totalBes / 12)
+      ? opstartEst / (totalBes / 12)
       : 999;
     var paybackTxt = payback < 1   ? 'Under 1 mdr.'
                    : payback > 48  ? 'Kræver konkret vurdering'
@@ -1314,7 +1315,10 @@ function beregn() {
 
   // ROI
   const roi            = spPrisMd > 0 ? (netto / spPrisMd) * 100 : 0;
-  const payback        = netto > 0 ? spPrisMd / netto : 999;
+  // Tilbagebetalingstid inkl. engangsomkostninger (opstartspakke + håndterminaler).
+  // Vises IKKE som pris i UI da det er tilbudsbaseret.
+  const _opstartEst    = 40000 + medarb * 4000;
+  const payback        = netto > 0 ? _opstartEst / netto : 999;
 
   // Indfasning
   const val3mdr  = (frigivne * 0.3) * lon + besFejl - spPrisMd;
