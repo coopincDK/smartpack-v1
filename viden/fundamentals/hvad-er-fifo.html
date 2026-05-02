@@ -39,11 +39,43 @@
     <h2>Hvad er FIFO?</h2>
     <p><strong>FIFO</strong> (First In, First Out) er en lagerstrategi, der sikrer at den ældste beholdning (tidligst modtaget) altid plukkes og sendes først. Metoden forhindrer, at ældre varer samler støv, mens nyere varer bruges, og eliminerer dead stock-problematikken over tid.</p>
     <p>FIFO er standard i de fleste professionelle lagre og grundlæggende for <strong>korrekt COGS-beregning</strong> og økonomisk rapportering.</p>
-      <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
 
+    <h2>Hvordan fungerer FIFO i praksis?</h2>
+    <p>FIFO kræver at systemet kender modtagelsesdato for hvert parti. Når en ordre plukkes, anviser WMS'et plukkeren til den lokation med den ældste modtagelsesdato. I praksis sker det på tre måder:</p>
+    <ul>
+      <li><strong>Fysisk FIFO:</strong> Hylden er opbygget så ny vare lægges ind bagfra og plukkes forfra. Kræver gennemgående reoler (flow-reoler) eller disciplineret placering.</li>
+      <li><strong>System-styret FIFO:</strong> WMS anviser korrekt lokation og parti ved hvert pluk. Plukkeren behøver ikke selv tænke over det.</li>
+      <li><strong>Batch-tracking FIFO:</strong> Systemet registrerer batch- eller lot-nummer og modtagelsesdato. Bruges typisk ved krav til sporbarhed eller holdbarhed.</li>
+    </ul>
+    <p>Uden et WMS er FIFO svaert at håndhæve konsekvent. En plukker der har travlt vælger nærmeste vare, ikke ældste. Det er menneskelig natur, ikke dårlig vilje.</p>
 
-    <!-- Inline CTA -->
-    
+    <h2>Hvad koster det ikke at bruge FIFO?</h2>
+    <p>Dead stock er den direkte konsekvens. Et lager med 2.000 SKU'er og en gennemsnitlig varværdi på 120 kr. pr. stk. behøver kun 0,5% dead stock for at have 120.000 kr. bundet i varer der aldrig sendes. Dertil kommer:</p>
+    <ul>
+      <li><strong>Nedskrivning:</strong> Varer over en vis alder skal nedskrives regnskabsmæssigt. Det rammer bundlinjen direkte.</li>
+      <li><strong>Lagerplads:</strong> Dead stock optager plads der ellers kunne bruges til salgbare varer. Ekstra m2 koster 800-1.500 kr./måned pr. reol.</li>
+      <li><strong>COGS-fejl:</strong> Uden FIFO beregnes vareomkostninger forkert, hvilket kan give fejl i bruttomargin og skat.</li>
+      <li><strong>Reklamationer:</strong> For varer med holdbarhed (kosmetik, fødevarer, batterier) kan manglende FIFO føre til at kunder modtager varer tæt på udløb. Det koster returhåndtering og mistede kunder.</li>
+    </ul>
+
+    <h2>FIFO vs. LIFO vs. FEFO</h2>
+    <p><strong>LIFO</strong> (Last In, First Out) er det modsatte: nyeste vare sendes først. LIFO er forbudt som regnskabsmetode i EU under IFRS og er sjældent relevant for fysisk lager. Brug det ikke.</p>
+    <p><strong>FEFO</strong> (First Expired, First Out) prioriterer udløbsdato frem for modtagelsesdato. FEFO er den korrekte strategi for alle varer med holdbarhed. For varer uden holdbarhedsdato er FIFO standarden.</p>
+    <p>Tommelfingerregel: Har varen en udløbsdato, brug FEFO. Har den ikke, brug FIFO.</p>
+
+    <h2>Typiske fejl ved FIFO-implementering</h2>
+    <ul>
+      <li><strong>Ingen batch-registrering ved modtagelse:</strong> Hvis systemet ikke registrerer modtagelsesdato pr. parti, kan FIFO ikke håndhæves. Det starter ved godset, ikke ved plukket.</li>
+      <li><strong>Blanding af batches på samme lokation:</strong> Hvis to batches fysisk er blandet på samme hylde, er FIFO umuligt uden batch-scanning. Hold batches adskilt eller brug flow-reoler.</li>
+      <li><strong>Manuelt FIFO uden system:</strong> At stole på medarbejdernes hukommelse og disciplin fejler ved sygdom, travlhed og vikarer. FIFO skal styres af systemet.</li>
+      <li><strong>Glemmer returvarer:</strong> Returnerede varer skal genindlægges med original modtagelsesdato, ikke returneringsdato. Ellers bryder de FIFO-sekvensen.</li>
+    </ul>
+
+    <h2>Hvornår skal du tage action?</h2>
+    <p>Se på dit lager i dag. Hvis du finder varer der har stået mere end 6 måneder og stadig er salgbare, har du et FIFO-problem. Hvis dit system ikke kan vise dig modtagelsesdato pr. parti, har du et system-problem. Begge dele løses, men det starter med at erkende at FIFO ikke er en administrativ detalje, det er en forudsætning for et sundt lager.</p>
+    <p>Koster det noget at implementere FIFO? Ja: en til to dages opsætning i WMS, træning af medarbejdere og eventuel omstrukturering af hylder til flow-reoler. Det betaler sig tilbage ved første kvartal uden dead stock-nedskrivning.</p>
+
+    <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
 
   </div>
 
@@ -80,4 +112,3 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er FIFO, og hvorfor er det standard i professionelle lagre?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body>
 </html>
-

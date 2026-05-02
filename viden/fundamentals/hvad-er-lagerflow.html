@@ -34,21 +34,58 @@
 
   <div class="article-body" data-pagefind-body="true">
 
-    <p>Modtagelsesvognen blokerer pakstationen. Plukkeren venter. Pakstationen venter på plukkerne. Afsendelsesvognen står midt i en gang. Tre mennesker går rundt om hinanden. Intet flyder. <strong>På 4 plukkere og 8 timer koster det 20% af kapaciteten</strong>, og ingen forsøger at løse det, fordi ingen kan se det helheds-billede.</p>
+    <p>Modtagelsesvognen blokerer pakstationen. Plukkeren venter. Pakstationen venter på plukkerne. Afsendelsesvognen står midt i en gang. Tre mennesker går rundt om hinanden. Intet flyder. <strong>På 4 plukkere og 8 timer koster det 20% af kapaciteten</strong>, og ingen forsøger at løse det, fordi ingen kan se helhedsbilledet.</p>
 
     <h2>Hvad er lagerflow?</h2>
-    <p><strong>Lagerflow</strong> er bevægelsesmønstret for varer, mennesker og information igennem lageret, fra modtagelse til afsendelse. Et godt lagerflow er lineaert, séquenseret og uden krydsende bevægelser. Et dårligt flow er kaotisk, reaktivt og fuldt af ventetid.</p>
+    <p><strong>Lagerflow</strong> er bevægelsesmønstret for varer, mennesker og information igennem lageret, fra modtagelse til afsendelse. Et godt lagerflow er lineaert, sekventeret og uden krydsende bevægelser. Et dårligt flow er kaotisk, reaktivt og fuldt af ventetid.</p>
     <p><strong>Tre typer flow i et lager:</strong></p>
-      <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
-
     <ul>
-      <li><strong>Vareflow</strong>: den fysiske bevægelse af varer fra modtagelse → lager → pluk → pak → afsendelse</li>
+      <li><strong>Vareflow</strong>: den fysiske bevægelse af varer fra modtagelse til lager til pluk til pak til afsendelse</li>
       <li><strong>Personflow</strong>: plukkerens og pakkerens bevægelsesmønstre</li>
-      <li><strong>Informationsflow</strong>: ordre-, pluk- og afsendelsessignalernes rej se fra webshop til WMS til medarbejder</li>
+      <li><strong>Informationsflow</strong>: ordre-, pluk- og afsendelsessignalernes rejse fra webshop til WMS til medarbejder</li>
     </ul>
 
-    <!-- Inline CTA -->
-    
+    <h2>De tre grundlæggende lager-layouts og deres flow</h2>
+    <p>Layoutet definerer grundlaget for flowet. Tre modeller dominerer:</p>
+    <ul>
+      <li><strong>I-flow (gennemgående):</strong> Modtagelse i én ende, afsendelse i den anden. Varer bevæger sig lineaert igennem lageret. Optimalt for høj volumen i begge ender. Kræver port-kapacitet i begge sider af bygningen.</li>
+      <li><strong>U-flow (vend-om):</strong> Ind og ud i samme ende af bygningen. Modtagelse og afsendelse deler portkapacitet. Fungerer godt ved begrænsede porte, men kræver stram sekvensstyring for at undgå krydsende trafik.</li>
+      <li><strong>L-flow:</strong> Modtagelse i én side, afsendelse i hjørnet. Kompromis mellem I og U. Bruges typisk ved eksisterende bygninger med uregelmæssig form.</li>
+    </ul>
+    <p>Layout-valget er irreversibelt på kort sigt. Flowoptimering inden for layoutet er billigere og hurtigere og giver ofte 80% af gevinsten.</p>
+
+    <h2>Hvad koster dårligt lagerflow konkret?</h2>
+    <p>Spildtid i bevægelse er den direkte omkostning. Et simpelt regneeksempel:</p>
+    <ul>
+      <li>4 medarbejdere a 220 kr./time arbejder 8 timer = 7.040 kr. i lønomkostning pr. dag</li>
+      <li>Dårligt flow koster 20% spildtid i krydsende bevægelser, ventetid og blokerede zoner</li>
+      <li>Direkte spildtid: 0,20 x 7.040 kr. = 1.408 kr./dag</li>
+      <li>Over 220 arbejdsdage om året: 309.000 kr. i spildtid</li>
+    </ul>
+    <p>Det er penge der ikke vises på en faktura, men som forsvinder stille og roligt i ineffektive bevægelsesmønstre. Dertil kommer forsinkede ordrer, overtidsomkostninger i peak og højere fejlrate under travlhed.</p>
+
+    <h2>Sådan forbedrer du lagerflowet uden at flytte reoler</h2>
+    <p>De hurtigste gevinster kræver ikke byggeprojekter:</p>
+    <ul>
+      <li><strong>Zoneopdeling med tape:</strong> Mærk modtagelseszonen, pakkezone og afsendelseszone tydeligt på gulvet. Ingen vogn må parkeres uden for sin zone. Implementeringstid: 2 timer.</li>
+      <li><strong>WMS-opgavestyring:</strong> Lad WMS'et sekvensere opgaver så plukkere og pakke-medarbejdere ikke krydser hinanden. Batching af plukordrer reducerer gangdistancer 30-50%.</li>
+      <li><strong>Slotting af A-varer:</strong> Flyt de 20% varer der udgør 80% af plukvolumen til zoner tættest på pakstationen. Reducerer gennemsnitlig gangdistance pr. pluk markant.</li>
+      <li><strong>Dedikerede vogntrafik-ruter:</strong> Fastlæg ensrettede ruter for trucktrafik og håndvogne. Eliminerer krydsende trafik i gange.</li>
+    </ul>
+
+    <h2>Typiske fejl i lagerflow</h2>
+    <ul>
+      <li><strong>Blanding af modtagelse og afsendelse i samme port:</strong> Ind- og udgående varer krydser hinanden og skaber kaos i spidsbelastning.</li>
+      <li><strong>Pakstationen placeret langt fra afsendelse:</strong> Pakkede ordrer transporteres langt. Den kortest mulige vej fra pakstation til afsendelsesdock sparer tid.</li>
+      <li><strong>Ingen buffer-zoner:</strong> Uden afmærkede buffer-zoner til ventende varer lægges alting hvor der er plads, og ingen kan finde noget.</li>
+      <li><strong>Returnerede varer i plukkegangene:</strong> Returnerede varer der ikke straks genplaceres blokerer flow og skaber forvirring om lagerstatusen.</li>
+    </ul>
+
+    <h2>Hvornår skal du tage action på lagerflowet?</h2>
+    <p>Lav et spaghetti-diagram: følg én medarbejder i 2 timer og tegn alle bevægelser på en plantegning. Ser resultatet ud som spaghetti, har du et flowproblem. Er mere end 30% af bevægelserne krydsende eller bagudrettede, er der dokumenterbar spildtid at hente.</p>
+    <p>Start med informationsflowet (WMS-opgavestyring), derefter zoneopdeling, til sidst fysisk slotting. Reolflytning er det dyreste og seneste skridt, ikke det første.</p>
+
+    <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
 
   </div>
 

@@ -38,13 +38,50 @@
 
     <h2>Hvad er inventory accuracy?</h2>
     <p><strong>Inventory accuracy</strong> (lagernøjagtighed) er graden af overensstemmelse mellem det fysiske lager og systemets registrerede beholdning. Måles typisk som:</p>
-    <blockquote>Inventory accuracy = (antal SKU'er inden for acceptable tolerance / total antal SKU'er tællet) × 100</blockquote>
-    <p>Acceptable tolerance defineres typisk som ±1 stk. eller ±1%. Et lager med 98% inventory accuracy har 2% af SKU'erne med afvigelse uden for tolerance.</p>
-      <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
+    <blockquote>Inventory accuracy = (antal SKU'er inden for acceptable tolerance / total antal SKU'er tællet) &times; 100</blockquote>
+    <p>Acceptable tolerance defineres typisk som &plusmn;1 stk. eller &plusmn;1%. Et lager med 98% inventory accuracy har 2% af SKU'erne med afvigelse uden for tolerance.</p>
 
+    <h2>Hvad koster lav inventory accuracy konkret?</h2>
+    <p>Konsekvenserne rammer flere steder på én gang:</p>
+    <ul>
+      <li><strong>Oversalg:</strong> Systemet tror der er 20 stk. Der er 2. En kunde bestiller 10. Ordren kan ikke leveres. Det koster kundeservice-tid, refusion og tab af tillid.</li>
+      <li><strong>Overkøb:</strong> Systemet tror der er 2 stk. Der er 20. Indkøb bestiller 50 stk. ekstra. Pludselig er der 70 stk. på lager af en vare der sælger 5 om måneden.</li>
+      <li><strong>Plukfejl:</strong> Plukkeren finder ikke varen på anvist lokation. Bruger 5-10 min på at lede. Multipliceret med 10 plukfejl om dagen: 50-100 minutter spildt dagligt.</li>
+      <li><strong>Sikkerhedslager:</strong> For at kompensere for usikkerhed holder mange lagre 20-30% ekstra sikkerhedslager. Det binder kapital unødigt.</li>
+    </ul>
+    <p>Et lager med 1.000 SKU'er og 96% inventory accuracy har 40 SKU'er med fejlbehæftet saldo. Hver fejl koster i gennemsnit 30-60 min at håndtere når den opdages. Det er 20-40 timers ekstraarbejde pr. optælling.</p>
 
-    <!-- Inline CTA -->
-    
+    <h2>Benchmarks: hvad er normalt, og hvad er godt?</h2>
+    <ul>
+      <li><strong>Under 95%:</strong> Kritisk. Daglige driftsproblemer. Ingen tillid til systemet. Alt styres manuelt.</li>
+      <li><strong>95-97%:</strong> Under gennemsnittet. Hyppige plukfejl og indkøbsfejl. Kræver øjeblikkelig indsats.</li>
+      <li><strong>97-99%:</strong> Acceptabelt men ikke godt nok for vækst. Fejl opstår stadig fast nok til at forstyrre driften.</li>
+      <li><strong>99-99,5%:</strong> Best practice for professionelle lagre. Driften kører stabilt.</li>
+      <li><strong>Over 99,5%:</strong> World class. Kræver WMS, scanning ved alle bevægelser og aktivt cycle counting.</li>
+    </ul>
+
+    <h2>De fire hyppigste årsager til lav inventory accuracy</h2>
+    <ul>
+      <li><strong>Plukfejl (30-40%):</strong> Forkert vare plukket, men systemet registrerer det som korrekt. Opstår ved manglende scanning og travlhed.</li>
+      <li><strong>Modtagelsesfejl (20-30%):</strong> Leverandør sender 48 stk., men systemet registrerer 50 fordi ingen tæller ved modtagelse. Fejlen sidder i systemet fra dag ét.</li>
+      <li><strong>Administrative fejl (15-25%):</strong> Manuel opdatering af saldoer, copy-paste-fejl i Excel, forkert enhed (stk. vs. kasser).</li>
+      <li><strong>Tyveri og svind (5-10%):</strong> Sjældnere end mange tror, men eksisterer. Scanning-tvang reducerer ikke tyveri, men afslører det hurtigere.</li>
+    </ul>
+    <p>Scanning-tvang ved alle lager-bevægelser (modtagelse, pluk, pak, retur) eliminerer pluk- og modtagelsesfejl. Det er den enkeltfaktor der rykker mest på inventory accuracy.</p>
+
+    <h2>Typiske fejl når man prøver at forbedre inventory accuracy</h2>
+    <ul>
+      <li><strong>Stor annual optælling uden at ændre processer:</strong> Tallene rettes, men fejlkilden er stadig der. 3 måneder senere er man tilbage til udgangspunktet.</li>
+      <li><strong>Fokus på tal, ikke årsager:</strong> Inventory accuracy-rapporterne viser 97,3%. Ingen kigger på hvilke SKU'er der fejler og hvorfor.</li>
+      <li><strong>Ingen scanning ved modtagelse:</strong> Den hurtigste vej til lav accuracy er at springe modtagelsesscanning over i travle perioder.</li>
+      <li><strong>Kun tælle ved problemer:</strong> Reaktiv optælling efter en klage. Cycle counting er proaktivt og forebyggende.</li>
+    </ul>
+
+    <h2>Hvornår skal du tage action?</h2>
+    <p>Mål din inventory accuracy nu. Tag 50 tilfældige SKU'er, tæl dem fysisk, og sammenlign med systemsaldoen. Hvis mere end 2 SKU'er afviger, er du under 96%. Det er et problem der koster penge i dag.</p>
+    <p>Over 99% kræver tre ting: scanning ved alle bevægelser, cycle counting som daglig rutine og en WMS der giver root cause-data. Alle tre kan implementeres inden for 90 dage i de fleste lagre.</p>
+
+    <p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Se hvordan SmartPack understøtter dette</a></p>
 
   </div>
 
@@ -81,4 +118,3 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er inventory accuracy, og hvad koster 2% afvigelse dig om året?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body>
 </html>
-

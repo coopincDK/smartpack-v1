@@ -5,7 +5,7 @@
 (function () {
   // Detect base URL fra scriptets egen placering
   // Virker på både smartpack.dk/ OG github.io/smartpack-v1/
-  var _src  = (document.currentScript || {}).src || '';
+  var _src  = window._headerBase || (document.currentScript || {}).src || '';
   var _base = _src ? _src.replace(/\/js\/header\.js.*$/, '') : '';
   function url(path) { return _base + path; }
 
