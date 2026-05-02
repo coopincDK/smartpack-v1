@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WMS til 3PL og Lagerhoteller | SmartPack Lagersystem</title>
+<meta name="description" content="SmartPack er lagersystemet (WMS) der er bygget til 3PL-lagerhoteller. Plug and Play-onboarding for 5.000 kr. Ingen kompleks opsætning. Fuld transparens for butikken.">
+<link rel="canonical" href="https://smartpack.dk/3pl.html">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Lagersystem til 3PL og Lagerhoteller | SmartPack">
+<meta property="og:description" content="Onboard nye webshop-kunder p&aring; under 60 dage. SmartPack er WMS-systemet der er bygget til 3PL-lagerhoteller i Danmark.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://smartpack.dk/3pl.html">
+<meta property="og:image" content="https://smartpack.dk/assets/og-image.jpg">
+<link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=3">
+<script src="js/theme-toggle.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvad koster SmartPack 3PL-rammeaftalen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "3PL Rammeaftalen koster 5.000 kr. som engangsbeløb og faktureres direkte til lagerhotellet. Det dækker standardopsætning, webshop-integration og onboarding af kunden."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan SmartPack bruges som WMS til et lagerhotel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. SmartPack er specifikt udviklet til 3PL-lagerhoteller. Systemet håndterer flere webshop-kunder på samme lager, giver fuld transparens i afregning og understøtter effektive pluk- og pakkerutiner."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad er inkluderet i SmartPacks standardopsætning for 3PL?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standardopsætningen inkluderer integration til webshop (Shopify, WooCommerce, Magento m.fl.), standard plukkeprofil, opsætning af op til 3 logistikpartnere, checkout-prislogik, returportal, Track & Trace-mails og standard stregkodedesign."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad koster udvidet supportaftale for lagerhoteller?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Udvidet supportaftale koster 10.000 kr. pr. år og faktureres direkte til lagerhotellet. Inkluderer 1 times online gennemgang, e-mail support (op til 5 henvendelser/md.) og adgang til specialopsætninger."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://smartpack.dk/3pl.html",
+      "url": "https://smartpack.dk/3pl.html",
+      "name": "WMS til 3PL og Lagerhoteller | SmartPack",
+      "description": "SmartPack WMS til 3PL-lagerhoteller. Plug and Play-onboarding, fuld transparens og automatiseret afregning.",
+      "isPartOf": {"@id": "https://smartpack.dk/#website"}
+    }
+  ]
+}
+</script>
+
+<style>
+/* ── Layout ── */
+.pl-hero { padding: clamp(7rem,12vw,10rem) 0 4rem; background: var(--bg-1); }
+.pl-hero__eyebrow { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:1rem; }
+.pl-hero__title { font-size:clamp(2.2rem,5vw,3.8rem); font-weight:900; line-height:1.08; letter-spacing:-.03em; margin-bottom:1.5rem; }
+.pl-hero__title em { font-style:normal; color:var(--accent); }
+.pl-hero__sub { font-size:1.1rem; color:var(--text-2); max-width:620px; line-height:1.75; margin-bottom:2rem; }
+.pl-hero__ctas { display:flex; gap:1rem; flex-wrap:wrap; }
+
+.pl-section { padding:5rem 0; }
+.pl-section--alt { background:var(--bg-2); }
+.pl-section--dark { background:var(--surface-1); }
+
+.pl-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:.75rem; }
+.pl-h2 { font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:900; letter-spacing:-.025em; line-height:1.15; margin-bottom:1rem; }
+.pl-lead { font-size:1rem; color:var(--text-2); line-height:1.8; max-width:680px; }
+
+/* ── Audience split ── */
+.audience-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+.audience-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2.5rem; }
+.audience-card--hotel { border-top:3px solid var(--accent); }
+.audience-card--shop { border-top:3px solid #3b82f6; }
+.audience-card h3 { font-size:1.25rem; font-weight:800; margin:.5rem 0 1rem; }
+.audience-card ul { list-style:none; display:flex; flex-direction:column; gap:.65rem; }
+.audience-card li { font-size:.9rem; color:var(--text-2); padding-left:1.5rem; position:relative; line-height:1.5; }
+.audience-card li::before { content:'\2713'; position:absolute; left:0; color:var(--accent); font-weight:800; }
+.audience-card--shop li::before { color:#3b82f6; }
+.audience-badge { display:inline-block; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; padding:.3rem .75rem; border-radius:999px; margin-bottom:.75rem; }
+.audience-badge--hotel { background:rgba(62,207,142,.15); color:var(--accent); }
+.audience-badge--shop { background:rgba(59,130,246,.12); color:#3b82f6; }
+
+/* ── Pricing cards ── */
+.price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+.price-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2rem; position:relative; }
+.price-card--featured { border-color:var(--accent); box-shadow:0 0 0 1px var(--accent),var(--shadow-md); }
+.price-card__badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--accent); color:#060f09; font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; padding:.3rem .9rem; border-radius:999px; white-space:nowrap; }
+.price-card__name { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); margin-bottom:.5rem; }
+.price-card__amount { font-size:2.2rem; font-weight:900; color:var(--text-1); line-height:1; margin-bottom:.25rem; }
+.price-card__period { font-size:.8rem; color:var(--text-3); margin-bottom:1.5rem; }
+.price-card__note { font-size:.75rem; color:var(--text-3); font-style:italic; margin-bottom:1.5rem; }
+.price-card ul { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
+.price-card li { font-size:.85rem; color:var(--text-2); padding-left:1.4rem; position:relative; line-height:1.5; }
+.price-card li::before { content:'\2713'; position:absolute; left:0; color:var(--accent); font-weight:800; }
+
+/* ── Included grid ── */
+.included-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; margin-top:2.5rem; }
+.included-item { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md); padding:1.5rem; }
+.included-item__icon { font-size:1.4rem; margin-bottom:.75rem; }
+.included-item h4 { font-size:.95rem; font-weight:700; margin-bottom:.4rem; }
+.included-item p { font-size:.85rem; color:var(--text-2); line-height:1.6; margin:0; }
+
+/* ── Future features ── */
+.future-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; margin-top:2.5rem; }
+.future-item { background:var(--surface-1); border:1px solid var(--border); border-radius:var(--r-md); padding:1.75rem; }
+.future-item__tag { display:inline-block; font-size:.68rem; font-weight:700; background:rgba(62,207,142,.12); color:var(--accent); padding:.2rem .6rem; border-radius:4px; margin-bottom:.75rem; text-transform:uppercase; letter-spacing:.08em; }
+.future-item h4 { font-size:1rem; font-weight:800; margin-bottom:.5rem; }
+.future-item p { font-size:.85rem; color:var(--text-2); line-height:1.65; margin:0; }
+
+/* ── Process steps ── */
+.steps { display:flex; flex-direction:column; gap:0; margin-top:2.5rem; counter-reset:step; }
+.step { display:grid; grid-template-columns:3rem 1fr; gap:1.5rem; padding:1.75rem 0; border-bottom:1px solid var(--border); }
+.step:last-child { border-bottom:none; }
+.step__num { width:3rem; height:3rem; border-radius:50%; background:var(--accent); color:#060f09; font-weight:900; font-size:1.1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.step__body h4 { font-size:1rem; font-weight:700; margin-bottom:.4rem; }
+.step__body p { font-size:.875rem; color:var(--text-2); line-height:1.65; margin:0; }
+.step__body ul { list-style:none; margin-top:.5rem; display:flex; flex-direction:column; gap:.35rem; }
+.step__body li { font-size:.85rem; color:var(--text-2); padding-left:1.25rem; position:relative; }
+.step__body li::before { content:'\2192'; position:absolute; left:0; color:var(--accent); }
+
+/* ── Quote ── */
+.pl-quote { margin:3rem 0; padding:2rem 2.5rem; border-left:4px solid var(--accent); background:var(--surface-1); border-radius:0 var(--r-md) var(--r-md) 0; }
+.pl-quote blockquote { font-size:1.15rem; font-style:italic; line-height:1.75; color:var(--text-1); margin:0 0 .75rem; }
+.pl-quote cite { font-size:.82rem; font-weight:700; color:var(--text-3); font-style:normal; }
+
+/* ── Pricing table ── */
+.pl-table { width:100%; border-collapse:collapse; margin-top:1.5rem; font-size:.875rem; }
+.pl-table th { text-align:left; padding:.75rem 1rem; background:var(--surface-1); font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); border-bottom:2px solid var(--border); }
+.pl-table td { padding:.7rem 1rem; border-bottom:1px solid var(--border); color:var(--text-2); vertical-align:top; }
+.pl-table tr:last-child td { border-bottom:none; }
+.pl-table td:first-child { color:var(--text-1); font-weight:600; }
+.pl-table td strong { color:var(--text-1); font-weight:700; }
+
+/* ── CTA banner ── */
+.pl-cta { background:var(--accent); border-radius:var(--r-xl); padding:4rem; text-align:center; margin-top:4rem; }
+.pl-cta h2 { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:900; color:#060f09; margin-bottom:.75rem; }
+.pl-cta p { color:rgba(6,15,9,.7); max-width:500px; margin:0 auto 2rem; font-size:1rem; }
+.pl-cta .btn--dark { background:#060f09; color:var(--accent); border:none; }
+.pl-cta .btn--dark:hover { background:#111; }
+
+/* ── Stat strip ── */
+.stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin:3rem 0; }
+.stat-item { text-align:center; }
+.stat-item strong { display:block; font-size:2rem; font-weight:900; color:var(--accent); line-height:1; }
+.stat-item span { font-size:.8rem; color:var(--text-3); text-transform:uppercase; letter-spacing:.06em; }
+
+/* ── Responsive ── */
+@media(max-width:900px) {
+  .audience-grid, .price-grid, .future-grid { grid-template-columns:1fr; }
+  .included-grid { grid-template-columns:1fr; }
+  .stat-strip { grid-template-columns:repeat(2,1fr); }
+  .pl-cta { padding:2.5rem 1.5rem; }
+}
+@media(max-width:600px) {
+  .stat-strip { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="site-header" id="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
+      <span class="nav__logo-text">SmartPack</span>
+    </a>
+    <ul class="nav__links" id="nav-links">
+      <li class="nav__item--has-dropdown">
+        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6z"/></svg></button>
+        <div class="nav__megamenu">
+          <a href="funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
+          <a href="integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
+          <a href="faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar p&aring; de hyppigste sp&oslash;rgsm&aring;l</span></a>
+          <a href="om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
+        </div>
+      </li>
+      <li><a href="priser.html" class="nav__link">Priser</a></li>
+      <li><a href="cases.html" class="nav__link">Cases</a></li>
+      <li><a href="3pl.html" class="nav__link nav__link--active">3PL</a></li>
+    </ul>
+    <div class="nav__actions">
+      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Log ind &amp; support &rarr;</a>
+      <a href="kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
+      <a href="kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
+      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="pl-hero">
+  <div class="container">
+    <div class="pl-hero__eyebrow">Lagersystem til 3PL &amp; Lagerhoteller</div>
+    <h1 class="pl-hero__title">WMS der er bygget<br>til <em>lagerhoteller.</em><br>Ikke tilpasset. Bygget.</h1>
+    <p class="pl-hero__sub">SmartPack g&oslash;r det nemt at onboarde nye webshop-kunder p&aring; dit lager. Plug and Play-opsætning p&aring; under 60 dage &mdash; med fuld transparens i afregning og plukrutiner der rent faktisk virker.</p>
+    <div class="pl-hero__ctas">
+      <a href="kontakt.html" class="btn btn--primary">Kontakt os om 3PL &rarr;</a>
+      <a href="#rammeaftale" class="btn btn--ghost">Se rammeaftalen</a>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<section class="pl-section pl-section--alt">
+  <div class="container">
+    <div class="stat-strip">
+      <div class="stat-item"><strong>&lt;60</strong><span>dage til live</span></div>
+      <div class="stat-item"><strong>500+</strong><span>webshops k&oslash;rer allerede</span></div>
+      <div class="stat-item"><strong>40+</strong><span>integrationer klar</span></div>
+      <div class="stat-item"><strong>0</strong><span>konsulenter n&oslash;dvendige</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TO MÅLGRUPPER -->
+<section class="pl-section">
+  <div class="container">
+    <div class="pl-label">To parter. &Eacute;t system.</div>
+    <h2 class="pl-h2">SmartPack skaber v&aelig;rdi p&aring; begge sider af lagerporten</h2>
+    <p class="pl-lead">Et 3PL-lager med SmartPack tiltr&aelig;kker bedre kunder &mdash; og giver dem et v&aelig;rkt&oslash;j, de faktisk g&aring;r glip af n&aring;r de skifter v&aelig;k.</p>
+    <div class="audience-grid">
+      <div class="audience-card audience-card--hotel">
+        <span class="audience-badge audience-badge--hotel">3PL / Lagerhotel</span>
+        <h3>I f&aring;r et system der g&oslash;r jer attraktive</h3>
+        <ul>
+          <li>Onboard nye kunder p&aring; under 60 dage &mdash; uden konsulenter</li>
+          <li>H&aring;ndter flere webshops p&aring; samme lager med fuld adskillelse</li>
+          <li>Automatisk og gennemsigtig afregning af pluk, pak og opbevaring</li>
+          <li>Effektive plukruter der reducerer fejl og &oslash;ger throughput</li>
+          <li>QR-scan til ad hoc-opgaver &mdash; containertømning, sortering, specialpakning</li>
+          <li>Kunder ser selv deres lageromkostninger i realtid &mdash; f&aelig;rre st&oslash;jende fakturasp&oslash;rgsm&aring;l</li>
+          <li>Dynamiske afregningsmodeller der beskytter jeres bundlinje (kommer i v1)</li>
+        </ul>
+      </div>
+      <div class="audience-card audience-card--shop">
+        <span class="audience-badge audience-badge--shop">Webshop-ejer p&aring; 3PL-lager</span>
+        <h3>I f&aring;r overblik I ellers m&aring;tte k&aelig;mpe for</h3>
+        <ul>
+          <li>Se lageromkostninger, plukpriser og forbrug direkte i SmartPack</li>
+          <li>Ret adresser og ordrer i din webshop &mdash; SmartPack synkroniserer via Webhooks</li>
+          <li>Overblik over pausede og fejlede ordrer med klar fejlbeskrivelse</li>
+          <li>Indkøbsforeslag og forecast baseret p&aring; dine faktiske salgsdata</li>
+          <li>Automatisk besked p&aring; shoppen n&aring;r varer er udsolgt og hvorn&aring;r de kommer hjem</li>
+          <li>Lagerv&aelig;rdirapporter til revisor med et klik</li>
+          <li>Fuld sporbarhed: batch, serienumre, udl&oslash;bsdato, vareflow</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RAMMEAFTALE -->
+<section class="pl-section pl-section--alt" id="rammeaftale">
+  <div class="container">
+    <div class="pl-label">3PL Rammeaftale</div>
+    <h2 class="pl-h2">Plug and Play &mdash; fra kontrakt til live p&aring; under 60 dage</h2>
+    <p class="pl-lead">Rammeaftalen giver lagerhoteller mulighed for at onboarde webshop-kunder hurtigt og standardiseret. Alt faktureres direkte til lagerhotellet &mdash; kunden beh&oslash;ver ikke styre noget.</p>
+
+    <div class="price-grid" style="margin-top:3rem">
+
+      <div class="price-card price-card--featured">
+        <div class="price-card__badge">Mest valgte</div>
+        <div class="price-card__name">3PL Rammeaftale</div>
+        <div class="price-card__amount">5.000 kr.</div>
+        <div class="price-card__period">Engangsbeløb &middot; Faktureres til lagerhotellet</div>
+        <div class="price-card__note">Standardopsætning inkluderet. Ingen overraskelser.</div>
+        <ul>
+          <li>Integration til webshop (Shopify, WooCommerce, Magento m.fl.)</li>
+          <li>Standard plukkeprofil (&rdquo;Alle ordrer&rdquo; forudindstillet)</li>
+          <li>Op til 3 logistikpartnere opsat</li>
+          <li>Checkout-prislogik (fri fragt over X kr. &mdash; op til 2 prisgrupper)</li>
+          <li>Standard returportal</li>
+          <li>Standard Track &amp; Trace-mails</li>
+          <li>Standard f&oslash;lgesedler og stregkodedesign</li>
+          <li>Gennemgang af 3PL-funktioner via video</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="price-card__name">Udvidet Supportaftale</div>
+        <div class="price-card__amount">10.000 kr.</div>
+        <div class="price-card__period">Per &aring;r &middot; Faktureres til lagerhotellet</div>
+        <div class="price-card__note">Til lagerhoteller der vil tilbyde mere.</div>
+        <ul>
+          <li>1 times online gennemgang med fokus p&aring; webshoppens behov</li>
+          <li>E-mail support (fair use: op til 5 henvendelser/m&aring;ned)</li>
+          <li>Ubegr&aelig;nset support via lagerhotellet</li>
+          <li>Vejledning om ops&aelig;tning og avancerede funktioner</li>
+          <li>Adgang til specialops&aelig;tninger og custom flows mod tilbud</li>
+        </ul>
+      </div>
+
+      <div class="price-card">
+        <div class="price-card__name">Ad Hoc Support</div>
+        <div class="price-card__amount">1.500 kr.</div>
+        <div class="price-card__period">Per sag &middot; Faktureres til lagerhotellet</div>
+        <div class="price-card__note">Uden l&oslash;bende aftale.</div>
+        <ul>
+          <li>Direkte support til webshopkunden pr. sag</li>
+          <li>Driftkritiske fejl der skyldes SmartPack: altid gratis</li>
+          <li>G&aelig;lder ogs&aring; uden for lagerhotellets supporttider via 24/7-vagtordning</li>
+          <li>Superbrugere hos lagerhotellet: altid fri og ubegr&aelig;nset adgang</li>
+          <li>Specialops&aelig;tninger og custom flows efter tilbud</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p style="font-size:.8rem;color:var(--text-3);margin-top:1.5rem;text-align:center">Alle priser er ekskl. moms &middot; Tilpasninger uden for standardrammen afregnes efter s&aelig;rskilt tilbud og accept fra lagerhotellet</p>
+  </div>
+</section>
+
+<!-- ONBOARDING PROCESS -->
+<section class="pl-section">
+  <div class="container" style="max-width:800px">
+    <div class="pl-label">Onboardingplan</div>
+    <h2 class="pl-h2">S&aring;dan g&aring;r det til</h2>
+    <p class="pl-lead">To trin. Ingen konsulenter. Lagerhotellet er afsender overfor kunden i hele forl&oslash;bet.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">1</div>
+        <div class="step__body">
+          <h4>Oprettelse og opstart</h4>
+          <p>Lagerhotellet udfylder dokumentet &ldquo;Ny kunde p&aring; lager&rdquo; og sender &ldquo;Integrationsplan for 3PL&rdquo; til kunden. SmartPack f&aring;r adgang til webshoppens system for at gennemf&oslash;re integrationen hurtigt og korrekt.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <div class="step__body">
+          <h4>Standardops&aelig;tning (inkluderet)</h4>
+          <ul>
+            <li>Integration til webshop (Shopify, Magento, WooCommerce m.fl.)</li>
+            <li>Standard plukkeprofil &mdash; &ldquo;Alle ordrer&rdquo; forudindstillet</li>
+            <li>Op til 3 logistikpartnere &mdash; enkelt setup uden toldhåndtering</li>
+            <li>Checkout-prislogik: fri fragt over X kr., op til 2 prisgrupper</li>
+            <li>Standard returportal, Track &amp; Trace-mails, f&oslash;lgesedler og stregkodedesign</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <div class="step__body">
+          <h4>Introduktion til funktioner</h4>
+          <p>Kunden f&aring;r en gennemgang af 3PL-funktioner via video. &Oslash;nskes uddybning, sker det via support@smartpack.dk &mdash; med lagerhotellet som afsender. Direkte dialog med webshoppen kr&aelig;ver at 3PL ogs&aring; deltager.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="pl-section pl-section--dark">
+  <div class="container" style="max-width:780px">
+    <div class="pl-quote">
+      <blockquote>&ldquo;Valget af WMS-system er alt afg&oslash;rende for stabilitet, kosteffektiv drift og glade medarbejdere. Vi besluttede at kontakte SmartPack &mdash; det var den rigtige beslutning.&rdquo;</blockquote>
+      <cite>&ndash; Klaus Vadstrup Hansen, COO, Lakuda / Batteribyen &mdash; 42% flere ordrer, 7 f&aelig;rre p&aring; lageret, under 60 dage til live</cite>
+    </div>
+    <div style="text-align:center;margin-top:1.5rem">
+      <a href="cases/lakuda-batteribyen.html" class="btn btn--ghost">L&aelig;s deres case &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- HVAD WEBSHOP-EJEREN FÅR -->
+<section class="pl-section">
+  <div class="container">
+    <div class="pl-label">Fordele for webshoppens ejer</div>
+    <h2 class="pl-h2">N&aring;r dit lager k&oslash;rer SmartPack &mdash; f&aring;r du det ogs&aring;</h2>
+    <p class="pl-lead">Bruger dit lagerhotel SmartPack, f&aring;r du som butiksindehaver adgang til et v&aelig;rkt&oslash;j der giver reelt overblik &mdash; ikke bare et lagersystem til dem der pakker.</p>
+
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="included-item__icon">&#128200;</div>
+        <h4>Realtidsoverblik over dit lager</h4>
+        <p>Se alle varer, lokationer og bev&aelig;gelser direkte i SmartPack. Lagerv&aelig;rdi p&aring; en hvilken som helst dato &mdash; eksport til revisor med &eacute;t klik.</p>
+      </div>
+      <div class="included-item">
+        <div class="included-item__icon">&#128204;</div>
+        <h4>Indkøbsforeslag og forecast</h4>
+        <p>SmartPack kender dit ordreflow og lagerbeholdning. F&aring; foreslag til hvad du skal hjem, hvorn&aring;r &mdash; og advarsler om d&oslash;de varer der bare koster husleje.</p>
+      </div>
+      <div class="included-item">
+        <div class="included-item__icon">&#128260;</div>
+        <h4>Ordresh&aring;ndtering og fejloverblik</h4>
+        <p>Se pausede og fejlede ordrer med pr&aelig;cis fejlbeskrivelse. Ret adresser i din webshop &mdash; SmartPack synkroniserer via Webhooks.</p>
+      </div>
+      <div class="included-item">
+        <div class="included-item__icon">&#128179;</div>
+        <h4>Fuld gennemsigtighed i afregning</h4>
+        <p>Hvis jeres afregningsmodel underst&oslash;ttes af SmartPack, kan du se pr&aelig;cist hvad du har betalt &mdash; denne m&aring;ned og historisk. Ingen overraskelser p&aring; fakturaen.</p>
+      </div>
+      <div class="included-item">
+        <div class="included-item__icon">&#128241;</div>
+        <h4>Automatisk kommunikation til slutkunder</h4>
+        <p>Track &amp; Trace-mails, returportal og meddelelse om restordrer sendes automatisk under lagerhotellets navn.</p>
+      </div>
+      <div class="included-item">
+        <div class="included-item__icon">&#128202;</div>
+        <h4>Sporbarhed og lagerjusteringer</h4>
+        <p>Alle lagerjusteringer logges. Se hvad der er &aelig;ndret, hvorn&aring;r og af hvem &mdash; og bekr&aelig;ft dem som to-do fra en overskuelig liste.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KOMMENDE: DYNAMISKE PRISMODELLER -->
+<section class="pl-section pl-section--alt">
+  <div class="container">
+    <div class="pl-label">Kommende i SmartPack v1</div>
+    <h2 class="pl-h2">Dynamiske afregningsmodeller &mdash; fair begge veje</h2>
+    <p class="pl-lead">Vi arbejder p&aring; en r&aelig;kke nye prisberegningsmuligheder der g&oslash;r afregningen mellem lagerhotel og butik langt mere gennemsigtig, fleksibel og automatiseret.</p>
+
+    <div class="future-grid">
+      <div class="future-item">
+        <span class="future-item__tag">Lagermodeller</span>
+        <h4>&#128201; Aktivitetsrabat &amp; M&aring;lrabatter</h4>
+        <p>Giv webshops spend-baseret rabat &mdash; h&oslash;j aktivitet giver lavere husleje. Prisen tilpasser sig automatisk n&aring;r kunden rammer bestemte volumener.</p>
+      </div>
+      <div class="future-item">
+        <span class="future-item__tag">Lagermodeller</span>
+        <h4>&#128260; Bev&aelig;gelsesbaseret Friplads</h4>
+        <p>Varer med bev&aelig;gelse opbevares gratis. Du betaler kun for hyldevarmere. Motiverer butikken til at aktivere eller fjerne d&oslash;de varer &mdash; I f&aring;r frigivet plads.</p>
+      </div>
+      <div class="future-item">
+        <span class="future-item__tag">Pluk &amp; Pak</span>
+        <h4>&#9878; V&aelig;gt- og volumenbaseret pluk</h4>
+        <p>Prisen f&oslash;lger varens v&aelig;gt eller m&sup3;. Systemet h&aring;ndterer automatisk at en stor og en lille vare koster forskelligt at plukke. Rabat p&aring; efterf&oslash;lgende pluk fra samme lokation.</p>
+      </div>
+      <div class="future-item">
+        <span class="future-item__tag">SLA</span>
+        <h4>&#129309; Automatisk SLA &amp; Kompensation</h4>
+        <p>Giv automatisk kompensation hvis I ikke n&aring;r det aftalte. Men garantien stopper automatisk hvis kunden dumper mere volumen ind end aftalt. Fair begge veje.</p>
+      </div>
+      <div class="future-item">
+        <span class="future-item__tag">Ad Hoc</span>
+        <h4>&#128241; QR-scan til Ad Hoc-opgaver</h4>
+        <p>Registrer ad hoc-opgaver som containert&oslash;mning eller specialpakning direkte p&aring; gulvet med et QR-scan. Ingen glemte timer. Alt faktureres gennemsigtigt.</p>
+      </div>
+      <div class="future-item">
+        <span class="future-item__tag">Arealbaseret</span>
+        <h4>&#9974; Faktisk m&sup2;-forbrug eller fast aftale</h4>
+        <p>Afreg baseret p&aring; pr&aelig;cist antal kvadratmeter dine varer fysisk optager &mdash; eller lav en fast m&sup2;-aftale for fuld forudsigelighed. To modeller, &eacute;t system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRISOVERSIGT / PLUK & PAK TABLE -->
+<section class="pl-section">
+  <div class="container">
+    <div class="pl-label">Eksempel p&aring; prisstruktur</div>
+    <h2 class="pl-h2">Forenklet &amp; gennemsigtigt prisblad</h2>
+    <p class="pl-lead">Herunder ses et eksempel p&aring; v&aelig;gtbaseret plukprissætning. De faktiske priser aftales i den individuelle serviceaftale med lagerhotellet.</p>
+
+    <div style="overflow-x:auto;margin-top:2rem">
+      <table class="pl-table">
+        <thead>
+          <tr>
+            <th>V&aelig;gtgruppe / Volumen</th>
+            <th>F&oslash;rste pluk</th>
+            <th>Pluk 2+ (samme lokation)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0 &ndash; 1 kg / &lt;0,01 m&sup3;</td><td><strong>8,00 kr.</strong></td><td>2,50 kr.</td></tr>
+          <tr><td>1,1 &ndash; 5 kg / 0,01&ndash;0,05 m&sup3;</td><td><strong>12,00 kr.</strong></td><td>4,00 kr.</td></tr>
+          <tr><td>5,1 &ndash; 15 kg / 0,05&ndash;0,15 m&sup3;</td><td><strong>18,00 kr.</strong></td><td>6,00 kr.</td></tr>
+          <tr><td>15,1 &ndash; 30 kg / 0,15&ndash;0,5 m&sup3;</td><td><strong>25,00 kr.</strong></td><td>8,00 kr.</td></tr>
+          <tr><td>30+ kg / 0,5+ m&sup3;</td><td colspan="2" style="color:var(--accent);font-weight:700">Kontakt os</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem">
+      <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem">
+        <p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.75rem">Ordreafvikling</p>
+        <p style="font-size:.875rem;color:var(--text-2);margin:0">Ordregebyr: <strong style="color:var(--text-1)">15,00 kr.</strong> pr. ordre<br>Pak &amp; booking: <strong style="color:var(--text-1)">20,00 kr.</strong> pr. ordre</p>
+      </div>
+      <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem">
+        <p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.75rem">Returh&aring;ndtering</p>
+        <p style="font-size:.875rem;color:var(--text-2);margin:0">Ordregebyr, retur: <strong style="color:var(--text-1)">50,00 kr.</strong><br>Pris pr. enhed: <strong style="color:var(--text-1)">5,00 kr.</strong></p>
+      </div>
+    </div>
+    <p style="font-size:.78rem;color:var(--text-3);margin-top:1rem">Alle priser er ekskl. moms. Priserne er illustrative eksempler og tilpasses den endelige aftale med lagerhotellet.</p>
+  </div>
+</section>
+
+<!-- ATTRAKTIV PRISMODEL -->
+<section class="pl-section pl-section--dark">
+  <div class="container" style="max-width:780px">
+    <div class="pl-label">S&aelig;rlig prismodel</div>
+    <h2 class="pl-h2">Over 100.000 pakker &aring;rligt?<br>Vi har noget til jer.</h2>
+    <p style="color:var(--text-2);line-height:1.8;font-size:1rem">Vi har en meget attraktiv prismodel for lagre med over 100.000 pakker &aring;rligt &mdash; ogs&aring; selvom vi i starten m&aring;ske kun h&aring;ndterer en br&oslash;kdel af dem via 3PL-rammeaftalen uden komplekse tilrettelser.</p>
+    <p style="color:var(--text-2);line-height:1.8;font-size:1rem;margin-top:1rem">Vi satser nemlig p&aring;, at n&aring;r I f&oslash;rst har pr&oslash;vet SmartPack, kommer vi ind p&aring; hele lageret. Det ved vi fra erfaring. Og s&aring; giver det mening at v&aelig;re generøs fra start.</p>
+    <div style="margin-top:2rem">
+      <a href="kontakt.html" class="btn btn--primary">F&aring; et tilbud &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="pl-section">
+  <div class="container" style="max-width:780px">
+    <div class="pl-label">FAQ</div>
+    <h2 class="pl-h2">Sp&oslash;rgsm&aring;l vi f&aring;r tit</h2>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;margin-top:2rem">
+
+      <details style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem 1.5rem">
+        <summary style="font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Hvad koster det at komme i gang som 3PL med SmartPack? <span style="color:var(--accent);font-size:1.2rem">+</span></summary>
+        <p style="margin:.75rem 0 0;color:var(--text-2);font-size:.9rem;line-height:1.7">3PL-rammeaftalen koster 5.000 kr. som engangsbeløb og faktureres direkte til lagerhotellet. Det d&aelig;kker fuld standardops&aelig;tning og onboarding af &eacute;n webshop-kunde.</p>
+      </details>
+
+      <details style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem 1.5rem">
+        <summary style="font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Kan SmartPack h&aring;ndtere flere webshops p&aring; samme lager? <span style="color:var(--accent);font-size:1.2rem">+</span></summary>
+        <p style="margin:.75rem 0 0;color:var(--text-2);font-size:.9rem;line-height:1.7">Ja. SmartPack er specifikt bygget til 3PL-milj&oslash;er med fuld adskillelse mellem kunder. Medarbejderne kan skifte mellem butikker i venstre hj&oslash;rne, og alle data er helt adskilte.</p>
+      </details>
+
+      <details style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem 1.5rem">
+        <summary style="font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Hvem f&aring;r fakturaen &mdash; lagerhotellet eller webshoppen? <span style="color:var(--accent);font-size:1.2rem">+</span></summary>
+        <p style="margin:.75rem 0 0;color:var(--text-2);font-size:.9rem;line-height:1.7">Alt faktureres direkte til lagerhotellet. SmartPack har ingen direkte fakturering til webshopkunden. Lagerhotellet s&aelig;tter selv prisen overfor kunden i deres individuelle serviceaftale.</p>
+      </details>
+
+      <details style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem 1.5rem">
+        <summary style="font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Hvad sker der hvis en webshop-kunde kontakter SmartPack direkte? <span style="color:var(--accent);font-size:1.2rem">+</span></summary>
+        <p style="margin:.75rem 0 0;color:var(--text-2);font-size:.9rem;line-height:1.7">Vi informerer altid lagerhotellet f&oslash;rst, s&aring; de kan pr&aelig;sentere muligheden for en udvidet supportaftale. Efterf&oslash;lgende henvendelser faktureres med 1.500 kr. pr. sag direkte til lagerhotellet.</p>
+      </details>
+
+      <details style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem 1.5rem">
+        <summary style="font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Hvilke webshop-platforme underst&oslash;tter SmartPack? <span style="color:var(--accent);font-size:1.2rem">+</span></summary>
+        <p style="margin:.75rem 0 0;color:var(--text-2);font-size:.9rem;line-height:1.7">SmartPack integrerer med Shopify, WooCommerce, Magento, DanDomain og 40+ andre platforme og b&aelig;rere. Se hele listen p&aring; <a href="integrationer.html" style="color:var(--accent)">integrationer-siden</a>.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pl-section">
+  <div class="container">
+    <div class="pl-cta">
+      <h2>Klar til at g&oslash;re jeres lager mere attraktivt?</h2>
+      <p>Book en uforpligtende snak om hvad SmartPack kan g&oslash;re for jeres 3PL-forretning &mdash; og f&aring; en konkret prismodel.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <a href="kontakt.html" class="btn btn--dark">Kontakt os direkte &rarr;</a>
+        <a href="cases/lakuda-batteribyen.html" class="btn" style="background:transparent;border:2px solid rgba(6,15,9,.3);color:#060f09">Se Lakuda-casen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="index.html" class="footer__logo">
+          <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
+          <span>SmartPack</span>
+        </a>
+        <p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd. Til dem der er tr&aelig;tte af lagerbøvl.</p>
+        <p class="footer__sub">WMS til webshops og 3PL der vil have styr p&aring; lageret.</p>
+        <a href="kontakt.html" class="footer__cta-btn">Book demo</a>
+      </div>
+      <div class="footer__nav">
+        <div class="footer__nav-col">
+          <h4>Produkt</h4>
+          <ul>
+            <li><a href="funktioner.html">Funktioner</a></li>
+            <li><a href="integrationer.html">Integrationer</a></li>
+            <li><a href="cases.html">Kundecases</a></li>
+            <li><a href="priser.html">Priser</a></li>
+            <li><a href="3pl.html">3PL &amp; Lagerhoteller</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Virksomhed</h4>
+          <ul>
+            <li><a href="om-os.html">Om os</a></li>
+            <li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li>
+            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
+            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
+          </ul>
+        </div>
+        <div class="footer__nav-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li>
+            <li><a href="tel:+4588202019">Akut? Tast 9.</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p>
+      <div class="footer__badges">
+        <span class="footer__badge">E-handel siden 2005</span>
+        <span class="footer__badge">Medlem af Dansk Erhverv</span>
+        <span class="footer__badge">WMS - Lagerstyring - 3PL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js?v=2" defer></script>
+</body>
+</html>
