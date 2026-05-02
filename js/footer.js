@@ -130,7 +130,7 @@
       var href = 'tel:+4588202019';
       phoneEl.innerHTML = dot
         + '<strong style="color:' + color + '">' + label + '</strong>'
-        + ' &middot; <span style="color:var(--text-2);font-size:.9em">' + msg + '</span>';
+        + ' &middot; ' + msg;
     })();
 
     /* ============================================================
