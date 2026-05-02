@@ -11,6 +11,11 @@
 <script src="../js/theme-toggle.js"></script>
 <style>
 .case-hero{padding:clamp(7rem,12vw,11rem) 0 4rem;background:var(--bg-1)}
+.case-hero-img{width:100%;max-height:480px;object-fit:cover;border-radius:var(--r-lg);margin:2.5rem 0 0;display:block}
+.img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin:2.5rem 0}
+.img-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-md);display:block}
+.img-grid img:first-child{grid-column:1/3;aspect-ratio:16/7}
+@media(max-width:640px){.img-grid{grid-template-columns:1fr 1fr}.img-grid img:first-child{grid-column:1/-1}}
 .case-hero__back{display:inline-flex;align-items:center;gap:.4rem;color:var(--text-3);font-size:.85rem;text-decoration:none;margin-bottom:2rem;transition:color var(--t-fast)}
 .case-hero__back:hover{color:var(--accent)}
 .case-hero__eyebrow{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:1rem}
@@ -45,6 +50,10 @@
   </div>
 </section>
 
+<div class="container" style="padding:0 1rem">
+  <img src="/assets/muramura-lager-1.jpg" alt="MuraMura lagerhotel Aarhus N" class="case-hero-img" loading="eager">
+</div>
+
 <section style="padding:4rem 0">
   <div class="container" style="max-width:780px">
 
@@ -55,6 +64,12 @@
     <h2 style="font-size:1.4rem;font-weight:800;margin:2.5rem 0 1rem">Udfordringen: kampagnedagen er den v&aelig;rste pr&oslash;ve</h2>
     <p style="color:var(--text-2);line-height:1.8;margin-bottom:1.2rem">Kampagnedage, Black Friday, udsalg, nyhedsbrevs-drops, er deri, mange lageroperationer knækker. Ordrer str&oslash;mmer ind i buljong. Medarbejderne skal eksekv<br>ere hurtigt. Et uoptimeret lager bruger det meste af dagen p&aring; at g&aring; mellem reoler.</p>
     <p style="color:var(--text-2);line-height:1.8;margin-bottom:1.2rem">For MuraMuras kunder inden for mode og smykker g&aelig;lder det s&aelig;rligt: en kampagnedag genererer potentielt et helt m&aring;neds normalt volumen p&aring; f&aring; timer. Sp&oslash;rgsm&aring;let er ikke om systemet kan klare det, men om det kan g&oslash;re det uden at fejlraten stiger og gangafstanden eksploderer.</p>
+
+    <div class="img-grid">
+      <img src="/assets/muramura-lager-2.jpg" alt="MuraMura lager flow" loading="lazy">
+      <img src="/assets/muramura-lager-3.jpg" alt="MuraMura pluk og pak" loading="lazy">
+      <img src="/assets/muramura-lager-4.jpg" alt="MuraMura ordrehåndtering" loading="lazy">
+    </div>
 
     <div class="case-context-note">
       <strong>Kontekst for tallene:</strong> Data'en herunder er fra en specifik kampagnedag hos MuraMura, en dag med markant h&oslash;jere volumen end normalt. Det er pr&aelig;cis her, systemoptimering testes for alvor: ikke n&aring;r det er roligt, men n&aring;r det virkelig g&aelig;lder.
