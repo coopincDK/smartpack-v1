@@ -89,33 +89,47 @@
       var phoneEl = document.getElementById('footer-phone-ctx');
       if (!phoneEl) return;
 
-      // dot farver
-      var G = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#3ecf8e;margin-right:5px;vertical-align:middle"></span>';
-      var Y = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f0b429;margin-right:5px;vertical-align:middle"></span>';
-      var R = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--text-3);margin-right:5px;vertical-align:middle"></span>';
+      // Dot-farver (3 tilstande)
+      var CLR_G = '#22c55e';
+      var CLR_Y = '#f59e0b';
+      var CLR_R = '#e53935';
+      function makeDot(clr) {
+        return '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + clr + ';margin-right:5px;vertical-align:middle"></span>';
+      }
 
-      var dot, label, msg;
+      var color, dot, label, msg;
       var erWeekend = (day === 0 || day === 6);
 
       if (erWeekend) {
-        // Weekend (lor+son)
-        if (h >= 0 && h < 8)  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19, tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
-        else if (h < 16)      { dot=Y; label='Weekend'; msg='KUN driftstop &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19, tast 9. Ellers ses vi mandag igen.'; }
-        else if (h < 20)      { dot=R; label='Weekend'; msg='Akut driftstop? Ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9. Vi holder weekend.'; }
-        else                  { dot=R; label='Weekend'; msg='KUN driftstop &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19, tast 9. Vi sover. Mandag &aring;bner normal support igen.'; }
+        // 🔴 Rød: hele weekenden
+        color = CLR_R;
+        label = 'Vi sover. KUN driftstop';
+        msg   = 'Ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9. &Aring;bner mandag.';
       } else {
         // Hverdag (man-fre)
-        if (h >= 0 && h < 6)  { dot=R; label='Vi sover';     msg='KUN driftstop &ndash; tast 9. Vi sover. Overvej om det kan vente til kl.&nbsp;9.'; }
-        else if (h < 9)       { dot=Y; label='&Aring;bner kl. 9'; msg='KUN driftstop: tast 9. Ellers er vi klar om lidt.'; }
-        else if (h < 16)      { dot=G; label='Support &aring;ben'; msg='Ring til os &ndash; vi tager telefonen nu. &middot; Tast 2'; }
-        else if (h < 20)      { dot=Y; label='Ulvetimen';    msg='Akut? Tast 9. KUN ved reel driftstop &ndash; vi har gang i ulvetimen.'; }
-        else if (h < 23)      { dot=R; label='Sent';         msg='Akut? Tast 9. KUN driftstop &ndash; vi sover muligvis, hav t&aring;lmodighed.'; }
-        else                  { dot=R; label='Vi sover';     msg='KUN driftstop &ndash; tast 9. Vi sover. Overvej om det kan vente til kl.&nbsp;9.'; }
+        if (h >= 8 && h < 17) {
+          // 🟢 Grøn: 08-17
+          color = CLR_G;
+          label = 'Support &aring;ben';
+          msg   = 'Ring til os &ndash; vi tager telefonen. Tast 2.';
+        } else if ((h >= 6 && h < 8) || (h >= 17 && h < 22)) {
+          // 🟡 Gul: 06-08 + 17-22
+          color = CLR_Y;
+          label = 'Begr&aelig;nset support';
+          msg   = 'Ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9 ved akut driftstop.';
+        } else {
+          // 🔴 Rød: 22-06
+          color = CLR_R;
+          label = 'Vi sover. KUN driftstop';
+          msg   = 'Tast 9. &Aring;bner igen kl.&nbsp;8.';
+        }
       }
 
-      // Ved aaben support: link er tast-2, ellers tast-9
-      var href = (label === 'Support &aring;ben') ? 'tel:+4588202019' : 'tel:+4588202019';
-      phoneEl.innerHTML = dot + '<strong style="color:inherit">' + label + '</strong> &middot; <a href="' + href + '" style="color:inherit">' + msg + '</a>';
+      dot = makeDot(color);
+      var href = 'tel:+4588202019';
+      phoneEl.innerHTML = dot
+        + '<strong style="color:' + color + '">' + label + '</strong>'
+        + ' &middot; <a href="' + href + '" style="color:' + color + '">' + msg + '</a>';
     })();
 
     /* ============================================================
