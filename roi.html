@@ -175,6 +175,32 @@
 .roi-cta p{color:var(--text-2);font-size:.88rem;margin-bottom:1.25rem;line-height:1.6}
 .roi-cta__btns{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
 
+/* === REALITY CHECK / SANITY === */
+.rc-banner{display:none;background:rgba(62,207,142,.07);border:1px solid rgba(62,207,142,.3);border-radius:var(--r-md);padding:1.1rem 1.35rem;margin-top:.65rem}
+.rc-banner.visible{display:block}
+.rc-banner__title{font-size:.9rem;font-weight:800;color:var(--text-1);margin-bottom:.3rem}
+.rc-banner__sub{font-size:.75rem;color:var(--text-2);line-height:1.6;margin-bottom:.75rem}
+.rc-alt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-bottom:.75rem}
+.rc-alt-item{font-size:.7rem;color:var(--text-2);background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:.35rem .6rem;display:flex;align-items:center;gap:.4rem}
+.rc-alt-item::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.sanity-box{display:none;font-size:.72rem;color:#9a6800;background:rgba(250,180,0,.09);border:1px solid rgba(250,180,0,.35);border-radius:var(--r-sm);padding:.5rem .8rem;margin-top:.35rem;line-height:1.55}
+.sanity-box.visible{display:block}
+.sanity-box--info{color:var(--text-2);background:var(--bg-2);border-color:var(--border)}
+.eff-score{display:flex;align-items:center;gap:.5rem;margin:.5rem 0;font-size:.67rem;color:var(--text-3)}
+.eff-score__bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.eff-score__fill{height:100%;background:var(--accent);border-radius:3px;transition:width .3s ease}
+.eff-score__lbl{font-weight:700;color:var(--text-2);white-space:nowrap;font-size:.65rem}
+
+/* === IKKE KUN HAENDER === */
+.njh-strip{background:var(--bg-1);border-top:1px solid var(--border);padding:3.5rem 0}
+.njh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:1.75rem}
+@media(max-width:820px){.njh-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.njh-grid{grid-template-columns:1fr}}
+.njh-card{background:var(--surface-1);border:1px solid var(--border);border-radius:var(--r-md);padding:1.1rem 1.25rem}
+.njh-card__icon{font-size:1.2rem;margin-bottom:.45rem}
+.njh-card__title{font-size:.84rem;font-weight:800;color:var(--text-1);margin-bottom:.25rem}
+.njh-card__body{font-size:.73rem;color:var(--text-2);line-height:1.55}
+
 /* === QUICK CALC === */
 .qc-strip{background:var(--bg-1);border-bottom:3px solid var(--accent);padding:3.5rem 0}
 .qc-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
@@ -278,6 +304,9 @@
 .sec-eye{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:.5rem}
 .sec-h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:900;line-height:1.15;margin-bottom:.6rem}
 .sec-sub{font-size:.95rem;color:var(--text-2);line-height:1.6;max-width:560px}
+/* Klik-for-at-indtaste på slider-værdier */
+.inp-val[data-sid]{cursor:pointer;border-bottom:1px dashed transparent;transition:border-color .15s}
+.inp-val[data-sid]:hover{border-bottom-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -340,11 +369,36 @@
 
       <!-- RESULTATER -->
       <div class="qc-results">
+
+        <!-- Hoved-tal (skifter indhold ved ekstrem effektivitet) -->
         <div class="qc-hero-num">
           <div class="qc-hero-num__val" id="qc-r-bes">0 kr.</div>
-          <div class="qc-hero-num__lbl">&Aring;rlig besparelse</div>
+          <div class="qc-hero-num__lbl" id="qc-r-bes-lbl">&Aring;rlig netto besparelse</div>
         </div>
-        <div class="qc-grid">
+
+        <!-- Effektivitetsscore (altid synlig) -->
+        <div class="eff-score">
+          <span>Effektivitet</span>
+          <div class="eff-score__bar"><div class="eff-score__fill" id="qc-eff-fill" style="width:25%"></div></div>
+          <span class="eff-score__lbl" id="qc-eff-lbl">God optimeringsmulighed</span>
+        </div>
+
+        <!-- Reality check banner (kun ved ekstrem effektivitet) -->
+        <div class="rc-banner" id="qc-rc-banner">
+          <div class="rc-banner__title" id="qc-rc-title">I er allerede stærke her.</div>
+          <div class="rc-banner__sub" id="qc-rc-sub">Hvis I sender s&aring; mange pakker med s&aring; f&aring; medarbejdere, er I allerede ekstremt effektive. S&aring; handler SmartPack nok ikke prim&aelig;rt om f&aelig;rre h&aelig;nder p&aring; lageret.</div>
+          <div class="rc-alt-grid">
+            <div class="rc-alt-item">Fragtvalg og labelflow</div>
+            <div class="rc-alt-item">Fejl, retur og sporbarhed</div>
+            <div class="rc-alt-item">Kundeservice-automatisering</div>
+            <div class="rc-alt-item">Integrationer og flows</div>
+            <div class="rc-alt-item">Peak uden panik</div>
+            <div class="rc-alt-item">Hurtigere onboarding</div>
+          </div>
+        </div>
+
+        <!-- Stat-kort (skjules ved ekstrem effektivitet) -->
+        <div class="qc-grid" id="qc-stat-grid">
           <div class="qc-card">
             <div class="qc-card__val qc-card__val--accent" id="qc-r-medarb">0</div>
             <div class="qc-card__lbl">Frigivne medarbejdere</div>
@@ -362,10 +416,20 @@
             <div class="qc-card__lbl">Tilbagebetaling</div>
           </div>
         </div>
+
         <div class="qc-payback" id="qc-r-note">SmartPack koster ca. <span id="qc-r-sppris">0 kr.</span>/md &ndash; resten er gevinst</div>
+
+        <!-- Sanity advarsler -->
+        <div id="qc-sanity-wrap">
+          <div class="sanity-box" id="san-fejl">Jeres fejlrate er allerede virkelig stærk. SmartPack kan stadig hjælpe med sporbarhed, skalering, integrationer og mindre manuel kontrol.</div>
+          <div class="sanity-box" id="san-auto">Det lyder som et setup med h&oslash;j automatisering. Her b&oslash;r vi lave en konkret vurdering frem for en standardberegning.</div>
+          <div class="sanity-box" id="san-lon">Det l&oslash;nniveau virker lavt inkl. feriepenge og arbejdsgiverudgifter. Tjek om tallet er realistisk &ndash; ellers bliver ROI for lav.</div>
+          <div class="sanity-box sanity-box--info" id="san-pluk">Det er allerede ekstremt hurtigt. SmartPack skaber typisk v&aelig;rdi via kontrol, fragt og integrationer frem for ren plukhastighed.</div>
+        </div>
+
         <div class="qc-cta">
-          <a href="#beregner" class="btn btn--primary" style="flex:1;text-align:center">Pr&aelig;cis beregning &darr;</a>
-          <a href="kontakt.html" class="btn btn--ghost" style="flex:1;text-align:center">Tal med os</a>
+          <a href="#beregner" class="btn btn--primary" id="qc-cta-primary" style="flex:1;text-align:center">Præcis beregning &darr;</a>
+          <a href="kontakt.html" class="btn btn--ghost" id="qc-cta-secondary" style="flex:1;text-align:center">Tal med os</a>
         </div>
       </div>
 
@@ -508,7 +572,7 @@
       <div>
         <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:.35rem">Detaljeret beregner</div>
         <div style="font-size:1.05rem;font-weight:800;color:var(--text-1);margin-bottom:.35rem">Vil du nørde tallene?</div>
-        <div style="font-size:.88rem;color:var(--text-2);line-height:1.6">Vi har allerede taget udgangspunkt i dine tal ovenfor. Her kan du justere alle detaljer: branche, vækstrate, returhåndtering, software-udgifter og saisonudsving &ndash; og se det samlede regneskær i realtid.</div>
+        <div style="font-size:.88rem;color:var(--text-2);line-height:1.6">Vi har allerede taget udgangspunkt i dine tal ovenfor. Her kan du justere alle detaljer: branche, vækstrate, returhåndtering, software-udgifter og saisonudsving &ndash; og se det samlede regnskab i realtid.</div>
       </div>
     </div>
   </div>
@@ -550,24 +614,24 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Lagermedarbejdere (FTE)</span>
-            <span class="inp-val" id="v-medarb">3</span>
+            <span class="inp-val" data-sid="medarb" title="Klik for at indtaste" id="v-medarb">3</span>
           </div>
-          <input type="range" class="roi-range" id="medarb" min="1" max="30" step="1" value="3">
+          <input type="range" class="roi-range" id="medarb" min="1" max="100" step="1" value="3">
           <div class="inp-note">Fuldtidsækvivalente på lageret</div>
         </div>
 
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Pakker sendt pr. måned</span>
-            <span class="inp-val" id="v-pakker">1.500</span>
+            <span class="inp-val" data-sid="pakker" title="Klik for at indtaste" id="v-pakker">1.500</span>
           </div>
-          <input type="range" class="roi-range" id="pakker" min="100" max="60000" step="100" value="1500">
+          <input type="range" class="roi-range" id="pakker" min="100" max="500000" step="1000" value="1500">
         </div>
 
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Timeløn inkl. feriepenge</span>
-            <span class="inp-val" id="v-lon">160 kr.</span>
+            <span class="inp-val" data-sid="lon" title="Klik for at indtaste" id="v-lon">160 kr.</span>
           </div>
           <input type="range" class="roi-range" id="lon" min="100" max="450" step="5" value="200">
           <div class="inp-note">Typisk 140&ndash;200 kr/t inkl. alle arbejdsgiverudgifter</div>
@@ -576,7 +640,7 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Pakkefejl</span>
-            <span class="inp-val" id="v-fejl">1,1%</span>
+            <span class="inp-val" data-sid="fejl" title="Klik for at indtaste" id="v-fejl">1,1%</span>
           </div>
           <input type="range" class="roi-range" id="fejl" min="0" max="5" step="0.1" value="1.1">
           <div class="inp-note">Branchegennemsnit 1&ndash;2%. SmartPack-kunder typisk under 0,4%</div>
@@ -585,7 +649,7 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Omkostning pr. fejl</span>
-            <span class="inp-val" id="v-fejlomk">400 kr.</span>
+            <span class="inp-val" data-sid="fejlomk" title="Klik for at indtaste" id="v-fejlomk">400 kr.</span>
           </div>
           <input type="range" class="roi-range" id="fejlomk" min="50" max="2000" step="50" value="400">
           <div class="inp-note">Returfragt + kundeservice + kreditnota. 300&ndash;600 kr. er realistisk</div>
@@ -594,7 +658,7 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Forventet månedlig vækst</span>
-            <span class="inp-val" id="v-vaekst">3%</span>
+            <span class="inp-val" data-sid="vaekst" title="Klik for at indtaste" id="v-vaekst">3%</span>
           </div>
           <input type="range" class="roi-range" id="vaekst" min="0" max="15" step="0.5" value="3">
           <div class="inp-note">Bruges til at beregne hvornår du rammer kapacitetsloftet</div>
@@ -609,7 +673,7 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Gns. ordreværdi (kr.)</span>
-            <span class="inp-val" id="v-ordrevaerdi">450 kr.</span>
+            <span class="inp-val" data-sid="ordrevaerdi" title="Klik for at indtaste" id="v-ordrevaerdi">450 kr.</span>
           </div>
           <input type="range" class="roi-range" id="ordrevaerdi" min="50" max="5000" step="50" value="450">
           <div class="inp-note">Gennemsnitlig omsætning pr. ordre inkl. moms</div>
@@ -618,20 +682,20 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Bruttoavance</span>
-            <span class="inp-val" id="v-avance">35%</span>
+            <span class="inp-val" data-sid="avance" title="Klik for at indtaste" id="v-avance">35%</span>
           </div>
           <input type="range" class="roi-range" id="avance" min="5" max="80" step="1" value="35">
           <div class="inp-note">Typisk 25&ndash;50% i e-handel</div>
         </div>
 
         <div class="inp-field">
-          <div class="inp-row"><span class="inp-label">Returrate</span><span class="inp-val" id="v-returrate">8%</span></div>
+          <div class="inp-row"><span class="inp-label">Returrate</span><span class="inp-val" data-sid="returrate" title="Klik for at indtaste" id="v-returrate">8%</span></div>
           <input type="range" class="roi-range" id="returrate" min="0" max="40" step="0.5" value="8">
           <div class="inp-note">Branchegennemsnit 8&ndash;15%. Fejlpakninger driver den op &ndash; SP bringer fejlbetingede returner t&aelig;t p&aring; 0</div>
         </div>
 
         <div class="inp-field">
-          <div class="inp-row"><span class="inp-label">Fragtpris pr. returnering</span><span class="inp-val" id="v-fragtRetur">85 kr.</span></div>
+          <div class="inp-row"><span class="inp-label">Fragtpris pr. returnering</span><span class="inp-val" data-sid="fragtRetur" title="Klik for at indtaste" id="v-fragtRetur">85 kr.</span></div>
           <input type="range" class="roi-range" id="fragtRetur" min="0" max="300" step="5" value="85">
           <div class="inp-note">Returfragt + h&aring;ndteringstid. Typisk 60&ndash;120 kr. ekskl. arbejdstid</div>
           <div class="inp-preview" id="retur-preview">
@@ -661,7 +725,7 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Nuv. WMS + support pr. md</span>
-            <span class="inp-val" id="v-wms">0 kr.</span>
+            <span class="inp-val" data-sid="wms" title="Klik for at indtaste" id="v-wms">0 kr.</span>
           </div>
           <input type="range" class="roi-range" id="wms" min="0" max="15000" step="100" value="0">
           <div class="inp-note">Hvad betaler I i dag for WMS + support + labelprint? Sæt 0 hvis ingen</div>
@@ -670,7 +734,7 @@
         <div class="inp-field">
           <div class="inp-row">
             <span class="inp-label">Checkout-besparelse pr. md</span>
-            <span class="inp-val" id="v-checkout">0 kr.</span>
+            <span class="inp-val" data-sid="checkout" title="Klik for at indtaste" id="v-checkout">0 kr.</span>
           </div>
           <input type="range" class="roi-range" id="checkout" min="0" max="8000" step="100" value="0">
           <div class="inp-note">Fragtoptimering via Shipmondo/Webshipper-integration. 0 hvis uklar</div>
@@ -681,7 +745,7 @@
         <div class="step-header"><div class="step-header__num">4</div><div><div class="step-header__title">Ekstra</div><div class="step-header__sub">S&aelig;sonudsving og kundeservice &ndash; de skjulte driftsomkostninger</div></div></div>
 
         <div class="inp-field">
-          <div class="inp-row"><span class="inp-label">Peak-faktor (s&aelig;sonudsving)</span><span class="inp-val" id="v-peak">0%</span></div>
+          <div class="inp-row"><span class="inp-label">Peak-faktor (s&aelig;sonudsving)</span><span class="inp-val" data-sid="peak" title="Klik for at indtaste" id="v-peak">0%</span></div>
           <input type="range" class="roi-range" id="peak" min="0" max="300" step="5" value="0">
           <div class="inp-note">Hvor mange % stiger I i jeres travleste m&aring;ned? (80% = Black Friday/jul). Beregner sparede vikarudgifter</div>
           <div class="inp-preview" id="peak-preview">
@@ -696,7 +760,7 @@
         </div>
 
         <div class="inp-field">
-          <div class="inp-row"><span class="inp-label">KS: ordresp&oslash;rgsm&aring;l pr. dag</span><span class="inp-val" id="v-ksMin">0 min.</span></div>
+          <div class="inp-row"><span class="inp-label">KS: ordresp&oslash;rgsm&aring;l pr. dag</span><span class="inp-val" data-sid="ksMin" title="Klik for at indtaste" id="v-ksMin">0 min.</span></div>
           <input type="range" class="roi-range" id="ksMin" min="0" max="180" step="5" value="0">
           <div class="inp-note">Minutter/dag p&aring; &ldquo;Hvor er min pakke?&rdquo;. SP reducerer disse med ~70% via automatiske notifikationer</div>
           <div class="inp-preview" id="ks-preview">
@@ -894,6 +958,52 @@
 </div>
 </section>
 
+<!-- SMARTPACK ER IKKE KUN FAERRE HAENDER -->
+<section class="njh-strip" id="njh-section">
+  <div class="container">
+    <div style="text-align:center;max-width:580px;margin:0 auto">
+      <div class="sec-eye">Bredere værdiskabelse</div>
+      <h2 class="sec-h2">SmartPack handler ikke kun om færre hænder</h2>
+      <p class="sec-sub" style="margin:0 auto">Hvis jeres lager allerede kører stærkt, kigger vi i stedet på de ting der ofte koster penge i baggrunden.</p>
+    </div>
+    <div class="njh-grid">
+      <div class="njh-card">
+        <div class="njh-card__icon">&#128230;</div>
+        <div class="njh-card__title">Fragtvalg og labelflow</div>
+        <div class="njh-card__body">Automatisk valg af billigste fragtl&oslash;sning pr. ordre. Ingen manuelle beslutninger, ingen forkerte labels.</div>
+      </div>
+      <div class="njh-card">
+        <div class="njh-card__icon">&#128241;</div>
+        <div class="njh-card__title">Kundeservice og notifikationer</div>
+        <div class="njh-card__body">Automatiske track &amp; trace-beskeder reducerer kundeservice-henvendelser med op til 70%.</div>
+      </div>
+      <div class="njh-card">
+        <div class="njh-card__icon">&#128203;</div>
+        <div class="njh-card__title">Fejl, retur og dokumentation</div>
+        <div class="njh-card__body">Sporbarhed på hver pakke. Færre fejlpakninger og hurtigere returbehandling med fuld audit trail.</div>
+      </div>
+      <div class="njh-card">
+        <div class="njh-card__icon">&#128279;</div>
+        <div class="njh-card__title">Integrationer og færre manuelle arbejdsgange</div>
+        <div class="njh-card__body">Direkte forbindelser til webshops, ERP og 3PL. Data flyder automatisk &ndash; ingen dobbeltindtastning.</div>
+      </div>
+      <div class="njh-card">
+        <div class="njh-card__icon">&#127956;</div>
+        <div class="njh-card__title">Peak-perioder uden panik</div>
+        <div class="njh-card__body">Black Friday og jul styres uden ekstra vikarer. SmartPack skærper kapaciteten når presset er højest.</div>
+      </div>
+      <div class="njh-card">
+        <div class="njh-card__icon">&#128640;</div>
+        <div class="njh-card__title">Hurtigere onboarding</div>
+        <div class="njh-card__body">Nye medarbejdere lærer systemet på timer, ikke uger. Nye kunder og shops onboardes uden projekter.</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <a href="kontakt.html" class="btn btn--primary">Lad os kigge på jeres specifikke setup</a>
+    </div>
+  </div>
+</section>
+
 <div id="sp-footer"></div>
 <script src="js/footer.js"></script>
 <script src="js/main.js?v=2" defer></script>
@@ -924,47 +1034,97 @@
     return Math.round(n) + ' kr.';
   }
 
+  // --- Effektivitetsniveauer ---
+  function getEffLevel(ppm) {
+    if (ppm >= 12000) return { key:'extreme',  pct:100, lbl:'Ekstremt effektive' };
+    if (ppm >= 6000)  return { key:'high',     pct:75,  lbl:'Allerede rimeligt effektive' };
+    if (ppm >= 2000)  return { key:'moderate', pct:50,  lbl:'God optimeringsmulighed' };
+    return               { key:'low',      pct:25,  lbl:'Stor arbejdskraftgevinst mulig' };
+  }
+
+  function sanityShow(id, show) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('visible', show);
+  }
+
   function calc() {
-    var ordrer  = Math.max(100, +document.getElementById('qc-ordrer').value || 1500);
-    var medarb  = Math.max(1,   +document.getElementById('qc-medarb').value || 3);
-    var lon     = Math.max(1,   +document.getElementById('qc-lon').value || 32000);
-    var fejl    = Math.max(0,   +document.getElementById('qc-fejl').value || 1.1);
-    var pluk    = Math.max(1,   +document.getElementById('qc-pluk').value || 42);
+    var ordrer = Math.max(100, +document.getElementById('qc-ordrer').value || 1500);
+    var medarb = Math.max(1,   +document.getElementById('qc-medarb').value || 3);
+    var lon    = Math.max(1,   +document.getElementById('qc-lon').value    || 32000);
+    var fejl   = Math.max(0,   +document.getElementById('qc-fejl').value   || 1.1);
+    var pluk   = Math.max(1,   +document.getElementById('qc-pluk').value   || 42);
 
-    var pakker_md   = ordrer;             // ordrer/md direkte
-    var lonAar      = lon * 13;           // inkl. feriepenge + overhead
-    var effekt      = 0.30;               // konservativt 30%
-    var frigivne    = medarb * effekt;
+    var pakker_md = ordrer;
+    var lonAar    = lon * 13;   // inkl. feriepenge + overhead
+    var effekt    = 0.30;
 
-    // Lønbesparelse
-    var lonsbes     = frigivne * lonAar;
+    // --- CLAMPING ---
+    // Frigivne kan max være 90% af medarbstaben
+    var frigivne  = Math.min(medarb * effekt, medarb * 0.90);
+    // Lønbesparelse kan max være den samlede lønudgift
+    var lonsbes   = Math.min(frigivne * lonAar, medarb * lonAar);
 
-    // Fejlbesparelse: fejlpakninger × 400 kr./fejl
-    var fejlAfter   = 0.3;
-    var fejlRed     = Math.max(0, fejl - fejlAfter);
-    var fejlBes     = (fejlRed / 100) * pakker_md * 400;
+    var fejlAfter    = 0.3;
+    var fejlRed      = Math.max(0, fejl - fejlAfter);
+    var fejlBes      = (fejlRed / 100) * pakker_md * 400;
+    var kapForbedring = 30;
+    var spMd         = spPrisQC(pakker_md);
+    var spAar        = spMd * 12;
+    var totalBes     = lonsbes + fejlBes;
+    var netto        = totalBes - spAar;
+    var fejlRedPct   = fejl > 0 ? Math.round((1 - fejlAfter / fejl) * 100) : 0;
 
-    // Kapacitetsforbedring baseret på pluktid
-    var kapForbedring = Math.round((pluk - (pluk * (1 - effekt))) / pluk * 100);
+    // Payback clamping
+    var payback = (spMd > 0 && totalBes > 0)
+      ? spMd / (totalBes / 12)
+      : 999;
+    var paybackTxt = payback < 1   ? 'Under 1 mdr.'
+                   : payback > 48  ? 'Kræver konkret vurdering'
+                   : payback.toFixed(1).replace('.',',') + ' mdr.';
 
-    // SP pris
-    var spMd        = spPrisQC(pakker_md);
-    var spAar       = spMd * 12;
+    // --- EFFEKTIVITETSSCORE ---
+    var ppm    = medarb > 0 ? pakker_md / medarb : 0;
+    var eff    = getEffLevel(ppm);
+    var efFill = document.getElementById('qc-eff-fill');
+    var efLbl  = document.getElementById('qc-eff-lbl');
+    if (efFill) efFill.style.width = eff.pct + '%';
+    if (efLbl)  efLbl.textContent  = eff.lbl;
 
-    var totalBes    = lonsbes + fejlBes;
-    var netto       = totalBes - spAar;
-    var payback     = spMd > 0 ? spMd / ((totalBes / 12)) : 0;
+    // --- SANITY CHECKS ---
+    sanityShow('san-fejl', fejl > 0 && fejl < 0.2);
+    sanityShow('san-auto', medarb <= 1 && pakker_md > 50000);
+    sanityShow('san-lon',  lon < 20000);
+    sanityShow('san-pluk', pluk < 15);
 
-    // Fejlreduktion pct
-    var fejlRedPct  = fejl > 0 ? Math.round((1 - fejlAfter / fejl) * 100) : 0;
+    // --- EXTREME CASE ---
+    var isExtreme = eff.key === 'extreme';
+    var rcBanner  = document.getElementById('qc-rc-banner');
+    var statGrid  = document.getElementById('qc-stat-grid');
+    var besLbl    = document.getElementById('qc-r-bes-lbl');
+    var note      = document.getElementById('qc-r-note');
+    var ctaPri    = document.getElementById('qc-cta-primary');
+    var ctaSec    = document.getElementById('qc-cta-secondary');
 
-    // DOM
-    document.getElementById('qc-r-bes').textContent        = fmtK(Math.max(0, netto));
-    document.getElementById('qc-r-medarb').textContent     = frigivne.toFixed(1).replace('.',',');
-    document.getElementById('qc-r-kapacitet').textContent  = '+' + kapForbedring + '%';
-    document.getElementById('qc-r-fejl').textContent       = '-' + fejlRedPct + '%';
-    document.getElementById('qc-r-payback').textContent    = payback < 50 ? payback.toFixed(1).replace('.',',') + ' mdr.' : 'Se præcis';
-    document.getElementById('qc-r-sppris').textContent     = spMd.toLocaleString('da-DK') + ' kr.';
+    if (rcBanner) rcBanner.classList.toggle('visible', isExtreme);
+    if (statGrid) statGrid.style.display = isExtreme ? 'none' : '';
+    if (note)     note.style.display     = isExtreme ? 'none' : '';
+
+    if (isExtreme) {
+      document.getElementById('qc-r-bes').textContent = 'I er stærke her';
+      if (besLbl)  besLbl.textContent = 'Effektivitet er allerede høj';
+      if (ctaPri)  { ctaPri.href = 'kontakt.html'; ctaPri.textContent = 'Lad os nørde jeres setup'; }
+      if (ctaSec)  { ctaSec.href = '#njh-section';  ctaSec.textContent = 'Se næste gevinst ↓'; }
+    } else {
+      document.getElementById('qc-r-bes').textContent = netto > 0 ? fmtK(netto) : 'Kræver konkret vurdering';
+      if (besLbl)  besLbl.textContent = netto > 0 ? 'Årlig netto besparelse' : 'Besparelse ved optimering';
+      if (ctaPri)  { ctaPri.href = '#beregner'; ctaPri.textContent = 'Præcis beregning ↓'; }
+      if (ctaSec)  { ctaSec.href = 'kontakt.html'; ctaSec.textContent = 'Tal med os'; }
+      document.getElementById('qc-r-medarb').textContent    = frigivne.toFixed(1).replace('.',',');
+      document.getElementById('qc-r-kapacitet').textContent = '+' + kapForbedring + '%';
+      document.getElementById('qc-r-fejl').textContent      = fejlRedPct > 0 ? '-' + fejlRedPct + '%' : '< 0,3%';
+      document.getElementById('qc-r-payback').textContent   = paybackTxt;
+    }
+    document.getElementById('qc-r-sppris').textContent = spMd.toLocaleString('da-DK') + ' kr.';
   }
 
   function init() {
@@ -1114,11 +1274,15 @@ function beregn() {
   const timerIAlt      = medarb * TIMER_PR_MND;
   const pakkerPrTimeNu = timerIAlt > 0 ? pakker / timerIAlt : 0;
   const timerMedSP     = b.median > 0 ? pakker / b.median : timerIAlt;
-  const frigivne       = Math.max(0, timerIAlt - timerMedSP);
-  const noedvendige    = timerMedSP / TIMER_PR_MND;
+  // CLAMP: frigivne timer kan ikke overstige fuld stab (du kan ikke frigive folk du ikke har)
+  const frigivneRaw    = Math.max(0, timerIAlt - timerMedSP);
+  const frigivne       = Math.min(frigivneRaw, timerIAlt);   // max = hvad de bruger i dag
+  const noedvendige    = Math.max(0.1, timerMedSP / TIMER_PR_MND);
   const antalFejl      = pakker * (fejl / 100);
 
-  const besArb         = frigivne * lon;
+  // CLAMP: lønbesparelse max = faktisk lønudgift
+  const besArbRaw      = frigivne * lon;
+  const besArb         = Math.min(besArbRaw, timerIAlt * lon);  // kan ikke spare mere end man bruger
   const besFejl        = antalFejl * fejlomk;
 
   // Kapacitet
@@ -1192,7 +1356,9 @@ function updateDOM(r) {
   el('r-noedv').textContent  = fmtN(r.noedvendige, 1);
   el('r-noedv-sub').textContent = 'vs. ' + r.medarb + ' i dag';
   el('r-roi').textContent    = (r.roi > 0 ? '+' : '') + fmtN(r.roi, 0) + '%';
-  el('r-payback').textContent = r.payback < 50 ? fmtN(r.payback, 1) + ' mdr.' : 'Ingen netto';
+  el('r-payback').textContent = r.payback < 1   ? 'Under 1 mdr.'
+                              : r.payback < 50  ? fmtN(r.payback, 1) + ' mdr.'
+                              : 'Kræver konkret vurdering';
 
   // Breakdown
   el('r-arb').textContent    = fmtKr(r.besArb);
@@ -1415,11 +1581,11 @@ function syncQCToBeregner() {
   var fejlQ   = Math.max(0,     +document.getElementById('qc-fejl').value  || 1.1);
 
   // ordrer/md direkte (QC bruger nu md, ikke dag)
-  var pakker  = Math.min(60000, Math.max(100, Math.round(ordrer / 100) * 100));
+  var pakker  = Math.min(500000, Math.max(100, Math.round(ordrer / 100) * 100));
   // Månedsløn ÷ 160,33 = timeløn, afrund til nærmeste 5
-  var lonTime = Math.min(450, Math.max(100, Math.round(lonMd / 160.33 / 5) * 5));
-  var medarbV = Math.min(30,  Math.max(1,   Math.round(medarbQ)));
-  var fejlV   = Math.min(5,   Math.max(0,   Math.round(fejlQ * 10) / 10));
+  var lonTime = Math.min(600, Math.max(100, Math.round(lonMd / 160.33 / 5) * 5));
+  var medarbV = Math.min(100, Math.max(1,   Math.round(medarbQ)));
+  var fejlV   = Math.min(15,  Math.max(0,   Math.round(fejlQ * 10) / 10));
 
   function setSlider(id, val) {
     var s = document.getElementById(id);
@@ -1471,6 +1637,41 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   document.getElementById('branche').addEventListener('change', update);
   update();
+
+  // Klik-for-at-indtaste: klik på værdi-span for at skrive direkte
+  document.querySelectorAll('.inp-val[data-sid]').forEach(function(span) {
+    span.addEventListener('click', function() {
+      var sid = span.getAttribute('data-sid');
+      var slider = document.getElementById(sid);
+      if (!slider) return;
+      var origVal = +slider.value;
+      var inp = document.createElement('input');
+      inp.type = 'number';
+      inp.value = origVal;
+      inp.min = slider.min;
+      inp.step = slider.step || 1;
+      inp.style.cssText = 'width:90px;text-align:right;font-weight:800;color:var(--accent);font-size:.9rem;background:transparent;border:0;border-bottom:2px solid var(--accent);outline:none;font-variant-numeric:tabular-nums;';
+      span.style.display = 'none';
+      span.after(inp);
+      inp.focus(); inp.select();
+      function apply() {
+        var v = parseFloat(inp.value);
+        if (isNaN(v)) v = origVal;
+        v = Math.max(+(slider.min) || 0, v);
+        if (v > +slider.max) slider.max = Math.ceil(v / (+slider.step || 100)) * (+slider.step || 100);
+        slider.value = v;
+        syncSlider(slider);
+        inp.remove();
+        span.style.display = '';
+        update();
+      }
+      inp.addEventListener('blur', apply);
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); apply(); }
+        if (e.key === 'Escape') { inp.remove(); span.style.display = ''; }
+      });
+    });
+  });
 });
 </script>
 </body>
