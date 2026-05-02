@@ -64,6 +64,21 @@
   }
 
   function initNav() {
+    // Announcement banner dismiss
+    var announce      = document.getElementById('site-announce');
+    var announceClose = document.getElementById('site-announce-close');
+    if (announce && sessionStorage.getItem('sp-announce-closed')) {
+      announce.style.display = 'none';
+      document.documentElement.style.setProperty('--announce-h', '0px');
+    }
+    if (announceClose) {
+      announceClose.addEventListener('click', function() {
+        announce.style.display = 'none';
+        document.documentElement.style.setProperty('--announce-h', '0px');
+        sessionStorage.setItem('sp-announce-closed', '1');
+      });
+    }
+
     var hamburger = document.getElementById('nav-hamburger');
     var navLinks  = document.getElementById('nav-links');
     var header    = document.getElementById('site-header');

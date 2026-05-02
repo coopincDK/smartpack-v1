@@ -83,7 +83,11 @@
 
 .pl-section { padding:6.5rem 0; }
 .pl-section--alt { background:var(--bg-2); }
-.pl-section--dark { background:var(--surface-1); }
+.pl-section--dark { background:#0f1318; }
+.pl-section--dark .pl-h2 { color:#fff; }
+.pl-section--dark .pl-lead { color:rgba(255,255,255,.65); }
+.pl-section--dark .pl-label { color:var(--accent); }
+.pl-section--dark p:not([style]) { color:rgba(255,255,255,.7); }
 
 .pl-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:.75rem; }
 .pl-h2 { font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:900; letter-spacing:-.025em; line-height:1.15; margin-bottom:1rem; }
@@ -142,7 +146,12 @@
 .step__body li::before { content:'\2192'; position:absolute; left:0; color:var(--accent); }
 
 /* ── Quote ── */
-.pl-quote { margin:3rem 0; padding:2rem 2.5rem; border-left:4px solid var(--accent); background:var(--surface-1); border-radius:0 var(--r-md) var(--r-md) 0; }
+.pl-quote { margin:3rem 0; padding:2rem 2.5rem; border-left:4px solid var(--accent); background:var(--surface); border-radius:0 var(--r-md) var(--r-md) 0; }
+.pl-section--dark .pl-quote { background:rgba(255,255,255,.06); border-color:var(--accent); }
+.pl-section--dark .pl-quote blockquote { color:rgba(255,255,255,.9); }
+.pl-section--dark .pl-quote cite { color:rgba(255,255,255,.5); }
+.pl-section--dark .btn--ghost { border-color:rgba(255,255,255,.35); color:#fff; }
+.pl-section--dark .btn--ghost:hover { background:rgba(255,255,255,.08); border-color:#fff; }
 .pl-quote blockquote { font-size:1.15rem; font-style:italic; line-height:1.75; color:var(--text-1); margin:0 0 .75rem; }
 .pl-quote cite { font-size:.82rem; font-weight:700; color:var(--text-3); font-style:normal; }
 
