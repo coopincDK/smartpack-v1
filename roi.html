@@ -615,7 +615,7 @@
             <span class="inp-label">Pakker sendt pr. måned</span>
             <span class="inp-val" data-sid="pakker" title="Klik for at indtaste" id="v-pakker">1.500</span>
           </div>
-          <input type="range" class="roi-range" id="pakker" min="100" max="500000" step="1000" value="1500">
+          <input type="range" class="roi-range" id="pakker" min="100" max="20000" step="100" value="1500">
         </div>
 
         <div class="inp-field">
@@ -1635,7 +1635,9 @@ function updateCharts(r) {
 
 // --- QC → Beregner sync ---
 // Når Quick Calc opdateres, sættes de tilsvarende slidere i den detaljerede beregner også.
+var _syncingFromBeregner = false;
 function syncQCToBeregner() {
+  if (_syncingFromBeregner) return;
   var ordrer  = Math.max(100,   +document.getElementById('qc-ordrer').value || 1500);
   var medarbQ = Math.max(1,     +document.getElementById('qc-medarb').value || 3);
   var lonMd   = Math.max(10000, +document.getElementById('qc-lon').value   || 32000);
@@ -1665,6 +1667,7 @@ function syncQCToBeregner() {
 
 // --- Beregner → QC sync (omvendt retning) ---
 function syncBeregnerToQC() {
+  _syncingFromBeregner = true;
   function setInp(id, val) {
     var el = document.getElementById(id);
     if (el && document.activeElement !== el) el.value = val;
@@ -1678,6 +1681,7 @@ function syncBeregnerToQC() {
   setInp('qc-lon',    Math.round(lon * 160.33 / 1000) * 1000);
   setInp('qc-fejl',   fejl);
   if (typeof window.qcCalc === 'function') window.qcCalc();
+  _syncingFromBeregner = false;
 }
 
 // --- Main update loop ---
