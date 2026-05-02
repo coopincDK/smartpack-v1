@@ -338,7 +338,7 @@
         <div class="qc-fields">
           <div>
             <div class="qc-field__label">Ordrer pr. m&aring;ned</div>
-            <input class="qc-field__input" id="qc-ordrer" type="number" min="100" max="100000" step="100" value="1500" inputmode="numeric">
+            <input class="qc-field__input" id="qc-ordrer" type="number" min="100" max="200000" step="100" value="1500" inputmode="numeric">
             <div class="qc-field__hint">Pakker sendt ud &ndash; gennemsnit inkl. rolige uger</div>
           </div>
           <div>
@@ -481,18 +481,6 @@
       <div class="case-result__lbl">netto besparelse &ndash; inkl. SmartPack-omkostning</div>
     </div>
 
-    <!-- LEAD MAGNET #1 -->
-    <div class="lead-magnet" style="margin-top:2rem;max-width:640px;margin-left:auto;margin-right:auto">
-      <div class="lead-magnet__eyebrow">Cases fra lagerhoteller og eCommerce</div>
-      <div class="lead-magnet__title">Vil du se hvor tallene kommer fra?</div>
-      <div class="lead-magnet__sub">Vi har samlet de typiske fejl, skjulte omkostninger og et konkret ROI-regnestykke fra rigtige lagerhoteller. Konkrete tal &ndash; ikke generisk r&aring;dgivning.</div>
-      <div class="lead-magnet__form">
-        <input class="lead-magnet__input" type="text" placeholder="Dit navn" aria-label="Navn">
-        <input class="lead-magnet__input" type="email" placeholder="Din email" aria-label="Email">
-        <a href="kontakt.html" class="btn btn--primary" style="white-space:nowrap">Hent ROI-rapport &rarr;</a>
-      </div>
-      <div class="lead-magnet__note">Ingen spam. Du f&aring;r rapporten direkte i indbakken inden for 24 timer.</div>
-    </div>
   </div>
 </section>
 
@@ -740,6 +728,7 @@
           <div class="inp-note">Fragtoptimering via Shipmondo/Webshipper-integration. 0 hvis uklar</div>
         </div>
 
+      </div>
       <!-- TRIN 4: EKSTRA -->
       <div class="inp-section" id="tab3">
         <div class="step-header"><div class="step-header__num">4</div><div><div class="step-header__title">Ekstra</div><div class="step-header__sub">S&aelig;sonudsving og kundeservice &ndash; de skjulte driftsomkostninger</div></div></div>
@@ -948,7 +937,7 @@
       <p>En 20-minutters snak giver dig et konkret estimat baseret på jeres faktiske tal, lager og ordremix.</p>
       <div class="roi-cta__btns">
         <a href="kontakt.html" class="btn btn--primary">Book gratis gennemgang &rarr;</a>
-        <a href="kontakt.html" class="btn btn--ghost">Hent ROI-rapport</a>
+        <a href="assets/smartpack-roi-guide.pdf" download class="btn btn--ghost">&#128196; Download ROI-guide</a>
         <a href="priser.html" class="btn btn--ghost">Se priser</a>
       </div>
     </div>
@@ -1065,14 +1054,15 @@
     var lonsbes   = Math.min(frigivne * lonAar, medarb * lonAar);
 
     var fejlAfter    = 0.3;
-    var fejlRed      = Math.max(0, fejl - fejlAfter);
+    var fejlRed      = Math.max(0, fejl - fejlAfter);  // aldrig negativ
     var fejlBes      = (fejlRed / 100) * pakker_md * 400;
     var kapForbedring = 30;
     var spMd         = spPrisQC(pakker_md);
     var spAar        = spMd * 12;
     var totalBes     = lonsbes + fejlBes;
     var netto        = totalBes - spAar;
-    var fejlRedPct   = fejl > 0 ? Math.round((1 - fejlAfter / fejl) * 100) : 0;
+    // Fejlreduktion: kun positiv - hvis fejl allerede er under SP's niveau, vis 0
+    var fejlRedPct   = fejl > fejlAfter ? Math.round((1 - fejlAfter / fejl) * 100) : 0;
 
     // Payback clamping
     var payback = (spMd > 0 && totalBes > 0)
@@ -1121,7 +1111,8 @@
       if (ctaSec)  { ctaSec.href = 'kontakt.html'; ctaSec.textContent = 'Tal med os'; }
       document.getElementById('qc-r-medarb').textContent    = frigivne.toFixed(1).replace('.',',');
       document.getElementById('qc-r-kapacitet').textContent = '+' + kapForbedring + '%';
-      document.getElementById('qc-r-fejl').textContent      = fejlRedPct > 0 ? '-' + fejlRedPct + '%' : '< 0,3%';
+      document.getElementById('qc-r-fejl').textContent      = fejl <= fejlAfter ? 'Allerede optimal'
+                                                              : '-' + fejlRedPct + '%';
       document.getElementById('qc-r-payback').textContent   = paybackTxt;
     }
     document.getElementById('qc-r-sppris').textContent = spMd.toLocaleString('da-DK') + ' kr.';
@@ -1355,7 +1346,9 @@ function updateDOM(r) {
   el('r-timer').textContent  = fmtN(r.frigivne, 1);
   el('r-noedv').textContent  = fmtN(r.noedvendige, 1);
   el('r-noedv-sub').textContent = 'vs. ' + r.medarb + ' i dag';
-  el('r-roi').textContent    = (r.roi > 0 ? '+' : '') + fmtN(r.roi, 0) + '%';
+  el('r-roi').textContent    = r.roi > 0   ? '+' + fmtN(r.roi, 0) + '%'
+                              : r.roi > -30 ? 'Tæt på break-even'
+                              : 'I klarer det allerede godt';
   el('r-payback').textContent = r.payback < 1   ? 'Under 1 mdr.'
                               : r.payback < 50  ? fmtN(r.payback, 1) + ' mdr.'
                               : 'Kræver konkret vurdering';
@@ -1364,7 +1357,9 @@ function updateDOM(r) {
   el('r-arb').textContent    = fmtKr(r.besArb);
   el('r-fejlbes').textContent= fmtKr(r.besFejl);
   el('r-spomk').textContent  = '\u2212 ' + fmtKr(r.spPrisMd);
-  el('r-netto').textContent  = fmtKr(r.netto);
+  el('r-netto').textContent  = r.netto >= 0 ? fmtKr(r.netto)
+                              : r.netto > -500 ? 'Tæt på nul'
+                              : 'I er stærke her';
 
   show('row-checkout', r.checkout > 0);
   if (r.checkout > 0) el('r-checkout-disp').textContent = fmtKr(r.checkout);
