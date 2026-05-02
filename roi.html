@@ -1096,11 +1096,11 @@
   }
 
   function calc() {
-    var ordrer = Math.max(100, +document.getElementById('qc-ordrer').value || 1500);
-    var medarb = Math.max(1,   +document.getElementById('qc-medarb').value || 3);
-    var lon    = Math.max(1,   +document.getElementById('qc-lon').value    || 32000);
-    var fejl   = Math.max(0,   +document.getElementById('qc-fejl').value   || 1.1);
-    var pluk   = Math.max(1,   +document.getElementById('qc-pluk').value   || 42);
+    var ordrer = Math.max(100, (isNaN(+document.getElementById('qc-ordrer').value) ? 1500 : +document.getElementById('qc-ordrer').value));
+    var medarb = Math.max(1,   (isNaN(+document.getElementById('qc-medarb').value) ? 3 : +document.getElementById('qc-medarb').value));
+    var lon    = Math.max(1,   (isNaN(+document.getElementById('qc-lon').value) ? 32000 : +document.getElementById('qc-lon').value));
+    var fejl   = Math.max(0,   (isNaN(+document.getElementById('qc-fejl').value) ? 1.1 : +document.getElementById('qc-fejl').value));
+    var pluk   = Math.max(1,   (isNaN(+document.getElementById('qc-pluk').value) ? 42 : +document.getElementById('qc-pluk').value));
 
     var pakker_md = ordrer;
     var lonAar    = lon * 13;   // inkl. feriepenge + overhead
@@ -1342,7 +1342,7 @@ function beregn() {
   var hint = '';
   var hintType = 'neutral';
 
-  if (pakkerPrMedarb > 20000) {
+  if (pakkerPrMedarb > 46000) {
     hint = '? Det svarer til ' + Math.round(pakkerPrMedarb/22) + ' pakker pr. mand om dagen. Det er urealistisk selv med SmartPack. Er det rigtigt?';
     hintType = 'question';
   } else if (pakkerPrMedarb < 10 && medarb > 0) {
@@ -1736,10 +1736,10 @@ var _syncingFromBeregner = false;
 var _pakkerTouched = false;
 function syncQCToBeregner() {
   if (_syncingFromBeregner) return;
-  var ordrer  = Math.max(100,   +document.getElementById('qc-ordrer').value || 1500);
-  var medarbQ = Math.max(1,     +document.getElementById('qc-medarb').value || 3);
-  var lonMd   = Math.max(10000, +document.getElementById('qc-lon').value   || 32000);
-  var fejlQ   = Math.max(0,     +document.getElementById('qc-fejl').value  || 1.1);
+  var ordrer  = Math.max(100,   (isNaN(+document.getElementById('qc-ordrer').value) ? 1500 : +document.getElementById('qc-ordrer').value));
+  var medarbQ = Math.max(1,     (isNaN(+document.getElementById('qc-medarb').value) ? 3 : +document.getElementById('qc-medarb').value));
+  var lonMd   = Math.max(10000, (isNaN(+document.getElementById('qc-lon').value) ? 32000 : +document.getElementById('qc-lon').value));
+  var fejlQ   = Math.max(0,     (isNaN(+document.getElementById('qc-fejl').value) ? 1.1 : +document.getElementById('qc-fejl').value));
 
   // ordrer/md direkte (QC bruger nu md, ikke dag)
   var pakker  = Math.min(500000, Math.max(100, Math.round(ordrer / 100) * 100));
@@ -1770,10 +1770,10 @@ function syncBeregnerToQC() {
     var el = document.getElementById(id);
     if (el && document.activeElement !== el) el.value = val;
   }
-  var pakker = +document.getElementById('pakker').value || 1500;
-  var medarb = +document.getElementById('medarb').value || 3;
-  var lon    = +document.getElementById('lon').value    || 200;
-  var fejl   = +document.getElementById('fejl').value  || 1.1;
+  var pakker = (isNaN(+document.getElementById('pakker').value) ? 1500 : +document.getElementById('pakker').value);
+  var medarb = (isNaN(+document.getElementById('medarb').value) ? 3 : +document.getElementById('medarb').value);
+  var lon    = (isNaN(+document.getElementById('lon').value) ? 200 : +document.getElementById('lon').value);
+  var fejl   = (isNaN(+document.getElementById('fejl').value) ? 1.1 : +document.getElementById('fejl').value);
   setInp('qc-ordrer', pakker);
   setInp('qc-medarb', medarb);
   setInp('qc-lon',    Math.round(lon * 160.33 / 1000) * 1000);
