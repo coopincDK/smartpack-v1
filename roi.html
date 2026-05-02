@@ -1371,6 +1371,9 @@ function beregn() {
   const frigivne       = Math.min(frigivneRaw, timerIAlt);   // max = hvad de bruger i dag
   const noedvendige    = Math.max(0.1, timerMedSP / TIMER_PR_MND);
 
+  // Kapacitet -- SKAL være før overcapacity-check (undgår Temporal Dead Zone)
+  const kapNu          = b.median * timerIAlt;  // Hvad kan de sende MED SP ved nuv. timer
+
   // OVERCAPACITY: Brugeren har angivet et volumen der kræver FLERE medarbejdere end de har.
   // besFejl og ekstrakapacitet cappas til det realistiske (kapNu = hvad nuv. stab kan med SP).
   const overcapacity   = noedvendige > medarb;
@@ -1381,9 +1384,6 @@ function beregn() {
   const besArbRaw      = frigivne * lon;
   const besArb         = Math.min(besArbRaw, timerIAlt * lon);  // kan ikke spare mere end man bruger
   const besFejl        = antalFejl * fejlomk;
-
-  // Kapacitet
-  const kapNu          = b.median * timerIAlt;  // Hvad kan de sende MED SP ved nuv. timer
   const kapUden        = pakkerPrTimeNu * timerIAlt; // = pakker (nuv. kapacitetsloft)
   // Ekstra kapacitet: kun relevant når vi IKKE er overcapacity
   const ekstraOrdrer   = overcapacity ? 0 : Math.max(0, kapNu - pakker);
@@ -1826,12 +1826,11 @@ document.addEventListener('DOMContentLoaded', function() {
         applied = true;
         var v = parseFloat(inp.value);
         if (isNaN(v)) v = displayVal;
-        {
-          v = Math.max(+(slider.min) || 0, v);
-          v = Math.min(+(slider.max) || 250000, v);
-          slider.value = v;
-          slider.value = v;
-        }
+        v = Math.max(+(slider.min) || 0, v);
+        v = Math.min(+(slider.max) || 999999, v);
+        slider.value = v;
+        _beregnTouched = true;  // KRITISK: inline-edit bypass-fix
+        _pakkerTouched = true;
         syncSlider(slider);
         inp.remove();
         span.style.display = '';
