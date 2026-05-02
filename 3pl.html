@@ -182,42 +182,15 @@
 <body>
 
 <!-- NAV -->
-<header class="site-header" id="site-header">
-  <nav class="nav container">
-    <a href="index.html" class="nav__logo">
-      <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="nav__logo-img">
-      <span class="nav__logo-text">SmartPack</span>
-    </a>
-    <ul class="nav__links" id="nav-links">
-      <li class="nav__item--has-dropdown">
-        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6z"/></svg></button>
-        <div class="nav__megamenu">
-          <a href="funktioner.html" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>
-          <a href="integrationer.html" class="nav__mega-item"><strong>Integrationer</strong><span>40+ forbindelser klar til brug</span></a>
-          <a href="faq.html" class="nav__mega-item"><strong>FAQ</strong><span>Svar p&aring; de hyppigste sp&oslash;rgsm&aring;l</span></a>
-          <a href="om-os.html" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>
-        </div>
-      </li>
-      <li><a href="priser.html" class="nav__link">Priser</a></li>
-      <li><a href="cases.html" class="nav__link">Cases</a></li>
-      <li><a href="3pl.html" class="nav__link nav__link--active">3PL</a></li>
-    </ul>
-    <div class="nav__actions">
-      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Log ind &amp; support &rarr;</a>
-      <a href="kontakt.html" class="btn btn--ghost nav__cta">Kontakt</a>
-      <a href="kontakt.html" class="btn btn--primary nav__cta">Book demo</a>
-      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
-      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu"><span></span><span></span><span></span></button>
-    </div>
-  </nav>
-</header>
+<div id="sp-header"></div>
+<script src="/js/header.js"></script>
 
 <!-- HERO -->
 <section class="pl-hero">
   <div class="container">
     <div class="pl-hero__eyebrow">Lagersystem til 3PL &amp; Lagerhoteller</div>
     <h1 class="pl-hero__title">WMS der er bygget<br>til <em>lagerhoteller.</em><br>Ikke tilpasset. Bygget.</h1>
-    <p class="pl-hero__sub">SmartPack g&oslash;r det nemt at onboarde nye webshop-kunder p&aring; dit lager. Plug and Play-opsætning p&aring; ca. 7 dage &mdash; med fuld transparens i afregning og plukrutiner der rent faktisk virker.</p>
+    <p class="pl-hero__sub">SmartPack g&oslash;r det nemt at onboarde nye webshop-kunder p&aring; dit lager. Plug and Play-opsætning p&aring; ca. 7 dage, med fuld transparens i afregning og plukrutiner der rent faktisk virker.</p>
     <div class="pl-hero__ctas">
       <a href="kontakt.html" class="btn btn--primary">Kontakt os om 3PL &rarr;</a>
       <a href="#rammeaftale" class="btn btn--ghost">Se rammeaftalen</a>
@@ -242,18 +215,18 @@
   <div class="container">
     <div class="pl-label">To parter. &Eacute;t system.</div>
     <h2 class="pl-h2">SmartPack skaber v&aelig;rdi p&aring; begge sider af lagerporten</h2>
-    <p class="pl-lead">Et 3PL-lager med SmartPack tiltr&aelig;kker bedre kunder &mdash; og giver dem et v&aelig;rkt&oslash;j, de faktisk g&aring;r glip af n&aring;r de skifter v&aelig;k.</p>
+    <p class="pl-lead">Et 3PL-lager med SmartPack tiltr&aelig;kker bedre kunder, og giver dem et v&aelig;rkt&oslash;j, de faktisk g&aring;r glip af n&aring;r de skifter v&aelig;k.</p>
     <div class="audience-grid">
       <div class="audience-card audience-card--hotel">
         <span class="audience-badge audience-badge--hotel">3PL / Lagerhotel</span>
         <h3>I f&aring;r et system der g&oslash;r jer attraktive</h3>
         <ul>
-          <li>Onboard nye kunder p&aring; ca. 7 dage &mdash; uden konsulenter</li>
+          <li>Onboard nye kunder p&aring; ca. 7 dage, uden konsulenter</li>
           <li>H&aring;ndter flere webshops p&aring; samme lager med fuld adskillelse</li>
           <li>Automatisk og gennemsigtig afregning af pluk, pak og opbevaring</li>
           <li>Effektive plukruter der reducerer fejl og &oslash;ger throughput</li>
-          <li>QR-scan til ad hoc-opgaver &mdash; containertømning, sortering, specialpakning</li>
-          <li>Kunder ser selv deres lageromkostninger i realtid &mdash; f&aelig;rre st&oslash;jende fakturasp&oslash;rgsm&aring;l</li>
+          <li>QR-scan til ad hoc-opgaver, containertømning, sortering, specialpakning</li>
+          <li>Kunder ser selv deres lageromkostninger i realtid, f&aelig;rre st&oslash;jende fakturasp&oslash;rgsm&aring;l</li>
           <li>Dynamiske afregningsmodeller der beskytter jeres samarbejde</li>
         </ul>
       </div>
@@ -262,7 +235,7 @@
         <h3>I f&aring;r overblik I ellers m&aring;tte k&aelig;mpe for</h3>
         <ul>
           <li>Se lageromkostninger, plukpriser og forbrug direkte i SmartPack</li>
-          <li>Ret adresser og ordrer i din webshop &mdash; SmartPack synkroniserer via Webhooks</li>
+          <li>Ret adresser og ordrer i din webshop, SmartPack synkroniserer via Webhooks</li>
           <li>Overblik over pausede og fejlede ordrer med klar fejlbeskrivelse</li>
           <li>Indkøbsforeslag og forecast baseret p&aring; dine faktiske salgsdata</li>
           <li>Automatisk besked p&aring; shoppen n&aring;r varer er udsolgt og hvorn&aring;r de kommer hjem</li>
@@ -281,8 +254,8 @@
       <div style="font-size:2rem;flex-shrink:0">&#128196;</div>
       <div>
         <p style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.5rem">S&aring;dan virker fakturering</p>
-        <h3 style="font-size:1.15rem;font-weight:900;margin-bottom:.75rem">SmartPack fakturerer kun lagerhotellet &mdash; aldrig webshoppens ejer</h3>
-        <p style="font-size:.9rem;color:var(--text-2);line-height:1.75;max-width:680px">3PL Rammeaftalen er tillægget I betaler &eacute;n gang for at kunne onboarde en ny webshop-kunde p&aring; SmartPack. Webshopkunden f&aring;r adgang til systemet gennem jer &mdash; I ejer relationen, I s&aelig;tter prisen over for kunden, og SmartPack sender aldrig en faktura direkte til webshopejeren. &Eacute;t faktureringssted. Ingen forvirring.<br><br><strong style="color:var(--text-1)">Webshopkunden er jeres kunde. Ikke vores.</strong></p>
+        <h3 style="font-size:1.15rem;font-weight:900;margin-bottom:.75rem">SmartPack fakturerer kun lagerhotellet</h3>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.75;max-width:680px">3PL Rammeaftalen er tillægget I betaler &eacute;n gang for at kunne onboarde en ny webshop-kunde p&aring; SmartPack. Webshopkunden f&aring;r adgang til systemet gennem jer, I ejer relationen, I s&aelig;tter prisen over for kunden, og SmartPack sender aldrig en faktura direkte til webshopejeren. &Eacute;t faktureringssted. Ingen forvirring.<br><br><strong style="color:var(--text-1)">Webshopkunden er jeres kunde. Ikke vores.</strong></p>
       </div>
     </div>
   </div>
@@ -292,8 +265,8 @@
 <section class="pl-section pl-section--alt" id="rammeaftale">
   <div class="container">
     <div class="pl-label">3PL Rammeaftale</div>
-    <h2 class="pl-h2">Plug and Play &mdash; fra kontrakt til live p&aring; ca. 7 dage</h2>
-    <p class="pl-lead">Rammeaftalen giver lagerhoteller mulighed for at onboarde webshop-kunder hurtigt og standardiseret. Alt faktureres direkte til lagerhotellet &mdash; kunden beh&oslash;ver ikke styre noget.</p>
+    <h2 class="pl-h2">Plug and Play: fra kontrakt til live p&aring; ca. 7 dage</h2>
+    <p class="pl-lead">Rammeaftalen giver lagerhoteller mulighed for at onboarde webshop-kunder hurtigt og standardiseret. Alt faktureres direkte til lagerhotellet, kunden beh&oslash;ver ikke styre noget.</p>
 
     <div class="price-grid" style="margin-top:3rem">
 
@@ -307,7 +280,7 @@
           <li>Integration til webshop (Shopify, WooCommerce, Magento m.fl.)</li>
           <li>Standard plukkeprofil (&rdquo;Alle ordrer&rdquo; forudindstillet)</li>
           <li>Op til 3 logistikpartnere opsat</li>
-          <li>Checkout-prislogik (fri fragt over X kr. &mdash; op til 2 prisgrupper)</li>
+          <li>Checkout-prislogik (fri fragt over X kr., op til 2 prisgrupper)</li>
           <li>Standard returportal</li>
           <li>Standard Track &amp; Trace-mails</li>
           <li>Standard f&oslash;lgesedler og stregkodedesign</li>
@@ -381,14 +354,14 @@
         <div class="step__num">3</div>
         <div class="step__body">
           <h4>Introduktion til funktioner</h4>
-          <p>Kunden f&aring;r en gennemgang af 3PL-funktioner via video. &Oslash;nskes uddybning, sker det via support@smartpack.dk &mdash; med lagerhotellet som afsender. Direkte dialog med webshoppen kr&aelig;ver at 3PL ogs&aring; deltager.</p>
+          <p>Kunden f&aring;r en gennemgang af 3PL-funktioner via video. &Oslash;nskes uddybning, sker det via support@smartpack.dk, med lagerhotellet som afsender. Direkte dialog med webshoppen kr&aelig;ver at 3PL ogs&aring; deltager.</p>
         </div>
       </div>
     </div>
 
     <div style="margin-top:2rem;border:1.5px dashed var(--border);border-radius:var(--r-md);padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1rem;background:var(--bg-2)">
       <span style="font-size:1.25rem;flex-shrink:0">&#9998;</span>
-      <p style="margin:0;font-size:.9rem;color:var(--text-2);line-height:1.65"><strong style="color:var(--text-1)">Andre ops&aelig;tninger aftales individuelt.</strong> Har I specielle krav til integrationer, toldhåndtering, mere end 3 logistikpartnere eller custom flows? Det finder vi en løsning på &mdash; kontakt os, så laver vi et tilbud direkte til lagerhotellet.</p>
+      <p style="margin:0;font-size:.9rem;color:var(--text-2);line-height:1.65"><strong style="color:var(--text-1)">Andre ops&aelig;tninger aftales individuelt.</strong> Har I specielle krav til integrationer, toldhåndtering, mere end 3 logistikpartnere eller custom flows? Det finder vi en løsning på, kontakt os, så laver vi et tilbud direkte til lagerhotellet.</p>
     </div>
   </div>
 </section>
@@ -397,8 +370,8 @@
 <section class="pl-section pl-section--dark">
   <div class="container" style="max-width:780px">
     <div class="pl-quote">
-      <blockquote>&ldquo;Valget af WMS-system er alt afg&oslash;rende for stabilitet, kosteffektiv drift og glade medarbejdere. Vi besluttede at kontakte SmartPack &mdash; det var den rigtige beslutning.&rdquo;</blockquote>
-      <cite>&ndash; Klaus Vadstrup Hansen, COO, Lakuda / Batteribyen &mdash; 42% flere ordrer, 7 f&aelig;rre p&aring; lageret, ca. 7 dage til live</cite>
+      <blockquote>&ldquo;Valget af WMS-system er alt afg&oslash;rende for stabilitet, kosteffektiv drift og glade medarbejdere. Vi besluttede at kontakte SmartPack, det var den rigtige beslutning.&rdquo;</blockquote>
+      <cite>&ndash; Klaus Vadstrup Hansen, COO, Lakuda / Batteribyen, 42% flere ordrer, 7 f&aelig;rre p&aring; lageret, ca. 7 dage til live</cite>
     </div>
     <div style="text-align:center;margin-top:1.5rem">
       <a href="cases/lakuda-batteribyen.html" class="btn btn--ghost">L&aelig;s deres case &rarr;</a>
@@ -410,29 +383,29 @@
 <section class="pl-section">
   <div class="container">
     <div class="pl-label">Fordele for webshoppens ejer</div>
-    <h2 class="pl-h2">N&aring;r dit lager k&oslash;rer SmartPack &mdash; f&aring;r du det ogs&aring;</h2>
-    <p class="pl-lead">Bruger dit lagerhotel SmartPack, f&aring;r du som butiksindehaver adgang til et v&aelig;rkt&oslash;j der giver reelt overblik &mdash; ikke bare et lagersystem til dem der pakker.</p>
+    <h2 class="pl-h2">N&aring;r dit lager k&oslash;rer SmartPack, f&aring;r du det ogs&aring;</h2>
+    <p class="pl-lead">Bruger dit lagerhotel SmartPack, f&aring;r du som butiksindehaver adgang til et v&aelig;rkt&oslash;j der giver reelt overblik, ikke bare et lagersystem til dem der pakker.</p>
 
     <div class="included-grid">
       <div class="included-item">
         <div class="included-item__icon">&#128200;</div>
         <h4>Realtidsoverblik over dit lager</h4>
-        <p>Se alle varer, lokationer og bev&aelig;gelser direkte i SmartPack. Lagerv&aelig;rdi p&aring; en hvilken som helst dato &mdash; eksport til revisor med &eacute;t klik.</p>
+        <p>Se alle varer, lokationer og bev&aelig;gelser direkte i SmartPack. Lagerv&aelig;rdi p&aring; en hvilken som helst dato, eksport til revisor med &eacute;t klik.</p>
       </div>
       <div class="included-item">
         <div class="included-item__icon">&#128204;</div>
         <h4>Indkøbsforeslag og forecast</h4>
-        <p>SmartPack kender dit ordreflow og lagerbeholdning. F&aring; foreslag til hvad du skal hjem, hvorn&aring;r &mdash; og advarsler om d&oslash;de varer der bare koster husleje.</p>
+        <p>SmartPack kender dit ordreflow og lagerbeholdning. F&aring; foreslag til hvad du skal hjem, hvorn&aring;r, og advarsler om d&oslash;de varer der bare koster husleje.</p>
       </div>
       <div class="included-item">
         <div class="included-item__icon">&#128260;</div>
         <h4>Ordresh&aring;ndtering og fejloverblik</h4>
-        <p>Se pausede og fejlede ordrer med pr&aelig;cis fejlbeskrivelse. Ret adresser i din webshop &mdash; SmartPack synkroniserer via Webhooks.</p>
+        <p>Se pausede og fejlede ordrer med pr&aelig;cis fejlbeskrivelse. Ret adresser i din webshop, SmartPack synkroniserer via Webhooks.</p>
       </div>
       <div class="included-item">
         <div class="included-item__icon">&#128179;</div>
         <h4>Fuld gennemsigtighed i afregning</h4>
-        <p>Hvis jeres afregningsmodel underst&oslash;ttes af SmartPack, kan du se pr&aelig;cist hvad du har betalt &mdash; denne m&aring;ned og historisk. Ingen overraskelser p&aring; fakturaen.</p>
+        <p>Hvis jeres afregningsmodel underst&oslash;ttes af SmartPack, kan du se pr&aelig;cist hvad du har betalt, denne m&aring;ned og historisk. Ingen overraskelser p&aring; fakturaen.</p>
       </div>
       <div class="included-item">
         <div class="included-item__icon">&#128241;</div>
@@ -442,7 +415,7 @@
       <div class="included-item">
         <div class="included-item__icon">&#128202;</div>
         <h4>Sporbarhed og lagerjusteringer</h4>
-        <p>Alle lagerjusteringer logges. Se hvad der er &aelig;ndret, hvorn&aring;r og af hvem &mdash; og bekr&aelig;ft dem som to-do fra en overskuelig liste.</p>
+        <p>Alle lagerjusteringer logges. Se hvad der er &aelig;ndret, hvorn&aring;r og af hvem, og bekr&aelig;ft dem som to-do fra en overskuelig liste.</p>
       </div>
     </div>
   </div>
@@ -452,19 +425,19 @@
 <section class="pl-section pl-section--alt">
   <div class="container">
     <div class="pl-label">Tilg&aelig;ngeligt i SmartPack</div>
-    <h2 class="pl-h2">Dynamiske afregningsmodeller &mdash; fair begge veje</h2>
+    <h2 class="pl-h2">Dynamiske afregningsmodeller, fair begge veje</h2>
     <p class="pl-lead">SmartPack underst&oslash;tter en r&aelig;kke fleksible prismodeller der g&oslash;r afregningen mellem lagerhotel og butik gennemsigtig og automatiseret. Hvad der kan aktiveres afh&aelig;nger af den individuelle serviceaftale.</p>
 
     <div class="future-grid">
       <div class="future-item">
         <span class="future-item__tag">Lagermodeller</span>
         <h4>&#128201; Aktivitetsrabat &amp; M&aring;lrabatter</h4>
-        <p>Giv webshops spend-baseret rabat &mdash; h&oslash;j aktivitet giver lavere husleje. Prisen tilpasser sig automatisk n&aring;r kunden rammer bestemte volumener.</p>
+        <p>Giv webshops spend-baseret rabat, h&oslash;j aktivitet giver lavere husleje. Prisen tilpasser sig automatisk n&aring;r kunden rammer bestemte volumener.</p>
       </div>
       <div class="future-item">
         <span class="future-item__tag">Lagermodeller</span>
         <h4>&#128260; Bev&aelig;gelsesbaseret Friplads</h4>
-        <p>Varer med bev&aelig;gelse opbevares gratis. Du betaler kun for hyldevarmere. Motiverer butikken til at aktivere eller fjerne d&oslash;de varer &mdash; I f&aring;r frigivet plads.</p>
+        <p>Varer med bev&aelig;gelse opbevares gratis. Du betaler kun for hyldevarmere. Motiverer butikken til at aktivere eller fjerne d&oslash;de varer, I f&aring;r frigivet plads.</p>
       </div>
       <div class="future-item">
         <span class="future-item__tag">Pluk &amp; Pak</span>
@@ -484,7 +457,7 @@
       <div class="future-item">
         <span class="future-item__tag">Arealbaseret</span>
         <h4>&#9974; Faktisk m&sup2;-forbrug eller fast aftale</h4>
-        <p>Afreg baseret p&aring; pr&aelig;cist antal kvadratmeter dine varer fysisk optager &mdash; eller lav en fast m&sup2;-aftale for fuld forudsigelighed. To modeller, &eacute;t system.</p>
+        <p>Afreg baseret p&aring; pr&aelig;cist antal kvadratmeter dine varer fysisk optager, eller lav en fast m&sup2;-aftale for fuld forudsigelighed. To modeller, &eacute;t system.</p>
       </div>
     </div>
   </div>
@@ -535,7 +508,7 @@
   <div class="container" style="max-width:780px">
     <div class="pl-label">S&aelig;rlig prismodel</div>
     <h2 class="pl-h2">Over 100.000 pakker &aring;rligt?<br>S&aring; skal I ikke straffes for volumen.</h2>
-    <p style="color:var(--text-2);line-height:1.8;font-size:1rem">Har I h&oslash;j volumen, laver vi en model der giver mening fra start &mdash; ogs&aring; selvom SmartPack i f&oslash;rste omgang kun bruges p&aring; en del af jeres kunder.</p>
+    <p style="color:var(--text-2);line-height:1.8;font-size:1rem">Har I h&oslash;j volumen, laver vi en model der giver mening fra start, ogs&aring; selvom SmartPack i f&oslash;rste omgang kun bruges p&aring; en del af jeres kunder.</p>
     <p style="color:var(--text-2);line-height:1.8;font-size:1rem;margin-top:1.25rem">Vores erfaring er enkel: N&aring;r f&oslash;rst lagerhotellet og kunderne m&aelig;rker flowet, flytter mere og mere af driften med. Derfor prioriterer vi at v&aelig;re gener&oslash;se fra start.</p>
     <div style="margin-top:2rem">
       <a href="kontakt.html" class="btn btn--primary">F&aring; et tilbud &rarr;</a>
@@ -562,7 +535,7 @@
       </details>
 
       <details style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-md);padding:1.25rem 1.5rem">
-        <summary style="font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Hvem f&aring;r fakturaen &mdash; lagerhotellet eller webshoppen? <span style="color:var(--accent);font-size:1.2rem">+</span></summary>
+        <summary style="font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Hvem f&aring;r fakturaen, lagerhotellet eller webshoppen? <span style="color:var(--accent);font-size:1.2rem">+</span></summary>
         <p style="margin:.75rem 0 0;color:var(--text-2);font-size:.9rem;line-height:1.7">Alt faktureres direkte til lagerhotellet. SmartPack har ingen direkte fakturering til webshopkunden. Lagerhotellet s&aelig;tter selv prisen overfor kunden i deres individuelle serviceaftale.</p>
       </details>
 
@@ -585,7 +558,7 @@
   <div class="container">
     <div class="pl-label">Lagerhoteller der k&oslash;rer SmartPack</div>
     <h2 class="pl-h2">Find et lager der allerede bruger SmartPack</h2>
-    <p class="pl-lead">Du beh&oslash;ver ikke vente p&aring; at dit lagerhotel k&oslash;ber systemet. Her er 9 danske 3PL-virksomheder der allerede k&oslash;rer SmartPack &mdash; og som du kan komme i kontakt med i dag.</p>
+    <p class="pl-lead">Du beh&oslash;ver ikke vente p&aring; at dit lagerhotel k&oslash;ber systemet. Her er 9 danske 3PL-virksomheder der allerede k&oslash;rer SmartPack, og som du kan komme i kontakt med i dag.</p>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem">
 
@@ -598,7 +571,7 @@
       <div style="background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:1.5rem">
         <p style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.4rem">T&aelig;t relation &middot; Hurtig onboarding</p>
         <h3 style="font-size:1rem;font-weight:800;margin-bottom:.6rem">BoxBee</h3>
-        <p style="font-size:.85rem;color:var(--text-2);line-height:1.6;margin:0">Lagerhotel for webshops der vil have en t&aelig;t relation til deres 3PL-partner. Her er du ikke en ordre i en k&oslash; &mdash; du er en kunde de kender.</p>
+        <p style="font-size:.85rem;color:var(--text-2);line-height:1.6;margin:0">Lagerhotel for webshops der vil have en t&aelig;t relation til deres 3PL-partner. Her er du ikke en ordre i en k&oslash;, du er en kunde de kender.</p>
       </div>
 
       <div style="background:var(--bg-2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--r-md);padding:1.5rem">
@@ -660,7 +633,7 @@
   <div class="container">
     <div class="pl-cta">
       <h2>Klar til at g&oslash;re jeres lager mere attraktivt?</h2>
-      <p>Book en uforpligtende snak om hvad SmartPack kan g&oslash;re for jeres 3PL-forretning &mdash; og f&aring; en konkret prismodel.</p>
+      <p>Book en uforpligtende snak om hvad SmartPack kan g&oslash;re for jeres 3PL-forretning, og f&aring; en konkret prismodel.</p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
         <a href="kontakt.html" class="btn btn--dark">Kontakt os direkte &rarr;</a>
         <a href="cases/lakuda-batteribyen.html" class="btn" style="background:transparent;border:2px solid rgba(255,255,255,.5);color:#fff">Se Lakuda-casen</a>
@@ -669,59 +642,8 @@
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <a href="index.html" class="footer__logo">
-          <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack" class="footer__logo-img">
-          <span>SmartPack</span>
-        </a>
-        <p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd. Til dem der er tr&aelig;tte af lagerbøvl.</p>
-        <p class="footer__sub">WMS til webshops og 3PL der vil have styr p&aring; lageret.</p>
-        <a href="kontakt.html" class="footer__cta-btn">Book demo</a>
-      </div>
-      <div class="footer__nav">
-        <div class="footer__nav-col">
-          <h4>Produkt</h4>
-          <ul>
-            <li><a href="funktioner.html">Funktioner</a></li>
-            <li><a href="integrationer.html">Integrationer</a></li>
-            <li><a href="cases.html">Kundecases</a></li>
-            <li><a href="priser.html">Priser</a></li>
-            <li><a href="3pl.html">3PL &amp; Lagerhoteller</a></li>
-          </ul>
-        </div>
-        <div class="footer__nav-col">
-          <h4>Virksomhed</h4>
-          <ul>
-            <li><a href="om-os.html">Om os</a></li>
-            <li><a href="https://www.tiktok.com/@smartpackwms" target="_blank" rel="noopener">TikTok</a></li>
-            <li><a href="https://www.youtube.com/@SmartPackWMS">YouTube</a></li>
-            <li><a href="https://dk.linkedin.com/company/smartpackwms">LinkedIn</a></li>
-          </ul>
-        </div>
-        <div class="footer__nav-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li>
-            <li><a href="tel:+4588202019">Akut? Tast 9.</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <p>&copy; 2026 SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p>
-      <div class="footer__badges">
-        <span class="footer__badge">E-handel siden 2005</span>
-        <span class="footer__badge">Medlem af Dansk Erhverv</span>
-        <span class="footer__badge">WMS - Lagerstyring - 3PL</span>
-      </div>
-    </div>
-  </div>
-</footer>
+<div id="sp-footer"></div>
+<script src="/js/footer.js"></script>
 
 <script src="js/main.js?v=2" defer></script>
 </body>
