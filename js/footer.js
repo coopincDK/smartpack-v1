@@ -86,7 +86,7 @@
       var now  = new Date();
       var day  = now.getDay();   // 0=son, 1=man...6=lor
       var hour = now.getHours(); // dansk lokal tid
-      var erAabent = day >= 1 && day <= 5 && hour >= 8 && hour < 17;
+      var erAabent = day >= 1 && day <= 5 && hour >= 9 && hour < 16;
       var phoneEl  = document.getElementById('footer-phone-ctx');
       if (!phoneEl) return;
       if (erAabent) {
