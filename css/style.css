@@ -3761,5 +3761,44 @@ html.theme-transition *::after {
   outline: none;
   border-color: var(--accent, #3ecf8e);
 }
+
+/* --- ROI BRIDGE (priser.html) --- */
+.roi-bridge {
+  background: var(--bg-2, #f7f9f7);
+  border-left: 3px solid var(--accent, #3ecf8e);
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
+  margin: 2.5rem 0;
+  max-width: 600px;
+}
+.roi-bridge__lead {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin: 0 0 .5rem;
+}
+.roi-bridge__body {
+  font-size: .9rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+.roi-bridge__teaser {
+  font-size: .85rem;
+  color: var(--text-2);
+  background: var(--bg-3, #eef3ee);
+  border-radius: 4px;
+  padding: .5rem .75rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+.roi-bridge__cta {
+  display: inline-block;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+}
+.roi-bridge__cta:hover { text-decoration: underline; }
  
  
