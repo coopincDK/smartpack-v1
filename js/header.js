@@ -14,6 +14,14 @@
     if (!placeholder) return;
 
     var html = [
+      '<div class="site-announce" id="site-announce">',
+      '  <span class="site-announce__inner">',
+      '    <span>&#128222; Ring til os: <a href="tel:88202019" class="site-announce__link">88 20 20 19 tryk 1</a></span>',
+      '    <span class="site-announce__sep">&#xb7;</span>',
+      '    <a href="mailto:bundlinjeboost@smartpack.dk" class="site-announce__link">bundlinjeboost@smartpack.dk</a>',
+      '  </span>',
+      '  <button class="site-announce__close" id="site-announce-close" aria-label="Luk">&#x2715;</button>',
+      '</div>',
       '<header class="site-header" id="site-header">',
       '  <nav class="nav container">',
       '    <a href="' + url('/') + '" class="nav__logo">',
@@ -35,7 +43,7 @@
       '      </li>',
       '      <li><a href="' + url('/priser.html') + '" class="nav__link">Priser</a></li>',
       '      <li><a href="' + url('/cases.html') + '" class="nav__link">Cases</a></li>',
-      '      <li><a href="' + url('/viden/') + '" class="nav__link">Viden</a></li>',
+      '      <li><a href="' + url('/roi.html') + '" class="nav__link">Beregn ROI</a></li>',
       '    </ul>',
       '    <div class="nav__actions">',
       '      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Log ind &amp; support &rarr;</a>',
