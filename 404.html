@@ -25,6 +25,123 @@
 .error-page__redirect{font-size:.85rem;color:var(--text-3);margin-top:3rem}
 </style>
 <script>
+// ============================================================
+// SmartPack — Auto-redirect fra gammel WordPress-site til ny
+// Genereret fra sitemap 2026-05-02
+// ============================================================
+(function() {
+  var p = window.location.pathname.toLowerCase();
+
+  var map = {
+    // Hovedsider
+    '/priser':'/priser.html','/priser/':'/priser.html',
+    '/funktioner':'/funktioner.html','/funktioner/':'/funktioner.html',
+    '/om-os':'/om-os.html','/om-os/':'/om-os.html',
+    '/kontakt':'/kontakt.html','/kontakt/':'/kontakt.html',
+    '/faq':'/faq.html','/faq/':'/faq.html',
+    '/privatlivspolitik':'/privatlivspolitik.html','/privatlivspolitik/':'/privatlivspolitik.html',
+    '/vilkaar-og-betingelser':'/vilkaar.html','/vilkaar-og-betingelser/':'/vilkaar.html',
+    '/gdpr':'/vilkaar.html','/gdpr/':'/vilkaar.html',
+    '/handelsbetingelser':'/handelsbetingelser.html','/handelsbetingelser/':'/handelsbetingelser.html',
+    // Sider med aendret navn
+    '/kundecases':'/cases.html','/kundecases/':'/cases.html',
+    '/pak-og-pluk-3pl-lagerhotel':'/3pl.html','/pak-og-pluk-3pl-lagerhotel/':'/3pl.html',
+    '/pak-og-pluk':'/3pl.html','/pak-og-pluk/':'/3pl.html',
+    '/dette-kan-vi':'/funktioner.html','/dette-kan-vi/':'/funktioner.html',
+    '/saadan-virker-det':'/funktioner.html','/saadan-virker-det/':'/funktioner.html',
+    '/ecommerce':'/funktioner.html','/ecommerce/':'/funktioner.html',
+    '/beregner':'/priser.html','/beregner/':'/priser.html',
+    '/beregner123':'/priser.html','/beregner123/':'/priser.html',
+    '/opstart-hvad-faar-man-med-i-opstarten':'/priser.html','/opstart-hvad-faar-man-med-i-opstarten/':'/priser.html',
+    '/superbruger':'/priser.html','/superbruger/':'/priser.html',
+    '/6-skarpe-e-commerce-tips-til-hoejsaeson-salg':'/viden/','/6-skarpe-e-commerce-tips-til-hoejsaeson-salg/':'/viden/',
+    '/support-database':'https://support.smartpack.dk/','/support-database/':'https://support.smartpack.dk/',
+    '/driftsinformation':'/','/driftsinformation/':'/',
+    '/demo-2':'/kontakt.html','/demo-2/':'/kontakt.html',
+    '/book-mikkel':'/kontakt.html','/book-mikkel/':'/kontakt.html',
+    '/integrationer_old':'/integrationer.html','/integrationer_old/':'/integrationer.html',
+    '/test':'/','/test/':'/','/tak':'/','/tak/':'/','/ditinput':'/','/ditinput/':'/',
+    // Integrationer: slug aendret
+    '/integrationer/shopify-wms-lagerstyring':'/integrationer/shopify.html',
+    '/integrationer/shopify-wms-lagerstyring/':'/integrationer/shopify.html',
+    '/integrationer/shopify-pos':'/integrationer/shopify.html',
+    '/integrationer/shopify-pos/':'/integrationer/shopify.html',
+    '/integrationer/private-app':'/integrationer/shopify.html',
+    '/integrationer/private-app/':'/integrationer/shopify.html',
+    '/integrationer/dynamic-365-business-central':'/integrationer/dynamics-365.html',
+    '/integrationer/dynamic-365-business-central/':'/integrationer/dynamics-365.html',
+    '/integrationer/e-conimic':'/integrationer/economic.html',
+    '/integrationer/e-conimic/':'/integrationer/economic.html',
+    '/integrationer/bft-transport-og-logistik':'/integrationer/bft-logistik.html',
+    '/integrationer/bft-transport-og-logistik/':'/integrationer/bft-logistik.html',
+    '/integrationer/inventory-planner-by-sage':'/integrationer/inventory-planner.html',
+    '/integrationer/inventory-planner-by-sage/':'/integrationer/inventory-planner.html',
+    '/integrationer/reversio-io':'/integrationer/reversio.html',
+    '/integrationer/reversio-io/':'/integrationer/reversio.html',
+    '/integrationer/herodesk-io':'/integrationer/herodesk.html',
+    '/integrationer/herodesk-io/':'/integrationer/herodesk.html',
+    '/integrationer/kangaroo-robotics-lagerrobot':'/integrationer/kangaroo-robotics.html',
+    '/integrationer/kangaroo-robotics-lagerrobot/':'/integrationer/kangaroo-robotics.html',
+    '/integrationer/stocky-indkoeb-til-shopify':'/integrationer/stocky.html',
+    '/integrationer/stocky-indkoeb-til-shopify/':'/integrationer/stocky.html',
+    '/integrationer/magento-2':'/integrationer/magento.html',
+    '/integrationer/magento-2/':'/integrationer/magento.html',
+    '/integrationer/create2stay':'/cases/create2stay.html',
+    '/integrationer/create2stay/':'/cases/create2stay.html',
+    // Integrationer: ingen ny side -> oversigt
+    '/integrationer/scannet':'/integrationer.html','/integrationer/scannet/':'/integrationer.html',
+    '/integrationer/wannafind':'/integrationer.html','/integrationer/wannafind/':'/integrationer.html',
+    '/integrationer/smartweb':'/integrationer.html','/integrationer/smartweb/':'/integrationer.html',
+    '/integrationer/homerunner':'/integrationer.html','/integrationer/homerunner/':'/integrationer.html',
+    '/integrationer/customlabels':'/integrationer.html','/integrationer/customlabels/':'/integrationer.html',
+    '/integrationer/api':'/integrationer.html','/integrationer/api/':'/integrationer.html',
+    '/integrationer/storebuddy':'/integrationer.html','/integrationer/storebuddy/':'/integrationer.html',
+    '/integrationer/pakkeshopper':'/integrationer.html','/integrationer/pakkeshopper/':'/integrationer.html',
+    '/integrationer/returnflows':'/integrationer.html','/integrationer/returnflows/':'/integrationer.html',
+    '/integrationer/float':'/integrationer.html','/integrationer/float/':'/integrationer.html',
+    '/integrationer/iex':'/integrationer.html','/integrationer/iex/':'/integrationer.html',
+    '/integrationer/sitesage':'/integrationer.html','/integrationer/sitesage/':'/integrationer.html',
+    '/integrationer/wilmo-ai':'/integrationer.html','/integrationer/wilmo-ai/':'/integrationer.html',
+    // Kundecases
+    '/kundecase/totteland':'/cases/totteland.html','/kundecase/totteland/':'/cases/totteland.html',
+    '/kundecase/danguitar':'/cases/danguitar.html','/kundecase/danguitar/':'/cases/danguitar.html',
+    '/kundecase/geekd':'/cases/geekd.html','/kundecase/geekd/':'/cases/geekd.html',
+    '/kundecase/jule-sweaters':'/cases/jule-sweaters.html','/kundecase/jule-sweaters/':'/cases/jule-sweaters.html',
+    '/kundecase/lakuda-batteribyen':'/cases/lakuda-batteribyen.html','/kundecase/lakuda-batteribyen/':'/cases/lakuda-batteribyen.html',
+    '/kundecase/firstgrade':'/cases/firstgrade.html','/kundecase/firstgrade/':'/cases/firstgrade.html',
+    '/kundecase/mayafreya':'/cases/maya-freya.html','/kundecase/mayafreya/':'/cases/maya-freya.html',
+    '/kundecase/maya-freya':'/cases/maya-freya.html','/kundecase/maya-freya/':'/cases/maya-freya.html',
+  };
+
+  // 1) Eksplicit match
+  var dest = map[p];
+  if (dest) { window.location.replace(dest); return; }
+
+  // 2) Trailing-slash fallback: /noget/ -> /noget.html
+  // Daekker alle integrationer og WP-stier med matchende slug
+  if (p.endsWith('/') && p.length > 1) {
+    window.location.replace(p.slice(0,-1) + '.html');
+    return;
+  }
+
+  // 3) Ingen extension -> proev .html
+  if (!p.endsWith('.html') && p.length > 1) {
+    window.location.replace(p + '.html');
+  }
+})();
+</script>
+<style>
+.error-page{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;z-index:1}
+.video-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.video-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.video-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(9,12,15,.9) 0%,rgba(9,12,15,.35) 100%)}
+.error-page__code{font-size:clamp(6rem,20vw,12rem);font-weight:900;line-height:1;color:var(--accent);opacity:.15;margin-bottom:-2rem;display:block}
+.error-page__title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;margin-bottom:1rem}
+.error-page__sub{color:var(--text-2);max-width:480px;margin:0 auto 2rem;line-height:1.7}
+.error-page__links{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2rem}
+.error-page__redirect{font-size:.85rem;color:var(--text-3);margin-top:3rem}
+</style>
+<script>
 // Auto-redirect kendte gamle URL-m&oslash;nstre
 const path = window.location.pathname.toLowerCase();
 const redirects = {
