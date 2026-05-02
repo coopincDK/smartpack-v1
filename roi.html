@@ -304,20 +304,21 @@
         <div class="qc-head__eye">ROI lagerstyring &middot; Fulfillment effektivisering</div>
         <h2 class="qc-head__h2">Hvad koster det<br><em>at vente?</em></h2>
         <p class="qc-head__sub">Typiske lagre er 20-40% overbemandet. Ind med tallene, se hvad det koster dig.</p>
+        <div style="font-size:.7rem;color:var(--text-3);background:var(--bg-2);border:1px dashed var(--border);border-radius:var(--r-sm);padding:.45rem .75rem;display:inline-block">Vi har sat et realistisk eksempel ind. Ret tallene, s&aring; de passer til dit lager.</div>
 
         <div class="qc-fields">
           <div>
-            <div class="qc-field__label">Ordrer pr. dag</div>
-            <input class="qc-field__input" id="qc-ordrer" type="number" min="1" max="10000" value="150" inputmode="numeric">
-            <div class="qc-field__hint">Gennemsnit &ndash; inkl. rolige dage</div>
+            <div class="qc-field__label">Ordrer pr. m&aring;ned</div>
+            <input class="qc-field__input" id="qc-ordrer" type="number" min="100" max="100000" step="100" value="1500" inputmode="numeric">
+            <div class="qc-field__hint">Pakker sendt ud &ndash; gennemsnit inkl. rolige uger</div>
           </div>
           <div>
             <div class="qc-field__label">Lagermedarbejdere</div>
-            <input class="qc-field__input" id="qc-medarb" type="number" min="1" max="200" value="5" inputmode="numeric">
+            <input class="qc-field__input" id="qc-medarb" type="number" min="1" max="200" value="3" inputmode="numeric">
           </div>
           <div>
-            <div class="qc-field__label">M&aring;nedslon pr. medarbejder (kr.)</div>
-            <input class="qc-field__input" id="qc-lon" type="number" min="10000" max="80000" step="1000" value="28000" inputmode="numeric">
+            <div class="qc-field__label">M&aring;nedsl&oslash;n pr. medarbejder (kr.)</div>
+            <input class="qc-field__input" id="qc-lon" type="number" min="10000" max="80000" step="1000" value="32000" inputmode="numeric">
             <div class="qc-field__hint">Inkl. feriepenge og arbejdsgiverudgifter</div>
           </div>
 
@@ -418,15 +419,51 @@
 
     <!-- LEAD MAGNET #1 -->
     <div class="lead-magnet" style="margin-top:2rem;max-width:640px;margin-left:auto;margin-right:auto">
-      <div class="lead-magnet__eyebrow">Bruges af lagerhoteller og e-commerce virksomheder</div>
-      <div class="lead-magnet__title">Hvad koster dit lager dig egentlig?</div>
-      <div class="lead-magnet__sub">Vi har samlet de typiske fejl, skjulte omkostninger og et konkret ROI-regnesk&uelig;de fra rigtige lagerhoteller. Konkrete tal &ndash; ikke generisk r&aring;dgivning.</div>
+      <div class="lead-magnet__eyebrow">Cases fra lagerhoteller og eCommerce</div>
+      <div class="lead-magnet__title">Vil du se hvor tallene kommer fra?</div>
+      <div class="lead-magnet__sub">Vi har samlet de typiske fejl, skjulte omkostninger og et konkret ROI-regnestykke fra rigtige lagerhoteller. Konkrete tal &ndash; ikke generisk r&aring;dgivning.</div>
       <div class="lead-magnet__form">
         <input class="lead-magnet__input" type="text" placeholder="Dit navn" aria-label="Navn">
         <input class="lead-magnet__input" type="email" placeholder="Din email" aria-label="Email">
         <a href="kontakt.html" class="btn btn--primary" style="white-space:nowrap">Hent ROI-rapport &rarr;</a>
       </div>
       <div class="lead-magnet__note">Ingen spam. Du f&aring;r rapporten direkte i indbakken inden for 24 timer.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GEVINST -->
+<section class="gevinst-strip">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:1.75rem">
+      <div class="sec-eye">3PL profit &middot; WMS business case</div>
+      <h2 class="sec-h2">Hvor kommer gevinsten fra?</h2>
+    </div>
+    <div class="gevinst-grid">
+      <div class="gevinst-card">
+        <div class="gevinst-card__icon">&#128170;</div>
+        <div class="gevinst-card__title">L&oslash;n</div>
+        <div class="gevinst-card__body">F&aelig;rre medarbejdere til samme volumen. Eller samme team, der klarer mere. SmartPack frigiver typisk 25-40% af l&oslash;nbudgettet.</div>
+        <div class="gevinst-card__stat">1 medarbejder ~ 300.000 kr./&aring;r</div>
+      </div>
+      <div class="gevinst-card">
+        <div class="gevinst-card__icon">&#128230;</div>
+        <div class="gevinst-card__title">Fejl</div>
+        <div class="gevinst-card__body">Pakkefejl n&aelig;rmer sig 0. Returfragt, kundeservice og ompak forsvinder. Branchegennemsnit 1-2%, SmartPack-kunder typisk under 0,4%.</div>
+        <div class="gevinst-card__stat">Fejlbetingede returner: -90%+</div>
+      </div>
+      <div class="gevinst-card">
+        <div class="gevinst-card__icon">&#128200;</div>
+        <div class="gevinst-card__title">Kapacitet</div>
+        <div class="gevinst-card__body">Flere ordrer ud af d&oslash;ren uden at ans&aelig;tte mere. Kapacitetsloftet h&aelig;ves typisk 40-60% fra dag &eacute;t med SmartPack.</div>
+        <div class="gevinst-card__stat">+40-60% kapacitet, samme team</div>
+      </div>
+      <div class="gevinst-card">
+        <div class="gevinst-card__icon">&#9889;</div>
+        <div class="gevinst-card__title">Onboarding</div>
+        <div class="gevinst-card__body">Ny medarbejder fungerer p&aring; max 15 minutter. Vikarudgifter i peak falder markant. Hurtigere drift fra f&oslash;rste dag.</div>
+        <div class="gevinst-card__stat">Live p&aring; under &eacute;n uge</div>
+      </div>
     </div>
   </div>
 </section>
@@ -458,6 +495,20 @@
       </div>
       <div style="text-align:center">
         <span class="payback-badge">&#9201; Typisk tilbagebetalt p&aring; 2&ndash;6 m&aring;neder</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NØRDE-TILSTAND INTRO -->
+<section style="background:var(--bg-1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2.25rem 0">
+  <div class="container">
+    <div style="display:flex;align-items:flex-start;gap:1.25rem;max-width:700px">
+      <div style="font-size:1.75rem;flex-shrink:0">&#129488;</div>
+      <div>
+        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:.35rem">Detaljeret beregner</div>
+        <div style="font-size:1.05rem;font-weight:800;color:var(--text-1);margin-bottom:.35rem">Vil du nørde tallene?</div>
+        <div style="font-size:.88rem;color:var(--text-2);line-height:1.6">Vi har allerede taget udgangspunkt i dine tal ovenfor. Her kan du justere alle detaljer: branche, vækstrate, returhåndtering, software-udgifter og saisonudsving &ndash; og se det samlede regneskær i realtid.</div>
       </div>
     </div>
   </div>
@@ -518,7 +569,7 @@
             <span class="inp-label">Timeløn inkl. feriepenge</span>
             <span class="inp-val" id="v-lon">160 kr.</span>
           </div>
-          <input type="range" class="roi-range" id="lon" min="100" max="450" step="5" value="160">
+          <input type="range" class="roi-range" id="lon" min="100" max="450" step="5" value="200">
           <div class="inp-note">Typisk 140&ndash;200 kr/t inkl. alle arbejdsgiverudgifter</div>
         </div>
 
@@ -553,7 +604,7 @@
 
       <!-- TRIN 2: OKONOMI -->
       <div class="inp-section" id="tab1">
-        <div class="step-header"><div class="step-header__num">2</div><div><div class="step-header__title">&Oslash;konomi</div><div class="step-header__sub">Oms&aelig;tning og avance &mdash; beregner potentiel meromsaetning med frigivne timer</div></div></div>
+        <div class="step-header"><div class="step-header__num">2</div><div><div class="step-header__title">&Oslash;konomi</div><div class="step-header__sub">Oms&aelig;tning og avance &mdash; beregner potentiel meromsætning med frigivne timer</div></div></div>
 
         <div class="inp-field">
           <div class="inp-row">
@@ -829,11 +880,12 @@
 
     <!-- CTA -->
     <div class="roi-cta">
-      <h3>Vil du se det præcise tal for jeres virksomhed?</h3>
-      <p>En gratis 20-minutters gennemgang giver jer et konkret estimat baseret på jeres faktiske opsætning, ordrer og lagerstruktur.</p>
+      <h3>Få beregnet din case</h3>
+      <p>En 20-minutters snak giver dig et konkret estimat baseret på jeres faktiske tal, lager og ordremix.</p>
       <div class="roi-cta__btns">
         <a href="kontakt.html" class="btn btn--primary">Book gratis gennemgang &rarr;</a>
-        <a href="priser.html" class="btn btn--ghost">Se fulde priser</a>
+        <a href="kontakt.html" class="btn btn--ghost">Hent ROI-rapport</a>
+        <a href="priser.html" class="btn btn--ghost">Se priser</a>
       </div>
     </div>
 
@@ -873,13 +925,13 @@
   }
 
   function calc() {
-    var ordrer  = Math.max(1, +document.getElementById('qc-ordrer').value || 150);
-    var medarb  = Math.max(1, +document.getElementById('qc-medarb').value || 5);
-    var lon     = Math.max(1, +document.getElementById('qc-lon').value || 28000);
-    var fejl    = Math.max(0, +document.getElementById('qc-fejl').value || 1.1);
-    var pluk    = Math.max(1, +document.getElementById('qc-pluk').value || 42);
+    var ordrer  = Math.max(100, +document.getElementById('qc-ordrer').value || 1500);
+    var medarb  = Math.max(1,   +document.getElementById('qc-medarb').value || 3);
+    var lon     = Math.max(1,   +document.getElementById('qc-lon').value || 32000);
+    var fejl    = Math.max(0,   +document.getElementById('qc-fejl').value || 1.1);
+    var pluk    = Math.max(1,   +document.getElementById('qc-pluk').value || 42);
 
-    var pakker_md   = ordrer * 22;
+    var pakker_md   = ordrer;             // ordrer/md direkte
     var lonAar      = lon * 13;           // inkl. feriepenge + overhead
     var effekt      = 0.30;               // konservativt 30%
     var frigivne    = medarb * effekt;
@@ -925,6 +977,9 @@
     });
     calc();
   }
+
+  // Eksponér globalt så beregner kan kalde QC-recalc
+  window.qcCalc = calc;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -1354,14 +1409,14 @@ function updateCharts(r) {
 // --- QC → Beregner sync ---
 // Når Quick Calc opdateres, sættes de tilsvarende slidere i den detaljerede beregner også.
 function syncQCToBeregner() {
-  var ordrer  = Math.max(1,     +document.getElementById('qc-ordrer').value || 150);
-  var medarbQ = Math.max(1,     +document.getElementById('qc-medarb').value || 5);
-  var lonMd   = Math.max(10000, +document.getElementById('qc-lon').value   || 28000);
+  var ordrer  = Math.max(100,   +document.getElementById('qc-ordrer').value || 1500);
+  var medarbQ = Math.max(1,     +document.getElementById('qc-medarb').value || 3);
+  var lonMd   = Math.max(10000, +document.getElementById('qc-lon').value   || 32000);
   var fejlQ   = Math.max(0,     +document.getElementById('qc-fejl').value  || 1.1);
 
-  // Konverter: ordrer/dag × 22 = pakker/md
-  var pakker  = Math.min(60000, Math.max(100, Math.round(ordrer * 22 / 100) * 100));
-  // Månedslon ÷ 160,33 = timelon, afrund til nærmeste 5
+  // ordrer/md direkte (QC bruger nu md, ikke dag)
+  var pakker  = Math.min(60000, Math.max(100, Math.round(ordrer / 100) * 100));
+  // Månedsløn ÷ 160,33 = timeløn, afrund til nærmeste 5
   var lonTime = Math.min(450, Math.max(100, Math.round(lonMd / 160.33 / 5) * 5));
   var medarbV = Math.min(30,  Math.max(1,   Math.round(medarbQ)));
   var fejlV   = Math.min(5,   Math.max(0,   Math.round(fejlQ * 10) / 10));
@@ -1381,12 +1436,30 @@ function syncQCToBeregner() {
   if (typeof update === 'function') update();
 }
 
+// --- Beregner → QC sync (omvendt retning) ---
+function syncBeregnerToQC() {
+  function setInp(id, val) {
+    var el = document.getElementById(id);
+    if (el && document.activeElement !== el) el.value = val;
+  }
+  var pakker = +document.getElementById('pakker').value || 1500;
+  var medarb = +document.getElementById('medarb').value || 3;
+  var lon    = +document.getElementById('lon').value    || 200;
+  var fejl   = +document.getElementById('fejl').value  || 1.1;
+  setInp('qc-ordrer', pakker);
+  setInp('qc-medarb', medarb);
+  setInp('qc-lon',    Math.round(lon * 160.33 / 1000) * 1000);
+  setInp('qc-fejl',   fejl);
+  if (typeof window.qcCalc === 'function') window.qcCalc();
+}
+
 // --- Main update loop ---
 function update() {
   document.querySelectorAll('.roi-range').forEach(syncSlider);
   const r = beregn();
   updateDOM(r);
   updateCharts(r);
+  syncBeregnerToQC();
 }
 
 // --- Init ---
