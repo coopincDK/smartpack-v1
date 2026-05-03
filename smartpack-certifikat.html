@@ -103,14 +103,22 @@
     }
 
     .cert-topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-family: 'Inter', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 800;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: #fff;
-      letter-spacing: -.02em;
+      letter-spacing: -.01em;
+      text-decoration: none;
     }
 
-    .cert-topbar-logo span { color: var(--accent); }
+    .cert-topbar-logo img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
 
     .cert-topbar-tag {
       font-size: .68rem;
@@ -485,7 +493,10 @@
 
     <!-- Top -->
     <div class="cert-topbar">
-      <div class="cert-topbar-logo">Smart<span>Pack</span></div>
+      <div class="cert-topbar-logo">
+        <img src="assets/cropped-favicon-smartpack.png" alt="SmartPack" />
+        SmartPack
+      </div>
       <div class="cert-topbar-tag">Lager &amp; Pakke Optimering</div>
     </div>
 
