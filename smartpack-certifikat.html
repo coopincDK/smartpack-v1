@@ -432,31 +432,30 @@
     @media print {
       html, body {
         background: white !important;
-        width: 210mm;
-        height: 297mm;
-        overflow: hidden;
+        margin: 0;
+        padding: 0;
       }
       .cert-toolbar, .site-header, .site-footer,
       #site-header, #site-footer, .no-print { display: none !important; }
+
+      /* Skalér hele kortet til at passe A4 */
       .cert-wrap {
         max-width: 100%;
         margin: 0;
         padding: 0;
         width: 210mm;
-        height: 297mm;
       }
+
       .cert-card {
         border-radius: 0;
         box-shadow: none;
         width: 210mm;
-        height: 297mm;
-        overflow: hidden;
         page-break-after: avoid;
         page-break-inside: avoid;
+        /* Brug zoom til proportional skalering */
+        zoom: 0.72;
       }
-      .cert-body {
-        padding: 2rem 3rem 1.5rem;
-      }
+
       .cert-edit-hint { display: none !important; }
       .cert-firm-input { border-bottom-style: solid !important; }
       .cert-sig-img { mix-blend-mode: normal !important; filter: none !important; }
