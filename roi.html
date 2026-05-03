@@ -878,14 +878,14 @@
         <div>
           <p class="chart-card__title">Kapacitetsloft, 24 måneder</p>
           <div style="margin-top:.5rem;display:flex;gap:.5rem;flex-wrap:wrap">
-            <span class="ceiling-badge ceiling-badge--warn" id="badge-uden" style="display:none">⚠️ Uden SP: md <span id="badge-uden-md">?</span></span>
-            <span class="ceiling-badge ceiling-badge--ok" id="badge-med" style="display:none">✅ Med SP: md <span id="badge-med-md">?</span></span>
+            <span class="ceiling-badge ceiling-badge--warn" id="badge-uden" style="display:none" title="Din vækst rammer kapacitetsloftet i denne måned uden SmartPack. Herefter kan I ikke følge med uden flere hænder.">⚠️ Uden SP: md <span id="badge-uden-md">?</span></span>
+            <span class="ceiling-badge ceiling-badge--ok" id="badge-med" style="display:none" title="Med SmartPack udskyder I kapacitetsloftet til denne måned. Samme stab, højere tempo.">✅ Med SP: md <span id="badge-med-md">?</span></span>
           </div>
         </div>
         <div class="chart-legend">
-          <div class="leg-item"><div class="leg-dash" style="background:#e08000;border-top:2px dashed #e08000"></div>Kapacitet nu</div>
-          <div class="leg-item"><div class="leg-dash" style="background:var(--accent)"></div>Kapacitet m. SP</div>
-          <div class="leg-item"><div class="leg-dash" style="background:var(--text-1)"></div>Din vækst</div>
+          <div class="leg-item" title="Hvad I maksimalt kan sende pr. måned med jeres nuværende stab og tempo, uden SmartPack."><div class="leg-dash" style="background:#e08000;border-top:2px dashed #e08000"></div>Kapacitet nu</div>
+          <div class="leg-item" title="Hvad I kan sende med SmartPack ved samme antal medarbejdere. Højere tempo giver højere loft."><div class="leg-dash" style="background:var(--accent)"></div>Kapacitet m. SP</div>
+          <div class="leg-item" title="Jeres forventede vækst måned for måned, baseret på den månedlige vækstrate I har sat."><div class="leg-dash" style="background:var(--text-1)"></div>Din vækst</div>
         </div>
       </div>
       <canvas id="chart-ceiling" height="180"></canvas>
