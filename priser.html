@@ -88,8 +88,8 @@
   <script src="js/theme-toggle.js"></script>
   <style>
     /* Page-hero */
-    .page-hero { padding: 120px 0 80px; }
-    .priser-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .page-hero { padding: 4rem 0 3rem; }
+    .priser-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
     .priser-video-wrap { position: relative; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.5); border: 1px solid var(--border); display: block; background: #111; }
     .priser-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
     .priser-quote-overlay { position: absolute; bottom: 0; left: 0; right: 0; margin: 0; padding: 1rem 1.25rem 1rem 1.1rem; background: linear-gradient(to top, rgba(0,0,0,.92) 60%, transparent); border-left: 3px solid var(--accent); pointer-events: none; }
@@ -113,7 +113,7 @@
     .page-hero__badge { font-size: .8rem; font-weight: 600; color: var(--accent); background: rgba(62,207,142,.1); border: 1px solid rgba(62,207,142,.25); border-radius: 20px; padding: .35em 1em; }
 
     /* Pricing grid */
-    .pricing-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-top: 3rem; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-top: 1.5rem; }
     .pricing-col { background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2.25rem 2.5rem; }
     @media (max-width: 640px) { .pricing-col { padding: 1.5rem 1.25rem; } }
     .pricing-col h4 { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 1.5rem; }
@@ -130,7 +130,7 @@
     .pricing-philosophy__promise svg { flex-shrink: 0; color: var(--accent); }
 
     /* Filosofi + beregner side-by-side */
-    .pricing-hero-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 3rem; align-items: stretch; padding: var(--section-py) 0 2rem; }
+    .pricing-hero-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 2rem; align-items: stretch; padding: 3rem 0 2rem; }
     .pricing-hero-left { padding-top: 1rem; display: flex; flex-direction: column; }
     .pricing-hero-right { display: flex; flex-direction: column; background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem 2.5rem; }
     @media (max-width: 900px) { .pricing-hero-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 3rem 0; } }
@@ -186,7 +186,7 @@
       .calc-res { border-right: none; border-bottom: 1px solid rgba(62,207,142,.15); }
       .calc-res:last-child { border-bottom: none; }
       .calc-field__input { width: 90px; font-size: 1rem; }
-      .page-hero { padding: 80px 0 40px; }
+      .page-hero { padding: 3rem 0 2rem; }
     }
     @media (max-width: 720px) {
       .pricing-grid { grid-template-columns: 1fr; }
@@ -390,14 +390,7 @@
           </div>
         </div>
 
-        <!-- Robot-boks -->
-        <div style="margin-top:auto;padding-top:.75rem;background:rgba(62,207,142,.06);border:1px solid rgba(62,207,142,.2);border-radius:12px;padding:1rem 1.25rem">
-          <p style="font-size:.82rem;font-weight:800;color:var(--text-1);margin-bottom:.4rem">T&aelig;nker du p&aring; robotter?</p>
-          <p style="font-size:.78rem;color:var(--text-3);line-height:1.7">Hos SmartPack er der ikke et m&aring;nedligt fee p&aring;, at jeres lagerrobot snakker med vores system. Vi ser robotten som en ligesindet medarbejder n&aring;r den er i drift, ligesom det &oslash;vrige personale.</p>
-        </div>
-        <div style="margin-top:1.25rem;padding:.8rem 1rem;border-left:3px solid var(--accent);background:rgba(62,207,142,.05);border-radius:0 8px 8px 0">
-          <p style="font-size:.82rem;color:var(--text-2);line-height:1.65;margin:0">Prisen er kun halvdelen. <a href="roi.html" style="color:var(--accent);font-weight:700">Se hvad SmartPack tjener hjem for dig &rarr;</a></p>
-        </div>
+
       </div>
 
       <!-- Højre: beregner -->
@@ -456,8 +449,7 @@
       </p>
       <a href="#cta" class="calc-cta">F&aring; et pr&aelig;cist tilbud &rarr;</a>
       <div style="margin-top:.75rem;font-size:.82rem;color:var(--text-2);text-align:center">
-        Vil du vide hvad det giver din bundlinje?
-        <a href="roi.html" style="color:var(--accent);font-weight:700">Regn din gevinst ud &rarr;</a>
+        <a href="roi.html" style="color:var(--accent);font-weight:700">Prisen er kun halvdelen. Se hvad SmartPack tjener hjem for dig &rarr;</a>
       </div>
 
     </div><!-- /pricing-calc -->
@@ -502,7 +494,14 @@
 
     </div><!-- /pricing-hero-grid -->
 
-
+    <!-- Robot-boks: bred info-stribe under begge kolonner -->
+    <div style="width:100%;max-width:100%;background:var(--surface);border:1px solid rgba(62,207,142,.2);border-radius:12px;padding:1.5rem 2rem;margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+      <div>
+        <p style="font-size:.85rem;font-weight:800;color:var(--text-1);margin:0 0 .25rem">T&aelig;nker du p&aring; robotter?</p>
+        <p style="font-size:.8rem;color:var(--text-3);line-height:1.6;margin:0">Hos SmartPack er der ikke et m&aring;nedligt fee p&aring;, at jeres lagerrobot snakker med vores system. Vi ser robotten som en ligesindet medarbejder n&aring;r den er i drift, ligesom det &oslash;vrige personale.</p>
+      </div>
+      <a href="roi.html" style="color:var(--accent);font-weight:700;font-size:.85rem;white-space:nowrap;flex-shrink:0">Prisen er kun halvdelen. Se hvad SmartPack tjener hjem for dig &rarr;</a>
+    </div>
 
   </div>
 </section>
@@ -652,7 +651,7 @@
   </div>
 </section>
 <style>
-.smartboost-section{padding:5rem 0;background:var(--bg-1);border-top:1px solid var(--border)}
+.smartboost-section{padding:4rem 0;background:var(--bg-1);border-top:1px solid var(--border)}
 .smartboost__inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 .smartboost__title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;line-height:1.15;margin:1rem 0 1.25rem}
 .smartboost__desc{color:var(--text-2);line-height:1.75;margin-bottom:1rem}
