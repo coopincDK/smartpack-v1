@@ -105,7 +105,7 @@
         // 🔴 Rød: hele weekenden
         color = CLR_R;
         label = 'Weekendlukket';
-        msg   = 'KUN driftstop: ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9. &Aring;bner mandag kl.&nbsp;8.';
+        msg   = 'KUN driftstop: ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9. &Aring;bner igen mandag.';
       } else {
         // Hverdag (man-fre)
         if (h >= 9 && h < 16) {

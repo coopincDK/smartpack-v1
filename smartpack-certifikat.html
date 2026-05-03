@@ -397,6 +397,13 @@
 
     .cert-back:hover { color: var(--text-1); }
 
+    .cert-stat-sub {
+      font-size: .72rem;
+      color: var(--text-3);
+      margin-top: .15rem;
+      font-style: italic;
+    }
+
     .cert-closing {
       font-size: .78rem;
       color: var(--text-3);
@@ -447,36 +454,54 @@
       margin: 0;
     }
 
+    @page { size: A4 portrait; margin: 8mm; }
+
     @media print {
       html, body {
         background: white !important;
         margin: 0;
         padding: 0;
+        height: 297mm;
+        overflow: hidden;
       }
       .cert-toolbar, .site-header, .site-footer,
       #site-header, #site-footer, .no-print { display: none !important; }
 
-      /* Skalér hele kortet til at passe A4 */
       .cert-wrap {
         max-width: 100%;
-        margin: 0;
+        margin: 0 auto;
         padding: 0;
-        width: 210mm;
+        width: 100%;
+        display: flex;
+        justify-content: center;
       }
 
       .cert-card {
         border-radius: 0;
         box-shadow: none;
-        width: 210mm;
+        width: 194mm;
+        margin: 0 auto;
         page-break-after: avoid;
         page-break-inside: avoid;
-        /* Brug zoom til proportional skalering */
         zoom: 0.88;
       }
 
       .cert-edit-hint { display: none !important; }
       .cert-firm-input { border-bottom-style: solid !important; }
       .cert-sig-img { mix-blend-mode: normal !important; filter: none !important; }
+
+      /* Tving baggrunde igennem */
+      .cert-topbar {
+        background: #1a1f25 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .cert-bottombar {
+        background: #f5f5f5 !important;
+        border-top: 1px solid #e0e0e0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -552,10 +577,7 @@
         <div class="cert-stat cert-stat--wide">
           <span class="cert-stat-value" id="stat-pct">Top 5%</span>
           <span class="cert-stat-label">Effektivitet i branchen</span>
-        </div>
-        <div class="cert-stat cert-stat--wide" id="stat-branche-wrap" style="display:none">
-          <span class="cert-stat-value" id="stat-branche" style="font-size:.95rem">-</span>
-          <span class="cert-stat-label">Branche</span>
+          <span class="cert-stat-sub" id="stat-branche" style="display:none"></span>
         </div>
       </div>
 
@@ -635,12 +657,10 @@
     } else {
       pptEl.textContent = '-';
     }
-    // Branche
+    // Branche under Top 5%
     if (raw.branche && raw.branche !== 'Andet') {
       var bEl = document.getElementById('stat-branche');
-      var bWrap = document.getElementById('stat-branche-wrap');
-      if (bEl) bEl.textContent = raw.branche;
-      if (bWrap) bWrap.style.display = '';
+      if (bEl) { bEl.textContent = raw.branche; bEl.style.display = ''; }
     }
 
     // Effektivitet vs. branche
