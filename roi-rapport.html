@@ -659,12 +659,7 @@
 
   // Vis diplom hvis top performer
   if (raw.topPerformer) {
-    var dip = document.getElementById('diplom-banner');
-    if (dip) dip.style.display = 'block';
-    el('page-cover').style.display = 'none';
-    el('page-overview').style.display = 'none';
-    el('page-details').style.display = 'none';
-    document.querySelector('.print-btn').style.display = 'none';
+    window.location.replace('smartpack-certifikat.html');
     return;
   }
 
