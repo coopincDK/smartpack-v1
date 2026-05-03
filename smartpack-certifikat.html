@@ -419,7 +419,7 @@
     /* ── PRINT ── */
     @media print {
       html, body { background: white !important; }
-      .cert-toolbar, .site-header, .site-footer, #site-header, #site-footer { display: none !important; }
+      .cert-toolbar, .site-header, .site-footer, #site-header, #site-footer, .no-print { display: none !important; }
       .cert-wrap { max-width: 100%; margin: 0; padding: 0; }
       .cert-card {
         border-radius: 0;
@@ -529,7 +529,7 @@
       </div>
 
       <!-- CTA -->
-      <div class="cert-cta-wrap">
+      <div class="cert-cta-wrap no-print">
         <a class="cert-cta" href="mailto:bundlinjeboost@smartpack.dk">Book en snak &rarr;</a>
         <a class="cert-back" href="roi.html">&larr; Tilbage til beregneren</a>
       </div>
@@ -541,7 +541,7 @@
 
     <!-- Bund -->
     <div class="cert-bottombar">
-      <div class="cert-bottombar-text">SmartPack &middot; smartpack.dk</div>
+      <div class="cert-bottombar-text">Brug for et l&oslash;ft p&aring; bundlinjen? Det starter typisk p&aring; lageret. &mdash; <strong>www.smartpack.dk</strong></div>
       <div class="cert-bottombar-date" id="cert-dato"></div>
     </div>
 
