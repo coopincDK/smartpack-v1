@@ -4,511 +4,436 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SmartPack Certifikat</title>
+  <link rel="icon" type="image/png" href="favicon-smartpack0.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/theme-toggle.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --dark:   #0f0f0f;
-      --white:  #ffffff;
-      --orange: #f4500a;
-      --gold:   #c9a84c;
-      --gold-light: #f5e9c8;
-      --cream:  #faf8f3;
-      --mid:    #555;
-      --muted:  #999;
-      --border: #e4e0d8;
-      --green:  #3ecf8e;
-      --mono:   'JetBrains Mono', monospace;
-      --sans:   'Inter', sans-serif;
-      --display: 'Syne', sans-serif;
+    /* ── Skærm-layout ── */
+    .cert-page {
+      max-width: 680px;
+      margin: 3rem auto 5rem;
+      padding: 0 1.5rem;
     }
 
-    body {
-      font-family: var(--sans);
-      background: #ddd9d0;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-      padding: 2rem 0 4rem;
-    }
-
-    @media print {
-      body { background: white; padding: 0; }
-      .no-print { display: none !important; }
-      .page { box-shadow: none; margin: 0; }
-      .recipient-name-input { border: none !important; background: transparent !important; }
-    }
-
-    /* ── Toolbar (no-print) ── */
-    .toolbar {
+    .cert-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 210mm;
-      margin: 0 auto 1.5rem;
-      padding: 0 4px;
+      margin-bottom: 2rem;
     }
 
-    .toolbar a {
-      font-family: var(--sans);
-      font-size: 13px;
-      color: #555;
+    .cert-toolbar a {
+      font-size: .875rem;
+      color: var(--text-3);
       text-decoration: none;
     }
 
-    .toolbar a:hover { color: #000; }
+    .cert-toolbar a:hover { color: var(--text-1); }
 
-    .print-btn {
-      background: var(--dark);
-      color: var(--white);
+    .cert-print-btn {
+      background: var(--accent);
+      color: #fff;
       border: none;
-      padding: 10px 22px;
-      font-family: var(--sans);
-      font-size: 13px;
+      padding: .6rem 1.4rem;
+      font-size: .875rem;
       font-weight: 600;
+      border-radius: 8px;
       cursor: pointer;
-      letter-spacing: 0.5px;
-      border-radius: 6px;
-      transition: background 0.15s;
+      letter-spacing: .02em;
+      transition: background .15s;
     }
 
-    .print-btn:hover { background: var(--orange); }
+    .cert-print-btn:hover { background: var(--accent-dark); }
 
-    /* ── A4 page ── */
-    .page {
-      width: 210mm;
-      height: 297mm;
-      margin: 0 auto;
-      background: var(--cream);
-      position: relative;
+    /* ── Certifikat-kort ── */
+    .cert-card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 60px rgba(0,0,0,0.18);
-      display: flex;
-      flex-direction: column;
+      box-shadow: 0 4px 40px rgba(0,0,0,.08);
     }
 
-    /* ── Dekorativ border-ramme ── */
-    .frame-outer {
-      position: absolute;
-      inset: 8mm;
-      border: 1.5px solid var(--gold);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .frame-inner {
-      position: absolute;
-      inset: 10.5mm;
-      border: 0.5px solid rgba(201,168,76,0.4);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    /* Hjørne-ornamenter */
-    .corner {
-      position: absolute;
-      width: 14mm;
-      height: 14mm;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .corner svg { width: 100%; height: 100%; }
-    .corner-tl { top: 5mm; left: 5mm; }
-    .corner-tr { top: 5mm; right: 5mm; transform: scaleX(-1); }
-    .corner-bl { bottom: 5mm; left: 5mm; transform: scaleY(-1); }
-    .corner-br { bottom: 5mm; right: 5mm; transform: scale(-1,-1); }
-
-    /* ── Top-stribe ── */
-    .top-bar {
-      background: var(--dark);
-      height: 18mm;
+    /* Top-bar */
+    .cert-topbar {
+      background: var(--text-1);
+      padding: 1.25rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20mm;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
     }
 
-    .top-bar-logo {
-      font-family: var(--display);
-      font-size: 18px;
+    .cert-topbar-logo {
+      font-size: 1.1rem;
       font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.5px;
+      color: #fff;
+      letter-spacing: -.02em;
     }
 
-    .top-bar-logo span { color: var(--orange); }
+    .cert-topbar-logo span { color: var(--accent); }
 
-    .top-bar-label {
-      font-family: var(--sans);
-      font-size: 9px;
+    .cert-topbar-tag {
+      font-size: .7rem;
       font-weight: 600;
-      letter-spacing: 3px;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,.35);
     }
 
-    /* ── Hoved-indhold ── */
-    .body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 0 22mm;
-      position: relative;
-      z-index: 1;
+    /* Hoved */
+    .cert-body {
+      padding: 3rem 2.5rem;
       text-align: center;
     }
 
-    /* Trofæ-ikon */
-    .trophy-wrap {
-      width: 22mm;
-      height: 22mm;
-      background: var(--gold-light);
-      border: 1.5px solid var(--gold);
+    .cert-trophy {
+      width: 72px;
+      height: 72px;
+      background: var(--accent-glow);
+      border: 2px solid var(--accent);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 7mm;
-      position: relative;
+      font-size: 2rem;
+      margin: 0 auto 1.5rem;
     }
-
-    .trophy-wrap::before {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 0.5px solid rgba(201,168,76,0.3);
-    }
-
-    .trophy-icon { font-size: 32px; line-height: 1; }
 
     .cert-eyebrow {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 4px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 3mm;
+      color: var(--accent);
+      margin-bottom: .5rem;
     }
 
     .cert-title {
-      font-family: var(--display);
-      font-size: 36px;
+      font-size: 2rem;
       font-weight: 800;
-      color: var(--dark);
-      letter-spacing: -1px;
-      line-height: 1.05;
-      margin-bottom: 2mm;
+      color: var(--text-1);
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
     }
 
-    .title-rule {
+    .cert-divider {
       display: flex;
       align-items: center;
-      gap: 4mm;
-      margin: 5mm auto 7mm;
-      width: 80%;
+      gap: 1rem;
+      margin: 0 auto 1.5rem;
+      max-width: 320px;
     }
 
-    .title-rule-line {
+    .cert-divider-line {
       flex: 1;
       height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      background: var(--border);
     }
 
-    .title-rule-diamond {
-      width: 5px;
-      height: 5px;
-      background: var(--gold);
-      transform: rotate(45deg);
+    .cert-divider-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
       flex-shrink: 0;
     }
 
-    .recipient-label {
-      font-size: 9px;
+    /* Firmanavn */
+    .cert-recipient-label {
+      font-size: .7rem;
       font-weight: 600;
-      letter-spacing: 3px;
+      letter-spacing: .12em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2mm;
+      color: var(--text-3);
+      margin-bottom: .5rem;
     }
 
-    /* Redigerbart firmanavn */
-    .recipient-name-input {
-      font-family: var(--display);
-      font-size: 26px;
+    .cert-firm-input {
+      font-size: 1.5rem;
       font-weight: 800;
-      color: var(--dark);
-      letter-spacing: -0.5px;
-      margin-bottom: 8mm;
-      padding-bottom: 6mm;
-      border: none;
-      border-bottom: 2px dashed rgba(201,168,76,0.5);
-      background: transparent;
+      color: var(--text-1);
+      letter-spacing: -.03em;
       text-align: center;
       width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px dashed var(--border-2);
+      padding-bottom: .5rem;
+      margin-bottom: .35rem;
       outline: none;
-      cursor: text;
+      font-family: inherit;
+      transition: border-color .2s;
     }
 
-    .recipient-name-input:focus {
-      border-bottom-color: var(--gold);
+    .cert-firm-input:focus {
+      border-bottom-color: var(--accent);
       border-bottom-style: solid;
     }
 
-    .recipient-name-input::placeholder {
-      color: rgba(201,168,76,0.5);
+    .cert-firm-input::placeholder {
+      color: var(--text-3);
+      font-weight: 500;
       font-style: italic;
     }
 
-    .edit-hint {
-      font-size: 9px;
-      color: var(--gold);
-      letter-spacing: 1px;
-      margin-top: -6mm;
-      margin-bottom: 6mm;
-      opacity: 0.7;
+    .cert-edit-hint {
+      font-size: .72rem;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      opacity: .7;
     }
 
-    .cert-body {
-      font-size: 11.5px;
+    /* Tekst */
+    .cert-text {
+      font-size: .95rem;
       line-height: 1.75;
-      color: var(--mid);
-      max-width: 130mm;
-      margin-bottom: 8mm;
+      color: var(--text-2);
+      max-width: 480px;
+      margin: 0 auto 2rem;
       font-style: italic;
     }
 
-    .cert-body strong {
+    .cert-text strong {
       font-style: normal;
-      font-weight: 600;
-      color: var(--dark);
+      font-weight: 700;
+      color: var(--text-1);
     }
 
-    .cert-separator {
-      width: 20mm;
-      height: 1px;
-      background: var(--gold);
-      margin: 0 auto 8mm;
-    }
-
-    /* Nøgletal-chips */
+    /* Nøgletal */
     .cert-stats {
       display: flex;
-      gap: 5mm;
+      gap: 1rem;
       justify-content: center;
-      margin-bottom: 8mm;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
     }
 
     .cert-stat {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1mm;
-      padding: 3mm 6mm;
-      background: var(--white);
+      background: var(--bg-2);
       border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .75rem 1.25rem;
+      min-width: 110px;
     }
 
     .cert-stat-value {
-      font-family: var(--mono);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark);
-      letter-spacing: -0.3px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -.02em;
+      display: block;
     }
 
     .cert-stat-label {
-      font-size: 8px;
+      font-size: .68rem;
       font-weight: 600;
-      letter-spacing: 1.5px;
+      letter-spacing: .08em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--text-3);
+      display: block;
+      margin-top: .15rem;
+    }
+
+    /* CTA */
+    .cert-cta-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
     }
 
     .cert-cta {
       display: inline-block;
-      background: var(--dark);
-      color: var(--white);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      padding: 4mm 10mm;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: .8rem 2rem;
+      border-radius: 8px;
       text-decoration: none;
-      margin-bottom: 4mm;
+      letter-spacing: .01em;
+      transition: background .15s;
     }
+
+    .cert-cta:hover { background: var(--accent-dark); }
 
     .cert-back {
-      font-size: 10px;
-      color: var(--muted);
+      font-size: .82rem;
+      color: var(--text-3);
       text-decoration: none;
-      display: block;
     }
 
-    /* ── Bund-stribe ── */
-    .bottom-bar {
-      background: var(--gold);
-      height: 10mm;
+    .cert-back:hover { color: var(--text-1); }
+
+    /* Bund-bar */
+    .cert-bottombar {
+      background: var(--bg-2);
+      border-top: 1px solid var(--border);
+      padding: 1rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20mm;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
     }
 
-    .bottom-bar-text {
-      font-size: 8px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.85);
-    }
-
-    .bottom-bar-date {
-      font-family: var(--mono);
-      font-size: 9px;
+    .cert-bottombar-text {
+      font-size: .75rem;
+      color: var(--text-3);
       font-weight: 500;
-      color: rgba(255,255,255,0.7);
+    }
+
+    .cert-bottombar-date {
+      font-size: .75rem;
+      color: var(--text-3);
+      font-weight: 500;
+    }
+
+    /* ── PRINT A4 ── */
+    @media print {
+      html, body { background: white !important; }
+      .cert-toolbar, .site-header, .site-footer { display: none !important; }
+      .cert-page { max-width: 100%; margin: 0; padding: 0; }
+      .cert-card {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        width: 210mm;
+        min-height: 297mm;
+      }
+      .cert-body { padding: 4rem 3rem; }
+      .cert-firm-input {
+        border-bottom-style: solid !important;
+        border-bottom-color: var(--border) !important;
+      }
+      .cert-edit-hint { display: none; }
+      .cert-print-btn { display: none; }
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
   </style>
 </head>
 <body>
 
-<!-- Toolbar -->
-<div class="toolbar no-print">
-  <a href="roi.html">&larr; Tilbage til beregneren</a>
-  <button class="print-btn" onclick="window.print()">&#8595; Gem som PDF</button>
+<div id="site-header"></div>
+<script src="js/header.js" defer></script>
+<script src="js/footer.js" defer></script>
+
+<div class="cert-page">
+
+  <!-- Toolbar -->
+  <div class="cert-toolbar">
+    <a href="roi.html">&larr; Tilbage til beregneren</a>
+    <button class="cert-print-btn" onclick="window.print()">&#8595;&nbsp; Gem som PDF</button>
+  </div>
+
+  <!-- Kort -->
+  <div class="cert-card">
+
+    <!-- Top -->
+    <div class="cert-topbar">
+      <div class="cert-topbar-logo">Smart<span>Pack</span></div>
+      <div class="cert-topbar-tag">Lager &amp; Pakke Optimering</div>
+    </div>
+
+    <!-- Body -->
+    <div class="cert-body">
+
+      <div class="cert-trophy">&#127942;</div>
+
+      <div class="cert-eyebrow">Certifikat</div>
+      <h1 class="cert-title">SmartPack Certifikat</h1>
+
+      <div class="cert-divider">
+        <div class="cert-divider-line"></div>
+        <div class="cert-divider-dot"></div>
+        <div class="cert-divider-line"></div>
+      </div>
+
+      <div class="cert-recipient-label">Tildelt til</div>
+      <input
+        class="cert-firm-input"
+        id="firma-navn"
+        type="text"
+        placeholder="Skriv firmanavn her..."
+        maxlength="60"
+        spellcheck="false"
+        autocomplete="off"
+      />
+      <div class="cert-edit-hint">&#9998; Klik for at redigere inden print</div>
+
+      <p class="cert-text">
+        Tillykke. I er allerede super optimeret.<br/><br/>
+        Vores beregning viser, at jeres lager allerede ligger i den liga, hvor vi normalt henter vores inspiration.
+        <strong>I er ikke en typisk SmartPack-kunde. I er dem, vi sammenligner andre med.</strong><br/><br/>
+        Har I lyst til at se, om vi kan presse det en tak mere, tager vi gerne en konkret snak om jeres flow.
+        Ingen salgspitch. Bare to folk der kigger p&aring; tallene.
+      </p>
+
+      <!-- Nøgletal fra beregningen -->
+      <div class="cert-stats">
+        <div class="cert-stat">
+          <span class="cert-stat-value" id="stat-pakker">-</span>
+          <span class="cert-stat-label">Pakker/time nu</span>
+        </div>
+        <div class="cert-stat">
+          <span class="cert-stat-value" id="stat-fejl">-</span>
+          <span class="cert-stat-label">Fejlrate</span>
+        </div>
+        <div class="cert-stat">
+          <span class="cert-stat-value" id="stat-pct">Top 5%</span>
+          <span class="cert-stat-label">Effektivitet</span>
+        </div>
+      </div>
+
+      <div class="cert-cta-wrap">
+        <a class="cert-cta" href="mailto:bundlinjeboost@smartpack.dk">Book en snak &rarr;</a>
+        <a class="cert-back" href="roi.html">&larr; Tilbage til beregneren</a>
+      </div>
+
+    </div>
+
+    <!-- Bund -->
+    <div class="cert-bottombar">
+      <div class="cert-bottombar-text">SmartPack &middot; smartpack.dk</div>
+      <div class="cert-bottombar-date" id="cert-dato"></div>
+    </div>
+
+  </div>
 </div>
 
-<div class="page">
+<div id="site-footer"></div>
 
-  <!-- Ramme -->
-  <div class="frame-outer"></div>
-  <div class="frame-inner"></div>
-
-  <!-- Hjørner -->
-  <div class="corner corner-tl">
-    <svg viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 8 Q2 2 8 2 L38 2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M6 34 L6 10 Q6 6 10 6 L34 6" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.5"/><circle cx="2" cy="2" r="2" fill="#c9a84c"/></svg>
-  </div>
-  <div class="corner corner-tr">
-    <svg viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 8 Q2 2 8 2 L38 2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M6 34 L6 10 Q6 6 10 6 L34 6" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.5"/><circle cx="2" cy="2" r="2" fill="#c9a84c"/></svg>
-  </div>
-  <div class="corner corner-bl">
-    <svg viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 8 Q2 2 8 2 L38 2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M6 34 L6 10 Q6 6 10 6 L34 6" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.5"/><circle cx="2" cy="2" r="2" fill="#c9a84c"/></svg>
-  </div>
-  <div class="corner corner-br">
-    <svg viewBox="0 0 40 40" fill="none"><path d="M2 38 L2 8 Q2 2 8 2 L38 2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M6 34 L6 10 Q6 6 10 6 L34 6" stroke="#c9a84c" stroke-width="0.5" fill="none" opacity="0.5"/><circle cx="2" cy="2" r="2" fill="#c9a84c"/></svg>
-  </div>
-
-  <!-- Top -->
-  <div class="top-bar">
-    <div class="top-bar-logo">Smart<span>Pack</span></div>
-    <div class="top-bar-label">Lager &amp; Pakke Optimering</div>
-  </div>
-
-  <!-- Body -->
-  <div class="body">
-
-    <div class="trophy-wrap">
-      <span class="trophy-icon">&#127942;</span>
-    </div>
-
-    <div class="cert-eyebrow">Certifikat</div>
-    <h1 class="cert-title">SmartPack<br/>Certifikat</h1>
-
-    <div class="title-rule">
-      <div class="title-rule-line"></div>
-      <div class="title-rule-diamond"></div>
-      <div class="title-rule-line"></div>
-    </div>
-
-    <div class="recipient-label">Tildelt til</div>
-    <input
-      class="recipient-name-input"
-      id="firma-navn"
-      type="text"
-      placeholder="Skriv firmanavn her..."
-      maxlength="60"
-      spellcheck="false"
-      autocomplete="off"
-    />
-    <div class="edit-hint no-print">&#9998; Klik for at redigere firmanavn inden print</div>
-
-    <p class="cert-body">
-      Tillykke. I er allerede super optimeret.<br/><br/>
-      Vores beregning viser, at jeres lager allerede ligger i den liga, hvor vi normalt henter vores inspiration.
-      <strong>I er ikke en typisk SmartPack-kunde. I er dem, vi sammenligner andre med.</strong><br/><br/>
-      Har I lyst til at se, om vi kan presse det en tak mere, tager vi gerne en konkret snak om jeres flow.
-      Ingen salgspitch. Bare to folk der kigger p&aring; tallene.
-    </p>
-
-    <div class="cert-separator"></div>
-
-    <div class="cert-stats">
-      <div class="cert-stat">
-        <span class="cert-stat-value" id="stat-pakker">-</span>
-        <span class="cert-stat-label">Pakker/time</span>
-      </div>
-      <div class="cert-stat">
-        <span class="cert-stat-value" id="stat-fejl">-</span>
-        <span class="cert-stat-label">Fejlrate</span>
-      </div>
-      <div class="cert-stat">
-        <span class="cert-stat-value" id="stat-pct">Top 5%</span>
-        <span class="cert-stat-label">Effektivitet</span>
-      </div>
-    </div>
-
-    <a class="cert-cta" href="mailto:bundlinjeboost@smartpack.dk">Book en snak &rarr;</a>
-    <a class="cert-back" href="roi.html">&larr; Tilbage til beregneren</a>
-
-  </div>
-
-  <!-- Bund -->
-  <div class="bottom-bar">
-    <div class="bottom-bar-text">SmartPack &middot; smartpack.dk</div>
-    <div class="bottom-bar-date" id="cert-dato"></div>
-  </div>
-
-</div>
+<script src="js/main.js" defer></script>
 
 <script>
   // Dato
-  var maaneder = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+  var md = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
   var d = new Date();
-  document.getElementById('cert-dato').textContent = maaneder[d.getMonth()] + ' ' + d.getFullYear();
+  document.getElementById('cert-dato').textContent = md[d.getMonth()] + ' ' + d.getFullYear();
 
-  // Hent data fra localStorage
+  // Data fra localStorage
   var raw;
   try { raw = JSON.parse(localStorage.getItem('smartpack_roi')); } catch(e) {}
 
   if (raw) {
-    // Pakker/time nu
     var ppt = raw.pakkerPrTimeNu || 0;
-    document.getElementById('stat-pakker').textContent = ppt > 0 ? ppt.toFixed(1).replace('.',',') + ' pkk/t' : '-';
+    document.getElementById('stat-pakker').textContent = ppt > 0
+      ? ppt.toFixed(1).replace('.',',') + ' pkk/t' : '-';
 
-    // Fejlrate
     var fejl = raw.fejl || 0;
-    document.getElementById('stat-fejl').textContent = fejl > 0 ? fejl.toFixed(1).replace('.',',') + '%' : '-';
+    document.getElementById('stat-fejl').textContent = fejl > 0
+      ? fejl.toFixed(1).replace('.',',') + '%' : '-';
 
-    // Effektivitet: sammenlign pakkerPrTimeNu med branche max
     if (raw.brancheMax && raw.brancheMax > 0 && ppt > 0) {
       var pct = Math.round((ppt / raw.brancheMax) * 100);
-      var label = pct >= 95 ? 'Top 5%' : pct >= 80 ? 'Top 20%' : 'Over median';
-      document.getElementById('stat-pct').textContent = label;
+      document.getElementById('stat-pct').textContent =
+        pct >= 95 ? 'Top 5%' : pct >= 80 ? 'Top 20%' : 'Over median';
     }
   }
 
-  // Gem firmanavn ved blur (til genbesog)
+  // Gem firmanavn
   var navnEl = document.getElementById('firma-navn');
   try {
     var gemt = localStorage.getItem('sp_cert_firma');
@@ -519,9 +444,8 @@
     try { localStorage.setItem('sp_cert_firma', navnEl.value); } catch(e) {}
   });
 
-  // Skjul edit-hint ved print
   navnEl.addEventListener('focus', function() {
-    var hint = document.querySelector('.edit-hint');
+    var hint = document.querySelector('.cert-edit-hint');
     if (hint) hint.style.display = 'none';
   });
 </script>
