@@ -37,7 +37,8 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
-      - name: Deploy via rsync
+      - name: Deploy static site via rsync
+        id: rsync
         run: |
           rsync -azv --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
@@ -45,6 +46,7 @@ jobs:
             --exclude='.github/' \
             --exclude='.claude/' \
             --exclude='.gitignore' \
+            --exclude='infra/' \
             --exclude='_inject_tracking.py' \
             --exclude='_TRACKING_TEMPLATE.html' \
             --exclude='encoding-report.txt' \
@@ -55,7 +57,30 @@ jobs:
             --exclude='desktop.ini' \
             --exclude='.DS_Store' \
             --exclude='node_modules/' \
-            ./ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH"
+            ./ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH" \
+            | tee /tmp/rsync.log
+          # Count actual changed/new files (rsync prints a path per change)
+          changes=$(grep -cE '^[^ /].*[^/]$' /tmp/rsync.log || true)
+          echo "files_changed=$changes" >> "$GITHUB_OUTPUT"
+
+      - name: Sync nginx.conf and reload (if changed)
+        run: |
+          remote=/var/www/smartpack.dk/nginx.conf
+          local_hash=$(sha256sum infra/nginx.conf | awk '{print $1}')
+          remote_hash=$(ssh -i ~/.ssh/deploy_key "$DEPLOY_USER@$DEPLOY_HOST" \
+            "sha256sum $remote 2>/dev/null | awk '{print \$1}'" || echo "")
+
+          if [ "$local_hash" = "$remote_hash" ]; then
+            echo "nginx.conf unchanged — skipping reload"
+            exit 0
+          fi
+
+          echo "nginx.conf changed (local=$local_hash remote=$remote_hash) — syncing"
+          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes \
+            infra/nginx.conf "$DEPLOY_USER@$DEPLOY_HOST:$remote"
+
+          ssh -i ~/.ssh/deploy_key "$DEPLOY_USER@$DEPLOY_HOST" \
+            "docker exec smartpack.dk nginx -t && docker exec smartpack.dk nginx -s reload"
 
       - name: Smoke test
         run: |
