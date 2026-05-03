@@ -7,6 +7,8 @@
 <meta name="description" content="Beregn hvad SmartPack WMS tjener hjem for dig. Se besparelse på løn og fejl, kapacitetsloft og tilbagebetalingstid. Gratis beregner.">
   <link rel="canonical" href="https://smartpack.dk/roi.html">
 <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
+<link rel="preconnect" href="https://www.youtube-nocookie.com">
+<link rel="dns-prefetch" href="//i.ytimg.com">
 <link rel="stylesheet" href="css/style.css?v=3">
 <script src="js/theme-toggle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
@@ -22,7 +24,11 @@
 .roi-hero__eye { font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:.65rem }
 .roi-hero__h1 { font-size:clamp(1.9rem,4vw,3rem);font-weight:900;line-height:1.08;margin-bottom:.9rem }
 .roi-hero__h1 em { font-style:normal;color:var(--accent) }
-.roi-hero__sub { font-size:1rem;color:var(--text-2);max-width:520px;line-height:1.7 }
+.roi-hero__sub { font-size:1rem;color:var(--text-2);line-height:1.7 }
+.roi-hero__grid { display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center }
+.roi-hero-video-wrap { position:relative;width:100%;padding-bottom:56.25%;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.35);border:1px solid var(--border) }
+.roi-hero-video-wrap iframe { position:absolute;inset:0;width:100%;height:100%;border:0 }
+@media(max-width:860px){.roi-hero__grid{grid-template-columns:1fr}.roi-hero-video-wrap{margin-top:1rem}}
 
 /* Main grid */
 .roi-wrap { display:grid;grid-template-columns:380px 1fr;gap:2rem;align-items:start;padding:2rem 0 6rem }
@@ -362,10 +368,24 @@
 <!-- HERO -->
 <section class="roi-hero">
   <div class="container">
-    <div class="roi-hero__eye">ROI Beregner &middot; Lageroptimering &middot; WMS business case</div>
-    <h1 class="roi-hero__h1">Hvad koster jeres lager<br><em>egentlig?</em></h1>
-    <p class="roi-hero__sub">De fleste lagre har 20–40% mere bemanding end nødvendigt.<br>Ikke fordi de gør noget forkert.<br>Men fordi systemerne ikke hjælper nok.<br><br>👉 Se hvad det betyder for dig</p>
-    <div style="margin-top:1.5rem;font-size:.95rem;font-weight:800;color:var(--accent);letter-spacing:.03em">&#128071; Prøv selv - det tager 10 sekunder</div>
+    <div class="roi-hero__grid">
+      <div>
+        <div class="roi-hero__eye">ROI Beregner &middot; Lageroptimering &middot; WMS business case</div>
+        <h1 class="roi-hero__h1">Hvad koster jeres lager<br><em>egentlig?</em></h1>
+        <p class="roi-hero__sub">De fleste lagre har 20–40% mere bemanding end nødvendigt.<br>Ikke fordi de gør noget forkert.<br>Men fordi systemerne ikke hjælper nok.<br><br>👉 Se hvad det betyder for dig</p>
+        <div style="margin-top:1.5rem;font-size:.95rem;font-weight:800;color:var(--accent);letter-spacing:.03em">&#128071; Prøv selv - det tager 10 sekunder</div>
+      </div>
+      <div class="roi-hero-video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/5Dpsry-Eerk?rel=0&modestbranding=1&color=white"
+          title="SmartPack ROI – hvad koster jeres lager egentlig?"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
   </div>
 </section>
 
