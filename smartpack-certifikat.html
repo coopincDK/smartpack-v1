@@ -271,6 +271,19 @@
       min-width: 120px;
     }
 
+    .cert-stat--wide {
+      min-width: 180px;
+      padding: .9rem 1.75rem;
+    }
+
+    .cert-stat-sub {
+      font-size: .68rem;
+      color: var(--text-3);
+      display: block;
+      margin-top: .15rem;
+      font-style: italic;
+    }
+
     .cert-stat-value {
       font-family: 'Inter', sans-serif;
       font-size: 1.15rem;
@@ -496,17 +509,14 @@
 
       <!-- Nøgletal -->
       <div class="cert-stats">
-        <div class="cert-stat">
+        <div class="cert-stat cert-stat--wide">
           <span class="cert-stat-value" id="stat-pakker">-</span>
-          <span class="cert-stat-label">Pakker/m&aring;ned</span>
+          <span class="cert-stat-label">Pakker pr. time</span>
+          <span class="cert-stat-sub" id="stat-pakker-sub"></span>
         </div>
-        <div class="cert-stat" id="stat-fejl-wrap">
-          <span class="cert-stat-value" id="stat-fejl">-</span>
-          <span class="cert-stat-label" id="stat-fejl-label">Fejlrate</span>
-        </div>
-        <div class="cert-stat">
+        <div class="cert-stat cert-stat--wide">
           <span class="cert-stat-value" id="stat-pct">Top 5%</span>
-          <span class="cert-stat-label">Effektivitet</span>
+          <span class="cert-stat-label">Effektivitet i branchen</span>
         </div>
       </div>
 
@@ -524,7 +534,7 @@
           <div class="cert-sig-line"></div>
           <div class="cert-sig-name">Nicolai Mortensen</div>
           <div class="cert-sig-place" id="sig-place-2">Grenaa, 03-05-2026</div>
-          <div class="cert-sig-title">COO, SmartPack</div>
+          <div class="cert-sig-title">CIO, SmartPack</div>
         </div>
       </div>
 
@@ -570,34 +580,27 @@
   try { raw = JSON.parse(localStorage.getItem('smartpack_roi')); } catch(e) {}
 
   if (raw) {
-    var pkMd = raw.pakker || 0;
-    var pkStr = pkMd >= 10000
-      ? Math.round(pkMd/1000) + '.000'
-      : pkMd >= 1000
-        ? (pkMd/1000).toFixed(1).replace('.',',') + '.000'
-        : Math.round(pkMd).toLocaleString('da-DK');
-    document.getElementById('stat-pakker').textContent = pkMd > 0 ? pkStr : '-';
-    var fejl = raw.fejl || 0;
-    var fejlEl = document.getElementById('stat-fejl');
-    var fejlLabel = document.getElementById('stat-fejl-label');
-    // Vis kun fejlrate hvis den er virkelig lav (< 0.5%) - ellers vis pakker/md
-    if (fejl > 0 && fejl < 0.5) {
-      fejlEl.textContent = fejl.toFixed(2).replace('.',',') + '%';
-      fejlLabel.textContent = 'Fejlrate';
-    } else if (raw.pakker && raw.pakker > 0) {
-      var pkStr = raw.pakker >= 1000
-        ? (raw.pakker/1000).toFixed(1).replace('.',',') + 'k'
-        : Math.round(raw.pakker).toLocaleString('da-DK');
-      fejlEl.textContent = pkStr;
-      fejlLabel.textContent = 'Pakker/md';
+    var ppt = raw.pakkerPrTimeNu || 0;
+    var pptEl = document.getElementById('stat-pakker');
+    var pptSub = document.getElementById('stat-pakker-sub');
+    if (ppt > 0) {
+      pptEl.textContent = ppt.toFixed(1).replace('.',',');
+      // Forklarende undertekst med kontekst
+      if (raw.brancheMedian && raw.brancheMedian > 0) {
+        var gange = (ppt / raw.brancheMedian).toFixed(1).replace('.',',');
+        pptSub.textContent = gange + 'x branchens median (' + raw.brancheMedian + ' pkk/t)';
+      }
     } else {
-      document.getElementById('stat-fejl-wrap').style.display = 'none';
+      pptEl.textContent = '-';
     }
-    if (raw.brancheMax && raw.brancheMax > 0 && ppt > 0) {
-      var pct = Math.round((ppt / raw.brancheMax) * 100);
+    // Effektivitet vs. branche
+    var ppt2 = raw.pakkerPrTimeNu || 0;
+    if (raw.brancheMax && raw.brancheMax > 0 && ppt2 > 0) {
+      var pct2 = Math.round((ppt2 / raw.brancheMax) * 100);
       document.getElementById('stat-pct').textContent =
-        pct >= 95 ? 'Top 5%' : pct >= 80 ? 'Top 20%' : 'Over median';
+        pct2 >= 95 ? 'Top 5%' : pct2 >= 80 ? 'Top 20%' : 'Over median';
     }
+
   }
 
   var navnEl = document.getElementById('firma-navn');
