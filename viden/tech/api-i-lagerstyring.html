@@ -45,7 +45,7 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>API i lagerstyring , sådan henter og sender dit WMS data | SmartPack Viden</title>
   <meta name="description" content="Forstå API-integrationer i lagerstyring: REST API, polling-intervaller, access tokens og fejlhåndtering. Undgå pagination-fejl og token-udløb.">
-  <link rel="canonical" href="https://smartpack.dk/viden/tech/api-i-lagerstyring.html">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/api-i-lagerstyring">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -153,7 +153,7 @@ Authorization: Bearer {access_token}</code></pre>
     </ul>
     <p>Overskrides grænsen, returneres HTTP 429 (Too Many Requests). Dit system skal håndtere dette gracefully med retry og backoff.</p>
 
-    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt">Se SmartPacks integrationer</a></p>
 
     <h2>Hvad API bruges til i lagerdrift</h2>
     <p><strong>Ordrehentning:</strong> WMS henter åbne ordrer fra webshop med filter på dato/status. Typisk pull hvert 2-5. minut som supplement til webhooks.</p>
@@ -214,9 +214,9 @@ Authorization: Bearer {access_token}</code></pre>
     <p><strong>Alternativet:</strong> Bygge egen API-integration: 60.000-120.000 kr. udvikling + 15.000 kr./år vedligehold. Ingen pagination: risiko for 516.000 kr. tab ved Black Friday. Hardkodet token: risiko for 40.000 kr. tab ved udløb. Ingen rate limiting-håndtering: 25% ordretab ved spidslast.</p>
     <p><strong>SmartPack-omkostning:</strong> 60.000 kr./år (inkl. alle integrationer + monitoring). <strong>Breakeven:</strong> Hvis SmartPack forhindrer én pagination-fejl (516.000 kr.) = 456.000 kr. sparet, ROI: 760%.</p>
   </div>
-  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
   <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
-  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er forskellen på API og webhook i lagerstyring?</summary><div class="faq-item__body"><p>API er pull: dit system spørger aktivt. Webhook er push: det eksterne system fortæller dig, når noget sker. Begge bruges typisk i kombination.</p></div></details>
     <details class="faq-item"><summary>Hvad sker der, hvis access token udløber midt i arbejdsdagen?</summary><div class="faq-item__body"><p>Alle API-kald fejler med HTTP 401. Ordrer hentes ikke, lager opdateres ikke. Systemet bør automatisk forsøge token-refresh og sende alert, hvis det fejler.</p></div></details>

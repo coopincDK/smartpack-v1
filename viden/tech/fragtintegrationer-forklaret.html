@@ -45,7 +45,7 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fragtintegrationer forklaret , GLS, PostNord, Bring og hvad der skiller dem | SmartPack Viden</title>
   <meta name="description" content="GLS metode-nøgler, PostNord MISKOS-nummer og Bring telefonnummer-format. Den tekniske guide til fragtintegrationer i dit WMS.">
-  <link rel="canonical" href="https://smartpack.dk/viden/tech/fragtintegrationer-forklaret.html">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/fragtintegrationer-forklaret">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -147,7 +147,7 @@ Authorization: Bearer {access_token}
     <p><strong>Telefonnummer-format:</strong> Bring kræver at modtagerens telefonnummer starter med <code>+47</code> efterfulgt af enten 9 cifre (mobilnummer) eller 4 cifre (fastnetnummer). Format: <code>+479XXXXXXXX</code> (mobil).</p>
     <p>Et telefonnummer uden <code>+47</code>-præfiks, med spaces, med bindestreger eller med forkert cifre-antal afvises af Bring API.</p>
 
-    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt">Se SmartPacks integrationer</a></p>
 
     <h2>Hvad koster fragtintegration-fejl?</h2>
     <table>
@@ -198,9 +198,9 @@ Authorization: Bearer {access_token}
     <h2>SmartPack understøttelse</h2>
     <p>SmartPack understøtter GLS, PostNord og Bring med præ-konfigurerede integrationer. GLS metode-nøgler konfigureres i fragtopsætning og matches mod webshop-leveringsmetoder. PostNord MISKOS-nummer konfigureres i fragtprofilen. Bring-telefonnummervalidering er built-in. Fragtlabels genereres og printes automatisk ved pakning. Tracking-numre gemmes på ordreniveau og videresendes til webshop ved fulfillment.</p>
   </div>
-  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
   <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
-  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er MISKOS-nummer og hvem har det?</summary><div class="faq-item__body"><p>Et 9-cifret PostNord-kundenummer, der identificerer din virksomhed i PostNords system. Det udleveres af PostNord ved aftaleoprettelse. Det er obligatorisk i alle API-kald til PostNord.</p></div></details>
     <details class="faq-item"><summary>Hvad er GLS metode-nøgler?</summary><div class="faq-item__body"><p>Interne identifikatorer for GLS-fragtprodukter brugt i API-integration. De tre primære: <code>gls_private_droppoint</code>, <code>gls_business_delivery</code>, <code>gls_flex_delivery</code>. Skal matches præcist mod webshop-leveringsmetoder.</p></div></details>

@@ -45,7 +45,7 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Business Central integration med WMS , hvad du skal kende inden opsætning | SmartPack Viden</title>
   <meta name="description" content="Business Central integration med WMS via OAuth2 og Azure App Registration. Undgå client secret-udløb efter 2 år og integrations-nedbrud.">
-  <link rel="canonical" href="https://smartpack.dk/viden/tech/business-central-integration.html">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/business-central-integration">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -145,7 +145,7 @@
     </table>
     <p><strong>Konklusion:</strong> Et client secret-udløb opdaget efter 2 dage koster 232.000 kr. Opdaget efter en uge: 1,4 mio. kr. Og det sker altid efter præcis 2 år. Microsoft sender ingen advarsel.</p>
 
-    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt">Se SmartPacks integrationer</a></p>
 
     <h2>Opsætning trin for trin</h2>
     <h3>Trin 1: Opret App Registration i Azure</h3>
@@ -212,9 +212,9 @@ Authorization: Bearer {access_token}</code></pre>
     <p><strong>Ja,</strong> hvis du vil undgå client secret-katastrofen. SmartPack har præ-konfigureret Business Central integration via OAuth2. SmartPack advarer i admin-panelet, når client secret nærmer sig udløb (60 dage varsel + 30 dage varsel + 7 dage varsel). Ordrer hentes automatisk fra BC, behandles i WMS-flow, og afsendelsesbekræftelse med tracking sendes tilbage til BC.</p>
     <p><strong>SmartPack-omkostning:</strong> 60.000 kr./år (inkl. BC + alle andre integrationer). <strong>Breakeven:</strong> Hvis SmartPack forhindrer én client secret-episode (232.000 kr. ved 2 dages downtime) = 172.000 kr. sparet i første år.</p>
   </div>
-  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
   <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
-  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er client secret i Business Central integration?</summary><div class="faq-item__body"><p>En hemmelig nøgle tilknyttet din Azure App Registration, brugt til at autentificere API-kald. Har en levetid på maksimalt 2 år. Udløber den, fejler alle BC API-kald.</p></div></details>
     <details class="faq-item"><summary>Hvordan ved jeg, hvornår client secret udløber?</summary><div class="faq-item__body"><p>I Azure Portal, App Registrations, din app, Certificates &amp; secrets. Udløbsdatoen vises. Microsoft sender ingen automatisk advarsel.</p></div></details>

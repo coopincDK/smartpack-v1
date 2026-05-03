@@ -45,7 +45,7 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>e-conomic integration med WMS , ordrer, fakturaer og Grant Token | SmartPack Viden</title>
   <meta name="description" content="e-conomic integration med WMS: ordrehentning hvert 5. minut, fakturakladder ved pakning og Grant Token. Undgå token-invalidering ved medarbejderskift.">
-  <link rel="canonical" href="https://smartpack.dk/viden/tech/economic-integration.html">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/economic-integration">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -144,7 +144,7 @@
       </tbody>
     </table>
 
-    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt.html">Se SmartPacks integrationer</a></p>
+    <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt">Se SmartPacks integrationer</a></p>
 
     <h2>Ordrehentning , hvert 5. minut</h2>
     <p>e-conomic-ordrer hentes via polling (ikke webhook). SmartPack og de fleste WMS-systemer poller e-conomic API hvert 5. minut for nye ordrer.</p>
@@ -191,9 +191,9 @@ X-AgreementGrantToken: {grant_token}</code></pre>
     <h2>SmartPack understøttelse</h2>
     <p>SmartPack henter ordrer fra e-conomic hvert 5. minut via polling. Grant Token og App Secret Key konfigureres i SmartPack admin. Fakturakladde oprettes automatisk ved pakning med præcist indhold. SmartPack sender alert, hvis e-conomic API fejler gentagne gange. Integration testes med e-conomic demo-miljø inden go-live.</p>
   </div>
-  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt.html" class="btn">Book gratis gennemgang</a></div>
+  <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
   <div class="article-disclaimer"><p>Tekniske detaljer er vejledende. Tjek altid aktuel API-dokumentation hos leverandøren.</p></div>
-  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms.html" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a></div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er et Grant Token i e-conomic?</summary><div class="faq-item__body"><p>Et persistent autoriseringstoken, der genereres ved en engangs-autorisationsproces af en e-conomic-bruger. Bruges af WMS til alle API-kald. Invalideres, hvis den autoriserende bruger slettes.</p></div></details>
     <details class="faq-item"><summary>Hvornår hentes ordrer fra e-conomic?</summary><div class="faq-item__body"><p>I SmartPack hentes ordrer fra e-conomic hvert 5. minut via API-polling. e-conomic understøtter ikke webhooks.</p></div></details>
