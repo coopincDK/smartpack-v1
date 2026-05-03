@@ -1350,9 +1350,6 @@ function beregn() {
   } else if (pakkerPrMedarb < 10 && medarb > 0) {
     hint = '? Færre end 10 pakker pr. mand om måneden. Er det en fejlindtastning?';
     hintType = 'question';
-  } else if (pakkerPrMedarb >= 200 && pakkerPrMedarb <= 10000) {
-    hint = '✓ Det har vi set hos webshops i den størrelse. Tallene giver mening.';
-    hintType = 'ok';
   }
 
   var hintEl = document.getElementById('pakker-hint');
