@@ -652,7 +652,7 @@
       // Forklarende undertekst med kontekst
       if (raw.brancheMedian && raw.brancheMedian > 0) {
         var gange = (ppt / raw.brancheMedian).toFixed(1).replace('.',',');
-        pptSub.textContent = gange + 'x branchens median (' + raw.brancheMedian + ' pkk/t)';
+        pptSub.textContent = gange + 'x median \u00B7 inkl. pauser, modtag. m.m.';
       }
     } else {
       pptEl.textContent = '-';
