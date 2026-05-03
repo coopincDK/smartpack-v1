@@ -103,7 +103,7 @@
     }
 
     .cert-topbar-logo {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.15rem;
       font-weight: 800;
       color: #fff;
@@ -159,7 +159,7 @@
     }
 
     .cert-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 2.2rem;
       font-weight: 800;
       color: var(--text-1);
@@ -203,7 +203,7 @@
     }
 
     .cert-firm-input {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.6rem;
       font-weight: 800;
       color: var(--text-1);
@@ -216,7 +216,6 @@
       padding-bottom: .5rem;
       margin-bottom: .3rem;
       outline: none;
-      font-family: 'Syne', sans-serif;
       transition: border-color .2s;
     }
 
@@ -273,7 +272,7 @@
     }
 
     .cert-stat-value {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.15rem;
       font-weight: 800;
       color: var(--accent);
@@ -309,11 +308,10 @@
     }
 
     .cert-sig-img {
-      height: 56px;
-      max-width: 180px;
+      height: 72px;
+      max-width: 200px;
       object-fit: contain;
-      object-position: bottom;
-      /* Fjern hvid baggrund i dark mode */
+      object-position: center;
       mix-blend-mode: multiply;
     }
 
@@ -329,10 +327,16 @@
     }
 
     .cert-sig-name {
-      font-size: .78rem;
+      font-size: .82rem;
       font-weight: 700;
       color: var(--text-1);
       letter-spacing: .01em;
+    }
+
+    .cert-sig-place {
+      font-size: .7rem;
+      color: var(--text-3);
+      font-style: italic;
     }
 
     .cert-sig-title {
@@ -493,12 +497,14 @@
           <img class="cert-sig-img" src="img/Martin Underskrift.PNG" alt="Underskrift Martin" />
           <div class="cert-sig-line"></div>
           <div class="cert-sig-name">Martin Ren&eacute; Mortensen</div>
+          <div class="cert-sig-place" id="sig-place-1">Grenaa, 03-05-2026</div>
           <div class="cert-sig-title">CEO, SmartPack</div>
         </div>
         <div class="cert-sig">
           <img class="cert-sig-img" src="img/nicolai underskrift.png" alt="Underskrift Nicolai" />
           <div class="cert-sig-line"></div>
           <div class="cert-sig-name">Nicolai Mortensen</div>
+          <div class="cert-sig-place" id="sig-place-2">Grenaa, 03-05-2026</div>
           <div class="cert-sig-title">COO, SmartPack</div>
         </div>
       </div>
@@ -527,6 +533,16 @@
   var md = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
   var d = new Date();
   document.getElementById('cert-dato').textContent = md[d.getMonth()] + ' ' + d.getFullYear();
+
+  // Grenaa + dato under underskrifter
+  var dd = String(d.getDate()).padStart(2,'0');
+  var mm = String(d.getMonth()+1).padStart(2,'0');
+  var yyyy = d.getFullYear();
+  var datoStr = 'Grenaa, ' + dd + '-' + mm + '-' + yyyy;
+  var p1 = document.getElementById('sig-place-1');
+  var p2 = document.getElementById('sig-place-2');
+  if (p1) p1.textContent = datoStr;
+  if (p2) p2.textContent = datoStr;
 
   var raw;
   try { raw = JSON.parse(localStorage.getItem('smartpack_roi')); } catch(e) {}
