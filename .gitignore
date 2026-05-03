@@ -37,3 +37,6 @@ desktop.ini
 
 # Logs
 *.log
+
+# Claude Code (lokale skills/settings)
+.claude/

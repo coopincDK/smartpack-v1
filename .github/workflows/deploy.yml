@@ -1,0 +1,69 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Rsync to smartpack.dk
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      DEPLOY_HOST: 168.119.186.156
+      DEPLOY_USER: root
+      DEPLOY_PATH: /var/www/smartpack.dk/public/
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sanity check — required files exist
+        run: |
+          test -f index.html || { echo "::error::index.html missing — refusing to deploy"; exit 1; }
+          test -f favicon.ico || echo "::warning::favicon.ico missing"
+          echo "Workspace size: $(du -sh . | cut -f1)"
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Deploy via rsync
+        run: |
+          rsync -azv --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.claude/' \
+            --exclude='.gitignore' \
+            --exclude='_inject_tracking.py' \
+            --exclude='_TRACKING_TEMPLATE.html' \
+            --exclude='encoding-report.txt' \
+            --exclude='Billeder OG VIDEO/' \
+            --exclude='*.ps1' \
+            --exclude='*.pdf' \
+            --exclude='Thumbs.db' \
+            --exclude='desktop.ini' \
+            --exclude='.DS_Store' \
+            --exclude='node_modules/' \
+            ./ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH"
+
+      - name: Smoke test
+        run: |
+          for path in / /priser /health; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --insecure "https://smartpack.dk${path}")
+            echo "GET https://smartpack.dk${path} -> ${code}"
+            if [ "$code" != "200" ]; then
+              echo "::error::${path} returned ${code}"
+              exit 1
+            fi
+          done
