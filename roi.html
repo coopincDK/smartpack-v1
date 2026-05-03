@@ -377,7 +377,7 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
               <div>
                 <div class="qc-field__label">Fejlrate (%)</div>
-                <input class="qc-field__input" id="qc-fejl" type="number" min="0" max="20" step="0.1" value="1.1" inputmode="decimal">
+                <input class="qc-field__input" id="qc-fejl" type="number" min="0.01" max="20" step="0.1" value="1.1" inputmode="decimal">
               </div>
               <div>
                 <div class="qc-field__label">Tid pr. pluk (sek.)</div>
@@ -678,7 +678,7 @@
             <span class="inp-label">Pakkefejl</span>
             <span class="inp-val" data-sid="fejl" title="Klik for at indtaste" id="v-fejl">1,1%</span>
           </div>
-          <input type="range" class="roi-range" id="fejl" min="0" max="5" step="0.1" value="1.1">
+          <input type="range" class="roi-range" id="fejl" min="0.1" max="5" step="0.1" value="1.1">
           <div class="inp-note">Branchen ligger typisk på 1,2%. Hvad er jeres erfaringstal?</div>
         </div>
 
@@ -1492,7 +1492,7 @@ function updateDOM(r) {
     } else if (r.netto < 0 || r.roi < 0) {
       nuanceEl.textContent = 'Vores udregninger er baseret på medianer, og vi kan se jeres performance ligger bedre end gennemsnittet. Det giver mere mening med en konkret snak om jeres flow for at se, hvor og hvor meget SmartPack vil kunne hjælpe.';
     } else if (r.noedvendige <= r.medarb) {
-      nuanceEl.textContent = 'I har fat i noget rigtigt. Har I lyst, tager vi gerne en snak om vi kan optimere det yderligere, men I er i top 5% allerede.';
+      nuanceEl.textContent = 'Med SmartPack kan I klare samme volumen med færre hænder. Det er typisk her de største besparelser sidder.';
     } else if (r.roi < 500) {
       nuanceEl.textContent = 'Her ser vi typisk et klart potentiale. Mest i fejlreduktion og tid sparet pr. ordre.';
     } else {
@@ -1624,7 +1624,7 @@ function updateDOM(r) {
       roi: r.roi, payback: r.payback,
       val3mdr: r.val3mdr, val12mdr: r.val12mdr,
       kapNu: r.kapNu,
-      topPerformer: !!(r.noedvendige <= r.medarb || r.usedMax)
+      topPerformer: !!(r.usedMax || r.netto < 0)
     }));
   } catch(e) {}
 }
@@ -1765,7 +1765,7 @@ function syncQCToBeregner() {
   // Månedsløn ÷ 160,33 = timeløn, afrund til nærmeste 5
   var lonTime = Math.min(600, Math.max(100, Math.round(lonMd / 160.33 / 5) * 5));
   var medarbV = Math.min(500, Math.max(1,   Math.round(medarbQ)));
-  var fejlV   = Math.min(15,  Math.max(0,   Math.round(fejlQ * 10) / 10));
+  var fejlV   = Math.min(15,  Math.max(0.1, Math.round(fejlQ * 10) / 10));
 
   function setSlider(id, val) {
     var s = document.getElementById(id);
