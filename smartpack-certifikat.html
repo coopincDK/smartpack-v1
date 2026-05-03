@@ -392,19 +392,13 @@
     /* Stempel */
     .cert-stamp {
       position: absolute;
-      bottom: 44px;
-      right: 36px;
-      width: 170px;
-      opacity: .92;
+      bottom: 40px;
+      right: 32px;
+      width: 200px;
+      opacity: .95;
       transform: rotate(-8deg);
       pointer-events: none;
-      mix-blend-mode: multiply;
       z-index: 4;
-    }
-
-    [data-theme="dark"] .cert-stamp {
-      mix-blend-mode: screen;
-      filter: invert(1);
     }
 
     /* Bund */
@@ -430,19 +424,42 @@
     }
 
     /* ── PRINT ── */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
     @media print {
-      html, body { background: white !important; }
-      .cert-toolbar, .site-header, .site-footer, #site-header, #site-footer, .no-print { display: none !important; }
-      .cert-wrap { max-width: 100%; margin: 0; padding: 0; }
+      html, body {
+        background: white !important;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+      .cert-toolbar, .site-header, .site-footer,
+      #site-header, #site-footer, .no-print { display: none !important; }
+      .cert-wrap {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        width: 210mm;
+        height: 297mm;
+      }
       .cert-card {
         border-radius: 0;
         box-shadow: none;
         width: 210mm;
-        min-height: 297mm;
+        height: 297mm;
+        overflow: hidden;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+      }
+      .cert-body {
+        padding: 2rem 3rem 1.5rem;
       }
       .cert-edit-hint { display: none !important; }
       .cert-firm-input { border-bottom-style: solid !important; }
-      .cert-sig-img { mix-blend-mode: normal; filter: none; }
+      .cert-sig-img { mix-blend-mode: normal !important; filter: none !important; }
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
