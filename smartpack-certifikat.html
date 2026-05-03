@@ -8,20 +8,16 @@
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/theme-toggle.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <style>
-    /* ── Skærm-layout ── */
-    .cert-page {
-      max-width: 680px;
-      margin: 3rem auto 5rem;
-      padding: 0 1.5rem;
-    }
-
+    /* ── Toolbar ── */
     .cert-toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 2rem;
+      max-width: 720px;
+      margin: 2rem auto 1.5rem;
+      padding: 0 1.5rem;
     }
 
     .cert-toolbar a {
@@ -41,32 +37,74 @@
       font-weight: 600;
       border-radius: 8px;
       cursor: pointer;
-      letter-spacing: .02em;
       transition: background .15s;
     }
 
     .cert-print-btn:hover { background: var(--accent-dark); }
 
-    /* ── Certifikat-kort ── */
+    /* ── A4-lignende certifikat-kort ── */
+    .cert-wrap {
+      max-width: 720px;
+      margin: 0 auto 5rem;
+      padding: 0 1.5rem;
+    }
+
     .cert-card {
       background: var(--bg-1);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+      position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 40px rgba(0,0,0,.08);
+      box-shadow: 0 8px 60px rgba(0,0,0,.1), inset 0 0 0 6px var(--bg-1), inset 0 0 0 7px var(--border);
     }
+
+    /* Hjørne-ornamenter via CSS */
+    .cert-card::before, .cert-card::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-color: var(--accent);
+      border-style: solid;
+      opacity: .4;
+    }
+
+    .cert-card::before {
+      top: 14px; left: 14px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .cert-card::after {
+      bottom: 14px; right: 14px;
+      border-width: 0 2px 2px 0;
+    }
+
+    /* Ekstra hjørner via spans */
+    .cert-corner-tr, .cert-corner-bl {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-color: var(--accent);
+      border-style: solid;
+      opacity: .4;
+      pointer-events: none;
+    }
+
+    .cert-corner-tr { top: 14px; right: 14px; border-width: 2px 2px 0 0; }
+    .cert-corner-bl { bottom: 14px; left: 14px; border-width: 0 0 2px 2px; }
 
     /* Top-bar */
     .cert-topbar {
       background: var(--text-1);
-      padding: 1.25rem 2.5rem;
+      padding: 1.1rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .cert-topbar-logo {
-      font-size: 1.1rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #fff;
       letter-spacing: -.02em;
@@ -75,16 +113,16 @@
     .cert-topbar-logo span { color: var(--accent); }
 
     .cert-topbar-tag {
-      font-size: .7rem;
+      font-size: .68rem;
       font-weight: 600;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.35);
+      color: rgba(255,255,255,.3);
     }
 
-    /* Hoved */
+    /* Body */
     .cert-body {
-      padding: 3rem 2.5rem;
+      padding: 3rem 3.5rem 2.5rem;
       text-align: center;
     }
 
@@ -99,60 +137,74 @@
       justify-content: center;
       font-size: 2rem;
       margin: 0 auto 1.5rem;
+      position: relative;
+    }
+
+    .cert-trophy::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      opacity: .25;
     }
 
     .cert-eyebrow {
-      font-size: .7rem;
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .15em;
+      letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: .5rem;
     }
 
     .cert-title {
-      font-size: 2rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
       font-weight: 800;
       color: var(--text-1);
       letter-spacing: -.04em;
       line-height: 1.1;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
-    .cert-divider {
+    /* Dekorativ linje */
+    .cert-rule {
       display: flex;
       align-items: center;
       gap: 1rem;
       margin: 0 auto 1.5rem;
-      max-width: 320px;
+      max-width: 360px;
     }
 
-    .cert-divider-line {
+    .cert-rule-line {
       flex: 1;
       height: 1px;
-      background: var(--border);
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      opacity: .5;
     }
 
-    .cert-divider-dot {
+    .cert-rule-diamond {
       width: 6px;
       height: 6px;
       background: var(--accent);
-      border-radius: 50%;
+      transform: rotate(45deg);
       flex-shrink: 0;
     }
 
-    /* Firmanavn */
+    /* Modtager */
     .cert-recipient-label {
-      font-size: .7rem;
+      font-size: .68rem;
       font-weight: 600;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--text-3);
-      margin-bottom: .5rem;
+      margin-bottom: .4rem;
     }
 
     .cert-firm-input {
-      font-size: 1.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
       font-weight: 800;
       color: var(--text-1);
       letter-spacing: -.03em;
@@ -162,9 +214,9 @@
       border: none;
       border-bottom: 2px dashed var(--border-2);
       padding-bottom: .5rem;
-      margin-bottom: .35rem;
+      margin-bottom: .3rem;
       outline: none;
-      font-family: inherit;
+      font-family: 'Syne', sans-serif;
       transition: border-color .2s;
     }
 
@@ -175,21 +227,22 @@
 
     .cert-firm-input::placeholder {
       color: var(--text-3);
-      font-weight: 500;
+      font-weight: 600;
       font-style: italic;
+      opacity: .6;
     }
 
     .cert-edit-hint {
-      font-size: .72rem;
+      font-size: .7rem;
       color: var(--accent);
       margin-bottom: 2rem;
       opacity: .7;
     }
 
-    /* Tekst */
+    /* Brødtekst */
     .cert-text {
-      font-size: .95rem;
-      line-height: 1.75;
+      font-size: .93rem;
+      line-height: 1.8;
       color: var(--text-2);
       max-width: 480px;
       margin: 0 auto 2rem;
@@ -207,34 +260,84 @@
       display: flex;
       gap: 1rem;
       justify-content: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       flex-wrap: wrap;
     }
 
     .cert-stat {
       background: var(--bg-2);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
       padding: .75rem 1.25rem;
-      min-width: 110px;
+      min-width: 120px;
     }
 
     .cert-stat-value {
-      font-size: 1.1rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--accent);
-      letter-spacing: -.02em;
       display: block;
+      letter-spacing: -.02em;
     }
 
     .cert-stat-label {
-      font-size: .68rem;
+      font-size: .65rem;
       font-weight: 600;
-      letter-spacing: .08em;
+      letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--text-3);
       display: block;
-      margin-top: .15rem;
+      margin-top: .2rem;
+    }
+
+    /* Underskrifter */
+    .cert-sigs {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      margin-bottom: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .cert-sig {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .35rem;
+    }
+
+    .cert-sig-img {
+      height: 56px;
+      max-width: 180px;
+      object-fit: contain;
+      object-position: bottom;
+      /* Fjern hvid baggrund i dark mode */
+      mix-blend-mode: multiply;
+    }
+
+    [data-theme="dark"] .cert-sig-img {
+      mix-blend-mode: screen;
+      filter: invert(1);
+    }
+
+    .cert-sig-line {
+      width: 160px;
+      height: 1px;
+      background: var(--border-2);
+    }
+
+    .cert-sig-name {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: .01em;
+    }
+
+    .cert-sig-title {
+      font-size: .68rem;
+      color: var(--text-3);
     }
 
     /* CTA */
@@ -243,6 +346,7 @@
       flex-direction: column;
       align-items: center;
       gap: .75rem;
+      margin-bottom: .5rem;
     }
 
     .cert-cta {
@@ -254,7 +358,6 @@
       padding: .8rem 2rem;
       border-radius: 8px;
       text-decoration: none;
-      letter-spacing: .01em;
       transition: background .15s;
     }
 
@@ -268,47 +371,42 @@
 
     .cert-back:hover { color: var(--text-1); }
 
-    /* Bund-bar */
+    /* Bund */
     .cert-bottombar {
       background: var(--bg-2);
       border-top: 1px solid var(--border);
-      padding: 1rem 2.5rem;
+      padding: .9rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .cert-bottombar-text {
-      font-size: .75rem;
+      font-size: .72rem;
       color: var(--text-3);
       font-weight: 500;
     }
 
     .cert-bottombar-date {
-      font-size: .75rem;
+      font-size: .72rem;
       color: var(--text-3);
       font-weight: 500;
     }
 
-    /* ── PRINT A4 ── */
+    /* ── PRINT ── */
     @media print {
       html, body { background: white !important; }
-      .cert-toolbar, .site-header, .site-footer { display: none !important; }
-      .cert-page { max-width: 100%; margin: 0; padding: 0; }
+      .cert-toolbar, .site-header, .site-footer, #site-header, #site-footer { display: none !important; }
+      .cert-wrap { max-width: 100%; margin: 0; padding: 0; }
       .cert-card {
-        border: none;
         border-radius: 0;
         box-shadow: none;
         width: 210mm;
         min-height: 297mm;
       }
-      .cert-body { padding: 4rem 3rem; }
-      .cert-firm-input {
-        border-bottom-style: solid !important;
-        border-bottom-color: var(--border) !important;
-      }
-      .cert-edit-hint { display: none; }
-      .cert-print-btn { display: none; }
+      .cert-edit-hint { display: none !important; }
+      .cert-firm-input { border-bottom-style: solid !important; }
+      .cert-sig-img { mix-blend-mode: normal; filter: none; }
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
@@ -320,16 +418,18 @@
 <script src="js/header.js" defer></script>
 <script src="js/footer.js" defer></script>
 
-<div class="cert-page">
+<!-- Toolbar -->
+<div class="cert-toolbar no-print">
+  <a href="roi.html">&larr; Tilbage til beregneren</a>
+  <button class="cert-print-btn" onclick="window.print()">&#8595;&nbsp; Gem som PDF</button>
+</div>
 
-  <!-- Toolbar -->
-  <div class="cert-toolbar">
-    <a href="roi.html">&larr; Tilbage til beregneren</a>
-    <button class="cert-print-btn" onclick="window.print()">&#8595;&nbsp; Gem som PDF</button>
-  </div>
-
-  <!-- Kort -->
+<div class="cert-wrap">
   <div class="cert-card">
+
+    <!-- Hjørne-ornament-hjelpere -->
+    <span class="cert-corner-tr"></span>
+    <span class="cert-corner-bl"></span>
 
     <!-- Top -->
     <div class="cert-topbar">
@@ -345,10 +445,10 @@
       <div class="cert-eyebrow">Certifikat</div>
       <h1 class="cert-title">SmartPack Certifikat</h1>
 
-      <div class="cert-divider">
-        <div class="cert-divider-line"></div>
-        <div class="cert-divider-dot"></div>
-        <div class="cert-divider-line"></div>
+      <div class="cert-rule">
+        <div class="cert-rule-line"></div>
+        <div class="cert-rule-diamond"></div>
+        <div class="cert-rule-line"></div>
       </div>
 
       <div class="cert-recipient-label">Tildelt til</div>
@@ -371,7 +471,7 @@
         Ingen salgspitch. Bare to folk der kigger p&aring; tallene.
       </p>
 
-      <!-- Nøgletal fra beregningen -->
+      <!-- Nøgletal -->
       <div class="cert-stats">
         <div class="cert-stat">
           <span class="cert-stat-value" id="stat-pakker">-</span>
@@ -387,6 +487,23 @@
         </div>
       </div>
 
+      <!-- Underskrifter -->
+      <div class="cert-sigs">
+        <div class="cert-sig">
+          <img class="cert-sig-img" src="img/Martin Underskrift.PNG" alt="Underskrift Martin" />
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-name">Martin Ren&eacute; Mortensen</div>
+          <div class="cert-sig-title">CEO, SmartPack</div>
+        </div>
+        <div class="cert-sig">
+          <img class="cert-sig-img" src="img/nicolai underskrift.png" alt="Underskrift Nicolai" />
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-name">Nicolai Mortensen</div>
+          <div class="cert-sig-title">COO, SmartPack</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
       <div class="cert-cta-wrap">
         <a class="cert-cta" href="mailto:bundlinjeboost@smartpack.dk">Book en snak &rarr;</a>
         <a class="cert-back" href="roi.html">&larr; Tilbage til beregneren</a>
@@ -406,14 +523,11 @@
 <div id="site-footer"></div>
 
 <script src="js/main.js" defer></script>
-
 <script>
-  // Dato
   var md = ['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
   var d = new Date();
   document.getElementById('cert-dato').textContent = md[d.getMonth()] + ' ' + d.getFullYear();
 
-  // Data fra localStorage
   var raw;
   try { raw = JSON.parse(localStorage.getItem('smartpack_roi')); } catch(e) {}
 
@@ -421,11 +535,9 @@
     var ppt = raw.pakkerPrTimeNu || 0;
     document.getElementById('stat-pakker').textContent = ppt > 0
       ? ppt.toFixed(1).replace('.',',') + ' pkk/t' : '-';
-
     var fejl = raw.fejl || 0;
     document.getElementById('stat-fejl').textContent = fejl > 0
       ? fejl.toFixed(1).replace('.',',') + '%' : '-';
-
     if (raw.brancheMax && raw.brancheMax > 0 && ppt > 0) {
       var pct = Math.round((ppt / raw.brancheMax) * 100);
       document.getElementById('stat-pct').textContent =
@@ -433,20 +545,14 @@
     }
   }
 
-  // Gem firmanavn
   var navnEl = document.getElementById('firma-navn');
-  try {
-    var gemt = localStorage.getItem('sp_cert_firma');
-    if (gemt) navnEl.value = gemt;
-  } catch(e) {}
-
+  try { var gemt = localStorage.getItem('sp_cert_firma'); if (gemt) navnEl.value = gemt; } catch(e) {}
   navnEl.addEventListener('input', function() {
     try { localStorage.setItem('sp_cert_firma', navnEl.value); } catch(e) {}
   });
-
   navnEl.addEventListener('focus', function() {
-    var hint = document.querySelector('.cert-edit-hint');
-    if (hint) hint.style.display = 'none';
+    var h = document.querySelector('.cert-edit-hint');
+    if (h) h.style.display = 'none';
   });
 </script>
 
