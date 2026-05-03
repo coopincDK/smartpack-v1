@@ -320,6 +320,9 @@
     .smartboost__list li::before { content: '\2713'; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
     .smartboost__disclaimer { font-size: .72rem; color: var(--text-3); margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); line-height: 1.6; font-style: italic; }
     @media (max-width: 800px) { .smartboost__inner { grid-template-columns: 1fr; } }
+    .robot-box { display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;width:100%;background:var(--surface);border:1px solid rgba(62,207,142,.2);border-radius:12px;padding:1.25rem 1.5rem;margin-top:1rem; }
+    .robot-box__link { color:var(--accent);font-weight:700;font-size:.85rem; }
+    @media (max-width:640px) { .robot-box { flex-direction:column;align-items:flex-start;gap:.75rem;padding:1rem 1.1rem;margin-top:.75rem; } }
   </style>
 
 
@@ -578,12 +581,12 @@
     </div><!-- /pricing-hero-grid -->
 
     <!-- Robot-boks: bred info-stribe under begge kolonner -->
-    <div style="width:100%;max-width:100%;background:var(--surface);border:1px solid rgba(62,207,142,.2);border-radius:12px;padding:1.5rem 2rem;margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap">
+    <div class="robot-box">
       <div>
         <p style="font-size:.85rem;font-weight:800;color:var(--text-1);margin:0 0 .25rem">Hvad med jeres robotter og h&aring;ndscannere?</p>
         <p style="font-size:.8rem;color:var(--text-3);line-height:1.6;margin:0">Der er intet m&aring;nedligt fee, hvis I har en lagerrobot, hardware eller andet scannerudstyr der er koblet til SmartPack. Vi ser nemlig hardwaren som en del af driften, ikke som en ekstra abonnementslinje.</p>
       </div>
-      <a href="roi" style="color:var(--accent);font-weight:700;font-size:.85rem;white-space:nowrap;flex-shrink:0">Prisen er kun halvdelen. Se hvad SmartPack tjener hjem for dig &rarr;</a>
+      <a href="roi" class="robot-box__link">Prisen er kun halvdelen. Se hvad SmartPack tjener hjem for dig &rarr;</a>
     </div>
 
   </div>
