@@ -204,17 +204,17 @@
 
     /* Logo */
     .case-item__logo {
-      height: 28px;
-      max-width: 100px;
+      height: 44px;
+      max-width: 140px;
       object-fit: contain;
       filter: brightness(0);
-      opacity: .65;
-      margin-bottom: 1rem;
-      transition: opacity .2s;
+      opacity: .8;
+      margin-bottom: 1.25rem;
+      transition: opacity .2s, transform .2s;
     }
-    .case-item:hover .case-item__logo { opacity: 1; }
-    [data-theme="dark"] .case-item__logo { filter: brightness(0) invert(1); opacity: .5; }
-    [data-theme="dark"] .case-item:hover .case-item__logo { opacity: .85; }
+    .case-item:hover .case-item__logo { opacity: 1; transform: scale(1.04); }
+    [data-theme="dark"] .case-item__logo { filter: brightness(0) invert(1); opacity: .65; }
+    [data-theme="dark"] .case-item:hover .case-item__logo { opacity: 1; }
 
     /* Stat pill */
     .case-item__stat {
