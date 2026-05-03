@@ -327,6 +327,32 @@
 
 /* === ROI NUANCE === */
 .roi-nuance-text { font-size: .85rem; color: var(--text-2); margin-top: .5rem; font-style: italic; }
+
+/* === QC MEANING BLOCK === */
+.qc-meaning { background: var(--bg-2); border: 1px solid rgba(62,207,142,.2); border-left: 3px solid var(--accent); border-radius: var(--r-md); padding: .9rem 1.1rem; }
+.qc-meaning__equiv { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .65rem; font-size: .82rem; color: var(--text-2); }
+.qc-meaning__eq-item { display: flex; align-items: center; gap: .4rem; line-height: 1.4; }
+.qc-meaning__eq-item strong { color: var(--accent); }
+.qc-meaning__divider { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--text-3); margin-bottom: .4rem; }
+.qc-meaning__praksis { display: flex; flex-direction: column; gap: .25rem; }
+.qc-meaning__p-item { font-size: .78rem; color: var(--text-2); display: flex; align-items: flex-start; gap: .4rem; line-height: 1.4; }
+.qc-meaning__p-item::before { content: '\2192'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+/* === MINI CASE STRIP === */
+.mini-case-strip { background: var(--bg-1); border-bottom: 1px solid var(--border); padding: 1.75rem 0; }
+.mini-case-inner { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; background: var(--surface-1); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--r-md); padding: 1.25rem 1.75rem; }
+.mini-case__eyebrow { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); margin-bottom: .4rem; }
+.mini-case__body { flex: 1; min-width: 180px; }
+.mini-case__headline { font-size: 1rem; font-weight: 900; color: var(--text-1); line-height: 1.25; margin-bottom: .35rem; }
+.mini-case__sub { font-size: .78rem; color: var(--text-2); line-height: 1.55; }
+.mini-case__link { font-size: .75rem; font-weight: 700; color: var(--accent); text-decoration: none; margin-top: .5rem; display: inline-block; }
+.mini-case__link:hover { text-decoration: underline; }
+.mini-case__stats { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+.mini-case__stat { text-align: center; }
+.mini-case__stat-num { font-size: 1.75rem; font-weight: 900; color: var(--accent); line-height: 1; }
+.mini-case__stat-lbl { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); margin-top: .2rem; }
+.mini-case__connector { font-size: .75rem; font-weight: 700; color: var(--text-3); padding: 0 .15rem; }
+@media(max-width:560px) { .mini-case-inner { gap: 1rem; } .mini-case__stats { width: 100%; justify-content: center; } }
 </style>
 </head>
 <body>
@@ -338,8 +364,8 @@
   <div class="container">
     <div class="roi-hero__eye">ROI Beregner &middot; Lageroptimering &middot; WMS business case</div>
     <h1 class="roi-hero__h1">Hvad koster jeres lager<br><em>egentlig?</em></h1>
-    <p class="roi-hero__sub">Ikke et løfte. Et estimat , baseret på det vi typisk ser på lagre som jeres.</p>
-    <div style="margin-top:1.5rem;font-size:.88rem;font-weight:700;color:var(--accent);letter-spacing:.04em">&#128071; Prøv selv</div>
+    <p class="roi-hero__sub">De fleste lagre er 20-40% overbemandet. Ikke fordi folk er dovne. Fordi systemerne er det.<br>Hvad koster det dig?</p>
+    <div style="margin-top:1.5rem;font-size:.95rem;font-weight:800;color:var(--accent);letter-spacing:.03em">&#128071; Prøv selv - det tager 10 sekunder</div>
   </div>
 </section>
 
@@ -396,6 +422,13 @@
           <div class="qc-hero-num__lbl" id="qc-r-bes-lbl">&Aring;rlig netto besparelse</div>
         </div>
 
+        <!-- Hvad betyder tallet i praksis? -->
+        <div class="qc-meaning" id="qc-meaning" style="display:none">
+          <div class="qc-meaning__equiv" id="qc-meaning-equiv"></div>
+          <div class="qc-meaning__divider">Det betyder i praksis:</div>
+          <div class="qc-meaning__praksis" id="qc-meaning-praksis"></div>
+        </div>
+
         <!-- Effektivitetsscore (altid synlig) -->
         <div class="eff-score">
           <span>Effektivitet</span>
@@ -405,15 +438,16 @@
 
         <!-- Reality check banner (kun ved ekstrem effektivitet) -->
         <div class="rc-banner" id="qc-rc-banner">
-          <div class="rc-banner__title" id="qc-rc-title">I er allerede stærke her.</div>
-          <div class="rc-banner__sub" id="qc-rc-sub">Hvis I sender s&aring; mange pakker med s&aring; f&aring; medarbejdere, er I allerede ekstremt effektive. S&aring; handler SmartPack nok ikke prim&aelig;rt om f&aelig;rre h&aelig;nder p&aring; lageret.</div>
+          <div class="rc-banner__title" id="qc-rc-title">Okay... s&aring; er I ikke normale.</div>
+          <div class="rc-banner__sub" id="qc-rc-sub">Hvis de tal passer, er I allerede ekstremt effektive. S&aring; handler det ikke om f&aelig;rre medarbejdere.</div>
+          <div style="font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);margin:.65rem 0 .4rem">Her kigger vi typisk p&aring;:</div>
           <div class="rc-alt-grid">
-            <div class="rc-alt-item">Fragtvalg og labelflow</div>
-            <div class="rc-alt-item">Fejl, retur og sporbarhed</div>
-            <div class="rc-alt-item">Kundeservice-automatisering</div>
+            <div class="rc-alt-item">Skalering uden at kn&aelig;kke</div>
+            <div class="rc-alt-item">Fragtoptimering</div>
+            <div class="rc-alt-item">Skjulte fejl og spild</div>
+            <div class="rc-alt-item">Onboarding af nye kunder</div>
+            <div class="rc-alt-item">Peak-perioder</div>
             <div class="rc-alt-item">Integrationer og flows</div>
-            <div class="rc-alt-item">Peak uden panik</div>
-            <div class="rc-alt-item">Hurtigere onboarding</div>
           </div>
         </div>
 
@@ -454,6 +488,31 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- MINI CASE: Lakuda / Batteribyen -->
+<section class="mini-case-strip">
+  <div class="container">
+    <div class="mini-case-inner">
+      <div class="mini-case__body">
+        <div class="mini-case__eyebrow">Lakuda / Batteribyen &mdash; Black Friday</div>
+        <div class="mini-case__headline">42% mere volumen.<br>7 f&aelig;rre medarbejdere.</div>
+        <div class="mini-case__sub">Samme Black Friday. Nyt WMS. Syv f&aelig;rre folk p&aring; lageret end &aring;ret f&oslash;r &mdash; og flere varer pr. ordre.</div>
+        <a href="cases.html" class="mini-case__link">Se alle cases &rarr;</a>
+      </div>
+      <div class="mini-case__stats">
+        <div class="mini-case__stat">
+          <div class="mini-case__stat-num">+42%</div>
+          <div class="mini-case__stat-lbl">Ordrer</div>
+        </div>
+        <div class="mini-case__connector">med</div>
+        <div class="mini-case__stat">
+          <div class="mini-case__stat-num">&minus;7</div>
+          <div class="mini-case__stat-lbl">Folk p&aring; lageret</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1175,21 +1234,45 @@
     if (statGrid) statGrid.style.display = isExtreme ? 'none' : '';
     if (note)     note.style.display     = isExtreme ? 'none' : '';
 
+    var meaningEl = document.getElementById('qc-meaning');
     if (isExtreme) {
-      document.getElementById('qc-r-bes').textContent = 'I er stærke her';
-      if (besLbl)  besLbl.textContent = 'Effektivitet er allerede høj';
-      if (ctaPri)  { ctaPri.href = 'kontakt.html'; ctaPri.textContent = 'Lad os nørde jeres setup'; }
-      if (ctaSec)  { ctaSec.href = '#njh-section';  ctaSec.textContent = 'Se næste gevinst ↓'; }
+      document.getElementById('qc-r-bes').textContent = 'I er ekstremt effektive';
+      if (besLbl)  besLbl.textContent = 'Jeres setup er atypisk';
+      if (ctaPri)  { ctaPri.href = 'kontakt.html'; ctaPri.textContent = 'Tal med os om jeres setup'; }
+      if (ctaSec)  { ctaSec.href = '#njh-section';  ctaSec.textContent = 'Se hvad vi kigger på ↓'; }
+      if (meaningEl) meaningEl.style.display = 'none';
     } else {
       document.getElementById('qc-r-bes').textContent = netto > 0 ? fmtK(netto) : 'Kræver konkret vurdering';
       if (besLbl)  besLbl.textContent = netto > 0 ? 'Årlig netto besparelse' : 'Besparelse ved optimering';
-      if (ctaPri)  { ctaPri.href = '#beregner'; ctaPri.textContent = 'Præcis beregning ↓'; }
-      if (ctaSec)  { ctaSec.href = 'kontakt.html'; ctaSec.textContent = 'Tal med os'; }
+      if (ctaPri)  { ctaPri.href = 'kontakt.html'; ctaPri.textContent = 'Få beregnet din case'; }
+      if (ctaSec)  { ctaSec.href = '#beregner'; ctaSec.textContent = 'Nørd tallene ↓'; }
       document.getElementById('qc-r-medarb').textContent    = frigivne.toFixed(1).replace('.',',');
       document.getElementById('qc-r-kapacitet').textContent = '+' + kapForbedring + '%';
       document.getElementById('qc-r-fejl').textContent      = fejl <= fejlAfter ? 'Allerede optimal'
-                                                              : '-' + fejlRedPct + '%';
+                                                            : '-' + fejlRedPct + '%';
       document.getElementById('qc-r-payback').textContent   = paybackTxt;
+      // --- Meaning block: hvad tallene reelt betyder ---
+      if (meaningEl && netto > 0) {
+        meaningEl.style.display = '';
+        var equivEl   = document.getElementById('qc-meaning-equiv');
+        var praksisEl = document.getElementById('qc-meaning-praksis');
+        if (equivEl) {
+          var lines = [];
+          if (frigivne >= 0.3) lines.push('<div class="qc-meaning__eq-item">= <strong>' + frigivne.toFixed(1).replace('.',',') + ' medarbejder' + (frigivne >= 1.8 ? 'e' : '') + '</strong> frigivet til vækst</div>');
+          lines.push('<div class="qc-meaning__eq-item">= <strong>+' + kapForbedring + '%</strong> kapacitet med samme team</div>');
+          if (fejl > fejlAfter) lines.push('<div class="qc-meaning__eq-item">= <strong>næsten 0</strong> fejl (fra ' + fejl.toFixed(1).replace('.',',') + '%)</div>');
+          equivEl.innerHTML = lines.join('');
+        }
+        if (praksisEl) {
+          var plines = [];
+          if (frigivne >= 0.5) plines.push('du kan vokse uden at ansætte');
+          plines.push('du undgår kaos i peak');
+          plines.push('du får mere ro i driften');
+          praksisEl.innerHTML = plines.map(function(l){ return '<div class="qc-meaning__p-item">' + l + '</div>'; }).join('');
+        }
+      } else if (meaningEl) {
+        meaningEl.style.display = 'none';
+      }
     }
     document.getElementById('qc-r-sppris').textContent = spMd.toLocaleString('da-DK') + ' kr.';
   }
