@@ -641,6 +641,7 @@
           <div class="branche-hint">Med SmartPack: <span id="b-range">15,34 pakker/time</span> &middot; median <span id="b-median">23</span>
             <span class="info-icon">i<span class="info-tooltip">Tallene er baseret p&aring; reelle SmartPack-kunder inden for branchen og d&aelig;kker <strong>hele arbejdsdagen</strong>, inkl. modtagelse, opfyldning, returh&aring;ndtering og andre lageropgaver. Faktisk pakker/time kan variere afh&aelig;ngig af lagerets layout, sortiment og ops&aelig;tning.</span></span>
           </div>
+          <div id="b-usedmax-note" style="display:none;margin-top:.35rem;font-size:.68rem;color:var(--accent);font-weight:600">&#9650; I er over medianen, s&aring; vi estimerer nu baseret p&aring; de bedste SmartPack-brugere i branchen (max <span id="b-usedmax-val"></span> pakker/time).</div>
         </div>
 
         <div class="inp-field">
@@ -1326,14 +1327,20 @@ function beregn() {
   // Lager
   const timerIAlt      = medarb * TIMER_PR_MND;
   const pakkerPrTimeNu = timerIAlt > 0 ? pakker / timerIAlt : 0;
-  const timerMedSP     = b.median > 0 ? pakker / b.median : timerIAlt;
+
+  // Hvis brugerens nuv. performance >= branchens median, brug max i stedet
+  // (de er allerede over gennemsnittet — vis hvad de bedste på SP opnår)
+  const usedMax        = b.max > 0 && pakkerPrTimeNu >= b.median;
+  const spEffektiv     = usedMax ? b.max : b.median;
+
+  const timerMedSP     = spEffektiv > 0 ? pakker / spEffektiv : timerIAlt;
   // CLAMP: frigivne timer kan ikke overstige fuld stab (du kan ikke frigive folk du ikke har)
   const frigivneRaw    = Math.max(0, timerIAlt - timerMedSP);
   const frigivne       = Math.min(frigivneRaw, timerIAlt);   // max = hvad de bruger i dag
   const noedvendige    = Math.max(0.1, timerMedSP / TIMER_PR_MND);
 
   // Kapacitet -- SKAL være før overcapacity-check (undgår Temporal Dead Zone)
-  const kapNu          = b.median * timerIAlt;  // Hvad kan de sende MED SP ved nuv. timer
+  const kapNu          = spEffektiv * timerIAlt;  // Hvad kan de sende MED SP ved nuv. timer
 
   // OVERCAPACITY: Brugeren har angivet et volumen der kræver FLERE medarbejdere end de har.
   // besFejl og ekstrakapacitet cappas til det realistiske (kapNu = hvad nuv. stab kan med SP).
@@ -1364,7 +1371,7 @@ function beregn() {
   // Peak-besparelse: sparede vikartimer i topperiode
   const peakPakker     = pakker * (1 + peak / 100);
   const vikarTimerUden = pakkerPrTimeNu > 0 ? Math.max(0, peakPakker - pakker) / pakkerPrTimeNu : 0;
-  const vikarTimerMed  = b.median > 0 ? Math.max(0, peakPakker - kapNu) / b.median : 0;
+  const vikarTimerMed  = spEffektiv > 0 ? Math.max(0, peakPakker - kapNu) / spEffektiv : 0;
   const besPeak        = Math.max(0, vikarTimerUden - vikarTimerMed) * lon * 1.2;
 
   // Kundeservice: SP reducerer ordrehenvendelser med 70%
@@ -1396,7 +1403,7 @@ function beregn() {
   return {
     medarb, pakker, lon, fejl, fejlomk, vaekst, ordrevaerdi, avance, wms, checkout,
     returrate, fragtRetur, peak, ksMin, branche,
-    b, timerIAlt, pakkerPrTimeNu, frigivne, noedvendige, antalFejl, overcapacity, pakkerEff,
+    b, spEffektiv, usedMax, timerIAlt, pakkerPrTimeNu, frigivne, noedvendige, antalFejl, overcapacity, pakkerEff,
     besArb, besFejl, ekstraOrdrer, extraOms, extraAvance,
     besRetur, reduceredeRetur, besKS, ksTiMd,
     besPeak, peakPakker, vikarTimerUden, vikarTimerMed,
@@ -1439,7 +1446,11 @@ function updateDOM(r) {
   // Nuancering baseret på ROI
   var nuanceEl = document.getElementById('roi-nuance');
   if (nuanceEl) {
-    if (r.noedvendige <= r.medarb) {
+    if (r.usedMax) {
+      nuanceEl.textContent = 'Jeres nuværende performance overstiger branchens median, så vi estimerer nu baseret på de bedste SmartPack-brugere i branchen (op mod ' + r.b.max + ' pakker/time). Vil I vide præcis, hvad det betyder for jer, giver en konkret snak om jeres flow mere end en generel beregning.';
+    } else if (r.netto < 0 || r.roi < 0) {
+      nuanceEl.textContent = 'Vores udregninger er baseret på medianer, og vi kan se jeres performance ligger bedre end gennemsnittet. Det giver mere mening med en konkret snak om jeres flow for at se, hvor og hvor meget SmartPack vil kunne hjælpe.';
+    } else if (r.noedvendige <= r.medarb) {
       nuanceEl.textContent = 'I har fat i noget rigtigt. Har I lyst, tager vi gerne en snak om vi kan optimere det yderligere, men I er i top 5% allerede.';
     } else if (r.roi < 500) {
       nuanceEl.textContent = 'Her ser vi typisk et klart potentiale. Mest i fejlreduktion og tid sparet pr. ordre.';
@@ -1533,6 +1544,10 @@ function updateDOM(r) {
   // Branche-hint
   el('b-range').textContent  = r.b.min + '\u2013' + r.b.max + ' pakker/time';
   el('b-median').textContent = r.b.median;
+  var maxNote = document.getElementById('b-usedmax-note');
+  var maxVal  = document.getElementById('b-usedmax-val');
+  if (maxNote) { maxNote.style.display = r.usedMax ? '' : 'none'; }
+  if (maxVal && r.usedMax) { maxVal.textContent = r.b.max; }
 
   // Input display values
   el('v-medarb').textContent   = r.medarb;
