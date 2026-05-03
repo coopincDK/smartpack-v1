@@ -204,16 +204,15 @@
 
     /* Logo */
     .case-item__logo {
-      height: 44px;
-      max-width: 140px;
+      height: 52px;
+      max-width: 160px;
       object-fit: contain;
       filter: brightness(0);
-      opacity: .8;
-      margin-bottom: 1.25rem;
+      opacity: .85;
       transition: opacity .2s, transform .2s;
     }
-    .case-item:hover .case-item__logo { opacity: 1; transform: scale(1.04); }
-    [data-theme="dark"] .case-item__logo { filter: brightness(0) invert(1); opacity: .65; }
+    .case-item:hover .case-item__logo { opacity: 1; transform: scale(1.03); }
+    [data-theme="dark"] .case-item__logo { filter: brightness(0) invert(1); opacity: .75; }
     [data-theme="dark"] .case-item:hover .case-item__logo { opacity: 1; }
 
     /* Stat pill */
@@ -539,6 +538,7 @@
     <div class="cases-grid">
 
       <article class="case-item reveal">
+        <img src="assets/muramura-logo.png" alt="" class="case-item__logo" loading="lazy">
         <div class="case-item__stat">275% performance &middot; kampagnedag</div>
         <div class="case-item__eyebrow">3PL &middot; Mode &amp; Smykker</div>
         <h2 class="case-item__name">MuraMura</h2>
