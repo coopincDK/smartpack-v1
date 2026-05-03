@@ -1,0 +1,180 @@
+﻿ENCODING & KVALITETSRAPPORT — SmartPack_v1
+Genereret: 2026-05-03
+Scannet: 365 HTML-filer (excl. Billeder OG VIDEO / node_modules / .git)
+============================================================
+
+OVERSIGT
+--------
+Kategori                          | Fund
+-----------------------------------+------
+Encoding-fejl (aeoaa - AE+slash)   |    2
+Encoding-fejl (dash/quote)         |    0
+Placeholder tekst (reel)           |    0 *
+&mdash;/&ndash; HTML-entity        |    3
+Forkert komma-mellemrum ( , )      |  333 **
+-----------------------------------+------
+Total fund                         |  338
+
+* 'placeholder' forekommer kun i CSS-attributter og HTML input-attributter (korrekt brug).
+** Langt de fleste er INTENTIONELLE stilvalg: " , " bruges gennemgaaende som
+   bindestreg/separator i overskrifter og titler.
+   Reel tekstfejl skoennes ca. 15-25 stk.
+
+
+============================================================
+1. ENCODING-FEJL (aeoaa) — 2 FUND
+============================================================
+FIL: vilkaar.html
+  L232 | <li><a href="#s25">25. ÃÆndringer i vilkårene</a></li>
+  L532 | <h2><span class="num">25.</span> ÃÆndringer i vilkårene</h2>
+
+Fejltype: 'ÃÆ' = forkert encoding af Æ (double-encoded).
+Loesning: Erstat 'ÃÆndringer' med 'Ændringer' (eller &AElig;ndringer).
+
+
+============================================================
+2. ENCODING-FEJL (dash/quote) — 0 FUND
+============================================================
+Ingen problemer fundet.
+
+
+============================================================
+3. PLACEHOLDER TEKST — 0 REELLE FUND
+============================================================
+Alle fund er tekniske/legitime:
+  - cases.html: CSS-klassen .case-item--placeholder (intentionel)
+  - index.html + index2.html: <!-- VIDEO PLACEHOLDER --> (HTML-kommentar)
+  - integrationer.html: <input placeholder="Soeg efter integration..."> (korrekt HTML-attribut)
+  - priser.html: <input placeholder="Skriv din mail..."> (korrekt HTML-attribut)
+  - smartpack-certifikat.html: CSS ::placeholder selektor (korrekt)
+  - viden/sok.html: JS-streng 'Soeg i vidensdatabasen' (korrekt)
+
+
+============================================================
+4. &mdash;/&ndash; HTML-ENTITY I SYNLIG TEKST — 3 FUND
+============================================================
+FIL: roi.html
+  L520 | <div class="mini-case__eyebrow">Lakuda / Batteribyen &mdash; Black Friday</div>
+  L522 | <div class="mini-case__sub">...Syv faerre folk paa lageret end aaret foer &mdash; og flere varer pr. ordre.</div>
+
+FIL: smartpack-certifikat.html
+  L618 | <div class="cert-bottombar-text">...Det starter typisk paa lageret. &mdash; <strong>www.smartpack.dk</strong></div>
+
+Note: &mdash; renderes korrekt af browsere og er teknisk OK. Men overvej at
+konvertere til UTF-8 em-dash (—) for konsistens med resten af siden.
+
+
+============================================================
+5. FORKERT KOMMA-MELLEMRUM ( , ) — 333 FUND
+============================================================
+--- VIGTIG KLASSIFICERING ---
+Moenster " , " bruges paa siden paa TO maader:
+
+A) INTENTIONELT STILVALG (ca. 310 fund) — bruges som dash/separator i titler og overskrifter:
+   Eksempel: "Plukruter er ineffektive , og det koster dig timer dagligt"
+   Eksempel: "9 typiske fejl ved valg af WMS , og hvad de koster dig"
+   Eksempel: "Lagermedarbejdere uddannelse: hvad virker , SmartPack Leksikon"
+   Dette er et gennemgaaende designvalg brugt i ALLE viden/* sider — ikke fejl.
+
+B) REEL TEKSTFEJL (ca. 20-25 fund) — kommaet skal IKKE have mellemrum foran:
+
+--- REELLE FEJL (udvalg, 30 fund) ---
+
+FIL: 3pl.html (7 fund)
+  L413 | Det er ikke teori , det er en tilfaeldig hverdag...
+  L519 | Det her er hvad vores kunder betaler , og hvad de typisk faar igen
+  L533 | jo lavere stykpris , og jo bedre soemmer tallet for alle parter
+  L795 | <td>0 , 1 kg / <0,01 m3</td>              (tabel-range: brug 0-1 kg)
+  L796 | <td>1,1 , 5 kg / 0,01-0,05 m3</td>        (tabel-range)
+  L797 | <td>5,1 , 15 kg / 0,05-0,15 m3</td>       (tabel-range)
+  L798 | <td>15,1 , 30 kg / 0,15-0,5 m3</td>       (tabel-range)
+
+FIL: cases/lakuda-batteribyen.html (6 fund — REEL fejl i synlig tekst)
+  L41  | LAKUDA valgte... SmartPack , og fik den tid de havde regnet med.
+  L50  | Runde 1: 1,5 mio. i besparelse paa papiret , nul i praksis
+  L53  | Runde 2: SmartPack virkede , men det var ikke uden boevl
+  L54  | beslutningen , og Klaus Vadstrup Hansen er ikke i tvivl.
+  L67  | Resultatet: 1,5 mio. , og 1 mio. ekstra. Trods boevlet.
+  L68  | Fuldt koerende i juni , under 60 dage.
+
+FIL: cases/index.html
+  L6   | <title>Cases , SmartPack</title>
+
+FIL: 404.html
+  L29  | // SmartPack , Auto-redirect fra gammel WordPress-site til ny   (kommentar)
+
+FIL: hero-designer.html
+  L5   | <title>Hero Designer , Desktop / Tablet / Mobil</title>
+
+FIL: index.html
+  L385 | 42% flere ordrer paa Black Friday , med faerre folk
+  L685 | Ruten giver mening , som en GPS.
+  L878 | alt=«E-logistik Guide 2026 , Dansk Erhverv & SmartPack»
+  L908 | <!-- PRICING PHILOSOPHY , MOVED / DEPRECATED -->   (kommentar)
+
+FIL: roi.html (20+ fund)
+  L408 | Pakker sendt ud , gennemsnit inkl. rolige uger
+  L421 | Valgfrit , for praecist resultat
+  L494 | SmartPack koster ca. 0 kr./md , resten er gevinst
+  L558 | Reelle tal , ikke salgspraesenation.
+  L581 | netto besparelse , inkl. SmartPack-omkostning
+  L630 | Gennemsnitlig omkostning pr. fejlpakke , returfragt, kundeservice og kreditnota.
+  L638 | bruger mere end en tredjedel af arbejdstiden paa at lede , ikke plukke.
+  L649 | ROI = (loensbesparelse + faerre fejl + hoejere kapacitet) , SmartPack-pris
+  L684 | saesonudsving , og se det samlede regnskab i realtid.
+  L808 | Branchegennemsnit 8,15%. Fejlpakninger driver den op , SP bringer...
+  L816 | Returomkostning , hvad koster det jer i dag?
+  L860 | Saasonudsving og kundeservice , de skjulte driftsomkostninger
+  L1023| Vi lover ikke besparelser paa forhaand , men vi kan vise...
+  L1076| Vi kigger gerne tallene igennem med jer , uden forpligtelse.
+  L1116| Data flyder automatisk , ingen dobbeltindtastning.
+
+FIL: roi-rapport.html (2 fund)
+  L402 | ...implementere SmartPack i jeres lager- og pakkeproces , baseret paa jeres egne tal.
+  L614 | Book en gratis gennemgang , vi gennemgaar tallene sammen
+
+FIL: priser.html (3 fund)
+  L159 | /* Result grid , 3 equal cells */  (CSS-kommentar)
+  L731 | ...alle dine webshop-kunder , og ét faktureringssted.
+  L774 | // EmailJS init , hent din Public Key (JS-kommentar)
+
+
+============================================================
+6. FILER MED FLEST FUND (TOP 10)
+============================================================
+ Nr. | Fil                                                 | Fund
+-----+------------------------------------------------------+------
+ 1   | roi.html                                            |  20+
+ 2   | viden/problemer/vi-kan-ikke-haandtere-peaks.html    |  12
+ 3   | viden/problemer/plukruter-er-ineffektive.html       |  10
+ 4   | viden/problemer/lageret-kan-ikke-foelge-med.html    |   8
+ 5   | 3pl.html                                            |   7
+ 6   | cases/lakuda-batteribyen.html                       |   6
+ 7   | viden/beslutning/hvornaar-skifte-system.html        |   5
+ 8   | viden/beslutning/hvornaar-excel-fejler.html         |   5
+ 9   | viden/beslutning/bedste-wms-til-webshop.html        |   5
+ 10  | viden/beslutning/cloud-vs-on-premise-wms.html       |   4
+
+
+============================================================
+7. ANBEFALEDE HANDLINGER (PRIORITERET)
+============================================================
+
+[KRITISK] 1. Ret encoding-fejl i vilkaar.html L232 + L532:
+   'ÃÆndringer' skal vaere 'Ændringer'
+
+[HOEJ]    2. Besluet om ' , '-separatoren er officielt designvalg:
+   - Hvis JA: dokumenter det og lad det staa.
+   - Hvis NEJ: erstat med endash (–) i titler/overskrifter,
+     og fjern mellemrum foran komma i loebende tekst.
+
+[MIDDEL]  3. Ret komma-fejl i synlig broedtekst (ikke titler):
+   Vigtigste filer: cases/lakuda-batteribyen.html, roi.html,
+   roi-rapport.html, priser.html L731, 3pl.html (tekstlinjer, ikke tabellinjer).
+   Tabelraenger i 3pl.html L795-798: brug bindestreg (0-1 kg, 1-5 kg osv.).
+
+[LAV]     4. &mdash; i roi.html + smartpack-certifikat.html (3 stk):
+   Teknisk OK, men overvej UTF-8 em-dash (—) for konsistens.
+
+============================================================
+Slut paa rapport — encoding-report.txt

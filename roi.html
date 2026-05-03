@@ -59,6 +59,7 @@
 .wizard-step.active .wizard-step__num { background:#fff;color:var(--accent) }
 .wizard-step.done .wizard-step__num { background:rgba(62,207,142,.2);color:var(--accent) }
 .wizard-step__lbl { font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);transition:color .15s }
+@media (max-width: 768px) { .wizard-step__lbl { font-size: .65rem; } }
 .wizard-step.active .wizard-step__lbl { color:#fff }
 .wizard-step.done .wizard-step__lbl { color:var(--accent);opacity:.7 }
 
@@ -71,7 +72,7 @@
 /* Nav buttons */
 .wizard-nav { display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:1rem 1.5rem;border-top:1px solid var(--border) }
 .wizard-nav__btn {
-  padding:.6rem .75rem;border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:.6rem .75rem;border:1px solid var(--border);border-radius:var(--r-sm);min-height:44px;
   font-size:.78rem;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s;
   background:var(--bg-2);color:var(--text-2);
 }
@@ -88,6 +89,7 @@
 .inp-field:last-child{border-bottom:none}
 .inp-row { display:flex;justify-content:space-between;align-items:center;margin-bottom:.55rem }
 .inp-label { font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3) }
+@media (max-width: 768px) { .inp-label { font-size: .8rem; } }
 .inp-val { font-size:.95rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;min-width:80px;text-align:right }
 .inp-note { font-size:.7rem;color:var(--text-3);line-height:1.5;margin-top:.35rem }
 
@@ -101,7 +103,7 @@
 .roi-range::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:var(--accent);border:2px solid var(--bg-1);cursor:pointer}
 
 /* Select */
-.roi-select{width:100%;padding:.5rem .8rem;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg-1);color:var(--text-1);font-size:.88rem;cursor:pointer}
+.roi-select{width:100%;padding:.5rem .8rem;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg-1);color:var(--text-1);font-size:1rem;cursor:pointer}
 .roi-select:focus{outline:2px solid var(--accent);outline-offset:2px}
 
 .branche-hint{font-size:.68rem;color:var(--text-3);margin-top:.4rem;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
@@ -237,7 +239,7 @@
 .qc-card__lbl{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-top:.2rem}
 .qc-payback{font-size:.78rem;font-weight:700;color:var(--text-2);text-align:center;padding:.6rem;background:var(--bg-2);border-radius:var(--r-sm);border:1px solid var(--border)}
 .qc-payback span{color:var(--accent)}
-.qc-cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}
+.qc-cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
 
 /* === SALGSSIDE SEKTIONER === */
 
