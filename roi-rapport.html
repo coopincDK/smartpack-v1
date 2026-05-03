@@ -775,29 +775,21 @@
 
   var s;
   if (isWeekend) {
-    if (h >= 8 && h < 16) {
-      s = { cls: 'sp-yellow', lbl: 'Weekend',
-            msg: 'KUN ved reel driftstop , tast 9. Ellers ses vi mandag igen.' };
-    } else if (h >= 16 && h < 20) {
-      s = { cls: 'sp-red', lbl: 'Weekend',
-            msg: 'Akut? Tast 9. KUN ved reel driftstop. Vi holder weekend.' };
-    } else {
-      s = { cls: 'sp-red', lbl: 'Weekend · vi sover',
-            msg: 'KUN driftstop , tast 9. Vi sover. Mandag åbner normal support igen.' };
-    }
+    s = { cls: 'sp-red', lbl: 'Weekendlukket',
+          msg: 'KUN driftstop: tast 9. Vi åbner igen mandag kl. 9.' };
   } else {
     if (h >= 6 && h < 9) {
       s = { cls: 'sp-yellow', lbl: 'Åbner kl. 9',
             msg: 'KUN driftstop: tast 9. Ellers er vi klar om lidt.' };
     } else if (h >= 9 && h < 16) {
       s = { cls: 'sp-green', lbl: 'Support åben',
-            msg: 'Ring til os , vi tager telefonen nu.' };
-    } else if (h >= 16 && h < 20) {
-      s = { cls: 'sp-yellow', lbl: 'Ulvetimen',
-            msg: 'Akut? Tast 9. KUN ved reel driftstop , vi har gang i ulvetimen.' };
-    } else if (h >= 20 && h < 23) {
-      s = { cls: 'sp-red', lbl: 'Sent',
-            msg: 'Akut? Tast 9. KUN driftstop , vi sover muligvis, hav tålmodighed.' };
+            msg: 'Ring til os, vi tager telefonen nu. Tast 2.' };
+    } else if (h >= 16 && h < 22) {
+      s = { cls: 'sp-yellow', lbl: 'Begrænset support',
+            msg: 'KUN ved akut driftstop: tast 9.' };
+    } else if (h >= 22 || h < 6) {
+      s = { cls: 'sp-red', lbl: 'Nattevagt',
+            msg: 'KUN driftstop: tast 9. Åbner igen kl. 9.';
     } else {
       s = { cls: 'sp-red', lbl: 'Vi sover',
             msg: 'KUN driftstop , tast 9. Vi sover. Overvej om det kan vente til kl. 9.' };
