@@ -1623,7 +1623,8 @@ function updateDOM(r) {
       totalAar: r.totalAar, nettoAar: r.nettoAar,
       roi: r.roi, payback: r.payback,
       val3mdr: r.val3mdr, val12mdr: r.val12mdr,
-      kapNu: r.kapNu
+      kapNu: r.kapNu,
+      topPerformer: !!(r.noedvendige <= r.medarb || r.usedMax)
     }));
   } catch(e) {}
 }
