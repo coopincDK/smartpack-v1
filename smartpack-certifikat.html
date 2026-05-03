@@ -44,9 +44,9 @@
 
     /* ── A4-lignende certifikat-kort ── */
     .cert-wrap {
-      max-width: 720px;
+      max-width: 210mm;
       margin: 0 auto 5rem;
-      padding: 0 1.5rem;
+      padding: 0 1rem;
     }
 
     .cert-card {
@@ -308,9 +308,10 @@
     }
 
     .cert-sig-img {
-      height: 72px;
-      max-width: 200px;
-      object-fit: contain;
+      height: 90px;
+      max-width: 220px;
+      width: 220px;
+      object-fit: cover;
       object-position: center;
       mix-blend-mode: multiply;
     }
@@ -321,7 +322,7 @@
     }
 
     .cert-sig-line {
-      width: 160px;
+      width: 200px;
       height: 1px;
       background: var(--border-2);
     }
@@ -374,6 +375,24 @@
     }
 
     .cert-back:hover { color: var(--text-1); }
+
+    /* Stempel */
+    .cert-stamp {
+      position: absolute;
+      bottom: 48px;
+      right: 40px;
+      width: 110px;
+      opacity: .88;
+      transform: rotate(-8deg);
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      z-index: 4;
+    }
+
+    [data-theme="dark"] .cert-stamp {
+      mix-blend-mode: screen;
+      filter: invert(1);
+    }
 
     /* Bund */
     .cert-bottombar {
@@ -479,11 +498,11 @@
       <div class="cert-stats">
         <div class="cert-stat">
           <span class="cert-stat-value" id="stat-pakker">-</span>
-          <span class="cert-stat-label">Pakker/time nu</span>
+          <span class="cert-stat-label">Pakker/m&aring;ned</span>
         </div>
-        <div class="cert-stat">
+        <div class="cert-stat" id="stat-fejl-wrap">
           <span class="cert-stat-value" id="stat-fejl">-</span>
-          <span class="cert-stat-label">Fejlrate</span>
+          <span class="cert-stat-label" id="stat-fejl-label">Fejlrate</span>
         </div>
         <div class="cert-stat">
           <span class="cert-stat-value" id="stat-pct">Top 5%</span>
@@ -517,6 +536,9 @@
 
     </div>
 
+    <!-- Stempel -->
+    <img class="cert-stamp" src="img/stamp-badge-sp.png" alt="SmartPack stempel" />
+
     <!-- Bund -->
     <div class="cert-bottombar">
       <div class="cert-bottombar-text">SmartPack &middot; smartpack.dk</div>
@@ -548,12 +570,29 @@
   try { raw = JSON.parse(localStorage.getItem('smartpack_roi')); } catch(e) {}
 
   if (raw) {
-    var ppt = raw.pakkerPrTimeNu || 0;
-    document.getElementById('stat-pakker').textContent = ppt > 0
-      ? ppt.toFixed(1).replace('.',',') + ' pkk/t' : '-';
+    var pkMd = raw.pakker || 0;
+    var pkStr = pkMd >= 10000
+      ? Math.round(pkMd/1000) + '.000'
+      : pkMd >= 1000
+        ? (pkMd/1000).toFixed(1).replace('.',',') + '.000'
+        : Math.round(pkMd).toLocaleString('da-DK');
+    document.getElementById('stat-pakker').textContent = pkMd > 0 ? pkStr : '-';
     var fejl = raw.fejl || 0;
-    document.getElementById('stat-fejl').textContent = fejl > 0
-      ? fejl.toFixed(1).replace('.',',') + '%' : '-';
+    var fejlEl = document.getElementById('stat-fejl');
+    var fejlLabel = document.getElementById('stat-fejl-label');
+    // Vis kun fejlrate hvis den er virkelig lav (< 0.5%) - ellers vis pakker/md
+    if (fejl > 0 && fejl < 0.5) {
+      fejlEl.textContent = fejl.toFixed(2).replace('.',',') + '%';
+      fejlLabel.textContent = 'Fejlrate';
+    } else if (raw.pakker && raw.pakker > 0) {
+      var pkStr = raw.pakker >= 1000
+        ? (raw.pakker/1000).toFixed(1).replace('.',',') + 'k'
+        : Math.round(raw.pakker).toLocaleString('da-DK');
+      fejlEl.textContent = pkStr;
+      fejlLabel.textContent = 'Pakker/md';
+    } else {
+      document.getElementById('stat-fejl-wrap').style.display = 'none';
+    }
     if (raw.brancheMax && raw.brancheMax > 0 && ppt > 0) {
       var pct = Math.round((ppt / raw.brancheMax) * 100);
       document.getElementById('stat-pct').textContent =
