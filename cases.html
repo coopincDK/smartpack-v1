@@ -210,8 +210,16 @@
       object-fit: contain;
       filter: brightness(0);
       opacity: .85;
-      margin: 0 auto 1.25rem;
+      margin: 1.5rem auto 1.5rem;
       transition: opacity .2s, transform .2s;
+    }
+    /* Fast logo-zone: sikrer brand-navn starter samme sted på tværs af kort */
+    .case-item > .case-item__logo:first-child {
+      margin-top: 0;
+      padding-top: 1rem;
+    }
+    .case-item__name {
+      min-height: 2.5rem;
     }
     .case-item:hover .case-item__logo { opacity: 1; transform: scale(1.03); }
     [data-theme="dark"] .case-item__logo { filter: brightness(0) invert(1); opacity: .75; }
@@ -663,7 +671,7 @@
       </article>
 
       <article class="case-item reveal">
-        <img src="assets/create2STAY.png" alt="" class="case-item__logo" loading="lazy">
+        <img src="assets/create2stay-logo.png" alt="" class="case-item__logo" loading="lazy">
         <div class="case-item__eyebrow">M&oslash;bler &amp; Indretning</div>
         <h2 class="case-item__name">Create2Stay</h2>
         <p class="case-item__body">Stort varekatalog, fuld overblik. Du ved altid hvad der er, og hvor det er.</p>
