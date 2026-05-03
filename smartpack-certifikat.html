@@ -471,7 +471,7 @@
         page-break-after: avoid;
         page-break-inside: avoid;
         /* Brug zoom til proportional skalering */
-        zoom: 0.72;
+        zoom: 0.88;
       }
 
       .cert-edit-hint { display: none !important; }
@@ -553,6 +553,10 @@
           <span class="cert-stat-value" id="stat-pct">Top 5%</span>
           <span class="cert-stat-label">Effektivitet i branchen</span>
         </div>
+        <div class="cert-stat cert-stat--wide" id="stat-branche-wrap" style="display:none">
+          <span class="cert-stat-value" id="stat-branche" style="font-size:.95rem">-</span>
+          <span class="cert-stat-label">Branche</span>
+        </div>
       </div>
 
       <!-- Underskrifter -->
@@ -631,6 +635,14 @@
     } else {
       pptEl.textContent = '-';
     }
+    // Branche
+    if (raw.branche && raw.branche !== 'Andet') {
+      var bEl = document.getElementById('stat-branche');
+      var bWrap = document.getElementById('stat-branche-wrap');
+      if (bEl) bEl.textContent = raw.branche;
+      if (bWrap) bWrap.style.display = '';
+    }
+
     // Effektivitet vs. branche
     var ppt2 = raw.pakkerPrTimeNu || 0;
     if (raw.brancheMax && raw.brancheMax > 0 && ppt2 > 0) {
