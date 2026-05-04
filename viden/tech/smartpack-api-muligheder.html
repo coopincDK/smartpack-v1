@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartPack API: 10 ting du kan bygge som de fleste ikke har t&#230;nkt p&#229; | SmartPack Viden</title>
+  <meta name="description" content="SmartPack har et &#229;bent API. De fleste bruger det til at hente ordrer. De smarte bygger noget helt andet. Her er 10 id&#233;er fra den vilde ende.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/smartpack-api-muligheder">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<!-- 2. Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<!-- 3. Meta Pixel -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "SmartPack API: 10 ting du kan bygge som de fleste ikke har t&#230;nkt p&#229;",
+    "description": "SmartPack har et &#229;bent API. De fleste bruger det til at hente ordrer. De smarte bygger noget helt andet.",
+    "author": {"@type": "Organization", "name": "SmartPack"},
+    "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"},
+    "datePublished": "2025-05-04",
+    "url": "https://smartpack.dk/viden/tech/smartpack-api-muligheder"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Har SmartPack et &#229;bent API?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Ja. SmartPack har et dokumenteret REST API der giver adgang til ordrer, lager, produkter, events og meget mere. Bruges til integrationer, automatisering og egne byggerier."}
+      },
+      {
+        "@type": "Question",
+        "name": "Hvad kan man bygge med SmartPack API?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Alt fra simple integrationer til avancerede systemer som anomaly detection, time-based pricing, automatisk bundling og headless storefronts. API'et giver adgang til realtidsdata om ordre, lager og bev&#230;gelser."}
+      },
+      {
+        "@type": "Question",
+        "name": "Beh&#248;ver man v&#230;re udvikler for at bruge SmartPack API?",
+        "acceptedAnswer": {"@type": "Answer", "text": "For de avancerede ting, ja. Men mange integrationer kan s&#230;ttes op via no-code v&#230;rkt&#248;jer som Make eller Zapier med SmartPacks webhooks og API-endpoints."}
+      },
+      {
+        "@type": "Question",
+        "name": "Hvad er forskellen p&#229; webhooks og API i SmartPack?",
+        "acceptedAnswer": {"@type": "Answer", "text": "API er pull: du sp&#248;rger og f&#229;r svar. Webhooks er push: SmartPack sender data til dig n&#229;r noget sker. Til realtidssystemer er webhooks det rigtige valg."}
+      },
+      {
+        "@type": "Question",
+        "name": "Kan man lave sit eget dashboard med SmartPack data?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Ja. Med API-adgang til ordrer, lagerl&#248;b og medarbejderaktivitet kan man bygge dashboards i v&#230;rkt&#248;jer som Grafana, Power BI eller et simpelt Google Sheet med automatisk opdatering."}
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&#x203A;</span><a href="../">Viden</a><span>&#x203A;</span><a href="./">Tech &amp; Integration</a><span>&#x203A;</span><span>SmartPack API muligheder</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech &amp; Integration</span>
+    <h1 class="article-title">SmartPack API: 10 ting du kan bygge som de fleste ikke har t&#230;nkt p&#229;</h1>
+    <div class="article-meta"><time datetime="2025-05-04">4. maj 2025</time><span>~9 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+
+<p>De fleste bruger SmartPacks API til to ting: hent ordrer, opdater lager.</p>
+<p>Det er fint. Men API'et kan meget mere end det. Det sidder p&#229; realtidsdata om hvad der sker p&#229; dit lager, hvornaar det sker, og hvorfor. Det er ikke bare et dataudtag. Det er en motor.</p>
+<p>Her er 10 ting du teknisk set kan bygge i dag. Nogle er realistiske n&#230;ste m&#229;ned. Andre er lidt vilde. Alle er mulige.</p>
+
+<p class="inline-cta">&#x1F449; Vil du se det i praksis? <a href="../../kontakt.html">Kontakt SmartPack</a></p>
+
+<h2>Hvad SmartPack API'et faktisk giver dig adgang til</h2>
+<p>F&#248;r vi dykker ned i de 10 id&#233;er: her er hvad API'et eksponerer.</p>
+<ul>
+  <li><strong>Ordrer</strong> med fuld tidslinje, status, linjer og metadata</li>
+  <li><strong>Lagerbev&#230;gelser</strong> per SKU, per placering, per tidspunkt</li>
+  <li><strong>Medarbejderaktivitet</strong> hvem plukkede hvad, og hvornaar</li>
+  <li><strong>Events og webhooks</strong> trigger n&#229;r noget sker, ikke n&#229;r du sp&#248;rger</li>
+  <li><strong>Produktdata</strong> v&#230;gt, m&#229;l, lokation, bevagelseshistorik</li>
+  <li><strong>Indkabsordrer og ankomst</strong> hvad er p&#229; vej ind</li>
+</ul>
+<p>Det interessante er kombinationen. En ordre alene er kedelig data. En ordre kombineret med lagerposition, tidspunkt og medarbejderhastighed er noget andet helt.</p>
+
+<h2>De 10 id&#233;er</h2>
+
+<h3>1. Shadow demand engine</h3>
+<p>De fleste analyserer hvad de solgte. F&#230; analyserer hvad de <em>n&#230;sten</em> solgte.</p>
+<p>Med API'et kan du tracke m&#248;nstre i afbrudte flows og kombinere dem med hvad der var p&#229; lager p&#229; det tidspunkt. Resultatet: "Hvis vi havde haft SKU-4421 p&#229; lager kl. 18:12 tirsdag, havde vi solgt 23 ekstra enheder."</p>
+<p>Det er ikke bare nice-to-have. Det er det datapunkt der bestemmer om du genbestiller i tide.</p>
+
+<h3>2. Automatisk bundling i realtid</h3>
+<p>N&#229;r en ordre kommer ind via webhook kan du i samme sekund k&#248;re logik: hvad k&#248;ber folk typisk sammen med dette? Hvad har vi p&#229; lager med h&#248;j margin?</p>
+<p>Output: et automatisk forslag til ops&#230;lger der sendes til kundeservice eller direkte tilbage i checkout. Ikke en produktanbefaling. En avanceoptimering.</p>
+
+<h3>3. Lager-personlighedsscoring</h3>
+<p>Giv hvert produkt en profil baseret p&#229; bev&#230;gelsesdata:</p>
+<ul>
+  <li><strong>Fast mover</strong> h&#248;j rotation, lav sikkerhedsmargin OK</li>
+  <li><strong>Slow burner</strong> lav rotation, bindes kapital, vurder genbestilling</li>
+  <li><strong>Seasonal spike</strong> roligt 10 m&#229;neder, eksplosion i 2</li>
+  <li><strong>Risky stock</strong> udl&#248;bsdato, h&#248;j returrate, eller begge</li>
+</ul>
+<p>I stedet for at kigge p&#229; en tabel med tal f&#229;r lagerchefen et hurtigt overblik over hvilke produkter der kr&#230;ver opm&#230;rksomhed denne uge. Lager bliver n&#230;sten intuitivt.</p>
+
+<h3>4. Reverse logistics optimizer</h3>
+<p>Returvarer koster penge p&#229; tre m&#229;der: h&#229;ndtering, plads og mistet salg n&#229;r de er i transit.</p>
+<p>Med API'et kan du bygge logik der automatisk vurderer: skal denne retur g&#229; tilbage p&#229; hyld? V&#230;re en del af en bundle til reduceret pris? Eller videresendes direkte til en anden kunde der har den p&#229; ordre?</p>
+<p>Smart reverse logistics er det omr&#229;de de fleste webshops ignorerer. Det er ogs&#229; et af de omr&#229;der med mest lav-h&#230;ngende frugt.</p>
+
+<h3>5. Tidsbaseret prismotor</h3>
+<p>Dynamic pricing er ikke nyt. Men dynamic pricing baseret p&#229; dit eget lager er n&#230;sten ingen der g&#248;r.</p>
+<p>Logikken: hver time trr en regel mod API'et. Lagerniveau under X? Pris op. Udl&#248;b om Y dage? Pris ned. Ordrehastighed h&#248;jere end normalt? Hold prisen.</p>
+<p>SmartPack har allerede dataen. Det her er bare logik ovenpaa.</p>
+
+<h3>6. Mikrofulfillment routing</h3>
+<p>Hvis du har lager p&#229; flere lokationer giver API'et dig mulighed for at sp&#248;rge: hvorfra er det hurtigst? Hvorfra er det billigst?</p>
+<p>For en ordre med to linjer kan svaret v&#230;re: linje 1 fra lager A (hurtigere levering), linje 2 fra lager B (lavere fragtomkostning). Du splitter ordren intelligent i stedet for at sende alt fra samme sted.</p>
+<p>Kræver inventory per location + shipments-logik. Begge er tilgaengelige via API.</p>
+
+<h3>7. Ops anomaly detector</h3>
+<p>Systemet der siger: "Det her burde ikke ske."</p>
+<p>Eksempler der kan detekteres via events og ordredata:</p>
+<ul>
+  <li>Pludselig spike i returns p&#229; en bestemt SKU (produktfejl?)</li>
+  <li>M&#230;rkelig ordretiming (botaktivitet?)</li>
+  <li>Lagerm&#230;ngde matcher ikke forventede bevagelser (tyveri eller fejlregistrering?)</li>
+  <li>En medarbejder der er 40% langsommere end normalt (traning, sygdom, fejlflow?)</li>
+</ul>
+<p>De fleste opdager disse ting n&#229;r skaden er sket. Med et simpelt event-baseret system opdager du det mens det sker.</p>
+
+<h3>8. Headless instant storefront</h3>
+<p>Input: et subset af dine produkter fra SmartPack. Output: en live webshop p&#229; 30 sekunder.</p>
+<p>API'et leverer priser, lagerstatus og produktdata. Du bygger en simpel frontend der serverer dem. Ingen Shopify-abonnement, ingen opsaetningstid. Godt til pop-up salg, B2B-specifikke kataloger eller intern testhandel.</p>
+<p>Det her er lidt vildt. Men teknisk set kræver det ikke meget.</p>
+
+<h3>9. Forhindsolg f&#248;r varen eksisterer</h3>
+<p>Vend flowet: vis produkter der endnu ikke er p&#229; lager. Lad kunder bestille alligevel.</p>
+<p>API'et bruges til at h&#229;ndtere k&#248;en: n&#229;r varen ankommer via indkabsordren, prioriteres forsendelserne automatisk efter bestillingstidspunkt. F&#248;rste kunde f&#248;rst.</p>
+<p>Demand f&#248;r supply. Det er s&#229;dan mange af de bedste brands s&#230;lger.</p>
+
+<h3>10. Selvoptimerende pluk-flow</h3>
+<p>Brug event-data til at tracke hvor lang tid tingene tager: tid fra ordre til plukstart, tid per linje, tid fra pluk til pak.</p>
+<p>Systemet finder flaskehalsene og foresl&#229;r: "Flyt SKU-7823 til en placering t&#230;ttere p&#229; pakkestation 2. Det sparer 18 sekunder per ordre. Det er 3 timer om m&#229;neden ved dit nuvaerende volumen."</p>
+<p>Sm&#229; optimeringer m&#230;rkes ikke ved 100 ordrer om dagen. De m&#230;rkes meget ved 800.</p>
+
+<h2>Hvad de fleste overser</h2>
+<p>De fleste teams bruger API'et til "vis ordre" og "opdater lager". Det er fint. Men SmartPacks edge er et andet sted.</p>
+<p>Dataen i systemet handler ikke bare om <em>hvad</em> der sker. Den handler om <em>hvornaar</em> og <em>hvorfor</em>. Timing + flow + bev&#230;gelse. Det er kombinationen der g&#248;r de avancerede ting mulige.</p>
+<p>Ordrerne alene er kedelige. Ordrerne kombineret med lagertilstand, medarbejdertid og historiske m&#248;nstre er et prognosevaerkt&#248;j.</p>
+
+<h2>Hvornaar giver det mening at bygge p&#229; API'et</h2>
+<p><strong>Det giver mening nu:</strong> Du har en udvikler (intern eller ekstern), du vil automatisere noget specifikt, eller du vil koble SmartPack til et system der ikke har en f&#230;rdig integration.</p>
+<p><strong>Det giver mening om 6 m&#229;neder:</strong> Du n&#229;r et volumen hvor manuelle beslutninger om lager og routing koster mere end det er v&#230;rd.</p>
+<p><strong>Det giver ikke mening endnu:</strong> Under 50 ordrer om dagen er de fleste af de avancerede use cases overkill. Brug SmartPack som det er. Det er allerede godt.</p>
+
+<h2>Hvornaar SmartPack API ikke er svaret</h2>
+<p>Hvis du ikke har en fast udvikler og ikke kender til webhooks og REST, er API-projekter sv&#230;re at f&#229; i m&#229;l uden hj&#230;lp. Start med SmartPacks egne integrationer og workflows. De klarer det meste uden kode.</p>
+<p>API'et er for dem der vil bygge noget sk&#230;riddersy. Ikke for dem der vil have n&#230;ste uges ordre i et Excel-ark.</p>
+
+  </div>
+
+  <div class="article-faq">
+    <h2>Ofte stillede sp&#248;rgsm&#229;l om SmartPack API</h2>
+    <details class="faq-item">
+      <summary>Har SmartPack et &#229;bent API?</summary>
+      <p>Ja. SmartPack har et dokumenteret REST API der giver adgang til ordrer, lager, produkter, events og meget mere. Det bruges til integrationer, automatisering og egne byggerier ovenpaa systemet.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Hvad kan man bygge med SmartPack API?</summary>
+      <p>Alt fra simple dataintegrationer til avancerede systemer som anomaly detection, automatisk bundling, tidsbaseret prissaetning og headless storefronts. API'et giver adgang til realtidsdata om ordre, lager og bev&#230;gelser.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Beh&#248;ver man v&#230;re udvikler for at bruge SmartPack API?</summary>
+      <p>For de avancerede ting, ja. Men mange integrationer kan s&#230;ttes op via no-code v&#230;rkt&#248;jer som Make eller Zapier med SmartPacks webhooks og API-endpoints. Kontakt SmartPack for vejledning.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Hvad er forskellen p&#229; webhooks og API i SmartPack?</summary>
+      <p>API er pull: du sp&#248;rger og f&#229;r svar. Webhooks er push: SmartPack sender data til dig n&#229;r noget sker. Til realtidssystemer er webhooks det rigtige valg. De to bruges typisk sammen.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Kan man lave sit eget dashboard med SmartPack data?</summary>
+      <p>Ja. Med API-adgang til ordrer, lagerl&#248;b og medarbejderaktivitet kan man bygge dashboards i v&#230;rkt&#248;jer som Grafana, Power BI eller et simpelt Google Sheet med automatisk opdatering via API.</p>
+    </details>
+  </div>
+
+  <div class="bottom-cta">
+    <p>Vil du vide hvad SmartPack kan g&#248;re for dit lager?</p>
+    <a href="../../kontakt.html" class="btn btn--primary">Tag en snak med os</a>
+  </div>
+
+  <div class="article-disclaimer">
+    <p>De 10 id&#233;er i denne artikel er teknisk mulige med SmartPacks &#229;bne API. Implementeringskompleksiteten varierer. Kontakt SmartPack for vejledning om hvad der giver mening for din virksomhed.</p>
+  </div>
+
+</div></div>
+</main>
+
+<div id="site-footer"></div>
+<script src="../../js/footer.js" defer></script>
+<script src="../../js/main.js" defer></script>
+</body>
+</html>
