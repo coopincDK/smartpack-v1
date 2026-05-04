@@ -505,7 +505,9 @@
         background: white !important;
         margin: 0 !important;
         padding: 0 !important;
+        padding-top: 0 !important;
         height: auto !important;
+        min-height: 0 !important;
         overflow: visible !important;
         /* Reset CSS variables til print-sikre farver */
         --bg-1: #ffffff;
@@ -513,6 +515,17 @@
         --text-1: #1a1f25;
         --text-2: #444;
         --border: #e0e0e0;
+        --announce-h: 0px;
+      }
+
+      /* Nuller alt der skaber blank forside */
+      body > *:not(.cert-wrap):not(#site-header):not(#site-footer):not(script):not(style) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+      }
+      #main-content, main {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
       }
 
       .cert-toolbar, .site-header, .site-footer,
@@ -539,13 +552,16 @@
       .cert-card {
         border-radius: 0 !important;
         box-shadow: none !important;
-        width: 194mm !important;
+        width: 190mm !important;
+        max-height: 270mm !important;
         margin: 0 auto !important;
         page-break-after: avoid;
         page-break-inside: avoid;
+        break-inside: avoid;
         background: #ffffff !important;
         border: 2px solid #2e7d32 !important;
-        overflow: visible !important;
+        overflow: hidden !important;
+        zoom: 0.82 !important;
       }
 
       .cert-edit-hint { display: none !important; }
