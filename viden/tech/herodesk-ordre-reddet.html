@@ -114,7 +114,7 @@
 </head><body><div id="sp-header"></div>
 <script src="../../js/header.js"></script><main id="main-content"><div class="article-page"><div class="article-wrap"><nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&#x203A;</span><a href="../">Viden</a><span>&#x203A;</span><a href="./">Tech &amp; Integrationer</a><span>&#x203A;</span><span>Pakken var allerede sendt</span></nav><header class="article-header"><span class="article-cat-badge">Tech &amp; Integrationer</span><h1 class="article-title">Helpdesk-integration med SmartPack: Sådan undgår du at pakken er sendt før du ved det</h1></header><div class="article-body" data-pagefind-body="true">
 
-<p>Kunden bestiller kl. 22:00. Skriver kl. 22:30 at adressen er forkert. Lageret pakker kl. 06:00. Kundeservice ser mailen kl. 12:00. Pakken er allerede sendt til den forkerte adresse. Nu starter returlogistikken, ekstra forsendelse og Trustpilot-klagen. Alt sammen fordi én mail ankom kl. 22:30 og ingen så den kl. 06:00. Det er ikke en menneskelig fejl. Det er et systemfejl. Og det koster dig penge hver gang det sker.</p>
+<p>Kunden bestiller kl. 22:00. Skriver kl. 22:30 at adressen er forkert. Lageret pakker kl. 06:00. Kundeservice ser mailen kl. 12:00. Pakken er allerede sendt til den forkerte adresse. Nu starter returlogistikken: 89 kr. retur, 49 kr. ny forsendelse, 2 timers kundeservice-tid. Én fejl koster 250-350 kr. Sker det 4 gange om måneden, brænder du 14.000 kr./år af på noget der kunne være stoppet kl. 22:31.</p>
 
 <p>Når kundeservice og lager arbejder fra de samme data, forsvinder den klassiske fejl: pakken er allerede sendt før du når at reagere.</p>
 
@@ -128,7 +128,7 @@
 
 <p>Alt sammen fordi én mail ankom kl. 22:30 og ingen så den kl. 06:00.</p>
 
-<p>Det er ikke en menneskelig fejl. Det er et systemfejl. Og det er præcis den type fejl der forsvinder når kundeservice og lager arbejder fra de samme data, i realtid.</p>
+<p>Det er ikke en menneskelig fejl. Det er et systemfejl. Når kundeservice og lager arbejder fra de samme data, forsvinder fejlen.</p>
 
 <h2>Kundeservice og lager arbejder i blinde</h2>
 
@@ -182,7 +182,7 @@
 
 <p>Ikke via Zapier, ikke via webhooks og ikke via et mellemlag der kræver løbende vedligehold. Direkte. Native. Det virker fra dag ét.</p>
 
-<p>Konkret hvad det betyder for dig:</p>
+<p>Hvad du får:</p>
 
 <ul>
   <li><strong>Du stopper fejl FØR de sker.</strong> Ikke forklarer dem bagefter.</li>
@@ -234,6 +234,24 @@
   <li><a href="./typiske-integrationsfejl">Typiske integrationsfejl og hvordan du undgår dem</a></li>
   <li><a href="./integrationer-forklaret">Integrationer forklaret: sådan forbinder du dine systemer</a></li>
 </ul>
+
+<h2>Hvad én fejl koster dig</h2>
+
+<p>Returlogistik: 89 kr. Ny forsendelse: 49 kr. Kundeservice-tid: 2 timer à 250 kr./time = 500 kr. I alt ca. 638 kr. per fejl.</p>
+
+<p>Sender du 500 ordrer/måned og 2% ender med adresseændring efter afsendelse, er det 10 fejl/måned = 6.380 kr./måned = 76.560 kr./år.</p>
+
+<p>Herodesk koster fra 0 kr. (gratis plan). Selv med 3 betalte agenter sparer du 5.000+ kr./måned. ROI er positiv fra dag ét hvis du har mere end 1 adressefejl om måneden.</p>
+
+<h2>Hvornår SmartPack + Herodesk IKKE hjælper</h2>
+
+<p><strong>Lageret pakker inden for 30 min. efter ordre:</strong> Selv med pause-funktion når du ikke at reagere. Løsning: automatisk 2-timers delay på alle ordrer efter kl. 20:00.</p>
+
+<p><strong>Kunden ændrer adresse efter ordren er afsendt:</strong> Integrationen kan ikke tilbagekalde en pakke fra PostNord. Du kan kun se status og informere kunden.</p>
+
+<p><strong>Lageret ignorerer SmartPack-status:</strong> Pakker lageret manuelt uden at tjekke systemet, virker pause-funktionen ikke. Det kræver at lageret faktisk bruger SmartPack.</p>
+
+<p><strong>Under 100 ordrer/måned:</strong> Sandsynligheden for timing-fejl er så lav at integrationen ikke betaler sig. Standard e-mail er nok.</p>
 
 <h2>Kom i gang</h2>
 
