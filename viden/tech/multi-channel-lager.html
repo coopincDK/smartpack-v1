@@ -134,7 +134,7 @@
     <p>WMS er den centrale hub. Den modtager ordrer fra alle kanaler via dedikerede integrationer, behandler alle ordrer i eet samlet flow (pluk, pak, forsend), og opdaterer beholdning p&aring; alle kanaler efter hvert salg.</p>
     <p>Hvert ordre tagges med kanalidentifikator: <code>channel: shopify_dk</code>, <code>channel: woocommerce_de</code> osv. Det bruges til rapportering, prioritering og kanalspecifik behandling.</p>
 
-    <h2>Realtidslager p&aring; tvaers af kanaler</h2>
+    <h2>Realtidslager p&aring; tvÃ¦rs af kanaler</h2>
     <p>Lageroppdatering pr. salg er ikke tilstraekkelig. Du har brug for reserveret lager:</p>
     <ul>
       <li>Ordre modtaget p&aring; Shopify: 1 enhed reserveres straks (ikke trukket fra lager, men reserveret)</li>
@@ -142,19 +142,19 @@
       <li>WooCommerce opdateres inden for sekunder: 2 tilgaengelige</li>
       <li>Trukket fra lager sker ved pakning/afsendelse</li>
     </ul>
-    <p>SmartPack bruger SignalR til at sende realtidsopdateringer. Badge-taellere (lagerantal) opdateres oejeblikkeligt p&aring; tvaers af alle tilknyttede systemer.</p>
+    <p>SmartPack bruger SignalR til at sende realtidsopdateringer. Badge-taellere (lagerantal) opdateres oejeblikkeligt p&aring; tvÃ¦rs af alle tilknyttede systemer.</p>
 
     <h2>Typiske fejl</h2>
     <ul>
       <li><strong>Ikke reservere lager ved ordremodtagelse:</strong> Lager traekkes kun ved afsendelse. I mellemtiden kan oversalg opstaa p&aring; travle dage.</li>
       <li><strong>Behandle kanaler som separate lagre:</strong> Opdele 100 enheder i &quot;50 til Shopify, 50 til WooCommerce&quot; er et antipattern. Det foerer til at Shopify loeber toer mens WooCommerce har 47 enheder staaende.</li>
-      <li><strong>Glemme kanalspecifik fragtlogik:</strong> GLS fungerer til Shopify, men Shopify DE-ordrer kraever DHL. Fragtlogik varierer pr. kanal og destination.</li>
+      <li><strong>Glemme kanalspecifik fragtlogik:</strong> GLS fungerer til Shopify, men Shopify DE-ordrer krÃ¦ver DHL. Fragtlogik varierer pr. kanal og destination.</li>
     </ul>
 
-    <h2>S&aring;dan goer du det rigtigt</h2>
+    <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
     <ol>
       <li><strong>Definer kanalprioritet:</strong> Hvornaar der er mangel p&aring; varer, hvilken kanal prioriteres? B2B-ordrer? Express-ordrer? Definer det i WMS-konfigurationen.</li>
-      <li><strong>Test synkronisering under belastning:</strong> Koer et loadtest: 50 samtidige ordrer p&aring; tvaers af 3 kanaler. Det er her multi-channel-problemer opstaar.</li>
+      <li><strong>Test synkronisering under belastning:</strong> Koer et loadtest: 50 samtidige ordrer p&aring; tvÃ¦rs af 3 kanaler. Det er her multi-channel-problemer opstaar.</li>
       <li><strong>Opsat kanal-specifik rapportering:</strong> Omsaetning, fejlrate og behandlingstid pr. kanal.</li>
     </ol>
 
@@ -173,7 +173,7 @@
     <details class="faq-item"><summary>Kan jeg have separate lagre til separate kanaler?</summary><div class="faq-item__body"><p>Teknisk ja, men det er et antipattern. Det foerer til utilstraekkelig udnyttelse af beholdning og kompleks administration. Eet faelles lager med prioriteringsstyring er bedre.</p></div></details>
     <details class="faq-item"><summary>Hvad er en race-condition i lagerstyring?</summary><div class="faq-item__body"><p>Naar to ordrer fra to kanaler behandles simultant for den samme vare, og begge ser tilgaengeligt lager, men kun een vare er faktisk p&aring; lager. Loses med ojeblikkelig reservation og database-niveau locking.</p></div></details>
     <details class="faq-item"><summary>Hvad er SignalR i lagersammenhaeng?</summary><div class="faq-item__body"><p>En teknologi til realtidskommunikation. I SmartPack bruges SignalR til at sende opdaterede lagertal til alle tilsluttede webshops og WMS-skaerme oejeblikkeligt.</p></div></details>
-    <details class="faq-item"><summary>Kan jeg tilfoeje nye kanaler efterfoelgende?</summary><div class="faq-item__body"><p>Ja, forudsat WMS har faerdigbyggede integrationer til platformen. Typisk en konfigurations-opgave, ikke en kode-aendring.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg tilfoeje nye kanaler efterfoelgende?</summary><div class="faq-item__body"><p>Ja, forudsat WMS har fÃ¦rdigbyggede integrationer til platformen. Typisk en konfigurations-opgave, ikke en kode-aendring.</p></div></details>
   </div>
 </div></div>
 
@@ -182,6 +182,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er multi-channel lagerstyring?","acceptedAnswer":{"@type":"Answer","text":"Evnen til at modtage ordrer fra flere salgskanaler og behandle dem i eet samlet WMS med faelles lagerbeholdning."}},{"@type":"Question","name":"Hvad er en race-condition i lagerstyring?","acceptedAnswer":{"@type":"Answer","text":"Naar to ordrer behandles simultant for den samme vare. Loses med ojeblikkelig reservation og database-locking."}},{"@type":"Question","name":"Kan jeg tilfoeje nye kanaler efterfoelgende?","acceptedAnswer":{"@type":"Answer","text":"Ja, forudsat WMS har faerdigbyggede integrationer. Typisk en konfigurations-opgave."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er multi-channel lagerstyring?","acceptedAnswer":{"@type":"Answer","text":"Evnen til at modtage ordrer fra flere salgskanaler og behandle dem i eet samlet WMS med faelles lagerbeholdning."}},{"@type":"Question","name":"Hvad er en race-condition i lagerstyring?","acceptedAnswer":{"@type":"Answer","text":"Naar to ordrer behandles simultant for den samme vare. Loses med ojeblikkelig reservation og database-locking."}},{"@type":"Question","name":"Kan jeg tilfoeje nye kanaler efterfoelgende?","acceptedAnswer":{"@type":"Answer","text":"Ja, forudsat WMS har fÃ¦rdigbyggede integrationer. Typisk en konfigurations-opgave."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Multi-channel lagerstyring: eet lager, mange salgskanaler","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

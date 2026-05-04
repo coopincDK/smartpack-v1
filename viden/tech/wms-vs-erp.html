@@ -131,8 +131,8 @@
     <h2>Hvornaar er det et problem ikke at have begge?</h2>
     <ul>
       <li><strong>Over 200 ordrer om dagen:</strong> P&aring; dette niveau er manuel ordrehaandtering direkte ineffektiv. Fejlprocenten stiger, og pick-hastighed bliver en flaskehals.</li>
-      <li><strong>Flere lagermedarbejdere:</strong> Uden WMS har du ingen sporbarhed paa, hvem der plukkede hvad. Det goer fejlfinding til gaetvark.</li>
-      <li><strong>Kompleks lagertopologi:</strong> Mehrlagersystemer, pick-zoner, bulk-lokationer og pakningstationer kraever styring, som ERP ikke kan levere.</li>
+      <li><strong>Flere lagermedarbejdere:</strong> Uden WMS har du ingen sporbarhed pÃ¥, hvem der plukkede hvad. Det gÃ¸r fejlfinding til gaetvark.</li>
+      <li><strong>Kompleks lagertopologi:</strong> Mehrlagersystemer, pick-zoner, bulk-lokationer og pakningstationer krÃ¦ver styring, som ERP ikke kan levere.</li>
       <li><strong>Returnering og sporbarhed:</strong> Lot-/serienummerstyring og returnering med lokationsregistrering er WMS-domaene.</li>
     </ul>
 
@@ -147,15 +147,15 @@
       <li><strong>Overser masterdata-problemet:</strong> WMS og ERP skal have identiske varenumre, stregkoder og enheder.</li>
     </ul>
 
-    <h2>S&aring;dan goer du det rigtigt</h2>
+    <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
     <ol>
       <li><strong>Definer ejerskab klart:</strong> ERP ejer ordredata og oekonomi. WMS ejer lokationer og lageroperationer. Definer, hvem der er &quot;master&quot; for beholdningsdata.</li>
-      <li><strong>Prioriter realtidsintegration:</strong> Lagerstatus boer aldrig vaere mere end minutter forsinket. Batchkoersler fra nat til nat skaber oversalg og fejl i pluklister.</li>
+      <li><strong>Prioriter realtidsintegration:</strong> Lagerstatus bÃ¸r aldrig vÃ¦re mere end minutter forsinket. Batchkoersler fra nat til nat skaber oversalg og fejl i pluklister.</li>
       <li><strong>Test med reelle ordrescenarier:</strong> Enkeltlinje, multilinje, restordre, returordre. Ikke kun happy path.</li>
     </ol>
 
     <h2>SmartPack</h2>
-    <p>SmartPack er et WMS bygget til e-handel. Det integrerer direkte med ERP-systemer som Business Central og e-conomic via API og webhooks. Ordrer hentes automatisk, behandles i pluk/pak-flow med TSP-optimerede ruter, og afsendelsesstatus sendes tilbage til ERP i realtid. Lagertal opdateres via SignalR, saa ERP altid ser aktuelle tal.</p>
+    <p>SmartPack er et WMS bygget til e-handel. Det integrerer direkte med ERP-systemer som Business Central og e-conomic via API og webhooks. Ordrer hentes automatisk, behandles i pluk/pak-flow med TSP-optimerede ruter, og afsendelsesstatus sendes tilbage til ERP i realtid. Lagertal opdateres via SignalR, sÃ¥ ERP altid ser aktuelle tal.</p>
   </div>
   <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
 <div class="bottom-cta"><p>Vil du kombinere WMS og ERP uden dobbelt-registrering?</p><a href="../../kontakt" class="btn">Book demo</a></div>
@@ -165,11 +165,11 @@
     <a href="./wms-vs-excel" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">WMS vs. Excel</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
-    <details class="faq-item"><summary>Kan mit ERP erstatte et WMS?</summary><div class="faq-item__body"><p>Til simple lageroperationer: ja. Over 100-200 ordrer/dag med pluk p&aring; tvaers af lokationer: nej. ERP mangler plukoptimering, batch picking og medarbejder-tracking.</p></div></details>
+    <details class="faq-item"><summary>Kan mit ERP erstatte et WMS?</summary><div class="faq-item__body"><p>Til simple lageroperationer: ja. Over 100-200 ordrer/dag med pluk p&aring; tvÃ¦rs af lokationer: nej. ERP mangler plukoptimering, batch picking og medarbejder-tracking.</p></div></details>
     <details class="faq-item"><summary>Hvad koster det ikke at have WMS?</summary><div class="faq-item__body"><p>Primaert via fejlpluk (5-15x ekstraomkostning pr. fejlordre) og ineffektiv gangtid. Sekundaert via manglende sporbarhed og svaar skalerbarhed.</p></div></details>
-    <details class="faq-item"><summary>Kan WMS og ERP have forskellig beholdning?</summary><div class="faq-item__body"><p>Det sker, hvis integrationen ikke er realtids, eller hvis der er manuelle korrektioner i eet system. Det boer aktivere alarm, det er symptom p&aring; integrationsproblemer.</p></div></details>
-    <details class="faq-item"><summary>Hvornaar boer jeg implementere begge?</summary><div class="faq-item__body"><p>Senest ved 150-200 daglige ordrer eller ved foerste gang en lagermedarbejder ikke kan finde en vare p&aring; hylden.</p></div></details>
-    <details class="faq-item"><summary>Hvad er forskellen p&aring; batch picking og normal pluk?</summary><div class="faq-item__body"><p>Batch picking samler pluk fra flere ordrer i een lagerrunde. Det reducerer gangtid dramatisk, men kraever WMS til at styre sortering og fordeling. ERP kan ikke dette.</p></div></details>
+    <details class="faq-item"><summary>Kan WMS og ERP have forskellig beholdning?</summary><div class="faq-item__body"><p>Det sker, hvis integrationen ikke er realtids, eller hvis der er manuelle korrektioner i eet system. Det bÃ¸r aktivere alarm, det er symptom p&aring; integrationsproblemer.</p></div></details>
+    <details class="faq-item"><summary>Hvornaar bÃ¸r jeg implementere begge?</summary><div class="faq-item__body"><p>Senest ved 150-200 daglige ordrer eller ved fÃ¸rste gang en lagermedarbejder ikke kan finde en vare p&aring; hylden.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen p&aring; batch picking og normal pluk?</summary><div class="faq-item__body"><p>Batch picking samler pluk fra flere ordrer i een lagerrunde. Det reducerer gangtid dramatisk, men krÃ¦ver WMS til at styre sortering og fordeling. ERP kan ikke dette.</p></div></details>
   </div>
 </div></div>
 
@@ -178,6 +178,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kan mit ERP erstatte et WMS?","acceptedAnswer":{"@type":"Answer","text":"Til simple lageroperationer: ja. Over 100-200 ordrer/dag: nej. ERP mangler plukoptimering og batch picking."}},{"@type":"Question","name":"Hvornaar boer jeg implementere begge?","acceptedAnswer":{"@type":"Answer","text":"Senest ved 150-200 daglige ordrer eller ved foerste gang en lagermedarbejder ikke kan finde en vare."}},{"@type":"Question","name":"Hvad er forskellen p&aring; batch picking og normal pluk?","acceptedAnswer":{"@type":"Answer","text":"Batch picking samler pluk fra flere ordrer i een runde. Kraever WMS til styring af sortering og fordeling."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kan mit ERP erstatte et WMS?","acceptedAnswer":{"@type":"Answer","text":"Til simple lageroperationer: ja. Over 100-200 ordrer/dag: nej. ERP mangler plukoptimering og batch picking."}},{"@type":"Question","name":"Hvornaar bÃ¸r jeg implementere begge?","acceptedAnswer":{"@type":"Answer","text":"Senest ved 150-200 daglige ordrer eller ved fÃ¸rste gang en lagermedarbejder ikke kan finde en vare."}},{"@type":"Question","name":"Hvad er forskellen p&aring; batch picking og normal pluk?","acceptedAnswer":{"@type":"Answer","text":"Batch picking samler pluk fra flere ordrer i een runde. KrÃ¦ver WMS til styring af sortering og fordeling."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WMS vs. ERP: hvad er forskellen, og hvornaar skal du have begge?","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

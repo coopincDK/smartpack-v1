@@ -112,7 +112,7 @@
     <p>Det er konsekvensen af polling-baseret lagersync. Her er hvad der kraeves for at undgaa det.</p>
 
     <h2>Hvad er real-time inventory?</h2>
-    <p>Real-time inventory er et lagerbehandlingssystem, hvor lagertal altid afspejler den faktiske, aktuelle beholdning, opdateret inden for sekunder af enhver haendelse der aendrer det.</p>
+    <p>Real-time inventory er et lagerbehandlingssystem, hvor lagertal altid afspejler den faktiske, aktuelle beholdning, opdateret inden for sekunder af enhver haendelse der Ã¦ndrer det.</p>
     <p>Haendelser der skal opdatere lager i realtid:</p>
     <ul>
       <li>Salg modtaget (reservation)</li>
@@ -136,7 +136,7 @@
     <p><strong>Konklusion:</strong> Reservation ikke implementeret er den dyreste fejl. Oversalg er den hyppigste.</p>
 
     <h2>Teknologien bag: SignalR og push-arkitektur</h2>
-    <p>Traditionel polling: WMS beder webshopen &quot;vis mig lagertallet&quot; hvert 15. minut. Real-time push: WMS sender &quot;lagertallet er aendret&quot; oejeblikkeligt til alle tilsluttede systemer.</p>
+    <p>Traditionel polling: WMS beder webshopen &quot;vis mig lagertallet&quot; hvert 15. minut. Real-time push: WMS sender &quot;lagertallet er Ã¦ndret&quot; oejeblikkeligt til alle tilsluttede systemer.</p>
     <p><strong>SignalR</strong> er Microsofts teknologi til realtidskommunikation. Det muliggoer push-notifikationer fra server til klient via WebSocket. I lagerstyringssammenhaeng bruges SignalR til at opdatere badge-taellere, de tal der viser lagerantal i UIet, oejeblikkeligt, uden at nogen behoever at trykke &quot;Genindlaes&quot;.</p>
     <p>Naar en plukker scanner en vare, opdateres lagervisningen p&aring; webshop (Shopify, WooCommerce) via API-kald, WMS interne dashboard via SignalR, og evt. ERP via integration. Alt sker inden for sekunder af scanningen.</p>
 
@@ -149,7 +149,7 @@
     <p><strong>Faktisk lager:</strong> Hvad der fysisk er p&aring; hylderne.</p>
     <p><strong>Reserveret lager:</strong> Allerede bestilt, men ikke plukket endnu.</p>
     <p><strong>Disponibelt lager</strong> = Faktisk minus Reserveret. Det er det disponible lager webshopen skal vise kunderne. Mange systemer viser faktisk lager, og det foerer til oversalg.</p>
-    <p>Eksempel: Faktisk lager: 5 enheder. Reserveret (aabne ordrer): 3 enheder. Disponibelt: 2 enheder, det er hvad webshoppen boer vise.</p>
+    <p>Eksempel: Faktisk lager: 5 enheder. Reserveret (aabne ordrer): 3 enheder. Disponibelt: 2 enheder, det er hvad webshoppen bÃ¸r vise.</p>
 
     <h2>Realtidsopdatering i praksis</h2>
     <ol>
@@ -168,7 +168,7 @@
       <li><strong>Ikke opdatere alle kanaler:</strong> Lager opdateres i Shopify, men WooCommerce glemmes. Oversalg p&aring; den glemte kanal.</li>
     </ul>
 
-    <h2>S&aring;dan goer du det rigtigt</h2>
+    <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
     <ol>
       <li><strong>Implementer reservation ved ordremodtagelse:</strong> Fra det oejeblik ordren modtages i WMS, registreres en reservation.</li>
       <li><strong>Brug push-teknologi (webhooks/SignalR) til aendringer:</strong> Push er hurtigere og mere effektivt end polling.</li>
@@ -190,7 +190,7 @@
     <details class="faq-item"><summary>Hvad er SignalR, og hvad bruges det til?</summary><div class="faq-item__body"><p>Microsofts bibliotek til realtidskommunikation. Brugt i SmartPack til at opdatere lagervisning oejeblikkeligt i WMS UI, uden at brugeren behoever genindlaese.</p></div></details>
     <details class="faq-item"><summary>Hvad er forskel p&aring; faktisk og disponibelt lager?</summary><div class="faq-item__body"><p>Faktisk lager er det der fysisk er p&aring; hylden. Disponibelt lager er faktisk minus reserveret (aabne ordrer). Webshopen skal vise disponibelt for at undgaa oversalg.</p></div></details>
     <details class="faq-item"><summary>Hvornaar er forsinkelse i lageropdatering acceptabel?</summary><div class="faq-item__body"><p>For lavrotationsvarer med god beholdning: op til 15 minutters forsinkelse er ok. For bestsellere, kampagnevarer og multi-channel: aldrig.</p></div></details>
-    <details class="faq-item"><summary>Kan jeg aktivere real-time inventory efterfoelgende?</summary><div class="faq-item__body"><p>Ja, forudsat WMS understoetter reservation og push-integration. Det kraever konfigurations-aendring og test.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg aktivere real-time inventory efterfoelgende?</summary><div class="faq-item__body"><p>Ja, forudsat WMS understoetter reservation og push-integration. Det krÃ¦ver konfigurations-aendring og test.</p></div></details>
   </div>
 </div></div>
 
@@ -200,5 +200,5 @@
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er real-time inventory?","acceptedAnswer":{"@type":"Answer","text":"Lagertal der opdateres inden for sekunder af enhver aendring. Modsaetningen er polling-baserede systemer."}},{"@type":"Question","name":"Hvad er forskel p&aring; faktisk og disponibelt lager?","acceptedAnswer":{"@type":"Answer","text":"Faktisk lager er hvad der fysisk er p&aring; hylden. Disponibelt er faktisk minus reserveret. Webshopen skal vise disponibelt."}},{"@type":"Question","name":"Hvad er SignalR?","acceptedAnswer":{"@type":"Answer","text":"Microsofts bibliotek til realtidskommunikation. Bruges til at opdatere lagervisning oejeblikkeligt i WMS UI."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Real-time inventory: hvorfor lagertal aldrig maa vaere forsinket","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Real-time inventory: hvorfor lagertal aldrig maa vÃ¦re forsinket","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

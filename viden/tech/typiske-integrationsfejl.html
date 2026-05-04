@@ -108,8 +108,8 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Integrationen virker. Ordrer flyder ind, lager opdateres, pakker sendes. Og saa en dag opdager I, at 47 ordrer ikke er behandlet siden i gaar morges, og ingen vidste det. Det er integrationsfejlenes natur: de sker oftest usynligt, opdages sent og koster dyrt.</p>
-    <p>Her er de mest typiske fejl, hvad der forarsager dem, og hvad du goer ved det.</p>
+    <p>Integrationen virker. Ordrer flyder ind, lager opdateres, pakker sendes. Og sÃ¥ en dag opdager I, at 47 ordrer ikke er behandlet siden i gaar morges, og ingen vidste det. Det er integrationsfejlenes natur: de sker oftest usynligt, opdages sent og koster dyrt.</p>
+    <p>Her er de mest typiske fejl, hvad der forarsager dem, og hvad du gÃ¸r ved det.</p>
 
     <h2>Hvad er integrationsfejl?</h2>
     <p>En integrationsfejl opstaar, naar to systemer ikke kan kommunikere som forventet. Det kan skyldes tekniske problemer (server nede, netvaerksfejl, timeout), datamassige problemer (forkert format, manglende felt) eller logiske problemer (mapping-fejl, duplikater, timing-konflikter).</p>
@@ -137,17 +137,17 @@
 
     <h3>1. Webhook leveres ikke/ignoreres</h3>
     <p><strong>Hvad sker:</strong> Shopify sender webhook-event, men dit WMS er utilgaengeligt i det oejeblik (deployment, server-restart, netvaerksfejl). Eventet forsvinder.</p>
-    <p><strong>Aarsag:</strong> Manglende retry-haandtering, timeout under deployment, ingen koe som buffer.</p>
+    <p><strong>Ã…rsag:</strong> Manglende retry-haandtering, timeout under deployment, ingen koe som buffer.</p>
     <p><strong>Losning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra koen, ikke direkte fra webhook.</p>
 
     <h3>2. BC client secret udloeber</h3>
     <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
-    <p><strong>Aarsag:</strong> Business Central bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 aar. Det er den hyppigste aarsag til BC-integrationsnedbrud. De fleste virksomheder saetter det op og glemmer det.</p>
+    <p><strong>Ã…rsag:</strong> Business Central bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 aar. Det er den hyppigste Ã¥rsag til BC-integrationsnedbrud. De fleste virksomheder saetter det op og glemmer det.</p>
     <p><strong>Losning:</strong> Saet kalenderreminder 30 og 60 dage foer udloeb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. maaned.</p>
 
     <h3>3. Leveringsmetode-mapping fejler</h3>
     <p><strong>Hvad sker:</strong> Kunden vaelger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
-    <p><strong>Aarsag:</strong> Shopify bruger interne nogler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
+    <p><strong>Ã…rsag:</strong> Shopify bruger interne nogler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
     <p><strong>Losning:</strong> Gennemgaa og test alle leveringsmetode-mappings i staging-miljo inden go-live.</p>
 
     <h3>4. Delvis synkronisering af ordrelinjer</h3>
@@ -160,17 +160,17 @@
 
     <h3>6. e-conomic Grant Token er trukket tilbage</h3>
     <p><strong>Hvad sker:</strong> e-conomic-integration holder op med at virke. Ordrer hentes ikke, fakturakladder oprettes ikke.</p>
-    <p><strong>Aarsag:</strong> e-conomic bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratraadt medarbejder), invalideres tokenet.</p>
+    <p><strong>Ã…rsag:</strong> e-conomic bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratraadt medarbejder), invalideres tokenet.</p>
     <p><strong>Losning:</strong> Brug en servicebruger/systembruger i e-conomic til integration, ikke en personlig bruger.</p>
 
     <h2>Det opdager de fleste for sent</h2>
     <ul>
-      <li><strong>At BC client secret udloeber praecis 2 aar efter oprettelse:</strong> Microsoft sender INGEN advarsel. Foerste tegn: kunder ringer og spoerger hvorfor ordren ikke er afsendt.</li>
+      <li><strong>At BC client secret udloeber praecis 2 aar efter oprettelse:</strong> Microsoft sender INGEN advarsel. FÃ¸rste tegn: kunder ringer og spoerger hvorfor ordren ikke er afsendt.</li>
       <li><strong>At webhook-tab er usynlige:</strong> Shopify sender webhook, men dit system er nede i 12 sekunder under deployment. Webhook forsvinder. Ingen alarm. Ordren behandles aldrig.</li>
-      <li><strong>At e-conomic Grant Token invalideres naar brugeren slettes:</strong> Den medarbejder der oprettede integrationen er stoppet for 6 maaneder siden. Fakturaer oprettes ikke laengere. Bogholderiet opdager det ved maanedsafslutning.</li>
+      <li><strong>At e-conomic Grant Token invalideres naar brugeren slettes:</strong> Den medarbejder der oprettede integrationen er stoppet for 6 maaneder siden. Fakturaer oprettes ikke lÃ¦ngere. Bogholderiet opdager det ved maanedsafslutning.</li>
     </ul>
 
-    <h2>S&aring;dan goer du det rigtigt</h2>
+    <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
     <ol>
       <li><strong>Implementer integration health dashboard:</strong> Vis, hvornaar hver integration sidst koerte succesfuldt, antal behandlede events og eventuelle fejl.</li>
       <li><strong>Alert ved ingen aktivitet:</strong> Hvis en integration ikke har modtaget events i 30 minutter i arbejdstiden, send alert. Fravaeret af data er i sig selv et signal.</li>
@@ -189,10 +189,10 @@
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
     <details class="faq-item"><summary>Hvad er den farligste type integrationsfejl?</summary><div class="faq-item__body"><p>Stille fejl. Systemet rapporterer intet, men data overfoeres ikke. Det opdages typisk af kunder eller ved manuel optellingel. Dage kan gaa inden nogen opdager det.</p></div></details>
-    <details class="faq-item"><summary>Hvorfor udloeber BC client secret?</summary><div class="faq-item__body"><p>Microsoft kraever rotation af client secrets i Azure AD/Entra ID. Maksimal levetid er 2 aar. Det er en sikkerhedsforanstaltning der sniger sig op p&aring; dig uden reminder.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor udloeber BC client secret?</summary><div class="faq-item__body"><p>Microsoft krÃ¦ver rotation af client secrets i Azure AD/Entra ID. Maksimal levetid er 2 aar. Det er en sikkerhedsforanstaltning der sniger sig op p&aring; dig uden reminder.</p></div></details>
     <details class="faq-item"><summary>Hvad sker der, hvis en webhook sendes to gange?</summary><div class="faq-item__body"><p>Shopify sender retries ved manglende kvittering. Hvis dit system ikke er idempotent, oprettes der duplikat-ordrer. Implementer idempotency-nogler baseret p&aring; ordre-ID.</p></div></details>
-    <details class="faq-item"><summary>Kan jeg teste integrationer uden rigtige ordrer?</summary><div class="faq-item__body"><p>Ja. Shopify har &quot;Send test notification&quot; for webhooks. Business Central og e-conomic kan testes med testmiljoeer/sandbox. Brug altid sandbox ved opsaetning.</p></div></details>
-    <details class="faq-item"><summary>Hvad er delvis synkronisering, og hvad goer jeg ved det?</summary><div class="faq-item__body"><p>Kun dele af data overfoeres, fx ordren importeres men adresse mangler. Detekteres via validering ved import og fejlkoe med notifikation.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg teste integrationer uden rigtige ordrer?</summary><div class="faq-item__body"><p>Ja. Shopify har &quot;Send test notification&quot; for webhooks. Business Central og e-conomic kan testes med testmiljoeer/sandbox. Brug altid sandbox ved opsÃ¦tning.</p></div></details>
+    <details class="faq-item"><summary>Hvad er delvis synkronisering, og hvad gÃ¸r jeg ved det?</summary><div class="faq-item__body"><p>Kun dele af data overfoeres, fx ordren importeres men adresse mangler. Detekteres via validering ved import og fejlkoe med notifikation.</p></div></details>
   </div>
 </div></div>
 
@@ -201,6 +201,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den farligste type integrationsfejl?","acceptedAnswer":{"@type":"Answer","text":"Stille fejl. Systemet rapporterer intet men data overfoeres ikke. Opdages typisk af kunder."}},{"@type":"Question","name":"Hvorfor udloeber BC client secret?","acceptedAnswer":{"@type":"Answer","text":"Microsoft kraever rotation af client secrets med maksimal levetid p&aring; 2 aar."}},{"@type":"Question","name":"Hvad sker der, hvis en webhook sendes to gange?","acceptedAnswer":{"@type":"Answer","text":"Uden idempotency oprettes duplikat-ordrer. Implementer idempotency-nogler baseret p&aring; ordre-ID."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den farligste type integrationsfejl?","acceptedAnswer":{"@type":"Answer","text":"Stille fejl. Systemet rapporterer intet men data overfoeres ikke. Opdages typisk af kunder."}},{"@type":"Question","name":"Hvorfor udloeber BC client secret?","acceptedAnswer":{"@type":"Answer","text":"Microsoft krÃ¦ver rotation af client secrets med maksimal levetid p&aring; 2 aar."}},{"@type":"Question","name":"Hvad sker der, hvis en webhook sendes to gange?","acceptedAnswer":{"@type":"Answer","text":"Uden idempotency oprettes duplikat-ordrer. Implementer idempotency-nogler baseret p&aring; ordre-ID."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Typiske integrationsfejl i lagerstyring: og hvordan du undgaar dem","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

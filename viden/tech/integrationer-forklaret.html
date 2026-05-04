@@ -108,11 +108,11 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Mandag morgen kl. 08:47. Lagerchefen aabner WMS. 0 nye ordrer. Underligt, normalt 47 ordrer om natten. Tjekker Shopify: 52 ordrer. Webhook-integration fejlet kl. 23:34 soendag. Ingen alarm. 52 ordrer sidder i Shopify. WMS ved intet. Stille fejl. Opdages efter 9 timer.</p>
+    <p>Mandag morgen kl. 08:47. Lagerchefen Ã¥bner WMS. 0 nye ordrer. Underligt, normalt 47 ordrer om natten. Tjekker Shopify: 52 ordrer. Webhook-integration fejlet kl. 23:34 soendag. Ingen alarm. 52 ordrer sidder i Shopify. WMS ved intet. Stille fejl. Opdages efter 9 timer.</p>
     <p>Det er integrationsfejlenes natur: de sker oftest usynligt, opdages sent og koster dyrt. Her er hvad du skal vide om integrationer i lagerstyring.</p>
 
     <h2>Hvad er en integration?</h2>
-    <p>En integration er en automatiseret forbindelse mellem to systemer, der goer det muligt for dem at udveksle data uden manuel indgriben. I lagerstyringssammenhaeng er de vigtigste integrationer:</p>
+    <p>En integration er en automatiseret forbindelse mellem to systemer, der gÃ¸r det muligt for dem at udveksle data uden manuel indgriben. I lagerstyringssammenhaeng er de vigtigste integrationer:</p>
     <ul>
       <li><strong>Webshop til WMS:</strong> Ordrer sendes til WMS til behandling</li>
       <li><strong>WMS til Webshop:</strong> Fulfillment-status og tracking sendes tilbage</li>
@@ -123,11 +123,11 @@
 
     <h2>Integrationstyper: API vs. Webhook</h2>
     <p class="inline-cta">&#x1F449; SmartPack bruger event-drevet integration med fuld webhook-support. <a href="../../kontakt">Se SmartPacks integrationer</a></p>
-    <p>De to dominerende teknologier er <strong>API (pull)</strong> og <strong>Webhook (push)</strong>. De er ikke konkurrenter, de loser forskellige problemer og bruges ofte i kombination.</p>
+    <p>De to dominerende teknologier er <strong>API (pull)</strong> og <strong>Webhook (push)</strong>. De er ikke konkurrenter, de lÃ¸ser forskellige problemer og bruges ofte i kombination.</p>
 
     <h3>API, du spoerger, systemet svarer</h3>
     <p>API (Application Programming Interface) fungerer som et spoergsmaal-svar-system. Dit WMS sender en foresprorgsel til fx Shopify: &quot;Vis mig alle ubehandlede ordrer fra de seneste 10 minutter.&quot; Shopify svarer med en liste.</p>
-    <p>Det kraever: AppId og AccessToken (autentifikation), et endpoint (URL til APIet), og en planlagt hentning (polling), typisk hvert 1-5. minut. API egner sig godt til periodisk synkronisering, opslag og opdatering af lagertal.</p>
+    <p>Det krÃ¦ver: AppId og AccessToken (autentifikation), et endpoint (URL til APIet), og en planlagt hentning (polling), typisk hvert 1-5. minut. API egner sig godt til periodisk synkronisering, opslag og opdatering af lagertal.</p>
 
     <h3>Webhook, systemet fortaeller dig, naar noget sker</h3>
     <p>En webhook er en push-notifikation. Shopify sender dig automatisk en besked, naar en ordre oprettes, du behoever ikke spoerge. Det sker i realtid. Webhooks egner sig godt til: ordremodtagelse, betalingsbekraeftelse og statusopdateringer.</p>
@@ -139,7 +139,7 @@
     </ul>
 
     <h3>Filintegration, det tredje alternativ</h3>
-    <p>Aeldre systemer bruger stadig filbaseret integration: CSV- eller XML-filer udveksles via FTP/SFTP. Det er langsomt, fejlprone og svaert at monitorere, men det eksisterer saerligt i ERP-sammenhaeng.</p>
+    <p>Aeldre systemer bruger stadig filbaseret integration: CSV- eller XML-filer udveksles via FTP/SFTP. Det er langsomt, fejlprone og svaert at monitorere, men det eksisterer sÃ¦rligt i ERP-sammenhaeng.</p>
 
     <h2>Hvad koster integrationsfejl reelt?</h2>
     <table>
@@ -162,7 +162,7 @@
 
     <h2>Integrationsmoenstre i e-handel</h2>
     <p><strong>Synkron integration:</strong> System A kalder System B og venter p&aring; svar, foer det fortsaetter. Simpelt, men saarbart, hvis B er langsom bremser det A.</p>
-    <p><strong>Asynkron integration:</strong> System A sender beskeden og fortsaetter. Beskeden lander i en koe og behandles, naar B er klar. Mere robust, men kraever fejlhaandtering i koen.</p>
+    <p><strong>Asynkron integration:</strong> System A sender beskeden og fortsaetter. Beskeden lander i en koe og behandles, naar B er klar. Mere robust, men krÃ¦ver fejlhaandtering i koen.</p>
     <p><strong>Event-drevet integration:</strong> Haendelser som ordre oprettet, vare plukket og pakke afsendt trigger automatisk alle relevante systemer. Det er den mest skalerbare arkitektur.</p>
 
     <h2>Typiske fejl</h2>
@@ -173,9 +173,9 @@
       <li><strong>Ignorer integration health monitoring:</strong> Uden monitoring ved du ikke, hvornaar en integration sidst koerte succesfuldt.</li>
     </ul>
 
-    <h2>S&aring;dan goer du det rigtigt</h2>
+    <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
     <ol>
-      <li><strong>Log alt:</strong> Hvert API-kald og webhook-modtagelse boer logges med timestamp, payload og respons-kode.</li>
+      <li><strong>Log alt:</strong> Hvert API-kald og webhook-modtagelse bÃ¸r logges med timestamp, payload og respons-kode.</li>
       <li><strong>Brug idempotente endpoints:</strong> Hvis samme webhook leveres to gange, maa systemet ikke oprette to ordrer.</li>
       <li><strong>Adskil systemer med en message queue:</strong> En koe beskytter mod spikes og giver buffer ved kortvarige nedbrud.</li>
     </ol>

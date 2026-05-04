@@ -108,7 +108,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Shopify er det nemmeste sted at starte. Det er ogsaa det sted, hvor integrationen har flest gotchas du ikke stoeder paa, foer du er i produktion. Custom shipping-metoder, leveringsmetode-mapping, HMAC-validering, fulfillment-flow, det er detaljer, der sender dit system i groeften, hvis du ikke kender dem.</p>
+    <p>Shopify er det nemmeste sted at starte. Det er ogsaa det sted, hvor integrationen har flest gotchas du ikke stoeder pÃ¥, foer du er i produktion. Custom shipping-metoder, leveringsmetode-mapping, HMAC-validering, fulfillment-flow, det er detaljer, der sender dit system i groeften, hvis du ikke kender dem.</p>
     <p>Her er det du rent faktisk skal vide, inklusive de fejl der koster mest naar de opdages i produktion.</p>
 
     <h2>Hvad er Shopify-integration med WMS?</h2>
@@ -119,14 +119,14 @@
     </ul>
     <p>Integrationen bruger to mekanismer: Webhooks (push, Shopify sender ordre-events til WMS i realtid) og REST API (pull, WMS henter periodisk ordrer og opdaterer lager).</p>
 
-    <h2>Opsaetning trin for trin</h2>
-    <p class="inline-cta">&#x1F449; SmartPack har praekonfigureret Shopify-integration klar til opsaetning p&aring; minutter. <a href="../../kontakt">Book demo</a></p>
+    <h2>OpsÃ¦tning trin for trin</h2>
+    <p class="inline-cta">&#x1F449; SmartPack har praekonfigureret Shopify-integration klar til opsÃ¦tning p&aring; minutter. <a href="../../kontakt">Book demo</a></p>
 
     <h3>Trin 1: Opret Custom App i Shopify</h3>
     <p>I Shopify Admin, Apps, App and sales channel settings, Develop apps: Opret ny custom app og tildel scopes: <code>read_orders</code>, <code>write_fulfillments</code>, <code>read_inventory</code>, <code>write_inventory</code>. Generer API-nogler: Admin API access token bruges som AccessToken.</p>
 
     <h3>Trin 2: Konfigurer webhooks</h3>
-    <p>Registrer webhooks for relevante events: <code>orders/create</code>, <code>orders/cancelled</code>, <code>orders/updated</code>, <code>app/uninstalled</code>. Endpoint skal vaere HTTPS. Test webhook-levering via Shopify Admin: Send test notification.</p>
+    <p>Registrer webhooks for relevante events: <code>orders/create</code>, <code>orders/cancelled</code>, <code>orders/updated</code>, <code>app/uninstalled</code>. Endpoint skal vÃ¦re HTTPS. Test webhook-levering via Shopify Admin: Send test notification.</p>
 
     <h3>Trin 3: HMAC-validering i WMS</h3>
     <p>Shopify webhook-secret genereres i app-konfigurationen. WMS skal validere hvert indkommende webhook: <code>computed = Base64(HMAC-SHA256(raw_body, webhook_secret))</code>. Hvis computed ikke matcher request-headeren <code>X-Shopify-Hmac-Sha256</code>, returner 401. Aldrig skip denne validering i produktion.</p>
@@ -155,8 +155,8 @@
     <h2>Det opdager de fleste for sent</h2>
     <ul>
       <li><strong>At <code>shopify_custom_dk</code> IKKE er en fejl:</strong> Det er Shopifys interne reference for custom shipping rates. Mange tror det er en bug. Resultatet: mapping fejler, ordrer strander.</li>
-      <li><strong>At location_id aendrer sig naar du flytter fra staging til produktion:</strong> Du hardkoder location_id fra test-shop. Gaar live. Alle fulfillments fejler med &quot;location not found&quot;.</li>
-      <li><strong>At Shopify API-versioner udfases efter 12 maaneder:</strong> Integrationen bryder naar Shopify udfaser versionen. Det opdages naar ordrer ikke laengere importeres.</li>
+      <li><strong>At location_id Ã¦ndrer sig naar du flytter fra staging til produktion:</strong> Du hardkoder location_id fra test-shop. Gaar live. Alle fulfillments fejler med &quot;location not found&quot;.</li>
+      <li><strong>At Shopify API-versioner udfases efter 12 maaneder:</strong> Integrationen bryder naar Shopify udfaser versionen. Det opdages naar ordrer ikke lÃ¦ngere importeres.</li>
     </ul>
 
     <h2>Typiske fejl</h2>
@@ -166,9 +166,9 @@
       <li><strong>API-version ikke specificeret:</strong> Shopify APIer versioneres. Bruger du ikke versioneret endpoint, kan breaking changes ramme din integration uden varsel.</li>
     </ul>
 
-    <h2>S&aring;dan goer du det rigtigt</h2>
+    <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
     <ol>
-      <li><strong>Brug Shopifys sandbox:</strong> Test altid ny opsaetning i en development store inden produktion.</li>
+      <li><strong>Brug Shopifys sandbox:</strong> Test altid ny opsÃ¦tning i en development store inden produktion.</li>
       <li><strong>Abonner p&aring; Shopify changelog:</strong> Shopify udfaser API-versioner hvert aar. Hold styr p&aring; deprecation-datoer.</li>
       <li><strong>Implementer order reconciliation:</strong> Koer daglig sammenligning: har alle Shopify-ordrer fra i gaar en tilsvarende WMS-ordre?</li>
     </ol>
@@ -198,5 +198,5 @@
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er shopify_custom_dk?","acceptedAnswer":{"@type":"Answer","text":"Den interne Shopify-reference for brugerdefinerede leveringsmetoder. Skal mappes korrekt i WMS."}},{"@type":"Question","name":"Hvad kraeves for at integrere Shopify med et WMS?","acceptedAnswer":{"@type":"Answer","text":"En custom app med korrekte scopes, webhook-konfiguration med HMAC-validering og leveringsmetode-mapping."}},{"@type":"Question","name":"Hvad er Shopify API-versioner?","acceptedAnswer":{"@type":"Answer","text":"Shopify versionerer sit API kvartalsvis. Aeldre versioner udfases med 12 maaneders varsel."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Shopify integration med WMS: komplet opsaetningsguide","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Shopify integration med WMS: komplet opsÃ¦tningsguide","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>
