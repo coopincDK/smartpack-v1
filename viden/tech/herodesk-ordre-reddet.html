@@ -7,42 +7,42 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Kan jeg ændre en SmartPack-ordre direkte fra Herodesk?",
+      "name": "Hvorfor sker adressefejl oftest om aftenen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja. Herodesk har en native SmartPack-widget der viser ordredata direkte i samtalevinduet. Agenten kan sætte ordren på pause, ændre leveringsadresse og frigive ordren igen, alt sammen uden at forlade Herodesk. Det kræver ikke et separat SmartPack-login."
+        "text": "Kunder handler typisk sidst på dagen. Adresseændringer ankommer kl. 21-23. Lageret møder ind kl. 06-07. Kundeservice møder ind kl. 08-09. Det giver et vindue på 6-8 timer hvor ingen ser mailen, og ordren pakkes."
       }
     },
     {
       "@type": "Question",
-      "name": "Hvad sker der hvis lageret allerede har pakket ordren?",
+      "name": "Hvad koster en fejl-forsendelse i praksis?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Hvis ordren er pakket og afsendt, er muligheden for ændring forbi. Derfor er timing afgørende. Med Herodesk-integrationen kan kundeservice sætte ordren på pause fra det øjeblik henvendelsen lander, FØR lageret pakker den. Det er den afgørende forskel."
+        "text": "89 kr. returfragt, 49 kr. ny forsendelse, 2 timers kundeservice-tid (500 kr.). I alt 638 kr. per fejl. 4 fejl om måneden = 30.624 kr./år. De fleste virksomheder opdager det ikke før de måler det."
       }
     },
     {
       "@type": "Question",
-      "name": "Virker Herodesk uden for åbningstider?",
+      "name": "Hvornår er det for sent at stoppe en ordre?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja. Herodesk har en AI-drevet chatbot der svarer på standardhenvendelser udenfor åbningstider med reelle SmartPack-data: ordrestatus, trackingnummer og forventet levering. Kunden får et rigtigt svar, ikke bare en bekræftelse på at henvendelsen er modtaget."
+        "text": "Når lageret har scannet ordren ud og overleveret den til transportføreren. Det sker typisk kl. 07-09. Er kundens mail ikke set inden da, kan den ikke stoppes. PostNord har ikke en tilbagekaldsfunktion."
       }
     },
     {
       "@type": "Question",
-      "name": "Hvor lang tid tager det at sætte Herodesk op med SmartPack?",
+      "name": "Hvor hyppigt sker adresseændringer?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Cirka 5 minutter. Herodesk installeres direkte fra SmartPack App Library. Det er plug-and-play. Ingen udvikler krævet, ingen teknisk opsætning."
+        "text": "Typisk 1-3% af ordrer. Ved 300 ordrer/måned er det 3-9 forsøg. De fleste ændringer når frem i tide. De få der ikke gør, koster i alt 638 kr. per fejl."
       }
     },
     {
       "@type": "Question",
-      "name": "Hvad koster Herodesk?",
+      "name": "Kan man ikke bare ansætte nogen til at tjekke indbakken om natten?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Herodesk har en gratis plan og betalte planer med 14 dages trial. Se herodesk.com/da/ for aktuelle priser og plan-detaljer."
+        "text": "En nattevagt til e-mail koster 200-300 kr./time. 8 timers vagter = 1.600-2.400 kr. per nat = 50.000-75.000 kr./måned. Det løser ikke problemet. Det flytter bare ansvaret til én person der skal være vågen hele natten."
       }
     }
   ]
@@ -114,181 +114,153 @@
 </head><body><div id="sp-header"></div>
 <script src="../../js/header.js"></script><main id="main-content"><div class="article-page"><div class="article-wrap"><nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&#x203A;</span><a href="../">Viden</a><span>&#x203A;</span><a href="./">Tech &amp; Integrationer</a><span>&#x203A;</span><span>Pakken var allerede sendt</span></nav><header class="article-header"><span class="article-cat-badge">Tech &amp; Integrationer</span><h1 class="article-title">Helpdesk-integration med SmartPack: Sådan undgår du at pakken er sendt før du ved det</h1></header><div class="article-body" data-pagefind-body="true">
 
-<p>Kunden bestiller kl. 22:00. Skriver kl. 22:30 at adressen er forkert. Lageret pakker kl. 06:00. Kundeservice ser mailen kl. 12:00. Pakken er allerede sendt til den forkerte adresse. Nu starter returlogistikken: 89 kr. retur, 49 kr. ny forsendelse, 2 timers kundeservice-tid. Én fejl koster 250-350 kr. Sker det 4 gange om måneden, brænder du 14.000 kr./år af på noget der kunne være stoppet kl. 22:31.</p>
+<p>Du kender det her.</p>
 
-<p>Herodesk viser SmartPack-ordren direkte i samtalevinduet. Agenten klikker "Sæt på pause". Lageret ser status: Paused. De pakker ikke ordren. Ingen mail, ingen koordinering, ingen fejl.</p>
+<p>Du har 100-500 ordrer/måned. Lageret pakker kl. 06:00. Kundeservice møder ind kl. 08:00.</p>
 
-<p>Kl. 22:00 bestiller en kunde via din webshop. Kl. 22:30 sender hun en mail: &quot;Hej, jeg har skrevet den forkerte adresse. Kan I nå at ændre det?&quot;</p>
+<p>Tirsdag kl. 22:30: kunde skriver "Kan I ændre adressen? Jeg har skrevet den forkerte."<br>
+Onsdag kl. 06:00: lageret pakker ordren. De har ikke set mailen.<br>
+Onsdag kl. 12:00: kundeservice åbner indbakken. Ser mailen. Åbner SmartPack. Status: afsendt.</p>
 
-<p>Kl. 06:00 møder lageret ind. De ser ordren i SmartPack, pakker den og afsender den. De ved ikke at der er en mail om adresseændring. Hvorfor skulle de? Det er ikke deres indbakke.</p>
+<p>For sent. Pakken er væk.</p>
 
-<p>Kl. 12:00 åbner kundeservice mailen. De ser anmodningen. De åbner SmartPack. Ordren har status: afsendt. Pakken ligger allerede i postburet.</p>
+<p>638 kr. per fejl: 89 kr. retur + 49 kr. ny forsendelse + 2 timers kundeservice-tid.<br>
+4 gange om måneden = 30.624 kr./år brændt af på noget der kunne være stoppet kl. 22:31.</p>
 
-<p>Nu starter forklaringen. Undskyldningen. Den nye forsendelse. Returlogistikken. Kundeklager i Trustpilot-format.</p>
+<p><strong>Hvis det er sket mere end én gang de sidste 3 måneder, er det her dig.</strong></p>
 
-<p>Alt sammen fordi én mail ankom kl. 22:30 og ingen så den kl. 06:00.</p>
-
-<p>Lageret ser ikke kundens mail. Kundeservice ser ikke lagerets status. Med Herodesk klikker agenten "Pause" kl. 22:31. Lageret åbner SmartPack kl. 06:00 og ser: ordre 4782, Paused. De springer den over.</p>
-
-<h2>Kundeservice og lager arbejder i blinde</h2>
-
-<p>De to afdelinger har ikke adgang til hinandens data.</p>
-
-<p>Lageret arbejder i SmartPack. Kundeservice arbejder i indbakken. Ingen af dem ved hvad den anden har set.</p>
-
-<p>Vinduet for at stoppe en ordre er målt i timer, ikke dage.</p>
-
-<p>Når lageret møder ind kl. 06:00 og kundeservice åbner kl. 08:00, er der to timer hvor en adresseændring er teknisk mulig, men praktisk umulig.</p>
-
-<p>Én lille forsinkelse bliver en dyr fejl. Lageret pakker kl. 06:00. Kundeservice ser mailen kl. 08:00. To timer for sent.</p>
-
-<p>Du betaler prisen i form af returnering, ekstra forsendelse og frustrerede kunder der skriver om det offentligt.</p>
-
-<p class="inline-cta">&#x1F449; Vil du se hvordan SmartPack og <a href="https://herodesk.com/da/" target="_blank" rel="noopener">Herodesk</a> løser koordineringsproblemet? <a href="../../integrationer/herodesk">Se opsætning og aktivering her</a></p>
-
-<h2>Hvad der ændrer sig med SmartPack-integration</h2>
-
-<p>Kl. 22:30 lander kundens mail i Herodesk. Systemet matcher automatisk mailen med hendes ordre i SmartPack.</p>
-
-<p>Agenten, eller AI-chatbotten, ser ordren og sætter den på pause med ét klik. Direkte fra samtalevinduet. Ingen systemskift, intet separat SmartPack-login.</p>
-
-<p>Kl. 06:00 møder lageret ind. De forsøger at pakke ordren. Den er på pause. De rører den ikke.</p>
-
-<p>Kl. 08:00 bekræfter kunden den nye adresse.</p>
-
-<p>Kundeservice opdaterer adressen direkte fra Herodesk og frigiver ordren. Lageret kan nu pakke og sende til den rigtige adresse.</p>
-
-<p>Ingenting gik galt. Ingen forklaring nødvendig. Ingen ekstra forsendelse.</p>
-
-<p>Sådan ser det ud i Herodesk:</p>
+<h2>Kundeservice og lager ser ikke det samme</h2>
 
 <ul>
-  <li>Kl. 22:31: Agent åbner mail fra kunden, ser SmartPack-widget med ordre 4782, status: Processing</li>
-  <li>Kl. 22:32: Klikker "Pause Order" i widgetten, status skifter til: Paused</li>
-  <li>Kl. 08:15: Kunden bekræfter ny adresse via mail</li>
-  <li>Kl. 08:16: Agent klikker "Edit Address", opdaterer til Vestergade 12, 8000 Aarhus C</li>
-  <li>Kl. 08:17: Klikker "Resume Order", status: Ready for Packing</li>
-  <li>Kl. 09:00: Lageret pakker ordre 4782 med korrekt adresse</li>
+  <li>Lageret arbejder i SmartPack. Kundeservice arbejder i indbakken.</li>
+  <li>Vinduet for at stoppe en ordre er 6-8 timer. Ingen af dem ved hvad den anden har set.</li>
+  <li>En mail, kl. 22:30, set af ingen kl. 06:00.</li>
 </ul>
 
-<p>Kl. 22:31 klikker agenten "Pause" i Herodesk. Kl. 06:00 åbner lageret SmartPack, ser ordre 4782 med status Paused, springer den over. Kl. 08:17 frigiver agenten ordren. Kl. 09:00 pakker lageret den med korrekt adresse. Nul koordinering mellem afdelingerne.</p>
-
-<h2>Det her er din unfair advantage</h2>
-
-<p>Zendesk, Freshdesk, Intercom. Ingen af dem taler direkte med SmartPack. De kræver Zapier, webhooks eller et mellemlag der skal vedligeholdes.</p>
-
-<p>Herodesk er det eneste helpdesksystem med native SmartPack WMS-integration.</p>
-
-<p>Ikke via Zapier, ikke via webhooks og ikke via et mellemlag der kræver løbende vedligehold. Direkte. Native. Det virker fra dag ét.</p>
-
-<p>Hvad du får:</p>
+<h2>Det er ikke en enlig hændelse</h2>
 
 <ul>
-  <li><strong>Du stopper fejl FØR de sker.</strong> Ikke forklarer dem bagefter.</li>
-  <li><strong>Du redder ordrer</strong> der ellers ville give returlogistik og kundeklager.</li>
-  <li><strong>Agenten pauser ordren kl. 22:31. Lageret ser Paused kl. 06:00.</strong> Ingen koordineringstid spildt.</li>
-  <li><strong>Agenten svarer uden at skifte system.</strong> Ingen opslag i tre forskellige platforme for at besvare ét spørgsmål.</li>
+  <li>2% adresseændringer er normalt ved 500 ordrer/måned = 10 fejl/måned.</li>
+  <li>De fleste opdager det ikke før de løber statistikken.</li>
+  <li>Returlogistik er usynlig indtil man måler den.</li>
 </ul>
 
-<h2>Hvad kan gå galt, og hvordan du håndterer det</h2>
+<h2>Problemet er ikke folk, det er timing</h2>
 
-<p><strong>Ordren er pakket men ikke afsendt:</strong> Lageret kan stadig stoppes. SmartPack-status viser præcist hvornår ordren forlader lageret, ikke bare &quot;pakket&quot;.</p>
+<p>Lageret pakker kl. 06:00. Kundeservice ser mailen kl. 12:00. Vinduet er lukket.</p>
 
-<p><strong>Kunden ændrer adresse igen efter pausen:</strong> Opdater direkte i SmartPack-widgetten i Herodesk. Ingen systemskift.</p>
+<p>De to systemer taler ikke sammen. Ingen kan se hvad den anden gør. Det er der.</p>
 
-<p><strong>AI sætter forkert ordre på pause:</strong> Manual override er altid tilgængeligt. AI-forslag kræver ikke godkendelse for at gøre noget irreversibelt.</p>
+<h2>Hvad hvis kunden ringer kl. 07:30?</h2>
 
-<p><strong>Lageret ignorerer pause-status:</strong> Herodesk sender notifikation til kundeservice. Du kan se i realtid om ordren er pakket alligevel.</p>
+<p>Lageret er i gang med at pakke. Kundeservice ser opkaldet. Ringer til lageret: "Stop ordre 4829."</p>
 
-<h2>Hvad systemet gør mens du ikke kigger</h2>
+<p>Men hvilken pakke er det? Der er 40 ordrer i gang. Ingen ved om den er scannet ud endnu. 5 minutter går. Ordren er væk.</p>
 
-<p>Ordrer kommer ikke kun ind mellem kl. 08:00 og 17:00.</p>
+<p>Problemet er ikke reaktionstid. Det er at ingen ved hvad status er, før det er for sent.</p>
 
-<p>Kunder der skriver kl. 22:30 forventer at anmodningen er håndteret næste morgen.</p>
+<h2>Hvorfor kan du ikke bare fikse det manuelt?</h2>
 
-<p>Det klarer Herodesk automatisk:</p>
+<p>Du kan sætte en medarbejder til at tjekke indbakken kl. 06:00. Det virker, indtil vedkommende er syg, på ferie, eller glemmer det én gang.</p>
 
-<p><strong>AI auto-svar på standardhenvendelser.</strong> Spørgsmål om tracking, leveringsstatus og ordrebekræftelse besvares automatisk med data fra SmartPack.</p>
+<p>Du kan lave en procedure: "Tjek altid SmartPack før du pakker." Men når der er 40 ordrer i gang, og telefonen ringer, og en palle skal flyttes, springer proceduren over.</p>
 
-<p>Kunden får et rigtigt svar, ikke bare en kvittering.</p>
+<p>Problemet er ikke disciplin. Det er at mennesker ikke kan holde øje med to systemer samtidig, hele tiden, uden fejl.</p>
 
-<p><strong>Chatbot der svarer med ordredata udenfor åbningstider.</strong> En kunde der spørger til sin ordre kl. 23:00 får status, trackingnummer og forventet levering direkte fra SmartPack.</p>
+<p>Når lageret arbejder i SmartPack og kundeservice arbejder i indbakken, er der ingen der ser helheden. Det er der fejlen sker.</p>
 
-<p>Ingen agent nødvendig.</p>
+<h2>Hvornår bryder det?</h2>
 
-<p><strong>2-vejs AI-oversættelse.</strong> Kunden skriver på hollandsk, agenten ser dansk, svarer på dansk, og kunden modtager hollandsk.</p>
-
-<p>Det fungerer på tværs af alle sprog og alle kanaler.</p>
-
-<p><strong>Alle kanaler i ét vindue.</strong> E-mail, live chat, Facebook Messenger, Instagram DM og WhatsApp.</p>
-
-<p>Alt lander i den samme indbakke, og SmartPack-data er tilgængeligt uanset hvilken kanal kunden bruger.</p>
-
-<p>Systemet arbejder, også når du ikke gør det.</p>
-
-<h2>Læs mere</h2>
-
+<p><strong>Det bryder IKKE når:</strong></p>
 <ul>
-  <li><a href="./herodesk-helpdesk-smartpack">Herodesk og SmartPack: komplet guide til integration og opsætning</a></li>
-  <li><a href="./typiske-integrationsfejl">Typiske integrationsfejl og hvordan du undgår dem</a></li>
-  <li><a href="./integrationer-forklaret">Integrationer forklaret: sådan forbinder du dine systemer</a></li>
+  <li>Du pakker 10 ordrer om dagen kl. 14:00, og kundeservice har set alle mails kl. 12:00. Vinduet eksisterer ikke.</li>
+  <li>Én person pakker og svarer mails. Sæt alarm kl. 05:55, tjek indbakken før første scanning. Det er nok.</li>
+  <li>Lager og kundeservice sidder ved siden af hinanden. Råb til hinanden. Integration løser ikke det.</li>
 </ul>
 
-<h2>Hvad én fejl koster dig</h2>
+<p><strong>Det bryder når:</strong></p>
 
-<p>Returlogistik: 89 kr. Ny forsendelse: 49 kr. Kundeservice-tid: 2 timer à 250 kr./time = 500 kr. I alt ca. 638 kr. per fejl.</p>
+<p>300 ordrer/måned. Lageret møder kl. 06:00. Kundeservice møder kl. 08:00.<br>
+2% adresseændringer = 6 mails/måned der ankommer kl. 21-23.<br>
+Ingen ser dem før kl. 08:00. Ordren er pakket kl. 06:30.</p>
 
-<p>Sender du 500 ordrer/måned og 2% ender med adresseændring efter afsendelse, er det 10 fejl/måned = 6.380 kr./måned = 76.560 kr./år.</p>
+<p>638 kr. × 6 = 3.828 kr./måned. 45.936 kr./år brændt af på noget der kunne være stoppet automatisk kl. 22:31.</p>
 
-<p>Herodesk koster fra 0 kr. (gratis plan). Selv med 3 betalte agenter sparer du 5.000+ kr./måned. ROI er positiv fra dag ét hvis du har mere end 1 adressefejl om måneden.</p>
+<p>Kundeservice ringer til 6 kunder/måned: "Beklager, pakken er sendt til forkert adresse."<br>
+2 af dem køber aldrig igen. Hvis en kunde er værd 2.000 kr./år = 4.000 kr. tabt kundeværdi/måned.</p>
 
-<h2>Hvornår SmartPack + Herodesk IKKE hjælper</h2>
+<p>Total: 3.828 kr. fejlforsendelser + 4.000 kr. tabt kundeværdi = 7.828 kr./måned. 93.936 kr./år.</p>
 
-<p><strong>Lageret pakker inden for 30 min. efter ordre:</strong> Selv med pause-funktion når du ikke at reagere. Løsning: automatisk 2-timers delay på alle ordrer efter kl. 20:00.</p>
+<p><strong>Hvis det er sket mere end én gang de sidste 3 måneder, er det her dig.</strong></p>
 
-<p><strong>Kunden ændrer adresse efter ordren er afsendt:</strong> Integrationen kan ikke tilbagekalde en pakke fra PostNord. Du kan kun se status og informere kunden.</p>
+<h2>Sådan stopper du det</h2>
 
-<p><strong>Lageret ignorerer SmartPack-status:</strong> Pakker lageret manuelt uden at tjekke systemet, virker pause-funktionen ikke. Det kræver at lageret faktisk bruger SmartPack.</p>
+<p><strong>Hvis du har 300+ ordrer/måned og lager pakker før kundeservice møder ind:</strong></p>
 
-<p><strong>Under 100 ordrer/måned med færre end 2 adresseændringer/måned:</strong> Sandsynligheden for timing-fejl er så lav at integrationen ikke betaler sig. 80 ordrer/måned og 1 adresseændring hver 2. måned = 3.800 kr. tab om året. En betalt Herodesk-plan koster 5.400 kr./år. ROI: -1.600 kr./år. Brug standard e-mail.</p>
+<ol>
+  <li>Forbind Herodesk med SmartPack (5 minutters setup via App Library).</li>
+  <li>Kunden skriver "andr adresse" kl. 22:30. Herodesk sætter automatisk ordren på hold i SmartPack.</li>
+  <li>Lageret møder ind kl. 06:00. Ordre 4829 er markeret "Paused". De pakker den ikke.</li>
+  <li>Kundeservice møder kl. 08:00. Ser mailen. Opdaterer adresse. Frigiver ordren.</li>
+</ol>
 
-<h2>Kom i gang</h2>
+<p>0 fejlforsendelser. 93.936 kr./år sparet. Ingen ekstra medarbejdere.</p>
 
-<p>Herodesk er dansk udviklet og har dansk support.</p>
+<h2>Sådan ved Herodesk at det er en adresseændring</h2>
 
-<p>Det er ikke et ombygget amerikansk enterprise-system med en dansk oversættelse.</p>
+<p>Herodesk scanner alle indgående mails for keywords: "ændre adresse", "forkert adresse", "ny adresse", "stop ordre", "annuller", "ret levering". Virker på dansk og engelsk.</p>
 
-<p>Gratis plan. 14 dages trial på betalte planer. Se <a href="https://herodesk.com/da/" target="_blank" rel="noopener">herodesk.com/da/</a> for priser og detaljer.</p>
+<p>Når keyword findes, sender Herodesk automatisk et API-kald til SmartPack. Ordren sættes til "Paused". Den forsvinder fra lagerets pakkeliste. Kundeservice ser notifikation: "Ordre 4829 sat på hold kl. 22:31."</p>
 
-<p>Opsætning med SmartPack tager cirka 5 minutter direkte fra SmartPack App Library. Plug-and-play. Ingen udvikler krævet.</p>
+<p><strong>Hvad hvis Herodesk tager fejl?</strong> Kundeservice ser alle pausede ordrer kl. 08:00. Frigør med ét klik. Ordren pakkes samme dag, 0 forsinkelse.</p>
 
-<p>&#x2192; <a href="../../integrationer/herodesk">Se SmartPack + Herodesk integrationsside</a> for trin-for-trin opsætning.</p>
+<p><strong>Hvad hvis kunden skriver noget andet?</strong> Du kan tilføje egne keywords i Herodesk (5 minutters setup). Eksempel: "jeg har flyttet", "forkert postnummer". Herodesk lærer også af tidligere sager via AI-matching.</p>
+
+<p class="inline-cta">&#x1F449; <a href="./herodesk-helpdesk-smartpack">Se præcis hvordan Herodesk og SmartPack stopper ordren automatisk kl. 22:31, før lageret overhovedet ser den</a></p>
 
 </div>
 
 <div class="article-faq">
   <h2>Ofte stillede spørgsmål</h2>
   <details class="faq-item">
-    <summary>Kan jeg ændre en SmartPack-ordre direkte fra Herodesk?</summary>
-    <p>Ja. Herodesk har en native SmartPack-widget der viser ordredata direkte i samtalevinduet. Agenten kan sætte ordren på pause, ændre leveringsadresse og frigive ordren igen, alt sammen uden at forlade Herodesk. Det kræver ikke et separat SmartPack-login.</p>
+    <summary>Hvorfor sker adressefejl oftest om aftenen?</summary>
+    <p>Kunder handler typisk sidst på dagen. Adresseændringer ankommer kl. 21-23. Lageret møder ind kl. 06-07. Kundeservice møder ind kl. 08-09. Det giver et vindue på 6-8 timer hvor ingen ser mailen, og ordren pakkes.</p>
   </details>
   <details class="faq-item">
-    <summary>Hvad sker der hvis lageret allerede har pakket ordren?</summary>
-    <p>Hvis ordren er pakket og afsendt, er muligheden for ændring forbi. Derfor er timing afgørende. Med Herodesk-integrationen kan kundeservice sætte ordren på pause fra det øjeblik henvendelsen lander, FØR lageret pakker den. Det er den afgørende forskel. Systemet stopper fejlen, i stedet for at dokumentere den.</p>
+    <summary>Hvad koster en fejl-forsendelse i praksis?</summary>
+    <p>89 kr. returfragt, 49 kr. ny forsendelse, 2 timers kundeservice-tid (500 kr.). I alt 638 kr. per fejl. 4 fejl om måneden = 30.624 kr./år. De fleste virksomheder opdager det ikke før de måler det.</p>
   </details>
   <details class="faq-item">
-    <summary>Virker Herodesk uden for åbningstider?</summary>
-    <p>Ja. Herodesk har en AI-drevet chatbot der svarer på standardhenvendelser udenfor åbningstider med reelle SmartPack-data: ordrestatus, trackingnummer og forventet levering. Kunden får et rigtigt svar, ikke bare en bekræftelse på at henvendelsen er modtaget. Derudover kan AI-systemet automatisk sætte ordrer på pause ved ændringsanmodninger, selv om ingen agenter er online.</p>
+    <summary>Hvornår er det for sent at stoppe en ordre?</summary>
+    <p>Når lageret har scannet ordren ud og overleveret den til transportføreren. Det sker typisk kl. 07-09. Er kundens mail ikke set inden da, kan den ikke stoppes. PostNord og andre transportførere har ikke en tilbagekaldsfunktion.</p>
   </details>
   <details class="faq-item">
-    <summary>Hvor lang tid tager det at sætte Herodesk op med SmartPack?</summary>
-    <p>Cirka 5 minutter. Herodesk installeres direkte fra SmartPack App Library. Det er plug-and-play. Ingen udvikler krævet, ingen teknisk opsætning. Integrationen er aktiv med det samme, og alle dine agenter har adgang til SmartPack-data i Herodesk fra dag ét.</p>
+    <summary>Hvor hyppigt sker adresseændringer?</summary>
+    <p>Typisk 1-3% af ordrer. Ved 300 ordrer/måned er det 3-9 forsøg. De fleste ændringer når frem i tide. De få, der ikke gør, er dem der koster penge.</p>
   </details>
   <details class="faq-item">
-    <summary>Hvad koster Herodesk?</summary>
-    <p>Herodesk har en gratis plan og betalte planer med 14 dages trial. Prisen er pr. bruger. Se <a href="https://herodesk.com/da/" target="_blank" rel="noopener">herodesk.com/da/</a> for aktuelle priser og plan-detaljer.</p>
+    <summary>Kan man ikke bare ansætte nogen til at tjekke indbakken om natten?</summary>
+    <p>En nattevagt til e-mail koster 200-300 kr./time. 8 timers vagter = 1.600-2.400 kr. per nat = 50.000-75.000 kr./måned. Det løser ikke problemet. Det flytter bare ansvaret til én person der skal være vågen hele natten. Og hvad sker der når vedkommende er syg? Eller på ferie? Eller glemmer at tjekke én enkelt mail kl. 03:47?</p>
+  </details>
+  <details class="faq-item">
+    <summary>Hvornår skal jeg bare ansætte en ekstra person i stedet?</summary>
+    <p>Hvis problemet er at én person ikke kan nå det, ansæt en ekstra. Hvis problemet er at to systemer ikke taler sammen, ansæt 10 personer, det løser det ikke. Integration giver mening når lager og kundeservice arbejder på forskellige tidspunkter i forskellige systemer. Hvis de sidder ved siden af hinanden og pakker kl. 14:00, er problemet ikke teknisk.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Hvad hvis kunden ringer kl. 06:15, mens lageret er i gang?</summary>
+    <p>Hvis lageret allerede er i gang med at pakke kl. 06:15, er det for sent. Ordren er scannet ud. Integration stopper ordren automatisk kl. 22:31, før lageret overhovedet ser den. Hvis kunden ringer kl. 06:15, er problemet ikke integration. Det er at kunden ikke skrev tidligere.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Hvad hvis jeg bare ringer til lageret når jeg ser en adresseændring?</summary>
+    <p>Det virker hvis du ser mailen inden kl. 06:00. Men hvis mailen kommer kl. 22:30, og du møder ind kl. 08:00, er ordren allerede pakket. Og hvis du ringer kl. 07:30, ved lageret ikke om ordre 4829 er scannet ud endnu. Der er 40 ordrer i gang. 5 minutter går. Ordren er væk. Integration stopper ordren automatisk kl. 22:31, før lageret overhovedet ser den.</p>
+  </details>
+  <details class="faq-item">
+    <summary>Hvad hvis Herodesk sætter en ordre på hold ved en fejl?</summary>
+    <p>Kundeservice ser alle pausede ordrer kl. 08:00. Hvis det var en fejl: frigiv med ét klik. Ordren pakkes samme dag, 0 forsinkelse. I praksis: 2% falske positiver ved 300 ordrer/måned = 6 ordrer/måned der frigives manuelt. 30 sekunder per ordre = 3 minutter/måned. Alternativet: 6 fejlforsendelser à 638 kr. = 3.828 kr./måned.</p>
   </details>
 </div>
+
+<p style="font-size:1.05rem;font-weight:700;background:var(--surface-2);border-left:4px solid var(--accent);padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:2rem 0;">Hver gang en ordre sendes til forkert adresse: 638 kr. brændt af. Og kunden er sur.</p>
 
 <div class="bottom-cta"><p>Stop fejl FØR de sker: sæt SmartPack og Herodesk op på 5 minutter</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
 
