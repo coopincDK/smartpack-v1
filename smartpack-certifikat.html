@@ -495,7 +495,7 @@
       margin: 0;
     }
 
-    @page { size: A4 portrait; margin: 8mm; }
+      @page { size: A4 portrait; margin: 0; }
 
     @media print {
       -webkit-print-color-adjust: exact;
@@ -530,7 +530,11 @@
 
       .cert-toolbar, .site-header, .site-footer,
       #site-header, #site-footer, #site-announce, .site-announce,
-      .site-footer, .no-print, nav, [class*="footer"] { display: none !important; }
+      .site-footer, .no-print, nav, [class*="footer"],
+      [class*="iubenda"], [id*="iubenda"], [class*="iub-"],
+      #iub-cs-preferences-toggle, .iubenda-cs-preferences-link,
+      .iubenda-floating-btn, [class*="cs-preferences"],
+      [class*="cookie"], .sp-announce, .announce-bar { display: none !important; }
 
       /* Tving synlighed — override eventuelle animation-klasser */
       .cert-wrap, .cert-card, .cert-body,
@@ -544,24 +548,28 @@
 
       .cert-wrap {
         max-width: 100% !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
         padding: 0 !important;
-        width: 100% !important;
+        width: 210mm !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
       }
 
       .cert-card {
         border-radius: 0 !important;
         box-shadow: none !important;
-        width: 190mm !important;
-        max-height: 270mm !important;
-        margin: 0 auto !important;
+        width: 210mm !important;
+        min-height: 297mm !important;
+        max-height: 297mm !important;
+        margin: 0 !important;
         page-break-after: avoid;
         page-break-inside: avoid;
         break-inside: avoid;
         background: #ffffff !important;
         border: 2px solid #2e7d32 !important;
         overflow: hidden !important;
-        zoom: 0.82 !important;
+        zoom: 0.78 !important;
       }
 
       .cert-edit-hint { display: none !important; }
