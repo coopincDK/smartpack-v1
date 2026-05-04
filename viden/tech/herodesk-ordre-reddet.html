@@ -116,7 +116,7 @@
 
 <p>Kunden bestiller kl. 22:00. Skriver kl. 22:30 at adressen er forkert. Lageret pakker kl. 06:00. Kundeservice ser mailen kl. 12:00. Pakken er allerede sendt til den forkerte adresse. Nu starter returlogistikken: 89 kr. retur, 49 kr. ny forsendelse, 2 timers kundeservice-tid. Én fejl koster 250-350 kr. Sker det 4 gange om måneden, brænder du 14.000 kr./år af på noget der kunne være stoppet kl. 22:31.</p>
 
-<p>Når kundeservice og lager arbejder fra de samme data, forsvinder den klassiske fejl: pakken er allerede sendt før du når at reagere.</p>
+<p>Herodesk viser SmartPack-ordren direkte i samtalevinduet. Agenten klikker "Sæt på pause". Lageret ser status: Paused. De pakker ikke ordren. Ingen mail, ingen koordinering, ingen fejl.</p>
 
 <p>Kl. 22:00 bestiller en kunde via din webshop. Kl. 22:30 sender hun en mail: &quot;Hej, jeg har skrevet den forkerte adresse. Kan I nå at ændre det?&quot;</p>
 
@@ -128,7 +128,7 @@
 
 <p>Alt sammen fordi én mail ankom kl. 22:30 og ingen så den kl. 06:00.</p>
 
-<p>Det er ikke en menneskelig fejl. Det er et systemfejl. Når kundeservice og lager arbejder fra de samme data, forsvinder fejlen.</p>
+<p>Lageret ser ikke kundens mail. Kundeservice ser ikke lagerets status. Med Herodesk klikker agenten "Pause" kl. 22:31. Lageret åbner SmartPack kl. 06:00 og ser: ordre 4782, Paused. De springer den over.</p>
 
 <h2>Kundeservice og lager arbejder i blinde</h2>
 
@@ -140,7 +140,7 @@
 
 <p>Når lageret møder ind kl. 06:00 og kundeservice åbner kl. 08:00, er der to timer hvor en adresseændring er teknisk mulig, men praktisk umulig.</p>
 
-<p>Én lille forsinkelse bliver en dyr fejl. Ikke fordi medarbejderne er dårlige, men fordi systemet tvinger dem til at arbejde ukoordineret.</p>
+<p>Én lille forsinkelse bliver en dyr fejl. Lageret pakker kl. 06:00. Kundeservice ser mailen kl. 08:00. To timer for sent.</p>
 
 <p>Du betaler prisen i form af returnering, ekstra forsendelse og frustrerede kunder der skriver om det offentligt.</p>
 
@@ -160,23 +160,22 @@
 
 <p>Ingenting gik galt. Ingen forklaring nødvendig. Ingen ekstra forsendelse.</p>
 
-<p>Det er hvad integrationen gør i praksis:</p>
+<p>Sådan ser det ud i Herodesk:</p>
 
 <ul>
-  <li>Kundeservice ser ordren direkte i samtalen, uden at åbne SmartPack</li>
-  <li>Kan sætte ordren på pause med ét klik, FØR lageret pakker den</li>
-  <li>Kan ændre leveringsadresse direkte fra Herodesk-vinduet</li>
-  <li>Frigiver ordren igen når kunden bekræfter</li>
-  <li>Ser live-status fra SmartPack hele tiden, på tværs af alle kanaler</li>
+  <li>Kl. 22:31: Agent åbner mail fra kunden, ser SmartPack-widget med ordre 4782, status: Processing</li>
+  <li>Kl. 22:32: Klikker "Pause Order" i widgetten, status skifter til: Paused</li>
+  <li>Kl. 08:15: Kunden bekræfter ny adresse via mail</li>
+  <li>Kl. 08:16: Agent klikker "Edit Address", opdaterer til Vestergade 12, 8000 Aarhus C</li>
+  <li>Kl. 08:17: Klikker "Resume Order", status: Ready for Packing</li>
+  <li>Kl. 09:00: Lageret pakker ordre 4782 med korrekt adresse</li>
 </ul>
 
-<p>Lageret styres automatisk, og kundeservice har kontrollen de manglede.</p>
+<p>Kl. 22:31 klikker agenten "Pause" i Herodesk. Kl. 06:00 åbner lageret SmartPack, ser ordre 4782 med status Paused, springer den over. Kl. 08:17 frigiver agenten ordren. Kl. 09:00 pakker lageret den med korrekt adresse. Nul koordinering mellem afdelingerne.</p>
 
 <h2>Det her er din unfair advantage</h2>
 
-<p>Alt andet helpdesk er standard. Zendesk, Freshdesk, Intercom.</p>
-
-<p>De er bygget til virksomheder med hundredvis af agenter og dedikerede IT-afdelinger. Det de ikke kan er at tale direkte med SmartPack.</p>
+<p>Zendesk, Freshdesk, Intercom. Ingen af dem taler direkte med SmartPack. De kræver Zapier, webhooks eller et mellemlag der skal vedligeholdes.</p>
 
 <p>Herodesk er det eneste helpdesksystem med native SmartPack WMS-integration.</p>
 
@@ -187,7 +186,7 @@
 <ul>
   <li><strong>Du stopper fejl FØR de sker.</strong> Ikke forklarer dem bagefter.</li>
   <li><strong>Du redder ordrer</strong> der ellers ville give returlogistik og kundeklager.</li>
-  <li><strong>Lageret og kundeservice arbejder fra de samme data.</strong> Ingen koordineringstid spildt.</li>
+  <li><strong>Agenten pauser ordren kl. 22:31. Lageret ser Paused kl. 06:00.</strong> Ingen koordineringstid spildt.</li>
   <li><strong>Agenten svarer uden at skifte system.</strong> Ingen opslag i tre forskellige platforme for at besvare ét spørgsmål.</li>
 </ul>
 
@@ -251,7 +250,7 @@
 
 <p><strong>Lageret ignorerer SmartPack-status:</strong> Pakker lageret manuelt uden at tjekke systemet, virker pause-funktionen ikke. Det kræver at lageret faktisk bruger SmartPack.</p>
 
-<p><strong>Under 100 ordrer/måned:</strong> Sandsynligheden for timing-fejl er så lav at integrationen ikke betaler sig. Standard e-mail er nok.</p>
+<p><strong>Under 100 ordrer/måned med færre end 2 adresseændringer/måned:</strong> Sandsynligheden for timing-fejl er så lav at integrationen ikke betaler sig. 80 ordrer/måned og 1 adresseændring hver 2. måned = 3.800 kr. tab om året. En betalt Herodesk-plan koster 5.400 kr./år. ROI: -1.600 kr./år. Brug standard e-mail.</p>
 
 <h2>Kom i gang</h2>
 
