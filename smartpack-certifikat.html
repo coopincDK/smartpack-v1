@@ -498,53 +498,98 @@
     @page { size: A4 portrait; margin: 8mm; }
 
     @media print {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+
       html, body {
         background: white !important;
-        margin: 0;
-        padding: 0;
-        height: 297mm;
-        overflow: hidden;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
+        /* Reset CSS variables til print-sikre farver */
+        --bg-1: #ffffff;
+        --bg-2: #f5f5f5;
+        --text-1: #1a1f25;
+        --text-2: #444;
+        --border: #e0e0e0;
       }
+
       .cert-toolbar, .site-header, .site-footer,
       #site-header, #site-footer, .no-print { display: none !important; }
 
+      /* Tving synlighed — override eventuelle animation-klasser */
+      .cert-wrap, .cert-card, .cert-body,
+      .cert-stats, .cert-sig-row, .cert-bottombar {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+
       .cert-wrap {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        width: 100% !important;
       }
 
       .cert-card {
-        border-radius: 0;
-        box-shadow: none;
-        width: 194mm;
-        margin: 0 auto;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        width: 194mm !important;
+        margin: 0 auto !important;
         page-break-after: avoid;
         page-break-inside: avoid;
-        zoom: 0.88;
+        background: #ffffff !important;
+        border: 2px solid #2e7d32 !important;
+        overflow: visible !important;
       }
 
       .cert-edit-hint { display: none !important; }
-      .cert-firm-input { border-bottom-style: solid !important; }
+      .cert-firm-input {
+        border-bottom: 1px solid #999 !important;
+        color: #1a1f25 !important;
+        background: transparent !important;
+      }
       .cert-sig-img { mix-blend-mode: normal !important; filter: none !important; }
 
-      /* Tving baggrunde igennem */
+      /* Tving baggrunde igennem med eksplicitte farver */
       .cert-topbar {
         background: #1a1f25 !important;
+        display: flex !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
+      .cert-topbar-logo, .cert-topbar-tag { color: #fff !important; }
+      .cert-topbar-logo img { display: inline-block !important; }
+
       .cert-bottombar {
         background: #f5f5f5 !important;
         border-top: 1px solid #e0e0e0 !important;
+        display: flex !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
+
+      /* Tekst-farver eksplicit i print */
+      .cert-eyebrow { color: #2e7d32 !important; }
+      .cert-title { color: #1a1f25 !important; }
+      .cert-text, .cert-recipient-label { color: #333 !important; }
+      .cert-stat-value { color: #2e7d32 !important; }
+      .cert-stat-label, .cert-stat-sub { color: #666 !important; }
+      .cert-sig-name, .cert-sig-title { color: #1a1f25 !important; }
+      .cert-sig-place { color: #666 !important; }
+      .cert-bottombar-text { color: #444 !important; }
+      .cert-bottombar-date { color: #444 !important; }
+
+      /* Stats grid */
+      .cert-stats { display: flex !important; }
+      .cert-stat { display: flex !important; flex-direction: column !important; }
+
+      /* Signatur-row */
+      .cert-sig-row { display: flex !important; }
     }
   </style>
 
