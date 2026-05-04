@@ -48,7 +48,7 @@ if (statNumbers.length) {
       // Ease out cubic
       const eased = 1 - Math.pow(1 - elapsed, 3);
       const current = Math.round(eased * target);
-      el.textContent = current;
+      el.textContent = (el.dataset.prefix || '') + current;
       if (elapsed < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
