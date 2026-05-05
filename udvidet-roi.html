@@ -1764,5 +1764,300 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<!-- ============================================================
+     GUIDED TOUR SYSTEM
+============================================================ -->
+<style>
+/* Welcome modal */
+.tour-welcome{
+  position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+  animation:twFadeIn .25s ease;
+}
+.tour-welcome.hidden{display:none}
+@keyframes twFadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.tour-welcome__box{
+  background:var(--surface-1);border:1px solid var(--border);border-radius:16px;
+  max-width:440px;width:100%;padding:2rem 2rem 1.75rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  position:relative;
+}
+.tour-welcome__icon{font-size:2rem;margin-bottom:.75rem}
+.tour-welcome__h{font-size:1.25rem;font-weight:900;color:var(--text-1);margin:0 0 .5rem;line-height:1.2}
+.tour-welcome__p{font-size:.9rem;color:var(--text-2);line-height:1.65;margin:0 0 1.5rem}
+.tour-welcome__btns{display:flex;gap:.6rem}
+.tour-welcome__yes{
+  flex:1;background:var(--accent);color:#fff;border:none;border-radius:8px;
+  padding:.7rem 1rem;font-size:.9rem;font-weight:700;cursor:pointer;
+  transition:opacity .15s;
+}
+.tour-welcome__yes:hover{opacity:.88}
+.tour-welcome__no{
+  flex:1;background:transparent;color:var(--text-2);border:1px solid var(--border);
+  border-radius:8px;padding:.7rem 1rem;font-size:.9rem;font-weight:600;cursor:pointer;
+  transition:border-color .15s,color .15s;
+}
+.tour-welcome__no:hover{border-color:var(--text-2);color:var(--text-1)}
+
+/* Tour overlay */
+.tour-overlay{
+  position:fixed;inset:0;z-index:8900;
+  pointer-events:none;
+}
+.tour-overlay.active{pointer-events:all}
+
+/* Spotlight ring on highlighted element */
+.tour-highlight{
+  outline:3px solid var(--accent)!important;
+  outline-offset:4px;
+  border-radius:6px;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.55)!important;
+  position:relative;
+  z-index:8950!important;
+}
+
+/* Tooltip */
+.tour-tip{
+  position:fixed;z-index:9100;
+  background:var(--surface-1);border:1px solid var(--border);border-radius:12px;
+  padding:1.1rem 1.25rem 1rem;
+  max-width:300px;min-width:240px;
+  box-shadow:0 12px 40px rgba(0,0,0,.3);
+  display:none;
+}
+.tour-tip.visible{display:block;animation:tipIn .2s ease}
+@keyframes tipIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.tour-tip__prog{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.35rem}
+.tour-tip__title{font-size:.95rem;font-weight:800;color:var(--text-1);margin:0 0 .3rem}
+.tour-tip__text{font-size:.82rem;color:var(--text-2);line-height:1.6;margin:0 0 1rem}
+.tour-tip__nav{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.tour-tip__btn{
+  padding:.45rem .9rem;border-radius:7px;font-size:.8rem;font-weight:700;
+  border:none;cursor:pointer;transition:opacity .15s;
+}
+.tour-tip__btn--prev{background:transparent;color:var(--text-3);border:1px solid var(--border)}
+.tour-tip__btn--prev:hover{color:var(--text-1);border-color:var(--text-2)}
+.tour-tip__btn--next{background:var(--accent);color:#fff}
+.tour-tip__btn--next:hover{opacity:.88}
+.tour-tip__btn--done{background:var(--accent);color:#fff}
+.tour-tip__dots{display:flex;gap:.3rem;flex:1;justify-content:center}
+.tour-tip__dot{width:5px;height:5px;border-radius:50%;background:var(--border);transition:background .15s}
+.tour-tip__dot.active{background:var(--accent)}
+.tour-tip__close{
+  position:absolute;top:.6rem;right:.7rem;
+  background:none;border:none;color:var(--text-3);font-size:1rem;
+  cursor:pointer;line-height:1;padding:.1rem .3rem;
+}
+.tour-tip__close:hover{color:var(--text-1)}
+</style>
+
+<!-- Welcome modal -->
+<div class="tour-welcome" id="tourWelcome">
+  <div class="tour-welcome__box">
+    <div class="tour-welcome__icon">🧮</div>
+    <h2 class="tour-welcome__h">Se hvordan beregner virker?</h2>
+    <p class="tour-welcome__p">Vi guider dig igennem hvert felt og forklarer hvad du skal indtaste. Tager under 2 minutter, og til sidst ser du dit personlige ROI-estimat.</p>
+    <div class="tour-welcome__btns">
+      <button class="tour-welcome__yes" onclick="tourStart()">Ja, vis mig rundt</button>
+      <button class="tour-welcome__no" onclick="tourDismiss()">Nej tak, jeg finder ud af det</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tour tooltip -->
+<div class="tour-tip" id="tourTip">
+  <button class="tour-tip__close" onclick="tourEnd()" title="Luk guide">&times;</button>
+  <div class="tour-tip__prog" id="tourProg"></div>
+  <div class="tour-tip__title" id="tourTitle"></div>
+  <div class="tour-tip__text" id="tourText"></div>
+  <div class="tour-tip__nav">
+    <button class="tour-tip__btn tour-tip__btn--prev" id="tourPrev" onclick="tourPrevStep()">&#8592; Forrige</button>
+    <div class="tour-tip__dots" id="tourDots"></div>
+    <button class="tour-tip__btn tour-tip__btn--next" id="tourNext" onclick="tourNextStep()">N&aelig;ste &#8594;</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ── Tour steps ──────────────────────────────────────────────
+  var steps = [
+    { target:null,        wizTab:null, title:'Velkommen til guiden',             text:'Vi g\u00e5r felt for felt. Du justerer tallene undervejs \u2014 se dit ROI opdatere sig i realtid p\u00e5 h\u00f8jre side.' },
+    { target:'#branche',  wizTab:0,    title:'Branche',                          text:'V\u00e6lg den branche der ligner jer mest. Det justerer pakker-per-time medianen, som er kernetal i beregningen.' },
+    { target:'#medarb',   wizTab:0,    title:'Ansatte p\u00e5 lageret',          text:'Antal medarbejdere der arbejder p\u00e5 lageret. Plukkere, pakkere og lagerfolk \u2014 ikke kontorfolk.' },
+    { target:'#pakker',   wizTab:0,    title:'Pakker sendt pr. m\u00e5ned',      text:'Jeres gennemsnitlige forsendelser pr. m\u00e5ned. Klik p\u00e5 tallet for at skrive direkte. Over 100.000? Klik p\u00e5 tallet.' },
+    { target:'#lon',      wizTab:0,    title:'Timelpn inkl. feriepenge',         text:'Den reelle timepris inkl. feriepenge, pension og arbejdsgiverafgifter. For de fleste 140\u2013200 kr/t.' },
+    { target:'#fejl',     wizTab:0,    title:'Pakkefejl',                        text:'Procent af pakker med fejl: forkert vare, antal eller adresse. Branchen ligger typisk p\u00e5 1,2%.' },
+    { target:'#fejlomk',  wizTab:0,    title:'Omkostning pr. fejl',              text:'Returfragt + kundeservice-tid + kreditnota. Typisk 300\u2013600 kr. per fejl.' },
+    { target:'#vaekst',   wizTab:0,    title:'Forventet m\u00e5nedlig v\u00e6kst', text:'Bruges til at beregne hvorn\u00e5r I rammer kapacitetsloftet. Vigtigt for 24-m\u00e5nedsgrafen.' },
+    { target:'#ordrevaerdi', wizTab:1, title:'Gns. ordrev\u00e6rdi',             text:'Gennemsnitlig omsaetning pr. ordre inkl. moms. Bruges til at beregne ekstra omsaetning med frigivne timer.' },
+    { target:'#avance',   wizTab:1,    title:'Avance p\u00e5 varerne',           text:'Jeres typiske bruttomarginal. Typisk 25\u201350% i e-handel. Bruges til netto-potentialet.' },
+    { target:'#returrate',wizTab:1,    title:'Returrate',                        text:'Hvor mange procent af ordrerne returneres? SmartPack bringer fejlbetingede returner tact p\u00e5 0.' },
+    { target:'#fragtRetur',wizTab:1,   title:'Fragtpris pr. returnering',        text:'Returfragt + h\u00e5ndteringstid. Typisk 60\u2013120 kr. ekskl. arbejdstid.' },
+    { target:'#wms',      wizTab:2,    title:'Lagersystem i dag',                text:'Jeres nuv\u00e6rende WMS + support + labelprint pr. m\u00e5ned. S\u00e6t 0 hvis I ikke har et system.' },
+    { target:'#checkout', wizTab:2,    title:'Fragtbesparelse pr. m\u00e5ned',   text:'Fragtoptimering via Shipmondo/Webshipper-integration. S\u00e6t 0 hvis uklart.' },
+    { target:'#peak',     wizTab:3,    title:'S\u00e6sonudsving',               text:'Hvor mange % stiger I i travleste m\u00e5ned? 80% svarer til Black Friday/jul. Beregner sparede vikarudgifter.' },
+    { target:'#ksMin',    wizTab:3,    title:'Kundeservice-henvendelser',        text:'Minutter/dag p\u00e5 \u201eHvor er min pakke?\u201c. SmartPack reducerer disse med ~70% via automatiske notifikationer.' },
+    { target:'#r-aar',    wizTab:null, title:'Dit ROI \u2014 live resultat',    text:'Det her er dit estimat baseret p\u00e5 dine egne tal. Ret et felt \u2014 resultatet opdateres med det samme.' }
+  ];
+
+  var _cur = 0;
+  var _prevTarget = null;
+
+  function $(sel){ return document.querySelector(sel); }
+
+  window.tourDismiss = function() {
+    var w = $('#tourWelcome');
+    if (w) w.classList.add('hidden');
+    sessionStorage.setItem('sp-tour-seen','1');
+  };
+
+  window.tourEnd = function() {
+    tourDismiss();
+    removeHighlight();
+    var tip = $('#tourTip');
+    if (tip) tip.classList.remove('visible');
+  };
+
+  function removeHighlight() {
+    if (_prevTarget) {
+      _prevTarget.classList.remove('tour-highlight');
+      _prevTarget = null;
+    }
+  }
+
+  function goWizTab(n) {
+    if (n === null) return;
+    var btn = document.querySelectorAll('.wizard-step')[n];
+    if (btn) btn.click();
+  }
+
+  function positionTip(el) {
+    var tip = $('#tourTip');
+    if (!tip) return;
+    if (!el) {
+      tip.style.top  = '50%';
+      tip.style.left = '50%';
+      tip.style.transform = 'translate(-50%,-50%)';
+      tip.style.maxWidth = '380px';
+      return;
+    }
+    tip.style.transform = '';
+    var r = el.getBoundingClientRect();
+    var tw = tip.offsetWidth || 300;
+    var th = tip.offsetHeight || 160;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    // Try below first, then above, then right, then left
+    var top, left;
+    if (r.bottom + th + 12 < vh) {
+      top  = r.bottom + 12;
+      left = Math.min(Math.max(r.left, 8), vw - tw - 8);
+    } else if (r.top - th - 12 > 0) {
+      top  = r.top - th - 12;
+      left = Math.min(Math.max(r.left, 8), vw - tw - 8);
+    } else if (r.right + tw + 12 < vw) {
+      top  = Math.min(Math.max(r.top, 8), vh - th - 8);
+      left = r.right + 12;
+    } else {
+      top  = Math.min(Math.max(r.top, 8), vh - th - 8);
+      left = Math.max(r.left - tw - 12, 8);
+    }
+    tip.style.top  = top + 'px';
+    tip.style.left = left + 'px';
+    tip.style.maxWidth = '300px';
+  }
+
+  function renderStep(i) {
+    var s = steps[i];
+    var tip = $('#tourTip');
+    if (!tip) return;
+
+    // Navigate wizard tab if needed
+    if (s.wizTab !== null && typeof goStep === 'function') goWizTab(s.wizTab);
+
+    // Highlight target
+    removeHighlight();
+    var el = s.target ? $(s.target) : null;
+    if (el) {
+      el.classList.add('tour-highlight');
+      _prevTarget = el;
+      setTimeout(function() {
+        el.scrollIntoView({ behavior:'smooth', block:'center' });
+        setTimeout(function() { positionTip(el); }, 350);
+      }, 80);
+    } else {
+      positionTip(null);
+    }
+
+    // Update text
+    $('#tourProg').textContent = 'Trin ' + (i+1) + ' af ' + steps.length;
+    $('#tourTitle').textContent = s.title;
+    $('#tourText').textContent  = s.text;
+
+    // Nav buttons
+    var prev = $('#tourPrev');
+    var next = $('#tourNext');
+    prev.style.visibility = i === 0 ? 'hidden' : 'visible';
+    if (i === steps.length - 1) {
+      next.textContent = '\u2713 F\u00e6rdig';
+      next.className = 'tour-tip__btn tour-tip__btn--done';
+    } else {
+      next.innerHTML = 'N\u00e6ste &#8594;';
+      next.className = 'tour-tip__btn tour-tip__btn--next';
+    }
+
+    // Dots
+    var dots = $('#tourDots');
+    dots.innerHTML = '';
+    steps.forEach(function(_, di) {
+      var d = document.createElement('span');
+      d.className = 'tour-tip__dot' + (di === i ? ' active' : '');
+      dots.appendChild(d);
+    });
+
+    tip.classList.add('visible');
+  }
+
+  window.tourStart = function() {
+    tourDismiss();
+    _cur = 0;
+    renderStep(_cur);
+  };
+
+  window.tourNextStep = function() {
+    if (_cur >= steps.length - 1) { tourEnd(); return; }
+    _cur++;
+    renderStep(_cur);
+  };
+
+  window.tourPrevStep = function() {
+    if (_cur <= 0) return;
+    _cur--;
+    renderStep(_cur);
+  };
+
+  // Auto-reposition on scroll/resize
+  window.addEventListener('scroll', function() {
+    if (_prevTarget) positionTip(_prevTarget);
+  }, { passive:true });
+  window.addEventListener('resize', function() {
+    if (_prevTarget) positionTip(_prevTarget);
+  });
+
+  // Show welcome on load (once per session)
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!sessionStorage.getItem('sp-tour-seen')) {
+      var w = $('#tourWelcome');
+      if (w) w.classList.remove('hidden');
+    } else {
+      var w = $('#tourWelcome');
+      if (w) w.classList.add('hidden');
+    }
+  });
+}());
+</script>
 </body>
 </html>
