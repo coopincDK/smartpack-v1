@@ -450,12 +450,42 @@
 <script src="js/header.js"></script>
 
 <!-- BEREGNER INTRO -->
-<section style="background:var(--bg-1);border-bottom:1px solid var(--border);padding:2rem 0">
+<style>
+.mhero{background:var(--bg-1);border-bottom:1px solid var(--border);padding:2.25rem 0 2rem}
+.mhero__eye{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:.55rem}
+.mhero__h1{font-size:clamp(1.5rem,3.5vw,2.1rem);font-weight:900;line-height:1.1;color:var(--text-1);margin:0 0 1.1rem}
+.mhero__h1 em{font-style:normal;color:var(--accent)}
+.mhero__flow{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem .15rem;margin-bottom:.9rem}
+.mhero__pill{display:inline-flex;align-items:center;gap:.3rem;background:var(--surface-1);border:1px solid var(--border);border-radius:999px;padding:.28rem .75rem;font-size:.78rem;font-weight:600;color:var(--text-2);white-space:nowrap;transition:border-color .2s,color .2s}
+.mhero__pill:hover{border-color:var(--accent);color:var(--accent)}
+.mhero__pill svg{width:12px;height:12px;opacity:.5;flex-shrink:0}
+.mhero__arrow{color:var(--text-3);font-size:.8rem;padding:0 .1rem;opacity:.5}
+.mhero__sub{font-size:.88rem;color:var(--text-3);display:flex;align-items:center;gap:.4rem}
+.mhero__sub svg{color:var(--accent);flex-shrink:0}
+@media(max-width:600px){.mhero__flow{gap:.35rem}}
+</style>
+<section class="mhero">
   <div class="container">
-    <div style="max-width:700px">
-      <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:.4rem">Detaljeret ROI beregner</div>
-      <h1 style="font-size:clamp(1.4rem,3vw,2rem);font-weight:900;margin:0 0 .5rem;color:var(--text-1)">N&oslash;rd tallene til bunds</h1>
-      <p style="color:var(--text-2);font-size:.95rem;margin:0">Juster branche, v&aelig;kstrate, returh&aring;ndtering, software-udgifter og s&aelig;sonudsving. Se det samlede regnskab i realtid.</p>
+    <div style="max-width:760px">
+      <div class="mhero__eye">Detaljeret ROI beregner</div>
+      <h1 class="mhero__h1">N&oslash;rd tallene.<br><em>Se dit regnskab i realtid.</em></h1>
+      <div class="mhero__flow">
+        <span class="mhero__pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="12" height="12" rx="2"/></svg>Branche</span>
+        <span class="mhero__arrow">&#8594;</span>
+        <span class="mhero__pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,12 6,6 10,9 14,3"/></svg>V&aelig;kstrate</span>
+        <span class="mhero__arrow">&#8594;</span>
+        <span class="mhero__pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="14,2 2,2 2,14"/><polyline points="14,8 2,8"/></svg>Returh&aring;ndtering</span>
+        <span class="mhero__arrow">&#8594;</span>
+        <span class="mhero__pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="12" height="8" rx="1"/><path d="M5 5V4a3 3 0 016 0v1"/></svg>Software</span>
+        <span class="mhero__arrow">&#8594;</span>
+        <span class="mhero__pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8 Q4 3 8 8 Q12 13 14 8"/></svg>S&aelig;sonudsving</span>
+        <span class="mhero__arrow">&#8594;</span>
+        <span class="mhero__pill" style="background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><polyline points="5,8 7,10 11,6"/></svg>Dit regnskab</span>
+      </div>
+      <div class="mhero__sub">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><line x1="8" y1="5" x2="8" y2="8"/><line x1="8" y1="11" x2="8" y2="11" stroke-linecap="round"/></svg>
+        Ret tallene i wizard&#39;en nedenfor. Resultatet opdateres med det samme.
+      </div>
     </div>
   </div>
 </section>
