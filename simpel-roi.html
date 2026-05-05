@@ -587,7 +587,7 @@
         </div>
 
         <div class="qc-cta">
-          <a href="#beregner" class="btn btn--primary" id="qc-cta-primary" style="flex:1;text-align:center">Præcis beregning &darr;</a>
+          <a href="udvidet-roi" class="btn btn--primary" id="qc-cta-primary" style="flex:1;text-align:center">N&oslash;rd tallene til bunds &rarr;</a>
           <a href="kontakt" class="btn btn--ghost" id="qc-cta-secondary" style="flex:1;text-align:center">Tal med os</a>
         </div>
       </div>
@@ -909,7 +909,7 @@
       document.getElementById('qc-r-bes').textContent = netto > 0 ? fmtK(netto) : 'Kræver konkret vurdering';
       if (besLbl)  besLbl.textContent = netto > 0 ? 'Årlig netto besparelse' : 'Besparelse ved optimering';
       if (ctaPri)  { ctaPri.href = 'kontakt'; ctaPri.textContent = 'Få beregnet din case'; }
-      if (ctaSec)  { ctaSec.href = '#beregner'; ctaSec.textContent = 'Nørd tallene ↓'; }
+      if (ctaSec)  { ctaSec.href = 'udvidet-roi'; ctaSec.textContent = 'Nørd tallene til bunds →'; }
       document.getElementById('qc-r-medarb').textContent    = frigivne.toFixed(1).replace('.',',');
       document.getElementById('qc-r-kapacitet').textContent = '+' + kapForbedring + '%';
       document.getElementById('qc-r-fejl').textContent      = fejl <= fejlAfter ? 'Allerede optimal'
