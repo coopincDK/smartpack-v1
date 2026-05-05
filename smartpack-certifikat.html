@@ -551,6 +551,7 @@
         margin: 0 !important;
         padding: 0 !important;
         width: 210mm !important;
+        overflow: visible !important;
         position: absolute !important;
         top: 0 !important;
         left: 0 !important;
@@ -559,9 +560,9 @@
       .cert-card {
         border-radius: 0 !important;
         box-shadow: none !important;
-        width: 210mm !important;
-        min-height: 297mm !important;
-        max-height: 297mm !important;
+        width: calc(210mm / 0.78) !important;
+        min-height: calc(297mm / 0.78) !important;
+        max-height: calc(297mm / 0.78) !important;
         margin: 0 !important;
         page-break-after: avoid;
         page-break-inside: avoid;
@@ -575,6 +576,7 @@
       .cert-edit-hint { display: none !important; }
       .cert-cta-wrap { display: none !important; }
       .cert-cta, .cert-back { display: none !important; }
+      .cert-closing { display: none !important; }
       .cert-firm-input {
         border-bottom: 1px solid #999 !important;
         color: #1a1f25 !important;
