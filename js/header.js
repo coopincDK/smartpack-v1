@@ -65,15 +65,25 @@
     // Announcement banner dismiss
     var announce      = document.getElementById('site-announce');
     var announceClose = document.getElementById('site-announce-close');
+
+    function updateAnnounceH() {
+      var h = (announce && announce.offsetParent !== null) ? announce.offsetHeight : 0;
+      document.documentElement.style.setProperty('--announce-h', h + 'px');
+    }
+
     if (announce && sessionStorage.getItem('sp-announce-closed')) {
       announce.style.display = 'none';
       document.documentElement.style.setProperty('--announce-h', '0px');
+    } else {
+      updateAnnounceH();
+      window.addEventListener('resize', updateAnnounceH);
     }
     if (announceClose) {
       announceClose.addEventListener('click', function() {
         announce.style.display = 'none';
         document.documentElement.style.setProperty('--announce-h', '0px');
         sessionStorage.setItem('sp-announce-closed', '1');
+        window.removeEventListener('resize', updateAnnounceH);
       });
     }
 
