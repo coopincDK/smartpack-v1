@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webhooks paa lageret: hvad er det og hvad kan du bruge dem til | SmartPack Viden</title>
+  <meta name="description" content="Webhooks sender automatisk data, naer noget sker. Paa et lager kan det betyde realtidsbeskeder om ordrer, forsendelser og lagerstatus. Her er en klar forklaring uden teknisk jargon.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/webhooks-lager-guide">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Webhooks paa lageret: hvad er det og hvad kan du bruge dem til","author":{"@type":"Organization","name":"SmartPack"},"publisher":{"@type":"Organization","name":"SmartPack","url":"https://smartpack.dk"},"datePublished":"2025-05-01","inLanguage":"da"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En webhook er en automatisk HTTP-besked, der sendes fra eet system til et andet, naer en bestemt haendelse sker. Fx sender Shopify en webhook til dit WMS, naer en ny ordre er lagt. Det er push-baseret kommunikation i stedet for poll-baseret, hvilket goer det hurtigere og mere effektivt."}},{"@type":"Question","name":"Hvad er forskellen paa en webhook og en API?","acceptedAnswer":{"@type":"Answer","text":"En API er pull-baseret: dit system spoerger et andet system om data. En webhook er push-baseret: et system sender automatisk data til dit system, naer noget sker. For lagerhenaendelser som nye ordrer og forsendelsesbekraeeftelse er webhooks hurtigere og mere effektive end at polle en API hvert minut."}},{"@type":"Question","name":"Hvad sker der, hvis en webhook fejler?","acceptedAnswer":{"@type":"Answer","text":"De fleste webhook-systemer forsoeeger at gensende ved fejl, typisk 3-5 gange over en periode paa 24-72 timer. Hvis alle gensendelsesforsoeog fejler, faar du normalt en fejlbesked i webhook-loggen. Det er vigtigt at overvaaage disse logs og have en process for haandtering af mislykkede webhooks."}}]}</script>
+
+<!-- ================================================================
+     SMARTPACK TRACKING
+================================================================ -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech</a><span>&rsaquo;</span><span>Webhooks paa lageret</span></nav>
+  <div class="article-header">
+    <span class="article-cat-badge">Tech</span>
+    <h1 class="article-title">Webhooks paa lageret: hvad er det og hvad kan du bruge dem til</h1>
+  </div>
+  <div class="article-body" data-pagefind-body="true">
+    <img class="article-hero-img" src="../../assets/viden/artikel_billeder/15-webhook-flowdiagram.jpg" alt="Webhook flowdiagram for lagerintegration" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;">
+
+    <p>Forestil dig at din webshop fortaeller dit lager om en ny ordre i oejeblikket, den laeegges. Ikke hvert 15. minut. Ikke naer nogen trykker opdater. Oejeblikkeligt, automatisk, uden menneskelig handling. Det er hvad webhooks goer.</p>
+    <p>Webhooks er et af de mest kraftfulde, men mindst forklarede vaerktoejer i modern logistik-tech. Mange lagerchefer ved ikke engang, at deres systemer bruger dem. Men forstaar du dem, kan du tage bedre beslutninger om din systemintegration og faa hurtigere, mere paalidelig dataudveksling.</p>
+    <p>Her er en klar forklaring uden unoevendig teknik.</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack bruger webhooks til realtidsintegration med webshops og fragtloesninger. <a href="../../kontakt">Laer mere om vores integrationsmuligheder</a></p>
+
+    <h2>Hvad er en webhook, forklaret enkelt</h2>
+    <p>Normalt naar to systemer udveksler data, sker det paa en af to maader:</p>
+    <ul>
+      <li><strong>Polling (pull):</strong> System A spoerger system B regelmaessigt: "Er der noget nyt?" Det er som at tjekke din postkasse hvert 15. minut. Uenergigt og langsomt.</li>
+      <li><strong>Webhook (push):</strong> System B sender automatisk en besked til System A, naer noget sker. Det er som at faa en SMS, naer posten ankommer. Hurtigere og mere effektivt.</li>
+    </ul>
+    <p>En webhook er teknisk set en HTTP POST-anmodning. Naer en bestemt haendelse sker i kilde-systemet (fx en ny ordre paa Shopify), sender det systemet en JSON-datapakke til en specificeret URL i modtager-systemet (fx din WMS URL-endpoint).</p>
+    <p>Det er ikke kompliceret. Det er simpel kommunikation med en klar trigger og en klar modtager.</p>
+
+    <h2>Typiske webhook-haendelser paa et lager</h2>
+    <p>Her er de haendelser, der typisk haandteres via webhooks i et lagersetup:</p>
+    <ul>
+      <li><strong>Ny ordre fra webshop:</strong> Shopify, WooCommerce eller anden platform sender ordredata til WMS ved ordremodtagelse.</li>
+      <li><strong>Ordre annulleret:</strong> Hvis kunden annullerer inden pluk, skal WMS vide det straks for at frigive reserveret lager.</li>
+      <li><strong>Forsendelsesbekraeeftelse:</strong> WMS sender trackingnummer og forsendelsestidspunkt til webshop, som videresender til kunden.</li>
+      <li><strong>Lagerbeholdning opdateret:</strong> WMS sender opdateret lagerstatus til webshop, naer varer er modtaget eller plukket.</li>
+      <li><strong>Returnering modtaget:</strong> Naer en returvare er registreret i WMS, kan webshop og kundeservicesystem opdateres automatisk.</li>
+      <li><strong>Fragttracking opdateret:</strong> Fragtleverandoeren sender webhooks om pakketransport, som kan forwrides til kunden.</li>
+    </ul>
+    <p>Summen af disse flows er et lagersystem, der reagerer i realtid frem for at vaere en halvtime bag virkeligheden.</p>
+
+    <h2>Hvad der kan gaa galt med webhooks</h2>
+    <p>Webhooks er robuste, men ikke ufejlbare. Her er de typiske problemer:</p>
+    <ul>
+      <li><strong>Modtager-endpoint er nede:</strong> Hvis dit WMS er utilgaengeligt, naer Shopify sender en webhook, fejler leveringen. Gode webhook-systemer forsoeeger at gensende automatisk, men det er ikke altid nok.</li>
+      <li><strong>Dobbelt-leverancer:</strong> Under gensendingsforsoeog kan den samme webhook blive leveret to gange. Modtager-systemet skal haandtere dette via idempotency-kontrol (tjekke om haendelsen allerede er behandlet).</li>
+      <li><strong>Aendringer i dataformat:</strong> Hvis webshop-platformen opdaterer sit API og aendrer webhook-payloadens struktur, kan din WMS-integration holder op med at virke stille og roligt.</li>
+      <li><strong>Manglende overvaaagning:</strong> Fejlede webhooks logges typisk, men ingen ser loggen. Saet alarmering op paa fejlede webhooks.</li>
+    </ul>
+    <p>De fleste problemer opstaar ikke i selve webhook-mekanismen men i mangel af fejlhaandtering og overvaaagning.</p>
+
+    <h2>Webhooks vs. API-polling: hvornaar bruges hvad</h2>
+    <p>Der er situationer, hvor polling er et bedre valg end webhooks:</p>
+    <ul>
+      <li>Naar du har brug for historiske data, ikke kun realtidsaendringer.</li>
+      <li>Naar kilde-systemet ikke understoeetter webhooks.</li>
+      <li>Naar du har brug for at hente status paa anmodning (brugeriniteret) frem for automatisk.</li>
+    </ul>
+    <p>For lager-specifikke haendelser som ordremodtagelse, forsendelse og lageropdatering er webhooks klart det bedste valg. De reducerer forsinkelse fra minutter til sekunder og reducerer unoevendig belastning paa begge systemer.</p>
+
+    <h2>Saadan kommer du i gang</h2>
+    <p>De fleste moderne platforme understoeetter webhooks uden installation. I Shopify konfigurerer du webhooks under Indstillinger. I SmartPack er de buildt ind i integrationsmodulerne. Processen er typisk:</p>
+    <ul>
+      <li>Definer, hvilke haendelser du vil abonnere paa.</li>
+      <li>Angiv URL-endpoint i modtager-systemet.</li>
+      <li>Test med et test-payload fra kilde-systemet.</li>
+      <li>Saet overvaaagning op paa fejlede leveringer.</li>
+    </ul>
+    <p>Ingen programmering kraevet, hvis du bruger systemer med native webhook-support.</p>
+  </div>
+
+  <div class="article-faq">
+    <h2>Ofte stillede spoergsmaal</h2>
+    <details class="faq-item"><summary>Hvad er en webhook, forklaret enkelt?</summary><p>En webhook er en automatisk besked, der sendes fra eet system til et andet, naer en bestemt haendelse sker. Naer en kunde bestiller paa din webshop, sender webshopen automatisk ordredata til dit WMS uden at nogen trykker paa noget.</p></details>
+    <details class="faq-item"><summary>Hvad er forskellen paa en webhook og en API?</summary><p>En API er pull-baseret: dit system spoerger et andet system regelmaessigt om data. En webhook er push-baseret: systemet sender data til dig automatisk, naer noget sker. Webhooks er hurtigere og mindre ressourcekraevende til realtidshaendelser.</p></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis en webhook fejler?</summary><p>De fleste systemer forsoeeger at gensende automatisk 3-5 gange over de foelgende timer. Fejlede webhooks logges og boer overvaaages. Saet en alarm op, saa du ved det, hvis webhooks systematisk fejler over en periode.</p></details>
+  </div>
+
+  <div class="bottom-cta">
+    <p>Vil du vide, hvilke webhooks SmartPack understoeetter og hvordan integrationen virker i praksis? Vi gennemgaar det i en demo.</p>
+    <a href="../../kontakt" class="btn btn--primary">Book en teknisk gennemgang</a>
+  </div>
+  <div class="article-disclaimer"><p>Tekniske beskrivelser i denne artikel er generelle. Konkrete implementeringsdetaljer varierer efter system og leverandoer.</p></div>
+</div></div>
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+</body></html>
