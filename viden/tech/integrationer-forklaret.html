@@ -3,7 +3,7 @@
 <!-- ================================================================
      SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
      Kopier hele denne blok til din nye <head> inden </head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+     Se ogsÃ¥: _TRACKING_TEMPLATE.html i roden
 ================================================================ -->
 
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
@@ -45,7 +45,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Integrationer forklaret: s&aring;dan taler dine systemer sammen | SmartPack Viden</title>
-  <meta name="description" content="Forstaa API, webhooks og filintegration i lagerstyring. Laer hvad det koster naar integrationer fejler, og hvordan du bygger robuste forbindelser.">
+  <meta name="description" content="ForstÃ¥ API, webhooks og filintegration i lagerstyring. Laer hvad det koster nÃ¥r integrationer fejler, og hvordan du bygger robuste forbindelser.">
   <link rel="canonical" href="https://smartpack.dk/viden/tech/integrationer-forklaret">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
@@ -60,7 +60,7 @@
 <!-- ================================================================
      SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
      Kopier hele denne blok til din nye <head> inden </head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+     Se ogsÃ¥: _TRACKING_TEMPLATE.html i roden
 ================================================================ -->
 
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
@@ -118,7 +118,7 @@
       <li><strong>WMS til Webshop:</strong> Fulfillment-status og tracking sendes tilbage</li>
       <li><strong>WMS til ERP:</strong> Beholdning, afsendelse og eventuel fakturering</li>
       <li><strong>WMS til Fragtmand:</strong> Fragttransport bestilles, labels genereres</li>
-      <li><strong>WMS til Indkoebssystem:</strong> Genbestilling ved minimum-lager</li>
+      <li><strong>WMS til IndkÃ¸bssystem:</strong> Genbestilling ved minimum-lager</li>
     </ul>
 
     <h2>Integrationstyper: API vs. Webhook</h2>
@@ -129,8 +129,8 @@
     <p>API (Application Programming Interface) fungerer som et spoergsmaal-svar-system. Dit WMS sender en foresprorgsel til fx Shopify: &quot;Vis mig alle ubehandlede ordrer fra de seneste 10 minutter.&quot; Shopify svarer med en liste.</p>
     <p>Det krÃ¦ver: AppId og AccessToken (autentifikation), et endpoint (URL til APIet), og en planlagt hentning (polling), typisk hvert 1-5. minut. API egner sig godt til periodisk synkronisering, opslag og opdatering af lagertal.</p>
 
-    <h3>Webhook, systemet fortaeller dig, naar noget sker</h3>
-    <p>En webhook er en push-notifikation. Shopify sender dig automatisk en besked, naar en ordre oprettes, du behoever ikke spoerge. Det sker i realtid. Webhooks egner sig godt til: ordremodtagelse, betalingsbekraeftelse og statusopdateringer.</p>
+    <h3>Webhook, systemet fortaeller dig, nÃ¥r noget sker</h3>
+    <p>En webhook er en push-notifikation. Shopify sender dig automatisk en besked, nÃ¥r en ordre oprettes, du behÃ¸ver ikke spoerge. Det sker i realtid. Webhooks egner sig godt til: ordremodtagelse, betalingsbekraeftelse og statusopdateringer.</p>
     <p>Krav til webhook-modtagelse:</p>
     <ul>
       <li>HTTPS-endpoint (usikrede HTTP accepteres ikke)</li>
@@ -143,7 +143,7 @@
 
     <h2>Hvad koster integrationsfejl reelt?</h2>
     <table>
-      <thead><tr><th>Fejltype</th><th>Direkte omkostning</th><th>Total aarlig</th></tr></thead>
+      <thead><tr><th>Fejltype</th><th>Direkte omkostning</th><th>Total Ã¥rlig</th></tr></thead>
       <tbody>
         <tr><td>Webhook-tab uden retry (5% af ordrer)</td><td>8.750 kr./dag</td><td>12.605.625 kr./aar</td></tr>
         <tr><td>Ingen HMAC-validering, svindel</td><td>8.000 kr./episode</td><td>96.000 kr./aar</td></tr>
@@ -158,19 +158,19 @@
       <li>Lagertal opdateres i WMS, men API-synkronisering til Shopify er fejlet i 2 timer</li>
       <li>Fragtbestilling sendes, men fragtmand-API returnerer fejl, der ikke logges</li>
     </ul>
-    <p>En haaard fejl stopper systemet og opdages. En stille fejl fortsaetter usynligt og opbygger data, der afviger fra virkeligheden.</p>
+    <p>En haaard fejl stopper systemet og opdages. En stille fejl fortsÃ¦tter usynligt og opbygger data, der afviger fra virkeligheden.</p>
 
-    <h2>Integrationsmoenstre i e-handel</h2>
-    <p><strong>Synkron integration:</strong> System A kalder System B og venter p&aring; svar, foer det fortsaetter. Simpelt, men saarbart, hvis B er langsom bremser det A.</p>
-    <p><strong>Asynkron integration:</strong> System A sender beskeden og fortsaetter. Beskeden lander i en koe og behandles, naar B er klar. Mere robust, men krÃ¦ver fejlhaandtering i koen.</p>
-    <p><strong>Event-drevet integration:</strong> Haendelser som ordre oprettet, vare plukket og pakke afsendt trigger automatisk alle relevante systemer. Det er den mest skalerbare arkitektur.</p>
+    <h2>IntegrationsmÃ¸nstre i e-handel</h2>
+    <p><strong>Synkron integration:</strong> System A kalder System B og venter p&aring; svar, foer det fortsÃ¦tter. Simpelt, men sÃ¥rbart, hvis B er langsom bremser det A.</p>
+    <p><strong>Asynkron integration:</strong> System A sender beskeden og fortsÃ¦tter. Beskeden lander i en koe og behandles, nÃ¥r B er klar. Mere robust, men krÃ¦ver fejlhaandtering i koen.</p>
+    <p><strong>Event-drevet integration:</strong> HÃ¦ndelser som ordre oprettet, vare plukket og pakke afsendt trigger automatisk alle relevante systemer. Det er den mest skalerbare arkitektur.</p>
 
     <h2>Typiske fejl</h2>
     <ul>
       <li><strong>Ingen retry-logik:</strong> Webhooks og API-kald fejler. Netvaerket fejler. Servere er nede. Uden automatisk retry mister du data. Implementer eksponentiel backoff: prrov igen efter 1 min, 5 min, 30 min.</li>
       <li><strong>Manglende signaturvalidering:</strong> Webhooks fra Shopify indeholder en HMAC-SHA256-signatur. Validerer du den ikke, kan hvem som helst sende falske ordre-events til dit endpoint.</li>
       <li><strong>Polling for hyppigt eller for sjaeldent:</strong> API-polling hvert 30. sekund giver unodvendig belastning. Polling hvert 30. minut giver for lang forsinkelse. Juster interval til faktisk behov.</li>
-      <li><strong>Ignorer integration health monitoring:</strong> Uden monitoring ved du ikke, hvornaar en integration sidst koerte succesfuldt.</li>
+      <li><strong>Ignorer integration health monitoring:</strong> Uden monitoring ved du ikke, hvornÃ¥r en integration sidst koerte succesfuldt.</li>
     </ul>
 
     <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
@@ -181,7 +181,7 @@
     </ol>
 
     <h2>SmartPack</h2>
-    <p>SmartPack bruger event-drevet integration med webhook-support og periodisk API-polling. Alle webhooks valideres med HMAC-SHA256. Integrationer til Shopify, WooCommerce, e-conomic og Business Central er praekonfigurerede. SmartPack logger alle integrationshaendelser og viser integration health i administrationspanelet.</p>
+    <p>SmartPack bruger event-drevet integration med webhook-support og periodisk API-polling. Alle webhooks valideres med HMAC-SHA256. Integrationer til Shopify, WooCommerce, e-conomic og Business Central er praekonfigurerede. SmartPack logger alle integrationshÃ¦ndelser og viser integration health i administrationspanelet.</p>
   </div>
   <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
 <div class="bottom-cta"><p>Vil du have stabile integrationer der virker?</p><a href="../../kontakt" class="btn">Se SmartPacks integrationer</a></div>
@@ -191,7 +191,7 @@
     <a href="./lager-api-integration" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">API-integration i lagersystemet</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
-    <details class="faq-item"><summary>Hvad er forskellen p&aring; API og webhook?</summary><div class="faq-item__body"><p>API er pull: du spoerger og faar svar. Webhook er push: systemet fortaeller dig, naar noget sker. Brug webhook til realtidshaendelser, API til periodiske opslag.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen p&aring; API og webhook?</summary><div class="faq-item__body"><p>API er pull: du spoerger og fÃ¥r svar. Webhook er push: systemet fortaeller dig, nÃ¥r noget sker. Brug webhook til realtidshÃ¦ndelser, API til periodiske opslag.</p></div></details>
     <details class="faq-item"><summary>Skal min webhook have HTTPS?</summary><div class="faq-item__body"><p>Ja, uden undtagelse. Shopify, WooCommerce og alle moderne platforme afviser HTTP-endpoints.</p></div></details>
     <details class="faq-item"><summary>Kan jeg have for mange integrationer?</summary><div class="faq-item__body"><p>Teknisk set nej, men kompleksiteten stiger. Hvert integrationspunkt er et potentielt fejlpunkt. Prioriter integrationer med hoj forretningsvaerdi.</p></div></details>
     <details class="faq-item"><summary>Hvad er idempotency i integration?</summary><div class="faq-item__body"><p>At det samme kald kan gentages uden at skabe duplikat-data. En ordre-webhook der leveres to gange maa ikke skabe to ordrer i WMS. Det sikres via idempotency-nogler, typisk ordre-ID.</p></div></details>
@@ -204,6 +204,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen p&aring; API og webhook?","acceptedAnswer":{"@type":"Answer","text":"API er pull: du spoerger og faar svar. Webhook er push: systemet fortaeller dig, naar noget sker."}},{"@type":"Question","name":"Skal min webhook have HTTPS?","acceptedAnswer":{"@type":"Answer","text":"Ja, uden undtagelse. Alle moderne platforme afviser HTTP-endpoints."}},{"@type":"Question","name":"Hvad er idempotency i integration?","acceptedAnswer":{"@type":"Answer","text":"At det samme kald kan gentages uden at skabe duplikat-data. Sikres via idempotency-nogler baseret p&aring; ordre-ID."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Integrationer forklaret: saadan taler dine systemer sammen","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen p&aring; API og webhook?","acceptedAnswer":{"@type":"Answer","text":"API er pull: du spoerger og fÃ¥r svar. Webhook er push: systemet fortaeller dig, nÃ¥r noget sker."}},{"@type":"Question","name":"Skal min webhook have HTTPS?","acceptedAnswer":{"@type":"Answer","text":"Ja, uden undtagelse. Alle moderne platforme afviser HTTP-endpoints."}},{"@type":"Question","name":"Hvad er idempotency i integration?","acceptedAnswer":{"@type":"Answer","text":"At det samme kald kan gentages uden at skabe duplikat-data. Sikres via idempotency-nogler baseret p&aring; ordre-ID."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Integrationer forklaret: sÃ¥dan taler dine systemer sammen","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

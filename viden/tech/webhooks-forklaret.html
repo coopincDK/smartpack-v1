@@ -3,7 +3,7 @@
 <!-- ================================================================
      SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
      Kopier hele denne blok til din nye <head> inden </head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+     Se ogsÃ¥: _TRACKING_TEMPLATE.html i roden
 ================================================================ -->
 
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
@@ -60,7 +60,7 @@
 <!-- ================================================================
      SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
      Kopier hele denne blok til din nye <head> inden </head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+     Se ogsÃ¥: _TRACKING_TEMPLATE.html i roden
 ================================================================ -->
 
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
@@ -108,11 +108,11 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Forestil dig at du hele dagen ringer til postvaesenet og spoerger: &quot;Er der breve til mig?&quot; Det er API-polling. En webhook er det modsatte: postvaesenet ringer til dig, naar der er et brev. Det er ikke en lille forskel, det er fundamentalt anderledes i e-handelssammenhaeng.</p>
-    <p>Her er alt du skal vide om webhooks: tekniske krav, hvad de koster naar de fejler, og hvordan du bygger en robust webhook-modtager.</p>
+    <p>Forestil dig at du hele dagen ringer til postvaesenet og spoerger: &quot;Er der breve til mig?&quot; Det er API-polling. En webhook er det modsatte: postvaesenet ringer til dig, nÃ¥r der er et brev. Det er ikke en lille forskel, det er fundamentalt anderledes i e-handelssammenhaeng.</p>
+    <p>Her er alt du skal vide om webhooks: tekniske krav, hvad de koster nÃ¥r de fejler, og hvordan du bygger en robust webhook-modtager.</p>
 
     <h2>Hvad er en webhook?</h2>
-    <p>En webhook er en HTTP-anmodning, som et eksternt system (Shopify, WooCommerce, e-conomic) sender til dit system, naar en bestemt haendelse sker. Det er push-notifikationer til software.</p>
+    <p>En webhook er en HTTP-anmodning, som et eksternt system (Shopify, WooCommerce, e-conomic) sender til dit system, nÃ¥r en bestemt hÃ¦ndelse sker. Det er push-notifikationer til software.</p>
     <p>Typiske webhook-events i e-handel:</p>
     <ul>
       <li><code>orders/create</code>: ny ordre modtaget</li>
@@ -131,14 +131,14 @@
     <p>Shopify og alle andre moderne platforme afviser HTTP-endpoints. Du skal have et gyldigt SSL-certifikat. Self-signed certifikater accepteres ikke i produktionsmiljoeer.</p>
 
     <h3>2. Svartid under 30 sekunder</h3>
-    <p>Shopify forventer HTTP 200 inden for 30 sekunder. Overskrides det, anses leveringen som mislykket, og Shopify forsoeger retry. Tunge processer bÃ¸r aldrig ske synkront i webhook-handleren, put jobbet i en koe og returner 200 straks.</p>
+    <p>Shopify forventer HTTP 200 inden for 30 sekunder. Overskrides det, anses leveringen som mislykket, og Shopify forsÃ¸ger retry. Tunge processer bÃ¸r aldrig ske synkront i webhook-handleren, put jobbet i en koe og returner 200 straks.</p>
 
     <h3>3. HMAC-SHA256 signaturvalidering</h3>
     <p>Shopify inkluderer en header <code>X-Shopify-Hmac-Sha256</code> med en hash af payload, signeret med dit webhook secret. Du skal validere denne signatur foer du behandler payload. GÃ¸r du det ikke, accepterer du potentielt falske requests.</p>
 
     <h2>Hvad koster webhook-fejl?</h2>
     <table>
-      <thead><tr><th>Fejltype</th><th>Total aarlig</th></tr></thead>
+      <thead><tr><th>Fejltype</th><th>Total Ã¥rlig</th></tr></thead>
       <tbody>
         <tr><td>Timeout (&gt;30 sek svartid), webhook deaktiveres</td><td>40.000 kr. per episode</td></tr>
         <tr><td>Ingen HMAC-validering, svindel-ordre</td><td>96.000 kr./aar</td></tr>
@@ -149,7 +149,7 @@
     <p><strong>Konklusion:</strong> Webhook-tab uden retry er den dyreste fejl. HMAC-skip er den farligste. Begge er 100% forebyggelige.</p>
 
     <h2>Webhook retry-mekanisme</h2>
-    <p>Shopify sender webhooks i realtid. Hvis leveringen fejler, forsoeger Shopify igen:</p>
+    <p>Shopify sender webhooks i realtid. Hvis leveringen fejler, forsÃ¸ger Shopify igen:</p>
     <ul>
       <li>Retry 1: efter ca. 1 minut</li>
       <li>Retry 2-N: med eksponentiel backoff</li>
@@ -167,7 +167,7 @@
       <tbody>
         <tr><td>Ny ordre modtaget</td><td>Ja</td><td>For langsomt</td></tr>
         <tr><td>Lagertal synkronisering</td><td>For mange events</td><td>Ja</td></tr>
-        <tr><td>Aendring i kundeprofil</td><td>Ja</td><td>Ja, begge virker</td></tr>
+        <tr><td>Ã¦ndring i kundeprofil</td><td>Ja</td><td>Ja, begge virker</td></tr>
         <tr><td>Batch-import af produkter</td><td>Nej</td><td>Ja</td></tr>
       </tbody>
     </table>
@@ -183,32 +183,32 @@
     <ul>
       <li><strong>Behandle tunge opgaver synkront i webhook-handler:</strong> Svartid overskrider 30 sekunder. Shopify anser leveringen som fejlet og sender retry. Ordren behandles to gange.</li>
       <li><strong>Skippe HMAC-validering midlertidigt:</strong> Under udvikling springes validering over. Det glider ind i produktion. Resultatet: enhver kan sende fabricerede ordre-events.</li>
-      <li><strong>Ikke h&aring;ndtere webhook-deaktivering:</strong> Systemet koerer videre men modtager ingen events. Ordrer behandles ikke.</li>
+      <li><strong>Ikke h&aring;ndtere webhook-deaktivering:</strong> Systemet kÃ¸rer videre men modtager ingen events. Ordrer behandles ikke.</li>
     </ul>
 
     <h2>S&aring;dan gÃ¸r du det rigtigt</h2>
     <ol>
       <li><strong>Returner 200 straks, behandl asynkront:</strong> Webhook-handler gemmer event i koe og returnerer 200. Baggrundsjob behandler fra koen.</li>
       <li><strong>Log raat payload ved modtagelse:</strong> Gem det raa JSON-payload ved modtagelse inden det behandles. Hvis behandling fejler, har du payloaden til re-behandling.</li>
-      <li><strong>Monitorer webhook-abonnementsstatus:</strong> Tjek regelmaessigt at dine webhook-abonnementer er aktive hos Shopify.</li>
+      <li><strong>Monitorer webhook-abonnementsstatus:</strong> Tjek regelmÃ¦ssigt at dine webhook-abonnementer er aktive hos Shopify.</li>
     </ol>
 
     <h2>SmartPack</h2>
     <p>SmartPack modtager webhooks fra Shopify, WooCommerce og andre platforme med fuld HMAC-SHA256 validering. Alle webhooks puttes i en intern event-koe og behandles asynkront. Svartid til platform er typisk under 200ms. Systemet er fuldt idempotent p&aring; ordre-ID-niveau. Webhook-aktivitet vises i SmartPack administrationspanel med status, tidsstempler og eventuelle fejl.</p>
   </div>
   <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
-<div class="bottom-cta"><p>Vil du undgaa webhook-tab og sikkerhedsbrud?</p><a href="../../kontakt" class="btn">Se SmartPacks webhook-haandtering</a></div>
+<div class="bottom-cta"><p>Vil du undgÃ¥ webhook-tab og sikkerhedsbrud?</p><a href="../../kontakt" class="btn">Se SmartPacks webhook-haandtering</a></div>
   <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
     <a href="./integrationer-forklaret" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Integrationer forklaret</span></a>
     <a href="./shopify-integration" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Shopify integration</span></a>
     <a href="./typiske-integrationsfejl" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Typiske integrationsfejl</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sporgsmaal</h2>
-    <details class="faq-item"><summary>Hvad er en webhook?</summary><div class="faq-item__body"><p>En push-notifikation fra et eksternt system (fx Shopify) til dit system. Shopify sender automatisk en HTTP POST til din URL, naar en ordre oprettes, Ã¦ndres eller annulleres.</p></div></details>
+    <details class="faq-item"><summary>Hvad er en webhook?</summary><div class="faq-item__body"><p>En push-notifikation fra et eksternt system (fx Shopify) til dit system. Shopify sender automatisk en HTTP POST til din URL, nÃ¥r en ordre oprettes, Ã¦ndres eller annulleres.</p></div></details>
     <details class="faq-item"><summary>Hvorfor krÃ¦ver webhooks HTTPS?</summary><div class="faq-item__body"><p>Uden HTTPS kan data aflyttes, og HMAC-signaturen kan ikke betros. Alle seriose platforme krÃ¦ver HTTPS-endpoints.</p></div></details>
-    <details class="faq-item"><summary>Hvad sker der, hvis min webhook-handler er for langsom?</summary><div class="faq-item__body"><p>Shopify anser leveringen som fejlet og forsoeger retry. Hvis din handler er langsom, risikerer du at modtage og behandle samme event to gange.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis min webhook-handler er for langsom?</summary><div class="faq-item__body"><p>Shopify anser leveringen som fejlet og forsÃ¸ger retry. Hvis din handler er langsom, risikerer du at modtage og behandle samme event to gange.</p></div></details>
     <details class="faq-item"><summary>Hvad er HMAC-SHA256, og hvorfor er det vigtigt?</summary><div class="faq-item__body"><p>En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke er manipuleret undervejs. Uden validering kan hvem som helst sende falske events.</p></div></details>
-    <details class="faq-item"><summary>Kan jeg teste webhooks lokalt?</summary><div class="faq-item__body"><p>Ja, med tunneling-vaerktoejer som ngrok eller Tailscale Funnel. De giver et offentligt HTTPS-endpoint der tunneler til din lokale server. Brug til udvikling, aldrig i produktion.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg teste webhooks lokalt?</summary><div class="faq-item__body"><p>Ja, med tunneling-vÃ¦rktÃ¸jer som ngrok eller Tailscale Funnel. De giver et offentligt HTTPS-endpoint der tunneler til din lokale server. Brug til udvikling, aldrig i produktion.</p></div></details>
   </div>
 </div></div>
 
@@ -217,6 +217,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En push-notifikation fra et eksternt system. Shopify sender automatisk en HTTP POST naar en ordre oprettes."}},{"@type":"Question","name":"Hvad er HMAC-SHA256?","acceptedAnswer":{"@type":"Answer","text":"En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke manipuleret."}},{"@type":"Question","name":"Hvad sker der, hvis min webhook-handler er for langsom?","acceptedAnswer":{"@type":"Answer","text":"Shopify anser leveringen som fejlet og forsoeger retry. Du risikerer at behandle samme event to gange."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En push-notifikation fra et eksternt system. Shopify sender automatisk en HTTP POST nÃ¥r en ordre oprettes."}},{"@type":"Question","name":"Hvad er HMAC-SHA256?","acceptedAnswer":{"@type":"Answer","text":"En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke manipuleret."}},{"@type":"Question","name":"Hvad sker der, hvis min webhook-handler er for langsom?","acceptedAnswer":{"@type":"Answer","text":"Shopify anser leveringen som fejlet og forsÃ¸ger retry. Du risikerer at behandle samme event to gange."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Webhooks forklaret: realtidsnotifikationer til dit lagersystem","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,7 +82,7 @@
   <div class="article-body" data-pagefind-body="true">
 
 <p>SmartPack har et &#229;bent API.</p>
-<p>De fleste bruger det til at synkronisere ordrer og opdatere lager. Det er fint. Men API'et sidder p&#229; realtidsdata om hvad der sker p&#229; dit lager, hvornaar det sker, hvem der g&#248;r det, og hvorfor.</p>
+<p>De fleste bruger det til at synkronisere ordrer og opdatere lager. Det er fint. Men API'et sidder p&#229; realtidsdata om hvad der sker p&#229; dit lager, hvornÃ¥r det sker, hvem der g&#248;r det, og hvorfor.</p>
 <p>Det er en motor. Sp&#248;rgsm&#229;let er bare hvad du vil bygge p&#229; den.</p>
 <p>Her er 10 id&#233;er til dem der t&#230;nker skidt og har modet og evnerne til at eksperimentere. Ingen af dem er garantier. Alle er mulige.</p>
 
@@ -93,7 +93,7 @@
 <ul>
   <li><strong>Ordrer</strong> med fuld tidslinje, status, linjer og metadata</li>
   <li><strong>Lagerbev&#230;gelser</strong> per SKU, per placering, per tidspunkt</li>
-  <li><strong>Medarbejderaktivitet</strong> hvem plukkede hvad, og hvornaar</li>
+  <li><strong>Medarbejderaktivitet</strong> hvem plukkede hvad, og hvornÃ¥r</li>
   <li><strong>Events og webhooks</strong> som trigger n&#229;r noget sker, ikke n&#229;r du sp&#248;rger</li>
   <li><strong>Produktdata</strong> v&#230;gt, m&#229;l, lokation, bev&#230;gelseshistorik</li>
   <li><strong>Indkabsordrer og ankomst</strong> hvad er p&#229; vej ind</li>
@@ -129,12 +129,12 @@
 <h3>&#x1F551; 5. Tidsbaseret prismotor</h3>
 <p>Ikke bare dynamic pricing. Dynamic pricing baseret p&#229; <em>dit eget lager</em>.</p>
 <p>Hver time k&#248;rer en regel mod API'et: lagerniveau under X, pris op. Udl&#248;b om Y dage, pris ned. Ordrehastighed over det normale, hold prisen.</p>
-<p>SmartPack har allerede dataen. Det her er bare logik ovenpaa.</p>
+<p>SmartPack har allerede dataen. Det her er bare logik ovenpÃ¥.</p>
 
 <h3>&#x1F3AF; 6. Mikrofulfillment routing</h3>
 <p>Ikke "send fra lager A".</p>
 <p>Men: split ordren intelligent. Linje 1 fra det lager der leverer hurtigst. Linje 2 fra det lager der er billigst. Systemet beslutter per linje, ikke per ordre.</p>
-<p>Kr&#230;ver inventory per location og lidt logik ovenpaa shipments-API'et. Begge er tilg&#230;ngelige.</p>
+<p>Kr&#230;ver inventory per location og lidt logik ovenpÃ¥ shipments-API'et. Begge er tilg&#230;ngelige.</p>
 
 <h3>&#x1F916; 7. Ops anomaly detector</h3>
 <p>Systemet der siger: "Det her burde ikke ske."</p>
@@ -158,7 +158,7 @@
 
 <h2>Det I m&#229;ske overser</h2>
 <p>De fleste teams bruger API'et til "vis ordre" og "opdater lager". Det er OK. Men SmartPacks edge er et andet sted.</p>
-<p>Dataen i systemet handler ikke bare om <em>hvad</em> der sker. Den handler om <em>hvornaar</em> og <em>hvorfor</em>. Timing plus flow plus bev&#230;gelse. Det er kombinationen der g&#248;r de avancerede ting mulige.</p>
+<p>Dataen i systemet handler ikke bare om <em>hvad</em> der sker. Den handler om <em>hvornÃ¥r</em> og <em>hvorfor</em>. Timing plus flow plus bev&#230;gelse. Det er kombinationen der g&#248;r de avancerede ting mulige.</p>
 <p>Ordrerne alene er kedelige. Ordrerne kombineret med lagertilstand, medarbejdertid og historiske m&#248;nstre er et prognosevaerkt&#248;j.</p>
 <p>Det kr&#230;ver en udvikler. Det kr&#230;ver lyst til at eksperimentere. Og det kr&#230;ver at man t&#248;r bygge noget der ikke eksisterer endnu.</p>
 <p>Men API'et er der. R&#229;materialerne er der. Det eneste der mangler er id&#233;en og h&#229;nderne.</p>
