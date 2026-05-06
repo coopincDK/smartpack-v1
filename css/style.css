@@ -3584,7 +3584,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 
 /* Bottom CTA */
 .bottom-cta {
-  margin: 3rem 0 2rem;
+  max-width: 720px;
+  margin: 3rem auto 2rem;
   padding: 2rem;
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -3606,7 +3607,11 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .bottom-cta .btn:hover { background: var(--accent-dark); }
 
 /* Related articles */
-.article-related { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.article-related { max-width: 720px; margin: 3rem auto 0; padding: 1.5rem 0 0; border-top: 1px solid var(--border); }
+.article-related h2 { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin-bottom: .75rem; }
+.article-related ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .4rem; }
+.article-related ul li a { font-size: .9rem; color: var(--accent); text-decoration: none; }
+.article-related ul li a:hover { text-decoration: underline; }
 .article-related__title { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-3); margin-bottom: 1rem; }
 .article-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: .75rem; }
 .article-related__item {
