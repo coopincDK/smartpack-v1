@@ -2,16 +2,16 @@
 <html lang="da">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webhooks pÃ¥ lageret: hvad er det og hvad kan du bruge dem til | SmartPack Viden</title>
-  <meta name="description" content="Webhooks sender automatisk data, naer noget sker. PÃ¥ et lager kan det betyde realtidsbeskeder om ordrer, forsendelser og lagerstatus. Her er en klar forklaring uden teknisk jargon.">
+  <title>Webhooks på lageret: hvad er det og hvad kan du bruge dem til | SmartPack Viden</title>
+  <meta name="description" content="Webhooks sender automatisk data, naer noget sker. På et lager kan det betyde realtidsbeskeder om ordrer, forsendelser og lagerstatus. Her er en klar forklaring uden teknisk jargon.">
   <link rel="canonical" href="https://smartpack.dk/viden/tech/webhooks-lager-guide">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style.css?v=4">
   <script src="../../js/theme-toggle.js"></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Webhooks pÃ¥ lageret: hvad er det og hvad kan du bruge dem til","author":{"@type":"Organization","name":"SmartPack"},"publisher":{"@type":"Organization","name":"SmartPack","url":"https://smartpack.dk"},"datePublished":"2025-05-01","inLanguage":"da"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En webhook er en automatisk HTTP-besked, der sendes fra eet system til et andet, naer en bestemt hÃ¦ndelse sker. Fx sender Shopify en webhook til dit WMS, naer en ny ordre er lagt. Det er push-baseret kommunikation i stedet for poll-baseret, hvilket gÃ¸r det hurtigere og mere effektivt."}},{"@type":"Question","name":"Hvad er forskellen pÃ¥ en webhook og en API?","acceptedAnswer":{"@type":"Answer","text":"En API er pull-baseret: dit system spoerger et andet system om data. En webhook er push-baseret: et system sender automatisk data til dit system, naer noget sker. For lagerhenaendelser som nye ordrer og forsendelsesbekraeeftelse er webhooks hurtigere og mere effektive end at polle en API hvert minut."}},{"@type":"Question","name":"Hvad sker der, hvis en webhook fejler?","acceptedAnswer":{"@type":"Answer","text":"De fleste webhook-systemer forsoeeger at gensende ved fejl, typisk 3-5 gange over en periode pÃ¥ 24-72 timer. Hvis alle gensendelsesforsoeog fejler, fÃ¥r du normalt en fejlbesked i webhook-loggen. Det er vigtigt at overvaaage disse logs og have en process for haandtering af mislykkede webhooks."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Webhooks på lageret: hvad er det og hvad kan du bruge dem til","author":{"@type":"Organization","name":"SmartPack"},"publisher":{"@type":"Organization","name":"SmartPack","url":"https://smartpack.dk"},"datePublished":"2025-05-01","inLanguage":"da"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En webhook er en automatisk HTTP-besked, der sendes fra eet system til et andet, naer en bestemt hændelse sker. Fx sender Shopify en webhook til dit WMS, naer en ny ordre er lagt. Det er push-baseret kommunikation i stedet for poll-baseret, hvilket gør det hurtigere og mere effektivt."}},{"@type":"Question","name":"Hvad er forskellen på en webhook og en API?","acceptedAnswer":{"@type":"Answer","text":"En API er pull-baseret: dit system spoerger et andet system om data. En webhook er push-baseret: et system sender automatisk data til dit system, naer noget sker. For lagerhenaendelser som nye ordrer og forsendelsesbekraeeftelse er webhooks hurtigere og mere effektive end at polle en API hvert minut."}},{"@type":"Question","name":"Hvad sker der, hvis en webhook fejler?","acceptedAnswer":{"@type":"Answer","text":"De fleste webhook-systemer forsoeeger at gensende ved fejl, typisk 3-5 gange over en periode på 24-72 timer. Hvis alle gensendelsesforsoeog fejler, får du normalt en fejlbesked i webhook-loggen. Det er vigtigt at overvaaage disse logs og have en process for håndtering af mislykkede webhooks."}}]}</script>
 
 <!-- ================================================================
      SMARTPACK TRACKING
@@ -35,31 +35,31 @@
 <script src="../../js/header.js"></script>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
-  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech</a><span>&rsaquo;</span><span>Webhooks pÃ¥ lageret</span></nav>
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech</a><span>&rsaquo;</span><span>Webhooks på lageret</span></nav>
   <div class="article-header">
     <span class="article-cat-badge">Tech</span>
-    <h1 class="article-title">Webhooks pÃ¥ lageret: hvad er det og hvad kan du bruge dem til</h1>
+    <h1 class="article-title">Webhooks på lageret: hvad er det og hvad kan du bruge dem til</h1>
   </div>
   <div class="article-body" data-pagefind-body="true">
     <img class="article-hero-img" src="../../assets/viden/artikel_billeder/15-webhook-flowdiagram.jpg" alt="Webhook flowdiagram for lagerintegration" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;">
 
-    <p>Forestil dig at din webshop fortaeller dit lager om en ny ordre i oejeblikket, den laeegges. Ikke hvert 15. minut. Ikke naer nogen trykker opdater. Oejeblikkeligt, automatisk, uden menneskelig handling. Det er hvad webhooks gÃ¸r.</p>
-    <p>Webhooks er et af de mest kraftfulde, men mindst forklarede vÃ¦rktÃ¸jer i modern logistik-tech. Mange lagerchefer ved ikke engang, at deres systemer bruger dem. Men forstÃ¥r du dem, kan du tage bedre beslutninger om din systemintegration og faa hurtigere, mere paalidelig dataudveksling.</p>
+    <p>Forestil dig at din webshop fortaeller dit lager om en ny ordre i oejeblikket, den laeegges. Ikke hvert 15. minut. Ikke naer nogen trykker opdater. Oejeblikkeligt, automatisk, uden menneskelig handling. Det er hvad webhooks gør.</p>
+    <p>Webhooks er et af de mest kraftfulde, men mindst forklarede værktøjer i modern logistik-tech. Mange lagerchefer ved ikke engang, at deres systemer bruger dem. Men forstår du dem, kan du tage bedre beslutninger om din systemintegration og faa hurtigere, mere paalidelig dataudveksling.</p>
     <p>Her er en klar forklaring uden unoevendig teknik.</p>
 
-    <p class="inline-cta">&#x1F449; SmartPack bruger webhooks til realtidsintegration med webshops og fragtlÃ¸sninger. <a href="../../kontakt">Laer mere om vores integrationsmuligheder</a></p>
+    <p class="inline-cta">&#x1F449; SmartPack bruger webhooks til realtidsintegration med webshops og fragtløsninger. <a href="../../kontakt">Laer mere om vores integrationsmuligheder</a></p>
 
     <h2>Hvad er en webhook, forklaret enkelt</h2>
-    <p>Normalt nÃ¥r to systemer udveksler data, sker det pÃ¥ en af to maader:</p>
+    <p>Normalt når to systemer udveksler data, sker det på en af to maader:</p>
     <ul>
-      <li><strong>Polling (pull):</strong> System A spoerger system B regelmÃ¦ssigt: "Er der noget nyt?" Det er som at tjekke din postkasse hvert 15. minut. Uenergigt og langsomt.</li>
+      <li><strong>Polling (pull):</strong> System A spoerger system B regelmæssigt: "Er der noget nyt?" Det er som at tjekke din postkasse hvert 15. minut. Uenergigt og langsomt.</li>
       <li><strong>Webhook (push):</strong> System B sender automatisk en besked til System A, naer noget sker. Det er som at faa en SMS, naer posten ankommer. Hurtigere og mere effektivt.</li>
     </ul>
-    <p>En webhook er teknisk set en HTTP POST-anmodning. Naer en bestemt hÃ¦ndelse sker i kilde-systemet (fx en ny ordre pÃ¥ Shopify), sender det systemet en JSON-datapakke til en specificeret URL i modtager-systemet (fx din WMS URL-endpoint).</p>
+    <p>En webhook er teknisk set en HTTP POST-anmodning. Naer en bestemt hændelse sker i kilde-systemet (fx en ny ordre på Shopify), sender det systemet en JSON-datapakke til en specificeret URL i modtager-systemet (fx din WMS URL-endpoint).</p>
     <p>Det er ikke kompliceret. Det er simpel kommunikation med en klar trigger og en klar modtager.</p>
 
-    <h2>Typiske webhook-hÃ¦ndelser pÃ¥ et lager</h2>
-    <p>Her er de hÃ¦ndelser, der typisk haandteres via webhooks i et lagersetup:</p>
+    <h2>Typiske webhook-hændelser på et lager</h2>
+    <p>Her er de hændelser, der typisk håndteres via webhooks i et lagersetup:</p>
     <ul>
       <li><strong>Ny ordre fra webshop:</strong> Shopify, WooCommerce eller anden platform sender ordredata til WMS ved ordremodtagelse.</li>
       <li><strong>Ordre annulleret:</strong> Hvis kunden annullerer inden pluk, skal WMS vide det straks for at frigive reserveret lager.</li>
@@ -68,47 +68,47 @@
       <li><strong>Returnering modtaget:</strong> Naer en returvare er registreret i WMS, kan webshop og kundeservicesystem opdateres automatisk.</li>
       <li><strong>Fragttracking opdateret:</strong> Fragtleverandoeren sender webhooks om pakketransport, som kan forwrides til kunden.</li>
     </ul>
-    <p>Summen af disse flows er et lagersystem, der reagerer i realtid frem for at vÃ¦re en halvtime bag virkeligheden.</p>
+    <p>Summen af disse flows er et lagersystem, der reagerer i realtid frem for at være en halvtime bag virkeligheden.</p>
 
-    <h2>Hvad der kan gÃ¥ galt med webhooks</h2>
+    <h2>Hvad der kan gå galt med webhooks</h2>
     <p>Webhooks er robuste, men ikke ufejlbare. Her er de typiske problemer:</p>
     <ul>
-      <li><strong>Modtager-endpoint er nede:</strong> Hvis dit WMS er utilgaengeligt, naer Shopify sender en webhook, fejler leveringen. Gode webhook-systemer forsoeeger at gensende automatisk, men det er ikke altid nok.</li>
-      <li><strong>Dobbelt-leverancer:</strong> Under gensendingsforsoeog kan den samme webhook blive leveret to gange. Modtager-systemet skal haandtere dette via idempotency-kontrol (tjekke om hÃ¦ndelsen allerede er behandlet).</li>
-      <li><strong>Ã¦ndringer i dataformat:</strong> Hvis webshop-platformen opdaterer sit API og Ã¦ndrer webhook-payloadens struktur, kan din WMS-integration holder op med at virke stille og roligt.</li>
-      <li><strong>Manglende overvaaagning:</strong> Fejlede webhooks logges typisk, men ingen ser loggen. Saet alarmering op pÃ¥ fejlede webhooks.</li>
+      <li><strong>Modtager-endpoint er nede:</strong> Hvis dit WMS er utilgængeligt, naer Shopify sender en webhook, fejler leveringen. Gode webhook-systemer forsoeeger at gensende automatisk, men det er ikke altid nok.</li>
+      <li><strong>Dobbelt-leverancer:</strong> Under gensendingsforsoeog kan den samme webhook blive leveret to gange. Modtager-systemet skal håndtere dette via idempotency-kontrol (tjekke om hændelsen allerede er behandlet).</li>
+      <li><strong>ændringer i dataformat:</strong> Hvis webshop-platformen opdaterer sit API og ændrer webhook-payloadens struktur, kan din WMS-integration holder op med at virke stille og roligt.</li>
+      <li><strong>Manglende overvaaagning:</strong> Fejlede webhooks logges typisk, men ingen ser loggen. Saet alarmering op på fejlede webhooks.</li>
     </ul>
-    <p>De fleste problemer opstÃ¥r ikke i selve webhook-mekanismen men i mangel af fejlhaandtering og overvaaagning.</p>
+    <p>De fleste problemer opstår ikke i selve webhook-mekanismen men i mangel af fejlhåndtering og overvaaagning.</p>
 
-    <h2>Webhooks vs. API-polling: hvornÃ¥r bruges hvad</h2>
+    <h2>Webhooks vs. API-polling: hvornår bruges hvad</h2>
     <p>Der er situationer, hvor polling er et bedre valg end webhooks:</p>
     <ul>
-      <li>NÃ¥r du har brug for historiske data, ikke kun realtidsÃ¦ndringer.</li>
-      <li>NÃ¥r kilde-systemet ikke understoeetter webhooks.</li>
-      <li>NÃ¥r du har brug for at hente status pÃ¥ anmodning (brugeriniteret) frem for automatisk.</li>
+      <li>Når du har brug for historiske data, ikke kun realtidsændringer.</li>
+      <li>Når kilde-systemet ikke understoeetter webhooks.</li>
+      <li>Når du har brug for at hente status på anmodning (brugeriniteret) frem for automatisk.</li>
     </ul>
-    <p>For lager-specifikke hÃ¦ndelser som ordremodtagelse, forsendelse og lageropdatering er webhooks klart det bedste valg. De reducerer forsinkelse fra minutter til sekunder og reducerer unoevendig belastning pÃ¥ begge systemer.</p>
+    <p>For lager-specifikke hændelser som ordremodtagelse, forsendelse og lageropdatering er webhooks klart det bedste valg. De reducerer forsinkelse fra minutter til sekunder og reducerer unoevendig belastning på begge systemer.</p>
 
-    <h2>SÃ¥dan kommer du i gang</h2>
+    <h2>Sådan kommer du i gang</h2>
     <p>De fleste moderne platforme understoeetter webhooks uden installation. I Shopify konfigurerer du webhooks under Indstillinger. I SmartPack er de buildt ind i integrationsmodulerne. Processen er typisk:</p>
     <ul>
-      <li>Definer, hvilke hÃ¦ndelser du vil abonnere pÃ¥.</li>
+      <li>Definer, hvilke hændelser du vil abonnere på.</li>
       <li>Angiv URL-endpoint i modtager-systemet.</li>
       <li>Test med et test-payload fra kilde-systemet.</li>
-      <li>Saet overvaaagning op pÃ¥ fejlede leveringer.</li>
+      <li>Saet overvaaagning op på fejlede leveringer.</li>
     </ul>
-    <p>Ingen programmering krÃ¦vet, hvis du bruger systemer med native webhook-support.</p>
+    <p>Ingen programmering krævet, hvis du bruger systemer med native webhook-support.</p>
   </div>
 
   <div class="article-faq">
     <h2>Ofte stillede spoergsmaal</h2>
-    <details class="faq-item"><summary>Hvad er en webhook, forklaret enkelt?</summary><p>En webhook er en automatisk besked, der sendes fra eet system til et andet, naer en bestemt hÃ¦ndelse sker. Naer en kunde bestiller pÃ¥ din webshop, sender webshopen automatisk ordredata til dit WMS uden at nogen trykker pÃ¥ noget.</p></details>
-    <details class="faq-item"><summary>Hvad er forskellen pÃ¥ en webhook og en API?</summary><p>En API er pull-baseret: dit system spoerger et andet system regelmÃ¦ssigt om data. En webhook er push-baseret: systemet sender data til dig automatisk, naer noget sker. Webhooks er hurtigere og mindre ressourcekrÃ¦vende til realtidshÃ¦ndelser.</p></details>
-    <details class="faq-item"><summary>Hvad sker der, hvis en webhook fejler?</summary><p>De fleste systemer forsoeeger at gensende automatisk 3-5 gange over de foelgende timer. Fejlede webhooks logges og boer overvaaages. Saet en alarm op, saa du ved det, hvis webhooks systematisk fejler over en periode.</p></details>
+    <details class="faq-item"><summary>Hvad er en webhook, forklaret enkelt?</summary><p>En webhook er en automatisk besked, der sendes fra eet system til et andet, naer en bestemt hændelse sker. Naer en kunde bestiller på din webshop, sender webshopen automatisk ordredata til dit WMS uden at nogen trykker på noget.</p></details>
+    <details class="faq-item"><summary>Hvad er forskellen på en webhook og en API?</summary><p>En API er pull-baseret: dit system spoerger et andet system regelmæssigt om data. En webhook er push-baseret: systemet sender data til dig automatisk, naer noget sker. Webhooks er hurtigere og mindre ressourcekrævende til realtidshændelser.</p></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis en webhook fejler?</summary><p>De fleste systemer forsoeeger at gensende automatisk 3-5 gange over de følgende timer. Fejlede webhooks logges og bør overvaaages. Saet en alarm op, saa du ved det, hvis webhooks systematisk fejler over en periode.</p></details>
   </div>
 
   <div class="bottom-cta">
-    <p>Vil du vide, hvilke webhooks SmartPack understoeetter og hvordan integrationen virker i praksis? Vi gennemgÃ¥r det i en demo.</p>
+    <p>Vil du vide, hvilke webhooks SmartPack understoeetter og hvordan integrationen virker i praksis? Vi gennemgår det i en demo.</p>
     <a href="../../kontakt" class="btn btn--primary">Book en teknisk gennemgang</a>
   </div>
   <div class="article-disclaimer"><p>Tekniske beskrivelser i denne artikel er generelle. Konkrete implementeringsdetaljer varierer efter system og leverandoer.</p></div>

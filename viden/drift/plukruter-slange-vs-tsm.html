@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plukruter: slange-metoden vs. TSM -- hvad er forskellen | SmartPack Viden</title>
-  <meta name="description" content="Slange-metoden og TSM er to vidt forskellige tilgange til plukkeruter. ForstÃ¥ forskellen, hvornÃ¥r du skal bruge hvilken, og hvad det betyder for din daglige plukketid.">
+  <meta name="description" content="Slange-metoden og TSM er to vidt forskellige tilgange til plukkeruter. Forstå forskellen, hvornår du skal bruge hvilken, og hvad det betyder for din daglige plukketid.">
   <link rel="canonical" href="https://smartpack.dk/viden/drift/plukruter-slange-vs-tsm">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../css/style.css?v=4">
   <script src="../../js/theme-toggle.js"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Plukruter: slange-metoden vs. TSM -- hvad er forskellen","author":{"@type":"Organization","name":"SmartPack"},"publisher":{"@type":"Organization","name":"SmartPack","url":"https://smartpack.dk"},"datePublished":"2025-05-01","inLanguage":"da"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er slange-metoden til plukkeruter?","acceptedAnswer":{"@type":"Answer","text":"Slange-metoden (ogsÃ¥ kaldt S-routing) er en simpel tilgang, hvor plukkerens rute slanger sig frem og tilbage gennem alle gange i en fast rÃ¦kkefoelge. Den er let at forstÃ¥ og krÃ¦ver ikke avanceret software, men er ikke optimal nÃ¥r varerne er spredt."}},{"@type":"Question","name":"Hvad er TSM i lagersammenhang?","acceptedAnswer":{"@type":"Answer","text":"TSM stÃ¥r for Travelling Salesman Method. Det er en algoritme der finder den korteste rute for at besÃ¸ge et saet plukpunkter. SmartPacks TSM-algoritme beregner den optimale rÃ¦kkefoelge for hvert enkelt plukjob baseret pÃ¥ de faktiske varer i ordren."}},{"@type":"Question","name":"Hvor meget hurtigere er TSM end slange-metoden?","acceptedAnswer":{"@type":"Answer","text":"Det afhÃ¦nger af lagrets layout og ordrernes spredning. Typisk 15-35% kortere plukrute pÃ¥ et lager med 8+ gange. Jo mere spredte varerne er, og jo faerre varer pr. gang i en ordre, des storre gevinst fra TSM."}},{"@type":"Question","name":"HvornÃ¥r er slange-metoden god nok?","acceptedAnswer":{"@type":"Answer","text":"Slange-metoden er god nok nÃ¥r ordrer indeholder mange varer spredt over alle gange, nÃ¥r lageret er lille (under 6 gange), eller nÃ¥r du ikke har et WMS der kan beregne optimerede ruter."}},{"@type":"Question","name":"Kan man blande slange og TSM?","acceptedAnswer":{"@type":"Answer","text":"Ja. Mange lagre bruger TSM til normale ordrer og slange-metoden til batch-pluk, hvor plukkeren alligevel skal igennem alle gange. SmartPack lader dig sÃ¦tte dette op pr. plukprofil."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er slange-metoden til plukkeruter?","acceptedAnswer":{"@type":"Answer","text":"Slange-metoden (også kaldt S-routing) er en simpel tilgang, hvor plukkerens rute slanger sig frem og tilbage gennem alle gange i en fast rækkefølge. Den er let at forstå og kræver ikke avanceret software, men er ikke optimal når varerne er spredt."}},{"@type":"Question","name":"Hvad er TSM i lagersammenhang?","acceptedAnswer":{"@type":"Answer","text":"TSM står for Travelling Salesman Method. Det er en algoritme der finder den korteste rute for at besøge et saet plukpunkter. SmartPacks TSM-algoritme beregner den optimale rækkefølge for hvert enkelt plukjob baseret på de faktiske varer i ordren."}},{"@type":"Question","name":"Hvor meget hurtigere er TSM end slange-metoden?","acceptedAnswer":{"@type":"Answer","text":"Det afhænger af lagrets layout og ordrernes spredning. Typisk 15-35% kortere plukrute på et lager med 8+ gange. Jo mere spredte varerne er, og jo faerre varer pr. gang i en ordre, des storre gevinst fra TSM."}},{"@type":"Question","name":"Hvornår er slange-metoden god nok?","acceptedAnswer":{"@type":"Answer","text":"Slange-metoden er god nok når ordrer indeholder mange varer spredt over alle gange, når lageret er lille (under 6 gange), eller når du ikke har et WMS der kan beregne optimerede ruter."}},{"@type":"Question","name":"Kan man blande slange og TSM?","acceptedAnswer":{"@type":"Answer","text":"Ja. Mange lagre bruger TSM til normale ordrer og slange-metoden til batch-pluk, hvor plukkeren alligevel skal igennem alle gange. SmartPack lader dig sætte dette op pr. plukprofil."}}]}</script>
 
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -40,14 +40,14 @@
   <div class="article-body" data-pagefind-body="true">
     <img class="article-hero-img" src="../../assets/viden/artikel_billeder/02-plukruter-lagerplan.jpg" alt="Lagerplan med plukrute" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;">
 
-    <p>NÃ¥r en plukker starter sin runde pÃ¥ lageret, er der ikke eet korrekt svar pÃ¥ hvilken rÃ¦kkefoelge han skal besÃ¸gte varerne. Der er mange mulige ruter. Forskellen pÃ¥ en god og en dÃ¥rlig rute kan let vÃ¦re 20-30% af plukkerens samlede arbejdstid.</p>
-    <p>To metoder dominerer: slange-metoden og TSM. Begge virker. Men de virker bedst under forskellige betingelser, og de krÃ¦ver forskelligt af dit setup.</p>
+    <p>Når en plukker starter sin runde på lageret, er der ikke eet korrekt svar på hvilken rækkefølge han skal besøgte varerne. Der er mange mulige ruter. Forskellen på en god og en dårlig rute kan let være 20-30% af plukkerens samlede arbejdstid.</p>
+    <p>To metoder dominerer: slange-metoden og TSM. Begge virker. Men de virker bedst under forskellige betingelser, og de kræver forskelligt af dit setup.</p>
 
     <p class="inline-cta">&#x1F449; SmartPack bruger TSM-algoritmen til at beregne optimale plukruter. <a href="../../kontakt">Se hvordan det virker</a></p>
 
     <h2>Slange-metoden: simpel og forudsigelig</h2>
-    <p>Slange-metoden fungerer ved at plukkeren kÃ¸rer igennem gangene i en fastlagt rÃ¦kkefoelge. Alle gange besoges fra ende til anden, og ruten slanger sig frem og tilbage. Deraf navnet.</p>
-    <p>Det ser sÃ¥dan ud i praksis:</p>
+    <p>Slange-metoden fungerer ved at plukkeren kører igennem gangene i en fastlagt rækkefølge. Alle gange besoges fra ende til anden, og ruten slanger sig frem og tilbage. Deraf navnet.</p>
+    <p>Det ser sådan ud i praksis:</p>
     <ul>
       <li>Start ved indgangen, koor til enden af gang 1.</li>
       <li>Drej ind i gang 2 fra enden, koor til begyndelsen.</li>
@@ -55,34 +55,34 @@
     </ul>
     <p>Fordele ved slange-metoden:</p>
     <ul>
-      <li><strong>Let at lÃ¦re.</strong> Nye medarbejdere forstar det i lobet af 5 minutter.</li>
-      <li><strong>KrÃ¦ver ikke software.</strong> Du kan skrive pluklisterne i Excel og sortere dem efter gang og placering.</li>
-      <li><strong>God ved fuld gang-daekkning.</strong> NÃ¥r ordren indeholder varer i nÃ¦sten alle gange, er slangen laenge nÃ¦sten optimal.</li>
+      <li><strong>Let at lære.</strong> Nye medarbejdere forstar det i lobet af 5 minutter.</li>
+      <li><strong>Kræver ikke software.</strong> Du kan skrive pluklisterne i Excel og sortere dem efter gang og placering.</li>
+      <li><strong>God ved fuld gang-daekkning.</strong> Når ordren indeholder varer i næsten alle gange, er slangen laenge næsten optimal.</li>
     </ul>
     <p>Ulemper:</p>
     <ul>
-      <li><strong>Ineffektiv ved spredt pluk.</strong> Hvis en ordre kun har varer i 3 ud af 12 gange, kÃ¸rer plukkeren igennem 9 tomme gange.</li>
-      <li><strong>Ingen optimering af stop-rÃ¦kkefoelge inden for en gang.</strong> Plukkeren kan sÃ¦tte varerne i forkert rÃ¦kkefoelge og maa vende om.</li>
+      <li><strong>Ineffektiv ved spredt pluk.</strong> Hvis en ordre kun har varer i 3 ud af 12 gange, kører plukkeren igennem 9 tomme gange.</li>
+      <li><strong>Ingen optimering af stop-rækkefølge inden for en gang.</strong> Plukkeren kan sætte varerne i forkert rækkefølge og maa vende om.</li>
       <li><strong>Vaekster med lageret.</strong> Jo flere gange, des mere ineffektiv ved spredte ordrer.</li>
     </ul>
 
     <h2>TSM: korteste vej til alle plukpunkter</h2>
-    <p>TSM stÃ¥r for Travelling Salesman Method. Det er en algoritme der loser det klassiske problem: givet N punkter pÃ¥ et kort, hvad er den koreste rute der besÃ¸ger alle punkterne?</p>
-    <p>PÃ¥ et lager betyder det: givet de specifikke varer i en ordre, hvad er den korteste rute plukkeren kan tage for at hente dem alle?</p>
-    <p>SmartPack bruger TSM kombineret med A* pathfinding. Det beregner ikke bare hvilken rÃ¦kkefoelge varerne skal plukkes i, men ogsÃ¥ hvilken vej plukkeren skal kÃ¸re igennem gangene for at undgÃ¥ unodige omveje.</p>
+    <p>TSM står for Travelling Salesman Method. Det er en algoritme der loser det klassiske problem: givet N punkter på et kort, hvad er den koreste rute der besøger alle punkterne?</p>
+    <p>På et lager betyder det: givet de specifikke varer i en ordre, hvad er den korteste rute plukkeren kan tage for at hente dem alle?</p>
+    <p>SmartPack bruger TSM kombineret med A* pathfinding. Det beregner ikke bare hvilken rækkefølge varerne skal plukkes i, men også hvilken vej plukkeren skal køre igennem gangene for at undgå unodige omveje.</p>
     <p>Fordele ved TSM:</p>
     <ul>
-      <li><strong>Markant kortere rute ved spredte ordrer.</strong> En ordre med varer i 4 ud af 12 gange kÃ¸rer plukkeren typisk 30-40% kortere rute med TSM end med slange.</li>
+      <li><strong>Markant kortere rute ved spredte ordrer.</strong> En ordre med varer i 4 ud af 12 gange kører plukkeren typisk 30-40% kortere rute med TSM end med slange.</li>
       <li><strong>Dynamisk pr. ordre.</strong> Ruten beregnes specfikt for den ordre, ikke en fast skabelon.</li>
-      <li><strong>Skalerer med lagerstorrelse.</strong> Jo storre lageret er, des storre er gevinsten.</li>
+      <li><strong>Skalerer med lagerstørrelse.</strong> Jo storre lageret er, des storre er gevinsten.</li>
     </ul>
     <p>Ulemper:</p>
     <ul>
-      <li><strong>KrÃ¦ver WMS.</strong> Du kan ikke beregne TSM i hoveapet eller pÃ¥ papir. Det krÃ¦ver software.</li>
-      <li><strong>KrÃ¦ver korrekt lagerdiagram.</strong> Systemet skal vide, hvor gangene er, og hvilke veje der er tilgaengelige. Forkert kortlaegning giver forkerte ruter.</li>
+      <li><strong>Kræver WMS.</strong> Du kan ikke beregne TSM i hoveapet eller på papir. Det kræver software.</li>
+      <li><strong>Kræver korrekt lagerdiagram.</strong> Systemet skal vide, hvor gangene er, og hvilke veje der er tilgængelige. Forkert kortlaegning giver forkerte ruter.</li>
     </ul>
 
-    <h2>HvornÃ¥r bruger du hvad?</h2>
+    <h2>Hvornår bruger du hvad?</h2>
     <p>Her er en praktisk oversigt:</p>
     <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem;">
       <thead><tr style="background:var(--surface);">
@@ -90,39 +90,39 @@
         <th style="padding:.6rem .75rem;text-align:left;border-bottom:2px solid var(--border);">Anbefalet metode</th>
       </tr></thead>
       <tbody>
-        <tr><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Lille lager under 6 gange</td><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Slange er tilstrÃ¦kkeligt</td></tr>
+        <tr><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Lille lager under 6 gange</td><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Slange er tilstrækkeligt</td></tr>
         <tr><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Stort lager, ordrer med faa varer</td><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">TSM giver stor gevinst</td></tr>
         <tr><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Batch-pluk med mange varer pr. tur</td><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Slange acceptabel, TSM marginalt bedre</td></tr>
         <tr><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Ingen WMS</td><td style="padding:.5rem .75rem;border-bottom:1px solid var(--border);">Slange-metoden</td></tr>
-        <tr><td style="padding:.5rem .75rem;">WMS med TSM-stÃ¸tte</td><td style="padding:.5rem .75rem;">TSM altid</td></tr>
+        <tr><td style="padding:.5rem .75rem;">WMS med TSM-støtte</td><td style="padding:.5rem .75rem;">TSM altid</td></tr>
       </tbody>
     </table>
 
     <h2>Hvad det betyder i kroner</h2>
     <p>Lad os sige du har 2 plukkere der each plukker 200 ordrer om dagen. Gennemsnitlig plukketid er 3 minutter pr. ordre med slange-metoden. TSM reducerer det til 2 minutter og 15 sekunder.</p>
-    <p>Det er 45 sekunder pr. ordre. Ganget med 400 ordrer om dagen er det 300 minutters sparet tid dagligt. Det er 5 timer. Til en timelon pÃ¥ 175 kr. er det 875 kr. om dagen, eller knap 190.000 kr. om Ã¥ret i spart lonudfgift.</p>
-    <p>Og det er kun plukketid. Hertil kommer faerre fejl, fordi en klar rute gÃ¸r det nemmere at holde koncentrationen.</p>
+    <p>Det er 45 sekunder pr. ordre. Ganget med 400 ordrer om dagen er det 300 minutters sparet tid dagligt. Det er 5 timer. Til en timelon på 175 kr. er det 875 kr. om dagen, eller knap 190.000 kr. om året i spart lonudfgift.</p>
+    <p>Og det er kun plukketid. Hertil kommer faerre fejl, fordi en klar rute gør det nemmere at holde koncentrationen.</p>
 
-    <h2>SÃ¥dan fungerer det i SmartPack</h2>
-    <p>I SmartPack vÃ¦lger du plukprofil nÃ¥r du starter plukjobbet. Profilen bestemmer om systemet bruger slange, TSM eller en punktbaseret algoritme. Du kan have flere profiler, fx en til eksprespakker og en til normale ordrer.</p>
-    <p>Systemet tegner ruten pÃ¥ et lagerdiagram pÃ¥ skraermen, saa plukkeren altid kan se, hvor han er og hvad der er nÃ¦ste stop. Plukkeren scanner placering for at bekraefte, at han er pÃ¥ det rigtige sted, inden han tager varen.</p>
-    <p>Du kan teste dine historiske plukkeruter i SmartPacks lager-designer og se, hvad TSM ville have sparet dig i gangafstand sammenlignet med din nuvÃ¦rende metode.</p>
+    <h2>Sådan fungerer det i SmartPack</h2>
+    <p>I SmartPack vælger du plukprofil når du starter plukjobbet. Profilen bestemmer om systemet bruger slange, TSM eller en punktbaseret algoritme. Du kan have flere profiler, fx en til eksprespakker og en til normale ordrer.</p>
+    <p>Systemet tegner ruten på et lagerdiagram på skraermen, saa plukkeren altid kan se, hvor han er og hvad der er næste stop. Plukkeren scanner placering for at bekraefte, at han er på det rigtige sted, inden han tager varen.</p>
+    <p>Du kan teste dine historiske plukkeruter i SmartPacks lager-designer og se, hvad TSM ville have sparet dig i gangafstand sammenlignet med din nuværende metode.</p>
   </div>
 
   <div class="article-faq">
     <h2>Ofte stillede spoergsmaal</h2>
-    <details class="faq-item"><summary>Hvad er slange-metoden til plukkeruter?</summary><p>Slange-metoden er en fast rute, der besÃ¸ger alle gange i rÃ¦kkefoelge fra ende til anden. Let at lÃ¦re og krÃ¦ver ingen software, men er ineffektiv nÃ¥r ordrer kun dÃ¦kker et faatal af gangene.</p></details>
-    <details class="faq-item"><summary>Hvad er TSM i lagerdrift?</summary><p>TSM (Travelling Salesman Method) er en algoritme der beregner den korteste rute for at besÃ¸gte alle plukpunkter i en bestemt ordre. SmartPack beregner denne rute automatisk pr. plukjob.</p></details>
-    <details class="faq-item"><summary>Hvor meget hurtigere er TSM end slange-metoden?</summary><p>Typisk 15-35% kortere plukrute pÃ¥ et lager med 8 eller flere gange. Gevinsten er stoerst nÃ¥r ordrer indeholder faerre varer spredt over mange gange.</p></details>
-    <details class="faq-item"><summary>HvornÃ¥r er slange-metoden god nok?</summary><p>NÃ¥r lageret er lille (under 6 gange), nÃ¥r du ikke har WMS, eller nÃ¥r batch-pluk alligevel krÃ¦ver fuld gang-daekkning. For store lagre med spredte ordrer er TSM nÃ¦sten altid bedre.</p></details>
-    <details class="faq-item"><summary>KrÃ¦ver TSM specialudstyr?</summary><p>Nej, men det krÃ¦ver et WMS der understotter det. TSM beregnes i software og vises pÃ¥ plukkkerens skaerm eller haandholdtterminalen. Ingen ekstra hardware er nÃ¸dvendig.</p></details>
+    <details class="faq-item"><summary>Hvad er slange-metoden til plukkeruter?</summary><p>Slange-metoden er en fast rute, der besøger alle gange i rækkefølge fra ende til anden. Let at lære og kræver ingen software, men er ineffektiv når ordrer kun dækker et faatal af gangene.</p></details>
+    <details class="faq-item"><summary>Hvad er TSM i lagerdrift?</summary><p>TSM (Travelling Salesman Method) er en algoritme der beregner den korteste rute for at besøgte alle plukpunkter i en bestemt ordre. SmartPack beregner denne rute automatisk pr. plukjob.</p></details>
+    <details class="faq-item"><summary>Hvor meget hurtigere er TSM end slange-metoden?</summary><p>Typisk 15-35% kortere plukrute på et lager med 8 eller flere gange. Gevinsten er størst når ordrer indeholder faerre varer spredt over mange gange.</p></details>
+    <details class="faq-item"><summary>Hvornår er slange-metoden god nok?</summary><p>Når lageret er lille (under 6 gange), når du ikke har WMS, eller når batch-pluk alligevel kræver fuld gang-daekkning. For store lagre med spredte ordrer er TSM næsten altid bedre.</p></details>
+    <details class="faq-item"><summary>Kræver TSM specialudstyr?</summary><p>Nej, men det kræver et WMS der understotter det. TSM beregnes i software og vises på plukkkerens skaerm eller haandholdtterminalen. Ingen ekstra hardware er nødvendig.</p></details>
   </div>
 
   <div class="bottom-cta">
-    <p>Bruger dine plukkere stadig slange-metoden pÃ¥ et lager med 8+ gange? Saa efterlader du sandsynligvis 20-30% plukkapacitet pÃ¥ bordet uden at vide det.</p>
-    <a href="../../kontakt" class="btn btn--primary">Se hvad TSM kan gÃ¸re for dit lager</a>
+    <p>Bruger dine plukkere stadig slange-metoden på et lager med 8+ gange? Saa efterlader du sandsynligvis 20-30% plukkapacitet på bordet uden at vide det.</p>
+    <a href="../../kontakt" class="btn btn--primary">Se hvad TSM kan gøre for dit lager</a>
   </div>
-  <div class="article-disclaimer"><p>Tidsestimaterne i denne artikel er baseret pÃ¥ erfaringer fra SmartPacks kunder. Faktiske resultater afhÃ¦nger af lageropbygning og ordresammensÃ¦tning.</p></div>
+  <div class="article-disclaimer"><p>Tidsestimaterne i denne artikel er baseret på erfaringer fra SmartPacks kunder. Faktiske resultater afhænger af lageropbygning og ordresammensætning.</p></div>
 </div></div>
 </main>
 <div id="sp-footer"></div>

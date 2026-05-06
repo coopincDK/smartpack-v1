@@ -2,8 +2,8 @@
 <html lang="da">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopify og WMS: hvad der faktisk synkroniserer og hvad der ikke gÃ¸r | SmartPack Viden</title>
-  <meta name="description" content="Shopify og WMS taler ikke altid det samme sprog. Her fÃ¥r du en aerligh gennemgang af hvad der synkroniserer automatisk, hvad der krÃ¦ver manuelt arbejde, og hvad der typisk gÃ¥r galt i integrationen.">
+  <title>Shopify og WMS: hvad der faktisk synkroniserer og hvad der ikke gør | SmartPack Viden</title>
+  <meta name="description" content="Shopify og WMS taler ikke altid det samme sprog. Her får du en aerligh gennemgang af hvad der synkroniserer automatisk, hvad der kræver manuelt arbejde, og hvad der typisk går galt i integrationen.">
   <link rel="canonical" href="https://smartpack.dk/viden/tech/shopify-wms-integration">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../css/style.css?v=4">
   <script src="../../js/theme-toggle.js"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Shopify og WMS: hvad der faktisk synkroniserer og hvad der ikke goer","author":{"@type":"Organization","name":"SmartPack"},"publisher":{"@type":"Organization","name":"SmartPack","url":"https://smartpack.dk"},"datePublished":"2025-05-01","inLanguage":"da"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad synkroniserer automatisk mellem Shopify og et WMS?","acceptedAnswer":{"@type":"Answer","text":"I en korrekt opsat integration synkroniserer typisk: ordrer fra Shopify til WMS (nyt salg), lagerstatus fra WMS til Shopify (beholdningsÃ¦ndringer), forsendelsesbekraeeftelse og trackingnummer fra WMS til Shopify, og ordrestatus (opfyldt, delvist opfyldt). Produktdata synkroniseres normalt kun ved initial opsÃ¦tning."}},{"@type":"Question","name":"Hvad synkroniserer ikke automatisk mellem Shopify og WMS?","acceptedAnswer":{"@type":"Answer","text":"Produktbeskrivelser, billeder, varianter og tags haandteres typisk i Shopify og synkroniseres ikke til WMS. Returnering og reklamationslÃ¸sninger krÃ¦ver som regel manuel eller separat integrationshaandtering. Bundling og kit-produkter er ogsÃ¥ notorisk svare at synkronisere korrekt."}},{"@type":"Question","name":"Hvad er den stÃ¸rste faldgrube ved Shopify-WMS integration?","acceptedAnswer":{"@type":"Answer","text":"At antage at lagerdata er det samme i begge systemer. Shopify og WMS kan have forskellig lagerstatus pÃ¥ grund af timing i synkroniseringen, reserverede ordrer der ikke er overfÃ¸rt endnu, eller fejl i den initiale opsÃ¦tning. Bekraeft altid, at begge systemer viser det samme ved opstart og efter hver stÃ¸rre lageropdatering."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad synkroniserer automatisk mellem Shopify og et WMS?","acceptedAnswer":{"@type":"Answer","text":"I en korrekt opsat integration synkroniserer typisk: ordrer fra Shopify til WMS (nyt salg), lagerstatus fra WMS til Shopify (beholdningsændringer), forsendelsesbekraeeftelse og trackingnummer fra WMS til Shopify, og ordrestatus (opfyldt, delvist opfyldt). Produktdata synkroniseres normalt kun ved initial opsætning."}},{"@type":"Question","name":"Hvad synkroniserer ikke automatisk mellem Shopify og WMS?","acceptedAnswer":{"@type":"Answer","text":"Produktbeskrivelser, billeder, varianter og tags håndteres typisk i Shopify og synkroniseres ikke til WMS. Returnering og reklamationsløsninger kræver som regel manuel eller separat integrationshåndtering. Bundling og kit-produkter er også notorisk svare at synkronisere korrekt."}},{"@type":"Question","name":"Hvad er den største faldgrube ved Shopify-WMS integration?","acceptedAnswer":{"@type":"Answer","text":"At antage at lagerdata er det samme i begge systemer. Shopify og WMS kan have forskellig lagerstatus på grund af timing i synkroniseringen, reserverede ordrer der ikke er overført endnu, eller fejl i den initiale opsætning. Bekraeft altid, at begge systemer viser det samme ved opstart og efter hver større lageropdatering."}}]}</script>
 
 <!-- ================================================================
      SMARTPACK TRACKING
@@ -43,17 +43,17 @@
   <div class="article-body" data-pagefind-body="true">
     <img class="article-hero-img" src="../../assets/viden/artikel_billeder/14-shopify-wms-integration.jpg" alt="Shopify og WMS integration diagram" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;">
 
-    <p>Mange e-handelsevirksomheder antager, at Shopify og deres WMS taler flydende med hinanden, naer de er koblet sammen. Den antagelse koester dem fejl, dobbeltregistreringer og kunder der bestiller produkter, der ikke er pÃ¥ lager.</p>
-    <p>Shopify er fremragende til at haandtere produktkataloget, priser, kampagner og kunderelationer. Et WMS er fremragende til at haandtere den fysiske lagerbeholdning, pluk, pak og forsendelse. Men der er et overlap, og i det overlap opstÃ¥r problemerne, hvis integrationen ikke er velovervejet.</p>
-    <p>Her er en klar gennemgang af, hvad der rent faktisk kan synkronisere, hvad der ikke gÃ¸r, og hvad du skal vÃ¦re opmaerksom pÃ¥.</p>
+    <p>Mange e-handelsevirksomheder antager, at Shopify og deres WMS taler flydende med hinanden, naer de er koblet sammen. Den antagelse koester dem fejl, dobbeltregistreringer og kunder der bestiller produkter, der ikke er på lager.</p>
+    <p>Shopify er fremragende til at håndtere produktkataloget, priser, kampagner og kunderelationer. Et WMS er fremragende til at håndtere den fysiske lagerbeholdning, pluk, pak og forsendelse. Men der er et overlap, og i det overlap opstår problemerne, hvis integrationen ikke er velovervejet.</p>
+    <p>Her er en klar gennemgang af, hvad der rent faktisk kan synkronisere, hvad der ikke gør, og hvad du skal være opmaerksom på.</p>
 
     <p class="inline-cta">&#x1F449; SmartPack har en native Shopify-integration. <a href="../../kontakt">Se hvad den daekkter i en demo</a></p>
 
     <h2>Hvad synkroniserer i en god integration</h2>
-    <p>En velopsat Shopify-WMS integration haandterer typisk disse datastroemme automatisk:</p>
+    <p>En velopsat Shopify-WMS integration håndterer typisk disse datastroemme automatisk:</p>
     <ul>
-      <li><strong>Ordrer fra Shopify til WMS:</strong> NÃ¥r en kunde bestiller pÃ¥ din webshop, sendes ordren automatisk til WMS for pluk og pakning. Dette er det mest kritiske flow og skal vÃ¦re realtid eller naer-realtid.</li>
-      <li><strong>Lagerstatus fra WMS til Shopify:</strong> NÃ¥r en ordre er plukket eller nye varer er modtaget, opdateres lagerbeholdningen pÃ¥ Shopify. Korrekt lagerstatus forhindrer oversalg.</li>
+      <li><strong>Ordrer fra Shopify til WMS:</strong> Når en kunde bestiller på din webshop, sendes ordren automatisk til WMS for pluk og pakning. Dette er det mest kritiske flow og skal være realtid eller naer-realtid.</li>
+      <li><strong>Lagerstatus fra WMS til Shopify:</strong> Når en ordre er plukket eller nye varer er modtaget, opdateres lagerbeholdningen på Shopify. Korrekt lagerstatus forhindrer oversalg.</li>
       <li><strong>Forsendelsesbekraeeftelse og trackingnummer:</strong> Naer en pakke er afsendt fra WMS, sendes trackingnummeret tilbage til Shopify og frem til kunden via email.</li>
       <li><strong>Ordrestatus:</strong> Ordren markeres som opfyldt i Shopify, naer WMS bekraeefterdet afsendt.</li>
     </ul>
@@ -62,45 +62,45 @@
     <h2>Hvad synkroniserer typisk ikke automatisk</h2>
     <p>Her er omraaderne, der overrasker flest:</p>
     <ul>
-      <li><strong>Produktdata:</strong> Produktbeskrivelser, billeder, varianter og tags oprettes i Shopify og synkroniseres ikke automatisk til WMS. WMS fÃ¥r typisk kun SKU, navn og mÃ¦ngde. Shopify er produktmester, WMS er lagermester.</li>
-      <li><strong>Returvarer:</strong> Returneringshaandtering er et separat flow. Naer en kunde returnerer i Shopify, skal det manuelt eller via et separat returneringsmodul haandteres i WMS. Mange integrationer daekkter ikke dette automatisk.</li>
-      <li><strong>Bundling og kits:</strong> Saelger du fx en "startpakke" bestÃ¥ende af tre individuelle varer, er det notorisk svaert at synkronisere korrekt. Shopify ser det som eet produkt, WMS skal plukke tre. Haandtering af dette krÃ¦ver specifik konfiguration.</li>
-      <li><strong>Delordrer og backorders:</strong> Hvad sker der, nÃ¥r du kun har to af tre bestilte varer pÃ¥ lager? Shopify og WMS haandterer dette forskelligt, og uden specifik opsÃ¦tning kan det give inkonsistente ordrestatuser.</li>
-      <li><strong>Prisjusteringer og rabatter:</strong> WMS behÃ¸ver normalt ikke prisoplysninger, men hvis du fakturerer via WMS, skal prisdata overfÃ¸res eksplicit.</li>
+      <li><strong>Produktdata:</strong> Produktbeskrivelser, billeder, varianter og tags oprettes i Shopify og synkroniseres ikke automatisk til WMS. WMS får typisk kun SKU, navn og mængde. Shopify er produktmester, WMS er lagermester.</li>
+      <li><strong>Returvarer:</strong> Returneringshåndtering er et separat flow. Naer en kunde returnerer i Shopify, skal det manuelt eller via et separat returneringsmodul håndteres i WMS. Mange integrationer daekkter ikke dette automatisk.</li>
+      <li><strong>Bundling og kits:</strong> Saelger du fx en "startpakke" bestående af tre individuelle varer, er det notorisk svaert at synkronisere korrekt. Shopify ser det som eet produkt, WMS skal plukke tre. håndtering af dette kræver specifik konfiguration.</li>
+      <li><strong>Delordrer og backorders:</strong> Hvad sker der, når du kun har to af tre bestilte varer på lager? Shopify og WMS håndterer dette forskelligt, og uden specifik opsætning kan det give inkonsistente ordrestatuser.</li>
+      <li><strong>Prisjusteringer og rabatter:</strong> WMS behøver normalt ikke prisoplysninger, men hvis du fakturerer via WMS, skal prisdata overføres eksplicit.</li>
     </ul>
 
-    <h2>Den stÃ¸rste faldgrube: lagerdata der divergerer</h2>
-    <p>Det mest almindelige problem i Shopify-WMS integrationer er, at de to systemer gradvist fÃ¥r forskellig lagerstatus. Det sker pÃ¥ grund af:</p>
+    <h2>Den største faldgrube: lagerdata der divergerer</h2>
+    <p>Det mest almindelige problem i Shopify-WMS integrationer er, at de to systemer gradvist får forskellig lagerstatus. Det sker på grund af:</p>
     <ul>
-      <li>Forsinkelse i synkronisering. Hvis din synk kÃ¸rer hvert 15. minut og du fÃ¥r 10 ordrer i den periode, kan Shopify kortvarigt vise forkert lager.</li>
-      <li>Fejl i den initiale opsÃ¦tning, hvor lager blev importeret fra et af systemerne med forkerte starttal.</li>
-      <li>Manuelle lagerkorrektioner i det ene system, der ikke overfÃ¸res til det andet.</li>
-      <li>Varer der er reserveret i WMS men ikke afspejlet i Shopifys tilgaengelige lager.</li>
+      <li>Forsinkelse i synkronisering. Hvis din synk kører hvert 15. minut og du får 10 ordrer i den periode, kan Shopify kortvarigt vise forkert lager.</li>
+      <li>Fejl i den initiale opsætning, hvor lager blev importeret fra et af systemerne med forkerte starttal.</li>
+      <li>Manuelle lagerkorrektioner i det ene system, der ikke overføres til det andet.</li>
+      <li>Varer der er reserveret i WMS men ikke afspejlet i Shopifys tilgængelige lager.</li>
     </ul>
-    <p>LÃ¸sningen er en klar datamaster-strategi: bestem, hvilket system er kilden til sandheden for lagerbeholdning. I de fleste tilfaelde boer det vÃ¦re WMS, der sender lagerstatus til Shopify, aldrig omvendt.</p>
+    <p>Løsningen er en klar datamaster-strategi: bestem, hvilket system er kilden til sandheden for lagerbeholdning. I de fleste tilfælde bør det være WMS, der sender lagerstatus til Shopify, aldrig omvendt.</p>
 
     <h2>Tekniske integrationsmetoder</h2>
     <p>Der er tre maader at koble Shopify og WMS:</p>
     <ul>
-      <li><strong>Native app fra WMS-leverandoer:</strong> Den nemmeste lÃ¸sning. SmartPack har fx en native Shopify-integration. Du installerer appen, godkender adgang og konfigurerer synkroniseringsregler.</li>
-      <li><strong>Middleware:</strong> Platforme som Linnworks, Skubana eller SKULabs sidder mellem Shopify og WMS og haandterer datastroemmen. Giver mere fleksibilitet men Ã¸ger kompleksiteten.</li>
-      <li><strong>Custom API-integration:</strong> Din egen udvikler bygger integrationen via Shopify Admin API og WMS API. Mest fleksibelt men dyrest og krÃ¦ver vedligeholdelse, naer de to systemer opdaterer deres API.</li>
+      <li><strong>Native app fra WMS-leverandoer:</strong> Den nemmeste løsning. SmartPack har fx en native Shopify-integration. Du installerer appen, godkender adgang og konfigurerer synkroniseringsregler.</li>
+      <li><strong>Middleware:</strong> Platforme som Linnworks, Skubana eller SKULabs sidder mellem Shopify og WMS og håndterer datastroemmen. Giver mere fleksibilitet men øger kompleksiteten.</li>
+      <li><strong>Custom API-integration:</strong> Din egen udvikler bygger integrationen via Shopify Admin API og WMS API. Mest fleksibelt men dyrest og kræver vedligeholdelse, naer de to systemer opdaterer deres API.</li>
     </ul>
-    <p>Uanset metode skal du teste graeensetilfaeldet: hvad sker der ved et fuldt udfyldt lager? Hvad sker der ved en returvare? Hvad sker der, naer en ordre annulleres efter pluk men foer forsendelse? Disse scenarieer afsloerer svaghederne i integrationen.</p>
+    <p>Uanset metode skal du teste graeensetilfældet: hvad sker der ved et fuldt udfyldt lager? Hvad sker der ved en returvare? Hvad sker der, naer en ordre annulleres efter pluk men foer forsendelse? Disse scenarieer afsloerer svaghederne i integrationen.</p>
   </div>
 
   <div class="article-faq">
     <h2>Ofte stillede spoergsmaal</h2>
     <details class="faq-item"><summary>Hvad synkroniserer automatisk mellem Shopify og WMS?</summary><p>Ordrer fra Shopify til WMS, lagerstatus fra WMS til Shopify, trackingnumre og forsendelsesbekraeeftelse. Det er de fire kerneflows i en velopsat integration.</p></details>
-    <details class="faq-item"><summary>Hvad synkroniserer ikke automatisk i Shopify-WMS integration?</summary><p>Produktbeskrivelser, billeder og tags haandteres kun i Shopify. Returnering, bundling og delordrer krÃ¦ver typisk separat konfiguration eller manuel haandtering.</p></details>
-    <details class="faq-item"><summary>Hvad er den stÃ¸rste fejl ved Shopify-WMS integration?</summary><p>Ikke at bestemme en klar datamaster. Beslut, at WMS er kilden til sandheden for lagerstatus, og at Shopify altid opdateres fra WMS, aldrig omvendt. Divergerende lagertal er den stÃ¸rste kilde til oversalg og fejl.</p></details>
+    <details class="faq-item"><summary>Hvad synkroniserer ikke automatisk i Shopify-WMS integration?</summary><p>Produktbeskrivelser, billeder og tags håndteres kun i Shopify. Returnering, bundling og delordrer kræver typisk separat konfiguration eller manuel håndtering.</p></details>
+    <details class="faq-item"><summary>Hvad er den største fejl ved Shopify-WMS integration?</summary><p>Ikke at bestemme en klar datamaster. Beslut, at WMS er kilden til sandheden for lagerstatus, og at Shopify altid opdateres fra WMS, aldrig omvendt. Divergerende lagertal er den største kilde til oversalg og fejl.</p></details>
   </div>
 
   <div class="bottom-cta">
-    <p>KÃ¸rer du Shopify og overvejer et WMS? SmartPack integrerer direkte med Shopify uden mellemmand. Vi hjaelper dig igennem opsÃ¦tningen.</p>
+    <p>Kører du Shopify og overvejer et WMS? SmartPack integrerer direkte med Shopify uden mellemmand. Vi hjælper dig igennem opsætningen.</p>
     <a href="../../kontakt" class="btn btn--primary">Faa en Shopify-WMS gennemgang</a>
   </div>
-  <div class="article-disclaimer"><p>Integrationsmulighederne beskrevet i denne artikel er baseret pÃ¥ SmartPacks erfaringer og kan variere afhÃ¦ngig af WMS-leverandoer og Shopify-version.</p></div>
+  <div class="article-disclaimer"><p>Integrationsmulighederne beskrevet i denne artikel er baseret på SmartPacks erfaringer og kan variere afhængig af WMS-leverandoer og Shopify-version.</p></div>
 </div></div>
 </main>
 <div id="sp-footer"></div>
