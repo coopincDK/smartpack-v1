@@ -3018,7 +3018,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
-.footer__nav-col h4 { margin-bottom: 1.25rem; }
+.footer__nav-col h4, .footer__nav-col .footer__nav-heading { margin-bottom: 1.25rem; font-size: 0.75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .footer__nav-col ul { display: flex; flex-direction: column; gap: .55rem; }
 .footer__nav-col li a {
   font-size: .85rem;
@@ -3165,7 +3165,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 :root:not([data-theme="dark"]) .footer span,
 :root:not([data-theme="dark"]) .footer strong,
 :root:not([data-theme="dark"]) .footer p,
-:root:not([data-theme="dark"]) .footer h4 {
+:root:not([data-theme="dark"]) .footer h4,
+:root:not([data-theme="dark"]) .footer .footer__nav-heading {
   color: #94a3b8;
 }
 :root:not([data-theme="dark"]) .footer .text-accent { color: #3ecf8e; }
