@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fragtlabel-setup: printer, placering og det der går galt | SmartPack Viden</title>
+  <meta name="description" content="Direktetermisk vs laser, printerplacering og de fejl der koster ordrer. En praktisk guide til fragtlabel-setup på pakkestation.">
+  <link rel="canonical" href="https://smartpack.dk/viden/hardware/fragtlabel-setup">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Hardware</a><span>&rsaquo;</span><span>Fragtlabel-setup</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Hardware</span>
+    <h1 class="article-title">Fragtlabel-setup: printer, placering og det der går galt</h1>
+    <div class="article-meta"><time datetime="2026-05-09">9. maj 2026</time><span>~6 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+<!-- ARTIKELTYPE: GUIDE | VÆGTPROFIL: Handling:3, Troværdighed:2, Økonomi:1 | VINKEL: Praktisk hardware-guide med fejlscenarier -->
+    <p>Scannerens stregkode er ulæselig. Chaufføren afviser pakken. Du sender en ny label med budtjeneste. 150 kr. ekstra for en label der kostede 15 sekunder at printe forkert.</p>
+    <p>Fragtlabel-fejl er ikke sjældne. De er en direkte konsekvens af forkert printer-setup og dårlig integration. De fleste kan undgås.</p>
+
+    <h2>Direktetermisk vs laser: vælg rigtigt fra start</h2>
+
+    <h3>Direktetermisk printer (anbefalet til fragt)</h3>
+    <p>Printer ved hjælp af varme på specialpapir. Ingen blæk, ingen toner. Vedligeholdelsesfri i praksis.</p>
+    <ul>
+      <li><strong>Fordele:</strong> Ingen forbrugsvarer udover labelruller, hurtig print (4-6 labels/sekund), pris 2.000-5.000 kr.</li>
+      <li><strong>Ulemper:</strong> Labels kan falme i stærkt sollys eller varme over 60 grader. Ikke egnet til permanent arkivering.</li>
+      <li><strong>Anbefalet til:</strong> Alle pakkelabels, fragtadviseringer, returreddeler. Industristandard hos PostNord, GLS, DAO, Bring.</li>
+    </ul>
+
+    <h3>Laser og inkjet (frarådes til fragt)</h3>
+    <p>Laser giver høj kvalitet men kræver toner (600-1.200 kr./stk. ved høj volumen), opvarmningstid og er langsommere. Inkjet er upålideligt i lager-miljøer med støv og varierende temperatur.</p>
+    <p>Brug laser til følgesedler og internt papir. Ikke til fragtlabels.</p>
+
+    <h2>Labelstørrelser og fragtportal-krav</h2>
+    <p>Hvert fragtselskab har specifikke krav. Bruger du forkert størrelse, scanner chaufføren ikke pakken ind. Din forsendelse registreres aldrig.</p>
+    <ul>
+      <li><strong>PostNord:</strong> 100x150 mm (4x6 tommer) standard. 100x210 mm til eksprespakker.</li>
+      <li><strong>GLS:</strong> 100x150 mm standard. Kræver specifikt labelformat med QR-kode i bestemte positioner.</li>
+      <li><strong>DAO:</strong> 100x150 mm. Stregkodeformat Code 128 påkrævet.</li>
+      <li><strong>Bring:</strong> 100x150 mm. Husk at kalibrere printer efter rullebyte.</li>
+    </ul>
+    <p>En printer der ikke er kalibreret til fragtselskabets krav printer labels hvor stregkoden er 2 mm forskudt. Det kan læses af din scanner men ikke af fragtselskabets scanner i terminalsorteringen.</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack printer fragtlabel automatisk ved scanning af plukkekassen. <a href="../../kontakt">Se det i praksis &rarr;</a></p>
+
+    <h2>Printerplacering: de 3 regler</h2>
+    <p>Printerens placering bestemmer om labelpåsætning tager 3 sekunder eller 12 sekunder. Over 200 daglige ordrer er det forskellen på 10 og 40 minutter om dagen.</p>
+    <ol>
+      <li><strong>Til venstre for pakkerens dominante hånd:</strong> Højrehåndet pakker = printer til venstre. Labelen tages med venstre hånd mens højre holder pakken. Ingen rotation af kroppen.</li>
+      <li><strong>Label-udkast i øjenhøjde:</strong> Printeren skal stå så labelen udskrives direkte inden for synsfeltet, ikke nedad mod gulvet eller opad over skulderen.</li>
+      <li><strong>Max 50 cm fra pakkeren:</strong> Enhver centimeter der er mere end 50 cm fra pakkeren betyder en unødvendig bevægelse per ordre.</li>
+    </ol>
+
+    <h2>De 5 fejl der koster ordrer</h2>
+
+    <h3>1. Label sidder skævt</h3>
+    <p>Årsag: Labelpapir sidder ikke korrekt i holderen, eller holder er ikke justeret til papirbredden. Løsning: juster holderne inden skiftets start. Tjek de første 5 labels efter rullebyte.</p>
+
+    <h3>2. Stregkode scanner kan ikke læse</h3>
+    <p>Årsag 1: Printer er ikke kalibreret efter skift af labelrulle. Kalibrér med fragtportalens testprint-funktion. Årsag 2: Printerhoved er snavset. Rengør med isopropanol-vatpind månedligt ved høj volumen.</p>
+
+    <h3>3. Forkert label til forkert pakke</h3>
+    <p>Årsag: Labels printes i batch og matches manuelt. En label lægges på forkert pakke. Løsning: Integrer printer med WMS så label kun printes ved scanning af netop den pakke. Nul batch-prints.</p>
+
+    <h3>4. Printer taber forbindelsen</h3>
+    <p>Årsag: USB-forbindelse løsner sig i et travlt miljø. Løsning: Netværksprinter (Ethernet eller Wi-Fi) frem for USB. Printerens IP-adresse konfigureres én gang og holder uanset kabelstatus.</p>
+
+    <h3>5. Label holder ikke fast</h3>
+    <p>Årsag: Labels opbevaret i direkte sollys eller varme mister klæbeevnen. Opbevar labelruller i skab væk fra direkte lys. Bruger du korrugeret karton med ujævn overflade: brug labels med stærkere klæber (spørg din leverandør om "aggressive adhesive").</p>
+
+    <h2>Hvad SmartPack gør</h2>
+    <p>SmartPack er direkte integreret med PostNord, GLS, DAO og Bring. Når pakkeren scanner plukkekassen, genereres fragtlabelen automatisk baseret på ordre, vægt og dimensions-data. Label printes på stationens printer. Nul manuel dataentry. Nul forkerte labels til forkerte pakker.</p>
+    <p>Kalibrering sker én gang per printer og gemmes i systemet. Skifter en medarbejder printer, henter systemet den korrekte konfiguration automatisk.</p>
+  </div>
+
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvilken fragtlabelprinter anbefales til lager?</summary><div class="faq-item__body"><p>Direktetermisk printer (Zebra, Honeywell, TSC, Godex) er industristandarden. Pris 2.000-5.000 kr. Ingen forbrugsvarer udover labelruller. Hurtig og vedligeholdelsesfri. Undgå laser og inkjet til fragtlabels.</p></div></details>
+    <details class="faq-item"><summary>Hvad er den korrekte labelstørrelse til dansk fragt?</summary><div class="faq-item__body"><p>100x150 mm (4x6 tommer) er standard hos PostNord, GLS, DAO og Bring. Kontrollér altid med det specifikke fragtselskab, da kravene til stregkodeformat og -placering varierer.</p></div></details>
+    <details class="faq-item"><summary>Hvad gør jeg når fragtselskabets scanner ikke kan læse min label?</summary><div class="faq-item__body"><p>Tre typiske årsager: 1) Printer er ikke kalibreret, kør testprint og sammenlign med fragtselskabets specifikationer. 2) Printerhoved er snavset, rengør med isopropanol. 3) Forkert labelformat, kontrollér at du bruger fragtselskabets godkendte labelformat.</p></div></details>
+    <details class="faq-item"><summary>USB eller netværksprinter til pakkestation?</summary><div class="faq-item__body"><p>Netværksprinter (Ethernet) foretrækkes på lagre med mange stationer. En fast IP-adresse gør det nemmere at konfigurere og fejlfinde. USB er fint til enkeltstation med stabil kabel-håndtering.</p></div></details>
+  </div>
+
+  <div class="bottom-cta"><p>Vil du have automatisk fragtlabel-print integreret i dit pakkesystem?</p><a href="../../kontakt" class="btn">Tal med SmartPack</a></div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning om printer-setup og fragtportal-integration.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./pakkestation-setup" class="article-related__item"><span class="article-related__item-cat">Hardware</span><span class="article-related__item-title">Pakkestation setup</span></a>
+    <a href="./tape-pistoler-effekt" class="article-related__item"><span class="article-related__item-cat">Hardware</span><span class="article-related__item-title">Tape-pistolers effekt</span></a>
+    <a href="../tech/wms-erp-integration" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">WMS og ERP-integration</span></a>
+  </div></div>
+</div></div>
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvilken fragtlabelprinter anbefales til lager?","acceptedAnswer":{"@type":"Answer","text":"Direktetermisk printer er industristandarden. Zebra, Honeywell, TSC, Godex. Pris 2.000-5.000 kr. Ingen forbrugsvarer udover labelruller."}},{"@type":"Question","name":"Hvad er den korrekte labelstørrelse til dansk fragt?","acceptedAnswer":{"@type":"Answer","text":"100x150 mm (4x6 tommer) er standard hos PostNord, GLS, DAO og Bring. Kontrollér altid fragtselskabets specifikke krav."}},{"@type":"Question","name":"Hvad gør jeg når fragtselskabets scanner ikke kan læse min label?","acceptedAnswer":{"@type":"Answer","text":"Tre årsager: ukalibreret printer, snavset printerhoved eller forkert labelformat. Kør testprint og sammenlign med fragtselskabets specifikationer."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fragtlabel-setup: printer, placering og det der går galt","dateModified":"2026-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

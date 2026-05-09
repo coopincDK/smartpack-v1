@@ -32,8 +32,9 @@
     <div class="article-meta"><time datetime="2026-05-09">9. maj 2026</time><span>~8 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Du sælger på din egen webshop. Du har en butik på Amazon og måske Zalando. Dine B2B-kunder bestiller direkte via telefon eller EDI. Alle tre kanaler trækker fra det samme fysiske lager og det samme lager ved ikke hvilken kanal der har prioritet, hvilken ordre der kom først eller om du har dækket den vare tre gange på én gang.</p>
-    <p>Det er problemet med multi-channel salg uden et system der er bygget til det. Varen er der. Ordren er der. Men koordinationen mangler og det koster dig oversalg, forsinkede forsendelser og sure kunder på tværs af alle kanaler på én gang.</p>
+    <p><strong>Tirsdag morgen kl. 09:47.</strong> En dansk tøjgrossist med 180 ordrer om dagen opdager at de har solgt 24 enheder af en populær jakke på Amazon, 18 på deres webshop og 30 til en B2B-kunde — alt sammen inden kl. 10. Problemet: de har 52 på lager. 20 af ordrerne skal annulleres.</p>
+    <p>Amazon giver en advarsel for høj annulleringsrate. Webshop-kunderne klager på Trustpilot. B2B-kunden ringer og truer med at skifte leverandør. Tabet: 78.000 kr. i tabt salg, 12.000 kr. i ekstra kundeservice og en beskadiget Amazon-konto der koster nedrangering i søgeresultater de næste tre måneder.</p>
+    <p>Det er ikke et ekstremt eksempel. Det er hverdagen for virksomheder der sælger på flere kanaler uden et system der koordinerer det i realtid.</p>
 
     <h2>Hvad er et multi-channel lager?</h2>
     <p>Et multi-channel lager er ikke en særlig type fysisk lager. Det er en måde at styre lageret på, hvor ét centralt system modtager ordrer fra flere salgskanaler, opdaterer beholdningen i realtid og koordinerer plukning og pakning uanset hvor ordren kom fra.</p>
@@ -45,7 +46,7 @@
     </ul>
     <p>Udfordringen er ikke at modtage ordrer fra tre steder. Udfordringen er at beholdningen er den samme og at den skal opdateres øjeblikkeligt på tværs af alle kanaler, når der sker et salg.</p>
 
-    <p class="inline-cta">&#x1F449; SmartPack håndterer multi-channel ordrer fra webshop, marketplace og B2B i ét system. <a href="../../kontakt">Se hvordan det fungerer &rarr;</a></p>
+    <p class="inline-cta">&#x1F449; SmartPack synkroniserer beholdning til alle kanaler hvert 15. sekund via API og blokerer automatisk oversalg. <a href="../../kontakt">Se hvordan det fungerer &rarr;</a></p>
 
     <h2>De tre klassiske fejl ved multi-channel lagerstyring</h2>
     <p>De fleste virksomheder støder på de samme tre problemer, når de begynder at sælge på flere kanaler uden et dedikeret system til at koordinere det.</p>
@@ -65,7 +66,9 @@
     <p>Ikke alle WMS-systemer er bygget til multi-channel. Når du evaluerer et system, er der seks funktioner der er afgørende:</p>
 
     <h3>Realtids lageropdatering på tværs af kanaler</h3>
-    <p>Når en ordre bekræftes på én kanal, skal beholdningen opdateres øjeblikkeligt på alle andre kanaler. Ikke om fem minutter. Ikke ved næste synkronisering. Med det samme. Det kræver API-integration med alle salgskanaler og et system der behandler reservation og bekræftelse som separate, synkroniserede hændelser.</p>
+    <p>Når en ordre bekræftes på én kanal, skal beholdningen opdateres øjeblikkeligt på alle andre kanaler. Ikke om fem minutter. Ikke ved næste synkronisering. Med det samme.</p>
+    <p><strong>Hvordan det virker i SmartPack:</strong> Når en ordre bekræftes på Amazon kl. 10:32:18, reserverer SmartPack varen i WMS samme sekund. Hvert 15. sekund sender SmartPack en beholdningsopdatering til alle tilsluttede kanaler via API (Shopify, WooCommerce, Amazon MWS, custom B2B-portaler). Hvis to ordrer kommer ind samtidigt og der kun er én vare tilbage, vinder den ordre der nåede WMS først. Den anden ordre får besked om at varen er udsolgt inden bekræftelse sendes til kunden.</p>
+    <p><strong>Konfliktløsning:</strong> Hvis Amazon og webshop begge modtager en ordre i samme 15-sekunders vindue, prioriterer SmartPack baseret på kanalprioritet (marketplace først pga. SLA) eller timestamp. Den tabende ordre sættes automatisk på bagordre eller afvises inden betaling trækkes.</p>
 
     <h3>Kanalspecifik ordreprioritering</h3>
     <p>Marketplace-ordrer skal overholde leveringsgarantier eller du mister din plads på platformen. B2B-ordrer kan have aftalt leveringsdato der ikke kan rykkes. Webshop-ordrer har forventninger om ekspedition inden for 1-2 dage. Et WMS skal kunne tildele prioritet automatisk baseret på kanal, SLA og ordretidspunkt, så plukkerne altid arbejder i den rigtige rækkefølge.</p>
@@ -82,7 +85,7 @@
     <h3>Returhåndtering pr. kanal</h3>
     <p>En returneret Amazon-vare følger andre regler end en webshop-returnering. B2B-kunder kan have kredit frem for refundering. Et WMS skal registrere returkanalen og anvende den korrekte behandlingsregel, herunder om varen kan sættes tilbage på hyld til salg, skal kvalitetstjekkes eller afskrives.</p>
 
-    <p class="inline-cta">&#x1F449; Vil du se SmartPacks multi-channel setup i praksis? <a href="../../kontakt">Book en demo &rarr;</a></p>
+    <p class="inline-cta">&#x1F449; Vil du se SmartPacks 15-sekunders synkronisering og konfliktløsning i praksis? <a href="../../kontakt">Book en demo &rarr;</a></p>
 
     <h2>Sådan ser en velfungerende multi-channel opsætning ud</h2>
     <p>En virksomhed der håndterer multi-channel effektivt har typisk følgende arkitektur:</p>
@@ -94,8 +97,19 @@
     </ul>
     <p>Resultatet er ikke nødvendigvis hurtigere ekspedition i absolutte tal. Det er konsistent ekspedition på tværs af kanaler, uden manuel koordination og uden oversalg. Det er det der gør det muligt at skalere multi-channel salget uden at tilsætte forholdsmæssigt mere personale.</p>
 
+    <h2>Hvad det koster at IKKE have multi-channel WMS</h2>
+    <p>Lad os regne på det. En virksomhed med 150 ordrer/dag fordelt på tre kanaler uden WMS:</p>
+    <ul>
+      <li><strong>Manuel synkronisering:</strong> 1,5 time/dag × 250 kr./time × 250 arbejdsdage = 93.750 kr./år</li>
+      <li><strong>Oversalg:</strong> 2 oversalg/måned × 800 kr. gennemsnitlig ordreværdi × 12 måneder = 19.200 kr. tabt salg</li>
+      <li><strong>Marketplace-advarsler:</strong> 1 Amazon-advarsel = nedrangering i søgeresultater = estimeret 15.000-40.000 kr. tabt salg over 3 måneder</li>
+      <li><strong>Kundeservice på fejl:</strong> 8 timer/måned × 300 kr./time × 12 = 28.800 kr./år</li>
+    </ul>
+    <p><strong>Samlet årlig omkostning:</strong> minimum 156.750 kr. uden at regne omdømmeskade og tabte gentagne køb.</p>
+    <p>Et multi-channel WMS koster typisk 3.000-8.000 kr./måned (36.000-96.000 kr./år). Payback er 6-9 måneder. Derefter er det ren gevinst.</p>
+
     <h2>Hvornår er du klar til et multi-channel WMS?</h2>
-    <p>Du behøver ikke et dedikeret WMS fra dag ét. Men der er klare signaler på at du er nået dertil:</p>
+    <p>Du behøver ikke et dedikeret WMS fra dag ét. Men gør det <strong>inden</strong> du rammer disse trigger points:</p>
     <ul>
       <li>Du har mere end to aktive salgskanaler med daglige ordrer</li>
       <li>Du bruger mere end én time om dagen på manuel synkronisering af beholdning</li>
@@ -103,7 +117,7 @@
       <li>Du har misset en marketplace SLA og fået en advarsel</li>
       <li>Din returhåndtering er kaotisk fordi du ikke kan se hvilken kanal returneringen kom fra</li>
     </ul>
-    <p>Hvis to eller flere af disse punkter gælder, betaler et WMS sig typisk inden for seks måneder i sparet mandetid og reducerede fejlomkostninger alene.</p>
+    <p>Hvis to eller flere af disse punkter gælder, koster det dig penge <strong>hver dag</strong> du venter.</p>
   </div>
 
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>

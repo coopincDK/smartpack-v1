@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDI-integrationer på lageret: hvad er det og hvornår er det nødvendigt? | SmartPack Viden</title>
+  <meta name="description" content="EDI automatiserer udveksling af ordrer, fakturaer og forsendelsesadviseringer med B2B-kunder. Lær hvad EDI er, hvornår det er nødvendigt og hvad det kræver af dit lager.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/edi-integrationer">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech</a><span>&rsaquo;</span><span>EDI-integrationer på lageret</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech</span>
+    <h1 class="article-title">EDI-integrationer på lageret: hvad er det og hvornår er det nødvendigt?</h1>
+    <div class="article-meta"><time datetime="2026-05-09">9. maj 2026</time><span>~8 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+    <p>Din B2B-kunde sender en indkøbsordre. Du sender varen. Du sender en faktura. Enkelt nok, indtil kunden kræver at det hele sker automatisk, i et bestemt format, via et bestemt system. Det er EDI. Og hvis du ikke kan levere det, mister du kontrakten.</p>
+    <p>EDI er ikke nyt. Teknologien er fra 1980'erne. Men den lever i bedste velgående hos store detailkæder, grossister og producenter der ikke ønsker at taste ordrer manuelt. Hvis du leverer til Coop, JYSK, Harald Nyborg eller lignende, har du sandsynligvis allerede mødt kravet.</p>
+
+    <h2>Hvad er EDI og hvordan fungerer det?</h2>
+    <p>EDI står for Electronic Data Interchange. Det er en standardiseret metode til at udveksle forretningsdokumenter elektronisk mellem to parter uden menneskelig indgriben. Ingen e-mails. Ingen PDF'er. Ingen manuelle indtastninger. Dokumenterne sendes direkte fra system til system i et format begge parter kan læse og behandle automatisk.</p>
+    <p>De mest almindelige EDI-dokumenttyper i lagersammenhæng er:</p>
+    <ul>
+      <li><strong>ORDERS (850):</strong> Indkøbsordre fra kunden til dig. Kunden lægger en ordre i sit system, og den lander automatisk i dit WMS eller ERP som en salgsordre.</li>
+      <li><strong>DESADV (856) / ASN:</strong> Advance Ship Notice. Du sender en forsendelsesadvisering til kunden inden pakken ankommer. Kunden ved præcis hvad der kommer, i hvilke kolli og med hvilke stregkoder.</li>
+      <li><strong>INVOIC (810):</strong> Elektronisk faktura. Sendes automatisk ved forsendelse og lander direkte i kundens kreditorsystem.</li>
+      <li><strong>ORDRSP:</strong> Ordrebekræftelse. Dit system bekræfter tilbage til kunden at ordren er modtaget og kan leveres.</li>
+      <li><strong>RECADV:</strong> Modtagelsesadvisering. Kunden bekræfter at varen er modtaget og godkendt.</li>
+    </ul>
+    <p>EDI bruger faste dataformater. Det mest udbredte i Europa er EDIFACT. I USA dominerer ANSI X12. Begge er XML-lignende strukturer med faste felter og koder. Du kan ikke sende et Word-dokument og kalde det EDI.</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack understøtter EDI-integrationer til de mest brugte B2B-kunder i Danmark. <a href="../../kontakt">Spørg om din kunde er understøttet &rarr;</a></p>
+
+    <h2>Hvornår er EDI nødvendigt? De tre scenarier</h2>
+    <p>Ikke alle virksomheder har brug for EDI. Det afhænger af hvem du sælger til og i hvilken skala. Her er de tre scenarier hvor EDI typisk bliver et krav snarere end et valg.</p>
+
+    <h3>Scenarie 1: Stor detailkunde kræver det</h3>
+    <p>Supermarkedskæder, byggemarkeder og tøjkæder har for længst standardiseret deres leverandøronboarding. Når du underskriver en leverandøraftale, er EDI en del af kontrakten. Kan du ikke levere, kan du ikke levere til dem. Period. Det er ikke forhandlingsbart. Det er teknisk hygiejne for dem.</p>
+    <p>Typisk tidslinje: kunden giver dig 60-90 dage til at sætte EDI op. Herefter sker al ordreudveksling via EDI. Leverandører der ikke kan følge med, ryger ud af sortimentet.</p>
+
+    <h3>Scenarie 2: Volumen gør manuel håndtering umulig</h3>
+    <p>Hvis du modtager 50+ B2B-ordrer om dagen fra de samme kunder, er manuel ordreindtastning en fejlkilde og en flaskehals. En medarbejder bruger 5-10 minutter på at taste en ordre ind. 50 ordrer om dagen er op til 8 timers dagligt arbejde på ren dataindtastning. EDI eliminerer det fuldstændigt og reducerer fejlraten til tæt på nul.</p>
+
+    <h3>Scenarie 3: Du vil skalere B2B uden at ansætte mere</h3>
+    <p>EDI er infrastruktur for B2B-vækst. Hvis din ambition er at vinde nye detailkontrakter og øge omsætningen uden proportionalt at øge administrationen, er EDI vejen. Det er ikke en udgift. Det er en forudsætning for at kunne sige ja til store kunder.</p>
+
+    <h2>Teknisk opsætning: hvad kræver EDI af dit lager?</h2>
+    <p>EDI er ikke en app du installerer. Det er en integration der forbinder dit system til kundens system via en mellemstation. Forstå de tre lag:</p>
+
+    <h3>Lag 1: Kommunikationskanal</h3>
+    <p>EDI-beskeder skal transporteres. De mest brugte kommunikationsmetoder er:</p>
+    <ul>
+      <li><strong>AS2:</strong> Direkte forbindelse over internet med kryptering og kvittering. Bruges af store detailkæder. Kræver certifikater og teknisk opsætning.</li>
+      <li><strong>SFTP:</strong> Filer overføres til en sikker FTP-server. Simpel opsætning men filbaseret, altså ikke realtid.</li>
+      <li><strong>VAN (Value Added Network):</strong> En tredjepartsnetværksudbyder der fungerer som posthus mellem alle parter. GXS, SPS Commerce og Descartes er store VAN-udbydere. Fordelen er at du kun opretter én forbindelse og kan nå mange kunder.</li>
+      <li><strong>API-baseret EDI:</strong> Moderne alternativ hvor EDI-formater transporteres via REST API. Lettere at integrere med moderne WMS-systemer.</li>
+    </ul>
+
+    <h3>Lag 2: Konvertering og mapping</h3>
+    <p>Din kundes ORDERS-besked skal konverteres til en salgsordre i dit WMS eller ERP. Det sker via en mapping, en regliste der oversætter kundens feltnavne til dine feltnavne. Kundens varenummer skal matche dit varenummer. Kundens lokationskode skal matche din adresse. Denne mapping er typisk det mest tidskrævende at sætte op første gang.</p>
+
+    <h3>Lag 3: Integration til dit WMS</h3>
+    <p>Den konverterede ordre skal lande et sted. Ideelt set direkte i dit WMS som en salgsordre klar til pluk. Når du sender ASN, skal den genereres automatisk fra WMS'et ved forsendelse og sendes tilbage via EDI-kanalen. Denne integration bestemmer om EDI er en gevinst eller en byrde. Et WMS med native EDI-understøttelse klarer det i baggrunden. Et WMS uden det kræver manuel mellemhåndtering.</p>
+
+    <p class="inline-cta">&#x1F449; Vil du vide om SmartPack kan håndtere din B2B-kundes EDI-krav? <a href="../../kontakt">Kontakt os med kundenavnet &rarr;</a></p>
+
+    <h2>Hvad koster EDI og hvem betaler?</h2>
+    <p>EDI-omkostninger fordeler sig typisk på tre poster:</p>
+    <ul>
+      <li><strong>Opsætning og mapping:</strong> 10.000-60.000 kr. afhængigt af kompleksitet og om der bruges standardmapping eller custom. Jo mere ikke-standard kunden er, jo dyrere.</li>
+      <li><strong>Løbende transaktionsomkostninger:</strong> VAN-udbydere tager typisk per besked. Regn med 1-5 kr. per transaktion ved lavt volumen. Ved højt volumen forhandles faste priser.</li>
+      <li><strong>Vedligeholdelse:</strong> Kunden opdaterer sine krav. Du skal opdatere din mapping. Sæt 5.000-20.000 kr./år af til dette ved 2-4 aktive EDI-forbindelser.</li>
+    </ul>
+    <p>Hvem betaler? Du betaler din side. Kunden betaler sin. Det er branchestandardpraksis. Store kunder hjælper sjældent med opsætningsomkostninger, men tilbyder til gengæld teknisk dokumentation og testmiljø.</p>
+
+    <h2>De mest almindelige EDI-fejl på lageret</h2>
+    <p>EDI fejler ikke tilfældigt. Fejlene er forudsigelige og typisk relateret til ét af disse problemer:</p>
+    <ul>
+      <li><strong>Varenummer-mismatch:</strong> Kundens varenummer matcher ikke dit. Ordren kan ikke behandles. Enten har du ikke oprettet varen endnu, eller din produktstamdata er ude af sync. Løsning: opret en varenummer-krydstabel i WMS eller ERP.</li>
+      <li><strong>ASN sendes for sent:</strong> Mange kunder kræver ASN inden varen ankommer på deres lager. Sendes den for sent eller slet ikke, risikerer du chargebacks. Løsning: automatisér ASN-afsendelse ved forsendelsesbekræftelse i WMS.</li>
+      <li><strong>Forkert SSCC-stregkode på paller:</strong> ASN indeholder SSCC-koder (stregkoder på palleniveau). Matcher kassen eller pallemærket ikke hvad der er sendt i ASN, nægter kunden varemodtagelse. Løsning: WMS skal generere og printe SSCC automatisk.</li>
+      <li><strong>Manglende fejlalarmer:</strong> En EDI-besked fejler og ingen opdager det. Ordren lander ikke. Kunden venter. Du aner intet. Løsning: overvågning og alarm ved fejlede transmissioner.</li>
+      <li><strong>Delordrer ikke håndteret:</strong> Du kan levere 80% af ordren i dag og resten om en uge. Din EDI-integration håndterer ikke partiel levering. Løsning: test delordrescenarier eksplicit inden go-live.</li>
+    </ul>
+
+    <h2>Hvad du skal kræve af dit WMS til EDI</h2>
+    <p>Når du evaluerer et WMS og EDI er et krav, stil disse spørgsmål inden kontrakt:</p>
+    <ul>
+      <li>Understøtter WMS'et native EDIFACT og ANSI X12 formatgenerering, eller kræves ekstern mapping-software?</li>
+      <li>Kan systemet automatisk generere ASN ved forsendelsesbekræftelse med korrekte SSCC-koder?</li>
+      <li>Har I eksisterende mappings til de kunder jeg arbejder med? Eller er det greenfield custom-arbejde?</li>
+      <li>Hvem vedligeholder mappings når kunder opdaterer deres EDI-krav?</li>
+      <li>Er der overvågning og alarm ved fejlede EDI-transmissioner?</li>
+      <li>Understøtter I VAN-forbindelser og/eller AS2 direkte, eller kræves en separat EDI-middleware?</li>
+    </ul>
+    <p>Et WMS der ikke kan svare klart på disse spørgsmål, har sandsynligvis begrænset EDI-erfaring. Det koster dig tid og penge når virkeligheden rammer.</p>
+  </div>
+
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er forskellen på EDI og en almindelig API-integration?</summary><div class="faq-item__body"><p>En API-integration kommunikerer i realtid via HTTP-kald og bruger typisk JSON eller XML i frit definerede formater. EDI bruger faste, standardiserede dokumentformater (EDIFACT, ANSI X12) og er designet til batch-udveksling af forretningsdokumenter mellem virksomheder. EDI er ældre teknologi, men er dybt forankret hos store detailkæder og grossister. API-baseret EDI er en hybrid der kombinerer standardformaterne med moderne transport.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg sende EDI manuelt uden integration til WMS?</summary><div class="faq-item__body"><p>Teknisk set ja, via web-portaler som SPS Commerce eller direkte i VAN-portaler. I praksis er det ikke holdbart ved mere end 10-20 ordrer om dagen. Du taster stadig data manuelt, bare i et andet system. Gevinsten ved EDI kommer når det er fuldt integreret og kører automatisk fra WMS til kunde og retur.</p></div></details>
+    <details class="faq-item"><summary>Hvad er en ASN og hvad sker der hvis jeg ikke sender den?</summary><div class="faq-item__body"><p>ASN står for Advance Ship Notice (DESADV i EDIFACT). Det er en besked du sender til kunden inden varen ankommer, med præcis information om indhold, antal, kolli og SSCC-stregkoder. Hvis du ikke sender ASN eller sender den for sent, kan kunden nægte at modtage forsendelsen eller udstede en chargeback (bøde) typisk på 500-5.000 kr. per hændelse. Store kunder er meget konsistente i håndhævelsen af dette krav.</p></div></details>
+    <details class="faq-item"><summary>Hvor lang tid tager det at sætte EDI op til en ny kunde?</summary><div class="faq-item__body"><p>Med standardmapping og en WMS der har håndteret kunden før: 2-4 uger inklusive test. Med en ny kunde og custom mapping: 6-12 uger afhængigt af kundens dokumentationskvalitet og din EDI-leverandørs kapacitet. Sæt altid tid af til et testforløb med kunden inden go-live. Det er sjældent første besked der er fejlfri.</p></div></details>
+  </div>
+
+  <div class="bottom-cta"><p>Har en B2B-kunde krævet EDI og du er ikke sikker på hvordan du kommer i gang?</p><a href="../../kontakt" class="btn">Tal med SmartPack om EDI</a></div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./wms-erp-integration" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">WMS og ERP integration</span></a>
+    <a href="./multi-channel-lager" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Multi-channel lager</span></a>
+    <a href="../fundamentals/hvad-er-lagerstyring" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerstyring?</span></a>
+  </div></div>
+</div></div>
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på EDI og en almindelig API-integration?","acceptedAnswer":{"@type":"Answer","text":"EDI bruger faste standardiserede dokumentformater (EDIFACT, ANSI X12) designet til batch-udveksling af forretningsdokumenter. API-integrationer kommunikerer i realtid via HTTP og bruger typisk JSON i frit definerede formater. EDI er standard hos store detailkæder og grossister."}},{"@type":"Question","name":"Kan jeg sende EDI manuelt uden integration til WMS?","acceptedAnswer":{"@type":"Answer","text":"Teknisk set ja via web-portaler, men ikke holdbart ved mere end 10-20 ordrer om dagen. Gevinsten ved EDI kommer når det kører fuldt automatisk fra WMS til kunde og retur."}},{"@type":"Question","name":"Hvad er en ASN og hvad sker der hvis jeg ikke sender den?","acceptedAnswer":{"@type":"Answer","text":"ASN er en forsendelsesadvisering du sender til kunden inden varen ankommer. Mangler den, kan kunden nægte modtagelse eller udstede chargebacks på typisk 500-5.000 kr. per hændelse."}},{"@type":"Question","name":"Hvor lang tid tager det at sætte EDI op til en ny kunde?","acceptedAnswer":{"@type":"Answer","text":"Med standardmapping og en WMS der kender kunden: 2-4 uger. Med ny kunde og custom mapping: 6-12 uger inklusive testforløb."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"EDI-integrationer på lageret: hvad er det og hvornår er det nødvendigt?","dateModified":"2026-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>

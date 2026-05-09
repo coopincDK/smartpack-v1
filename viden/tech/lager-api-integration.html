@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lager API-integration: hvad det er og hvornår du har brug for det | SmartPack Viden</title>
+  <meta name="description" content="REST API, webhooks eller fil-baseret integration? Forstå de tre tilgange til lager-integration og hvornår hvilken giver mening.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/lager-api-integration">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech</a><span>&rsaquo;</span><span>Lager API-integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech</span>
+    <h1 class="article-title">Lager API-integration: hvad det er, hvornår du har brug for det og hvad det koster</h1>
+    <div class="article-meta"><time datetime="2026-05-09">9. maj 2026</time><span>~7 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+<!-- ARTIKELTYPE: GUIDE | VÆGTPROFIL: Økonomi:2, Handling:3, Troværdighed:2 | VINKEL: Praktisk teknisk guide til ikke-tekniske beslutningstagere -->
+    <p>Din webshop sender en ordre. WMS'et modtager den. Fragtportalen printer labelen. Alt sker automatisk. Det er hvad en velfungerende API-integration ser ud som.</p>
+    <p>Uden den: din medarbejder eksporterer en CSV fra webshoppen, importerer den i WMS'et, eksporterer igen til fragtportalen. 45 minutter om dagen ved 200 ordrer. 165 timer om året. 57.750 kr. i spildt løn ved 350 kr. i timen.</p>
+
+    <h2>De tre integrationstyper på lager</h2>
+
+    <h3>REST API (realtidsintegration)</h3>
+    <p>Systemerne taler direkte med hinanden. Ordre placeres i webshoppen kl. 14:32. WMS modtager den kl. 14:32. Beholdning opdateres kl. 14:33. Det er REST API.</p>
+    <p><strong>Hvornår det giver mening:</strong> Over 100 daglige ordrer, multi-channel salg (webshop + marketplace + B2B), behov for realtids lagerstatus på hjemmesiden.</p>
+    <p><strong>Hvad det koster:</strong> 5.000-25.000 kr. opsætning per integration, 0-500 kr./måned løbende. Teknisk kompetence krævet eller ekstern konsulent.</p>
+
+    <h3>Webhooks (hændelsebaseret)</h3>
+    <p>WMS'et sender en besked til webshoppen, når noget sker. Ordre er plukket, pakket, afsendt. Tracking-nummer genereret. Webshoppen opdaterer ordrestatus automatisk.</p>
+    <p><strong>Hvornår det giver mening:</strong> Når du vil have automatiske statusopdateringer uden at polle API'et konstant. Lavere serverbelastning end fuld REST API.</p>
+    <p><strong>Hvad det koster:</strong> Typisk billigere end fuld REST API. 2.000-10.000 kr. opsætning.</p>
+
+    <h3>Fil-baseret (CSV/XML import/eksport)</h3>
+    <p>Systemerne udveksler filer på et aftalt tidspunkt. Nattlig batch-kørsel: eksporter ordrer fra webshoppen, importer i WMS, eksporter bekræftelser. Gammelkendt, simpelt, fungerer.</p>
+    <p><strong>Hvornår det giver mening:</strong> Under 50 daglige ordrer, simpel ét-kanal drift, lille teknisk budget, B2B-kunder der sender Excel-ordrer.</p>
+    <p><strong>Hvad det koster:</strong> 0-5.000 kr. opsætning, men koster tid i manuel håndtering løbende.</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack har færdige integrationer til Shopify, WooCommerce, Magento og de store fragtportaler. <a href="../../kontakt">Se integrationer &rarr;</a></p>
+
+    <h2>De typiske integrationspunkter på et lager</h2>
+    <p>De fleste lageroperationer har brug for integration på 3-4 punkter:</p>
+    <ul>
+      <li><strong>Webshop → WMS:</strong> Ordrer ind, beholdning ud</li>
+      <li><strong>WMS → Fragtportal:</strong> Forsendelsesdata ind, tracking-nummer og label ud</li>
+      <li><strong>WMS → ERP:</strong> Lagerværdi, lagerbevægelser, indkøbsordrer</li>
+      <li><strong>Leverandør → WMS:</strong> Advanceret forsendelsesadvisering (ASN) ved varemodtagelse</li>
+    </ul>
+    <p>De fleste begynder med webshop-integration og tilføjer fragtportal-integration. ERP-integration kommer typisk når virksomheden vokser til 500+ daglige ordrer.</p>
+
+    <h2>Hvad der går galt uden ordentlig integration</h2>
+    <p>Manuel dataoverførsel er ikke bare ineffektivt. Det er en fejlkilde.</p>
+    <ul>
+      <li><strong>Dobbelt data-entry:</strong> Ordrenummer tastes manuelt ind. Fejlrate på 1-3% per tastning. 200 ordrer om dagen = 2-6 fejl dagligt.</li>
+      <li><strong>Forsinkede statusopdateringer:</strong> Kunden spørger til sin ordre kl. 15. Medarbejderen har ikke eksporteret tracking-numre endnu. De eksporteres kl. 16. En times unødvendig kundeservice.</li>
+      <li><strong>Beholdning out of sync:</strong> Webshoppen viser 10 på lager. WMS'et ved at 3 er reserveret til en igangværende ordre. Du sælger 8 og kan kun levere 7.</li>
+    </ul>
+
+    <h2>Hvornår API er overkill</h2>
+    <p>API-integration er ikke altid svaret. Det giver ikke mening at investere 20.000 kr. i en integration der sparer 30 minutter om måneden.</p>
+    <p>Fil-baseret integration er tilstrækkeligt hvis:</p>
+    <ul>
+      <li>Under 30 daglige ordrer med én salgskanal</li>
+      <li>Ingen realtids lagerstatus på hjemmesiden</li>
+      <li>B2B-kunder accepterer daglig batch-opdatering</li>
+      <li>Ingen sæsonudsving der kræver hurtig skalering</li>
+    </ul>
+    <p>Investér i API-integration når manuel overførsel tager mere end 30 minutter om dagen, eller når fejl fra manuel dataentry koster mere end 3.000 kr. om måneden i tid og fejlrettelse.</p>
+
+    <h2>Hvad SmartPack gør</h2>
+    <p>SmartPack har native REST API-integrationer til Shopify, WooCommerce, Magento, PrestaShop og de store danske fragtportaler (PostNord, GLS, DAO, Bring). Ordrer importeres automatisk, tracking-numre eksporteres automatisk, beholdning synkroniseres realtid.</p>
+    <p>For B2B og ERP-integration tilbyder SmartPack webhook-understøttelse og CSV/XML import/eksport til de systemer der ikke har native integration. Implementeringstid for en standard Shopify-integration: 1-3 dage.</p>
+  </div>
+
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er forskellen på REST API og webhook?</summary><div class="faq-item__body"><p>REST API er en tovejsforbindelse du kan forespørge når du vil. Webhook er en envejsbesked systemet sender når noget sker. REST API bruges til at hente data. Webhooks bruges til at reagere på hændelser. De fleste integrationer bruger begge.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster det at integrere WMS med webshop?</summary><div class="faq-item__body"><p>Standard Shopify eller WooCommerce integration koster 5.000-15.000 kr. i opsætning. Native-integrationer (som SmartPack) er typisk inkluderet i abonnementet. Custom EDI-integration til B2B-kunder koster 20.000-80.000 kr.</p></div></details>
+    <details class="faq-item"><summary>Har jeg brug for en teknisk medarbejder til at vedligeholde integrationen?</summary><div class="faq-item__body"><p>Standard cloud-integrationer vedligeholdes typisk af leverandøren og kræver ingen teknisk medarbejder. Custom-integrationer kræver enten intern teknisk kompetence eller en serviceaftale med leverandøren. Budget 5.000-20.000 kr./år til vedligeholdelse af custom-integrationer.</p></div></details>
+    <details class="faq-item"><summary>Hvornår er fil-baseret integration godt nok?</summary><div class="faq-item__body"><p>Under 50 daglige ordrer med én salgskanal og ingen krav til realtids lagerstatus. Fil-baseret integration er billigere og enklere. Skift til API når manuel overførsel tager mere end 30 minutter om dagen.</p></div></details>
+  </div>
+
+  <div class="bottom-cta"><p>Vil du have realtidsintegration mellem din webshop og dit lager?</p><a href="../../kontakt" class="btn">Tal med SmartPack</a></div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning om integration til dit setup.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./wms-erp-integration" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">WMS og ERP-integration</span></a>
+    <a href="./edi-integrationer" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">EDI-integrationer</span></a>
+    <a href="./multi-channel-lager" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Multi-channel lager</span></a>
+  </div></div>
+</div></div>
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på REST API og webhook?","acceptedAnswer":{"@type":"Answer","text":"REST API er en tovejsforbindelse du forespørger. Webhook er en envejsbesked systemet sender ved hændelser. De fleste integrationer bruger begge."}},{"@type":"Question","name":"Hvad koster det at integrere WMS med webshop?","acceptedAnswer":{"@type":"Answer","text":"Standard Shopify/WooCommerce integration: 5.000-15.000 kr. Native-integrationer er typisk inkluderet i abonnementet. Custom EDI: 20.000-80.000 kr."}},{"@type":"Question","name":"Hvornår er fil-baseret integration godt nok?","acceptedAnswer":{"@type":"Answer","text":"Under 50 daglige ordrer med én salgskanal og ingen realtids-krav. Skift til API når manuel overførsel tager mere end 30 minutter om dagen."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Lager API-integration: hvad det er, hvornår du har brug for det og hvad det koster","dateModified":"2026-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
