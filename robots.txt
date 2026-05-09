@@ -17,5 +17,8 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+# Cloudflare email-protection (undga crawling af obfuskerede mailto-links)
+Disallow: /cdn-cgi/
+
 # Sitemap
 Sitemap: https://smartpack.dk/sitemap.xml
