@@ -1,1 +1,759 @@
-﻿
+﻿<!DOCTYPE html>
+<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
+<!-- ================================================================
+     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
+     Kopier hele denne blok til din nye <head> inden </head>
+     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT PAA TRACKING BLOK
+================================================================ -->
+</head> -->
+
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>FAQ | SmartPack WMS - pris, onboarding og support</title>
+  <meta name="description" content="Direkte svar p&aring; de sp&oslash;rgsm&aring;l vi oftest f&aring;r. Pris, binding, onboarding, integrationer, support og alt det andet. Ingen corporate-speak.">
+  <link rel="canonical" href="https://smartpack.dk/faq">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0c1117">
+  <meta name="author" content="SmartPack">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://smartpack.dk/faq">
+  <meta property="og:site_name" content="SmartPack">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:title" content="FAQ - SmartPack WMS | Svar p&aring; det du undrer dig over">
+  <meta property="og:description" content="Direkte svar p&aring; pris, binding, onboarding, integrationer og support. Ingen corp-speak.">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SmartPackWMS">
+  <meta name="twitter:title" content="FAQ - SmartPack WMS">
+  <meta name="twitter:description" content="Direkte svar. Ingen corporate-speak. Bygget af e-k&oslash;bm&aelig;nd til e-k&oslash;bm&aelig;nd.">
+  <meta name="twitter:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
+  <link rel="apple-touch-icon" href="assets/favicon-smartpack0.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
+          {"@type": "ListItem", "position": 2, "name": "FAQ", "item": "https://smartpack.dk/faq.html"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://smartpack.dk/faq.html",
+        "url": "https://smartpack.dk/faq.html",
+        "name": "FAQ \u2013 SmartPack WMS",
+        "description": "Direkte svar p\u00e5 de sp\u00f8rgsm\u00e5l vi oftest f\u00e5r om SmartPack.",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Hvad koster SmartPack?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Du betaler per ordre \u2013 ikke per bruger eller m\u00e5ned. Prisen starter ved 3,00 kr./ordre og falder med volumen. Minimumsforbrug er 3.000 kr./mdr. Ingen opstartsfee, ingen skjulte gebyrer."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Er der binding p\u00e5 SmartPack?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nej. Ingen binding, ingen opsigelsesperiode. Du kan stoppe n\u00e5r som helst."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hvad er inkluderet i prisen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Alt. WMS, support, opdateringer og alle integrationer er inkluderet i ordreprisen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hvor lang tid tager onboarding?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "De fleste er i gang inden for f\u00e5 dage. Vi hj\u00e6lper med opsaetning, integration og tr\u00e6ning."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kan SmartPack integrere med vores webshop eller ERP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ja. SmartPack har 40+ integrationer til webshops (Shopify, WooCommerce, DanDomain m.fl.), ERP (e-conomic, Uniconta, Dynamics 365) og fragtl\u00f8sninger (PostNord, GLS, DAO, Bring, DHL m.fl.)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Er der support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ja. Support er inkluderet i prisen. Derudover har vi SOS 24/7 hotline for kritiske situationer."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kan vi bruge vores egne fragtaftaler?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ja. SmartPack bruger jeres eksisterende fragtaftaler og priser. Vi erstatter ikke jeres fragtl\u00f8sning \u2013 vi integrerer med den."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hvad er SmartBoost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SmartBoost er vores konsulentservice der hj\u00e6lper med at optimere jeres lagerprocesser. F\u00f8rste m\u00f8de er gratis, derefter aftales pris direkte med eksperten."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Hvad hvis vi vil stoppe?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ingen binding. Du stopper n\u00e5r du vil. Dine data eksporteres og slettes efter aftale."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="dns-prefetch" href="//i.ytimg.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <script src="js/theme-toggle.js"></script>
+
+  <style>
+    /* Page hero */
+    .faq-hero {
+      padding: 120px 0 70px;
+      text-align: center;
+    }
+    .faq-hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.75rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin: .75rem 0 1.25rem;
+    }
+    .faq-hero__sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+    @media (max-width: 640px) {
+      .faq-hero { padding: 90px 0 50px; }
+    }
+
+    /* Active nav link */
+    .nav__link--active { color: var(--accent) !important; }
+
+    /* FAQ section */
+    .faq-section {
+      padding: 0 0 var(--section-py);
+    }
+
+    /* Accordion wrapper */
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Single item */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    /* Question button */
+    .faq-item__btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.35rem 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      color: var(--text-1);
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.45;
+      transition: color var(--t-fast);
+    }
+    .faq-item__btn:hover {
+      color: var(--accent);
+    }
+    .faq-item.is-open .faq-item__btn {
+      color: var(--accent);
+    }
+
+    /* Icon */
+    .faq-item__icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-mid);
+      color: var(--text-3);
+    }
+    .faq-item__icon svg {
+      width: 11px;
+      height: 11px;
+      transition: transform var(--t-mid);
+    }
+    .faq-item__btn:hover .faq-item__icon {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .faq-item.is-open .faq-item__icon {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+    }
+    .faq-item.is-open .faq-item__icon svg {
+      transform: rotate(180deg);
+    }
+
+    /* Answer panel */
+    .faq-item__body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--t-mid);
+    }
+    .faq-item.is-open .faq-item__body {
+      grid-template-rows: 1fr;
+    }
+    .faq-item__body-inner {
+      overflow: hidden;
+    }
+    .faq-item__answer {
+      padding: 0 0 1.5rem;
+      font-size: .935rem;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .faq-item__answer p + p {
+      margin-top: .75rem;
+    }
+    .faq-item__answer strong {
+      color: var(--text-1);
+      font-weight: 700;
+    }
+    .faq-item__answer a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .faq-item__answer a:hover {
+      opacity: .8;
+    }
+    /* Inline highlight chip */
+    .faq-chip {
+      display: inline-block;
+      background: rgba(62,207,142,.1);
+      border: 1px solid rgba(62,207,142,.25);
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: .2em .8em;
+      margin: 0 .1em;
+      white-space: nowrap;
+    }
+
+    /* CTA strip below accordion */
+    .faq-cta-strip {
+      max-width: 720px;
+      margin: 3rem auto 0;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .faq-cta-strip__text p {
+      font-size: .75rem;
+      color: var(--text-3);
+      margin-top: .25rem;
+    }
+    .faq-cta-strip__text strong {
+      font-size: 1rem;
+      color: var(--text-1);
+    }
+    .faq-cta-strip__actions {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 600px) {
+      .faq-cta-strip {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+
+<!-- ================================================================
+     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
+     Kopier hele denne blok til din nye <head> inden </head>
+     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT PAA TRACKING BLOK
+================================================================ -->
+</head>
+<body>
+
+<!-- NAV -->
+<div id="sp-header"></div>
+<script src="js/header.js"></script>
+
+<!-- HERO -->
+<section class="faq-hero" id="hero">
+  <div class="container">
+    <div class="eyebrow reveal">FAQ</div>
+    <h1 class="reveal">Svar p&aring; det du<br><span class="text-accent">undrer dig over.</span></h1>
+    <p class="faq-hero__sub reveal">Ingen marketingsprog. Vi svarer som folk der selv har pakket ordrer og kender lagerdrift indefra.</p>
+  </div>
+</section>
+
+<!-- FAQ ACCORDION -->
+<section class="faq-section">
+  <div class="container">
+
+    <ul class="faq-list" id="faq-list">
+
+      <!-- 1 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad koster det?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Du betaler <strong>per ordre</strong>, ikke per bruger, ikke per m&aring;ned, ikke per linje p&aring; fakturaen du ikke forst&aring;r. Prisen starter ved <span class="faq-chip">3,00 kr./ordre</span> og falder gradvis jo mere volumen du har. Ved 5.000 ordrer/mdr. er du under 1,50 kr. Per ordre er alt inkluderet: WMS, support, opdateringer, integrationer.</p>
+              <p>Der er et minimumsforbrug p&aring; <strong>3.000 kr./mdr.</strong> Det svarer til ca. 1.000 ordrer. Sender du under det, betaler du minimummet. Der er ingen opstartsfee og ingen skjulte gebyrer.</p>
+              <p>Vil du have et konkret tal p&aring; jeres volumen? <a href="priser">Brug vores prisberegner</a>, den er pr&aelig;cis p&aring; to minutter.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 2 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Er der binding?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p><strong>Nej.</strong> En m&aring;neds opsigelsesvarsel, det er det hele. Vi har valgt det bevidst, fordi vi er sikre nok p&aring; produktet til ikke at have brug for at l&aring;se dig fast.</p>
+              <p>Langt de fleste bliver. Ikke fordi de er bundet, men fordi det virker.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 3 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad er inkluderet i prisen?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Alt det du rent faktisk bruger: <strong>WMS-platformen, onboarding, l&oslash;bende support, alle softwareopdateringer, integrationer til webshop og ERP</strong>, labelprint, returh&aring;ndtering, batchpluk, lokationsstyring og brugeradgang til hele teamet.</p>
+              <p>Ingen moduler du skal betale ekstra for. Ingen "enterprise add-ons". Ingen overraskelse p&aring; n&aelig;ste faktura. Det vi lover p&aring; dag &eacute;t, er det du f&aring;r.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 4 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvor lang tid tager onboarding?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Typisk <strong>1-3 uger</strong> fra kontrakt til f&oslash;rste ordre plukket i systemet. Det afh&aelig;nger af, hvor kompleks jeres ops&aelig;tning er: antal lokationer, integrationer, om du skifter fra et andet system eller starter fra scratch.</p>
+              <p>Vi k&oslash;rer onboarding med dig, ikke ved at sende en PDF og h&aring;be p&aring; det bedste. Du f&aring;r en dedikeret kontaktperson der kender lagerdrift, og som kan svare p&aring; de sp&oslash;rgsm&aring;l der opst&aring;r undervejs. Typisk er folk selvk&oslash;rende inden for den f&oslash;rste m&aring;ned.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 5 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Kan SmartPack integrere med vores webshop eller ERP?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Ja. Vi har f&aelig;rdige integrationer til de platforme de fleste danske webshops k&oslash;rer p&aring;: <strong>Shopify, WooCommerce, Magento, Dandomain, e-conomic, BC, Uniconta</strong> og de mest udbredte fragtleverand&oslash;rer.</p>
+              <p>Har du et specialsystem eller et &aelig;ldre ERP, kigger vi p&aring; det. Vi har en &aring;ben API og har l&oslash;st mere end &eacute;n "det kan sikkert ikke lade sig g&oslash;re"-integration. Sp&oslash;rg os, det koster ikke noget at h&oslash;re.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 6 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad sker der hvis vi sender f&aelig;rre pakker en m&aring;ned?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Du betaler for det du bruger, og ikke mere. Falder volumen, falder fakturaen. Den eneste bundgr&aelig;nse er minimumsfaktura p&aring; <span class="faq-chip">3.000 kr./mdr.</span>, svarende til ca. 1.000 ordrer.</p>
+              <p>Det betyder ogs&aring;, at s&aelig;sonudsving, sommerlavpunkter, perioder uden kampagner, ikke straffes. Vi er bygget til virkeligheden, ikke en Excel-model.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 7 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Er der support? Hvorn&aring;r?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Ja. <strong>SOS-support k&oslash;rer 24/7</strong>, hvis lageret br&aelig;nder (metaforisk), har du et nummer du kan ringe p&aring;. Til hverdag k&oslash;rer daglig support p&aring; hverdage via <a href="https://support.smartpack.dk" target="_blank" rel="noopener noreferrer">support.smartpack.dk</a>.</p>
+              <p>Vi svarer hurtigt, fordi vi selv har siddet med det. Den der besvarer din support-henvendelse har sandsynligvis st&aring;et ved et plukbord. Det m&aelig;rkes p&aring; svarene.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 8 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Kan vi bruge vores egne fragtaftaler?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p><strong>Ja, absolut.</strong> Vi tvinger dig ikke over p&aring; vores fragtaftaler. Vi bruger de aftaler du allerede har: GLS, PostNord, DAO, Bring, DHL og de fleste andre. Du beholder dine priser og dine relationer.</p>
+              <p>Har du ikke gode fragtaftaler endnu, kan vi hj&aelig;lpe med det. men det er dit valg, ikke vores krav.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 9 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Passer SmartPack til os?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Det kan give mening allerede fra <strong>ca. 400 ordrer/mdr.</strong>, og for nogen endda tidligere. Under det betaler du minimumsbel&oslash;bet uanset hvad, s&aring; det afh&aelig;nger af din situation.</p>
+              <p>Sender du 5.000+ ordrer/mdr. i et system der ikke er bygget til det? S&aring; er det n&aelig;rmest sikkert at SmartPack er det rigtige valg.</p>
+              <p>Det hurtigste svar: <a href="mailto:bundlinjeboost@smartpack.dk">send os en mail</a> med dit volumen og nuv&aelig;rende setup. Vi siger &aelig;rligt om vi er et match.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 10 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad er SmartBoost?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>SmartBoost er vores netv&aelig;rk af <strong>eksterne eksperter</strong> der er pissehamrende dygtige inden for alt fra CRO og marketing til logistik og webshop-optimering.</p>
+              <p>Da vi tjener mere jo flere ordrer du sender, giver vi gerne <strong>f&oslash;rste m&oslash;de p&aring; os</strong>, helt gratis og uforpligtende. Du f&aring;r masser af fif og gode r&aring;d allerede p&aring; m&oslash;det, og du beh&oslash;ver ikke takke ja til mere.</p>
+              <p>&Oslash;nsker du efterf&oslash;lgende mere hj&aelig;lp, aftaler du det direkte med eksperten, uden om SmartPack.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 11 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Koster det ekstra at tilf&oslash;je en lagerrobot?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p><strong>Nej.</strong> Robot-integration er inkluderet. Har du en robot, eller planl&aelig;gger du at f&aring; en, er systemet allerede klar til det.</p>
+              <p>Robotten selv koster hvad robotten koster, det er separat hardware. Vi opkr&aelig;ver ikke en "robot-integration-fee" oveni. Vi er ligeglade med hvilken teknologi du bruger p&aring; lageret.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- 12 -->
+      <li class="faq-item">
+        <button class="faq-item__btn" aria-expanded="false">
+          <span>Hvad hvis vi vil stoppe?</span>
+          <span class="faq-item__icon" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <polyline points="2,4 6,8 10,4"/>
+            </svg>
+          </span>
+        </button>
+        <div class="faq-item__body" role="region">
+          <div class="faq-item__body-inner">
+            <div class="faq-item__answer">
+              <p>Send en mail. <strong>&Eacute;n m&aring;neds varsel.</strong> Ingen gebyrer, ingen "retention-samtaler", ingen sv&aelig;rd at falde p&aring;.</p>
+              <p>Jeres data er jeres. Du f&aring;r den eksporteret i et format du kan bruge. Vi hj&aelig;lper med at flytte dig videre, selv om vi ikke er dem der tjener p&aring; det. Det er bare den rigtige m&aring;de at g&oslash;re det p&aring;.</p>
+              <p>Vil du stoppe fordi noget ikke virker? Ring til os inden du opsiger. Det er muligvis et problem vi kan l&oslash;se p&aring; 20 minutter.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul><!-- /.faq-list -->
+
+    <!-- CTA strip -->
+    <div class="faq-cta-strip reveal">
+      <div class="faq-cta-strip__text">
+        <strong>Ikke fundet svaret?</strong>
+        <p>Ring eller skriv direkte, vi svarer inden for 24 timer.</p>
+      </div>
+      <div class="faq-cta-strip__actions">
+        <a href="mailto:support@smartpack.dk" class="btn btn--primary">Skriv til os</a>
+        <a href="tel:+4588202019" class="btn btn--ghost js-phone-cta" style="display:none">Ring til os</a>
+        <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--ghost">Skriv en mail</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SUPPORT -->
+<section style="padding:3rem 0;background:var(--surface-1);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container" style="text-align:center">
+    <div class="eyebrow">Allerede kunde?</div>
+    <h2 style="font-size:clamp(1.4rem,3vw,2rem);margin:.75rem 0 1rem">Her er alle de sp&oslash;rgsm&aring;l vi m&oslash;der ofte</h2>
+    <p style="color:var(--text-2);max-width:480px;margin:0 auto 1.5rem">Guides, how-tos og fejls&oslash;gning, samlet &eacute;t sted.</p>
+    <a href="https://support.smartpack.dk" target="_blank" rel="noopener noreferrer" class="btn btn--primary">G&aring; til support.smartpack.dk &rarr;</a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-section__inner reveal">
+      <div class="eyebrow">Klar til en snak?</div>
+      <h2>Vi svarer &aelig;rligt, ogs&aring; hvis vi ikke passer.</h2>
+      <p>45 minutter. Ingen forpligtelse. Vi kigger p&aring; jeres setup og siger hvad vi mener.</p>
+      <div class="cta-section__actions">
+        <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--primary btn--xl">F&aring; et prisestimat</a>
+        <a href="tel:+4588202019" class="btn btn--ghost btn--xl js-phone-cta" style="display:none">Ring til os</a>
+        <a href="mailto:bundlinjeboost@smartpack.dk" class="btn btn--ghost btn--xl">Skriv en mail</a>
+      </div>
+      <div class="cta-section__reassurance">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Ingen binding</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Svar inden for 24 timer</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SOS support 24/7</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div id="sp-footer"></div>
+<script src="js/footer.js"></script>
+
+<script>
+  // FAQ accordion
+  (function () {
+    var list = document.getElementById('faq-list');
+    if (!list) return;
+
+    list.addEventListener('click', function (e) {
+      var btn = e.target.closest('.faq-item__btn');
+      if (!btn) return;
+
+      var item = btn.closest('.faq-item');
+      var isOpen = item.classList.contains('is-open');
+
+      // Close all
+      list.querySelectorAll('.faq-item.is-open').forEach(function (openItem) {
+        openItem.classList.remove('is-open');
+        openItem.querySelector('.faq-item__btn').setAttribute('aria-expanded', 'false');
+      });
+
+      // Open clicked (unless it was already open)
+      if (!isOpen) {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  })();
+</script>
+<script src="js/main.js?v=2" defer></script>
+
+</body>
+</html>
