@@ -8,6 +8,10 @@ on:
       - '!viden/**/index.html'
   workflow_dispatch:
 
+concurrency:
+  group: pagefind-rebuild
+  cancel-in-progress: false
+
 jobs:
   pagefind:
     runs-on: ubuntu-latest
@@ -35,5 +39,6 @@ jobs:
           git add pagefind/
           git diff --staged --quiet && echo "No changes to pagefind index" || (
             git commit -m "chore: rebuild pagefind search index [skip ci]"
+            git pull --rebase origin main
             git push
           )
