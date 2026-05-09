@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hvad er FIFO -- First In First Out forklaret for lager | SmartPack Viden</title>
-  <meta name="description" content="FIFO (First In First Out) er et grundlaeggende lagerprincip. Laerl hvad det er, hvornaar du skal bruge det, og hvordan et WMS implementerer FIFO automatisk.">
+  <title>Hvad er FIFO? Forklaring og eksempler fra lageret | SmartPack Viden</title>
+  <meta name="description" content="FIFO betyder First In, First Out. Laer hvad princippet goer i praksis, hvornaar det er obligatorisk, og hvad det koster dig at ignorere det.">
   <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-fifo">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
@@ -63,90 +63,118 @@
   <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Fundamentals</a><span>&rsaquo;</span><span>Hvad er FIFO?</span></nav>
   <header class="article-header">
     <span class="article-cat-badge">Fundamentals</span>
-    <h1 class="article-title">Hvad er FIFO -- First In First Out forklaret for lager</h1>
-    <div class="article-meta"><time datetime="2025-05-09">9. maj 2025</time><span>~6 min</span></div>
+    <h1 class="article-title">Hvad er FIFO? Forklaring og eksempler fra lageret</h1>
+    <div class="article-meta"><time datetime="2025-05-09">9. maj 2025</time><span>~5 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>FIFO staar for First In, First Out. Princippet er simpelt: den vare, der kom ind paa lageret foerst, er ogsaa den foerste der forlade det. Sagt paa en anden maade: aeldste beholdning sendes foerst. Det lyder indlysende, men i praksis er FIFO et af de principper, der oftest brydes paa ustrukturerede lagre, og bruddet koster penge.</p>
-    <p>FIFO er ikke blot relevant for holdbarhedsvarer. Det er et grundlaegende princip for at undgaa ukurans, sikre ensartet produktkvalitet og opretholde korrekt vaerdiansaettelse af beholdning.</p>
+<!-- ARTIKELTYPE: GUIDE | VAGTPROFIL: Okonomi:3, Handling:3, Trovaerdighed:2 | VINKEL: FIFO koster dig 115k-165k/aar hvis lageret ikke er bygget til det | HOOK TYPE: Konkret tab -->
+    <p>FIFO betyder First In, First Out.<br>
+    Den aeldste vare ud foerst.</p>
+    <p>Kosmetikvirksomhed, 500 ordrer/uge. En plukker sender en creme fra januar til en kunde i maj. To paller, ingen maerkning. Kunden returnerer. 340 kr. tabt paa een ordre.<br>
+    Det sker 2-3 gange om ugen. Aarligt tab: 115.000-165.000 kr.</p>
+    <p>Det er ikke uvidenhed. Det er to paller der staar ved siden af hinanden uden maerkning.</p>
 
-    <h2>FIFO vs. LIFO vs. FEFO</h2>
-    <p>Det er vaerd at kende de tre grundlaeggende lagerprincipper og hvornaar hvert er relevant:</p>
+    <h2>Hvad betyder FIFO i praksis paa lageret?</h2>
+    <p>FIFO er ikke bare en bogholderiprincip. Det er en fysisk instruktion til dine plukkere: naar du har to af den samme vare, tager du altid den aeldste foerst.</p>
+    <p>Det kraever tre ting:</p>
+    <ul>
+      <li><strong>Separate lokationer:</strong> Ny modtagelse maa ikke blandes med gammel beholdning. Enten separate hylder, eller A/B-zoner paa samme hylde.</li>
+      <li><strong>Datostempling:</strong> Hver modtagelse faar en dato. Enten i systemet (batch-ID) eller fysisk (tusch paa kassen).</li>
+      <li><strong>Dirigering:</strong> Plukkeren skal vide hvilken lokation der har den aeldste vare. Enten via WMS eller via fysisk maerkning (A-zone = pluk herfra).</li>
+    </ul>
+    <p>Mangler eet af de tre: plukkeren tager den naermeste palle, ikke den aeldste. Du faar reklamationen 3 uger senere og ingen ved hvilken vare der gik til hvilken kunde.</p>
 
-    <p class="inline-cta">&#x1F449; SmartPack understøtter FIFO, FEFO og batchstyring som standard. <a href="../../kontakt">Book en gratis demo</a></p>
+    <h2>Hvad koster det at ignorere FIFO?</h2>
+    <p>Her er hvad det koster i kroner:</p>
+    <p><strong>Eksempel: E-handel med kosmetik, 500 ordrer/uge</strong><br>Lagervaerdi 2,5 mio. kr., gennemsnitlig holdbarhed 18 maaneder.</p>
+    <ul>
+      <li><strong>Udloebet beholdning:</strong> 3-5% af lageret udloeber foer salg = 75.000-125.000 kr./aar i direkte tab</li>
+      <li><strong>Returhaandtering:</strong> Returrate stiger fra 1,2% til 2,8% pga. kort holdbarhed = 40.000 kr./aar</li>
+      <li><strong>Bundet kapital:</strong> Gammel beholdning er penge der ikke arbejder. Det forringer din cash flow og kraever mere lagerplads.</li>
+      <li><strong>Compliance-risiko:</strong> I regulerede brancher kan det koste tilladelser og boedestraffe paa 15.000-50.000 kr.</li>
+    </ul>
+    <p><strong>Samlet cost: 115.000-165.000 kr. aarligt.</strong></p>
 
+    <h2>Hvornaar er FIFO ikke bare god praksis, men et krav?</h2>
+    <p>FIFO er lovpligtigt i foedevarer, farmaceutisk og kosmetik. I andre brancher er der ingen lovkrav. Og det koster dig stadig 115.000-165.000 kr. om aaret.</p>
     <table>
-      <thead><tr><th>Princip</th><th>Fuld betegnelse</th><th>Logik</th><th>Typisk anvendelse</th></tr></thead>
+      <thead><tr><th>Branche</th><th>Aarsag til FIFO-krav</th><th>Konsekvens uden FIFO</th></tr></thead>
       <tbody>
-        <tr><td>FIFO</td><td>First In, First Out</td><td>Aeldste varer plukkes foerst</td><td>De fleste fysiske produkter</td></tr>
-        <tr><td>LIFO</td><td>Last In, First Out</td><td>Nyeste varer plukkes foerst</td><td>Sjeldent i lagerlogistik, mest regnskab</td></tr>
-        <tr><td>FEFO</td><td>First Expired, First Out</td><td>Kortest udloebsdato plukkes foerst</td><td>Foedevarer, kosmetik, medicin</td></tr>
+        <tr><td>Foedevarer og drikkevarer</td><td>Udloebsdato, hygiejne</td><td>Returvarer, reklamationer, boder</td></tr>
+        <tr><td>Kosmetik og hudpleje</td><td>Stabilitet, holdbarhed</td><td>Kvalitetsproblemer, klager</td></tr>
+        <tr><td>Farmaceutisk</td><td>Lovkrav, sporbarhed</td><td>Tilbagetrækning, myndighedssag</td></tr>
+        <tr><td>Elektronikvarer</td><td>Komponentforbedringer, EOL</td><td>Forældet lager, afskrivning</td></tr>
+        <tr><td>Mode og beklædning</td><td>Sæsonudsving, trends</td><td>Restlager, prisreduktioner</td></tr>
       </tbody>
     </table>
+    <p>En e-handelsvirksomhed med 2 mio. kr. i lagervaerdi og 12 maaneders omsaetningshastighed binder 500.000-800.000 kr. i gammel beholdning uden FIFO. Det er kapital der staar stille i stedet for at finansiere Q4-indkoeb eller en ekstra medarbejder.</p>
 
-    <p>LIFO bruges naesten ikke i fysisk lagerlogistik i Europa. Det er primaerl et regnskabsmaessigt begreb og er faktisk ikke tilladt under IFRS-standarden. I dansk lagerlogistik er valget typisk FIFO eller FEFO afhaengigt af produkttype.</p>
-
-    <h2>Hvornaar er FIFO kritisk?</h2>
-
-    <h3>Produkter med holdbarhedsdato</h3>
-    <p>For foedevarer, kosmetik, medicin og andre holdbarhedsstyrede produkter er FIFO (eller snarere FEFO) ikke et valg, men et krav. At sende produkter med laengere holdbarhed foerst, mens aeldere varer blever paa lager, foerer uundgaaeligt til spild og potentielt sundhedsfarlige leverancer. Mange virksomheder i denne kategori har lovmaessige forpligtelser til at dokumentere FEFO-overholdelse.</p>
-
-    <h3>Mode og saesonstyrings produkter</h3>
-    <p>I mode er produkter fra tidlige collections laengere fra den aktuelle saeson, og har dermed lavere omsaetningspotentiale. FIFO sikrer, at aeldste collection afvikles foerst, inden naeste saeson ankommer og skaber nedprispres paa den aeldste beholdning.</p>
-
-    <h3>Elektronik og tekniske komponenter</h3>
-    <p>Elektronikprodukter forvaerres ikke kemisk, men de kan bli teknologisk forlaeldede. FIFO sikrer, at aeldste modeller sendes foerst og reducerer risikoen for at sidde med forlaeldet beholdning, naar en ny model lanceres.</p>
-
-    <h3>Standardvarer og non-food</h3>
-    <p>Selv for produkter uden formeel holdbarhedsdato er FIFO god praksis. Det sikrer jaevn rotation af beholdningen og afdeekker problemer med produktkvalitet over tid. En emballage, der har ligget for laenge i et lager, kan vaere udsat for fugt, stoed eller UV-lys, der paavikrer kvaliteten.</p>
-
-    <h2>Saaledes bryder FIFO ned uden et system</h2>
-    <p>Paa et lager uden systematisk FIFO-styring opstaar brud typisk som foelge af:</p>
+    <h2>FIFO vs. LIFO vs. FEFO</h2>
+    <p>Der er tre primære principper for lagerrotation. De forveksles tit:</p>
     <ul>
-      <li><strong>Frontlagring:</strong> Nye varer stilles foran aeldere beholdning, fordi det er nemmest. Plukker henter fra fronten. Aeldste varer forbliver bagest.</li>
-      <li><strong>Samme lokation, blandet batch:</strong> Forskellige leverancer af samme SKU placeres i samme lokation uden adskillelse. Det er umuligt at sikre FIFO manuelt.</li>
-      <li><strong>Ingen registrering af modtagelsesdato:</strong> Uden modtagelsesdato eller batch-nummer er det umuligt at vide, hvad der er aeldst.</li>
-      <li><strong>Travlhed:</strong> I travle perioder henter plukker fra den naermeste tilgaengelige beholdning, ikke den aeldste.</li>
+      <li><strong>FIFO (First In, First Out):</strong> Aeldste vare ud foerst. Standard i de fleste brancher.</li>
+      <li><strong>LIFO (Last In, First Out):</strong> Nyeste vare ud foerst. Sjaeldent brugt i fysisk lager, mest bogholderi i USA.</li>
+      <li><strong>FEFO (First Expired, First Out):</strong> Varen med tidligst udloebsdato ud foerst. Brugt i foedevarer og farma. Mere praecis end FIFO naar holdbarhedsdatoer varierer per batch.</li>
     </ul>
+    <p>Brug FEFO naer du modtager partier med varierende produktionsdatoer fra din leverandoer. Brug FIFO naer alle varer i en levering har identisk holdbarhed. I praksis: sporg din leverandoer om holdbarhedsdatoer varierer per batch.</p>
 
-    <h2>Implementering af FIFO i et WMS</h2>
-    <p>Et WMS implementerer FIFO ved at registrere indgangstidspunktet for hvert parti og dirigere plukker til den aeldste beholdning foerst. De konkrete mekanismer:</p>
+    <h2>Saadan implementerer du FIFO paa dit lager</h2>
+    <p>Tre metoder, sorteret fra simplest til mest automatiseret:</p>
+    <ol>
+      <li><strong>Markering ved modtagelse:</strong> Dato-mærk altid nye varer. En simpel tusch paa kassen fungerer bedre end ingen system.</li>
+      <li><strong>Dobbelt-zone metoden:</strong> Del din hylde i to zoner, A og B. Ny modtagelse fylder B. Plukkere tager altid fra A. Naer A er tomt, flyttes B til A og ny modtagelse fylder B.</li>
+      <li><strong>WMS med FIFO-logik:</strong> Et Warehouse Management System som SmartPack dirigerer automatisk plukkere til den rigtige lokation baseret paa modtagelsesdato. Nul manuel koordinering.</li>
+    </ol>
+    <h2>Saadan loser SmartPack FIFO automatisk</h2>
+    <p>SmartPack registrerer modtagelsesdato paa batch-niveau. Naer en plukker scanner en ordre, dirigerer systemet til lokationen med aeldste batch. Ingen manuel koordinering.</p>
+    <ul>
+      <li><strong>Ved modtagelse:</strong> Du scanner varen ind. Systemet logger dato og lokation.</li>
+      <li><strong>Ved plukning:</strong> Plukkeren scanner ordren. Systemet viser: Hylde A3, batch fra 12. jan.</li>
+      <li><strong>Ved retur:</strong> Systemet husker original modtagelsesdato, ikke returdato. Returvarer sendes ud med korrekt alder.</li>
+    </ul>
+    <p>Resultat: FIFO-fejl gaar fra 2-3 per uge til nul. Tab paa 115.000-165.000 kr./aar elimineres.</p>
 
-    <h3>Batch og lot-numre</h3>
-    <p>Ved modtagelse tildeles hvert parti et unikt batch-nummer med modtagelsesdato. Systemet dirigerer altid plukning fra den aeldste aktive batch, uanset fysisk placering paa lageret.</p>
+    <h2>Hvornaar giver SmartPack IKKE mening?</h2>
+    <p>SmartPack er bygget til volumen og kompleksitet. Det giver IKKE mening hvis:</p>
+    <ul>
+      <li><strong>Du har faerre end 3 SKUer og modtager een gang om maaneden:</strong> Manuel dobbelt-zone er hurtigere end at laere et WMS. Du bruger 2 timer/maaned paa at flytte varer. Det kan du styre uden software.</li>
+      <li><strong>Dit lager er under 50 m2 og du selv plukker:</strong> Du kan se alle varer fra eet punkt. FIFO er implicit. Et system tilfojer overhead uden vaerdi.</li>
+      <li><strong>Du har saessonvarer med 100% omsaetning paa 6-8 uger:</strong> Alt saelges inden rotation bliver et problem. FIFO er irrelevant. Brug pengene paa indkoeb i stedet.</li>
+      <li><strong>Du allerede har et WMS der haandterer FIFO korrekt:</strong> Hvis dit nuvaerende system dirigerer til aeldste batch, logger modtagelsesdatoer og du ikke har FIFO-fejl, er der ingen grund til at skifte. SmartPack er til dem der enten ikke har et WMS, eller har et der ikke loser FIFO-problemet.</li>
+    </ul>
+    <p>SmartPack giver foerst mening naer FIFO-fejl koster dig mere end 40.000 kr./aar. Det sker typisk ved 50+ ordrer/dag, eller naer du haandterer returvarer ugentligt og mister overblikket over hvilke varer der er aeldst.</p>
+    <p class="inline-cta">&#x1F449; Haandterer du 50+ ordrer/dag: se hvordan SmartPack automatiserer FIFO. <a href="../../kontakt">Book en gratis demo</a></p>
 
-    <h3>Lokations-FIFO</h3>
-    <p>For produkter uden eksplicit batch-styring kan systemet implementere FIFO paa lokationsniveau ved at registrere hvornaar en lokation sidst fik tilfoert beholdning og dirigere til aeldste lokation.</p>
+    <h2>Det her gaar galt i virkeligheden</h2>
+    <p>FIFO fejler ikke fordi folk ikke ved hvad det er. Det fejler fordi lageret ikke er bygget til det.</p>
+    <h3>Scenarie 1: Returvarer bryder systemet</h3>
+    <p>En kunde returnerer en vare fra marts. Den lander i retur-zonen i april, godkendes i maj og kommer tilbage paa lager i juni. Systemet siger juni. Virkeligheden siger marts. Returvarer bliver de nyeste varer og sendes ud igen med 3 maaneders kortere holdbarhed end kunden forventer.</p>
+    <h3>Scenarie 2: Leverandoeren sender i forkert raekkefoelge</h3>
+    <p>Du bestiller batch A (produceret uge 10) og batch B (produceret uge 12). Batch B ankommer foerst fordi logistikken fejlede. Hvis dit system kun kender modtagelsesdato, sender du nu de yngste varer ud foerst. Batch A bliver liggende til det udloeber.</p>
+    <h3>Scenarie 3: Plukkeren kan ikke se forskellen</h3>
+    <p>To paller, samme varenummer, staar ved siden af hinanden. Den ene er fra januar, den anden fra marts. Ingen maerkning, ingen visuel forskel. Plukkeren tager den naermeste. FIFO eksisterer i systemet, men ikke i virkeligheden.</p>
 
-    <h3>FEFO-overkrydsning</h3>
-    <p>For holdbarhedsstyrede produkter er FEFO et mere praecist princip end FIFO. Et godt WMS understoeetter begge og tillader konfiguration per produktkategori, saa FIFO bruges til standardvarer og FEFO til holdbarhedsvarer.</p>
 
-    <h3>Alarmering ved risiko for udloeb</h3>
-    <p>SmartPack genererer automatisk advarsler, naar varer naermer sig udloebsdato og endnu ikke er solgt. Dette giver mulighed for at ivaerksaette tiltag, f.eks. kampagnepris eller overfoersel til en anden kanal, inden varen maa kasseres.</p>
-
-    <h2>SmartPack og FIFO</h2>
-    <p>SmartPack understøtter FIFO og FEFO som standard for alle produktkategorier. Batch-registrering ved modtagelse, automatisk FIFO-dirigering ved plukning og advarsler om udloebsrisiko er inkluderet i standardloesningen. Du beholder fuld sporbarhed fra modtagelse til forsendelse.</p>
   </div>
-  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret paa erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og boer tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret raadgivning.</p></div>
-<div class="bottom-cta"><p>Vil du have automatisk FIFO og FEFO paa dit lager?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret paa erfaring fra lageroperation siden 2005. Tallene er baseret paa reelle cases fra e-handelsvirksomheder med 500+ ordrer/uge. <a href="../../kontakt">Kontakt os</a> for en beregning baseret paa dit lager.</p></div>
+<div class="bottom-cta"><p>Haandterer du 50+ ordrer/dag og vil have FIFO til at koere automatisk?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
   <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
-    <a href="../okonomi/lageromsoetningshastighed" class="article-related__item"><span class="article-related__item-cat">&Oslash;konomi</span><span class="article-related__item-title">Lageromloebshastighed</span></a>
-    <a href="../tech/hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
-    <a href="../problemer/vi-laver-for-mange-pakkefejl" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Vi laver for mange pakkefejl</span></a>
+    <a href="./hvad-er-fefo" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er FEFO lagerstyring?</span></a>
+    <a href="./hvad-er-lagerstyring" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerstyring?</span></a>
+    <a href="./hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spoergsmaal</h2>
-    <details class="faq-item"><summary>Hvad er FIFO paa et lager?</summary><div class="faq-item__body"><p>FIFO (First In, First Out) betyder, at den vare der kom ind paa lageret foerst, ogsaa er den foerste der sendes ud. Det sikrer, at aeldste beholdning altid afvikles foerst og reducerer risikoen for ukurans og spild.</p></div></details>
-    <details class="faq-item"><summary>Hvad er forskellen paa FIFO og FEFO?</summary><div class="faq-item__body"><p>FIFO baserer sig paa indgangsdato: aeldste modtaget forlade lageret foerst. FEFO baserer sig paa udloebsdato: varen med korteste resterende holdbarhed forlade lageret foerst. FEFO er mere relevant for foedevarer, medicin og kosmetik.</p></div></details>
-    <details class="faq-item"><summary>Bruges LIFO paa lagre i Danmark?</summary><div class="faq-item__body"><p>Naesten aldrig i lagerlogistik. LIFO (Last In, First Out) er primaerl et regnskabsmaessigt begreb og er ikke tilladt under IFRS-standarden, som de fleste danske virksomheder folger. I fysisk lagerlogistik er FIFO eller FEFO standarden.</p></div></details>
-    <details class="faq-item"><summary>Kan jeg implementere FIFO uden et WMS?</summary><div class="faq-item__body"><p>Teoretisk ja, men i praksis er det meget svaerl at vedligeholde FIFO manuelt paa et travlt lager. Frontlagring og blanding af partier er de hyppigste aarsager til FIFO-brud. Et WMS dirigerer automatisk til den aeldste beholdning og eliminerer den menneskelige fejlkilde.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen paa FIFO og FEFO?</summary><div class="faq-item__body"><p>FIFO sender den aeldste vare ud foerst baseret paa modtagelsesdato. FEFO sender den vare ud foerst, som udloeber snarest. Naer alle varer i et batch har samme holdbarhedsdato giver de samme resultat. FEFO er mere praecis, naer der er variation i holdbarhed inden for samme varenummer.</p></div></details>
+    <details class="faq-item"><summary>Er FIFO lovpligtigt?</summary><div class="faq-item__body"><p>Det afhaenger af branchen. I foedevarer, farmaceutisk og kosmetik er rotationsstyring et regulatorisk krav. I andre brancher er det ikke lovkrav, men god praksis der reducerer spild og kapitalomkostninger.</p></div></details>
+    <details class="faq-item"><summary>Kan man koere FIFO uden et WMS?</summary><div class="faq-item__body"><p>Ja, men det kraever disciplin og fysiske systemer som dobbelt-zone metoden og datostempling. Over 50 ordrer om dagen bliver manuel FIFO-kontrol fejlbehæftet og tidskostvende. Et WMS automatiserer det.</p></div></details>
+    <details class="faq-item"><summary>Hvad er LIFO, og bruges det nogensinde?</summary><div class="faq-item__body"><p>LIFO er Last In, First Out. I fysisk lagerdrift bruges det naesten aldrig, da det typisk forer til ophobning af gammel beholdning. I USA bruges LIFO som regnskabsprincip til lagervaerdiansaettelse, men det er ikke tilladt under IFRS som bruges i Europa.</p></div></details>
   </div>
 </div></div>
-
 
 </main>
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er FIFO paa et lager?","acceptedAnswer":{"@type":"Answer","text":"FIFO (First In, First Out) betyder at den vare der kom ind paa lageret foerst ogsaa er den foerste der sendes ud."}},{"@type":"Question","name":"Hvad er forskellen paa FIFO og FEFO?","acceptedAnswer":{"@type":"Answer","text":"FIFO baserer sig paa indgangsdato. FEFO baserer sig paa udloebsdato og er mest relevant for foedevarer og medicin."}},{"@type":"Question","name":"Kan jeg implementere FIFO uden et WMS?","acceptedAnswer":{"@type":"Answer","text":"I praksis er det svaerl at vedligeholde FIFO manuelt. Et WMS dirigerer automatisk til aeldste beholdning."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er FIFO -- First In First Out forklaret for lager","dateModified":"2025-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen paa FIFO og FEFO?","acceptedAnswer":{"@type":"Answer","text":"FIFO sender den aeldste vare ud foerst baseret paa modtagelsesdato. FEFO sender den vare ud foerst som udloeber snarest. Naer alle varer i et batch har samme holdbarhedsdato giver de samme resultat."}},{"@type":"Question","name":"Er FIFO lovpligtigt?","acceptedAnswer":{"@type":"Answer","text":"Det afhaenger af branchen. I foedevarer, farmaceutisk og kosmetik er rotationsstyring et regulatorisk krav. I andre brancher er det god praksis der reducerer spild og kapitalomkostninger."}},{"@type":"Question","name":"Kan man koere FIFO uden et WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja, men det kraever disciplin og fysiske systemer. Over 50 ordrer om dagen bliver manuel FIFO-kontrol fejlbehæftet. Et WMS automatiserer det."}},{"@type":"Question","name":"Hvad er LIFO?","acceptedAnswer":{"@type":"Answer","text":"LIFO er Last In, First Out. I fysisk lagerdrift bruges det naesten aldrig da det forer til ophobning af gammel beholdning."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er FIFO? Forklaring og eksempler fra lageret","dateModified":"2025-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>
