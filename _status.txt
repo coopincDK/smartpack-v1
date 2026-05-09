@@ -1,0 +1,4 @@
+ M .gitignore
+?? _status.txt
+?? viden/hardware/ergonomi-fejlrate.html
+?? viden/hardware/skridt-per-plukker.html

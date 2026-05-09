@@ -11,6 +11,7 @@ Billeder OG VIDEO/
 
 # Scripts og interne filer
 *.ps1
+*.bat
 *.pdf
 linkedin-data.json
 
