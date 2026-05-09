@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WMS og ERP integration: sådan får du de to systemer til at tale sammen | SmartPack Viden</title>
+  <meta name="description" content="WMS og ERP skal dele data for at fungere. Lær hvad der skal synkroniseres, hvad der går galt og hvad du skal stille krav om inden du vælger system.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/wms-erp-integration">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech</a><span>&rsaquo;</span><span>WMS og ERP integration</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Tech</span>
+    <h1 class="article-title">WMS og ERP integration: sådan får du de to systemer til at tale sammen</h1>
+    <div class="article-meta"><time datetime="2026-05-09">9. maj 2026</time><span>~7 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+    <p>Dit ERP ved hvad du har købt. Dit WMS ved hvad du har på hylden. Når de ikke taler sammen, er begge systemer delvist blinde. Indkøbsordrer der ikke opdaterer WMS. Forsendelser der ikke opdaterer ERP. Regnskaber der afviger fra lagerbeholdning.</p>
+    <p>Integration mellem WMS og ERP er ikke en luksus. Det er det der gør begge systemer brugbare på samme tid.</p>
+
+    <h2>Hvad er forskellen på WMS og ERP?</h2>
+    <p>De to systemer løser fundamentalt forskellige problemer:</p>
+    <ul>
+      <li><strong>ERP (Enterprise Resource Planning):</strong> Virksomhedens økonomiske og administrative rygrad. Indkøb, fakturering, regnskab, lageromstætning på økonomisk niveau. Eksempler: Business Central, SAP, E-conomic, Uniconta.</li>
+      <li><strong>WMS (Warehouse Management System):</strong> Den operationelle styring af det fysiske lager. Pluk, pak, modtagelse, lokationsstyring, ruteoptimering. Eksempler: SmartPack, Manhattan, Logisnext.</li>
+    </ul>
+    <p>ERP har typisk et lagermodul, men det er ikke et WMS. Det mangler plukoptimering, lokationsstyring og det operationelle lag der gør lagerdrift effektivt.</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack integrerer med de mest brugte ERP-systemer i Danmark. <a href="../../kontakt">Se integrationsmulighederne &rarr;</a></p>
+
+    <h2>Hvad der skal synkroniseres</h2>
+    <p>En velfungerende WMS-ERP integration synkroniserer mindst disse datastrømme:</p>
+
+    <h3>Fra ERP til WMS</h3>
+    <ul>
+      <li>Indkøbsordrer (forventede leverancer WMS skal modtage)</li>
+      <li>Salgordrer (hvad WMS skal plukke og sende)</li>
+      <li>Produktstamdata (varenumre, mål, vægt, kategorier)</li>
+      <li>Leverandørdata (til modtagelsesregistrering)</li>
+    </ul>
+
+    <h3>Fra WMS til ERP</h3>
+    <ul>
+      <li>Lagerbevægelser (pluk, modtagelse, justeringer)</li>
+      <li>Forsendelsesbekræftelser (hvad der reelt er sendt)</li>
+      <li>Returnerede varer (opdatering af beholdning)</li>
+      <li>Lagerværdi ved periodeafslutning</li>
+    </ul>
+
+    <h2>Integrationsteknologier</h2>
+    <h3>API-baseret integration (foretrækkes)</h3>
+    <p>Realtidssynkronisering via REST API. En ordre lægges i ERP og er i WMS inden for sekunder. En forsendelse bekræftes i WMS og ERP opdateres straks. Ingen manuelle synkroniseringer, ingen forsinkelse.</p>
+    <p>Kræver at både WMS og ERP har veldokumenterede API'er og en integrationsløsning (middleware eller direkte). Det er standard i moderne systemer.</p>
+
+    <h3>Filbaseret integration (legacy)</h3>
+    <p>CSV eller XML-filer udveksles periodisk (typisk hvert kvarter eller hver time). Billigere at implementere men giver forsinkede data og risiko for fil-konflikter. Undgå det når API er muligt.</p>
+
+    <h3>Middleware (iPaaS)</h3>
+    <p>Mellemlagssoftware som Zapier, Make eller Boomi der forbinder systemer uden direkte integration. Fleksibelt men tilføjer et ekstra fejlpunkt og en ekstra løbende omkostning.</p>
+
+    <h2>Typiske fejl i WMS-ERP integration</h2>
+    <ul>
+      <li><strong>Enkelt-kilde-problematik:</strong> Begge systemer opdaterer beholdning uafhængigt. Hvem vinder når de er uenige? Der må være ét system der er "master of record" for beholdning.</li>
+      <li><strong>Manglende fejlhåndtering:</strong> Hvad sker der når en synkronisering fejler? Kender nogen det? Er der alarm?</li>
+      <li><strong>Produktstamdata ude af sync:</strong> Et varenummer i ERP der ikke matcher WMS giver fejl i plukordrer og modtagelse.</li>
+      <li><strong>Test kun på tilstanderét, ikke ændringer:</strong> Integrationen virker ved simple ordrer. Den fejler ved annulleringer, delvise forsendelser og returordrer.</li>
+    </ul>
+
+    <h2>Hvad du skal kræve inden valg</h2>
+    <p>Når du evaluerer et WMS, stil disse spørgsmål:</p>
+    <ul>
+      <li>Har I en eksisterende integration med vores ERP? Eller kræver det custom-udvikling?</li>
+      <li>Hvem ejer integrationsvedligeholdelsen når ERP opdateres?</li>
+      <li>Hvad er maksimale synkroniseringslatens (forsinkelse)?</li>
+      <li>Hvad sker der ved fejlede synkroniseringer? Er der alarm og genopretning?</li>
+    </ul>
+
+    <h2>Hvad SmartPack gør</h2>
+    <p>SmartPack har native integrationer med Business Central, E-conomic og Uniconta via API. Synkronisering sker i realtid for ordrer og indc. 5-15 minutters interval for lagerbevægelser. Integrationen vedligeholdes af SmartPack og følger med når ERP-systemerne opdaterer deres API.</p>
+  </div>
+
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Har jeg brug for både WMS og ERP?</summary><div class="faq-item__body"><p>Når du er små: nej. ERP's lagermodul er tilstrækkeligt under 100-200 ordrer om måneden. Når du er mellemstor: ja, du behøver WMS for operationel effektivitet og ERP for økonomisk styring. De to systemer er komplementerende, ikke konkurrerende.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster en WMS-ERP integration?</summary><div class="faq-item__body"><p>Med native integration (som SmartPack har til Business Central og E-conomic): typisk inkluderet i WMS-prisen eller 500-2.000 kr./måned ekstra. Custom API-integration: 30.000-150.000 kr. i development plus løbende vedligeholdelse. Vælg altid native integration når muligt.</p></div></details>
+    <details class="faq-item"><summary>Hvad er "master of record" og hvorfor er det vigtigt?</summary><div class="faq-item__body"><p>Master of record er det system der er kilden til sandhed for en given datamængde. For lagerbeholdning bør WMS være master of record da det er tættest på den fysiske virkelighed. ERP læser fra WMS, ikke omvendt. Uden klar master of record får du konflikter når systemerne er uenige.</p></div></details>
+  </div>
+
+  <div class="bottom-cta"><p>Vil du integrere dit WMS med dit ERP uden hovedpine?</p><a href="../../kontakt" class="btn">Tal med SmartPack</a></div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="../fundamentals/hvad-er-lagerstyring" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerstyring?</span></a>
+    <a href="./multi-channel-lager" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Multi-channel lager</span></a>
+    <a href="../problemer/excel-bryder-sammen" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Når Excel ikke er nok</span></a>
+  </div></div>
+</div></div>
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Har jeg brug for både WMS og ERP?","acceptedAnswer":{"@type":"Answer","text":"Under 200 ordrer om måneden er ERP's lagermodul typisk nok. Over det behøver du WMS for operationel effektivitet."}},{"@type":"Question","name":"Hvad koster en WMS-ERP integration?","acceptedAnswer":{"@type":"Answer","text":"Med native integration: typisk inkluderet eller 500-2.000 kr./måned. Custom API-integration: 30.000-150.000 kr. plus vedligeholdelse."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WMS og ERP integration: sådan får du de to systemer til at tale sammen","dateModified":"2026-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
