@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er en SKU? Forklaring og eksempler fra lageret | SmartPack Viden</title>
+  <meta name="description" content="SKU er dit lagersystems rygrad. Lær hvad en SKU er, hvordan du opbygger en god SKU-struktur, og hvad det koster dig at gøre det forkert.">
+  <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-sku">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Fundamentals</a><span>&rsaquo;</span><span>Hvad er en SKU?</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Fundamentals</span>
+    <h1 class="article-title">Hvad er en SKU? Forklaring og eksempler fra lageret</h1>
+    <div class="article-meta"><time datetime="2025-05-09">9. maj 2025</time><span>~5 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+    <p>En SKU er ikke bare et nummer. Det er den identitet din vare har på lageret, og hvis du har bygget SKU-strukturen forkert, betaler du for det hver gang der plukkes en ordre forkert, hvert kvartal når lagertællingen ikke stemmer, og første gang du skal skifte ERP-system og opdager at ingen forstår hvad tallene betyder.</p>
+    <p>SKU står for Stock Keeping Unit. På dansk: lagerenhed. Det er den unikke kode der identificerer præcis én variant af én vare i dit sortiment. Ikke produktet generelt, men den specifikke variant med størrelse, farve, pakningsstørrelse og alt andet der adskiller den fra alle andre varer på lageret.</p>
+
+    <h2>Hvad er en SKU i praksis?</h2>
+    <p>En SKU er den korteste entydige beskrivelse af en vare som dit system forstår. Hvis du sælger en t-shirt i tre farver og fem størrelser, har du 15 SKU'er, ikke én. Hvis du sælger kaffe i 250g og 500g emballage, er det to SKU'er selv om det er det samme produkt.</p>
+    <p class="inline-cta">&#x1F449; Se hvordan SmartPack håndterer SKU-styring i dit lager. <a href="../../kontakt">Book en gratis demo</a></p>
+    <p>Forskellen på en SKU og et EAN-stregkode er vigtig at forstå:</p>
+    <ul>
+      <li><strong>SKU</strong> er din interne kode, du definerer den selv, og den er unik inden for dit sortiment</li>
+      <li><strong>EAN/GTIN</strong> er en international standard sat af producenten, den er den samme uanset hvem der sælger varen</li>
+      <li><strong>En vare kan have begge</strong>, og i et godt system er de koblet sammen</li>
+    </ul>
+    <p>Mange virksomheder bruger EAN som SKU i begyndelsen. Det virker, men giver problemer når du får egne mærkevarer, bundter varer, eller sælger samme produkt i forskellige pakningstyper med forskellig pris.</p>
+
+    <h2>Hvad sker der når SKU-strukturen er forkert?</h2>
+    <p>Fejl i SKU-strukturen er ikke abstrakte problemer. De har konkrete konsekvenser der kan opgøres i kroner:</p>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Typisk årsag</th><th>Konsekvens</th></tr></thead>
+      <tbody>
+        <tr><td>Dublerede SKU'er</td><td>To medarbejdere opretter samme vare selvstændigt</td><td>Lagerbeholdning splittes, fejlplukning, dobbelt genbestilling</td></tr>
+        <tr><td>For brede SKU'er</td><td>Farver samlet under én kode</td><td>Du kan ikke se hvilken farve der mangler, kunden modtager forkert</td></tr>
+        <tr><td>Ingen navnekonvention</td><td>SKU oprettet ad hoc over tid</td><td>Søgning er umulig, onboarding af nye medarbejdere tager 3x så lang tid</td></tr>
+        <tr><td>SKU ændres ved rebranding</td><td>Ny leverandør, nyt navn på produktet</td><td>Historik brydes, rapportering holder op med at give mening</td></tr>
+      </tbody>
+    </table>
+    <p>Et konkret eksempel: et tøjfirma med 800 varenumre opdager ved årsopgørelsen at 120 SKU'er i systemet aldrig er solgt. Halvdelen er dubletter oprettet fordi ingen vidste hvad den originale hed. Resultatet: 60 lagerpositioner er tomme i systemet, men ikke på lageret. Lagertællingen tager tre dage ekstra.</p>
+
+    <h2>Sådan bygger du en god SKU-struktur</h2>
+    <p>En god SKU-struktur er nem at læse, nem at oprette og svær at lave forkert. Den bedste struktur er den din organisation rent faktisk bruger konsekvent.</p>
+
+    <h3>Grundprincipper for SKU-opbygning</h3>
+    <ol>
+      <li><strong>Brug et fast format:</strong> Beslut dig for et format og hold det. Eksempel: KATEGORI-PRODUKT-VARIANT-STØRRELSE. Fx: TROJE-BASIC-RØD-M. Alle ved hvad hvert felt betyder.</li>
+      <li><strong>Undgå mellemrum og specialtegn:</strong> SKU'er bruges i URLs, CSV-filer og systemer der ikke håndterer specialtegn. Brug bindestreg eller understreg som separator.</li>
+      <li><strong>Hold det kort:</strong> En SKU på 8-12 tegn er lettere at scanne og taste end en på 20+. Hvert ekstra tegn er en ekstra fejlkilde ved manuel indtastning.</li>
+      <li><strong>Byg hierarki ind:</strong> Start med det bredeste (kategori) og gå mod det mere specifikke (variant). Det giver dig filtrerings- og sorteringsmuligheder i alle systemer.</li>
+      <li><strong>Genbrug ikke gamle SKU'er:</strong> Når en vare udgår, arkiver dens SKU. Genbrug aldrig koden til en ny vare. Historikken vil blande sig med den nye vares data.</li>
+    </ol>
+
+    <h3>Hvornår skal du have ét SKU versus flere?</h3>
+    <p>Tommelfingerreglen: hvis to varer kan opbevares separat på lageret og plukkes til forskellige ordrer, har de brug for separate SKU'er. Overvej disse scenarier:</p>
+    <ul>
+      <li>Samme produkt, forskellig farve: separate SKU'er</li>
+      <li>Samme produkt, forskellig størrelse: separate SKU'er</li>
+      <li>Samme produkt, forskellig emballage (enkelt vs. 6-pak): separate SKU'er</li>
+      <li>Samme produkt, forskellig leverandør men identisk vare: overvej fælles SKU med leverandørkode som attribut</li>
+      <li>Bundle af to produkter solgt sammen: ny SKU specifikt for bundlet</li>
+    </ul>
+
+    <h2>SKU og dit lagersystem</h2>
+    <p>En SKU er kun så nyttig som det system der bruger den. I et WMS som SmartPack er SKU'en det centrale referencepunkt for:</p>
+    <ul>
+      <li><strong>Lokationsstyring:</strong> Systemet ved præcis hvilken hylde SKU'en hører til, og dirigerer plukkeren direkte derhen</li>
+      <li><strong>Lagerbeholdning:</strong> Realtidstal på præcis hvor mange enheder der er på lager, reserveret og på vej ind</li>
+      <li><strong>Genbestilling:</strong> Automatisk alarm når beholdningen falder under et defineret minimum for den specifikke SKU</li>
+      <li><strong>Rapportering:</strong> Salgshistorik, svindopgørelse og omsætningshastighed per SKU</li>
+    </ul>
+    <p>Uden en ensartet SKU-struktur kan systemet ikke levere præcise tal. Garbage in, garbage out gælder i særlig grad for lagerdata.</p>
+
+    <h2>Hvornår giver SmartPack mening for SKU-styring?</h2>
+    <p>SmartPack automatiserer SKU-baseret lokationsstyring og genbestilling, men er ikke den rigtige løsning for alle.</p>
+
+    <h3>SmartPack giver mening når:</h3>
+    <ul>
+      <li>Du har <strong>500+ aktive SKU'er</strong> og kan ikke holde styr på det manuelt</li>
+      <li>Du oplever <strong>fejlplukning på 2%+</strong> fordi medarbejdere forveksler varianter</li>
+      <li>Du har <strong>løbende lagerubalance</strong> og ved ikke hvilke SKU'er der er problemet</li>
+      <li>Du vokser og har brug for at <strong>onboarde nye medarbejdere hurtigt</strong> uden at de skal kende sortimentet udenad</li>
+    </ul>
+
+    <h3>SmartPack giver IKKE mening når:</h3>
+    <ul>
+      <li>Du har <strong>under 100 SKU'er</strong> og et enkelt regneark holder styr på dem</li>
+      <li>Du har <strong>under 20 ordrer om dagen</strong> og fejlplukning sker sjældnere end én gang om ugen</li>
+    </ul>
+  </div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
+<div class="bottom-cta"><p>Vil du have styr på din SKU-struktur og lagerstyring?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./hvad-er-lagerstyring" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerstyring?</span></a>
+    <a href="./hvad-er-lagerflow" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerflow?</span></a>
+    <a href="./hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er forskellen på en SKU og et stregkodenummer?</summary><div class="faq-item__body"><p>En SKU er din interne identifikationskode som du selv definerer og styrer. Et stregkodenummer (EAN/GTIN) er en internationalt standardiseret kode sat af producenten. En vare har typisk begge, og i et godt lagersystem er de koblet sammen, så du kan scanne stregkoden og systemet finder den tilhørende SKU automatisk.</p></div></details>
+    <details class="faq-item"><summary>Kan to varer have samme SKU?</summary><div class="faq-item__body"><p>Nej, aldrig. En SKU skal være unik inden for dit sortiment. To varer med samme SKU giver fejl i lagerbeholdningen, fejlplukning og kaos i rapporteringen. Hvis du opdager dublerede SKU'er i dit system, er det en kritisk fejl der skal rettes straks.</p></div></details>
+    <details class="faq-item"><summary>Hvor mange tegn bør en SKU have?</summary><div class="faq-item__body"><p>De fleste virksomheder lander på 8-15 tegn som det optimale. Kortere end 8 tegn er svært at gøre meningsfuldt for et stort sortiment. Længere end 15 tegn giver fejl ved manuel indtastning og fylder unødigt på labels. Vælg et format og hold det konsekvent.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der med SKU'en når en vare udgår?</summary><div class="faq-item__body"><p>Arkiver SKU'en i stedet for at slette den. Du har brug for den til historiske salgsrapporter, garantisager og revisionsformål. Genrug aldrig en udgået SKU til en ny vare, da historikken vil blande sig med den nye vares data og give forkerte tal i alle rapporter.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på en SKU og et stregkodenummer?","acceptedAnswer":{"@type":"Answer","text":"En SKU er din interne identifikationskode som du selv definerer. Et EAN/GTIN er en internationalt standardiseret kode sat af producenten. I et godt system er de koblet sammen."}},{"@type":"Question","name":"Kan to varer have samme SKU?","acceptedAnswer":{"@type":"Answer","text":"Nej, aldrig. En SKU skal være unik inden for dit sortiment. Dublerede SKU'er giver fejl i lagerbeholdningen og fejlplukning."}},{"@type":"Question","name":"Hvor mange tegn bør en SKU have?","acceptedAnswer":{"@type":"Answer","text":"De fleste virksomheder lander på 8-15 tegn. Kortere er svært at gøre meningsfuldt, længere giver fejl ved manuel indtastning."}},{"@type":"Question","name":"Hvad sker der med SKU'en når en vare udgår?","acceptedAnswer":{"@type":"Answer","text":"Arkiver SKU'en i stedet for at slette den. Genbrug aldrig en udgået SKU til en ny vare, da historikken vil blande sig med den nye vares data."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er en SKU? Forklaring og eksempler fra lageret","dateModified":"2025-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
