@@ -92,17 +92,17 @@
   <!-- Viden -->
   <url><loc>https://smartpack.dk/viden/</loc><lastmod>2026-05-02</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/baeredygtighed/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/baeredygtighed/baeredygtigt-fyldmateriale</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/baeredygtighed/co2-rapportering-fragt</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/baeredygtighed/fill-rate-optimering</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/baeredygtighed/groen-fragt-greenwashing</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/beslutning/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
   <url><loc>https://smartpack.dk/viden/beslutning/3pl-vs-eget-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/beslutning/bedste-wms-til-webshop</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/beslutning/cloud-vs-on-premise-wms</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/beslutning/fejl-ved-valg-af-system</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/beslutning/hvilket-setup-passer-til-dig</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/beslutning/hvordan-vælger-du-lager-software</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/beslutning/hvornår-erp-ikke-er-nok</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/beslutning/hvornår-excel-fejler</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/beslutning/hvornår-shopify-ikke-er-nok</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
@@ -133,172 +133,172 @@
   <url><loc>https://smartpack.dk/viden/drift/uk-compliance-post-brexit</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/drift/weee-regler</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/fundamentals/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/abc-analyse-sortiment</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-3pl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-batch-picking</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-cross-docking</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-cycle-counting</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
   <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-demand-planning</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-dropshipping</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-fefo</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-fifo</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-fulfillment</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-inventory-accuracy</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-lagerflow</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-lagerstyring</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-lead-time</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-pluk-og-pak</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-reorder-point</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-safety-stock</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-sku</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-warehouse-layout</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-wms</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/hvad-er-zone-picking</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/fundamentals/slotting-hvad-koster-det-ikke</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
   <url><loc>https://smartpack.dk/viden/hardware/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/anti-fatigue-maatter</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/arbejdshoejde-pakkebord</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/batch-picking-hjaelpemidler</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/daarlige-arbejdsstillinger-tempo</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/emballageoptimering-fragt</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/emballage-setup-pakketid</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/ergonomi-fejlrate</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/ergonomi-paa-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/fragtlabel-setup</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/fra-manuelt-til-optimeret</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/fyldmateriale-valg</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/hardware-loser-ikke-alt</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/hardware/hardware-vs-system-effekt</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/investering-udstyr-vs-software</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/lageroptimering-roi-forst</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/manuel-vs-elektrisk-pallelofter</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/overemballering-omkostning</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/hardware/oversete-ting-paa-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/pakkebord-flaskehalsen</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/pakkestation-setup</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/plukkevogn-bestemmer-dit-tempo</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/printer-placering-flow</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/rullebaner-paa-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/single-vs-multi-order-plukkevogn</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/skridt-per-plukker</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/hardware/smaa-forbedringer-store-besparelser</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/standard-vs-specialkasser</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/tape-pistoler-effekt</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/tape-placering-paa-bord</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/tape-valg-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/transportvogne-paa-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/valg-af-kasser</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/okonomi/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/beholdningsomkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/okonomi/bemanding-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/break-even-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/budget-til-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/cost-per-ordre</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/dead-stock-omkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/emballagekostnader</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/okonomi/emballageomkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/fejlomkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/forsendelsesomkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/fragtforhandling</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/lagerhusleje-optimering</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/okonomi/lageromkostninger-beregning</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/lageromkostninger-pr-sku</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/lageromsoetningshastighed</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/oekonomi-i-automatisering</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/personaleomkostninger-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/plukkefejl-koster-penge</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/okonomi/returomkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/okonomi/roi-paa-wms</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/skjulte-lageromkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/personale/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/personale/ansaettelse-lagerchef</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/personale/hse-sikkerhed-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/personale/medarbejder-turnover-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/personale/motivation-lagermedarbejdere</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/personale/saesonansatte-paa-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/personale/ungarbejdere-paa-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/problemer/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/afhængighed-af-nøglemedarbejdere</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/dårlig-onboarding-af-medarbejdere</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/excel-bryder-sammen</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/problemer/forkert-vareplacering</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/for-mange-hasteordrer</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/for-mange-manuelle-processer</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/for-mange-systemer</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/ingen-standarder</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/integrationer-fejler</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/lageret-er-indrettet-forkert</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/lageret-kan-ikke-følge-med-vækst</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
   <url><loc>https://smartpack.dk/viden/problemer/lageret-vokser-ukontrolleret</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/overfyldt-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/plukruter-er-ineffektive</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/returproces-er-kaos</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/problemer/shopify-er-ikke-nok</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/vi-ansætter-for-hurtigt</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/vi-bruger-for-meget-tid-på-pluk</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/problemer/vi-kan-ikke-haandtere-peaks</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/vi-kender-ikke-vores-lageromkostninger</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/problemer/vi-laver-for-mange-pakkefejl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/problemer/vi-løber-tør-for-varer</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/vi-mangler-overblik-over-lageret</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/vi-mister-varer</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/vores-data-er-rod</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/realworld/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/case-50-ordrer-dag</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/case-fra-eget-lager-til-3pl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/case-skifte-wms-midt-i-saeson</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/dansk-vs-tysk-logistik</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/en-dag-på-et-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/realworld/fra-garage-til-skalering</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/realworld/fra-ordre-til-levering</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/realworld/hvad-gør-de-bedste-anderledes</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/hvordan-lager-påvirker-kundetilfredshed</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/realworld/hvordan-undgår-du-at-skalere-kaos</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/hvornaar-fyre-3pl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/realworld/kampagner-vs-drift</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/realworld/lager-vs-marketing</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/onboarding-3pl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/skjulte-gebyrer-3pl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/sla-med-3pl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/realworld/smartpack-3pl-guide</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/realworld/sådan-arbejder-top-webshops</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/realworld/typisk-lager-evolution</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/retur/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/retur/beskadigede-returvarer</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/retur/retur-emballage</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/retur/returhaandtering-webshop</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/retur/returlogistik-fra-tab-til-neutral</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/retur/returrate-benchmarks</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/retur/wms-og-retur</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/tech/</loc><lastmod>2026-05-02</lastmod><priority>0.5</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/ai-paa-lageret-2026</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/tech/api-i-lagerstyring</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/batch-picking-teknologi</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/business-central-integration</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/cloud-wms-fordele</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/dataflow-i-ecommerce</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/economic-integration</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/edi-integrationer</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/tech/fragtintegrationer-forklaret</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/fulfillment-sync</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/hvad-er-wms</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/integrationer-forklaret</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/lager-api-integration</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/lager-automatisering-teknologi</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
   <url><loc>https://smartpack.dk/viden/tech/lager-software-valg</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/mobile-scanning-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/multi-channel-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/tech/pick-by-light</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/pim-vs-wms</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/real-time-beholdning</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/real-time-inventory</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/rfid-paa-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/tech/shopify-integration</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/stregkode-scanning-lager</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/typiske-integrationsfejl</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/voice-picking</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/tech/webhooks-forklaret</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/wms-erp-integration</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/tech/wms-integration-webshop</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/wms-vs-erp</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/wms-vs-excel</loc><lastmod>2026-05-02</lastmod><priority>0.6</priority></url>
@@ -328,12 +328,12 @@
 
   <!-- Nye artikler maj 2026 -->
   <url><loc>https://smartpack.dk/viden/tech/smartpack-api-muligheder</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/ordrer-via-kundemails</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
+  
   <url><loc>https://smartpack.dk/viden/okonomi/spare-medarbejdere-wms</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/tidsforbrug-lager</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
-  <url><loc>https://smartpack.dk/viden/beslutning/hvornaar-er-lager-en-omkostning</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
-  <url><loc>https://smartpack.dk/viden/beslutning/ordrer-via-kundemails</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
-  <url><loc>https://smartpack.dk/viden/beslutning/godt-nok-plukkehastighed</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
+  
+  
+  
   <url><loc>https://smartpack.dk/viden/problemer/de-7-skjulte-lagerfejl</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/problemer/medarbejderne-er-ikke-problemet</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/vaekst/optimer-plukkehastighed</loc><lastmod>2026-05-04</lastmod><priority>0.7</priority></url>
