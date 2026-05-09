@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er FIFO -- First In First Out forklaret for lager | SmartPack Viden</title>
+  <meta name="description" content="FIFO (First In First Out) er et grundlaeggende lagerprincip. Laerl hvad det er, hvornaar du skal bruge det, og hvordan et WMS implementerer FIFO automatisk.">
+  <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-fifo">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+
+<!-- ================================================================
+     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
+     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT paa TRACKING BLOK
+================================================================ -->
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Fundamentals</a><span>&rsaquo;</span><span>Hvad er FIFO?</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Fundamentals</span>
+    <h1 class="article-title">Hvad er FIFO -- First In First Out forklaret for lager</h1>
+    <div class="article-meta"><time datetime="2025-05-09">9. maj 2025</time><span>~6 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+    <p>FIFO staar for First In, First Out. Princippet er simpelt: den vare, der kom ind paa lageret foerst, er ogsaa den foerste der forlade det. Sagt paa en anden maade: aeldste beholdning sendes foerst. Det lyder indlysende, men i praksis er FIFO et af de principper, der oftest brydes paa ustrukturerede lagre, og bruddet koster penge.</p>
+    <p>FIFO er ikke blot relevant for holdbarhedsvarer. Det er et grundlaegende princip for at undgaa ukurans, sikre ensartet produktkvalitet og opretholde korrekt vaerdiansaettelse af beholdning.</p>
+
+    <h2>FIFO vs. LIFO vs. FEFO</h2>
+    <p>Det er vaerd at kende de tre grundlaeggende lagerprincipper og hvornaar hvert er relevant:</p>
+
+    <p class="inline-cta">&#x1F449; SmartPack understøtter FIFO, FEFO og batchstyring som standard. <a href="../../kontakt">Book en gratis demo</a></p>
+
+    <table>
+      <thead><tr><th>Princip</th><th>Fuld betegnelse</th><th>Logik</th><th>Typisk anvendelse</th></tr></thead>
+      <tbody>
+        <tr><td>FIFO</td><td>First In, First Out</td><td>Aeldste varer plukkes foerst</td><td>De fleste fysiske produkter</td></tr>
+        <tr><td>LIFO</td><td>Last In, First Out</td><td>Nyeste varer plukkes foerst</td><td>Sjeldent i lagerlogistik, mest regnskab</td></tr>
+        <tr><td>FEFO</td><td>First Expired, First Out</td><td>Kortest udloebsdato plukkes foerst</td><td>Foedevarer, kosmetik, medicin</td></tr>
+      </tbody>
+    </table>
+
+    <p>LIFO bruges naesten ikke i fysisk lagerlogistik i Europa. Det er primaerl et regnskabsmaessigt begreb og er faktisk ikke tilladt under IFRS-standarden. I dansk lagerlogistik er valget typisk FIFO eller FEFO afhaengigt af produkttype.</p>
+
+    <h2>Hvornaar er FIFO kritisk?</h2>
+
+    <h3>Produkter med holdbarhedsdato</h3>
+    <p>For foedevarer, kosmetik, medicin og andre holdbarhedsstyrede produkter er FIFO (eller snarere FEFO) ikke et valg, men et krav. At sende produkter med laengere holdbarhed foerst, mens aeldere varer blever paa lager, foerer uundgaaeligt til spild og potentielt sundhedsfarlige leverancer. Mange virksomheder i denne kategori har lovmaessige forpligtelser til at dokumentere FEFO-overholdelse.</p>
+
+    <h3>Mode og saesonstyrings produkter</h3>
+    <p>I mode er produkter fra tidlige collections laengere fra den aktuelle saeson, og har dermed lavere omsaetningspotentiale. FIFO sikrer, at aeldste collection afvikles foerst, inden naeste saeson ankommer og skaber nedprispres paa den aeldste beholdning.</p>
+
+    <h3>Elektronik og tekniske komponenter</h3>
+    <p>Elektronikprodukter forvaerres ikke kemisk, men de kan bli teknologisk forlaeldede. FIFO sikrer, at aeldste modeller sendes foerst og reducerer risikoen for at sidde med forlaeldet beholdning, naar en ny model lanceres.</p>
+
+    <h3>Standardvarer og non-food</h3>
+    <p>Selv for produkter uden formeel holdbarhedsdato er FIFO god praksis. Det sikrer jaevn rotation af beholdningen og afdeekker problemer med produktkvalitet over tid. En emballage, der har ligget for laenge i et lager, kan vaere udsat for fugt, stoed eller UV-lys, der paavikrer kvaliteten.</p>
+
+    <h2>Saaledes bryder FIFO ned uden et system</h2>
+    <p>Paa et lager uden systematisk FIFO-styring opstaar brud typisk som foelge af:</p>
+    <ul>
+      <li><strong>Frontlagring:</strong> Nye varer stilles foran aeldere beholdning, fordi det er nemmest. Plukker henter fra fronten. Aeldste varer forbliver bagest.</li>
+      <li><strong>Samme lokation, blandet batch:</strong> Forskellige leverancer af samme SKU placeres i samme lokation uden adskillelse. Det er umuligt at sikre FIFO manuelt.</li>
+      <li><strong>Ingen registrering af modtagelsesdato:</strong> Uden modtagelsesdato eller batch-nummer er det umuligt at vide, hvad der er aeldst.</li>
+      <li><strong>Travlhed:</strong> I travle perioder henter plukker fra den naermeste tilgaengelige beholdning, ikke den aeldste.</li>
+    </ul>
+
+    <h2>Implementering af FIFO i et WMS</h2>
+    <p>Et WMS implementerer FIFO ved at registrere indgangstidspunktet for hvert parti og dirigere plukker til den aeldste beholdning foerst. De konkrete mekanismer:</p>
+
+    <h3>Batch og lot-numre</h3>
+    <p>Ved modtagelse tildeles hvert parti et unikt batch-nummer med modtagelsesdato. Systemet dirigerer altid plukning fra den aeldste aktive batch, uanset fysisk placering paa lageret.</p>
+
+    <h3>Lokations-FIFO</h3>
+    <p>For produkter uden eksplicit batch-styring kan systemet implementere FIFO paa lokationsniveau ved at registrere hvornaar en lokation sidst fik tilfoert beholdning og dirigere til aeldste lokation.</p>
+
+    <h3>FEFO-overkrydsning</h3>
+    <p>For holdbarhedsstyrede produkter er FEFO et mere praecist princip end FIFO. Et godt WMS understoeetter begge og tillader konfiguration per produktkategori, saa FIFO bruges til standardvarer og FEFO til holdbarhedsvarer.</p>
+
+    <h3>Alarmering ved risiko for udloeb</h3>
+    <p>SmartPack genererer automatisk advarsler, naar varer naermer sig udloebsdato og endnu ikke er solgt. Dette giver mulighed for at ivaerksaette tiltag, f.eks. kampagnepris eller overfoersel til en anden kanal, inden varen maa kasseres.</p>
+
+    <h2>SmartPack og FIFO</h2>
+    <p>SmartPack understøtter FIFO og FEFO som standard for alle produktkategorier. Batch-registrering ved modtagelse, automatisk FIFO-dirigering ved plukning og advarsler om udloebsrisiko er inkluderet i standardloesningen. Du beholder fuld sporbarhed fra modtagelse til forsendelse.</p>
+  </div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret paa erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og boer tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret raadgivning.</p></div>
+<div class="bottom-cta"><p>Vil du have automatisk FIFO og FEFO paa dit lager?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="../okonomi/lageromsoetningshastighed" class="article-related__item"><span class="article-related__item-cat">&Oslash;konomi</span><span class="article-related__item-title">Lageromloebshastighed</span></a>
+    <a href="../tech/hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
+    <a href="../problemer/vi-laver-for-mange-pakkefejl" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Vi laver for mange pakkefejl</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spoergsmaal</h2>
+    <details class="faq-item"><summary>Hvad er FIFO paa et lager?</summary><div class="faq-item__body"><p>FIFO (First In, First Out) betyder, at den vare der kom ind paa lageret foerst, ogsaa er den foerste der sendes ud. Det sikrer, at aeldste beholdning altid afvikles foerst og reducerer risikoen for ukurans og spild.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen paa FIFO og FEFO?</summary><div class="faq-item__body"><p>FIFO baserer sig paa indgangsdato: aeldste modtaget forlade lageret foerst. FEFO baserer sig paa udloebsdato: varen med korteste resterende holdbarhed forlade lageret foerst. FEFO er mere relevant for foedevarer, medicin og kosmetik.</p></div></details>
+    <details class="faq-item"><summary>Bruges LIFO paa lagre i Danmark?</summary><div class="faq-item__body"><p>Naesten aldrig i lagerlogistik. LIFO (Last In, First Out) er primaerl et regnskabsmaessigt begreb og er ikke tilladt under IFRS-standarden, som de fleste danske virksomheder folger. I fysisk lagerlogistik er FIFO eller FEFO standarden.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg implementere FIFO uden et WMS?</summary><div class="faq-item__body"><p>Teoretisk ja, men i praksis er det meget svaerl at vedligeholde FIFO manuelt paa et travlt lager. Frontlagring og blanding af partier er de hyppigste aarsager til FIFO-brud. Et WMS dirigerer automatisk til den aeldste beholdning og eliminerer den menneskelige fejlkilde.</p></div></details>
+  </div>
+</div></div>
+
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er FIFO paa et lager?","acceptedAnswer":{"@type":"Answer","text":"FIFO (First In, First Out) betyder at den vare der kom ind paa lageret foerst ogsaa er den foerste der sendes ud."}},{"@type":"Question","name":"Hvad er forskellen paa FIFO og FEFO?","acceptedAnswer":{"@type":"Answer","text":"FIFO baserer sig paa indgangsdato. FEFO baserer sig paa udloebsdato og er mest relevant for foedevarer og medicin."}},{"@type":"Question","name":"Kan jeg implementere FIFO uden et WMS?","acceptedAnswer":{"@type":"Answer","text":"I praksis er det svaerl at vedligeholde FIFO manuelt. Et WMS dirigerer automatisk til aeldste beholdning."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er FIFO -- First In First Out forklaret for lager","dateModified":"2025-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
