@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er lagernøjagtighed (inventory accuracy)? Sådan måler og forbedrer du den | SmartPack Viden</title>
+  <meta name="description" content="Lagernøjagtighed fortæller dig om dit system og dit fysiske lager stemmer overens. Lær hvad god accuracy er, hvordan du måler den, og hvad det koster dig at have dårlig kontrol.">
+  <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-inventory-accuracy">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+
+<!-- ================================================================
+     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
+     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT på TRACKING BLOK
+================================================================ -->
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Fundamentals</a><span>&rsaquo;</span><span>Hvad er lagernøjagtighed?</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Fundamentals</span>
+    <h1 class="article-title">Hvad er lagernøjagtighed (inventory accuracy)? Sådan måler og forbedrer du den</h1>
+    <div class="article-meta"><time datetime="2025-05-09">9. maj 2025</time><span>~6 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+    <p>Dit system siger 240 enheder. Du tæller 183. Forskellen på 57 enheder opdager du ikke, før en kunde bestiller noget du ikke har, og leveringstiden pludselig bliver 8 dage i stedet for 2. Det er hvad dårlig lagernøjagtighed koster i praksis.</p>
+    <p>Inventory accuracy er ikke bare en KPI du rapporterer til ledelsen. Det er grundlaget for alle andre beslutninger på lageret: genbestilling, pluk, kapacitetsplanlægning og kundeservice. Når accuracy er lav, arbejder hele organisationen på forkerte forudsætninger.</p>
+
+    <h2>Hvad er lagernøjagtighed, og hvordan beregner du den?</h2>
+    <p>Lagernøjagtighed måler hvor stor en andel af dine varenumre der har korrekt beholdning i systemet sammenlignet med den fysiske beholdning på lageret. Formlen er enkel:</p>
+    <p><strong>Inventory Accuracy (%) = (Varenumre med korrekt beholdning / Totalt antal varenumre talt) × 100</strong></p>
+    <p>Et eksempel: Du tæller 500 varenumre. 463 stemmer mellem system og fysisk lager. Din accuracy er 463/500 × 100 = 92,6%.</p>
+    <p class="inline-cta">&#x1F449; Vil du se hvordan SmartPack holder din lagernøjagtighed over 99%? <a href="../../kontakt">Book en gratis demo</a></p>
+    <p>Der er to måder at definere "korrekt" på, og valget påvirker din score markant:</p>
+    <ul>
+      <li><strong>Binær: enten korrekt eller forkert.</strong> Systemet siger 240, du tæller 239. Det tæller som forkert. Streng, men den eneste måde der giver mening for planlægning.</li>
+      <li><strong>Tolerance-baseret: acceptabelt inden for X%.</strong> Systemet siger 240, du tæller 239. Inden for 1% tolerance tæller det som korrekt. Bruges til bulk-varer og råvarer, men skjuler strukturelle problemer.</li>
+    </ul>
+    <p>Brug binær accuracy som din primære KPI. Tolerance-baseret accuracy kan supplere for specifikke varekategorier, men aldrig som eneste mål.</p>
+
+    <h2>Hvad er god lagernøjagtighed, og hvad koster det at ligge under?</h2>
+    <p>De fleste lageroperationer befinder sig et sted mellem 85% og 98% accuracy. Branchen er ikke enig om hvad der er acceptabelt, men tallene herunder viser hvad de forskellige niveauer faktisk betyder:</p>
+    <table>
+      <thead><tr><th>Accuracy-niveau</th><th>Hvad det betyder i praksis</th><th>Typisk konsekvens</th></tr></thead>
+      <tbody>
+        <tr><td>Under 85%</td><td>Over 1 ud af 7 varenumre er forkert i systemet</td><td>Hyppige stockouts, manuelle korrektioner dagligt, lav kundetilfredshed</td></tr>
+        <tr><td>85-92%</td><td>Synlige huller i lagerdata, men drift er mulig</td><td>Overbestilling som buffer, 3-5% spild på grund af fejlpluk</td></tr>
+        <tr><td>92-97%</td><td>Funktionelt niveau for manuelle operationer</td><td>Lejlighedsvise forstyrrelser, kan drives uden WMS ved lavt volumen</td></tr>
+        <tr><td>97-99%</td><td>Solidt niveau, egnet til automatisering</td><td>Få manuelle korrektioner, god grundlag for forecastning</td></tr>
+        <tr><td>99%+</td><td>Best practice for seriøse lageroperationer</td><td>Tillid til systemdata, minimal sikkerhedsbeholdning nødvendig</td></tr>
+      </tbody>
+    </table>
+    <p>Når accuracy falder under 92%, begynder virksomheder at kompensere med sikkerhedsbeholdning. Det lyder fornuftigt, men det er en dyr løsning på et problem der ikke burde eksistere.</p>
+
+    <h3>Hvad koster lav accuracy? Konkret regnestykke</h3>
+    <table>
+      <thead><tr><th>Post</th><th>Beregning</th><th>Årligt beløb</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Ekstra sikkerhedsbeholdning (8% ekstra på 3 mio. kr. lager)</td>
+          <td>3.000.000 × 0,08 × 0,08 (kapitalomkostning)</td>
+          <td>19.200 kr.</td>
+        </tr>
+        <tr>
+          <td>Fejlpluk og omlevering (2% af 15 mio. kr. omsætning)</td>
+          <td>15.000.000 × 0,02 × 0,30 (håndteringsomkostning)</td>
+          <td>90.000 kr.</td>
+        </tr>
+        <tr>
+          <td>Manuelle korrektioner (3 timer/dag × 52 uger × 350 kr.)</td>
+          <td>3 × 5 × 52 × 350</td>
+          <td>273.000 kr.</td>
+        </tr>
+        <tr>
+          <td>Mistede salg ved stockouts (1,5% af omsætning)</td>
+          <td>15.000.000 × 0,015</td>
+          <td>225.000 kr.</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="2"><strong>Total årlig cost ved 90% accuracy</strong></td><td><strong>607.200 kr.</strong></td></tr>
+      </tfoot>
+    </table>
+    <p>Det tal overrasker de fleste. Problemet er at omkostningerne er usynlige: de gemmer sig i arbejdstimer, ekstra beholdning og tabt salg der aldrig registreres som en linje i regnskabet.</p>
+
+    <h2>Hvad ødelægger lagernøjagtigheden? De 5 hyppigste årsager</h2>
+    <p>Accuracy forsvinder ikke tilfældigt. Der er systematiske årsager bag, og de samme 5 går igen i stort set alle lageroperationer:</p>
+
+    <h3>1. Modtagelsesfejl</h3>
+    <p>Leverandøren sender 144 enheder. Modtageren scanner én kasse og registrerer 12. Resten tæller manuelt og skriver 144 på en seddel der ikke scannes. Systemet siger 12. Lageret har 144. Du opdager det næste gang du skal plukke.</p>
+    <p><strong>Fix:</strong> Scan eller tæl altid ved modtagelse. Brug to-persons check ved store leverancer. Tillad aldrig manuel registrering uden systemindtastning.</p>
+
+    <h3>2. Returvarer uden korrekt registrering</h3>
+    <p>Kunden returnerer 3 enheder. De lander i returzonen. Godkendes efter 5 dage. Lægges tilbage på lager uden at systemet opdateres. Systemet er nu 3 enheder for lav. Sker det 20 gange om måneden, mister du 60 enheder i accuracy per måned.</p>
+    <p><strong>Fix:</strong> Integrer returflowet direkte i WMS. Ingen vare rører lagerhylden uden at systemet er opdateret.</p>
+
+    <h3>3. Fejlpluk og omplacering</h3>
+    <p>En plukker tager fra forkert lokation. Sender den rigtige vare, men systemet trækker fra en anden lokation. To varenumre er nu forkerte i systemet. Sker det 10 gange om dagen på 200 ordrer, er 5% af dine transaktioner fejlbehæftede.</p>
+    <p><strong>Fix:</strong> Scan-bekræftelse ved pluk. Systemet skal kræve scanning af lokation og varenummer inden pluk bekræftes.</p>
+
+    <h3>4. Justeringer uden dokumentation</h3>
+    <p>En medarbejder opdager en difference og retter den manuelt i systemet uden at notere årsagen. Tallet er nu korrekt, men du ved ikke hvorfor det var forkert. Problemet gentager sig næste måned.</p>
+    <p><strong>Fix:</strong> Alle justeringer skal have årsagskode: beskadiget vare, tyveri, modtagelsesfejl, plukfejl. Analyser årsagskoderne månedligt.</p>
+
+    <h3>5. Produktomdøbning og variantstyring</h3>
+    <p>Du sælger rød t-shirt i S, M og L. Nogen opfatter dem som én vare og registrerer alle tre størrelser under samme varenummer. Systemet viser 90 enheder. I virkeligheden er der 30 af hver størrelse. Første gang en kunde bestiller M i en bestemt farve, viser systemet 90 tilgængelige. Du har måske 0.</p>
+    <p><strong>Fix:</strong> Én SKU per unik salgsenhed. Ingen undtagelser. Valider variantstruktur ved onboarding af nye varer.</p>
+
+    <h2>Sådan måler du lagernøjagtighed korrekt: cycle counting vs. årlig optælling</h2>
+    <p>Der er to fundamentalt forskellige tilgange til at måle og vedligeholde accuracy. De fleste vælger den forkerte.</p>
+
+    <h3>Årlig lageroptælling: det klassiske valg</h3>
+    <p>En gang om året tælles alt. Lageret lukker i 1-3 dage. Alle medarbejdere tæller. Resultatet indberettes til regnskabet.</p>
+    <p>Problemet: du opdager fejl et år efter de opstod. Du ved ikke hvornår, hvorfor eller hvem der skabte fejlen. Du kan ikke forebygge det. Og næste år gentager det sig.</p>
+    <p>Brug kun den årlige optælling til regnskabsformål. Brug den aldrig som din primære accuracy-metode.</p>
+
+    <h3>Cycle counting: den rigtige tilgang</h3>
+    <p>Cycle counting betyder at du tæller en lille del af lageret løbende, hele året. I stedet for at tælle alt en gang, tæller du 20-50 varenumre om dagen, hver dag.</p>
+    <p>Fordele:</p>
+    <ul>
+      <li>Du opdager fejl inden for dage, ikke måneder</li>
+      <li>Du identificerer hvilke varenumre der konstant er forkerte og kan undersøge årsagen</li>
+      <li>Lageret lukker aldrig ned for optælling</li>
+      <li>Du kan prioritere: tæl A-varer (høj omsætning) hyppigt, C-varer sjældnere</li>
+    </ul>
+
+    <h3>Cycle counting frekvens baseret på ABC-analyse</h3>
+    <table>
+      <thead><tr><th>Kategori</th><th>Andel af varenumre</th><th>Andel af omsætning</th><th>Anbefalede optælling</th></tr></thead>
+      <tbody>
+        <tr><td>A-varer</td><td>10-20%</td><td>70-80%</td><td>Månedligt eller ugentligt</td></tr>
+        <tr><td>B-varer</td><td>30-40%</td><td>15-25%</td><td>Kvartalsvis</td></tr>
+        <tr><td>C-varer</td><td>40-60%</td><td>5-10%</td><td>Halvårligt eller ved mistanke</td></tr>
+      </tbody>
+    </table>
+    <p>En operation med 1.000 varenumre kan dække alle A-varer månedligt og alle C-varer halvårligt med 15-20 minutters daglig optælling. Det kræver ingen lukkedage og giver løbende indblik i accuracy.</p>
+
+    <h2>Trin-for-trin: Sådan forbedrer du accuracy fra 90% til 99%</h2>
+    <p>Forbedring af lagernøjagtighed sker ikke ved at tælle mere. Det sker ved at fjerne årsagerne til fejlene. Her er den rækkefølge der virker:</p>
+
+    <h3>Fase 1: Mål baseline (uge 1-2)</h3>
+    <ol>
+      <li><strong>Tel 100 tilfældige varenumre.</strong> Registrer alle differencer og årsagskoder.</li>
+      <li><strong>Beregn din nuværende accuracy.</strong> Det er dit udgangspunkt.</li>
+      <li><strong>Identificer de 10 varenumre med størst absolut difference.</strong> De fortæller dig hvor problemet sidder.</li>
+    </ol>
+
+    <h3>Fase 2: Fjern de største årsager (uge 3-8)</h3>
+    <ol>
+      <li><strong>Implementer scan-bekræftelse ved modtagelse.</strong> Ingen vare på lager uden scanning.</li>
+      <li><strong>Integrer returflow.</strong> Returer opdaterer systemet inden de fysisk lægges på plads.</li>
+      <li><strong>Indfør årsagskoder på alle justeringer.</strong> Ingen fri-tekst justeringer.</li>
+    </ol>
+
+    <h3>Fase 3: Vedligehold med cycle counting (løbende)</h3>
+    <ol>
+      <li><strong>Start daglig cycle counting.</strong> 20-30 varenumre om dagen.</li>
+      <li><strong>Analyser årsagskoder ugentligt.</strong> Hvilken fejltype dominerer denne uge?</li>
+      <li><strong>Mål accuracy månedligt.</strong> Sammenlign med foregående måned.</li>
+    </ol>
+    <p>De fleste operationer ser en forbedring fra 90% til 95-96% inden for 8 uger, og 97-99% inden for 6 måneder, hvis alle tre faser gennemføres.</p>
+
+    <h2>Hvornår skal du handle? 7 trigger-points der kræver handling nu</h2>
+    <p>Lagernøjagtighed forværres gradvist. De fleste opdager det for sent. Her er de konkrete signaler der betyder: <strong>gør noget nu, ikke næste kvartal.</strong></p>
+
+    <h3>1. Du bruger over 2 timer/dag på manuelle korrektioner</h3>
+    <p>Hvis en medarbejder bruger mere end 25% af sin tid på at rette systemfejl, er problemet ikke medarbejderen. Det er processen. Beregn timeprisen: 2 timer × 350 kr. × 220 arbejdsdage = 154.000 kr./år. Det er prisen for at ignorere problemet.</p>
+    <p><strong>Handling:</strong> Start cycle counting i dag. Identificer de 10 varenumre med flest korrektioner og find årsagen inden for 1 uge.</p>
+
+    <h3>2. Din accuracy er under 92% i to måneder i træk</h3>
+    <p>Under 92% betyder at mere end 1 ud af 12 varenumre er forkert. Det er ikke en midlertidig afvigelse. Det er et strukturelt problem der forværres hver måned du venter.</p>
+    <p><strong>Handling:</strong> Mål baseline nu. Tæl 100 tilfældige varenumre. Registrer årsagskoder. Implementer scan-bekræftelse ved modtagelse inden for 2 uger.</p>
+
+    <h3>3. Du har stockouts på varer systemet viser som "på lager"</h3>
+    <p>Kunden bestiller. Systemet bekræfter. Plukkeren finder ingenting. Du opdager det først når ordren skal pakkes. Sker det mere end 2 gange om ugen, mister du 8+ ordrer om måneden. Ved gennemsnitlig ordreværdi på 1.200 kr. er det 115.200 kr. tabt omsætning om året.</p>
+    <p><strong>Handling:</strong> Integrer returflow direkte i systemet. Ingen vare må røre lagerhylden uden at systemet opdateres først.</p>
+
+    <h3>4. Du overbestiller "for en sikkerheds skyld"</h3>
+    <p>Når du ikke stoler på systemdata, kompenserer du med ekstra beholdning. 8% ekstra sikkerhedsbeholdning på et lager til 3 mio. kr. koster 19.200 kr. årligt i kapitalomkostninger + lagerplads. Det er symptombehandling af et accuracy-problem.</p>
+    <p><strong>Handling:</strong> Beregn din faktiske sikkerhedsbeholdning. Sammenlign med hvad den burde være ved 99% accuracy. Forskellen er din årlige cost of inaction.</p>
+
+    <h3>5. Fejlpluk-raten er over 2%</h3>
+    <p>Mere end 2 fejl per 100 ordrer indikerer at plukkerne ikke kan stole på lokationsdata. De plukker fra hukommelse eller gætter. Ved 200 ordrer/dag og 850 kr. i returhåndtering per fejl: 4 fejl/dag × 220 dage = 748.000 kr./år.</p>
+    <p><strong>Handling:</strong> Kræv scanning af både lokation og varenummer ved pluk. Ingen undtagelser. Implementer det i morgen.</p>
+
+    <h3>6. Den årlige lageropgørelse viser over 5% afvigelse</h3>
+    <p>Hvis den årlige optælling afslører at systemet er 5%+ forkert, har problemet eksisteret i måneder. Du har opereret på forkerte forudsætninger hele året. Genbestilling, forecasting og kundeløfter har været baseret på forkerte tal.</p>
+    <p><strong>Handling:</strong> Skift fra årlig optælling til daglig cycle counting. Start i morgen med 20 varenumre/dag. Opdager fejl inden for dage, ikke måneder.</p>
+
+    <h3>7. Du ansætter ekstra folk for at "holde styr på lageret"</h3>
+    <p>Når løsningen på lagerproblemer er en ekstra medarbejder til at tælle, rette og tjekke, er det ikke et kapacitetsproblem. Det er et systemproblem. En ekstra medarbejder til 320.000 kr./år + overhead = 400.000 kr. Det er dyrt plaster på et billigt sår.</p>
+    <p><strong>Handling:</strong> Før du ansætter: mål accuracy, implementer cycle counting og fjern de 3 største årsager til fejl. Vurder om du stadig har brug for ekstra kapacitet efter 8 uger.</p>
+
+    <h2>Hvornår giver SmartPack mening for lagernøjagtighed?</h2>
+    <p>SmartPack automatiserer de processer der typisk skaber accuracy-fejl: modtagelse, pluk, returnering og justering. Men det er ikke den rigtige løsning for alle.</p>
+
+    <h3>SmartPack giver mening når:</h3>
+    <ul>
+      <li>Du håndterer <strong>100+ ordrer/dag</strong> og manuelle processer ikke kan følge med</li>
+      <li>Du har <strong>500+ unikke varenumre</strong> og cycle counting er svært at styre i Excel</li>
+      <li>Din accuracy er under <strong>95%</strong> og du ikke kan identificere årsagerne</li>
+      <li>Du bruger <strong>mere end 2 timer/dag</strong> på manuelle korrektioner og lageroptælling</li>
+    </ul>
+
+    <h3>SmartPack giver IKKE mening når:</h3>
+    <ul>
+      <li>Du har <strong>under 30 ordrer/dag</strong> og et simpelt Excel-system er tilstrækkeligt</li>
+      <li>Du har <strong>under 200 varenumre</strong> og kan tælle hele lageret på 2 timer</li>
+      <li>Din accuracy allerede er <strong>over 98%</strong> med eksisterende processer</li>
+    </ul>
+
+    <h3>Alternativet koster:</h3>
+    <table>
+      <thead><tr><th>Løsning</th><th>Opsætning</th><th>Løbende cost</th><th>Opnåelig accuracy</th></tr></thead>
+      <tbody>
+        <tr><td>Manuel optælling + Excel (under 30 ordrer/dag)</td><td>0 kr.</td><td>5-10 timer/uge</td><td>88-93%</td></tr>
+        <tr><td>Stregkodescanner + Excel-log (30-100 ordrer/dag)</td><td>5.000-15.000 kr.</td><td>3-5 timer/uge</td><td>93-97%</td></tr>
+        <tr><td>WMS som SmartPack (100+ ordrer/dag)</td><td>25.000-50.000 kr.</td><td>0-1 timer/uge (automatisk)</td><td>98-99,5%</td></tr>
+      </tbody>
+    </table>
+    <p>Beslutningen er enkel: beregn hvad 1% forbedring i accuracy er værd for dig i reduceret sikkerhedsbeholdning og færre fejlordrer. Hvis det er over 25.000 kr. om året, tjener et WMS sig ind på under 12 måneder.</p>
+  </div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
+<div class="bottom-cta"><p>Vil du have styr på din lagernøjagtighed med automatisk cycle counting og real-time korrektioner?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./hvad-er-fifo" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er FIFO lagerstyring?</span></a>
+    <a href="./hvad-er-lagerstyring" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerstyring?</span></a>
+    <a href="./hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er en god lagernøjagtighed?</summary><div class="faq-item__body"><p>Best practice er 99% eller derover. Operationer med 97-99% anses for solide. Under 95% er problematisk og medfører typisk overbestilling, fejlpluk og høje manuelle korrektionsomkostninger. De fleste umodne lageroperationer starter på 85-92% og forbedrer sig til 97%+ inden for 6-12 måneder med systematisk cycle counting og procesfix.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen på cycle counting og årlig lageroptælling?</summary><div class="faq-item__body"><p>Cycle counting er løbende optælling af en lille andel af lageret hver dag, mens den årlige optælling tæller alt på en gang. Cycle counting opdager fejl inden for dage og identificerer årsagerne. Den årlige optælling opdager fejl op til 12 måneder efter de opstod og giver ingen information om årsag. Cycle counting er den eneste metode der faktisk forbedrer accuracy over tid.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg forbedre lagernøjagtighed uden et WMS?</summary><div class="faq-item__body"><p>Ja, op til et niveau. Med scan-bekræftelse ved modtagelse, integreret returflow og daglig cycle counting i Excel kan de fleste operationer nå 95-97% accuracy uden WMS. Over 100 ordrer om dagen begynder manuelle processer at fejle konsekvent, og et WMS er nødvendigt for at nå og holde 99%+.</p></div></details>
+    <details class="faq-item"><summary>Hvad er de mest almindelige årsager til lav lagernøjagtighed?</summary><div class="faq-item__body"><p>De fem hyppigste årsager er: modtagelsesfejl (forkert antal registreret), returvarer der ikke opdaterer systemet, fejlpluk fra forkert lokation, manuelle justeringer uden årsagskode og forkert variantstruktur. Modtagelsesfejl og returvarer tegner sig alene for 60-70% af accuracy-tab i de fleste operationer.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en god lagernojagtighed?","acceptedAnswer":{"@type":"Answer","text":"Best practice er 99% eller derover. Operationer med 97-99% anses for solide. Under 95% er problematisk og medforer typisk overbestilling, fejlpluk og hoje manuelle korrektionsomkostninger."}},{"@type":"Question","name":"Hvad er forskellen pa cycle counting og arlig lageroptaelling?","acceptedAnswer":{"@type":"Answer","text":"Cycle counting er lobende optaelling af en lille andel af lageret hver dag, mens den arlige optaelling taeller alt pa en gang. Cycle counting opdager fejl inden for dage og identificerer arsagerne."}},{"@type":"Question","name":"Kan jeg forbedre lagernojagtighed uden et WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja, op til et niveau. Med scan-bekraeftelse ved modtagelse, integreret returflow og daglig cycle counting i Excel kan de fleste operationer na 95-97% accuracy uden WMS."}},{"@type":"Question","name":"Hvad er de mest almindelige arsager til lav lagernojagtighed?","acceptedAnswer":{"@type":"Answer","text":"De fem hyppigste arsager er: modtagelsesfejl, returvarer der ikke opdaterer systemet, fejlpluk fra forkert lokation, manuelle justeringer uden arsagskode og forkert variantstruktur."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er lagernojagtighed (inventory accuracy)? Sadan maler og forbedrer du den","dateModified":"2025-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
