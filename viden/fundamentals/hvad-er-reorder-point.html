@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hvad er reorder point? Beregning og eksempler | SmartPack Viden</title>
+  <meta name="description" content="Reorder point fortæller dig præcist hvornår du skal bestille hjem. Lær formlen, se konkrete eksempler og undgå tomme hylder og overfyldt lager.">
+  <link rel="canonical" href="https://smartpack.dk/viden/fundamentals/hvad-er-reorder-point">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=4">
+  <script src="../../js/theme-toggle.js"></script>
+
+<!-- ================================================================
+     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
+     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT pÅ TRACKING BLOK
+================================================================ -->
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Fundamentals</a><span>&rsaquo;</span><span>Hvad er reorder point?</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Fundamentals</span>
+    <h1 class="article-title">Hvad er reorder point? Beregning og eksempler</h1>
+    <div class="article-meta"><time datetime="2025-05-09">9. maj 2025</time><span>~6 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+    <p>Reorder point er det lagerniveau hvor du skal afgive en ny ordre til din leverandør, hvis du vil undgå tomme hylder. Ikke det niveau du har lyst til at bestille ved. Ikke et skøn. Et præcist tal baseret på dit forbrug og din leveringstid.</p>
+    <p>De fleste virksomheder bestiller varer når de husker det, når lageret ser tyndt ud, eller når en sælger ringer. Det koster dem stockouts i travle perioder og overfyldt lager i rolige perioder. Reorder point fjerner gætteriet og erstatter det med et system der virker, også når du holder ferie.</p>
+
+    <h2>Hvad er reorder point, og hvorfor er det vigtigt?</h2>
+    <p>Reorder point (ROP) er det antal enheder på lager, der udløser en ny indkøbsordre. Når dit lagerniveau falder til eller under dette tal, bestiller du hjem. Det sikrer at nye varer ankommer, inden du løber tør.</p>
+    <p>Uden et defineret reorder point sker en af to ting: du bestiller for tidligt og binder kapital i overskydende lager, eller du bestiller for sent og mister salg. Begge dele koster penge, men stockouts er typisk dyrere fordi du mister ikke bare én ordre, men potentielt en kunde.</p>
+    <p>Reorder point er ikke det samme som sikkerhedslager. Sikkerhedslageret er bufferen mod usikkerhed og indgår som en del af beregningen. Reorder point er den grænse, der aktiverer din ordre.</p>
+
+    <p class="inline-cta">&#x1F449; Se hvordan SmartPack beregner og opdaterer reorder points automatisk for alle dine varenumre. <a href="../../kontakt">Book en gratis demo</a></p>
+
+    <h2>Formlen for reorder point, trin for trin</h2>
+    <p>Grundformlen er simpel:</p>
+    <p><strong>Reorder Point = (Gennemsnitligt dagligt forbrug × Leveringstid i dage) + Sikkerhedslager</strong></p>
+    <p>Tre input. Alle tre skal være præcise, ellers holder resultatet ikke.</p>
+
+    <h3>Trin 1: Beregn gennemsnitligt dagligt forbrug</h3>
+    <p>Tag dit totale salg for en periode og divider med antallet af dage. Vælg en periode der er repræsentativ for din normale drift, typisk de seneste 90 dage. Medtag ikke ekstraordinære perioder som Black Friday medmindre du planlægger specifikt for dem.</p>
+    <p>Eksempel: Du sælger 2.700 enheder på 90 dage. Dagligt forbrug = 2.700 / 90 = <strong>30 enheder/dag</strong>.</p>
+
+    <h3>Trin 2: Fastlæg leveringstiden</h3>
+    <p>Leveringstiden er antallet af dage fra du afgiver en ordre til varerne er på lager og klar til pluk. Inkluder alle faser: ordrebehandling hos leverandøren, transport, modtagelse og eventuel kvalitetskontrol.</p>
+    <p>Brug den faktiske gennemsnitlige leveringstid fra de seneste 6-12 måneder, ikke den leverandøren lover dig. Disse to tal er sjældent identiske.</p>
+    <p>Eksempel: Din leverandør leverer typisk på 7 dage, men modtagelse og kontrol tager yderligere 1 dag. Reel leveringstid = <strong>8 dage</strong>.</p>
+
+    <h3>Trin 3: Beregn sikkerhedslageret</h3>
+    <p>Sikkerhedslageret er bufferen mod forsinkelser og pludselige salgsstigninger. Den simpleste metode er at gange maksimalt dagligt forbrug minus gennemsnitligt forbrug med maksimal leveringstid:</p>
+    <p><strong>Sikkerhedslager = (Maks. dagligt forbrug - Gns. dagligt forbrug) × Maks. leveringstid</strong></p>
+    <p>Eksempel: Maksimalt dagligt forbrug er 45 enheder. Gennemsnit er 30 enheder. Maksimal leveringstid er 12 dage.</p>
+    <p>Sikkerhedslager = (45 - 30) × 12 = <strong>180 enheder</strong>.</p>
+
+    <h3>Trin 4: Sæt det hele sammen</h3>
+    <p>ROP = (30 × 8) + 180 = 240 + 180 = <strong>420 enheder</strong>.</p>
+    <p>Når dit lager falder til 420 enheder, afgiver du en ny ordre. Med gennemsnitligt forbrug på 30 enheder/dag er der 14 dages salg tilbage, heraf 8 dages faktisk leveringstid og 6 dages buffer i sikkerhedslageret.</p>
+
+    <h2>Konkrete eksempler på reorder point</h2>
+    <p>Teorien er enkel. Her er tre virkelige scenarier med forskellige udfordringer:</p>
+
+    <h3>Eksempel 1: Stabil vare, forudsigelig leverandør</h3>
+    <table>
+      <thead><tr><th>Parameter</th><th>Værdi</th></tr></thead>
+      <tbody>
+        <tr><td>Gennemsnitligt dagligt forbrug</td><td>50 enheder</td></tr>
+        <tr><td>Leveringstid</td><td>5 dage</td></tr>
+        <tr><td>Maks. dagligt forbrug</td><td>65 enheder</td></tr>
+        <tr><td>Maks. leveringstid</td><td>7 dage</td></tr>
+        <tr><td>Sikkerhedslager</td><td>(65 - 50) × 7 = 105 enheder</td></tr>
+        <tr><td><strong>Reorder Point</strong></td><td><strong>(50 × 5) + 105 = 355 enheder</strong></td></tr>
+      </tbody>
+    </table>
+    <p>Denne vare er nem at styre. Lav variation i både forbrug og leveringstid betyder et relativt lavt sikkerhedslager i forhold til omsætningen.</p>
+
+    <h3>Eksempel 2: Sæsonvare med uforudsigelig efterspørgsel</h3>
+    <p>Du sælger solcreme. I marts er dagligt forbrug 20 enheder. I juni er det 120 enheder. Beregn separate reorder points for høj- og lavsæson og skift over i god tid. Brug maj-salgsdata som grundlag for sommersæsonens ROP, ikke helårsgennemsnittet.</p>
+    <p>Hvis du bruger årsgennemsnittet (f.eks. 55 enheder/dag) til at beregne dit sommer-ROP, undervurderer du behovet med mere end 50% og løber tør i uge 2 af august.</p>
+
+    <h3>Eksempel 3: Import fra Asien med lang og variabel leveringstid</h3>
+    <table>
+      <thead><tr><th>Parameter</th><th>Værdi</th></tr></thead>
+      <tbody>
+        <tr><td>Gennemsnitligt dagligt forbrug</td><td>80 enheder</td></tr>
+        <tr><td>Gennemsnitlig leveringstid</td><td>35 dage (søfragt)</td></tr>
+        <tr><td>Maks. dagligt forbrug</td><td>110 enheder</td></tr>
+        <tr><td>Maks. leveringstid</td><td>52 dage (forsinkelser ved havn)</td></tr>
+        <tr><td>Sikkerhedslager</td><td>(110 - 80) × 52 = 1.560 enheder</td></tr>
+        <tr><td><strong>Reorder Point</strong></td><td><strong>(80 × 35) + 1.560 = 4.360 enheder</strong></td></tr>
+      </tbody>
+    </table>
+    <p>Bemærk størrelsen på sikkerhedslageret relativt til forbrug gange leveringstid. Lang og variabel leveringstid straffes hårdt i beregningen. Det er korrekt: du binder mere kapital, men alternativet er at løbe tør i 17 dage mens containeren venter ved havnen.</p>
+
+    <h2>Sikkerhedslageret, den del de fleste glemmer</h2>
+    <p>Mange virksomheder beregner reorder point uden at inkludere sikkerhedslager. De multiplicerer blot dagligt forbrug med leveringstid og sætter det som deres grænse. Det fungerer perfekt i en verden uden forsinkelser og uden variation i efterspørgsel, det vil sige aldrig.</p>
+    <p>Konsekvensen er forudsigelig: de rammer grænsen præcist, leverandøren er 3 dage forsinket, og de løber tør to dage før varerne ankommer. 120 tabte ordrer. En utilfreds storkunde. Hastefragt til dobbeltpris.</p>
+    <p>Sikkerhedslageret beregnes ud fra variation, ikke ud fra gennemsnit. Jo større udsving i forbrug og leveringstid, jo større buffer du har brug for. Det er ikke spild, det er forsikring mod den virkelige verdens uforudsigelighed.</p>
+
+    <h3>Simpel tommelfingerregel for sikkerhedslager</h3>
+    <ul>
+      <li><strong>Stabil vare, pålidelig leverandør:</strong> 5-7 dages ekstra forbrug som buffer</li>
+      <li><strong>Variabel efterspørgsel eller leverandørforsinkelser op til 3 dage:</strong> 10-14 dages buffer</li>
+      <li><strong>Sæsonvare eller import med forsinkelser op til 2 uger:</strong> 21-30 dages buffer</li>
+      <li><strong>Enkelt leverandørkilde, ingen substitut:</strong> Minimum 30 dages buffer uanset variation</li>
+    </ul>
+    <p>Disse tal er startpunkter. Juster baseret på hvad en stockout faktisk koster dig per dag i tabt omsætning og i kundeskade.</p>
+
+    <h2>Hvornår skal du genberegne dit reorder point?</h2>
+    <p>Et reorder point er ikke et tal du beregner én gang og glemmer. Det skal opdateres når forudsætningerne ændrer sig. I praksis betyder det mindst kvartalsvis gennemgang og øjeblikkeligt ved følgende hændelser:</p>
+    <ul>
+      <li><strong>Leverandørskift:</strong> Ny leverandør har anden leveringstid og pålidelighed. Genberegn baseret på faktiske data, ikke leverandørens løfte.</li>
+      <li><strong>Produktlancering eller kampagne:</strong> Forventet salgsstigning ændrer det daglige forbrug markant. Beregn kampagne-ROP separat og aktiver det 2 leveringstider før kampagnestart.</li>
+      <li><strong>Sæsonskifte:</strong> Solcreme i maj er ikke det samme som solcreme i november. Hold separate ROP-profiler for høj- og lavsæson.</li>
+      <li><strong>Vækst i ordreantal:</strong> Dobler du omsætningen på 12 måneder, er dit daglige forbrug fordoblet. Et ROP beregnet på gammelt data vil fejle systematisk.</li>
+      <li><strong>Leverandørforsinkelser:</strong> Hvis din leverandør har haft tre forsinkelser på seks måneder, er din faktiske maks. leveringstid højere end du troede. Opdater tallet.</li>
+    </ul>
+    <p>En simpel månedlig tjekliste: sammenlign faktisk forbrug med det forbrug du brugte i ROP-beregningen. Afviger det med mere end 15%, genberegn. Det tager 10 minutter per varenummer.</p>
+
+    <h2>Hvad koster det at have forkert reorder point?</h2>
+    <p>Et forkert reorder point rammer dig på to måder: for lavt giver stockouts, for højt giver overlagring. Begge koster penge, men stockouts er typisk det dobbelte i samlet impact.</p>
+    <table>
+      <thead><tr><th>Fejltype</th><th>Årsag</th><th>Typisk konsekvens</th><th>Estimeret cost</th></tr></thead>
+      <tbody>
+        <tr><td>ROP for lavt, stockout</td><td>Undervurderet forbrug eller leveringstid</td><td>Tabte ordrer, hastefragt, kundetab</td><td>800-3.500 kr. per hændelse</td></tr>
+        <tr><td>ROP for højt, overstok</td><td>Overvurderet forbrug eller sikkerhedslager</td><td>Bundet kapital, lagerplads, spild</td><td>8-15% af vareværdien per år</td></tr>
+        <tr><td>ROP ikke opdateret, sæson</td><td>Bruger helårssnit i sæsontoppen</td><td>Stockout i kampagneuge</td><td>2-5x normal stockout-cost</td></tr>
+        <tr><td>Intet ROP, manuel bestilling</td><td>Bestiller på mavefornemmelse</td><td>Uforudsigelig lagerniveau, reaktiv drift</td><td>Svær at opgøre, estimeret 3-7% ekstra lagercost</td></tr>
+      </tbody>
+    </table>
+    <p>For en virksomhed med 8 mio. kr. i omsætning og 40% vareforbrug koster uoptimerede reorder points typisk 80.000-200.000 kr. om året i kombineret stockout-tab og overlagring. Det er ikke usandsynlige estimater, det er hvad vi ser i praksis hos virksomheder der aldrig har sat systemet op korrekt.</p>
+
+    <h2>Hvornår giver SmartPack mening for reorder point?</h2>
+    <p>Manuel beregning af reorder point fungerer fint med under 50 unikke varenumre og stabile leverandørforhold. Excel-ark, kvartalsvis opdatering, én ansvarlig person. Det virker.</p>
+    <p>Det holder op med at virke, når du rammer én eller flere af disse grænser:</p>
+    <ul>
+      <li>Du har <strong>100+ varenumre</strong> med forskellig sæsonalitet og leverandørprofil</li>
+      <li>Du oplever <strong>stockouts</strong> på A-varer trods bevidst lagerplanlægning</li>
+      <li>Du bruger <strong>mere end 3 timer om ugen</strong> på at vurdere hvornår du skal bestille</li>
+      <li>Din <strong>leverandørmix er kompleks</strong> med import fra flere lande og varierende leveringstider</li>
+      <li>Du har <strong>sæsonudsving over 2x</strong> på centrale varenumre</li>
+    </ul>
+    <p>SmartPack beregner og opdaterer reorder points løbende baseret på faktisk salgsdata og registrerede leveringstider. Ingen manuel opdatering. Ingen forældet data. Systemet advarer dig, inden du rammer grænsen, ikke når du allerede er løbet tør.</p>
+  </div>
+  <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
+<div class="bottom-cta"><p>Vil du have reorder points til at køre automatisk for alle dine varenumre?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./hvad-er-fifo" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er FIFO lagerstyring?</span></a>
+    <a href="./hvad-er-sikkerhedslager" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er sikkerhedslager?</span></a>
+    <a href="./hvad-er-lagerstyring" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagerstyring?</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er forskellen på reorder point og sikkerhedslager?</summary><div class="faq-item__body"><p>Reorder point er den grænse der udløser en ny ordre. Sikkerhedslager er en buffer mod forsinkelser og efterspørgselsudsving og indgår som en del af reorder point-beregningen. Sikkerhedslageret er det minimum du aldrig vil gå under under normale omstændigheder.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg beregne reorder point i Excel?</summary><div class="faq-item__body"><p>Ja. Formlen er simpel: (Gns. dagligt forbrug × Leveringstid i dage) + Sikkerhedslager. Med under 50 varenumre og stabile leverandørforhold fungerer Excel fint. Udfordringen er at holde data opdateret, særligt hvis forbrug eller leveringstider ændrer sig løbende.</p></div></details>
+    <details class="faq-item"><summary>Hvad gør jeg, hvis min leveringstid varierer meget?</summary><div class="faq-item__body"><p>Brug den maksimale leveringstid fra de seneste 12 måneder, ikke gennemsnittet, når du beregner sikkerhedslageret. For varer med kritisk enkeltleverandørkilde bør du overveje en ekstra buffer svarende til minimum 2 ugers forbrug oven i den normale beregning.</p></div></details>
+    <details class="faq-item"><summary>Hvor ofte skal reorder point opdateres?</summary><div class="faq-item__body"><p>Minimum én gang i kvartalet for stabile varer. Øjeblikkeligt ved leverandørskift, kampagneplanlægning og sæsonskifte. Hvis dit salg vokser mere end 20% på et år, bør du opdatere månedligt, da forbrugstallene der indgår i beregningen hurtigt forældes.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen paa reorder point og sikkerhedslager?","acceptedAnswer":{"@type":"Answer","text":"Reorder point er den graense der udloser en ny ordre. Sikkerhedslager er en buffer mod forsinkelser og eftersporgselsudsving og indgaar som en del af reorder point-beregningen."}},{"@type":"Question","name":"Kan jeg beregne reorder point i Excel?","acceptedAnswer":{"@type":"Answer","text":"Ja. Formlen er: (Gns. dagligt forbrug gange Leveringstid i dage) plus Sikkerhedslager. Med under 50 varenumre og stabile leverandorforhold fungerer Excel fint."}},{"@type":"Question","name":"Hvad goer jeg, hvis min leveringstid varierer meget?","acceptedAnswer":{"@type":"Answer","text":"Brug den maksimale leveringstid fra de seneste 12 maaneder, ikke gennemsnittet, naar du beregner sikkerhedslageret. For varer med kritisk enkeltleverandorkilde bor du overveje en ekstra buffer."}},{"@type":"Question","name":"Hvor ofte skal reorder point opdateres?","acceptedAnswer":{"@type":"Answer","text":"Minimum en gang i kvartalet for stabile varer. Ojeblikkeligt ved leverandorskift, kampagneplanlægning og saesonskifte."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Hvad er reorder point? Beregning og eksempler","dateModified":"2025-05-09","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+</body></html>
