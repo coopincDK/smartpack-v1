@@ -1,0 +1,354 @@
+﻿SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\1763626666836.jpg	292 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\1768986103488.jpg	347 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\batteribyen web.png	377.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Bertram.jpeg	278.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\bg-header-1.png	678.1 KB	->	30 KB	saved 648.2 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\ebog.png	965.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\futurewarehuse.png	2578.9 KB	->	306.1 KB	saved 2272.8 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Jacob Johansen.jpeg	423.7 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\kap10_fragtaftale_forhandling.png	6343 KB	->	609.1 KB	saved 5733.9 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\kap6_tavlemoede_i_praksis.png	6290.7 KB	->	604.6 KB	saved 5686.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\lagerhotel-1.jpg	374.9 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Lasse bonde.jpeg	368.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Mads Nissen.jpeg	513.9 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Martin Mortesen.jpeg	327.8 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Michael b Jensen.png	517.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Michael Rieland.jpeg	398.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Mikkel Kvist Foldager.jpeg	358 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\muramura-hero.png	2298.8 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\muramura-lager-1.jpg	374.9 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\muramura-lager-7.jpg	292 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\muramura-lager-9.jpg	347 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Niklas olesen.jpeg	313 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\organized warehouse shelves labeled bins.jpg	477 KB	->	105.8 KB	saved 371.2 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Rasmus Soelberg.png	254.7 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\SmartPack-WMS-PDA.png	1696 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\suspekt logo.png	200.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\TEAM BILLEDE.jpeg	259 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\team Geekd.png	201.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\warehouse barcode scanner picking close up.jpg	339.2 KB	->	56.8 KB	saved 282.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\warehouse dashboard simple clean.jpg	316.9 KB	->	81.1 KB	saved 235.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\warehouse packing station label printer.jpg	278.3 KB	->	66 KB	saved 212.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\warehouse worker handheld scanner natural.jpg	409.2 KB	->	63.5 KB	saved 345.8 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\Warehouse-Warrior-CTA.png	484.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\SmartPack-App-Icons\SmartPack\ERP\Dynamics-365-Business-Central.png	255 KB	->	41.1 KB	saved 213.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\108845.jpg	434.5 KB	->	92.9 KB	saved 341.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\11153.jpg	274.3 KB	->	64.3 KB	saved 210.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\122981.jpg	455.5 KB	->	97.2 KB	saved 358.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\12595.jpg	428.8 KB	->	96.6 KB	saved 332.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\129605.jpg	404.6 KB	->	84.4 KB	saved 320.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\130924.jpg	450 KB	->	104.9 KB	saved 345 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\132083.jpg	466.7 KB	->	117.5 KB	saved 349.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\1463.jpg	667.7 KB	->	107.3 KB	saved 560.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\1486.jpg	570.2 KB	->	96.8 KB	saved 473.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\1510.jpg	346.4 KB	->	58.1 KB	saved 288.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\1515.jpg	211.5 KB	->	53.1 KB	saved 158.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\1520.jpg	223.2 KB	->	47.3 KB	saved 175.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\15334.jpg	401.9 KB	->	124 KB	saved 277.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\1569.jpg	461.7 KB	->	73.8 KB	saved 387.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\16619.jpg	578.7 KB	->	93.3 KB	saved 485.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\18180.jpg	459.9 KB	->	86.2 KB	saved 373.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\19218.jpg	272.6 KB	->	57.9 KB	saved 214.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2148470997.jpg	422.2 KB	->	48.2 KB	saved 373.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2148475607.jpg	488.4 KB	->	54.3 KB	saved 434 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2148577090.jpg	451.3 KB	->	64.5 KB	saved 386.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2148886875.jpg	689.1 KB	->	123.9 KB	saved 565.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2148886877.jpg	608.8 KB	->	91 KB	saved 517.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2148890040.jpg	574.1 KB	->	74.5 KB	saved 499.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2148902535.jpg	586.4 KB	->	88.5 KB	saved 497.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2149262074.jpg	497 KB	->	72 KB	saved 425 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2151294598.jpg	780.8 KB	->	194.2 KB	saved 586.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2152001536.jpg	535.1 KB	->	76.3 KB	saved 458.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2177.jpg	401.8 KB	->	76.9 KB	saved 324.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\24052.jpg	353.5 KB	->	70.5 KB	saved 282.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2446.jpg	359.5 KB	->	58.4 KB	saved 301.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\245324.jpg	316.8 KB	->	77.5 KB	saved 239.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2505.jpg	343.7 KB	->	56.9 KB	saved 286.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\2538.jpg	280 KB	->	66.3 KB	saved 213.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\25461.jpg	304.1 KB	->	51.4 KB	saved 252.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\25615.jpg	366.6 KB	->	93.9 KB	saved 272.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\314507.jpg	216.5 KB	->	54 KB	saved 162.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\3927543.jpg	395.7 KB	->	83.8 KB	saved 311.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\3pl-outsourcing-lager.jpg	242 KB	->	234.1 KB	saved 7.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\4577.jpg	226 KB	->	51.9 KB	saved 174.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\4657.jpg	312.4 KB	->	74.8 KB	saved 237.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\4711.jpg	232.7 KB	->	52.5 KB	saved 180.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\4721.jpg	202.6 KB	->	46.9 KB	saved 155.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\50201.jpg	314 KB	->	72.4 KB	saved 241.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\56900.jpg	378.7 KB	->	79 KB	saved 299.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\59561.jpg	294.6 KB	->	70.5 KB	saved 224.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\60268.jpg	276.4 KB	->	69.2 KB	saved 207.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\62144.jpg	374 KB	->	76.8 KB	saved 297.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\62425.jpg	448.4 KB	->	90 KB	saved 358.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\6585.jpg	379.8 KB	->	90.3 KB	saved 289.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\67812.jpg	270.2 KB	->	60.4 KB	saved 209.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\68974.jpg	345.7 KB	->	71.2 KB	saved 274.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\69950.jpg	278.7 KB	->	52.7 KB	saved 226 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\73641.jpg	402.7 KB	->	82 KB	saved 320.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\7395.jpg	325.3 KB	->	79.5 KB	saved 245.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\74.jpg	705.9 KB	->	99.5 KB	saved 606.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\76924.jpg	314.7 KB	->	66.7 KB	saved 248 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\77641.jpg	290.2 KB	->	53.6 KB	saved 236.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\83349.jpg	565.8 KB	->	139.5 KB	saved 426.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\84294.jpg	392.8 KB	->	89.1 KB	saved 303.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\90447.jpg	488.2 KB	->	112 KB	saved 376.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\abc-analyse-lager.jpg	395.6 KB	->	382.3 KB	saved 13.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\adr-regler-farligt-gods-lastbil-inspektion.jpg	307.9 KB	->	294.8 KB	saved 13.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\aerosoler-fragt-spraydaaser-emballage.jpg	240.9 KB	->	233.4 KB	saved 7.5 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\afrunding_gaa_en_tur.png	5487.4 KB	->	423.1 KB	saved 5064.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\automatisering-roi-robotter.jpg	380.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig-emballage-webshop.jpg	226.7 KB	->	219.7 KB	saved 7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig-fragtloesning-valg.jpg	262 KB	->	255 KB	saved 7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtigt-fyldmateriale.jpg	264.9 KB	->	256.8 KB	saved 8.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtigt-lager-2026.jpg	389 KB	->	374.1 KB	saved 14.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\batch-picking-lager.jpg	289.7 KB	->	279.4 KB	saved 10.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\beholdningsomkostninger-overstock.jpg	343.5 KB	->	331.9 KB	saved 11.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\bemanding-lager-personale.jpg	325.5 KB	->	318.1 KB	saved 7.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\break-even-lager-vaekst.jpg	269.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\break-even-lager-v├ªkst.jpg	418.8 KB	->	403.4 KB	saved 15.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\budget-lager-planlaegning.jpg	237.6 KB	->	230.2 KB	saved 7.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ce-maerkning-produkt-kontrol-lager.jpg	369.6 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ChatGPT Image 12. apr. 2026, 06.37.53.png	891.2 KB	->	92.4 KB	saved 798.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\cirkulaer-oekonomi-lager.jpg	308.2 KB	->	299.1 KB	saved 9.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\co2-aftryk-lager.jpg	391.1 KB	->	377.7 KB	saved 13.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\co2-rapportering-fragt.jpg	284.9 KB	->	273.3 KB	saved 11.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\cost-per-ordre-pakkestation.jpg	292.6 KB	->	281.3 KB	saved 11.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\cross-docking-lager.jpg	283.3 KB	->	274.2 KB	saved 9.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\daarlig-onboarding-ny-medarbejder.jpg	258.9 KB	->	249.7 KB	saved 9.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\data-er-rod-system-fejl.jpg	266.4 KB	->	256.3 KB	saved 10.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\dead-stock-dodt-lager.jpg	352.9 KB	->	339.9 KB	saved 13 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\demand-planning-lager.jpg	295.4 KB	->	283.7 KB	saved 11.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\dropshipping-lager.jpg	276.1 KB	->	267.2 KB	saved 8.9 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\emballage-lovgivning-genbrug-kasser-lager.jpg	376.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\emballageomkostninger-materialer.jpg	275.7 KB	->	265.3 KB	saved 10.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\emballageomkostninger-optimering.jpg	223.8 KB	->	217.9 KB	saved 6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\empty-storage-space-filled-with-stacks-merchandise-goods.jpg	5951.7 KB	->	1343.1 KB	saved 4608.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\energiforbrug-lager.jpg	387.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\esg-rapportering-lager.jpg	358.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\eu-batteriforordning-batteri-lager.jpg	386.8 KB	->	372 KB	saved 14.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\excel-bryder-sammen-kaos.jpg	293.8 KB	->	281.4 KB	saved 12.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\farligt-gods-webshop-pakning.jpg	351.4 KB	->	336.3 KB	saved 15.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fefo-udloebsdato-lager.jpg	327.4 KB	->	315.1 KB	saved 12.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fejlomkostninger-forkert-ordre.jpg	253.5 KB	->	245.2 KB	saved 8.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fifo-foerst-ind-foerst-ud.jpg	226.1 KB	->	218.8 KB	saved 7.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fill-rate-optimering.jpg	274.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\for-mange-systemer-overvaeldet.jpg	297.9 KB	->	287.6 KB	saved 10.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\for-meget-tid-paa-pluk.jpg	317.7 KB	->	305.5 KB	saved 12.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\forkert-vareplacering-lang-vej.jpg	320.5 KB	->	308.3 KB	saved 12.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\forord_det_usynlige_lager.png	6507.5 KB	->	655.3 KB	saved 5852.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\forord_en_ting_ad_gangen.png	4717.3 KB	->	196.1 KB	saved 4521.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\forord_hvem_er_guiden_til.png	5948.4 KB	->	536.3 KB	saved 5412.2 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\forord_vaekstrejse_tidslinje.png	2980.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\forsendelsesomkostninger-fragt.jpg	393.7 KB	->	386.5 KB	saved 7.3 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\forside_hero_image.png	6192 KB	->	612.8 KB	saved 5579.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fragt-dokumenter-papirer-pakke.jpg	383 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fragtforhandling-kontrakt.jpg	308.4 KB	->	297.5 KB	saved 10.9 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\futurewarehuse.png	2578.9 KB	->	306.1 KB	saved 2272.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\gdpr-lager-data-sikkerhed-computer.jpg	322.3 KB	->	311.4 KB	saved 10.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\groen-fragt-greenwashing.jpg	221.9 KB	->	214.8 KB	saved 7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_1631.JPEG	740.3 KB	->	412.9 KB	saved 327.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_6240.JPEG	1057.1 KB	->	576.7 KB	saved 480.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_6251.JPEG	892.2 KB	->	478.7 KB	saved 413.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_7064.JPG	5551.3 KB	->	3681 KB	saved 1870.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_8084.JPEG	883.2 KB	->	477.1 KB	saved 406.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_8085-scaled0.jpg	635.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_9361.JPEG	854.7 KB	->	472 KB	saved 382.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_9380.JPEG	800.3 KB	->	424.2 KB	saved 376.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_9643.JPEG	1079.3 KB	->	576.9 KB	saved 502.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\IMG_9647.JPEG	702.7 KB	->	436.9 KB	saved 265.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ineffektive-plukruter-lang-vej.jpg	352.7 KB	->	340.6 KB	saved 12.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-backorder-tidslinje.jpg	229.9 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-black-friday-6-uger.jpg	340.9 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-fulfillment-flow.jpg	316.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-inventory-accuracy-kaede.jpg	289.7 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-lagerflow-trin.jpg	225.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-reorder-point-tidslinje.jpg	304.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-saeson-aarshjul.jpg	305.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\infografik-safety-stock-formel.jpg	356.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\integrationer-fejler-system-fejl.jpg	281.6 KB	->	270.5 KB	saved 11.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\intrastat-eu-handel-lager-eksport.jpg	361 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ioss-eu-pakker-under-150eur.jpg	201.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kan-ikke-haandtere-peaks.jpg	390.8 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap10_emballage_sender_luft.png	4952.9 KB	->	329.5 KB	saved 4623.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap10_fragtaftale_forhandling.png	6343 KB	->	609.1 KB	saved 5733.9 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap10_fragt_checkout.png	4515 KB	->	281.9 KB	saved 4233.1 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap11_emballage_til_brandet.png	4811.7 KB	->	294.6 KB	saved 4517.1 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap11_emballage_tre_niveauer.png	5194.5 KB	->	317.5 KB	saved 4877 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap11_standardstoerrelse_emballage.png	4237.5 KB	->	249 KB	saved 3988.5 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap11_standardstorrelse_emballage.jpg	340.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap11_unboxing_oplevelse.png	5207.4 KB	->	385.7 KB	saved 4821.7 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap12_lager_klar_til_black_friday.png	6319.2 KB	->	692.5 KB	saved 5626.7 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap13_3pl_som_genvej.png	5019.2 KB	->	353.7 KB	saved 4665.5 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap13_exit_plan.png	4450.2 KB	->	347.2 KB	saved 4103 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap13_sla_tjekliste.png	4421.1 KB	->	362.2 KB	saved 4058.9 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap13_wms_overgang.png	5185 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap1_abc_analyse_infografik.png	4285.1 KB	->	215.9 KB	saved 4069.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap1_a_zone_i_praksis.png	5920.3 KB	->	521.7 KB	saved 5398.6 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap1_lager_foer_efter_abc.png	5651.9 KB	->	538.6 KB	saved 5113.3 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap2_ergonomisk_pakkebord.png	5795.8 KB	->	463.3 KB	saved 5332.5 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap2_gulvmarkering_zoner.png	6054.2 KB	->	579.9 KB	saved 5474.3 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap2_lagerflow_3_zoner.png	5152.6 KB	->	416.8 KB	saved 4735.8 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap3_batch_pluk_vs_enkelt.png	4869.6 KB	->	362.7 KB	saved 4506.9 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap3_plukkeliste_papir_vs_digital.png	4679.2 KB	->	332.9 KB	saved 4346.3 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap3_plukkevogn_med_kasser.png	6132.2 KB	->	582.1 KB	saved 5550 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap3_single_vs_multi_line.png	4611.6 KB	->	349.2 KB	saved 4262.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap4_god_vs_daarlig_sku.png	4993.7 KB	->	411.9 KB	saved 4581.8 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap4_produktlabel_med_sku.png	5914.8 KB	->	499.5 KB	saved 5415.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap4_sku_som_oversaetter.png	4658.4 KB	->	291 KB	saved 4367.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap4_varekort_eksempel.png	4393.5 KB	->	256.1 KB	saved 4137.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap5_fysisk_min_max_markering.png	5990.1 KB	->	460.9 KB	saved 5529.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap5_min_max_graf.png	4522.7 KB	->	306 KB	saved 4216.7 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap5_overstock_vs_udsolgt.png	4625.9 KB	->	278.3 KB	saved 4347.5 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap6_fejllog_eksempel.png	4343.4 KB	->	342.5 KB	saved 4000.9 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap6_omkostning_pakkefejl.png	5406 KB	->	297.9 KB	saved 5108.1 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap6_pakkebord_med_tjekliste.png	5768.5 KB	->	462 KB	saved 5306.6 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap6_pakkefejl_100_ordrer.png	5439.3 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap6_pakkefejl_trustpilot.png	4866.7 KB	->	334.3 KB	saved 4532.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap6_tavlemoede_i_praksis.png	6290.7 KB	->	604.6 KB	saved 5686.1 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap7_returlog_eksempel.png	4385.6 KB	->	409.2 KB	saved 3976.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap7_returproces_flow.png	4291.2 KB	->	235.8 KB	saved 4055.4 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap7_returzone_paa_lager.png	7216.1 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap8_kasse_til_defekte_varer.png	5753.3 KB	->	477.2 KB	saved 5276.1 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap8_lager_audit_tjekliste.png	4557 KB	->	209.8 KB	saved 4347.2 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap8_rullende_lageroptaelling.png	4613.5 KB	->	312.7 KB	saved 4300.8 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap8_tre_typer_svind.png	4371 KB	->	313.7 KB	saved 4057.4 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap9_bundet_kapital_c_varer.png	5012.5 KB	->	350.5 KB	saved 4662 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap9_gennemloebstid_forklaret.png	4104.8 KB	->	242.7 KB	saved 3862.1 KB
+COMPRESSED	PNG->JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\kap9_noegletal_dashboard.png	4503.9 KB	->	277.2 KB	saved 4226.7 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\klimavenlig-logistik-praksis.jpg	370 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\koelekaede-frost-varer-lager.jpg	407.8 KB	->	393.6 KB	saved 14.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lager-kan-ikke-foelge-med.jpg	365.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lager-vokser-ukontrolleret.jpg	368.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lagerhusleje-spildt-plads.jpg	262.2 KB	->	257.2 KB	saved 5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lageromkostninger-pr-sku.jpg	400.2 KB	->	383.7 KB	saved 16.5 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lageromkostninger-samlet-overblik.jpg	356.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lageromsaetningshastighed-kontrast.jpg	376.1 KB	->	361.4 KB	saved 14.7 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lageromsoetningshastighed-kontrast.jpg	380.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lagerstyring-overblik.jpg	296 KB	->	285.7 KB	saved 10.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lead-time-leveringstid.jpg	335.1 KB	->	325.2 KB	saved 9.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\lucid-registrering-emballage-tyskland.jpg	331.4 KB	->	320.7 KB	saved 10.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\manglende-overblik-forvirret.jpg	268.3 KB	->	259.1 KB	saved 9.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\mistede-varer-soeger.jpg	368.5 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\muramura-hero.png	2298.8 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\muramura-lager-9.jpg	347 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\organized warehouse shelves labeled bins.jpg	477 KB	->	105.8 KB	saved 371.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\overfyldt-lager-ingen-plads.jpg	302.7 KB	->	294.1 KB	saved 8.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\papir-vs-plastik-emballage.jpg	280.3 KB	->	270.1 KB	saved 10.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\parfume-alkohol-fragt-sikkerhed.jpg	329.4 KB	->	315.9 KB	saved 13.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\personaleomkostninger-manuelt-arbejde.jpg	309.1 KB	->	297.7 KB	saved 11.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\pluk-og-pak-station.jpg	307.2 KB	->	294.9 KB	saved 12.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\plukkefejl-omkostning-fejl.jpg	315.5 KB	->	305.4 KB	saved 10.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\returomkostninger-retur-pakker.jpg	357.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\returproces-kaos-rod.jpg	393 KB	->	379.2 KB	saved 13.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\roi-wms-foer-efter.jpg	358.9 KB	->	347.2 KB	saved 11.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\shopify-ikke-nok-overvaeldet.jpg	276.3 KB	->	269.8 KB	saved 6.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\skjulte-lageromkostninger-spild.jpg	346.7 KB	->	336.6 KB	saved 10.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\sku-varenummer-lager.jpg	358.1 KB	->	344.5 KB	saved 13.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\slotting-hyldeplacering.jpg	406.7 KB	->	391.2 KB	saved 15.5 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\SmartPack-WMS-PDA.png	1696 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\smiling-looking-friendly-showing-number-two-scaled.jpg	251.7 KB	->	249.7 KB	saved 2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\tarifkoder-hs-cn-taric-lager.jpg	265.5 KB	->	256.5 KB	saved 9.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\TEAM BILLEDE.jpeg	259 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\temperaturkontrol-lager-overvaagning.jpg	363.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\two-factory-worker-celebrate-success-together-factory-warehouse-scaled.jpg	240.8 KB	->	238.6 KB	saved 2.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\uk-brexit-eksport-pakker.jpg	369.7 KB	->	357.7 KB	saved 12 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\warehouse barcode scanner picking close up.jpg	339.2 KB	->	56.8 KB	saved 282.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\warehouse dashboard simple clean.jpg	316.9 KB	->	81.1 KB	saved 235.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\warehouse packing station label printer.jpg	278.3 KB	->	66 KB	saved 212.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\warehouse worker handheld scanner natural.jpg	409.2 KB	->	63.5 KB	saved 345.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\warehouse-layout-lagerindretning.jpg	416.2 KB	->	401.7 KB	saved 14.5 KB
+SKIP_ALPHA	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\Warehouse-Warrior-CTA.png	484.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\weee-elektronik-affald-lager.jpg	360.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\wms-lagerstyringssystem.jpg	250.7 KB	->	242.2 KB	saved 8.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\zone-picking-zonepluk.jpg	348.7 KB	->	336.7 KB	saved 12.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\01-pakkebord-setup.jpg	338.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\02-plukruter-lagerplan.jpg	363.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\03-to-pakkestationer.jpg	375.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\04-cycle-counting-scanning.jpg	365.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\05-abc-zoner-lagerplan.jpg	389.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\06-fejllevering-forkert-vare.jpg	356.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\07-fragtaftale-kontrakt.jpg	372.6 KB	->	367.3 KB	saved 5.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\08-lageromkostning-lommeregner.jpg	345.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\09-dead-stock-stoevede-varer.jpg	388.5 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\10-onboarding-to-personer.jpg	394.5 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\11-vagtplan-kalender.jpg	389.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\12-voice-picking-headset.jpg	384 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\13-ean-stregkode-label.jpg	363.7 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\14-shopify-wms-integration.jpg	377.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\16-flytning-storre-lager.jpg	372.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\17-3pl-kontrakt-paragraf.jpg	370.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\18-eget-lager-vs-lagerhotel.jpg	371 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\19-black-friday-pakker-travlhed.jpg	378.5 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\artikel_billeder\20-vaekst-graf-lager.jpg	312 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig_web\baeredygtig-emballage-webshop.jpg	226.7 KB	->	219.7 KB	saved 7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig_web\baeredygtig-fragtloesning-valg.jpg	262 KB	->	255 KB	saved 7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig_web\baeredygtig-returhaandtering.jpg	350.1 KB	->	337.2 KB	saved 12.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig_web\baeredygtigt-fyldmateriale.jpg	264.9 KB	->	256.8 KB	saved 8.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig_web\baeredygtigt-lager-2026.jpg	389 KB	->	374.1 KB	saved 14.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\baeredygtig_web\cirkulaer-oekonomi-lager.jpg	308.2 KB	->	299.1 KB	saved 9.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\01-fri-fragt-lommeregner.jpg	372.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\02-leveringstid-forventning.jpg	260.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\03-pakkeshop-pakke.jpg	346.7 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\04-webshop-udsolgt-badge.jpg	381.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\05-kunde-pakker-retur.jpg	363.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\06-retur-kasser-stablet.jpg	360.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\07-returneret-vare-gul-lap.jpg	353.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\08-webshop-2-tilbage-lager.jpg	331.3 KB	->	329.7 KB	saved 1.7 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\09-produktbillede-maaltabel.jpg	264.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\10-bundle-produkt.jpg	319.1 KB	->	318 KB	saved 1.1 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\11-preorder-produktside.jpg	377.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\12-black-friday-nedtaelling.jpg	368.8 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\13-udsalg-skilt-lagerhylde.jpg	384.7 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\14-julevarer-lager-august.jpg	399.6 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\15-kaelder-lager-vs-professionelt.jpg	382 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\16-dropshipping-vs-eget-lager.jpg	367.5 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\18-kundeservice-lagermedarbejder.jpg	397.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\19-trustpilot-stjerner-beskadiget-pakke.jpg	368.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\ecom_artikel_billeder\20-laast-lager-webshop-laptop.jpg	393.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\3pl-outsourcing-lager.jpg	242 KB	->	234.1 KB	saved 7.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\abc-analyse-lager.jpg	395.6 KB	->	382.3 KB	saved 13.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\batch-picking-lager.jpg	289.7 KB	->	279.4 KB	saved 10.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\cross-docking-lager.jpg	283.3 KB	->	274.2 KB	saved 9.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\cycle-counting-lager.jpg	235.9 KB	->	227.8 KB	saved 8.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\demand-planning-lager.jpg	295.4 KB	->	283.7 KB	saved 11.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\dropshipping-lager.jpg	276.1 KB	->	267.2 KB	saved 8.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\fefo-udloebsdato-lager.jpg	327.4 KB	->	315.1 KB	saved 12.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\fifo-foerst-ind-foerst-ud.jpg	226.1 KB	->	218.8 KB	saved 7.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\fulfillment-pluk-pak.jpg	406.8 KB	->	393 KB	saved 13.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\inventory-accuracy-lagernoejagtighed.jpg	208.7 KB	->	203.7 KB	saved 5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\lagerflow-optimeret-rute.jpg	320.5 KB	->	309.7 KB	saved 10.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\lagerstyring-overblik.jpg	296 KB	->	285.7 KB	saved 10.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\lead-time-leveringstid.jpg	335.1 KB	->	325.2 KB	saved 9.9 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\pluk-og-pak-station.jpg	307.2 KB	->	294.9 KB	saved 12.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\reorder-point-genbestilling.jpg	354.7 KB	->	341.3 KB	saved 13.4 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\safety-stock-sikkerhedslager.jpg	288.5 KB	->	278.3 KB	saved 10.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\sku-varenummer-lager.jpg	358.1 KB	->	344.5 KB	saved 13.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\slotting-hyldeplacering.jpg	406.7 KB	->	391.2 KB	saved 15.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\warehouse-layout-lagerindretning.jpg	416.2 KB	->	401.7 KB	saved 14.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\wms-lagerstyringssystem.jpg	250.7 KB	->	242.2 KB	saved 8.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\fundamentals_web\zone-picking-zonepluk.jpg	348.7 KB	->	336.7 KB	saved 12.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\afhaengighed-noglemedarbejder.jpg	325 KB	->	312.9 KB	saved 12 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\ansaetter-for-hurtigt-kaos.jpg	368.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\daarlig-onboarding-ny-medarbejder.jpg	258.9 KB	->	249.7 KB	saved 9.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\data-er-rod-system-fejl.jpg	266.4 KB	->	256.3 KB	saved 10.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\excel-bryder-sammen-kaos.jpg	293.8 KB	->	281.4 KB	saved 12.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\for-mange-hasteordrer-stress.jpg	350.6 KB	->	337.8 KB	saved 12.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\for-mange-pakkefejl.jpg	324.9 KB	->	311.9 KB	saved 13 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\for-mange-systemer-overvaeldet.jpg	297.9 KB	->	287.6 KB	saved 10.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\for-meget-tid-paa-pluk.jpg	317.7 KB	->	305.5 KB	saved 12.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\forkert-vareplacering-lang-vej.jpg	320.5 KB	->	308.3 KB	saved 12.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\ineffektive-plukruter-lang-vej.jpg	352.7 KB	->	340.6 KB	saved 12.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\ingen-standarder-rodet-lager.jpg	385.3 KB	->	371.2 KB	saved 14.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\integrationer-fejler-system-fejl.jpg	281.6 KB	->	270.5 KB	saved 11.2 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\kan-ikke-haandtere-peaks.jpg	390.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\lager-indrettet-forkert-kaos.jpg	352.5 KB	->	341.1 KB	saved 11.4 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\lager-kan-ikke-foelge-med.jpg	365.3 KB
+SKIP_NOTSMALLER	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\lager-vokser-ukontrolleret.jpg	368.3 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\manglende-overblik-forvirret.jpg	268.3 KB	->	259.1 KB	saved 9.2 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\manglende-overblik-omkostninger.jpg	262.4 KB	->	252.8 KB	saved 9.7 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\manglende-processer-inkonsistens.jpg	317.7 KB	->	306.6 KB	saved 11.1 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\mistede-varer-soeger.jpg	249.6 KB	->	239.5 KB	saved 10 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\overfyldt-lager-ingen-plads.jpg	302.7 KB	->	294.1 KB	saved 8.6 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\returproces-kaos-rod.jpg	393 KB	->	379.2 KB	saved 13.8 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\shopify-ikke-nok-overvaeldet.jpg	276.3 KB	->	269.8 KB	saved 6.5 KB
+COMPRESSED	JPEG	C:\Users\MartinMortensen\Desktop\SmartPack_v1\assets\viden\problemer_web\udsolgte-bestsellere-tom-hylde.jpg	307.7 KB	->	296.9 KB	saved 10.8 KB
