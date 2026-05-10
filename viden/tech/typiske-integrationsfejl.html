@@ -148,17 +148,17 @@
 
     <h3>1. Webhook leveres ikke/ignoreres</h3>
     <p><strong>Hvad sker:</strong> Shopify sender webhook-event, men dit WMS er utilgængeligt i det oejeblik (deployment, server-restart, netvaerksfejl). Eventet forsvinder.</p>
-    <p><strong>Årsag:</strong> Manglende retry-håndtering, timeout under deployment, ingen koe som buffer.</p>
+    <p><strong>årsag:</strong> Manglende retry-håndtering, timeout under deployment, ingen koe som buffer.</p>
     <p><strong>Losning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra koen, ikke direkte fra webhook.</p>
 
     <h3>2. BC client secret udloeber</h3>
     <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
-    <p><strong>Årsag:</strong> Business Central bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 år. Det er den hyppigste årsag til BC-integrationsnedbrud. De fleste virksomheder sætter det op og glemmer det.</p>
+    <p><strong>årsag:</strong> Business Central bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 år. Det er den hyppigste årsag til BC-integrationsnedbrud. De fleste virksomheder sætter det op og glemmer det.</p>
     <p><strong>Losning:</strong> Saet kalenderreminder 30 og 60 dage foer udloeb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. maaned.</p>
 
     <h3>3. Leveringsmetode-mapping fejler</h3>
     <p><strong>Hvad sker:</strong> Kunden vælger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
-    <p><strong>Årsag:</strong> Shopify bruger interne nogler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
+    <p><strong>årsag:</strong> Shopify bruger interne nogler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
     <p><strong>Losning:</strong> Gennemgå og test alle leveringsmetode-mappings i staging-miljo inden go-live.</p>
 
     <h3>4. Delvis synkronisering af ordrelinjer</h3>
@@ -171,7 +171,7 @@
 
     <h3>6. e-conomic Grant Token er trukket tilbage</h3>
     <p><strong>Hvad sker:</strong> e-conomic-integration holder op med at virke. Ordrer hentes ikke, fakturakladder oprettes ikke.</p>
-    <p><strong>Årsag:</strong> e-conomic bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratraadt medarbejder), invalideres tokenet.</p>
+    <p><strong>årsag:</strong> e-conomic bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratraadt medarbejder), invalideres tokenet.</p>
     <p><strong>Losning:</strong> Brug en servicebruger/systembruger i e-conomic til integration, ikke en personlig bruger.</p>
 
     <h2>Det opdager de fleste for sent</h2>
