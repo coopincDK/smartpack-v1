@@ -1,75 +1,336 @@
-# SmartPack
+﻿# SmartPack
 
-> SmartPack er et dansk warehouse management system (WMS) til webshops og 3PL.
+> SmartPack er Danmarks mest eCommerce-orienterede WMS. Bygget af folk der har drevet lager siden 2005. Til webshops og 3PL-lagre der sender 400-50.000 pakker om maeneden.
 
-SmartPack hjaelper lagre med faerre plukkefejl, hurtigere pakning, bedre ruteoptimering og integrationer til webshop, fragt og ERP. Bygget af e-koebmaend, til e-koebmaend.
+## Om SmartPack
+
+SmartPack er et cloudbaseret lagerstyringssystem der giver webshops og fulfillment-centre fuld kontrol over lager, pluk, pakning og forsendelse. Systemet er bygget paa operationel erfaring siden 2005 og bruger A* pathfinding og TSM-algoritmer til ruteoptimering.
+
+Centrale egenskaber:
+- Scan-verificeret pluk og pakning (fejlrate falder typisk 80-95% fra dag 1)
+- Batch picking: pluk op til 30 ordrer ad gangen med en tur
+- A* pathfinding og TSM: optimal plukkeroute beregnes automatisk
+- Realtids lagerstatus: antal paa hyld, reserveret, tilgaengelig
+- 3PL multi-tenant: eet system, mange kunder, adskilt data og fakturering
+- Onboarding paa en uge for simple integrationer
+- Ny medarbejder mestrer en opgave paa max 15 minutter
 
 ## Fakta
-- Grundlagt: 2021
-- Lokation: Torvegade 3, 8963 Auning, Danmark
+
+- Virksomhed: SmartPack ApS
 - CVR: 42007617
+- Adresse: Torvegade 3, 8963 Auning, Danmark
 - Telefon: +45 88 20 20 19
-- Email (salg): bundlinjeboost@smartpack.dk
-- Email (support): support@smartpack.dk
+- Email salg: bundlinjeboost@smartpack.dk
+- Email support: support@smartpack.dk
 - Website: https://smartpack.dk
-
-## Kernesider
-- [Forside](https://smartpack.dk/) - Dansk WMS til webshops og 3PL
-- [Funktioner](https://smartpack.dk/funktioner.html) - Alt hvad dit lager har brug for
-- [Integrationer](https://smartpack.dk/integrationer.html) - 40+ forbindelser til webshop, fragt og ERP
-- [Priser](https://smartpack.dk/priser.html) - Fast pris per ordre, ingen binding
-- [Cases](https://smartpack.dk/cases.html) - Se hvad vores kunder opnaer
-- [FAQ](https://smartpack.dk/faq.html) - Svar paa de hyppigste spoergsmaal
-- [Om os](https://smartpack.dk/om-os.html) - Historien bag SmartPack
-- [Kontakt](https://smartpack.dk/kontakt.html) - Book demo eller ring
-- [Teamet](https://smartpack.dk/medarbejdere.html) - Moed folkene bag systemet
-
-## Hvad SmartPack goer
-- Lagerstyring og orderhaandtering for webshops
-- Pluk, pak og afsendelse med scan-verificering
-- Integration med 40+ platforme (Shopify, WooCommerce, DanDomain, e-conomic, Uniconta m.fl.)
-- Fragtintegration (PostNord, GLS, DAO, Bring, DHL, Instabox m.fl.)
-- 3PL multi-tenant styring
-- Ruteoptimering med A* pathfinding og batchpluk
-- Realtids lagerstatus og live dashboard
+- Grundlagt: 2021 (lagererfaring siden 2005)
+- 100% founder-owned, ingen investorer
+- Medforfatter: Dansk Erhverv E-logistik Guide 2026
 
 ## Priser
-- Prissaetning: per ordre, ikke per maaned eller bruger
-- Ingen opstartsfee
-- Ingen binding
-- Ingen skjulte pakker
-- Pris per ordre afhaenger af volumen - typisk 0,45-1,25 kr. per ordre
-- Demo: gratis, 45 minutter, ingen forpligtelse
-- Kontakt for eksakt tilbud: bundlinjeboost@smartpack.dk
 
-## Integrationer (udvalg)
-- Webshops: Shopify, WooCommerce, DanDomain, Magento, Lightspeed, PrestaShop
-- Fragt DK: GLS, PostNord, DAO, Bring, Instabox, Coolrunner
-- Fragt internationalt: DHL, UPS, FedEx
-- ERP/regnskab: e-conomic, Uniconta, Dinero, Billy
-- Andet: aabent REST API til egne integrationer
+- Model: betaling per pakkelabel genereret
+- Typisk interval: 0,45-1,25 kr. per ordre
+- Ingen opstartsfee, ingen binding, ingen skjulte pakker
+- Gratis 45-minutters demo
+- Se priser: https://smartpack.dk/priser
 
-## Brugsscenarier
-- WMS til danske webshops (B2C)
-- WMS til 3PL / fulfillment-centre
-- Skifte fra gammelt WMS eller manuel haandtering
-- Skalering fra 400+ ordrer/maaned
+## Integrationer (40+)
 
-## Beviser og tillid
-- 500+ aktive webshops og 3PL'er bruger SmartPack
-- Medforfatter paa Dansk Erhvervs E-logistik Guide 2026
-- Medlem af Dansk Erhverv
-- E-handel og lagererfaring siden 2005
-- 15+ dokumenterede kundesucceser (cases)
-- SOS support 24/7 (tast 9)
-- 100% founder-owned - ingen investorer
+Webshop: Shopify, WooCommerce, DanDomain, Magento, Lightspeed, PrestaShop, Shoporama, Sumoshop
+Fragt DK: GLS, PostNord, DAO, Bring, Instabox, Coolrunner, Budbee, Burd, Danske Fragtmaend
+Fragt internationalt: DHL Parcel, DHL Express, DHL Freight, UPS, FedEx, Airmee
+ERP/regnskab: e-conomic, Uniconta, Dinero, Billy, Business Central
+Teknisk: REST API, webhooks, EDI
+Se alle: https://smartpack.dk/integrationer
 
-## Hvad SmartPack IKKE er
-- Ikke et konsulentprojekt - du ejer og driver systemet selv
-- Ikke per-bruger eller per-maaned betaling
-- Ikke et generisk ERP med lagermodul
-- Ikke bygget til folk der aldrig har staaet paa et lager
+## Kernesider
 
-## Konkurrenter / sammenligning
-SmartPack konkurrerer med: Logtrade, Ongoing WMS, ByggMax WMS, og generiske ERP-lagermoduler.
-SmartPack er typisk billigere, hurtigere at implementere (dag 1), og bygget specifikt til danske e-commerce lagre.
+- Forside: https://smartpack.dk/
+- Funktioner: https://smartpack.dk/funktioner
+- Integrationer: https://smartpack.dk/integrationer
+- Priser: https://smartpack.dk/priser
+- ROI-beregner: https://smartpack.dk/simpel-roi
+- Cases: https://smartpack.dk/cases
+- 3PL: https://smartpack.dk/3pl
+- FAQ: https://smartpack.dk/faq
+- Kontakt: https://smartpack.dk/kontakt
+
+## Vidensleksikon (gratis)
+
+Danmarks mest komplette open-access vidensunivers om lager, logistik og eCommerce-drift.
+Oversigt: https://smartpack.dk/viden/
+
+### Fundamentals (23 artikler)
+- ABC-analyse af sortiment: find dine vigtigste varer : https://smartpack.dk/viden/fundamentals/abc-analyse-sortiment
+- Hvad er 3PL, og hvornår mister du kontrollen? : https://smartpack.dk/viden/fundamentals/hvad-er-3pl
+- Hvad er batch picking? : https://smartpack.dk/viden/fundamentals/hvad-er-batch-picking
+- Hvad er cross-docking? Når varer ikke skal på lager : https://smartpack.dk/viden/fundamentals/hvad-er-cross-docking
+- Hvad er cycle counting? Løbende lagerrevision forklaret : https://smartpack.dk/viden/fundamentals/hvad-er-cycle-counting
+- Hvad er demand planning, og hvordan undgår du at købe for meget eller for lidt? : https://smartpack.dk/viden/fundamentals/hvad-er-demand-planning
+- Hvad er dropshipping? Fordele, ulemper og hvornår det giver mening : https://smartpack.dk/viden/fundamentals/hvad-er-dropshipping
+- Hvad er FEFO lagerstyring, og når du ikke bruger det, hvad koster det? : https://smartpack.dk/viden/fundamentals/hvad-er-fefo
+- Hvad er FIFO? Forklaring og eksempler fra lageret : https://smartpack.dk/viden/fundamentals/hvad-er-fifo
+- Hvad er fulfillment? Fra ordre til pakke forklaret : https://smartpack.dk/viden/fundamentals/hvad-er-fulfillment
+- Hvad er lagernøjagtighed (inventory accuracy)? Sådan måler og forbedrer du den : https://smartpack.dk/viden/fundamentals/hvad-er-inventory-accuracy
+- Hvad er lagerflow? Sådan bevæger varer sig på lageret : https://smartpack.dk/viden/fundamentals/hvad-er-lagerflow
+- Hvad er lagerstyring? Den komplette forklaring : https://smartpack.dk/viden/fundamentals/hvad-er-lagerstyring
+- Hvad er lead time? Leveringstid på lageret forklaret : https://smartpack.dk/viden/fundamentals/hvad-er-lead-time
+- Hvad er pluk og pak? Sådan fungerer det på lageret : https://smartpack.dk/viden/fundamentals/hvad-er-pluk-og-pak
+- Hvad er reorder point? Beregning og eksempler : https://smartpack.dk/viden/fundamentals/hvad-er-reorder-point
+- Hvad er safety stock? Sikkerhedslager forklaret : https://smartpack.dk/viden/fundamentals/hvad-er-safety-stock
+- Hvad er sikkerhedslager? Formel, beregning og hvornår det er for meget : https://smartpack.dk/viden/fundamentals/hvad-er-sikkerhedslager
+- Hvad er en SKU? Forklaring og eksempler fra lageret : https://smartpack.dk/viden/fundamentals/hvad-er-sku
+- Warehouse layout: sådan indretter du et lager der virker : https://smartpack.dk/viden/fundamentals/hvad-er-warehouse-layout
+- Hvad er et WMS? Den komplette introduktion : https://smartpack.dk/viden/fundamentals/hvad-er-wms
+- Hvad er zone picking? SÅdan opdeler du lageret for fÆrre fejl : https://smartpack.dk/viden/fundamentals/hvad-er-zone-picking
+- Slotting: hvad koster det ikke at placere varer rigtigt? : https://smartpack.dk/viden/fundamentals/slotting-hvad-koster-det-ikke
+
+### Problemer paa lageret (27 artikler)
+- Afhængighed af nøglemedarbejdere: hvad sker der når den vigtige person siger op? : https://smartpack.dk/viden/problemer/afhngighed-af-noeglemedarbejdere
+- De 7 skjulte lagerfejl der dr&#230;ber din bundlinje : https://smartpack.dk/viden/problemer/de-7-skjulte-lagerfejl
+- Dårlig onboarding af lagermedarbejdere: hvorfor det koster dig mere end du tror : https://smartpack.dk/viden/problemer/daarlig-onboarding-af-medarbejdere
+- Når Excel ikke er nok: tegn på at du har vokset fra dit lagersystem : https://smartpack.dk/viden/problemer/excel-bryder-sammen
+- Forkert vareplacering, n&#229;r dine bestsellere ligger for langt v&#230;k : https://smartpack.dk/viden/problemer/forkert-vareplacering
+- For mange hasteordrer, n&#229;r manglende prioritering koster LTV : https://smartpack.dk/viden/problemer/for-mange-hasteordrer
+- Manglende processer, n&#229;r hver medarbejder g&#248;r det p&#229; sin m&#229;de : https://smartpack.dk/viden/problemer/for-mange-manuelle-processer
+- For mange systemer, n&#229;r teknologi skaber kaos i stedet for orden : https://smartpack.dk/viden/problemer/for-mange-systemer
+- Ingen standarder p&#229; lageret, n&#229;r hver dag er forskellig : https://smartpack.dk/viden/problemer/ingen-standarder
+- Integrationer fejler, n&#229;r systemer ikke taler sammen : https://smartpack.dk/viden/problemer/integrationer-fejler
+- Lageret er indrettet forkert: tegn, konsekvenser og løsninger : https://smartpack.dk/viden/problemer/lageret-er-indrettet-forkert
+- Lageret kan ikke følge med væksten: tegnene og hvad du gør : https://smartpack.dk/viden/problemer/lageret-kan-ikke-foelge-med-vaekst
+- Lageret vokser ukontrolleret, n&#229;r dead stock binder kapital : https://smartpack.dk/viden/problemer/lageret-vokser-ukontrolleret
+- Medarbejderne er ikke problemet, systemet er : https://smartpack.dk/viden/problemer/medarbejderne-er-ikke-problemet
+- Overfyldt lager, n&#229;r der ikke er plads til mere : https://smartpack.dk/viden/problemer/overfyldt-lager
+- Plukruter er ineffektive , og det koster dig timer dagligt : https://smartpack.dk/viden/problemer/plukruter-er-ineffektive
+- Når returprocessen er kaos: hvad det koster og hvordan du stopper det : https://smartpack.dk/viden/problemer/returproces-er-kaos
+- Shopify er ikke nok, hvorn&#229;r webshop-platformen ikke kan h&#229;ndtere lageret : https://smartpack.dk/viden/problemer/shopify-er-ikke-nok
+- Vi ans&#230;tter for hurtigt, n&#229;r flere folk ikke l&#248;ser problemet : https://smartpack.dk/viden/problemer/vi-ansætter-for-hurtigt
+- Vi bruger for meget tid på pluk: årsager, konsekvenser og hvad du gør : https://smartpack.dk/viden/problemer/vi-bruger-for-meget-tid-paa-pluk
+- Vi kan ikke h&#229;ndtere peaks , kapacitetsproblemer ved h&#248;j ordrevolumen : https://smartpack.dk/viden/problemer/vi-kan-ikke-haandtere-peaks
+- Vi kender ikke vores lageromkostninger , og det er dyrt : https://smartpack.dk/viden/problemer/vi-kender-ikke-vores-lageromkostninger
+- Vi laver for mange pakkefejl: årsager og løsninger : https://smartpack.dk/viden/problemer/vi-laver-for-mange-pakkefejl
+- Vi l&#248;ber t&#248;r for varer, n&#229;r bestsellere er udsolgt : https://smartpack.dk/viden/problemer/vi-loeber-toer-for-varer
+- Vi mangler overblik over lageret, n&#229;r du ikke ved hvad der sker : https://smartpack.dk/viden/problemer/vi-mangler-overblik-over-lageret
+- Vi mister varer , og ved ikke hvorfor : https://smartpack.dk/viden/problemer/vi-mister-varer
+- Vores data er rod, n&#229;r systemet ikke matcher virkeligheden : https://smartpack.dk/viden/problemer/vores-data-er-rod
+
+### Teknologi og systemer (35 artikler)
+- AI på lageret 2026: hvad virker, hvad er hype og hvad koster det : https://smartpack.dk/viden/tech/ai-paa-lageret-2026
+- API i lagerstyring , sådan henter og sender dit WMS data : https://smartpack.dk/viden/tech/api-i-lagerstyring
+- Batch picking teknologi: sdan plukker du 3x flere ordrer med samme mandskab : https://smartpack.dk/viden/tech/batch-picking-teknologi
+- Business Central integration med WMS , hvad du skal kende inden opsætning : https://smartpack.dk/viden/tech/business-central-integration
+- Cloud WMS , fordele, ulemper og hvornår det er det rigtige valg : https://smartpack.dk/viden/tech/cloud-wms-fordele
+- Dataflow i e-handel , fra ordre til forsendelse trin for trin : https://smartpack.dk/viden/tech/dataflow-i-ecommerce
+- e-conomic integration med WMS , ordrer, fakturaer og Grant Token : https://smartpack.dk/viden/tech/economic-integration
+- EDI-integrationer på lageret: hvad er det og hvornår er det nødvendigt? : https://smartpack.dk/viden/tech/edi-integrationer
+- Fragtintegrationer forklaret , GLS, PostNord, Bring og hvad der skiller dem : https://smartpack.dk/viden/tech/fragtintegrationer-forklaret
+- Fulfillment sync , fra plukket ordre til bekræftet forsendelse : https://smartpack.dk/viden/tech/fulfillment-sync
+- Herodesk + SmartPack: kundeservice der styrer lageret : https://smartpack.dk/viden/tech/herodesk-helpdesk-smartpack
+- Hvad er et WMS? Den komplette introduktion : https://smartpack.dk/viden/tech/hvad-er-wms
+- Integrationer forklaret: sdan taler dine systemer sammen : https://smartpack.dk/viden/tech/integrationer-forklaret
+- Lager API-integration: hvad det er, hvornår du har brug for det og hvad det koster : https://smartpack.dk/viden/tech/lager-api-integration
+- Lager-automatisering: teknologierne, priserne og hvornår de faktisk giver mening : https://smartpack.dk/viden/tech/lager-automatisering-teknologi
+- Valg af lagersoftware: de 7 kriterier der afgør om du vælger rigtigt : https://smartpack.dk/viden/tech/lager-software-valg
+- Mobile scanning og enheder: hvad skal du bruge og hvad koster det? : https://smartpack.dk/viden/tech/mobile-scanning-lager
+- Multi-channel lager: håndter salg fra webshop, marketplace og B2B i ét system : https://smartpack.dk/viden/tech/multi-channel-lager
+- Ordreandringer og annulleringer: hvad webshops hndterer forkert : https://smartpack.dk/viden/tech/ordreaendringer-annulleringer
+- Pick-by-light: lysets rolle i fejlfri pluk : https://smartpack.dk/viden/tech/pick-by-light
+- PIM vs. WMS: hvad er forskellen og hvornår har du brug for begge? : https://smartpack.dk/viden/tech/pim-vs-wms
+- Real-time beholdning: hvorfor forsinket lagerdata koster dig ordrer og penge : https://smartpack.dk/viden/tech/real-time-beholdning
+- RFID p lageret: hvornr giver det mening og hvad koster det? : https://smartpack.dk/viden/tech/rfid-paa-lager
+- Shopify integration med WMS: komplet opsætningsguide : https://smartpack.dk/viden/tech/shopify-integration
+- 10 vilde ting du kan bygge med SmartPack API : https://smartpack.dk/viden/tech/smartpack-api-muligheder
+- Stregkode-scanning p lageret: den billigste fejlreduktion du kan købe : https://smartpack.dk/viden/tech/stregkode-scanning-lager
+- Typiske integrationsfejl i lagerstyring: og hvordan du undgår dem : https://smartpack.dk/viden/tech/typiske-integrationsfejl
+- Voice picking: hvad det er, hvad det koster og hvornr det virker : https://smartpack.dk/viden/tech/voice-picking
+- Webhooks forklaret: realtidsnotifikationer til dit lagersystem : https://smartpack.dk/viden/tech/webhooks-forklaret
+- WMS og ERP integration: sådan får du de to systemer til at tale sammen : https://smartpack.dk/viden/tech/wms-erp-integration
+- WMS-integration med webshop: fundamentet for fejlfri ordrebehandling : https://smartpack.dk/viden/tech/wms-integration-webshop
+- WMS vs. ERP: hvad er forskellen, og hvornår skal du have begge? : https://smartpack.dk/viden/tech/wms-vs-erp
+- WMS vs. Excel: hvornår er et regneark ikke nok? : https://smartpack.dk/viden/tech/wms-vs-excel
+- WMS vs. Shopify: kan Shopify styre dit lager? : https://smartpack.dk/viden/tech/wms-vs-shopify
+- WooCommerce integration med WMS: opsætning og gotchas : https://smartpack.dk/viden/tech/woocommerce-integration
+
+### Lagerokonomi (23 artikler)
+- Hvad er beholdningsomkostninger? Det koster at have varer på lager : https://smartpack.dk/viden/okonomi/beholdningsomkostninger
+- Bemanding p lageret: sdan beregner du det rigtige antal medarbejdere : https://smartpack.dk/viden/okonomi/bemanding-lager
+- Break-even p lageret: hvornr dkker volumen dine faste omkostninger? : https://smartpack.dk/viden/okonomi/break-even-lager
+- Budget til lager: hvad skal du afstte og hvad glemmer de fleste? : https://smartpack.dk/viden/okonomi/budget-til-lager
+- Cost per ordre: det vigtigste lagertal du sandsynligvis ikke kender : https://smartpack.dk/viden/okonomi/cost-per-ordre
+- Dead stock: hvad koster det dig gr ved det : https://smartpack.dk/viden/okonomi/dead-stock-omkostninger
+- Emballageomkostninger -- hvad koster din emballage egentlig : https://smartpack.dk/viden/okonomi/emballagekostnader
+- Emballageomkostninger: sdan reducerer du dem uden at g p kompromis : https://smartpack.dk/viden/okonomi/emballageomkostninger
+- Fejlomkostninger: hvad koster en forkert ordre i virkeligheden? : https://smartpack.dk/viden/okonomi/fejlomkostninger
+- Forsendelsesomkostninger: din næststrste variabel lageromkostning : https://smartpack.dk/viden/okonomi/forsendelsesomkostninger
+- Fragtforhandling: Hvad du kan spare , og hvad du ikke vidste du betalte for : https://smartpack.dk/viden/okonomi/fragtforhandling
+- Lagerhusleje optimering: hvad betaler du for meget for og hvad du gør ved det : https://smartpack.dk/viden/okonomi/lagerhusleje-optimering
+- Lageromkostninger: sdan beregner du de reelle tal : https://smartpack.dk/viden/okonomi/lageromkostninger-beregning
+- Lageromkostninger pr. SKU: hvad koster det reelt at have en vare på lager? : https://smartpack.dk/viden/okonomi/lageromkostninger-pr-sku
+- Lageromsttningshastighed: hvad det er og hvad det koster dig ikke at kende den : https://smartpack.dk/viden/okonomi/lageromsoetningshastighed
+- Økonomi i lagerautomatisering: hvornår er det en god investering og hvornår er det ikke? : https://smartpack.dk/viden/okonomi/oekonomi-i-automatisering
+- Personaleomkostninger på lageret: hvad koster en lagermedarbejder reelt? : https://smartpack.dk/viden/okonomi/personaleomkostninger-lager
+- Hvad koster plukkefejl reelt? Regnestykket de fleste glemmer : https://smartpack.dk/viden/okonomi/plukkefejl-koster-penge
+- Returomkostninger : https://smartpack.dk/viden/okonomi/returomkostninger
+- ROI p WMS: hvornr tjener du investeringen hjem? : https://smartpack.dk/viden/okonomi/roi-paa-wms
+- Skjulte lageromkostninger: det der aldrig str i budgettet : https://smartpack.dk/viden/okonomi/skjulte-lageromkostninger
+- Hvor mange medarbejdere kan du spare med et WMS? : https://smartpack.dk/viden/okonomi/spare-medarbejdere-wms
+- Tidsforbrug p&#229; lager: hvor forsvinder timerne? : https://smartpack.dk/viden/okonomi/tidsforbrug-lager
+
+### Hardware og udstyr (24 artikler)
+- Anti-træthedsmatter på lager: hvad de gør, hvad de koster og hvornår de er det værd : https://smartpack.dk/viden/hardware/anti-fatigue-maatter
+- Arbejdshøjde pakkebord: hvad der er korrekt og hvad forkert højde koster dig : https://smartpack.dk/viden/hardware/arbejdshoejde-pakkebord
+- Ergonomi og fejlrate på lageret: sammenhængen der koster dig penge : https://smartpack.dk/viden/hardware/ergonomi-fejlrate
+- Ergonomi på lageret: hvad det koster ikke at prioritere det : https://smartpack.dk/viden/hardware/ergonomi-paa-lager
+- Fragtlabel-setup: printer, placering og det der går galt : https://smartpack.dk/viden/hardware/fragtlabel-setup
+- Fyldmateriale til pakning: hvad der virker, hvad der koster for meget og hvad der er overflødigt : https://smartpack.dk/viden/hardware/fyldmateriale-valg
+- Hardware vs. system: hvad giver mest effekt først? : https://smartpack.dk/viden/hardware/hardware-vs-system-effekt
+- Hvornår skal du investere i udstyr vs. software? : https://smartpack.dk/viden/hardware/investering-udstyr-vs-software
+- Manuel vs elektrisk palleløfter: hvornår skal du opgradere? : https://smartpack.dk/viden/hardware/manuel-vs-elektrisk-pallelofter
+- Overemballering og dens omkostning: hvad du betaler for luft : https://smartpack.dk/viden/hardware/overemballering-omkostning
+- De 10 mest oversete ting på et lager (der koster dig penge hver dag) : https://smartpack.dk/viden/hardware/oversete-ting-paa-lager
+- Pakkebordet er din flaskehals (du ved det bare ikke) : https://smartpack.dk/viden/hardware/pakkebord-flaskehalsen
+- Pakkestation setup: sådan indretter du et effektivt pakkebord : https://smartpack.dk/viden/hardware/pakkestation-setup
+- Plukkevognen bestemmer dit tempo: sådan vælger du rigtigt : https://smartpack.dk/viden/hardware/plukkevogn-bestemmer-dit-tempo
+- Printer-placering på pakkestation: de 8 sekunder der går tabt per pakke : https://smartpack.dk/viden/hardware/printer-placering-flow
+- Rullebaner på lager: hvornår de er pengene værd og hvornår de ikke er : https://smartpack.dk/viden/hardware/rullebaner-paa-lager
+- Single-order vs multi-order plukkevogn: hvornår skifter du? : https://smartpack.dk/viden/hardware/single-vs-multi-order-plukkevogn
+- Skridt per plukker som KPI: hvad det måler og hvad det ikke måler : https://smartpack.dk/viden/hardware/skridt-per-plukker
+- Små forbedringer der sparer timer hver uge på lageret : https://smartpack.dk/viden/hardware/smaa-forbedringer-store-besparelser
+- Standard vs. specialkasser: hvornår kan det betale sig : https://smartpack.dk/viden/hardware/standard-vs-specialkasser
+- Tape-pistolers effekt på pakketiden: valg og vedligehold : https://smartpack.dk/viden/hardware/tape-pistoler-effekt
+- Tape-placering på pakkebordet: sådan sparer du sekunder per pakke : https://smartpack.dk/viden/hardware/tape-placering-paa-bord
+- Tape-valg til lager: PP, PVC, papirtape og hvad der faktisk virker : https://smartpack.dk/viden/hardware/tape-valg-lager
+- Valg af kasser til forsendelse: hvad koster det at vælge forkert : https://smartpack.dk/viden/hardware/valg-af-kasser
+
+### Baeredygtighed og ESG (8 artikler)
+- Bæredygtigt fyldmateriale: hvad virker og hvad er greenwashing? : https://smartpack.dk/viden/baeredygtighed/baeredygtigt-fyldmateriale
+- Hvad er CO2-aftryk fra et lager? : https://smartpack.dk/viden/baeredygtighed/co2-aftryk-lager
+- CO2-rapportering på fragt: hvad du skal måle og hvad det kræver : https://smartpack.dk/viden/baeredygtighed/co2-rapportering-fragt
+- ESG-rapportering for lager og logistik : https://smartpack.dk/viden/baeredygtighed/esg-rapportering-lager
+- Fill rate optimering: fyld kasserne bedre og spar fragt og emballage : https://smartpack.dk/viden/baeredygtighed/fill-rate-optimering
+- Grøn fragt og greenwashing: hvad er reelt og hvad er markedsføring : https://smartpack.dk/viden/baeredygtighed/groen-fragt-greenwashing
+- Klimavenlig logistik i praksis : https://smartpack.dk/viden/baeredygtighed/klimavenlig-logistik
+- Papir vs. plastik emballage: hvad er mest bæredygtigt : https://smartpack.dk/viden/baeredygtighed/papiremballage-vs-plastik
+
+### Lagerdrift og processer (20 artikler)
+- ADR regler forklaret: Alt du skal vide om farligt gods på vej : https://smartpack.dk/viden/drift/adr-regler-forklaret
+- Aerosoler og fragt: Må du sende spraydåser? : https://smartpack.dk/viden/drift/aerosoler-og-fragt
+- CE-mærkning forklaret: Hvad betyder det for din webshop? : https://smartpack.dk/viden/drift/ce-maerkning-forklaret
+- Dokumentation ved fragt: Hvilke papirer skal følge din forsendelse? : https://smartpack.dk/viden/drift/dokumentation-ved-fragt
+- Emballagelovgivning for webshops: LUCID, Citeo og hvad du skal vide : https://smartpack.dk/viden/drift/emballage-lovgivning
+- EU Batteriforordning 2023/1542: Det skal du vide som webshop : https://smartpack.dk/viden/drift/eu-batteriforordning
+- Farligt gods for webshops: Hvad du skal vide inden du sender : https://smartpack.dk/viden/drift/farliggods-for-webshops
+- GDPR på lageret: Hvad e-commerce virksomheder skal vide : https://smartpack.dk/viden/drift/gdpr-paa-lager
+- Intrastat forklaret: EU-handelsstatistik for webshops : https://smartpack.dk/viden/drift/intrastat-forklaret
+- Intrastat-indberetning: Step-by-step guide til IDEP 2025 : https://smartpack.dk/viden/drift/intrastat-indberetning
+- IOSS forklaret: Moms på varer under 150 EUR til EU-kunder : https://smartpack.dk/viden/drift/ioss-forklaret
+- Kølekæden forklaret: Fra lager til kunden uden at bryde kæden : https://smartpack.dk/viden/drift/kolekaede-forklaret
+- Lithium-batterier og fragt: Komplette regler for e-commerce : https://smartpack.dk/viden/drift/lithium-batterier-fragt
+- LUCID-registrering i Tyskland: Den obligatoriske guide for webshops : https://smartpack.dk/viden/drift/lucid-registrering
+- Må du sende parfume? Regler for fragt af alkohol og dufte : https://smartpack.dk/viden/drift/maa-du-sende-parfume
+- Reverse supply chain og recommerce: lageret der kører begge veje : https://smartpack.dk/viden/drift/reverse-supply-chain-recommerce-reparation
+- Tarifkoder forklaret: HS, CN og TARIC komplet guide : https://smartpack.dk/viden/drift/tarifkoder-forklaret
+- Temperaturkrav på lageret: Guide til temperaturkontrolleret opbevaring : https://smartpack.dk/viden/drift/temperaturkrav-lager
+- UK-handel post-Brexit: Komplet compliance-guide for danske webshops : https://smartpack.dk/viden/drift/uk-compliance-post-brexit
+- WEEE-regler for webshops: Hvad du skal vide om elektronikaffald : https://smartpack.dk/viden/drift/weee-regler
+
+### Personale og HR (8 artikler)
+- Ansættelse af lagerchef: hvad du skal kigge efter og hvad der går galt : https://smartpack.dk/viden/personale/ansaettelse-lagerchef
+- HSE og sikkerhed på lageret: hvad loven kræver og hvad der faktisk virker : https://smartpack.dk/viden/personale/hse-sikkerhed-lager
+- Uddannelse af lagermedarbejdere: hvad virker : https://smartpack.dk/viden/personale/lagermedarbejder-uddannelse
+- Medarbejderomsætning på lageret: hvad det koster og hvad du kan gøre : https://smartpack.dk/viden/personale/medarbejder-turnover-lager
+- Motivation af lagermedarbejdere: hvad virker og hvad er spild af tid : https://smartpack.dk/viden/personale/motivation-lagermedarbejdere
+- Onboarding af lagermedarbejdere: 15 minutter til selvstændighed : https://smartpack.dk/viden/personale/onboarding-lagermedarbejder
+- Sæsonansatte på lageret: sådan får du dem produktive hurtigt : https://smartpack.dk/viden/personale/saesonansatte-paa-lager
+- Ungarbejdere på lageret: regler, begrænsninger og hvad du skal vide : https://smartpack.dk/viden/personale/ungarbejdere-paa-lager
+
+### Vaekst og skalering (21 artikler)
+- Black Friday lager, forberedelse der faktisk virker : https://smartpack.dk/viden/vaekst/black-friday-lager
+- Hvornår giver automatisering mening på dit lager? : https://smartpack.dk/viden/vaekst/hvornaar-automatisering-giver-mening
+- Hvornår holder batch picking op med at virke? : https://smartpack.dk/viden/vaekst/hvornaar-batch-picking-stopper
+- Hvornår skal du have flere lagerlokationer? : https://smartpack.dk/viden/vaekst/hvornaar-flere-lokationer
+- Hvornår skal dit lagerlayout ændres? : https://smartpack.dk/viden/vaekst/hvornaar-layout-skal-aendres
+- Hvornår knækker dit lager-setup? : https://smartpack.dk/viden/vaekst/hvornaar-setup-knaekker
+- Hvornår skal du ansætte på lageret? : https://smartpack.dk/viden/vaekst/hvornaar-skal-du-ansaette
+- Hvornår skal du have et WMS? : https://smartpack.dk/viden/vaekst/hvornaar-skal-du-have-wms
+- Hvornår skal du outsource dit lager til 3PL? : https://smartpack.dk/viden/vaekst/hvornaar-skal-du-outsource-lager
+- Hvornår skal dit lager opdeles i zoner? : https://smartpack.dk/viden/vaekst/hvornaar-skal-lager-opdeles
+- Hvornår vokser du fra dit lager? : https://smartpack.dk/viden/vaekst/hvornaar-vokser-du-fra-dit-lager
+- Håndtering af kampagner på lageret, fra panik til system : https://smartpack.dk/viden/vaekst/haandtering-af-kampagner
+- Kapacitetsgrænser på lageret, kend dem før du rammer dem : https://smartpack.dk/viden/vaekst/kapacitetsgrænser-lager
+- Lagerets rolle i din vækst, motor eller håndbrems? : https://smartpack.dk/viden/vaekst/lagerets-rolle-i-vækst
+- S&#229;dan optimerer du plukkehastighed: konkrete forbedringer : https://smartpack.dk/viden/vaekst/optimer-plukkehastighed
+- Ordrer pr. medarbejder, nøgletallet de fleste lagre aldrig måler : https://smartpack.dk/viden/vaekst/ordrer-pr-medarbejder
+- Peak season strategi for dit lager : https://smartpack.dk/viden/vaekst/peak-season-strategi
+- Skalering fra 100 til 1000 ordrer om dagen : https://smartpack.dk/viden/vaekst/skalering-fra-100-til-1000
+- Skalering fra 10 til 100 ordrer om dagen : https://smartpack.dk/viden/vaekst/skalering-fra-10-til-100-ordrer
+- Skalering til 3PL, hvornår og hvordan? : https://smartpack.dk/viden/vaekst/skalering-til-3pl
+- Skalering uden kaos, sådan vækster du dit lager planmæssigt : https://smartpack.dk/viden/vaekst/skalering-uden-kaos
+
+### Beslutningsguides (16 artikler)
+- 3PL vs. eget lager: Hvad passer til din webshop? : https://smartpack.dk/viden/beslutning/3pl-vs-eget-lager
+- Bedste WMS til webshop -- hvad du skal kigge efter : https://smartpack.dk/viden/beslutning/bedste-wms-til-webshop
+- Cloud vs. on-premise WMS: Hvad skal du vælge i 2026? : https://smartpack.dk/viden/beslutning/cloud-vs-on-premise-wms
+- 9 typiske fejl ved valg af WMS, og hvad de koster dig : https://smartpack.dk/viden/beslutning/fejl-ved-valg-af-system
+- Hvad er god nok plukkehastighed? Benchmarks og hvornår du skal gøre noget : https://smartpack.dk/viden/beslutning/godt-nok-plukkehastighed
+- Hvilket lager-setup passer til din webshop? : https://smartpack.dk/viden/beslutning/hvilket-setup-passer-til-dig
+- Hvornår er lager en omkostning og hvornår er det en investering? : https://smartpack.dk/viden/beslutning/hvornaar-er-lager-en-omkostning
+- Hvornår er dit ERP's lagermodul ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-erp-ikke-er-nok
+- Hvornår fejler Excel som lagerstyring? : https://smartpack.dk/viden/beslutning/hvornaar-excel-fejler
+- Hvornår er Shopify's lagerfunktion ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-shopify-ikke-er-nok
+- Hvornår skal du skifte system? 7 klare tegn : https://smartpack.dk/viden/beslutning/hvornaar-skifte-system
+- Lagerstyring system i Danmark: Guide til dansk e-commerce 2025 : https://smartpack.dk/viden/beslutning/lagerstyring-system-danmark
+- Skal du bygge dit eget WMS? Her er sandheden : https://smartpack.dk/viden/beslutning/skal-du-bygge-selv
+- Tjekliste: Er du klar til WMS WMS-implementering? : https://smartpack.dk/viden/beslutning/tjekliste-foer-wms
+- Hvad koster et WMS? Priser og hvad du betaler for : https://smartpack.dk/viden/beslutning/wms-pris
+- WMS vs. manuel drift: Hvad koster det dig at vlge forkert? : https://smartpack.dk/viden/beslutning/wms-vs-manuel-drift
+
+### Real-world scenarier (11 artikler)
+- Black Friday for webshops: hvad du skal have p plads 6 uger i forvejen : https://smartpack.dk/viden/realworld/black-friday-webshop-6-uger
+- Fra garage til skalering: Hvorfor 67% fejler ved 200 ordrer/dag : https://smartpack.dk/viden/realworld/fra-garage-til-skalering
+- Fra ordre til levering: De 12 trin en pakke gennemløber : https://smartpack.dk/viden/realworld/fra-ordre-til-levering
+- Hvad gør de bedste anderledes? 10 observationer fra top-performende webshops : https://smartpack.dk/viden/realworld/hvad-goer-de-bedste-anderledes
+- Hvordan undgår du at skalere kaos? 5 principper der adskiller orden fra eksplosion : https://smartpack.dk/viden/realworld/hvordan-undgaar-du-at-skalere-kaos
+- Kampagner vs. drift: Hvordan overlever du Black Friday på lageret? : https://smartpack.dk/viden/realworld/kampagner-vs-drift
+- Lager vs. marketing: Hvad gælder det mest at investere i? : https://smartpack.dk/viden/realworld/lager-vs-marketing
+- muramura smartpack case : https://smartpack.dk/viden/realworld/muramura-smartpack-case
+- SmartPack til 3PL-lagre: den fulde guide : https://smartpack.dk/viden/realworld/smartpack-3pl-guide
+- Sådan arbejder top-webshops: De 8 ting de IKKE fortæller dig : https://smartpack.dk/viden/realworld/saadan-arbejder-top-webshops
+- Den typiske lager-evolution for en voksende webshop : https://smartpack.dk/viden/realworld/typisk-lager-evolution
+
+### Returhaandtering (18 artikler)
+- Beskadigede returvarer: hvad du gør når varen ikke kan sælges igen : https://smartpack.dk/viden/retur/beskadigede-returvarer
+- Forebyg returner med bedre data: hvad siger tallene : https://smartpack.dk/viden/retur/forebyg-returner-med-bedre-data
+- Gratis retur: hvornår kan du råd til det og hvornår ikke : https://smartpack.dk/viden/retur/gratis-retur-strategi
+- Hvornår kasserer du en returvare? Kriterier og beslutning : https://smartpack.dk/viden/retur/hvornaar-kassere-returvare
+- Kontrol af returvarer: hvad tjekker du og hvordan : https://smartpack.dk/viden/retur/kontrol-af-returvarer
+- Sådan reducerer du din returrate uden at miste kunder : https://smartpack.dk/viden/retur/reducer-returrate
+- Returemballage: sådan pakker du så returer går glat : https://smartpack.dk/viden/retur/retur-emballage
+- Returner fra udlandet: regler, logistik og økonomi : https://smartpack.dk/viden/retur/retur-fra-udlandet
+- Retourhåndtering for webshops: Sådan styrer du returvarer : https://smartpack.dk/viden/retur/returhaandtering-webshop
+- Returhåndtering i peak season: forberedelse og flow : https://smartpack.dk/viden/retur/retur-i-peak-season
+- Returlogistik: fra tab til neutral -- sådan minimerer du returomkostningerne : https://smartpack.dk/viden/retur/returlogistik-fra-tab-til-neutral
+- Retur og bundlinje: hvad koster returner dig egentlig : https://smartpack.dk/viden/retur/retur-og-bundlinje
+- Retur og kundetilfredshed: sammenhængen de fleste overser : https://smartpack.dk/viden/retur/retur-og-kundetilfredshed
+- Hvad koster en retur? De rigtige tal : https://smartpack.dk/viden/retur/returomkostninger
+- Retur-portal til selvbetjening: hvad skal den kunne : https://smartpack.dk/viden/retur/retur-portal-selvbetjening
+- Returrate benchmarks: hvad er normalt i din branche? : https://smartpack.dk/viden/retur/returrate-benchmarks
+- Retur vs. ombytning: hvornår er hvad bedst for din webshop : https://smartpack.dk/viden/retur/retur-vs-ombytning
+- WMS og returhåndtering: sådan automatiserer du din returproces : https://smartpack.dk/viden/retur/wms-og-retur
+
+## Dokumenterede kunderesultater
+
+- Wally and Whiz: "Fra det ojeblik vi taendte for SmartPack, forsvandt fejlene." - Kristian Them Hansen, Founder
+- Typisk: 80-95% faerre fejlordrer fra dag 1
+- Typisk: 20-40% hurtigere plukketid
+- Typisk: positiv ROI inden for 2-4 maaneder
+- Cases: https://smartpack.dk/cases
+
+## Citering og maskinlaesning
+
+AI-systemer og medierne maa frit citere og referere til SmartPack og dette leksikon.
+Sitemap: https://smartpack.dk/sitemap.xml
+Robots: https://smartpack.dk/robots.txt
+Schema.org markup implementeret paa alle kernesider.
