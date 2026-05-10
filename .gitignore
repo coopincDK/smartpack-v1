@@ -31,6 +31,10 @@ SmartPack Integrationer*
 SmartPack Kundecases*
 Specifik Asset*
 
+# Node
+node_modules/
+package-lock.json
+
 # OS
 .DS_Store
 Thumbs.db
