@@ -591,8 +591,8 @@
         </div>
 
         <div class="qc-cta">
-          <a href="kontakt" class="btn btn--primary" id="qc-cta-primary">&#128222; SmartPack regner det n&oslash;jagtige tal med dig &rarr;</a>
-          <a href="udvidet-roi" class="btn btn--ghost" id="qc-cta-secondary">Vil du n&oslash;rde ned i tallene selv? G&aring; til den udvidede beregner &rarr;</a>
+          <a href="kontakt" class="btn btn--primary" id="qc-cta-primary">&#128222; Skal vi regne p&aring; din ROI sammen? &rarr;</a>
+          <a href="udvidet-roi" class="btn btn--ghost" id="qc-cta-secondary">N&oslash;rd selv ned i tallene &rarr;</a>
         </div>
       </div>
 
@@ -912,8 +912,8 @@
     } else {
       document.getElementById('qc-r-bes').textContent = netto > 0 ? fmtK(netto) : 'Kræver konkret vurdering';
       if (besLbl)  besLbl.textContent = netto > 0 ? 'Årlig netto besparelse' : 'Besparelse ved optimering';
-      if (ctaPri)  { ctaPri.href = 'kontakt'; ctaPri.textContent = '\u260E SmartPack regner det n\u00f8jagtige tal med dig \u2192'; }
-      if (ctaSec)  { ctaSec.href = 'udvidet-roi'; ctaSec.textContent = 'Vil du n\u00f8rde ned i tallene selv? G\u00e5 til den udvidede beregner \u2192'; }
+      if (ctaPri)  { ctaPri.href = 'kontakt'; ctaPri.textContent = '\u260E Skal vi regne p\u00e5 din ROI sammen? \u2192'; }
+      if (ctaSec)  { ctaSec.href = 'udvidet-roi'; ctaSec.textContent = 'N\u00f8rd selv ned i tallene \u2192'; }
       document.getElementById('qc-r-medarb').textContent    = frigivne.toFixed(1).replace('.',',');
       document.getElementById('qc-r-kapacitet').textContent = '+' + kapForbedring + '%';
       document.getElementById('qc-r-fejl').textContent      = fejl <= fejlAfter ? 'Allerede optimal'
