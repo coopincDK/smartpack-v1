@@ -114,7 +114,7 @@
       <div style="font-size:2.5rem;margin-bottom:.75rem;line-height:1;">⚖️</div>
       <h1 style="font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:var(--text-1);margin:0 0 .75rem;">Beslutning</h1>
       <p style="font-size:1.05rem;color:var(--text-2);margin:0 0 .5rem;">V&aelig;lg det rigtige system og setup. Konkrete regnestykker og kriterier.</p>
-      <span style="font-size:.85rem;color:var(--text-3);">12 artikler</span>
+      <span style="font-size:.85rem;color:var(--text-3);"><span class="article-count-dynamic">artikler</span></span>
     </header>
     <h2>Beslutningsguider til lager og logistik</h2>
     <div class="cat-index__grid">
@@ -154,4 +154,5 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
+<script>document.addEventListener("DOMContentLoaded",function(){var n=document.querySelectorAll(".cat-index__item,.viden-article-card").length;document.querySelectorAll(".article-count-dynamic").forEach(function(el){el.textContent=n+" artikler"});});</script>
 </body></html>
