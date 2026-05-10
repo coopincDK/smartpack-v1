@@ -282,7 +282,7 @@
 .qc-card__lbl{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-top:.2rem}
 .qc-payback{font-size:.78rem;font-weight:700;color:var(--text-2);text-align:center;padding:.6rem;background:var(--bg-2);border-radius:var(--r-sm);border:1px solid var(--border)}
 .qc-payback span{color:var(--accent)}
-.qc-cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
+.qc-cta{display:flex;flex-direction:column;gap:.75rem;margin-top:1.25rem}.qc-cta .btn--primary{font-size:1.05rem;font-weight:800;padding:1rem 1.5rem;letter-spacing:-.01em;text-align:center;box-shadow:0 4px 16px rgba(30,176,112,.25)}.qc-cta .btn--ghost{font-size:.9rem;font-weight:700;padding:.85rem 1.5rem;text-align:center;border-width:2px}
 
 /* === SALGSSIDE SEKTIONER === */
 
@@ -591,8 +591,8 @@
         </div>
 
         <div class="qc-cta">
-          <a href="udvidet-roi" class="btn btn--primary" id="qc-cta-primary" style="flex:1;text-align:center">N&oslash;rd tallene til bunds &rarr;</a>
-          <a href="kontakt" class="btn btn--ghost" id="qc-cta-secondary" style="flex:1;text-align:center">Tal med os</a>
+          <a href="kontakt" class="btn btn--primary" id="qc-cta-primary">&#128222; SmartPack regner det n&oslash;jagtige tal med dig &rarr;</a>
+          <a href="udvidet-roi" class="btn btn--ghost" id="qc-cta-secondary">Vil du n&oslash;rde ned i tallene selv? G&aring; til den udvidede beregner &rarr;</a>
         </div>
       </div>
 
@@ -912,8 +912,8 @@
     } else {
       document.getElementById('qc-r-bes').textContent = netto > 0 ? fmtK(netto) : 'Kræver konkret vurdering';
       if (besLbl)  besLbl.textContent = netto > 0 ? 'Årlig netto besparelse' : 'Besparelse ved optimering';
-      if (ctaPri)  { ctaPri.href = 'kontakt'; ctaPri.textContent = 'Få beregnet din case'; }
-      if (ctaSec)  { ctaSec.href = 'udvidet-roi'; ctaSec.textContent = 'Nørd tallene til bunds →'; }
+      if (ctaPri)  { ctaPri.href = 'kontakt'; ctaPri.textContent = '\u260E SmartPack regner det n\u00f8jagtige tal med dig \u2192'; }
+      if (ctaSec)  { ctaSec.href = 'udvidet-roi'; ctaSec.textContent = 'Vil du n\u00f8rde ned i tallene selv? G\u00e5 til den udvidede beregner \u2192'; }
       document.getElementById('qc-r-medarb').textContent    = frigivne.toFixed(1).replace('.',',');
       document.getElementById('qc-r-kapacitet').textContent = '+' + kapForbedring + '%';
       document.getElementById('qc-r-fejl').textContent      = fejl <= fejlAfter ? 'Allerede optimal'
