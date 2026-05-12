@@ -186,7 +186,8 @@
     .int-hub__how-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .75rem; }
     .int-hub__how-steps li { display: flex; align-items: center; gap: .75rem; font-size: .95rem; color: var(--text-2); }
     .int-hub__how-steps li span { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: rgba(62,207,142,.15); color: var(--accent); font-size: .78rem; font-weight: 800; flex-shrink: 0; }
-    .int-hub__how-gif { position: relative; }
+    .int-hub__how-gif { position: relative; max-height: 380px; overflow: hidden; border-radius: 12px; }
+    .int-hub__how-gif img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; border-radius: 12px; }
     @media (max-width: 760px) { .int-hub__how-inner { grid-template-columns: 1fr; } }
 
     .int-hub__stats {
