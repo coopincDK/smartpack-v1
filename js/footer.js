@@ -112,7 +112,7 @@
           // 🟢 Grøn: 09-16
           color = CLR_G;
           label = 'Support &aring;ben';
-          msg   = 'Ring til os &ndash; vi tager telefonen. Tast 2.';
+          msg   = 'Ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; vi tager telefonen. Tast 2.';
         } else if ((h >= 6 && h < 9) || (h >= 16 && h < 22)) {
           // 🟡 Gul: 06-09 + 16-22
           color = CLR_Y;
