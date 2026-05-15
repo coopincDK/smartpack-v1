@@ -1,0 +1,475 @@
+<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
+<!-- ================================================================
+     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
+     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT PAA TRACKING BLOK
+================================================================ -->
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head> -->
+
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding med SmartPack WMS | Fra aftale til live</title>
+<meta name="description" content="Se hvordan et typisk SmartPack-onboarding forloeber. Fra kontrakt til live-system pa ca. 7 dage med onsite besog, systemopsaetning og 3 maneders fri support.">
+<meta property="og:title" content="Onboarding med SmartPack WMS | Fra aftale til live">
+<meta property="og:description" content="Se faserne, ansvarsfordelingen og hvad I kan forvente. SmartPack klarer det tunge. I klarer lageret.">
+<meta property="og:url" content="https://smartpack.dk/onboarding">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="js/theme-toggle.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://smartpack.dk/onboarding",
+  "url": "https://smartpack.dk/onboarding",
+  "name": "Onboarding med SmartPack WMS",
+  "description": "Gennemgang af SmartPack onboarding-forloeb fra aftale til live system.",
+  "isPartOf": {"@id": "https://smartpack.dk/#website"}
+}
+</script>
+
+<style>
+/* Hero */
+.ob-hero { padding: clamp(7rem,12vw,10rem) 0 5rem; background: var(--bg-1); }
+.ob-hero__eyebrow { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:1rem; }
+.ob-hero__title { font-size:clamp(2.2rem,5vw,3.8rem); font-weight:900; line-height:1.08; letter-spacing:-.03em; margin-bottom:1.5rem; }
+.ob-hero__title em { font-style:normal; color:var(--accent); }
+.ob-hero__sub { font-size:1.1rem; color:var(--text-2); max-width:600px; line-height:1.75; margin-bottom:2.5rem; }
+.ob-hero__ctas { display:flex; gap:1rem; flex-wrap:wrap; }
+
+/* Stat strip */
+.stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin:3.5rem 0 0; }
+.stat-item { text-align:center; padding:1.5rem 1rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md); }
+.stat-item strong { display:block; font-size:2rem; font-weight:900; color:var(--accent); line-height:1; margin-bottom:.35rem; }
+.stat-item span { font-size:.78rem; color:var(--text-3); text-transform:uppercase; letter-spacing:.06em; }
+
+/* Sections */
+.ob-section { padding:6rem 0; }
+.ob-section--alt { background:var(--bg-2); }
+.ob-section--dark { background:#0f1318; }
+.ob-section--dark .ob-h2 { color:#fff; }
+.ob-section--dark .ob-lead { color:rgba(255,255,255,.65); }
+.ob-section--dark .ob-label { color:var(--accent); }
+
+.ob-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:.75rem; }
+.ob-h2 { font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:900; letter-spacing:-.025em; line-height:1.15; margin-bottom:1rem; }
+.ob-lead { font-size:1rem; color:var(--text-2); line-height:1.8; max-width:680px; }
+
+/* Phase timeline */
+.phase-list { display:flex; flex-direction:column; gap:0; margin-top:3rem; counter-reset:phase; }
+.phase { display:grid; grid-template-columns:4rem 1fr; gap:2rem; padding:2rem 0; border-bottom:1px solid var(--border); position:relative; }
+.phase:last-child { border-bottom:none; }
+.phase__num { width:3.5rem; height:3.5rem; border-radius:50%; background:var(--accent); color:#060f09; font-weight:900; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.phase__num--muted { background:var(--bg-3); color:var(--text-2); border:2px solid var(--border); }
+.phase__body { padding-top:.35rem; }
+.phase__label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.4rem; display:flex; align-items:center; gap:.5rem; }
+.phase__badge { font-size:.65rem; font-weight:700; padding:.2em .6em; border-radius:999px; }
+.phase__badge--sp { background:rgba(62,207,142,.15); color:var(--accent); border:1px solid rgba(62,207,142,.3); }
+.phase__badge--kunde { background:rgba(59,130,246,.12); color:#3b82f6; border:1px solid rgba(59,130,246,.3); }
+.phase__badge--both { background:rgba(255,200,50,.1); color:#d4a017; border:1px solid rgba(255,200,50,.3); }
+.phase__title { font-size:1.05rem; font-weight:800; margin-bottom:.5rem; }
+.phase__desc { font-size:.875rem; color:var(--text-2); line-height:1.7; margin:0 0 .6rem; }
+.phase__tasks { list-style:none; margin:.5rem 0 0; display:flex; flex-direction:column; gap:.3rem; }
+.phase__tasks li { font-size:.82rem; color:var(--text-2); padding-left:1.25rem; position:relative; line-height:1.5; }
+.phase__tasks li::before { content:'\2192'; position:absolute; left:0; color:var(--accent); }
+.phase__gate { margin-top:.75rem; background:rgba(239,68,68,.07); border:1px solid rgba(239,68,68,.2); border-radius:var(--r-sm); padding:.5rem .85rem; font-size:.78rem; color:#ef4444; display:flex; gap:.5rem; align-items:flex-start; }
+.phase__gate svg { flex-shrink:0; margin-top:.05rem; }
+
+/* Infographic sections */
+.ob-infographic { width:100%; border-radius:var(--r-lg); display:block; margin:2.5rem 0 0; box-shadow:var(--shadow-md); }
+.ob-infographic--narrow { max-width:860px; margin-left:auto; margin-right:auto; }
+
+/* Ansvar split */
+.ansvar-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:3rem; }
+.ansvar-card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2.5rem; }
+.ansvar-card--sp { border-top:3px solid var(--accent); }
+.ansvar-card--kunde { border-top:3px solid #3b82f6; }
+.ansvar-card h3 { font-size:1.1rem; font-weight:800; margin:.5rem 0 1.25rem; }
+.ansvar-card ul { list-style:none; display:flex; flex-direction:column; gap:.8rem; }
+.ansvar-card li { font-size:.88rem; color:var(--text-2); padding-left:1.5rem; position:relative; line-height:1.55; }
+.ansvar-card li::before { content:'\2713'; position:absolute; left:0; font-weight:800; }
+.ansvar-card--sp li::before { color:var(--accent); }
+.ansvar-card--kunde li::before { color:#3b82f6; }
+.ansvar-badge { display:inline-block; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; padding:.3rem .75rem; border-radius:999px; margin-bottom:.6rem; }
+.ansvar-badge--sp { background:rgba(62,207,142,.15); color:var(--accent); }
+.ansvar-badge--kunde { background:rgba(59,130,246,.12); color:#3b82f6; }
+
+/* Support box */
+.support-box { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-xl); padding:3.5rem; display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin-top:3rem; }
+.support-box__headline { font-size:clamp(1.4rem,2.5vw,2rem); font-weight:900; margin-bottom:.75rem; }
+.support-box__headline em { font-style:normal; color:var(--accent); }
+.support-box__body { font-size:.95rem; color:var(--text-2); line-height:1.75; }
+.support-items { display:flex; flex-direction:column; gap:1rem; }
+.support-item { display:flex; gap:1rem; align-items:flex-start; }
+.support-item__icon { width:2.5rem; height:2.5rem; border-radius:var(--r-md); background:rgba(62,207,142,.1); border:1px solid rgba(62,207,142,.2); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+.support-item__text h4 { font-size:.9rem; font-weight:700; margin-bottom:.2rem; }
+.support-item__text p { font-size:.82rem; color:var(--text-2); margin:0; line-height:1.5; }
+
+/* CTA */
+.ob-cta { background:var(--accent); border-radius:var(--r-xl); padding:4.5rem; text-align:center; margin-top:4rem; }
+.ob-cta h2 { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:900; color:#060f09; margin-bottom:.75rem; }
+.ob-cta p { color:rgba(0,0,0,.6); max-width:520px; margin:0 auto 2rem; font-size:1rem; }
+
+/* Responsive */
+@media(max-width:900px) {
+  .stat-strip { grid-template-columns:repeat(2,1fr); }
+  .ansvar-grid { grid-template-columns:1fr; }
+  .support-box { grid-template-columns:1fr; gap:2rem; padding:2rem; }
+  .phase { grid-template-columns:3rem 1fr; gap:1.25rem; }
+}
+@media(max-width:600px) {
+  .ob-cta { padding:2.5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="sp-header"></div>
+<script src="js/header.js"></script>
+
+<!-- HERO -->
+<section class="ob-hero">
+  <div class="container">
+    <div class="ob-hero__eyebrow">Onboarding</div>
+    <h1 class="ob-hero__title">Fra aftale til live<br>pa <em>ca. 7 dage</em></h1>
+    <p class="ob-hero__sub">Saadan forloeber et typisk SmartPack-onboarding. Vi klarer det tekniske. I klarer lageret. Og tre dage med fysisk tilstedevarelse fra os sikrer, at alt virker fra dag et.</p>
+    <div class="ob-hero__ctas">
+      <a href="kontakt.html" class="btn btn--primary">Book et moede &rarr;</a>
+      <a href="priser.html" class="btn btn--ghost">Se priser</a>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-item"><strong>~7</strong><span>dage til live</span></div>
+      <div class="stat-item"><strong>3</strong><span>onsite dage</span></div>
+      <div class="stat-item"><strong>3 mdr.</strong><span>fri opstart-support</span></div>
+      <div class="stat-item"><strong>12</strong><span>faser i alt</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOWGRAFIK -->
+<section class="ob-section ob-section--alt">
+  <div class="container">
+    <div class="ob-label">Overblik</div>
+    <h2 class="ob-h2">Det fulde forloeb</h2>
+    <p class="ob-lead">Herunder ses hele onboarding-flowet fra forste moede til live-system. Groen = SmartPack. Blaa = Kunden.</p>
+    <img src="assets/onboardingflow.png" alt="SmartPack onboarding flow" class="ob-infographic" loading="lazy">
+  </div>
+</section>
+
+<!-- FASER -->
+<section class="ob-section">
+  <div class="container">
+    <div class="ob-label">Fase for fase</div>
+    <h2 class="ob-h2">Hvad sker hvornaar</h2>
+    <p class="ob-lead">12 faser. Sekventielt. Ingen fase starter foer den forrige er klar.</p>
+
+    <div class="phase-list">
+
+      <div class="phase">
+        <div class="phase__num">1</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--both">SmartPack + Kunde</span></div>
+          <div class="phase__title">Onboarding og intromoedet</div>
+          <p class="phase__desc">Vi gennemgaar tidsplan, ansvar og forventninger. I bekraefter jeres superbruger og vi aftaler kommunikationsveje.</p>
+          <ul class="phase__tasks">
+            <li>SmartPack praesenter tidsplan og procesansvar</li>
+            <li>I identificerer jeres superbruger</li>
+            <li>Vi aftaler dato for onsite dag 1</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">2</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--both">SmartPack + Kunde</span></div>
+          <div class="phase__title">Oprettelse i systemet</div>
+          <p class="phase__desc">Vi opretter jer som kunde i SmartPack WMS. I fremsender API-adgange til webshop og fragtleverandoerer.</p>
+          <ul class="phase__tasks">
+            <li>SmartPack opretter kundeprofil og CMS</li>
+            <li>I fremsender logins til fragtintegrationer</li>
+            <li>I sikrer at ALLE varer har SKU og stregkode</li>
+          </ul>
+          <div class="phase__gate">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Blokerende gate: Ingen varer uden SKU og stregkode kan indscannes. Forlobet stoppes, hvis dette ikke er klaret inden fase 3.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">3</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span></div>
+          <div class="phase__title">Systemforbindelsen</div>
+          <p class="phase__desc">Vi kobler jeres webshop og fragtleverandoerer til SmartPack og indlaeser alle varer. Fejlprodukter (manglende data) oplyst til jer for rettelse.</p>
+          <ul class="phase__tasks">
+            <li>Forbind CMS til SmartPack</li>
+            <li>Indlaes varer</li>
+            <li>Rapport over fejlprodukter sendes til jer</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num phase__num--muted">4</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--kunde">Kunde</span></div>
+          <div class="phase__title">Forberedelse af lageret</div>
+          <p class="phase__desc">Inden vores foerste besog skal lageret vaere i den oenskede tilstand. Hardware skal ogsaa vaere indkobt.</p>
+          <ul class="phase__tasks">
+            <li>Organiser og ryd op pa lageret</li>
+            <li>Indkob scannere, printere og totes/kasser</li>
+          </ul>
+          <div class="phase__gate">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Blokerende gate: Onsite dag 1 kan ikke gennemfoeres, hvis lageret ikke er klar eller hardware mangler.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">5</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span> <span style="font-size:.7rem;color:var(--text-3);font-weight:600;">Onsite dag 1</span></div>
+          <div class="phase__title">Installation pa lageret</div>
+          <p class="phase__desc">Vi er fysisk til stede. Lageret optegnes digitalt, hardware kalibreres og superbrugeren introduceres til systemet.</p>
+          <ul class="phase__tasks">
+            <li>Digital lageroptegning: reoler, hylder, lokationer, pakkevogne</li>
+            <li>Opsaet og kalibrer scannere og printere</li>
+            <li>Installer og test Printerservice pa udpeget computer</li>
+            <li>Introducer superbruger til udskrift af lagerlokationer</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num phase__num--muted">6</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--kunde">Kunde</span></div>
+          <div class="phase__title">Udskrift og opsaetning af lokationer</div>
+          <p class="phase__desc">I printer lokationslabels og paesaetter dem pa hylderne. Manglende stregkoder pa varer paesaettes nu.</p>
+          <ul class="phase__tasks">
+            <li>Udskriv og paesaet lokationslabels</li>
+            <li>Paesaet manglende stregkoder pa varer</li>
+            <li>Sorter varer til korrekte fremtidige lokationer</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">7</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span> <span style="font-size:.7rem;color:var(--text-3);font-weight:600;">Online</span></div>
+          <div class="phase__title">Statusmoede</div>
+          <p class="phase__desc">30 minutters online moede for at vurdere status pa lokationsopsaetning og planlaegge dag 2 og 3.</p>
+          <ul class="phase__tasks">
+            <li>Afklar status pa lokationer</li>
+            <li>Planlaeg onsite dag 2 og 3</li>
+            <li>Opsaml aabne opgaver</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">8</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span> <span style="font-size:.7rem;color:var(--text-3);font-weight:600;">Onsite dag 2 og 3</span></div>
+          <div class="phase__title">Indscanning, oplearing og test</div>
+          <p class="phase__desc">Alle varer indscannes pa deres lokationer. Personalet oplares i hverdagsbrug. Vi korer testordrer og verificer alle forbindelser.</p>
+          <ul class="phase__tasks">
+            <li>Indscan alle varer pa lokationer i SmartPack</li>
+            <li>Oplaer superbruger og lagerpersonale</li>
+            <li>Gennemfoer testordrer med superbruger</li>
+            <li>Endelig test af systemflow og integrationer</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num phase__num--muted">9</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--kunde">Kunde</span></div>
+          <div class="phase__title">Fuld lagerstatus</div>
+          <p class="phase__desc">I gennemfoerer en komplet lagerstatus med haandterminaler. Saadan sikres det at lageropgoerelsen i SmartPack matcher det fysiske lager.</p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">10</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span></div>
+          <div class="phase__title">Overfoersel og test i produktion</div>
+          <p class="phase__desc">Ordrer overfores til SmartPack WMS og systemet testes i det rigtige produktionsmiljo.</p>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">11</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span></div>
+          <div class="phase__title">Endelig overdragelse og live</div>
+          <p class="phase__desc">Systemet er klart. Vi overdrageer SmartPack WMS og aftaler kommunikationsformer, responstid og adgang til helpcenter og FAQ.</p>
+          <ul class="phase__tasks">
+            <li>Endelig overdragelse af SmartPack WMS</li>
+            <li>Aftaler kommunikation og responstid</li>
+            <li>Adgang til helpcenter, FAQ og yderligere traening</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase__num">12</div>
+        <div class="phase__body">
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span></div>
+          <div class="phase__title">Opfoelgning efter 1 maneds drift</div>
+          <p class="phase__desc">Statusmoede ca. 1 maaned efter overdragelse. Vi evaluerer brugen og identificerer forbedringspunkter.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ANSVAR SPLIT -->
+<section class="ob-section ob-section--alt">
+  <div class="container">
+    <div class="ob-label">Ansvarsfordeling</div>
+    <h2 class="ob-h2">Hvem goer hvad</h2>
+    <p class="ob-lead">SmartPack klarer det tekniske og vaerer til stede pa lageret. I saetter lageret i stand og laerer det nye system at kende.</p>
+    <div class="ansvar-grid">
+      <div class="ansvar-card ansvar-card--sp">
+        <div class="ansvar-badge ansvar-badge--sp">SmartPack</div>
+        <h3>Vi klarer det tekniske</h3>
+        <ul>
+          <li>Systemopsaetning og integrationer (webshop, fragt)</li>
+          <li>Digital lageroptegning pa stedet</li>
+          <li>Installation og kalibrering af scannere og printere</li>
+          <li>Indscanning af alle varer pa lokationer</li>
+          <li>Oplaring af superbruger og personale</li>
+          <li>Testordrer og verifikation af systemflow</li>
+          <li>Overdragelse og dokumentation</li>
+          <li>3 maneders fri opstart-support</li>
+        </ul>
+      </div>
+      <div class="ansvar-card ansvar-card--kunde">
+        <div class="ansvar-badge ansvar-badge--kunde">Kunden</div>
+        <h3>I klargjoer lageret</h3>
+        <ul>
+          <li>Sikre at ALLE varer har SKU og stregkode</li>
+          <li>Fremsende API-adgange og logins</li>
+          <li>Indkobe og have hardware klar (scannere, printere, totes)</li>
+          <li>Rydde op og klargjoere lageret inden dag 1</li>
+          <li>Udskrive og paesaette lokationslabels</li>
+          <li>Sortere varer til de rigtige lokationer</li>
+          <li>Gennemfoere fuld lagerstatus med haandterminaler</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEMFORBINDELSE -->
+<section class="ob-section">
+  <div class="container">
+    <div class="ob-label">Systemintegration</div>
+    <h2 class="ob-h2">Saadan kobler systemerne sig sammen</h2>
+    <p class="ob-lead">SmartPack forbinder sig til jeres eksisterende systemer via API. Ingen manuel dataoeverfoerelse. Ordrer, varer og lagerstatus synkroniserer automatisk.</p>
+    <img src="assets/setup-flow-systemer.png" alt="Diagram over systemforbindelser i SmartPack setup" class="ob-infographic ob-infographic--narrow" loading="lazy">
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section class="ob-section ob-section--alt">
+  <div class="container">
+    <div class="support-box">
+      <div>
+        <div class="ob-label">Efter overdragelse</div>
+        <div class="support-box__headline">3 maneders <em>fri support</em> inkluderet</div>
+        <p class="support-box__body">I den kritiske periode lige efter I er gaet live, er I ikke alene. Opstart-support er inkluderet i etableringsprisen og daekreer de forste 3 maaneder.</p>
+      </div>
+      <div class="support-items">
+        <div class="support-item">
+          <div class="support-item__icon">&#128222;</div>
+          <div class="support-item__text">
+            <h4>Telefonsupport</h4>
+            <p>Ring direkte til SmartPack. Vi kender jeres setup og kan hjaelpe med det samme.</p>
+          </div>
+        </div>
+        <div class="support-item">
+          <div class="support-item__icon">&#128196;</div>
+          <div class="support-item__text">
+            <h4>Helpcenter og FAQ</h4>
+            <p>Komplet dokumentation, videoer og guides tilgaengelige 24/7 pa support.smartpack.dk.</p>
+          </div>
+        </div>
+        <div class="support-item">
+          <div class="support-item__icon">&#128200;</div>
+          <div class="support-item__text">
+            <h4>Opfoelgningsmoede efter 1 maaned</h4>
+            <p>Vi tjekker ind, evaluerer brugen og justerer hvis noget kan goeres bedre.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="ob-section">
+  <div class="container">
+    <div class="ob-cta">
+      <h2>Klar til at komme i gang?</h2>
+      <p>De fleste af vores kunder er live inden for en uge. Book et moede og vi gennemgaar forlobet for jer.</p>
+      <a href="kontakt.html" class="btn btn--dark" style="display:inline-block;padding:.9rem 2rem;font-weight:800;font-size:1rem;border-radius:999px;text-decoration:none;">Book et moede &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<div id="sp-footer"></div>
+<script src="js/footer.js"></script>
+<script src="js/main.js" defer></script>
+
+</body>
+</html>
