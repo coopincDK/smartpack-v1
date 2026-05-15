@@ -772,7 +772,7 @@
 
 
 
-<!-- SMARTPACK ER IKKE KUN FAERRE HAENDER -->
+<!-- SMARTPACK ER IKKE KUN færre HAENDER -->
 <section class="njh-strip" id="njh-section">
   <div class="container">
     <div style="text-align:center;max-width:580px;margin:0 auto">
@@ -1163,14 +1163,14 @@ function beregn() {
   // CLAMP: frigivne timer kan ikke overstige fuld stab (du kan ikke frigive folk du ikke har)
   const frigivneRaw    = Math.max(0, timerIAlt - timerMedSP);
   const frigivne       = Math.min(frigivneRaw, timerIAlt);   // max = hvad de bruger i dag
-  const noedvendige    = Math.max(0.1, timerMedSP / TIMER_PR_MND);
+  const nødvendige    = Math.max(0.1, timerMedSP / TIMER_PR_MND);
 
   // Kapacitet -- SKAL være før overcapacity-check (undgår Temporal Dead Zone)
   const kapNu          = spEffektiv * timerIAlt;  // Hvad kan de sende MED SP ved nuv. timer
 
   // OVERCAPACITY: Brugeren har angivet et volumen der kræver FLERE medarbejdere end de har.
   // besFejl og ekstrakapacitet cappas til det realistiske (kapNu = hvad nuv. stab kan med SP).
-  const overcapacity   = noedvendige > medarb;
+  const overcapacity   = nødvendige > medarb;
   const pakkerEff      = overcapacity ? Math.min(pakker, kapNu) : pakker;
   const antalFejl      = pakkerEff * (fejl / 100);
 
@@ -1229,7 +1229,7 @@ function beregn() {
   return {
     medarb, pakker, lon, fejl, fejlomk, vaekst, ordrevaerdi, avance, wms, checkout,
     returrate, fragtRetur, peak, ksMin, branche,
-    b, spEffektiv, usedMax, timerIAlt, pakkerPrTimeNu, frigivne, noedvendige, antalFejl, overcapacity, pakkerEff,
+    b, spEffektiv, usedMax, timerIAlt, pakkerPrTimeNu, frigivne, nødvendige, antalFejl, overcapacity, pakkerEff,
     besArb, besFejl, ekstraOrdrer, extraOms, extraAvance,
     besRetur, reduceredeRetur, besKS, ksTiMd,
     besPeak, peakPakker, vikarTimerUden, vikarTimerMed,
@@ -1249,7 +1249,7 @@ function updateDOM(r) {
 
   // Stats
   el('r-timer').textContent  = fmtN(r.frigivne, 1);
-  el('r-noedv').textContent  = fmtN(r.noedvendige, 1);
+  el('r-noedv').textContent  = fmtN(r.nødvendige, 1);
   el('r-noedv-sub').textContent = 'vs. ' + r.medarb + ' i dag';
 
   // Overcapacity: vis advarsel og farv kortet rødt
@@ -1263,7 +1263,7 @@ function updateDOM(r) {
     setOC('res-overcap-stab',   r.medarb);
     setOC('res-overcap-kapnu',  kapnuFmt);
     setOC('res-overcap-pakker', Math.round(r.pakker).toLocaleString('da-DK'));
-    setOC('res-overcap-noedv',  fmtN(r.noedvendige, 1));
+    setOC('res-overcap-noedv',  fmtN(r.nødvendige, 1));
   }
   el('r-roi').textContent    = r.roi > 0   ? '+' + fmtN(r.roi, 0) + '%'
                               : r.roi > -30 ? 'Tæt på break-even'
@@ -1276,7 +1276,7 @@ function updateDOM(r) {
       nuanceEl.textContent = 'Jeres nuværende performance overstiger branchens median, så vi estimerer nu baseret på de bedste SmartPack-brugere i branchen (op mod ' + r.b.max + ' pakker/time). Vil I vide præcis, hvad det betyder for jer, giver en konkret snak om jeres flow mere end en generel beregning.';
     } else if (r.netto < 0 || r.roi < 0) {
       nuanceEl.textContent = 'Vores udregninger er baseret på medianer, og vi kan se jeres performance ligger bedre end gennemsnittet. Det giver mere mening med en konkret snak om jeres flow for at se, hvor og hvor meget SmartPack vil kunne hjælpe.';
-    } else if (r.noedvendige <= r.medarb) {
+    } else if (r.nødvendige <= r.medarb) {
       nuanceEl.textContent = 'Med SmartPack kan I klare samme volumen med færre hænder. Det er typisk her de største besparelser sidder.';
     } else if (r.roi < 500) {
       nuanceEl.textContent = 'Her ser vi typisk et klart potentiale. Mest i fejlreduktion og tid sparet pr. ordre.';
@@ -1398,7 +1398,7 @@ function updateDOM(r) {
       peak: r.peak, ksMin: r.ksMin, branche: r.branche,
       brancheMin: r.b.min, brancheMax: r.b.max, brancheMedian: r.b.median,
       timerIAlt: r.timerIAlt, pakkerPrTimeNu: r.pakkerPrTimeNu,
-      frigivne: r.frigivne, noedvendige: r.noedvendige,
+      frigivne: r.frigivne, nødvendige: r.nødvendige,
       besArb: r.besArb, besFejl: r.besFejl, besRetur: r.besRetur,
       besKS: r.besKS, besPeak: r.besPeak, checkout_bes: r.checkout,
       wmsForskell: r.wmsForskell, ekstraOrdrer: r.ekstraOrdrer,

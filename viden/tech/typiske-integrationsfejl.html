@@ -139,8 +139,8 @@
       <tbody>
         <tr><td>BC client secret udloeber (2 dage downtime)</td><td>40.000 kr. per episode</td></tr>
         <tr><td>Stille fejl (47 ordrer, opdages efter 24 timer)</td><td>64.002 kr. per episode</td></tr>
-        <tr><td>Webhook-tab uden retry (5% af ordrer)</td><td>3.182.200 kr./aar</td></tr>
-        <tr><td>Leveringsmetode-mapping fejl (10% af ordrer)</td><td>2.281.250 kr./aar</td></tr>
+        <tr><td>Webhook-tab uden retry (5% af ordrer)</td><td>3.182.200 kr./å</td></tr>
+        <tr><td>Leveringsmetode-mapping fejl (10% af ordrer)</td><td>2.281.250 kr./å</td></tr>
       </tbody>
     </table>
 
@@ -154,7 +154,7 @@
     <h3>2. BC client secret udloeber</h3>
     <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
     <p><strong>årsag:</strong> Business Central bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 år. Det er den hyppigste årsag til BC-integrationsnedbrud. De fleste virksomheder sætter det op og glemmer det.</p>
-    <p><strong>Losning:</strong> Saet kalenderreminder 30 og 60 dage foer udloeb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. maaned.</p>
+    <p><strong>Losning:</strong> sæt kalenderreminder 30 og 60 dage foer udloeb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. maaned.</p>
 
     <h3>3. Leveringsmetode-mapping fejler</h3>
     <p><strong>Hvad sker:</strong> Kunden vælger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
