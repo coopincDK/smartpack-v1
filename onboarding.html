@@ -69,17 +69,13 @@
 .ob-hero__title em { font-style:normal; color:var(--accent); }
 .ob-hero__sub { font-size:1.05rem; color:var(--text-2); line-height:1.75; margin-bottom:2rem; }
 .ob-hero__ctas { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0; }
-.ob-hero__card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2rem; }
-.ob-hero__card-title { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); margin-bottom:1.25rem; }
-.ob-hero__col { margin-bottom:1.25rem; }
-.ob-hero__col:last-child { margin-bottom:0; }
-.ob-hero__col-label { font-size:.75rem; font-weight:700; padding:.2em .65em; border-radius:999px; display:inline-block; margin-bottom:.6rem; }
-.ob-hero__col-label--sp { background:rgba(62,207,142,.15); color:var(--accent); }
-.ob-hero__col-label--kunde { background:rgba(59,130,246,.12); color:#3b82f6; }
-.ob-hero__col ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.35rem; }
-.ob-hero__col li { font-size:.82rem; color:var(--text-2); padding-left:1.1rem; position:relative; line-height:1.5; }
-.ob-hero__col--sp li::before { content:'\2713'; position:absolute; left:0; color:var(--accent); font-weight:800; font-size:.75rem; }
-.ob-hero__col--kunde li::before { content:'\2713'; position:absolute; left:0; color:#3b82f6; font-weight:800; font-size:.75rem; }
+.ob-video-wrap { position:relative; aspect-ratio:16/9; border-radius:12px; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,.5); border:1px solid var(--border); display:block; background:#111; }
+.ob-video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; }
+.ob-quote-overlay { position:absolute; bottom:0; left:0; right:0; margin:0; padding:1rem 1.25rem 1rem 1.1rem; background:linear-gradient(to top, rgba(0,0,0,.92) 60%, transparent); border-left:3px solid var(--accent); pointer-events:none; }
+.ob-quote-overlay p { font-size:.82rem; color:#fff; line-height:1.55; font-style:italic; margin:0 0 .4rem; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+.ob-quote-overlay footer { font-size:.72rem; }
+.ob-quote-overlay strong { color:var(--accent); font-weight:800; }
+.ob-quote-overlay span { color:rgba(255,255,255,.6); }
 @media(max-width:900px) { .ob-hero__grid { grid-template-columns:1fr; gap:2.5rem; } }
 
 .stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin:3.5rem 0 0; }
@@ -176,23 +172,19 @@
         </div>
       </div>
       <div class="ob-hero__right">
-        <div class="ob-hero__card">
-          <div style="border-radius:var(--r-md);overflow:hidden;aspect-ratio:16/9;background:#000;margin-bottom:1.25rem">
-            <iframe src="https://www.youtube.com/embed/7M3_4AP_vzU" title="Sygeplejebutikken og SmartPack WMS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;display:block"></iframe>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:.6rem">
-            <div style="display:flex;align-items:flex-start;gap:.75rem;padding:.65rem .85rem;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.18);border-radius:var(--r-sm)">
-              <span style="font-size:1rem;flex-shrink:0">&#128308;</span>
-              <span style="font-size:.82rem;color:var(--text-2);line-height:1.5"><strong style="color:var(--text-1)">600 timer spildt</strong> p&aring; et andet lagersystem. Onboarding mislykkedes.</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:.75rem;padding:.65rem .85rem;background:rgba(62,207,142,.06);border:1px solid rgba(62,207,142,.2);border-radius:var(--r-sm)">
-              <span style="font-size:1rem;flex-shrink:0">&#128994;</span>
-              <span style="font-size:.82rem;color:var(--text-2);line-height:1.5"><strong style="color:var(--text-1)">5 timers teknisk onboarding</strong> med SmartPack &mdash; og de k&oslash;rte.</span>
-            </div>
-          </div>
-          <div style="margin-top:1rem;text-align:right">
-            <a href="cases/sygeplejebutikken" style="font-size:.78rem;color:var(--accent);text-decoration:none;font-weight:600">L&aelig;s hele casen &rarr;</a>
-          </div>
+        <div class="ob-video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/7M3_4AP_vzU?rel=0&modestbranding=1&color=white"
+            title="Sygeplejebutikken og SmartPack WMS"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+          <blockquote class="ob-quote-overlay">
+            <p>&ldquo;600 timer spildt p&aring; et andet system. 5 timers onboarding med SmartPack &mdash; og vi k&oslash;rte.&rdquo;</p>
+            <footer><strong>Rikke</strong><span> &mdash; Sygeplejebutikken</span></footer>
+          </blockquote>
         </div>
       </div>
     </div>
