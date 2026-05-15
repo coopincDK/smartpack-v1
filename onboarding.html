@@ -63,11 +63,24 @@
 
 <style>
 .ob-hero { padding: clamp(7rem,12vw,10rem) 0 5rem; background: var(--bg-1); }
+.ob-hero__grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
 .ob-hero__eyebrow { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:1rem; }
 .ob-hero__title { font-size:clamp(2.2rem,5vw,3.8rem); font-weight:900; line-height:1.08; letter-spacing:-.03em; margin-bottom:1.5rem; }
 .ob-hero__title em { font-style:normal; color:var(--accent); }
-.ob-hero__sub { font-size:1.1rem; color:var(--text-2); max-width:600px; line-height:1.75; margin-bottom:2.5rem; }
-.ob-hero__ctas { display:flex; gap:1rem; flex-wrap:wrap; }
+.ob-hero__sub { font-size:1.05rem; color:var(--text-2); line-height:1.75; margin-bottom:2rem; }
+.ob-hero__ctas { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0; }
+.ob-hero__card { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-lg); padding:2rem; }
+.ob-hero__card-title { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--text-3); margin-bottom:1.25rem; }
+.ob-hero__col { margin-bottom:1.25rem; }
+.ob-hero__col:last-child { margin-bottom:0; }
+.ob-hero__col-label { font-size:.75rem; font-weight:700; padding:.2em .65em; border-radius:999px; display:inline-block; margin-bottom:.6rem; }
+.ob-hero__col-label--sp { background:rgba(62,207,142,.15); color:var(--accent); }
+.ob-hero__col-label--kunde { background:rgba(59,130,246,.12); color:#3b82f6; }
+.ob-hero__col ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.35rem; }
+.ob-hero__col li { font-size:.82rem; color:var(--text-2); padding-left:1.1rem; position:relative; line-height:1.5; }
+.ob-hero__col--sp li::before { content:'\2713'; position:absolute; left:0; color:var(--accent); font-weight:800; font-size:.75rem; }
+.ob-hero__col--kunde li::before { content:'\2713'; position:absolute; left:0; color:#3b82f6; font-weight:800; font-size:.75rem; }
+@media(max-width:900px) { .ob-hero__grid { grid-template-columns:1fr; gap:2.5rem; } }
 
 .stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin:3.5rem 0 0; }
 .stat-item { text-align:center; padding:1.5rem 1rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md); }
@@ -152,12 +165,38 @@
 <!-- HERO -->
 <section class="ob-hero">
   <div class="container">
-    <div class="ob-hero__eyebrow">Onboarding</div>
-    <h1 class="ob-hero__title">Fra aftale til live<br>p&aring; <em>ca. 7 dage</em></h1>
-    <p class="ob-hero__sub">S&aring;dan forl&oslash;ber et typisk SmartPack-onboarding. Vi klarer det tekniske. I klarer lageret. Og tre dage med fysisk tilstedev&aelig;relse fra os sikrer, at alt virker fra dag &eacute;t.</p>
-    <div class="ob-hero__ctas">
-      <a href="kontakt.html" class="btn btn--primary">Book et m&oslash;de &rarr;</a>
-      <a href="priser.html" class="btn btn--ghost">Se priser</a>
+    <div class="ob-hero__grid">
+      <div class="ob-hero__left">
+        <div class="ob-hero__eyebrow">Onboarding</div>
+        <h1 class="ob-hero__title">Fra aftale til live<br>p&aring; <em>ca. 7 dage</em></h1>
+        <p class="ob-hero__sub">S&aring;dan forl&oslash;ber et typisk SmartPack-onboarding. Vi klarer det tekniske. I klarer lageret.</p>
+        <div class="ob-hero__ctas">
+          <a href="kontakt.html" class="btn btn--primary">Book et m&oslash;de &rarr;</a>
+          <a href="priser.html" class="btn btn--ghost">Se priser</a>
+        </div>
+      </div>
+      <div class="ob-hero__right">
+        <div class="ob-hero__card">
+          <div class="ob-hero__card-title">Hvem g&oslash;r hvad</div>
+          <div class="ob-hero__col ob-hero__col--sp">
+            <span class="ob-hero__col-label ob-hero__col-label--sp">SmartPack</span>
+            <ul>
+              <li>Systemops&aelig;tning og integrationer</li>
+              <li>Fysisk installation p&aring; lageret (3 dage)</li>
+              <li>Opl&aelig;ring af personale</li>
+              <li>3 m&aring;neders fri support efter go-live</li>
+            </ul>
+          </div>
+          <div class="ob-hero__col ob-hero__col--kunde">
+            <span class="ob-hero__col-label ob-hero__col-label--kunde">Kunden</span>
+            <ul>
+              <li>SKU og stregkode p&aring; alle varer</li>
+              <li>Hardware klar inden dag 1</li>
+              <li>Lager ryddet og klar til optegning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="stat-strip">
       <div class="stat-item"><strong>~7</strong><span>dage til live</span></div>
