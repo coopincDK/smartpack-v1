@@ -31,6 +31,7 @@
       '        <button class="nav__link nav__dropdown-btn" aria-expanded="false" aria-haspopup="true">Udforsk SmartPack <svg class="nav__chevron" viewBox="0 0 10 6" width="10" height="6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6z"/></svg></button>',
       '        <div class="nav__megamenu">',
       '          <a href="' + url('/funktioner.html') + '" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>',
+      '          <a href="' + url('/onboarding.html') + '" class="nav__mega-item"><strong>Onboarding</strong><span>Fra aftale til live p&aring; ca. 7 dage</span></a>',
       '          <a href="' + url('/integrationer.html') + '" class="nav__mega-item"><strong>Integrationer</strong><span>Forbindelser klar til brug</span></a>',
       '          <a href="' + url('/faq.html') + '" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a>',
       '          <a href="' + url('/om-os.html') + '" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>',
