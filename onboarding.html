@@ -296,7 +296,7 @@
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F5A8;&#xFE0F;</div>
           <div class="ob-ifg-num">Trin 6</div>
           <div class="ob-ifg-title">Udskrift og ops&aelig;tning af lokationer</div>
-          <div class="ob-ifg-badge ob-ifg-badge--kunde">Det g&oslash;r I</div>
+          <div class="ob-ifg-badge ob-ifg-badge--kunde">Det g&oslash;r I - Onsite dag 1</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
         <button class="ob-ifg-box ob-ifg-box--sp" data-step="7" aria-label="Trin 7">
@@ -327,14 +327,14 @@
           <div class="ob-ifg-icon" aria-hidden="true">&#x26A1;</div>
           <div class="ob-ifg-num">Trin 10</div>
           <div class="ob-ifg-title">Overf&oslash;rsel og test i produktion</div>
-          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 2+3</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
         <button class="ob-ifg-box ob-ifg-box--sp" data-step="11" aria-label="Trin 11">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F680;</div>
           <div class="ob-ifg-num">Trin 11</div>
           <div class="ob-ifg-title">Endelig overdragelse og live</div>
-          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 2+3</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
         <button class="ob-ifg-box ob-ifg-box--sp" data-step="12" aria-label="Trin 12">
@@ -453,7 +453,7 @@
       <div class="phase">
         <div class="phase__num phase__num--muted">6</div>
         <div class="phase__body">
-          <div class="phase__label"><span class="phase__badge phase__badge--kunde">Det g&oslash;r I</span></div>
+          <div class="phase__label"><span class="phase__badge phase__badge--kunde">Det g&oslash;r I</span> <span class="phase__tag">Onsite dag 1</span></div>
           <div class="phase__title">Udskrift og ops&aelig;tning af lokationer</div>
           <p class="phase__desc">I printer lokationslabels og p&aring;s&aelig;tter dem p&aring; hylderne. Manglende stregkoder p&aring; varer p&aring;s&aelig;ttes nu.</p>
           <ul class="phase__tasks">
@@ -481,7 +481,7 @@
       <div class="phase">
         <div class="phase__num">8</div>
         <div class="phase__body">
-          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span> <span class="phase__tag">Onsite dag 2 og 3</span></div>
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span> <span class="phase__tag">Onsite dag 1</span></div>
           <div class="phase__title">Indscanning, opl&aelig;ring og test</div>
           <p class="phase__desc">Alle varer indscannes p&aring; deres lokationer. Personalet opl&aelig;res i hverdagsbrug. Vi k&oslash;rer testordrer og verificerer alle forbindelser.</p>
           <ul class="phase__tasks">
@@ -542,7 +542,7 @@
       <div class="phase">
         <div class="phase__num">10</div>
         <div class="phase__body">
-          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span></div>
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span> <span class="phase__tag">Onsite dag 2+3</span></div>
           <div class="phase__title">Overf&oslash;rsel og test i produktion</div>
           <p class="phase__desc">Ordrer overfores til SmartPack WMS og systemet testes i det rigtige produktionsmilj&oslash;.</p>
         </div>
@@ -551,7 +551,7 @@
       <div class="phase">
         <div class="phase__num">11</div>
         <div class="phase__body">
-          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span></div>
+          <div class="phase__label"><span class="phase__badge phase__badge--sp">SmartPack</span> <span class="phase__tag">Onsite dag 2+3</span></div>
           <div class="phase__title">Endelig overdragelse og live</div>
           <p class="phase__desc">Systemet er klart. Vi overdrager SmartPack WMS og aftaler kommunikationsformer, responstid og adgang til helpcenter og FAQ.</p>
           <ul class="phase__tasks">
@@ -718,10 +718,10 @@ var steps = [
     { title:'Installation p&aring; lageret', badge:'SmartPack - Onsite dag 1', cls:'sp',
       desc:'Vi er fysisk til stede. Lageret optegnes digitalt, hardware kalibreres og superbrugeren introduceres til systemet.',
       tasks:['Digital lageroptegning: reoler, hylder, lokationer, pakkevogne','Ops&aelig;t og kalibrer scannere og printere','Installer og test Printerservice p&aring; udpeget computer','Introduc&eacute;r superbruger til udskrift af lagerlokationer'] },
-    { title:'Udskrift og ops&aelig;tning af lokationer', badge:'Det g&oslash;r I', cls:'kunde',
+    { title:'Udskrift og ops&aelig;tning af lokationer', badge:'Det g&oslash;r I - Onsite dag 1', cls:'kunde',
       desc:'I printer lokationslabels og p&aring;s&aelig;tter dem p&aring; hylderne. Manglende stregkoder p&aring; varer p&aring;s&aelig;ttes nu.',
       tasks:['Udskriv og p&aring;s&aelig;t lokationslabels','P&aring;s&aelig;t manglende stregkoder p&aring; varer','Sorter varer til korrekte fremtidige lokationer'] },
-    { title:'Indscanning, opl&aelig;ring og test', badge:'SmartPack - Onsite dag 2+3', cls:'sp',
+    { title:'Indscanning, opl&aelig;ring og test', badge:'SmartPack - Onsite dag 1', cls:'sp',
       desc:'Alle varer indscannes p&aring; deres lokationer. Personalet opl&aelig;res i hverdagsbrug. Vi k&oslash;rer testordrer og verificerer alle forbindelser.',
       tasks:['Indscan alle varer p&aring; lokationer i SmartPack','Opl&aelig;r superbruger og lagerpersonale','Gennemf&oslash;r testordrer med superbruger','Endelig test af systemflow og integrationer'] },
     { title:'Go-live gennemgang', badge:'SmartPack - Online', cls:'sp',
@@ -730,10 +730,10 @@ var steps = [
     { title:'Lagerstatus og validering', badge:'Det g&oslash;r I', cls:'kunde',
       desc:'I gennemf&oslash;rer en komplet lagerstatus med h&aring;ndterminaler. S&aring;dan sikres det at lagerbeh&oslash;ldningen i SmartPack matcher det fysiske lager.',
       tasks:['Gennemf&oslash;r fuld lagerstatus med h&aring;ndterminaler','Afstemt lagerbeh&oslash;ldning i SmartPack','Godkend t&aelig;lling og l&aring;s status'] },
-    { title:'Overf&oslash;rsel og test i produktion', badge:'SmartPack', cls:'sp',
+    { title:'Overf&oslash;rsel og test i produktion', badge:'SmartPack - Onsite dag 2+3', cls:'sp',
       desc:'Ordrer overf&oslash;res til SmartPack WMS og systemet testes i det rigtige produktionsmilj&oslash;.',
       tasks:['Ordrer overf&oslash;res til SmartPack WMS','Systemtest i produktionsmilj&oslash;','Bekr&aelig;ft at alle integrationer virker live'] },
-    { title:'Endelig overdragelse og live', badge:'SmartPack', cls:'sp',
+    { title:'Endelig overdragelse og live', badge:'SmartPack - Onsite dag 2+3', cls:'sp',
       desc:'Systemet er klart. Vi overdrager SmartPack WMS og aftaler kommunikationsformer, responstid og adgang til helpcenter og FAQ.',
       tasks:['Endelig overdragelse af SmartPack WMS','Aftaler kommunikation og responstid','Adgang til helpcenter, FAQ og yderligere tr&aelig;ning','Fri og ubegr&aelig;nset support til 2 superbrugere aktiveres'] },
     { title:'Opf&oslash;lgning efter 1 m&aring;ned', badge:'SmartPack', cls:'sp',
