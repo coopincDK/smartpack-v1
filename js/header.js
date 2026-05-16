@@ -32,6 +32,7 @@
       '        <div class="nav__megamenu">',
       '          <a href="' + url('/funktioner.html') + '" class="nav__mega-item"><strong>Funktioner</strong><span>Alt hvad dit lager har brug for</span></a>',
       '          <a href="' + url('/onboarding.html') + '" class="nav__mega-item"><strong>Onboarding</strong><span>Fra aftale til live p&aring; ca. 7 dage</span></a>',
+      '          <a href="' + url('/support.html') + '" class="nav__mega-item"><strong>Support &amp; Superbrugere</strong><span>Fri og ubegr&aelig;nset support til superbrugere</span></a>',
       '          <a href="' + url('/integrationer.html') + '" class="nav__mega-item"><strong>Integrationer</strong><span>Forbindelser klar til brug</span></a>',
       '          <a href="' + url('/faq.html') + '" class="nav__mega-item"><strong>FAQ</strong><span>Svar på de hyppigste spørgsmål</span></a>',
       '          <a href="' + url('/om-os.html') + '" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>',
