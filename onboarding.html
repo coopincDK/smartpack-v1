@@ -152,7 +152,7 @@
   .stat-strip { grid-template-columns:1fr 1fr; }
 }
   /* Interactive flow infographic */
-  .ob-flow { margin-top:1.75rem; }
+  .ob-flow { margin-top:1.75rem; display:flex; flex-direction:column; gap:.75rem; }
   .ob-flow-row { display:flex; align-items:stretch; }
   .ob-flow-sep { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:1.4rem; color:rgba(130,130,130,.5); font-size:.95rem; user-select:none; pointer-events:none; }
   .ob-flow-snake { line-height:0; }
@@ -278,13 +278,7 @@
         </button>
       </div>
 
-      <!-- Slangekobling 1 til 2 -->
-      <div class="ob-flow-snake" aria-hidden="true">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="height:2.2rem">
-          <defs><marker id="arr1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="rgba(130,130,130,.55)" stroke-width="1"/></marker></defs>
-          <path d="M 97 2 L 97 50 L 3 50 L 3 98" fill="none" stroke="rgba(130,130,130,.45)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr1)"/>
-        </svg>
-      </div>
+
 
       <!-- R&aelig;kke 2: trin 5-8 -->
       <div class="ob-flow-row">
@@ -313,13 +307,7 @@
         </button>
       </div>
 
-      <!-- Slangekobling 2 til 3 -->
-      <div class="ob-flow-snake" aria-hidden="true">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="height:2.2rem">
-          <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="rgba(130,130,130,.55)" stroke-width="1"/></marker></defs>
-          <path d="M 97 2 L 97 50 L 3 50 L 3 98" fill="none" stroke="rgba(130,130,130,.45)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr2)"/>
-        </svg>
-      </div>
+
 
       <!-- R&aelig;kke 3: trin 9-12 -->
       <div class="ob-flow-row">
