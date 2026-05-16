@@ -151,7 +151,40 @@
   .ob-cta { padding:2.5rem 1.5rem; }
   .stat-strip { grid-template-columns:1fr 1fr; }
 }
-</style>
+  /* Interactive flow infographic */
+  .ob-ifg { display:grid; grid-template-columns:repeat(4,1fr); gap:.85rem; margin-top:1.75rem; }
+  .ob-ifg-box { border:2px solid; border-radius:10px; padding:1rem 1rem .9rem; cursor:pointer; transition:transform .15s ease,box-shadow .15s ease; background:var(--bg-1); }
+  .ob-ifg-box:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,.14); }
+  .ob-ifg-box:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .ob-ifg-box--kunde  { border-color:#3ecf8e; }
+  .ob-ifg-box--faelles{ border-color:#c0392b; }
+  .ob-ifg-box--sp     { border-color:#8b6914; }
+  .ob-ifg-num  { font-size:.68rem; font-weight:800; opacity:.45; margin-bottom:.3rem; }
+  .ob-ifg-title{ font-size:.88rem; font-weight:700; color:var(--text-1); line-height:1.4; }
+  .ob-ifg-badge{ font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.09em; margin-top:.45rem; }
+  .ob-ifg-badge--kunde  { color:#3ecf8e; }
+  .ob-ifg-badge--faelles{ color:#c0392b; }
+  .ob-ifg-badge--sp     { color:#8b6914; }
+  .ob-ifg-hint { font-size:.7rem; color:var(--text-3); margin-top:1rem; text-align:center; }
+  /* Modal */
+  .ob-modal-bg { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9000; display:flex; align-items:center; justify-content:center; padding:1.25rem; backdrop-filter:blur(3px); }
+  .ob-modal-bg[hidden] { display:none; }
+  .ob-modal { background:var(--bg-1); border-radius:14px; max-width:500px; width:100%; padding:2rem 2rem 1.75rem; position:relative; max-height:88vh; overflow-y:auto; box-shadow:0 24px 60px rgba(0,0,0,.35); }
+  .ob-modal__close { position:absolute; top:.9rem; right:.9rem; background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-3); line-height:1; padding:.25rem .4rem; border-radius:6px; }
+  .ob-modal__close:hover { background:var(--bg-2); color:var(--text-1); }
+  .ob-modal__step { font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; opacity:.5; margin-bottom:.35rem; }
+  .ob-modal__badge { display:inline-block; font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:.09em; padding:.2em .65em; border-radius:999px; margin-bottom:.85rem; }
+  .ob-modal__badge--kunde  { background:rgba(62,207,142,.12); color:#3ecf8e; }
+  .ob-modal__badge--faelles{ background:rgba(192,57,43,.1);  color:#c0392b; }
+  .ob-modal__badge--sp     { background:rgba(139,105,20,.1); color:#8b6914; }
+  .ob-modal__title { font-size:1.25rem; font-weight:800; color:var(--text-1); margin-bottom:.75rem; }
+  .ob-modal__desc  { font-size:.92rem; color:var(--text-2); line-height:1.7; margin-bottom:1rem; }
+  .ob-modal__tasks { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.4rem; }
+  .ob-modal__tasks li { display:flex; gap:.6rem; font-size:.88rem; color:var(--text-2); line-height:1.5; }
+  .ob-modal__tasks li::before { content:'\2713'; color:var(--accent); font-weight:800; flex-shrink:0; }
+  @media(max-width:680px){ .ob-ifg{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:380px){ .ob-ifg{ grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
 
@@ -202,10 +235,89 @@
   <div class="container">
     <div class="ob-label">Overblik</div>
     <h2 class="ob-h2">Det fulde forl&oslash;b</h2>
-    <p class="ob-lead">Herunder ses hele onboarding-flowet fra f&oslash;rste m&oslash;de til live-system.<br>Gr&oslash;n kant = Kundeopgave.<br>R&oslash;d kant = F&aelig;lles.<br>Brun/m&oslash;rk kant = SmartPack.</p>
-    <img src="assets/onboardingflow.png" alt="SmartPack onboarding flow" class="ob-infographic" loading="lazy">
+    <p class="ob-lead">12 trin fra kontrakt til live. Klik p&aring; et trin for at se detaljer.</p>
+    <div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:1.25rem;font-size:.78rem;color:var(--text-3)">
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#3ecf8e;margin-right:.3em"></span>Jeres opgave</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#c0392b;margin-right:.3em"></span>F&aelig;lles</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8b6914;margin-right:.3em"></span>SmartPack</span>
+    </div>
+    <div class="ob-ifg" id="ob-ifg" role="list">
+      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="1" role="listitem" aria-label="Trin 1">
+        <div class="ob-ifg-num">Trin 1</div>
+        <div class="ob-ifg-title">Underskrevet aftale</div>
+        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--faelles" data-step="2" role="listitem" aria-label="Trin 2">
+        <div class="ob-ifg-num">Trin 2</div>
+        <div class="ob-ifg-title">Onboarding og intr&oslash;m&oslash;det</div>
+        <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--sp" data-step="3" role="listitem" aria-label="Trin 3">
+        <div class="ob-ifg-num">Trin 3</div>
+        <div class="ob-ifg-title">Oprettelse i SmartPack</div>
+        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--faelles" data-step="4" role="listitem" aria-label="Trin 4">
+        <div class="ob-ifg-num">Trin 4</div>
+        <div class="ob-ifg-title">API-n&oslash;gler og systemadgange</div>
+        <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--sp" data-step="5" role="listitem" aria-label="Trin 5">
+        <div class="ob-ifg-num">Trin 5</div>
+        <div class="ob-ifg-title">Systemforbindelsen</div>
+        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="6" role="listitem" aria-label="Trin 6">
+        <div class="ob-ifg-num">Trin 6</div>
+        <div class="ob-ifg-title">Forberedelse af lageret</div>
+        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--sp" data-step="7" role="listitem" aria-label="Trin 7">
+        <div class="ob-ifg-num">Trin 7</div>
+        <div class="ob-ifg-title">Installation p&aring; lageret</div>
+        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 1</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="8" role="listitem" aria-label="Trin 8">
+        <div class="ob-ifg-num">Trin 8</div>
+        <div class="ob-ifg-title">Udskrift og ops&aelig;tning af lokationer</div>
+        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--faelles" data-step="9" role="listitem" aria-label="Trin 9">
+        <div class="ob-ifg-num">Trin 9</div>
+        <div class="ob-ifg-title">Go-live gennemgang</div>
+        <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles - Online</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--sp" data-step="10" role="listitem" aria-label="Trin 10">
+        <div class="ob-ifg-num">Trin 10</div>
+        <div class="ob-ifg-title">Indscanning, opl&aelig;ring og test</div>
+        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 2 og 3</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="11" role="listitem" aria-label="Trin 11">
+        <div class="ob-ifg-num">Trin 11</div>
+        <div class="ob-ifg-title">Lagerstatus og validering</div>
+        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+      </button>
+      <button class="ob-ifg-box ob-ifg-box--sp" data-step="12" role="listitem" aria-label="Trin 12">
+        <div class="ob-ifg-num">Trin 12</div>
+        <div class="ob-ifg-title">Go-live</div>
+        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+      </button>
+    </div>
+    <p class="ob-ifg-hint">Klik p&aring; et trin for at se hvad der sker</p>
   </div>
 </section>
+
+<!-- MODAL -->
+<div class="ob-modal-bg" id="ob-modal" hidden role="dialog" aria-modal="true" aria-labelledby="ob-modal-title">
+  <div class="ob-modal">
+    <button class="ob-modal__close" id="ob-modal-close" aria-label="Luk">&times;</button>
+    <div class="ob-modal__step" id="ob-modal-step"></div>
+    <span class="ob-modal__badge" id="ob-modal-badge"></span>
+    <div class="ob-modal__title" id="ob-modal-title"></div>
+    <p class="ob-modal__desc" id="ob-modal-desc"></p>
+    <ul class="ob-modal__tasks" id="ob-modal-tasks"></ul>
+  </div>
+</div>
 
 <!-- FASER -->
 <section class="ob-section">
@@ -544,5 +656,80 @@
 <script src="js/footer.js"></script>
 <script src="js/main.js" defer></script>
 
+<script>
+(function(){
+  var steps = [
+    { title:'Underskrevet aftale', badge:'Jeres opgave', cls:'kunde',
+      desc:'Aftalen underskrives mellem jer og SmartPack. Dette er startskuddet - fra nu af er I officielt i gang.',
+      tasks:['Kontrakt underskrives','Etableringspris bekr&aelig;ftes','Onboarding-forl&oslash;bet s&aelig;ttes i gang'] },
+    { title:'Onboarding og intr&oslash;m&oslash;det', badge:'F&aelig;lles', cls:'faelles',
+      desc:'Vi g&aring;r igennem hele forl&oslash;bet med jer - hvem g&oslash;r hvad, hvorn&aring;r og hvordan. I udpeger jeres superbruger.',
+      tasks:['SmartPack pr&aelig;senterer tidsplan og procesansvar','I identificerer jeres superbruger','Vi aftaler dato for onsite dag 1'] },
+    { title:'Oprettelse i SmartPack', badge:'SmartPack', cls:'sp',
+      desc:'Vi opretter jer som kunde i SmartPack WMS. Kundeprofil, brugerkonti og CMS-adgang klarg&oslash;res.',
+      tasks:['Opret kundeprofil og CMS i SmartPack','Brugerkonti oprettes til superbrugere','Systemmilj&oslash; klarg&oslash;res'] },
+    { title:'API-n&oslash;gler og systemadgange', badge:'F&aelig;lles', cls:'faelles',
+      desc:'I fremsender API-adgange til jeres webshop og fragtleverand&oslash;rer. Vi sikrer alle forbindelser er klar til integration.',
+      tasks:['I fremsender logins til fragtintegrationer','I sikrer at alle varer har unik SKU og stregkode','SmartPack bekr&aelig;fter modtagelse og tester adgange'] },
+    { title:'Systemforbindelsen', badge:'SmartPack', cls:'sp',
+      desc:'Vi kobler jeres webshop og fragtleverand&oslash;rer til SmartPack og indl&aelig;ser alle varer. Fejlprodukter rapporteres til jer.',
+      tasks:['Forbind CMS til SmartPack','Indl&aelig;s alle varer i systemet','Rapport over fejlprodukter (manglende data) sendes til jer'] },
+    { title:'Forberedelse af lageret', badge:'Jeres opgave', cls:'kunde',
+      desc:'Inden vi kommer ud skal lageret v&aelig;re klar og hardware indkj&oslash;bt. Jo bedre forberedelse, jo hurtigere dag 1.',
+      tasks:['Organis&eacute;r og ryd op p&aring; lageret','Indk&oslash;b scannere, printere og totes/kasser','Hardware skal v&aelig;re p&aring; plads inden onsite dag 1'] },
+    { title:'Installation p&aring; lageret', badge:'SmartPack - Onsite dag 1', cls:'sp',
+      desc:'Vi er fysisk til stede p&aring; jeres lager. Lageret optegnes digitalt, hardware ops&aelig;ttes og superbrugeren introduceres.',
+      tasks:['Digital lageroptegning: reoler, hylder, lokationer','Ops&aelig;t og kalibr&eacute;r scannere og printere','Installer og test Printerservice p&aring; udpeget computer','Introducer superbruger til udskrift af lagerlokationer'] },
+    { title:'Udskrift og ops&aelig;tning af lokationer', badge:'Jeres opgave', cls:'kunde',
+      desc:'I printer lokationslabels og p&aring;s&aelig;tter dem p&aring; hylderne. Manglende stregkoder p&aring; varer p&aring;s&aelig;ttes nu.',
+      tasks:['Udskriv og p&aring;s&aelig;t lokationslabels p&aring; alle hylder','P&aring;s&aelig;t manglende stregkoder p&aring; varer','Sorter varer til de rigtige lokationer'] },
+    { title:'Go-live gennemgang', badge:'F&aelig;lles - Online m&oslash;de', cls:'faelles',
+      desc:'30 minutters online check: er alt klar til dag 2 og 3? Vi afklarer &aring;bne punkter og planl&aelig;gger de to sidste onsite-dage.',
+      tasks:['Afklar status p&aring; lokationsops&aelig;tning','Planl&aelig;g onsite dag 2 og 3','Opsaml &aring;bne opgaver'] },
+    { title:'Indscanning, opl&aelig;ring og test', badge:'SmartPack - Onsite dag 2 og 3', cls:'sp',
+      desc:'Vi indscannes alle varer p&aring; lokationer. Personalet opl&aelig;res. Vi k&oslash;rer testordrer og verificerer alle forbindelser.',
+      tasks:['Indscan alle varer p&aring; lokationer i SmartPack','Opl&aelig;r superbruger og lagerpersonale','Gennemf&oslash;r testordrer med superbruger','Endelig test af systemflow og integrationer'] },
+    { title:'Lagerstatus og validering', badge:'Jeres opgave', cls:'kunde',
+      desc:'I gennemf&oslash;rer en komplet lagerstatus med h&aring;ndterminaler. S&aring;dan sikres det at lagerbeh&oslash;ldningen i SmartPack matcher det fysiske lager.',
+      tasks:['Gennemf&oslash;r fuld lagerstatus med h&aring;ndterminaler','Afstemt lagerbeh&oslash;ldning i SmartPack','Godkend t&aelig;lling og l&aring;s status'] },
+    { title:'Go-live', badge:'SmartPack', cls:'sp',
+      desc:'Systemet er klart. Vi overdrager SmartPack WMS og aftaler kommunikationsformer og support. I er live.',
+      tasks:['Endelig overdragelse af SmartPack WMS','Aftaler kommunikation og responstid','Adgang til helpcenter, FAQ og yderligere tr&aelig;ning','Fri og ubegr&aelig;nset support til 2 superbrugere aktiveres'] }
+  ];
+
+  var modal = document.getElementById('ob-modal');
+  var modalStep = document.getElementById('ob-modal-step');
+  var modalBadge = document.getElementById('ob-modal-badge');
+  var modalTitle = document.getElementById('ob-modal-title');
+  var modalDesc = document.getElementById('ob-modal-desc');
+  var modalTasks = document.getElementById('ob-modal-tasks');
+  var closeBtn = document.getElementById('ob-modal-close');
+
+  document.getElementById('ob-ifg').addEventListener('click', function(e) {
+    var box = e.target.closest('[data-step]');
+    if (!box) return;
+    var i = parseInt(box.dataset.step) - 1;
+    var s = steps[i];
+    modalStep.textContent = 'Trin ' + (i+1) + ' af 12';
+    modalBadge.innerHTML = s.badge;
+    modalBadge.className = 'ob-modal__badge ob-modal__badge--' + s.cls;
+    modalTitle.innerHTML = s.title;
+    modalDesc.innerHTML = s.desc;
+    modalTasks.innerHTML = s.tasks.map(function(t){ return '<li>' + t + '</li>'; }).join('');
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  });
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+})();
+</script>
 </body>
 </html>
