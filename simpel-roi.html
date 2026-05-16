@@ -78,6 +78,11 @@
 .roi-hero__grid { display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center }
 .roi-hero-video-wrap { position:relative;width:100%;padding-bottom:56.25%;border-radius:14px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.35);border:1px solid var(--border) }
 .roi-hero-video-wrap iframe { position:absolute;inset:0;width:100%;height:100%;border:0 }
+    .roi-quote-overlay { position:absolute;bottom:0;left:0;right:0;margin:0;padding:1rem 1.25rem 1rem 1.1rem;background:linear-gradient(to top,rgba(0,0,0,.92) 60%,transparent);border-left:3px solid var(--accent);pointer-events:none; }
+    .roi-quote-overlay p { font-size:.82rem;color:#fff;line-height:1.55;font-style:italic;margin:0 0 .4rem;text-shadow:0 1px 3px rgba(0,0,0,.5); }
+    .roi-quote-overlay footer { font-size:.72rem; }
+    .roi-quote-overlay strong { color:var(--accent);font-weight:800; }
+    .roi-quote-overlay span { color:rgba(255,255,255,.6); }
 @media(max-width:860px){.roi-hero__grid{grid-template-columns:1fr}.roi-hero-video-wrap{margin-top:1rem}}
 
 /* Main grid */
@@ -479,6 +484,10 @@
           allowfullscreen
           loading="lazy"
         ></iframe>
+        <blockquote class="roi-quote-overlay">
+          <p>&ldquo;Vi havde meget mere oms&aelig;tning, som kunne h&aring;ndteres af langt f&aelig;rre personer.&rdquo;</p>
+          <footer><strong>Jester</strong><span> &mdash; CEO, Firstgrade</span></footer>
+        </blockquote>
       </div>
     </div>
   </div>
