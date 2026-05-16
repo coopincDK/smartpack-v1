@@ -152,7 +152,12 @@
   .stat-strip { grid-template-columns:1fr 1fr; }
 }
   /* Interactive flow infographic */
-  .ob-ifg { display:grid; grid-template-columns:repeat(4,1fr); gap:.85rem; margin-top:1.75rem; }
+  .ob-flow { margin-top:1.75rem; }
+  .ob-flow-row { display:flex; align-items:stretch; }
+  .ob-flow-sep { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:1.4rem; color:rgba(130,130,130,.5); font-size:.95rem; user-select:none; pointer-events:none; }
+  .ob-flow-snake { line-height:0; }
+  .ob-flow-snake svg { width:100%; height:2rem; display:block; overflow:visible; }
+  .ob-ifg-box { flex:1; min-width:0; }
   .ob-ifg-box { border:2px solid; border-radius:10px; padding:1rem 1rem .9rem; cursor:pointer; transition:transform .15s ease,box-shadow .15s ease; background:var(--bg-1); }
   .ob-ifg-box:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,.14); }
   .ob-ifg-box:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
@@ -182,8 +187,11 @@
   .ob-modal__tasks { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.4rem; }
   .ob-modal__tasks li { display:flex; gap:.6rem; font-size:.88rem; color:var(--text-2); line-height:1.5; }
   .ob-modal__tasks li::before { content:'\2713'; color:var(--accent); font-weight:800; flex-shrink:0; }
-  @media(max-width:680px){ .ob-ifg{ grid-template-columns:repeat(2,1fr); } }
-  @media(max-width:380px){ .ob-ifg{ grid-template-columns:1fr; } }
+  @media(max-width:700px){
+    .ob-flow-row { flex-direction:column; }
+    .ob-flow-sep { width:auto; height:1.1rem; }
+    .ob-flow-snake { display:none; }
+  }
   </style>
 </head>
 <body>
@@ -241,67 +249,105 @@
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#c0392b;margin-right:.3em"></span>F&aelig;lles</span>
       <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#8b6914;margin-right:.3em"></span>SmartPack</span>
     </div>
-    <div class="ob-ifg" id="ob-ifg" role="list">
-      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="1" role="listitem" aria-label="Trin 1">
-        <div class="ob-ifg-num">Trin 1</div>
-        <div class="ob-ifg-title">Underskrevet aftale</div>
-        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--faelles" data-step="2" role="listitem" aria-label="Trin 2">
-        <div class="ob-ifg-num">Trin 2</div>
-        <div class="ob-ifg-title">Onboarding og intr&oslash;m&oslash;det</div>
-        <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--sp" data-step="3" role="listitem" aria-label="Trin 3">
-        <div class="ob-ifg-num">Trin 3</div>
-        <div class="ob-ifg-title">Oprettelse i SmartPack</div>
-        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--faelles" data-step="4" role="listitem" aria-label="Trin 4">
-        <div class="ob-ifg-num">Trin 4</div>
-        <div class="ob-ifg-title">API-n&oslash;gler og systemadgange</div>
-        <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--sp" data-step="5" role="listitem" aria-label="Trin 5">
-        <div class="ob-ifg-num">Trin 5</div>
-        <div class="ob-ifg-title">Systemforbindelsen</div>
-        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="6" role="listitem" aria-label="Trin 6">
-        <div class="ob-ifg-num">Trin 6</div>
-        <div class="ob-ifg-title">Forberedelse af lageret</div>
-        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--sp" data-step="7" role="listitem" aria-label="Trin 7">
-        <div class="ob-ifg-num">Trin 7</div>
-        <div class="ob-ifg-title">Installation p&aring; lageret</div>
-        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 1</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="8" role="listitem" aria-label="Trin 8">
-        <div class="ob-ifg-num">Trin 8</div>
-        <div class="ob-ifg-title">Udskrift og ops&aelig;tning af lokationer</div>
-        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--faelles" data-step="9" role="listitem" aria-label="Trin 9">
-        <div class="ob-ifg-num">Trin 9</div>
-        <div class="ob-ifg-title">Go-live gennemgang</div>
-        <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles - Online</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--sp" data-step="10" role="listitem" aria-label="Trin 10">
-        <div class="ob-ifg-num">Trin 10</div>
-        <div class="ob-ifg-title">Indscanning, opl&aelig;ring og test</div>
-        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 2 og 3</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--kunde" data-step="11" role="listitem" aria-label="Trin 11">
-        <div class="ob-ifg-num">Trin 11</div>
-        <div class="ob-ifg-title">Lagerstatus og validering</div>
-        <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
-      </button>
-      <button class="ob-ifg-box ob-ifg-box--sp" data-step="12" role="listitem" aria-label="Trin 12">
-        <div class="ob-ifg-num">Trin 12</div>
-        <div class="ob-ifg-title">Go-live</div>
-        <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
-      </button>
+    <div id="ob-ifg" class="ob-flow">
+
+      <!-- R&aelig;kke 1: trin 1-4 -->
+      <div class="ob-flow-row">
+        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="1" aria-label="Trin 1">
+          <div class="ob-ifg-num">Trin 1</div>
+          <div class="ob-ifg-title">Underskrevet aftale</div>
+          <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--faelles" data-step="2" aria-label="Trin 2">
+          <div class="ob-ifg-num">Trin 2</div>
+          <div class="ob-ifg-title">Onboarding og intr&oslash;m&oslash;det</div>
+          <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="3" aria-label="Trin 3">
+          <div class="ob-ifg-num">Trin 3</div>
+          <div class="ob-ifg-title">Oprettelse i SmartPack</div>
+          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--faelles" data-step="4" aria-label="Trin 4">
+          <div class="ob-ifg-num">Trin 4</div>
+          <div class="ob-ifg-title">API-n&oslash;gler og systemadgange</div>
+          <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles</div>
+        </button>
+      </div>
+
+      <!-- Slangekobling 1 til 2 -->
+      <div class="ob-flow-snake" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="height:2.2rem">
+          <defs><marker id="arr1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="rgba(130,130,130,.55)" stroke-width="1"/></marker></defs>
+          <path d="M 97 2 L 97 50 L 3 50 L 3 98" fill="none" stroke="rgba(130,130,130,.45)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr1)"/>
+        </svg>
+      </div>
+
+      <!-- R&aelig;kke 2: trin 5-8 -->
+      <div class="ob-flow-row">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="5" aria-label="Trin 5">
+          <div class="ob-ifg-num">Trin 5</div>
+          <div class="ob-ifg-title">Systemforbindelsen</div>
+          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="6" aria-label="Trin 6">
+          <div class="ob-ifg-num">Trin 6</div>
+          <div class="ob-ifg-title">Forberedelse af lageret</div>
+          <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="7" aria-label="Trin 7">
+          <div class="ob-ifg-num">Trin 7</div>
+          <div class="ob-ifg-title">Installation p&aring; lageret</div>
+          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 1</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="8" aria-label="Trin 8">
+          <div class="ob-ifg-num">Trin 8</div>
+          <div class="ob-ifg-title">Udskrift og ops&aelig;tning af lokationer</div>
+          <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+        </button>
+      </div>
+
+      <!-- Slangekobling 2 til 3 -->
+      <div class="ob-flow-snake" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="height:2.2rem">
+          <defs><marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="rgba(130,130,130,.55)" stroke-width="1"/></marker></defs>
+          <path d="M 97 2 L 97 50 L 3 50 L 3 98" fill="none" stroke="rgba(130,130,130,.45)" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr2)"/>
+        </svg>
+      </div>
+
+      <!-- R&aelig;kke 3: trin 9-12 -->
+      <div class="ob-flow-row">
+        <button class="ob-ifg-box ob-ifg-box--faelles" data-step="9" aria-label="Trin 9">
+          <div class="ob-ifg-num">Trin 9</div>
+          <div class="ob-ifg-title">Go-live gennemgang</div>
+          <div class="ob-ifg-badge ob-ifg-badge--faelles">F&aelig;lles - Online</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="10" aria-label="Trin 10">
+          <div class="ob-ifg-num">Trin 10</div>
+          <div class="ob-ifg-title">Indscanning, opl&aelig;ring og test</div>
+          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 2+3</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="11" aria-label="Trin 11">
+          <div class="ob-ifg-num">Trin 11</div>
+          <div class="ob-ifg-title">Lagerstatus og validering</div>
+          <div class="ob-ifg-badge ob-ifg-badge--kunde">Jeres opgave</div>
+        </button>
+        <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="12" aria-label="Trin 12">
+          <div class="ob-ifg-num">Trin 12</div>
+          <div class="ob-ifg-title">Go-live &#127680;</div>
+          <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
+        </button>
+      </div>
+
     </div>
     <p class="ob-ifg-hint">Klik p&aring; et trin for at se hvad der sker</p>
   </div>
