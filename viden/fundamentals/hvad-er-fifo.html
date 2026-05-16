@@ -74,7 +74,7 @@
     <div class="article-meta"><time datetime="2025-05-09">9. maj 2025</time><span>~5 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>FIFO er den lagerregel alle nikker genkendende til, og halvdelen ignorerer — indtil de opdager 47.000 kr. i udløbet lager uge 48, midt i Black Friday-forberedelsen, når der ikke er tid til at fikse det.</p>
+    <p>FIFO er den lagerregel alle nikker genkendende til, og halvdelen ignorerer - indtil de opdager 47.000 kr. i udløbet lager uge 48, midt i Black Friday-forberedelsen, når der ikke er tid til at fikse det.</p>
     <p>First In, First Out. Første vare ind, første vare ud. Simpelt på papiret. I virkeligheden er det forskellen på om du sender friske varer til kunder eller opdager problemet når en kunde klager over 3 måneders resterende holdbarhed på et 18-måneders produkt.</p>
 
     <h2>Hvad betyder FIFO i praksis på lageret?</h2>
@@ -139,16 +139,16 @@
     <p><strong>Gør IKKE:</strong> Implementer WMS uden at rydde op i eksisterende lager først. Gammel beholdning skal ud eller kasseres før go-live.</p>
 
     <h2>Det her går galt i virkeligheden</h2>
-    <p>FIFO fejler ikke fordi folk ikke ved hvad det er. Det fejler fordi lageret ikke er bygget til det — og fordi de opdager det for sent.</p>
+    <p>FIFO fejler ikke fordi folk ikke ved hvad det er. Det fejler fordi lageret ikke er bygget til det - og fordi de opdager det for sent.</p>
 
     <h3>Scenarie 1: Returvarer bryder systemet</h3>
     <p>En kunde returnerer en vare fra marts. Den lander i retur-zonen i april, godkendes i maj og kommer tilbage på lager i juni. Systemet siger juni. Virkeligheden siger marts. Returvaren bliver den "nyeste" vare og sendes ud igen med 3 måneders kortere holdbarhed end kunden forventer.</p>
-    <p><strong>Konsekvens:</strong> Næste kunde klager over kort holdbarhed. Returhåndtering koster 1.200 kr. per sag. Opdages først når klagen kommer ind — 2-3 uger efter afsendelse.</p>
+    <p><strong>Konsekvens:</strong> Næste kunde klager over kort holdbarhed. Returhåndtering koster 1.200 kr. per sag. Opdages først når klagen kommer ind - 2-3 uger efter afsendelse.</p>
     <p><strong>Løsning:</strong> Registrer returvarer med original modtagelsesdato, ikke godkendelsesdato. Kræver WMS eller manuel datostempling på returlabel.</p>
 
     <h3>Scenarie 2: Leverandøren sender i forkert rækkefølge</h3>
     <p>Du bestiller batch A (produceret uge 10) og batch B (produceret uge 12). Batch B ankommer først fordi logistikken fejlede. Hvis dit system kun kender modtagelsesdato, sender du nu de yngste varer ud først. Batch A bliver liggende til det udløber.</p>
-    <p><strong>Konsekvens:</strong> 18.000 kr. i batch A kasseres ved næste lageroptælling. Opdages først når der er 2 måneder til udløb — for sent til at sælge videre.</p>
+    <p><strong>Konsekvens:</strong> 18.000 kr. i batch A kasseres ved næste lageroptælling. Opdages først når der er 2 måneder til udløb - for sent til at sælge videre.</p>
     <p><strong>Løsning:</strong> Registrer produktionsdato eller batchnummer ved modtagelse, ikke kun modtagelsesdato. Skift til FEFO hvis leverandør ikke leverer i kronologisk rækkefølge.</p>
 
     <h3>Scenarie 3: Plukkeren kan ikke se forskellen</h3>
@@ -166,11 +166,11 @@
       
       <li><strong>Vækst gør det værre:</strong> Ved 30 ordrer/dag virker manuel FIFO fint. Ved 80 ordrer/dag kollapser det. Overgangen sker over 4-6 måneder, og du opdager først tabet når Q4-regnskabet lukkes.</li>
       
-      <li><strong>Sæsonvarer afslører det:</strong> Black Friday, jul, valentinsdag — når volumen stiger 3x i 2 uger, kan plukkere ikke følge med. De tager hvad der er nemmest. Gammel beholdning bliver liggende. Opdages i januar når der laves oprydning.</li>
+      <li><strong>Sæsonvarer afslører det:</strong> Black Friday, jul, valentinsdag - når volumen stiger 3x i 2 uger, kan plukkere ikke følge med. De tager hvad der er nemmest. Gammel beholdning bliver liggende. Opdages i januar når der laves oprydning.</li>
     </ul>
 
     <h3>Case: Kosmetikgrossist, uge 48, 2024</h3>
-    <p>Virksomhed med 450 ordrer/uge opdager mandag d. 25. november at 47.000 kr. i hudplejeprodukter udløber inden årsskiftet. Problemet opdages fordi en ny medarbejder starter og stiller spørgsmål til hvorfor der står to paller af samme produkt — én med støv på.</p>
+    <p>Virksomhed med 450 ordrer/uge opdager mandag d. 25. november at 47.000 kr. i hudplejeprodukter udløber inden årsskiftet. Problemet opdages fordi en ny medarbejder starter og stiller spørgsmål til hvorfor der står to paller af samme produkt - én med støv på.</p>
     <p>De har 5 uger til at sælge produkterne. Black Friday er om 4 dage. De kan ikke nå at lave kampagne. Resultatet: 32.000 kr. kasseres, 15.000 kr. sælges til 40% rabat via outlet-kanal.</p>
     <p><strong>årsag:</strong> Ingen registrering af modtagelsesdato. Plukkere tog altid fra den palle der stod nærmest døren. Gammel beholdning blev skubbet længere ind i lageret.</p>
     <p><strong>Løsning implementeret:</strong> WMS med FIFO-logik + ugentlig rapport over varer med under 120 dage til udløb. Cost: 35.000 kr. opsætning. Besparelse år 1: 98.000 kr.</p>
@@ -233,9 +233,9 @@
 
     <h3>SmartPack giver IKKE mening når:</h3>
     <ul>
-      <li>Du har <strong>under 20 ordrer/dag</strong> — manuel FIFO med dobbelt-zone metoden er billigere og hurtigere at implementere</li>
-      <li>Dine varer <strong>ikke har udløbsdato</strong> og ikke mister værdi over tid — FIFO er nice-to-have, ikke must-have</li>
-      <li>Du har <strong>én pluklokation per varenummer</strong> — der er ingen rotation at styre</li>
+      <li>Du har <strong>under 20 ordrer/dag</strong> - manuel FIFO med dobbelt-zone metoden er billigere og hurtigere at implementere</li>
+      <li>Dine varer <strong>ikke har udløbsdato</strong> og ikke mister værdi over tid - FIFO er nice-to-have, ikke must-have</li>
+      <li>Du har <strong>én pluklokation per varenummer</strong> - der er ingen rotation at styre</li>
     </ul>
 
     <h3>Alternativet koster:</h3>

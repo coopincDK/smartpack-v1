@@ -1286,7 +1286,7 @@ function beregn() {
   const pakkerPrTimeNu = timerIAlt > 0 ? pakker / timerIAlt : 0;
 
   // Hvis brugerens nuv. performance >= branchens median, brug max i stedet
-  // (de er allerede over gennemsnittet — vis hvad de bedste på SP opnår)
+  // (de er allerede over gennemsnittet - vis hvad de bedste på SP opnår)
   const usedMax        = b.max > 0 && pakkerPrTimeNu >= b.median;
   const spEffektiv     = usedMax ? b.max : b.median;
 
