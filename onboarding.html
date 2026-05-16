@@ -360,6 +360,7 @@
     <div class="ob-modal__title" id="ob-modal-title"></div>
     <p class="ob-modal__desc" id="ob-modal-desc"></p>
     <ul class="ob-modal__tasks" id="ob-modal-tasks"></ul>
+    <div id="ob-modal-cta"></div>
   </div>
 </div>
 
@@ -754,7 +755,8 @@ var steps = [
       tasks:['Endelig overdragelse af SmartPack WMS','Aftaler kommunikation og responstid','Adgang til helpcenter, FAQ og yderligere tr&aelig;ning','Fri og ubegr&aelig;nset support til 2 superbrugere aktiveres'] },
     { title:'Vi f&oslash;lger op og glemmer jer ikke', badge:'SmartPack', cls:'sp',
       desc:'I perioden efter go-live har vi ekstra fokus p&aring; jer. Statusm&oslash;de efter 1 m&aring;ned er standard. Vi laver ogs&aring; opf&oslash;lgning efter 3 m&aring;neder og 1 &aring;r efter behov.',
-      tasks:['Gennemgang af brug og performance efter 1 m&aring;ned','Opf&oslash;lgning efter 3 m&aring;neder (efter behov)','&Aring;rlig opf&oslash;lgning (efter behov)','Justeringer og optimeringer aftales l&oslash;bende'] }
+      tasks:['Gennemgang af brug og performance efter 1 m&aring;ned','Opf&oslash;lgning efter 3 m&aring;neder (efter behov)','&Aring;rlig opf&oslash;lgning (efter behov)','Justeringer og optimeringer aftales l&oslash;bende'],
+      cta:'Har I brug for hj&aelig;lp? Jeres superbrugere kan altid r&aelig;kke ud til os. <a href="support.html" style="color:var(--accent);font-weight:700;text-decoration:none">L&aelig;s mere om superbrugere &rarr;</a>' }
   ];
 
 
@@ -777,6 +779,8 @@ var steps = [
     modalTitle.innerHTML = s.title;
     modalDesc.innerHTML = s.desc;
     modalTasks.innerHTML = s.tasks.map(function(t){ return '<li>' + t + '</li>'; }).join('');
+    var ctaEl = document.getElementById('ob-modal-cta');
+    if (ctaEl) { ctaEl.innerHTML = s.cta ? '<p style="margin:1rem 0 0;font-size:.85rem;color:var(--text-2);padding-top:1rem;border-top:1px solid var(--border)">' + s.cta + '</p>' : ''; }
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
     closeBtn.focus();
