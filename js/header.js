@@ -38,7 +38,6 @@
       '          <a href="' + url('/om-os.html') + '" class="nav__mega-item"><strong>Om os</strong><span>Historien bag SmartPack</span></a>',
       '          <a href="' + url('/medarbejdere.html') + '" class="nav__mega-item"><strong>Teamet</strong><span>Mød folkene bag systemet</span></a>',
       '          <a href="' + url('/3pl.html') + '" class="nav__mega-item"><strong>3PL &amp; Lagerhotel</strong><span>WMS til lagerhoteller</span></a>',
-      '          <a href="' + url('/simpel-roi.html') + '" class="nav__mega-item"><strong>ROI Beregner</strong><span>Hvad sparer du med SmartPack?</span></a>',
       '        </div>',
       '      </li>',
       '      <li><a href="' + url('/priser.html') + '" class="nav__link">Priser</a></li>',
