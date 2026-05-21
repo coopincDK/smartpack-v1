@@ -38,9 +38,10 @@
 
 <div class="stats" id="stats">
   <h1>📊 Besøg på /beregner/</h1>
-  <div class="sub">Ugentlig oversigt &middot; Seneste 60 uger</div>
+  <div class="sub">Ugentlig oversigt</div>
   <div id="chartArea"><div class="loading">Henter data...</div></div>
   <div class="total" id="totalArea"></div>
+  <button id="expandBtn" onclick="loadMore()" style="display:none;margin-top:14px;padding:8px 18px;border-radius:8px;border:1.5px solid #d1d5db;background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;color:#1a3d2b">Se seneste 1 år →</button>
 </div>
 
 <script>
@@ -74,7 +75,18 @@ function getWeeks(n) {
 }
 
 async function loadStats() {
-  const weeks = getWeeks(60);
+  await renderWeeks(8);
+  document.getElementById('expandBtn').style.display = 'inline-block';
+}
+
+async function loadMore() {
+  document.getElementById('expandBtn').style.display = 'none';
+  document.getElementById('expandBtn').textContent = 'Henter...';
+  await renderWeeks(52);
+}
+
+async function renderWeeks(n) {
+  const weeks = getWeeks(n);
   const results = await Promise.all(
     weeks.map(w =>
       fetch(`https://api.countapi.xyz/get/smartpack-dk/${w.key}`)
@@ -97,7 +109,7 @@ async function loadStats() {
   `).join('');
 
   document.getElementById('totalArea').innerHTML =
-    `Total seneste 60 uger: <strong>${total} besøg</strong>`;
+    `Total seneste ${n} uger: <strong>${total} bes\u00f8g</strong>`;
 }
 </script>
 </body>
