@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="1; url=https://smartpack.dk/udvidet-roi">
+<link rel="canonical" href="https://smartpack.dk/udvidet-roi">
+<title>Viderestiller...</title>
+</head>
+<body>
+<p style="font-family:sans-serif;color:#666;text-align:center;margin-top:80px">Viderestiller...</p>
+<script>
+// Tæl besøget (ugentlig nøgle)
+(function() {
+  function getWeekKey() {
+    const now = new Date();
+    const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const week = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+    return `beregner-${d.getUTCFullYear()}-W${String(week).padStart(2,'0')}`;
+  }
+  fetch(`https://api.countapi.xyz/hit/smartpack-dk/${getWeekKey()}`).catch(()=>{});
+})();
+setTimeout(() => window.location.replace('https://smartpack.dk/udvidet-roi'), 300);
+</script>
+</body>
+</html>
