@@ -53,6 +53,7 @@
       '            <li><a href="' + url('/faq.html') + '">FAQ</a></li>',
       '            <li><a href="mailto:support@smartpack.dk">support@smartpack.dk</a></li>',
       '            <li><a href="https://support.smartpack.dk" target="_blank" rel="noopener">Helpdesk &amp; tickets</a></li>',
+      '            <li><a href="' + url('/driftinformation.html') + '">Driftinformation</a></li>',
       phoneHtml,
       '          </ul>',
       '        </div>',
