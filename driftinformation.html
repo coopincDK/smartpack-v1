@@ -68,8 +68,11 @@
     }
     .drift-contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 700px) {
+      .drift-contact-grid { grid-template-columns: 1fr; }
     }
     .drift-contact-item {
       display: flex;
@@ -81,8 +84,8 @@
       color: var(--accent);
       margin-top: .15rem;
     }
-    .drift-contact-item strong { display: block; font-size: .9rem; margin-bottom: .2rem; }
-    .drift-contact-item span { font-size: .85rem; color: var(--text-2); line-height: 1.5; }
+    .drift-contact-item strong { display: block; font-size: .9rem; margin-bottom: .3rem; }
+    .drift-contact-item span { display: block; font-size: .875rem; color: var(--text-2); line-height: 1.5; margin-bottom: .15rem; }
     .drift-contact-item a { color: var(--accent); text-decoration: none; font-weight: 600; }
     .drift-contact-item a:hover { text-decoration: underline; }
   </style>
@@ -132,7 +135,8 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
           <div>
             <strong>Telefon i normal &aring;bningstid</strong>
-            <span><a href="tel:+4588202019">88 20 20 19</a> &mdash; tryk <strong>2</strong><br>Mandag&ndash;fredag kl. 09.00&ndash;16.00</span>
+            <span><a href="tel:+4588202019">88 20 20 19</a>, tryk <strong style="color:var(--accent)">2</strong></span>
+            <span>Mandag&ndash;fredag kl. 09.00&ndash;16.00</span>
           </div>
         </div>
 
@@ -140,7 +144,8 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <div>
             <strong>Akut hj&aelig;lp uden for &aring;bningstid</strong>
-            <span><a href="tel:+4588202019">88 20 20 19</a> &mdash; tryk <strong>9</strong><br>Ved driftskritiske SmartPack-fejl</span>
+            <span><a href="tel:+4588202019">88 20 20 19</a>, tryk <strong style="color:var(--accent)">9</strong></span>
+            <span>Ved driftskritiske SmartPack-fejl</span>
           </div>
         </div>
 
