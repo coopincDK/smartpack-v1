@@ -77,7 +77,7 @@
       '      </div>',
       '    </div>',
       '    <div class="footer__bottom">',
-      '      <p>&copy; <span id="copy-year"></span> SmartPack ApS &middot; CVR 42007617 &middot; Torvegade 3, 8963 Auning</p>',
+      '      <p>&copy; <span id="copy-year"></span> SmartPack ApS &middot; CVR 42007617 &middot; Østerbrogade 67A, 8500 Grenaa</p>',
       '      <div class="footer__badges">',
       '        <span class="footer__badge">E-handel siden 2005</span>',
       '        <span class="footer__badge">Medlem af Dansk Erhverv</span>',

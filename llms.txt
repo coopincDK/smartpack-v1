@@ -19,7 +19,7 @@ Centrale egenskaber:
 
 - Virksomhed: SmartPack ApS
 - CVR: 42007617
-- Adresse: Torvegade 3, 8963 Auning, Danmark
+- Adresse: Østerbrogade 67A, 8500 Grenaa, Danmark
 - Telefon: +45 88 20 20 19
 - Email salg: bundlinjeboost@smartpack.dk
 - Email support: support@smartpack.dk
