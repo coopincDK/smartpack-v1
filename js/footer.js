@@ -29,6 +29,10 @@
       '          <p style="font-weight:600;font-size:0.85rem;color:#e2e8f0;margin:0 0 0.25rem">F&aring; tips om lagerdrift</p>',
       '          <p style="font-size:0.78rem;color:#94a3b8;margin:0 0 0.75rem">Vi sender af og til praktiske tips om lager, logistik og e-handel.</p>',
       '          <form id="footer-nl-form" style="display:flex;flex-direction:column;gap:0.5rem">',
+      '            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem">',
+      '              <input id="footer-nl-name" type="text" placeholder="Dit navn" style="padding:0.55rem 0.75rem;border-radius:0.4rem;border:1px solid #475569;background:#1e293b;color:#e2e8f0;font-size:0.85rem;outline:none;width:100%;box-sizing:border-box">',
+      '              <input id="footer-nl-company" type="text" placeholder="Firma" style="padding:0.55rem 0.75rem;border-radius:0.4rem;border:1px solid #475569;background:#1e293b;color:#e2e8f0;font-size:0.85rem;outline:none;width:100%;box-sizing:border-box">',
+      '            </div>',
       '            <input id="footer-nl-email" type="email" placeholder="navn@firma.dk" required style="padding:0.55rem 0.75rem;border-radius:0.4rem;border:1px solid #475569;background:#1e293b;color:#e2e8f0;font-size:0.85rem;outline:none;width:100%;box-sizing:border-box">',
       '            <label style="display:flex;gap:0.5rem;align-items:flex-start;cursor:pointer">',
       '              <input id="footer-nl-consent" type="checkbox" style="margin-top:3px;flex-shrink:0;accent-color:#22c55e">',
@@ -98,11 +102,13 @@
 
     // Nyhedsbrev signup i footer
     (function() {
-      var form    = document.getElementById('footer-nl-form');
-      var emailEl = document.getElementById('footer-nl-email');
-      var consent = document.getElementById('footer-nl-consent');
-      var btn     = document.getElementById('footer-nl-btn');
-      var msg     = document.getElementById('footer-nl-msg');
+      var form      = document.getElementById('footer-nl-form');
+      var emailEl   = document.getElementById('footer-nl-email');
+      var nameEl    = document.getElementById('footer-nl-name');
+      var companyEl = document.getElementById('footer-nl-company');
+      var consent   = document.getElementById('footer-nl-consent');
+      var btn       = document.getElementById('footer-nl-btn');
+      var msg       = document.getElementById('footer-nl-msg');
       if (!form) return;
 
       form.addEventListener('submit', function(e) {
@@ -121,7 +127,11 @@
             'Authorization': 'Bearer sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE',
             'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ email: emailEl.value.toLowerCase().trim() })
+          body: JSON.stringify(Object.assign(
+            { email: emailEl.value.toLowerCase().trim() },
+            nameEl.value.trim()    ? { name: nameEl.value.trim() }       : {},
+            companyEl.value.trim() ? { company: companyEl.value.trim() } : {}
+          ))
         })
         .then(function(r) {
           if (r.status === 201 || r.status === 409) {
