@@ -154,6 +154,73 @@
       });
     })();
 
+    // Afmeld overlay: intercepter link og vis inline modal
+    (function() {
+      document.addEventListener('click', function(e) {
+        var a = e.target.closest('a');
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        if (href.indexOf('/SmartPackUpdate/afmeld') === -1 && href.indexOf('SmartPackUpdate/afmeld') === -1) return;
+        e.preventDefault();
+
+        var existing = document.getElementById('sp-afmeld-overlay');
+        if (existing) { existing.style.display = 'flex'; return; }
+
+        var overlay = document.createElement('div');
+        overlay.id = 'sp-afmeld-overlay';
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,0.80);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:1rem';
+        overlay.innerHTML = [
+          '<div style="background:#fff;border-radius:1rem;padding:2.5rem 2rem;width:100%;max-width:420px;box-shadow:0 4px 24px rgba(0,0,0,0.15);text-align:center;position:relative">',
+          '  <button id="sp-afmeld-close" style="position:absolute;top:0.75rem;right:0.75rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#9ca3af;line-height:1">&times;</button>',
+          '  <div style="font-size:2rem;margin-bottom:0.75rem">📧</div>',
+          '  <h2 style="font-size:1.3rem;font-weight:700;margin:0 0 0.5rem;font-family:inherit">Afmeld nyhedsmail</h2>',
+          '  <p style="color:#555;font-size:0.9rem;margin:0 0 1.25rem;line-height:1.5">Indtast din e-mail for at stoppe med at modtage nyheder fra SmartPack.</p>',
+          '  <div id="sp-afmeld-msg" style="display:none;border-radius:0.5rem;padding:0.75rem 1rem;font-size:0.9rem;margin-bottom:0.75rem"></div>',
+          '  <form id="sp-afmeld-form">',
+          '    <input id="sp-afmeld-email" type="email" placeholder="din@email.dk" required autocomplete="email" style="width:100%;padding:0.65rem 0.9rem;border:1.5px solid #d1d5db;border-radius:0.5rem;font-size:0.95rem;font-family:inherit;background:#f9fafb;color:#1a1a1a;margin-bottom:0.75rem;outline:none;box-sizing:border-box">',
+          '    <button type="submit" id="sp-afmeld-btn" style="width:100%;padding:0.75rem;border:none;border-radius:0.5rem;font-size:0.95rem;font-family:inherit;font-weight:600;cursor:pointer;background:#dc2626;color:#fff">Afmeld nyhedsmail</button>',
+          '  </form>',
+          '</div>'
+        ].join('');
+        document.body.appendChild(overlay);
+
+        document.getElementById('sp-afmeld-close').addEventListener('click', function() {
+          overlay.style.display = 'none';
+        });
+        overlay.addEventListener('click', function(ev) {
+          if (ev.target === overlay) overlay.style.display = 'none';
+        });
+
+        document.getElementById('sp-afmeld-form').addEventListener('submit', function(ev) {
+          ev.preventDefault();
+          var email = document.getElementById('sp-afmeld-email').value.trim().toLowerCase();
+          var btn   = document.getElementById('sp-afmeld-btn');
+          var msg   = document.getElementById('sp-afmeld-msg');
+          btn.disabled = true; btn.textContent = 'Afmelder...';
+          fetch('https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers?email=eq.' + encodeURIComponent(email), {
+            method: 'DELETE',
+            headers: { 'apikey': 'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE', 'Authorization': 'Bearer sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE', 'Prefer': 'return=representation' }
+          }).then(function(r) { return r.json(); }).then(function(d) {
+            msg.style.display = 'block';
+            if (Array.isArray(d) && d.length > 0) {
+              msg.style.cssText += ';background:#dcfce7;color:#166534';
+              msg.textContent = '\u2705 Du er nu afmeldt.';
+              document.getElementById('sp-afmeld-form').style.display = 'none';
+            } else {
+              msg.style.cssText += ';background:#fee2e2;color:#991b1b';
+              msg.textContent = 'Vi kunne ikke finde den e-mail.';
+              btn.disabled = false; btn.textContent = 'Afmeld nyhedsmail';
+            }
+          }).catch(function() {
+            msg.style.display = 'block';
+            msg.style.cssText += ';background:#fee2e2;color:#991b1b';
+            msg.textContent = 'Noget gik galt. Pr\u00f8v igen.';
+            btn.disabled = false; btn.textContent = 'Afmeld nyhedsmail';
+          });
+        });
+      });
+    })();
+
     // Tidsstyret support-status i footer (fuld tidsplan)
     (function() {
       var now  = new Date();
