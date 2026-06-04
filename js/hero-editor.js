@@ -1,23 +1,23 @@
-/**
+﻿/**
  * SmartPack Hero Editor
  * Tryk E for at toggle panelet
  * Klik "Kopier CSS" for at få de endelige værdier
  */
 (function () {
   const CONTROLS = [
-    { label: 'PDA – venstre (%)',      prop: '--ph-left',   min: -10, max: 50, step: 1,  def: 0,   target: '.hero__phone',     css: 'left' },
-    { label: 'PDA – top (%)',          prop: '--ph-top',    min: -20, max: 80, step: 1,  def: 50,  target: '.hero__phone',     css: 'top' },
-    { label: 'PDA – bredde (%)',       prop: '--ph-w',      min: 15,  max: 70, step: 1,  def: 45,  target: '.hero__phone',     css: 'width' },
-    { label: 'GIF – højre (%)',        prop: '--db-right',  min: -20, max: 30, step: 1,  def: -2,  target: '.hero__dashboard', css: 'right' },
-    { label: 'GIF – bund (%)',         prop: '--db-bottom', min: -20, max: 30, step: 1,  def: -2,  target: '.hero__dashboard', css: 'bottom' },
-    { label: 'GIF – bredde (%)',       prop: '--db-w',      min: 40,  max: 100,step: 1,  def: 82,  target: '.hero__dashboard', css: 'width' },
-    { label: 'Badge 1 – top (%)',      prop: '--b1-top',    min: 0,   max: 60, step: 1,  def: 4,   target: '.hero__badge--1',  css: 'top' },
-    { label: 'Badge 1 – venstre (%)',  prop: '--b1-left',   min: 0,   max: 90, step: 1,  def: 30,  target: '.hero__badge--1',  css: 'left' },
-    { label: 'Badge 2 – top (%)',      prop: '--b2-top',    min: 0,   max: 90, step: 1,  def: 38,  target: '.hero__badge--2',  css: 'top' },
-    { label: 'Badge 2 – højre (%)',    prop: '--b2-right',  min: -10, max: 60, step: 1,  def: 2,   target: '.hero__badge--2',  css: 'right' },
-    { label: 'Badge 3 – bund (%)',     prop: '--b3-bottom', min: 0,   max: 60, step: 1,  def: 22,  target: '.hero__badge--3',  css: 'bottom' },
-    { label: 'Badge 3 – venstre (%)',  prop: '--b3-left',   min: 0,   max: 90, step: 1,  def: 28,  target: '.hero__badge--3',  css: 'left' },
-    { label: 'Komposition – højde',    prop: '--comp-h',    min: 250, max: 750,step: 10, def: 540, target: '.hero__composition', css: 'height', unit: 'px' },
+    { label: 'PDA - venstre (%)',      prop: '--ph-left',   min: -10, max: 50, step: 1,  def: 0,   target: '.hero__phone',     css: 'left' },
+    { label: 'PDA - top (%)',          prop: '--ph-top',    min: -20, max: 80, step: 1,  def: 50,  target: '.hero__phone',     css: 'top' },
+    { label: 'PDA - bredde (%)',       prop: '--ph-w',      min: 15,  max: 70, step: 1,  def: 45,  target: '.hero__phone',     css: 'width' },
+    { label: 'GIF - højre (%)',        prop: '--db-right',  min: -20, max: 30, step: 1,  def: -2,  target: '.hero__dashboard', css: 'right' },
+    { label: 'GIF - bund (%)',         prop: '--db-bottom', min: -20, max: 30, step: 1,  def: -2,  target: '.hero__dashboard', css: 'bottom' },
+    { label: 'GIF - bredde (%)',       prop: '--db-w',      min: 40,  max: 100,step: 1,  def: 82,  target: '.hero__dashboard', css: 'width' },
+    { label: 'Badge 1 - top (%)',      prop: '--b1-top',    min: 0,   max: 60, step: 1,  def: 4,   target: '.hero__badge--1',  css: 'top' },
+    { label: 'Badge 1 - venstre (%)',  prop: '--b1-left',   min: 0,   max: 90, step: 1,  def: 30,  target: '.hero__badge--1',  css: 'left' },
+    { label: 'Badge 2 - top (%)',      prop: '--b2-top',    min: 0,   max: 90, step: 1,  def: 38,  target: '.hero__badge--2',  css: 'top' },
+    { label: 'Badge 2 - højre (%)',    prop: '--b2-right',  min: -10, max: 60, step: 1,  def: 2,   target: '.hero__badge--2',  css: 'right' },
+    { label: 'Badge 3 - bund (%)',     prop: '--b3-bottom', min: 0,   max: 60, step: 1,  def: 22,  target: '.hero__badge--3',  css: 'bottom' },
+    { label: 'Badge 3 - venstre (%)',  prop: '--b3-left',   min: 0,   max: 90, step: 1,  def: 28,  target: '.hero__badge--3',  css: 'left' },
+    { label: 'Komposition - højde',    prop: '--comp-h',    min: 250, max: 750,step: 10, def: 540, target: '.hero__composition', css: 'height', unit: 'px' },
   ];
 
   const panel = document.createElement('div');
@@ -117,7 +117,7 @@
     const css = buildCSS();
     navigator.clipboard.writeText(css).then(() => {
       const fb = document.getElementById('he-feedback');
-      fb.textContent = '✓ CSS kopieret – send til Eric';
+      fb.textContent = '✓ CSS kopieret - send til Eric';
       setTimeout(() => { fb.textContent = ''; }, 3000);
     });
   });
@@ -130,5 +130,5 @@
     }
   });
 
-  console.log('%c Hero Editor aktiv – tryk E for at åbne ', 'background:#3ecf8e;color:#06100a;font-weight:bold;padding:4px 8px;border-radius:4px');
+  console.log('%c Hero Editor aktiv - tryk E for at åbne ', 'background:#3ecf8e;color:#06100a;font-weight:bold;padding:4px 8px;border-radius:4px');
 })();

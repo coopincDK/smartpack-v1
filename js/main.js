@@ -1,5 +1,5 @@
-/* ===========================================
-   SMARTPACK.DK — JAVASCRIPT
+﻿/* ===========================================
+   SMARTPACK.DK - JAVASCRIPT
 =========================================== */
 
 'use strict';
@@ -15,7 +15,7 @@ if (header) {
 }
 
 // NAV-logik håndteres af header.js (initNav)
-// main.js tilføjer IKKE duplicate listeners — det forårsagede at klik togglede open/closed i samme event
+// main.js tilføjer IKKE duplicate listeners - det forårsagede at klik togglede open/closed i samme event
 
 // --- REVEAL: Scroll-triggered animations ---
 const revealElements = document.querySelectorAll('.reveal');
@@ -98,7 +98,7 @@ window.handleSignup = function(e) {
   const btn   = form.querySelector('button');
   const input = form.querySelector('input');
 
-  // Optimistic UI — vis feedback med det samme
+  // Optimistic UI - vis feedback med det samme
   btn.textContent = 'Sender...';
   btn.disabled = true;
   input.disabled = true;
@@ -106,7 +106,7 @@ window.handleSignup = function(e) {
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
     user_email:  email,
     email:       email,          // matcher {{email}} i template To Email-feltet
-    signup_type: 'V2 Wizard — tidlig adgang',
+    signup_type: 'V2 Wizard - tidlig adgang',
     timestamp:   new Date().toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })
   })
   .then(function() {

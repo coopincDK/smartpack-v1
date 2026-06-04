@@ -1,5 +1,5 @@
 ﻿/* ============================================================
-   SmartPack — Centraliseret footer
+   SmartPack - Centraliseret footer
    Virker på alle domæner og subdirectory-deployments.
    ============================================================ */
 (function () {
@@ -354,7 +354,7 @@
     })();
 
     /* ============================================================
-       TRACKING — indsæt scripts her
+       TRACKING - indsæt scripts her
        ============================================================ */
   }
 
