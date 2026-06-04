@@ -10,13 +10,7 @@
   <script src="/js/theme-toggle.js"></script>
   <link rel="stylesheet" href="/css/main.css">
   <style>
-    .unsubscribe-wrap {
-      min-height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-    }
+    body { margin:0; overflow:hidden; }
     .unsubscribe-card {
       background: var(--card-bg, #fff);
       border: 1px solid var(--border, #e5e7eb);
@@ -74,33 +68,37 @@
   </style>
 </head>
 <body>
-  <div id="site-header"></div>
-  <script src="/js/header.js?v=3" defer></script>
+  <!-- Overlay baggrund -->
+  <div id="overlay-backdrop" style="
+    position:fixed;inset:0;z-index:999;
+    background:rgba(15,23,42,0.75);
+    backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;padding:1rem;
+  ">
+    <div class="unsubscribe-card" style="position:relative">
+      <!-- Luk-knap -->
+      <button onclick="history.length>1?history.back():location.href='/'" style="
+        position:absolute;top:0.75rem;right:0.75rem;
+        background:none;border:none;font-size:1.4rem;cursor:pointer;
+        color:#9ca3af;line-height:1;width:auto;padding:0;
+      " title="Luk">&times;</button>
 
-  <main>
-    <div class="unsubscribe-wrap">
-      <div class="unsubscribe-card">
-        <div class="icon">📧</div>
-        <h1>Afmeld nyhedsmail</h1>
-        <p>Indtast din e-mail for at stoppe med at modtage nyheder fra SmartPack.</p>
+      <div class="icon">📧</div>
+      <h1>Afmeld nyhedsmail</h1>
+      <p>Indtast din e-mail for at stoppe med at modtage nyheder fra SmartPack.</p>
 
-        <div id="msg" class="msg" style="display:none"></div>
+      <div id="msg" class="msg" style="display:none"></div>
 
-        <form id="form">
-          <input type="email" id="email" placeholder="din@email.dk" required autocomplete="email">
-          <button type="submit" class="btn-red" id="btn">Afmeld nyhedsmail</button>
-        </form>
+      <form id="form">
+        <input type="email" id="email" placeholder="din@email.dk" required autocomplete="email">
+        <button type="submit" class="btn-red" id="btn">Afmeld nyhedsmail</button>
+      </form>
 
-        <div class="back">
-          <a href="/">&larr; Tilbage til SmartPack</a>
-        </div>
+      <div class="back" style="margin-top:1rem">
+        <a href="/">Tilbage til SmartPack</a>
       </div>
     </div>
-  </main>
-
-  <div id="sp-footer"></div>
-  <script src="/js/footer.js?v=5"></script>
-  <script src="/js/main.js?v=2" defer></script>
+  </div>
 
   <script>
     const SUPABASE_URL = 'https://midtkaplyhxhrdtujmda.supabase.co';
