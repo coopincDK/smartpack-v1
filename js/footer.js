@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    SmartPack — Centraliseret footer
    Virker på alle domæner og subdirectory-deployments.
    ============================================================ */
@@ -142,30 +142,30 @@
       if (erHelligdagIdag) {
         // 🔴 Rød: helligdag
         color = CLR_R;
-        label = 'Helligdag &ndash; lukket';
+        label = 'Helligdag - lukket';
         msg   = 'Support er lukket på alle danske helligdage samt Grundlovsdag (5. juni), Juleaftensdag (24. december) og Nytårsaftensdag (31. december).';
       } else if (erWeekend) {
         // 🔴 Rød: hele weekenden
         color = CLR_R;
         label = 'Weekendlukket';
-        msg   = 'KUN driftstop: ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9. &Aring;bner igen mandag.';
+        msg   = 'KUN driftstop: ring 88&nbsp;20&nbsp;20&nbsp;19 - tast 9. &Aring;bner igen mandag.';
       } else {
         // Hverdag (man-fre)
         if (h >= 9 && h < 16) {
           // 🟢 Grøn: 09-16
           color = CLR_G;
           label = 'Support &aring;ben';
-          msg   = 'Ring 88&nbsp;20&nbsp;20&nbsp;19 &ndash; vi tager telefonen. Tast 2.';
+          msg   = 'Ring 88&nbsp;20&nbsp;20&nbsp;19 - vi tager telefonen. Tast 2.';
         } else if ((h >= 6 && h < 9) || (h >= 16 && h < 22)) {
           // 🟡 Gul: 06-09 + 16-22
           color = CLR_Y;
-          label = 'Begr&aelig;nset support &ndash; ring 88&nbsp;20&nbsp;20&nbsp;19';
-          msg   = 'KUN ved akut driftstop &ndash; tast 9.';
+          label = 'Begr&aelig;nset support - ring 88&nbsp;20&nbsp;20&nbsp;19';
+          msg   = 'KUN ved akut driftstop - tast 9.';
         } else {
           // 🔴 Rød: 22-06
           color = CLR_R;
           label = 'Nattevagt';
-          msg   = 'KUN ved akut driftstop &ndash; tast 9. &Aring;bner igen kl.&nbsp;9.';
+          msg   = 'KUN ved akut driftstop - tast 9. &Aring;bner igen kl.&nbsp;9.';
         }
       }
 
@@ -203,9 +203,9 @@
         } else {
           tekst = 'support holder lukket fra ' + fmtDato(bloekStart) + ' til og med ' + fmtDato(bloekSlut);
         }
-        notits = ' &mdash; <span style="color:#f59e0b;font-size:0.88em">'
+        notits = '<br><span style="color:#f59e0b;font-size:0.88em">'
                + '\u26a0\ufe0f Bem\u00e6rk: ' + tekst
-               + '. Akut support er stadig tilg\u00e6ngelig p\u00e5 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9.</span>';
+               + '. Akut support er stadig tilg\u00e6ngelig p\u00e5 88&nbsp;20&nbsp;20&nbsp;19 - tast 9.</span>';
       }
 
       dot = makeDot(color);
