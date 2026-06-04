@@ -25,6 +25,19 @@
       '        <p class="footer__tagline">Bygget af e-k&oslash;bm&aelig;nd.<br>Til dig der er tr&aelig;t af lagerb&oslash;vl.</p>',
       '        <p class="footer__sub">Har du styr p&aring; lageret?</p>',
       '        <a href="' + url('/kontakt.html') + '" class="footer__cta-btn">Lad os kigge p&aring; det sammen &rarr;</a>',
+      '        <div class="footer__newsletter" style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.1)">',
+      '          <p style="font-weight:600;font-size:0.85rem;color:#e2e8f0;margin:0 0 0.25rem">F&aring; tips om lagerdrift</p>',
+      '          <p style="font-size:0.78rem;color:#94a3b8;margin:0 0 0.75rem">Vi sender af og til praktiske tips om lager, logistik og e-handel.</p>',
+      '          <form id="footer-nl-form" style="display:flex;flex-direction:column;gap:0.5rem">',
+      '            <input id="footer-nl-email" type="email" placeholder="navn@firma.dk" required style="padding:0.55rem 0.75rem;border-radius:0.4rem;border:1px solid #475569;background:#1e293b;color:#e2e8f0;font-size:0.85rem;outline:none;width:100%;box-sizing:border-box">',
+      '            <label style="display:flex;gap:0.5rem;align-items:flex-start;cursor:pointer">',
+      '              <input id="footer-nl-consent" type="checkbox" style="margin-top:3px;flex-shrink:0;accent-color:#22c55e">',
+      '              <span style="font-size:0.75rem;color:#94a3b8;line-height:1.4">Jeg accepterer at modtage nyhedsmail fra SmartPack. Du kan <a href="' + url('/SmartPackUpdate/afmeld') + '" style="color:#4ade80">afmelde dig</a> igen n&aring;r som helst.</span>',
+      '            </label>',
+      '            <button id="footer-nl-btn" type="submit" style="padding:0.55rem 1rem;border-radius:0.4rem;background:#2D5A3D;color:#fff;font-weight:600;font-size:0.85rem;border:none;cursor:pointer;transition:background 0.15s">Tilmeld &rarr;</button>',
+      '            <p id="footer-nl-msg" style="font-size:0.78rem;margin:0;min-height:1.2em"></p>',
+      '          </form>',
+      '        </div>',
       '      </div>',
       '      <div class="footer__nav">',
       '        <div class="footer__nav-col">',
@@ -82,6 +95,54 @@
 
     var y = document.getElementById('copy-year');
     if (y) y.textContent = new Date().getFullYear();
+
+    // Nyhedsbrev signup i footer
+    (function() {
+      var form    = document.getElementById('footer-nl-form');
+      var emailEl = document.getElementById('footer-nl-email');
+      var consent = document.getElementById('footer-nl-consent');
+      var btn     = document.getElementById('footer-nl-btn');
+      var msg     = document.getElementById('footer-nl-msg');
+      if (!form) return;
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!emailEl.value || !consent.checked) return;
+        btn.disabled = true;
+        btn.textContent = 'Tilmelder...';
+        msg.style.color = '#94a3b8';
+        msg.textContent = '';
+
+        fetch('https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': 'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE',
+            'Authorization': 'Bearer sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ email: emailEl.value.toLowerCase().trim() })
+        })
+        .then(function(r) {
+          if (r.status === 201 || r.status === 409) {
+            msg.style.color = '#4ade80';
+            msg.textContent = 'Tak - du er tilmeldt!';
+            form.reset();
+          } else {
+            msg.style.color = '#f87171';
+            msg.textContent = 'Noget gik galt. Pr\u00f8v igen.';
+          }
+          btn.disabled = false;
+          btn.textContent = 'Tilmeld \u2192';
+        })
+        .catch(function() {
+          msg.style.color = '#f87171';
+          msg.textContent = 'Noget gik galt. Pr\u00f8v igen.';
+          btn.disabled = false;
+          btn.textContent = 'Tilmeld \u2192';
+        });
+      });
+    })();
 
     // Tidsstyret support-status i footer (fuld tidsplan)
     (function() {
