@@ -169,11 +169,50 @@
         }
       }
 
+      // --- Find næste lukkeblokt inden for 7 dage ---
+      var MAANEDER = ['januar','februar','marts','april','maj','juni','juli','august','september','oktober','november','december'];
+      var DAGE_DK  = ['s\u00f8ndag','mandag','tirsdag','onsdag','torsdag','fredag','l\u00f8rdag'];
+      var D = 86400000;
+
+      function erLukket(dato) {
+        return erHelligdag(dato) || dato.getDay() === 0 || dato.getDay() === 6;
+      }
+      function fmtDato(dato) {
+        return DAGE_DK[dato.getDay()] + ' d.&nbsp;' + dato.getDate() + '.&nbsp;' + MAANEDER[dato.getMonth()];
+      }
+
+      // Find første helligdag (ikke bare weekend) inden for 7 hverdage
+      var bloekStart = null;
+      for (var off2 = 1; off2 <= 7; off2++) {
+        var tjek2 = new Date(idag.getTime() + off2 * D);
+        if (erHelligdag(tjek2)) { bloekStart = tjek2; break; }
+      }
+
+      var notits = '';
+      if (bloekStart && !erHelligdagIdag && !erWeekend) {
+        // Udvid blokken fremad: find sidste dag i den sammehængende lukkeperiode
+        var bloekSlut = new Date(bloekStart.getTime());
+        for (var ext = 1; ext <= 10; ext++) {
+          var naeste = new Date(bloekStart.getTime() + ext * D);
+          if (erLukket(naeste)) { bloekSlut = naeste; } else { break; }
+        }
+        var erSammedag = bloekStart.getTime() === bloekSlut.getTime();
+        var tekst;
+        if (erSammedag) {
+          tekst = 'support holder lukket ' + fmtDato(bloekStart);
+        } else {
+          tekst = 'support holder lukket fra ' + fmtDato(bloekStart) + ' til og med ' + fmtDato(bloekSlut);
+        }
+        notits = ' &mdash; <span style="color:#f59e0b;font-size:0.88em">'
+               + '\u26a0\ufe0f Bem\u00e6rk: ' + tekst
+               + '. Akut support er stadig tilg\u00e6ngelig p\u00e5 88&nbsp;20&nbsp;20&nbsp;19 &ndash; tast 9.</span>';
+      }
+
       dot = makeDot(color);
       var href = 'tel:+4588202019';
       phoneEl.innerHTML = dot
         + '<strong style="color:' + color + '">' + label + '</strong>'
-        + ' &middot; ' + msg;
+        + ' &middot; ' + msg + notits;
     })();
 
     /* ============================================================
