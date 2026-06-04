@@ -99,10 +99,52 @@
         return '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + clr + ';margin-right:5px;vertical-align:middle"></span>';
       }
 
+      // --- Helligdagsberegning ---
+      function paaskedag(aar) {
+        // Anonym Gregoriansk algoritme
+        var a = aar % 19, b = Math.floor(aar/100), c = aar % 100;
+        var d = Math.floor(b/4), e = b % 4, f = Math.floor((b+8)/25);
+        var g = Math.floor((b-f+1)/3), h = (19*a+b-d-g+15) % 30;
+        var i = Math.floor(c/4), k = c % 4;
+        var l = (32+2*e+2*i-h-k) % 7;
+        var m = Math.floor((a+11*h+22*l)/451);
+        var maaned = Math.floor((h+l-7*m+114)/31); // 1-baseret
+        var dag = ((h+l-7*m+114) % 31) + 1;
+        return new Date(aar, maaned-1, dag);
+      }
+      function erHelligdag(dato) {
+        var aar = dato.getFullYear();
+        var md  = (dato.getMonth()+1)*100 + dato.getDate(); // MMDD
+        // Faste helligdage
+        var faste = [101, 605, 1224, 1225, 1226, 1231];
+        for (var i=0; i<faste.length; i++) if (md === faste[i]) return true;
+        // Bevægelige (påskebaserede)
+        var p0 = paaskedag(aar).getTime();
+        var dag = dato.getTime();
+        var D  = 86400000;
+        return [
+          -3*D, // Skærtorsdag
+          -2*D, // Langfredag
+           0,   // Påskedag
+          +1*D, // 2. Påskedag
+         +39*D, // Kristi Himmelfartsdag
+         +49*D, // 1. Pinsedag
+         +50*D, // 2. Pinsedag
+        ].some(function(off){ return p0+off === dag; });
+      }
+      // Brug kun dato (ingen tid) til helligdagscheck
+      var idag = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var erHelligdagIdag = erHelligdag(idag);
+
       var color, dot, label, msg;
       var erWeekend = (day === 0 || day === 6);
 
-      if (erWeekend) {
+      if (erHelligdagIdag) {
+        // 🔴 Rød: helligdag
+        color = CLR_R;
+        label = 'Helligdag &ndash; lukket';
+        msg   = 'Support er lukket på alle danske helligdage samt Grundlovsdag (5. juni), Juleaftensdag (24. december) og Nytårsaftensdag (31. december).';
+      } else if (erWeekend) {
         // 🔴 Rød: hele weekenden
         color = CLR_R;
         label = 'Weekendlukket';
