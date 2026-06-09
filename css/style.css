@@ -547,7 +547,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   min-height: calc(100svh - 140px);
   display: grid;
   grid-template-rows: 1fr auto;
-  padding-top: 68px;
+  padding-top: calc(68px + var(--announce-h));
   overflow-x: hidden;
 }
 .hero__bg {
