@@ -197,21 +197,37 @@
           var btn   = document.getElementById('sp-afmeld-btn');
           var msg   = document.getElementById('sp-afmeld-msg');
           btn.disabled = true; btn.textContent = 'Afmelder...';
-          fetch('https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers?email=eq.' + encodeURIComponent(email), {
-            method: 'DELETE',
-            headers: { 'apikey': 'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE', 'Authorization': 'Bearer sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE', 'Prefer': 'return=representation' }
-          }).then(function(r) { return r.json(); }).then(function(d) {
+          btn.disabled = true; btn.textContent = 'Afmelder...';
+          // Tjek om email eksisterer, slet derefter
+          var SB_URL = 'https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers';
+          var SB_KEY = 'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE';
+          var hdrs   = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+          fetch(SB_URL + '?email=eq.' + encodeURIComponent(email) + '&select=id', { headers: hdrs })
+          .then(function(r) { return r.json(); })
+          .then(function(rows) {
+            if (!Array.isArray(rows) || rows.length === 0) {
+              msg.style.display = 'block';
+              msg.style.cssText += ';background:#fee2e2;color:#991b1b';
+              msg.textContent = 'Vi kunne ikke finde den e-mail.';
+              btn.disabled = false; btn.textContent = 'Afmeld nyhedsmail';
+              return;
+            }
+            return fetch(SB_URL + '?email=eq.' + encodeURIComponent(email), { method: 'DELETE', headers: hdrs });
+          })
+          .then(function(r) {
+            if (!r) return;
             msg.style.display = 'block';
-            if (Array.isArray(d) && d.length > 0) {
+            if (r.ok) {
               msg.style.cssText += ';background:#dcfce7;color:#166534';
               msg.textContent = '\u2705 Du er nu afmeldt.';
               document.getElementById('sp-afmeld-form').style.display = 'none';
             } else {
               msg.style.cssText += ';background:#fee2e2;color:#991b1b';
-              msg.textContent = 'Vi kunne ikke finde den e-mail.';
+              msg.textContent = 'Noget gik galt. Pr\u00f8v igen.';
               btn.disabled = false; btn.textContent = 'Afmeld nyhedsmail';
             }
-          }).catch(function() {
+          })
+          .catch(function() {
             msg.style.display = 'block';
             msg.style.cssText += ';background:#fee2e2;color:#991b1b';
             msg.textContent = 'Noget gik galt. Pr\u00f8v igen.';
