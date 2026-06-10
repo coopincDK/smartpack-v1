@@ -631,11 +631,12 @@
 
       function openMailto() {
         var to = selectedType === 'learn' ? 'bundlinjeboost@smartpack.dk' : 'support@smartpack.dk';
-        var subj = encodeURIComponent((selectedType === 'learn' ? 'Foresp\u00f8rgsel' : selectedType === 'support' ? 'Support-sag' : 'Henvendelse') + ' fra ' + data.name + ' - ' + data.company);
-        var body = encodeURIComponent('Navn: ' + data.name + '\nFirma: ' + data.company + '\nEmail: ' + data.email + (data.subject ? '\nEmne: ' + data.subject : '') + (data.message ? '\nBesked: ' + data.message : '') + (data.comment ? '\nKommentar: ' + data.comment : ''));
+        var typeLabels = { learn: '[Lead]', general: '[Generel]', support: '[Support]' };
+        var subj = encodeURIComponent((typeLabels[selectedType] || '') + ' ' + data.name + ' - ' + data.company);
+        var body = encodeURIComponent('Navn: ' + data.name + '\nEmail: ' + data.email + '\n\n' + buildMessage(data));
         window.open('mailto:' + to + '?subject=' + subj + '&body=' + body);
         g('spcov-ok-title').textContent = data.name.split(' ')[0] + ', vi har sendt dig et udkast!';
-        g('spcov-ok-text').textContent = 'Din email-klient er \u00e5bnet. Send den afsted, s\u00e5 vender vi tilbage inden for 24 timer.';
+        g('spcov-ok-text').textContent = 'Din email-klient er åbnet. Send den afsted og vi vender tilbage.';
         showStep('spcov-s3');
       }
 
