@@ -20,6 +20,6 @@ jobs:
           echo "window._spcovGhToken = '${{ secrets.GH_DISPATCH_TOKEN }}';" > js/contact-config.js
           git config user.name  "SmartPack Deploy Bot"
           git config user.email "deploy@smartpack.dk"
-          git add js/contact-config.js
+          git add -f js/contact-config.js
           git diff --cached --quiet || git commit -m "chore: inject contact token [skip ci]"
           git push
