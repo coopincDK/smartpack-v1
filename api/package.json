@@ -1,0 +1,13 @@
+{
+  "name": "smartpack-contact-api",
+  "version": "1.0.0",
+  "description": "SMTP endpoint for SmartPack contact overlay",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.14"
+  }
+}
