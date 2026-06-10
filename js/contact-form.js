@@ -755,7 +755,7 @@
     var a = e.target.closest('a');
     if (!a) return;
     var href = a.getAttribute('href') || '';
-    if (/kontakt/.test(href) || /bundlinjeboost@smartpack\.dk/.test(href)) {
+    if (/kontakt/.test(href) || /bundlinjeboost@smartpack\.dk/.test(href) || href === '#cta' || a.hasAttribute('data-spcov')) {
       e.preventDefault(); spcov.open();
     }
   }, true);
