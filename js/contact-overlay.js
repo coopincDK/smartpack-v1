@@ -248,7 +248,7 @@
   var root = document.createElement('div');
   root.id = 'spcov-root';
   root.innerHTML = [
-    '<div class="spcov-overlay" id="spcov-overlay" onclick="if(event.target===this)spcov.close()">',
+    '<div class="spcov-overlay" id="spcov-overlay">',
     '<div class="sp-modal" id="spcov-modal">',
 
     /* top bar: logo + close */
@@ -691,6 +691,16 @@
   /* ESC */
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && g('spcov-overlay').classList.contains('active')) spcov.close();
+  });
+
+  /* backdrop-luk: kun hvis både mousedown og mouseup sker på backdrop (ikke ved drag/copy-paste) */
+  var _bdDown = false;
+  g('spcov-overlay').addEventListener('mousedown', function (e) {
+    _bdDown = e.target === g('spcov-overlay');
+  });
+  g('spcov-overlay').addEventListener('mouseup', function (e) {
+    if (_bdDown && e.target === g('spcov-overlay')) spcov.close();
+    _bdDown = false;
   });
 
   /* intercept kontakt-links */
