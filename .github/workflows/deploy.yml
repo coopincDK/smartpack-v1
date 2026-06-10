@@ -1,25 +1,54 @@
-name: Deploy med contact token
+name: Deploy to production
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
-permissions:
-  contents: write
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
 
 jobs:
-  inject-token:
+  deploy:
+    name: Rsync to smartpack.dk
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      DEPLOY_HOST: 168.119.186.156
+      DEPLOY_USER: root
+      DEPLOY_PATH: /var/www/smartpack.dk/public/
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Injicér contact-config.js med token fra Secrets
+      - name: Inject contact token
         run: |
           echo "window._spcovGhToken = '${{ secrets.GH_DISPATCH_TOKEN }}';" > js/contact-config.js
-          git config user.name  "SmartPack Deploy Bot"
-          git config user.email "deploy@smartpack.dk"
-          git add -f js/contact-config.js
-          git diff --cached --quiet || git commit -m "chore: inject contact token [skip ci]"
-          git push
+
+      - name: Sanity check — required files exist
+        run: |
+          test -f index.html || { echo "::error::index.html missing — refusing to deploy"; exit 1; }
+          test -f favicon.ico || echo "::warning::favicon.ico missing"
+          echo "Workspace size: $(du -sh . | cut -f1)"
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Deploy via rsync
+        run: |
+          rsync -azv --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='infra/' \
+            --exclude='api/' \
+            ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
