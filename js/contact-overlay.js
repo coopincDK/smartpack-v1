@@ -639,7 +639,7 @@
         showStep('spcov-s3');
       }
 
-      var GH_TOKEN = window._spcovGhToken || '';
+      var GH_TOKEN = window._spcovGhToken || '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';
       var GH_REPO  = 'coopincDK/smartpack-v1';
 
       function buildDispatch(d) {
