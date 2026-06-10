@@ -537,6 +537,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   }
   .nav__hamburger { display: flex; z-index: 1300; }
   .nav__cta { display: none; }
+  .nav__cta--always { display: inline-flex !important; padding: 0.45rem 1rem; font-size: .85rem; }
 }
 
 /* ============================================

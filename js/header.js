@@ -44,7 +44,7 @@
       '    </ul>',
       '    <div class="nav__actions">',
       '      <a href="https://support.smartpack.dk" target="_blank" rel="noopener" class="nav__support-link">Log ind &amp; support &rarr;</a>',
-      '      <a href="' + url('/kontakt.html') + '" class="btn btn--ghost nav__cta">Kontakt</a>',
+      '      <a href="' + url('/kontakt.html') + '" class="btn btn--ghost nav__cta nav__cta--always">Kontakt</a>',
       '      <a href="' + url('/kontakt.html') + '" class="btn btn--primary nav__cta">Book demo</a>',
       '      <button class="theme-toggle" aria-label="Skift tema"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>',
       '      <button class="nav__hamburger" id="nav-hamburger" aria-label="&Aring;bn menu">',
@@ -164,36 +164,6 @@
   } else {
     document.addEventListener('DOMContentLoaded', injectHeader);
   }
-
-  // Sticky mobil CTA bar
-  (function () {
-    var style = document.createElement('style');
-    style.textContent = [
-      '@media (max-width: 1024px) {',
-      '  .sp-mobile-cta { position:fixed; bottom:0; left:0; right:0; z-index:9990;',
-      '    padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:#111;',
-      '    border-top:1px solid rgba(255,255,255,.1); display:flex; gap:10px; }',
-      '  .sp-mobile-cta__btn { flex:1; padding:13px 16px; border-radius:8px; font-size:.95rem;',
-      '    font-weight:700; text-align:center; cursor:pointer; border:none; text-decoration:none; }',
-      '  .sp-mobile-cta__btn--primary { background:var(--accent,#16a34a); color:#fff; }',
-      '  .sp-mobile-cta__btn--ghost { background:transparent; color:#fff;',
-      '    border:1.5px solid rgba(255,255,255,.3); }',
-      '  body { padding-bottom: 72px !important; }',
-      '}'
-    ].join('');
-    document.head.appendChild(style);
-    function injectMobileCta() {
-      if (document.getElementById('sp-mobile-cta')) return;
-      var bar = document.createElement('div');
-      bar.id = 'sp-mobile-cta';
-      bar.className = 'sp-mobile-cta';
-      bar.innerHTML = '<a href="tel:+4588202019" class="sp-mobile-cta__btn sp-mobile-cta__btn--ghost">Ring: 88 20 20 19</a>' +
-        '<a href="kontakt" class="sp-mobile-cta__btn sp-mobile-cta__btn--primary">Kontakt &rarr;</a>';
-      document.body.appendChild(bar);
-    }
-    if (document.body) injectMobileCta();
-    else document.addEventListener('DOMContentLoaded', injectMobileCta);
-  })();
 
   // Load contact overlay på alle sider (v= fra header.js URL = cache-bust ved deploy)
   if (!document.getElementById('spcov-root')) {
