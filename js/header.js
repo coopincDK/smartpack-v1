@@ -9,6 +9,13 @@
   var _base = _src ? _src.replace(/\/js\/header\.js.*$/, '') : '';
   function url(path) { return _base + path; }
 
+  /* Mobil nav override - injiceres her da style.css ikke version-bumpes */
+  (function(){
+    var s = document.createElement('style');
+    s.textContent = '@media(max-width:1080px){.nav__cta--always{display:inline-flex!important;padding:.4rem .9rem;font-size:.82rem;line-height:1.4;}}';
+    document.head.appendChild(s);
+  })();
+
   function injectHeader() {
     var placeholder = document.getElementById('sp-header');
     if (!placeholder) return;
