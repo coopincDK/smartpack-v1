@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    SmartPack Contact Overlay v2 — lys tema, clean design
    ============================================================ */
 (function () {
@@ -267,7 +267,7 @@
     '<div class="step active" id="spcov-s1">',
     '  <div class="sp-heading">',
     '    <h2 class="sp-title">Hvad kan vi hjælpe med?</h2>',
-    '    <p class="sp-sub">Udfyld dine oplysninger og vælg emne — vi vender tilbage inden for 24 timer.</p>',
+    '    <p class="sp-sub">Udfyld dine oplysninger og vælg emne. Vi kommer normalt retur inden for en hverdag.</p>',
     '  </div>',
     '  <div class="sp-steps" id="spcov-step-ind">',
     '    <div class="sp-dot active" id="spcov-dot-1"></div>',
@@ -484,7 +484,7 @@
     '  <div class="sp-success">',
     '    <div class="sp-success-icon">&#x2713;</div>',
     '    <div class="sp-success-title" id="spcov-ok-title">Modtaget!</div>',
-    '    <p class="sp-success-text" id="spcov-ok-text">Vi vender tilbage inden for 24 timer.</p>',
+    '    <p class="sp-success-text" id="spcov-ok-text">Vi kommer normalt retur inden for en hverdag.</p>',
     '    <button class="sp-btn" onclick="spcov.close()" style="max-width:200px;margin:0 auto">Luk &#8594;</button>',
     '  </div>',
     '</div>',
@@ -693,7 +693,7 @@
         var sent = true;
         if (sent) {
           var titles = { learn: 'Vi gl\u00e6der os til en snak!', general: 'Tak for din besked!', support: 'Support-sag modtaget!' };
-          var texts = { learn: 'Vi kigger p\u00e5 jeres setup og vender tilbage inden for 24 timer. Ingen salgspitch.', general: 'Vi svarer inden for 24 timer.', support: 'Vi kigger p\u00e5 det hurtigst muligt. Br\u00e6nder det? Ring direkte.' };
+          var texts = { learn: 'Vi kigger p\u00e5 jeres setup og vender tilbage inden for 24 timer. Ingen salgspitch.', general: 'Vi kommer normalt retur inden for en hverdag.', support: 'Vi kigger p\u00e5 det hurtigst muligt. Br\u00e6nder det? Ring direkte.' };
           g('spcov-ok-title').textContent = data.name.split(' ')[0] + ', ' + (titles[selectedType] || 'tak!');
           g('spcov-ok-text').textContent  = texts[selectedType] || '';
           showStep('spcov-s3');
