@@ -48,3 +48,5 @@ desktop.ini
 
 infra/.env
 api/.env
+
+js/contact-config.js

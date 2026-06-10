@@ -1,0 +1,60 @@
+name: Contact Form
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:         { required: true,  type: string }
+      name:         { required: true,  type: string }
+      company:      { required: true,  type: string }
+      email:        { required: true,  type: string }
+      phone:        { required: false, type: string, default: '' }
+      cvr:          { required: false, type: string, default: '' }
+      orders:       { required: false, type: string, default: '' }
+      employees:    { required: false, type: string, default: '' }
+      shops:        { required: false, type: string, default: '' }
+      erp:          { required: false, type: string, default: '' }
+      carriers_dk:  { required: false, type: string, default: '' }
+      carriers_int: { required: false, type: string, default: '' }
+      urgency:      { required: false, type: string, default: '' }
+      source:       { required: false, type: string, default: '' }
+      comment:      { required: false, type: string, default: '' }
+      subject:      { required: false, type: string, default: '' }
+      message:      { required: false, type: string, default: '' }
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install nodemailer
+        run: npm install nodemailer
+
+      - name: Send contact email
+        run: node .github/scripts/send-contact-email.js
+        env:
+          SMTP_HOST:    ${{ secrets.SMTP_HOST }}
+          SMTP_PORT:    ${{ secrets.SMTP_PORT }}
+          SMTP_SECURE:  ${{ secrets.SMTP_SECURE }}
+          SMTP_USER:    ${{ secrets.SMTP_USER }}
+          SMTP_PASS:    ${{ secrets.SMTP_PASS }}
+          MAIL_FROM:    ${{ secrets.MAIL_FROM }}
+          MAIL_LEAD:    ${{ secrets.MAIL_LEAD }}
+          MAIL_SUPPORT: ${{ secrets.MAIL_SUPPORT }}
+          INPUT_TYPE:         ${{ inputs.type }}
+          INPUT_NAME:         ${{ inputs.name }}
+          INPUT_COMPANY:      ${{ inputs.company }}
+          INPUT_EMAIL:        ${{ inputs.email }}
+          INPUT_PHONE:        ${{ inputs.phone }}
+          INPUT_CVR:          ${{ inputs.cvr }}
+          INPUT_ORDERS:       ${{ inputs.orders }}
+          INPUT_EMPLOYEES:    ${{ inputs.employees }}
+          INPUT_SHOPS:        ${{ inputs.shops }}
+          INPUT_ERP:          ${{ inputs.erp }}
+          INPUT_CARRIERS_DK:  ${{ inputs.carriers_dk }}
+          INPUT_CARRIERS_INT: ${{ inputs.carriers_int }}
+          INPUT_URGENCY:      ${{ inputs.urgency }}
+          INPUT_SOURCE:       ${{ inputs.source }}
+          INPUT_COMMENT:      ${{ inputs.comment }}
+          INPUT_SUBJECT:      ${{ inputs.subject }}
+          INPUT_MESSAGE:      ${{ inputs.message }}

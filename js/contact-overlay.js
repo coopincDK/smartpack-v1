@@ -639,13 +639,47 @@
         showStep('spcov-s3');
       }
 
+      var GH_TOKEN = window._spcovGhToken || '';
+      var GH_REPO  = 'coopincDK/smartpack-v1';
+
+      function buildDispatch(d) {
+        var inp = {
+          type:         d.type    || '',
+          name:         d.name    || '',
+          company:      d.company || '',
+          email:        d.email   || '',
+          phone:        d.phone   || '',
+          cvr:          d.cvr     || '',
+          orders:       String(d.orders    || ''),
+          employees:    String(d.employees || ''),
+          shops:        (d.shops        || []).join(', ') + (d.shop_andet    ? ' (' + d.shop_andet    + ')' : ''),
+          erp:          (d.erp          || []).join(', ') + (d.erp_andet     ? ' (' + d.erp_andet     + ')' : ''),
+          carriers_dk:  (d.carriers_dk  || []).join(', ') + (d.carriers_dk_andet  ? ' (' + d.carriers_dk_andet  + ')' : ''),
+          carriers_int: (d.carriers_int || []).join(', ') + (d.carriers_int_andet ? ' (' + d.carriers_int_andet + ')' : ''),
+          urgency:      String(d.urgency || ''),
+          source:       (d.source || '') + (d.source_andet ? ' (' + d.source_andet + ')' : ''),
+          comment:      d.comment || '',
+          subject:      d.subject || '',
+          message:      d.message || ''
+        };
+        return { ref: 'main', inputs: inp };
+      }
+
       try {
-        var resp = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        if (resp.ok) {
+        var resp = await fetch(
+          'https://api.github.com/repos/' + GH_REPO + '/actions/workflows/contact.yml/dispatches',
+          {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/vnd.github+json',
+              'Authorization': 'Bearer ' + GH_TOKEN,
+              'X-GitHub-Api-Version': '2022-11-28',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(buildDispatch(data))
+          }
+        );
+        if (resp.status === 204) {
           var titles = { learn: 'Vi gl\u00e6der os til en snak!', general: 'Tak for din besked!', support: 'Support-sag modtaget!' };
           var texts = { learn: 'Vi kigger p\u00e5 jeres setup og vender tilbage inden for 24 timer. Ingen salgspitch.', general: 'Vi svarer inden for 24 timer.', support: 'Vi kigger p\u00e5 det hurtigst muligt. Br\u00e6nder det? Ring direkte.' };
           g('spcov-ok-title').textContent = data.name.split(' ')[0] + ', ' + (titles[selectedType] || 'tak!');

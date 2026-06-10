@@ -173,6 +173,10 @@
   // Load contact overlay på alle sider (v= fra header.js URL = cache-bust ved deploy)
   if (!document.getElementById('spcov-root')) {
     window._spcovBase = _base;
+    // GH token sættes i js/contact-config.js (ikke i git)
+    var cfgScript = document.createElement('script');
+    cfgScript.src = _base + '/js/contact-config.js?' + _qv;
+    document.head.appendChild(cfgScript);
     var _qv = _src && _src.indexOf('?') >= 0 ? _src.substring(_src.indexOf('?') + 1) : ('t=' + Date.now());
     var spcovScript = document.createElement('script');
     spcovScript.src = _base + '/js/contact-overlay.js?' + _qv;
