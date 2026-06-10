@@ -639,6 +639,20 @@
         showStep('spcov-s3');
       }
 
+      /* Sørg for EmailJS er loaded og initialiseret */
+      if (typeof emailjs === 'undefined') {
+        await new Promise(function (resolve, reject) {
+          var s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+          s.onload = function () { emailjs.init({ publicKey: 'aF4PLh0ndPGtWwSLx' }); resolve(); };
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      } else if (!window._ejsInited) {
+        emailjs.init({ publicKey: 'aF4PLh0ndPGtWwSLx' });
+        window._ejsInited = true;
+      }
+
       var urgencyLabels = {'1':'Afsøger inspiration','2':'Overvejer seriøst','3':'Aktivt på udkig','4':'Klar til at gå i gang','5':'Hellere i går end i dag'};
 
       function buildMessage(d) {
