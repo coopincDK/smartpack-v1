@@ -45,3 +45,6 @@ desktop.ini
 
 # Claude Code (lokale skills/settings)
 .claude/
+
+infra/.env
+api/.env
