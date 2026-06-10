@@ -639,47 +639,45 @@
         showStep('spcov-s3');
       }
 
-      var GH_TOKEN = window._spcovGhToken || '';
-      var GH_REPO  = 'coopincDK/smartpack-v1';
+      var urgencyLabels = {'1':'Afsøger inspiration','2':'Overvejer seriøst','3':'Aktivt på udkig','4':'Klar til at gå i gang','5':'Hellere i går end i dag'};
 
-      function buildDispatch(d) {
-        var inp = {
-          type:         d.type    || '',
-          name:         d.name    || '',
-          company:      d.company || '',
-          email:        d.email   || '',
-          phone:        d.phone   || '',
-          cvr:          d.cvr     || '',
-          orders:       String(d.orders    || ''),
-          employees:    String(d.employees || ''),
-          shops:        (d.shops        || []).join(', ') + (d.shop_andet    ? ' (' + d.shop_andet    + ')' : ''),
-          erp:          (d.erp          || []).join(', ') + (d.erp_andet     ? ' (' + d.erp_andet     + ')' : ''),
-          carriers_dk:  (d.carriers_dk  || []).join(', ') + (d.carriers_dk_andet  ? ' (' + d.carriers_dk_andet  + ')' : ''),
-          carriers_int: (d.carriers_int || []).join(', ') + (d.carriers_int_andet ? ' (' + d.carriers_int_andet + ')' : ''),
-          urgency:      String(d.urgency || ''),
-          source:       (d.source || '') + (d.source_andet ? ' (' + d.source_andet + ')' : ''),
-          comment:      d.comment || '',
-          subject:      d.subject || '',
-          message:      d.message || ''
-        };
-        return { ref: 'main', inputs: inp };
+      function buildMessage(d) {
+        var lines = [];
+        var add = function(label, val) { if (val) lines.push(label + ': ' + val); };
+        add('Virksomhed', d.company);
+        if (d.type === 'learn') {
+          add('Ordrer pr. dag', d.orders);
+          add('Medarbejdere', d.employees);
+          add('Webshop platform', (d.shops || []).join(', ') + (d.shop_andet ? ' (' + d.shop_andet + ')' : ''));
+          add('ERP', (d.erp || []).join(', ') + (d.erp_andet ? ' (' + d.erp_andet + ')' : ''));
+          add('Fragtpartner DK', (d.carriers_dk || []).join(', ') + (d.carriers_dk_andet ? ' (' + d.carriers_dk_andet + ')' : ''));
+          add('Fragtpartner INT', (d.carriers_int || []).join(', ') + (d.carriers_int_andet ? ' (' + d.carriers_int_andet + ')' : ''));
+          add('Hastegrad', urgencyLabels[String(d.urgency)] || d.urgency);
+          add('Telefon', d.phone);
+          add('CVR', d.cvr);
+          add('Hørt via', (d.source || '') + (d.source_andet ? ' (' + d.source_andet + ')' : ''));
+          add('Kommentar', d.comment);
+        } else {
+          add('Emne', d.subject);
+          add('Besked', d.message);
+        }
+        return lines.join('\n');
       }
 
+      var typeLabels = { learn: '[Lead]', general: '[Generel]', support: '[Support]' };
+      var toEmail = data.type === 'learn' ? 'bundlinjeboost@smartpack.dk' : 'support@smartpack.dk';
+      var params = {
+        to_email: toEmail,
+        subject:  (typeLabels[data.type] || '') + ' ' + data.name + ' - ' + data.company,
+        name:     data.name,
+        email:    data.email,
+        message:  buildMessage(data)
+      };
+
       try {
-        var resp = await fetch(
-          'https://api.github.com/repos/' + GH_REPO + '/actions/workflows/contact.yml/dispatches',
-          {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/vnd.github+json',
-              'Authorization': 'Bearer ' + GH_TOKEN,
-              'X-GitHub-Api-Version': '2022-11-28',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(buildDispatch(data))
-          }
-        );
-        if (resp.status === 204) {
+        await emailjs.send('service_otu5dlt', 'template_rbiz8zh', params);
+        var sent = true;
+        if (sent) {
           var titles = { learn: 'Vi gl\u00e6der os til en snak!', general: 'Tak for din besked!', support: 'Support-sag modtaget!' };
           var texts = { learn: 'Vi kigger p\u00e5 jeres setup og vender tilbage inden for 24 timer. Ingen salgspitch.', general: 'Vi svarer inden for 24 timer.', support: 'Vi kigger p\u00e5 det hurtigst muligt. Br\u00e6nder det? Ring direkte.' };
           g('spcov-ok-title').textContent = data.name.split(' ')[0] + ', ' + (titles[selectedType] || 'tak!');

@@ -173,10 +173,11 @@
   // Load contact overlay på alle sider (v= fra header.js URL = cache-bust ved deploy)
   if (!document.getElementById('spcov-root')) {
     window._spcovBase = _base;
-    // GH token sættes i js/contact-config.js (ikke i git)
-    var cfgScript = document.createElement('script');
-    cfgScript.src = _base + '/js/contact-config.js?' + _qv;
-    document.head.appendChild(cfgScript);
+    // EmailJS SDK
+    var ejsScript = document.createElement('script');
+    ejsScript.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    ejsScript.onload = function () { emailjs.init({ publicKey: 'aF4PLh0ndPGtWwSLx' }); };
+    document.head.appendChild(ejsScript);
     var _qv = _src && _src.indexOf('?') >= 0 ? _src.substring(_src.indexOf('?') + 1) : ('t=' + Date.now());
     var spcovScript = document.createElement('script');
     spcovScript.src = _base + '/js/contact-overlay.js?' + _qv;
