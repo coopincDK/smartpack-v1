@@ -12,7 +12,7 @@
   /* Mobil nav override - injiceres her da style.css ikke version-bumpes */
   (function(){
     var s = document.createElement('style');
-    s.textContent = '@media(max-width:1080px){.nav__cta--always{display:inline-flex!important;padding:.4rem .9rem;font-size:.82rem;line-height:1.4;}}';
+    s.textContent = '@media(max-width:1080px){.nav{overflow:hidden;}.nav__actions{gap:.375rem;flex-shrink:0;}.nav__hamburger{flex-shrink:0;margin-right:0;}.nav__cta--always{display:inline-flex!important;padding:.35rem .75rem;font-size:.8rem;line-height:1.4;white-space:nowrap;flex-shrink:0;}.nav__logo{min-width:0;overflow:hidden;}.nav__logo-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}}';
     document.head.appendChild(s);
   })();
 
