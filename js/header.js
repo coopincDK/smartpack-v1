@@ -165,6 +165,36 @@
     document.addEventListener('DOMContentLoaded', injectHeader);
   }
 
+  // Sticky mobil CTA bar
+  (function () {
+    var style = document.createElement('style');
+    style.textContent = [
+      '@media (max-width: 1024px) {',
+      '  .sp-mobile-cta { position:fixed; bottom:0; left:0; right:0; z-index:9990;',
+      '    padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:#111;',
+      '    border-top:1px solid rgba(255,255,255,.1); display:flex; gap:10px; }',
+      '  .sp-mobile-cta__btn { flex:1; padding:13px 16px; border-radius:8px; font-size:.95rem;',
+      '    font-weight:700; text-align:center; cursor:pointer; border:none; text-decoration:none; }',
+      '  .sp-mobile-cta__btn--primary { background:var(--accent,#16a34a); color:#fff; }',
+      '  .sp-mobile-cta__btn--ghost { background:transparent; color:#fff;',
+      '    border:1.5px solid rgba(255,255,255,.3); }',
+      '  body { padding-bottom: 72px !important; }',
+      '}'
+    ].join('');
+    document.head.appendChild(style);
+    function injectMobileCta() {
+      if (document.getElementById('sp-mobile-cta')) return;
+      var bar = document.createElement('div');
+      bar.id = 'sp-mobile-cta';
+      bar.className = 'sp-mobile-cta';
+      bar.innerHTML = '<a href="tel:+4588202019" class="sp-mobile-cta__btn sp-mobile-cta__btn--ghost">Ring: 88 20 20 19</a>' +
+        '<a href="kontakt" class="sp-mobile-cta__btn sp-mobile-cta__btn--primary">Kontakt &rarr;</a>';
+      document.body.appendChild(bar);
+    }
+    if (document.body) injectMobileCta();
+    else document.addEventListener('DOMContentLoaded', injectMobileCta);
+  })();
+
   // Load contact overlay på alle sider (v= fra header.js URL = cache-bust ved deploy)
   if (!document.getElementById('spcov-root')) {
     window._spcovBase = _base;
