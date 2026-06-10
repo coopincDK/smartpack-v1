@@ -23,6 +23,14 @@
     '  align-items:center;justify-content:center;padding:1rem;',
     '}',
     '.spcov-overlay.active{display:flex;animation:spcov-fade .18s ease}',
+    /* force light theme always */
+    '[data-theme="dark"] .spcov-overlay{--t:#0f172a;--t2:#374151;--t3:#6b7280;--bg:#fff;--surf:#f8fafc;--border:#e2e8f0;color-scheme:light;}',
+    '@media(prefers-color-scheme:dark){.spcov-overlay{--t:#0f172a;--t2:#374151;--t3:#6b7280;--bg:#fff;--surf:#f8fafc;--border:#e2e8f0;color-scheme:light;}}',
+    '.spcov-overlay .sp-modal{background:#fff!important;color:#0f172a!important;}',
+    '.spcov-overlay .sp-body{background:#fff!important;}',
+    '.spcov-overlay .sp-topbar{background:#fff!important;border-bottom:1px solid #f1f5f9!important;}',
+    '.spcov-overlay input,.spcov-overlay select,.spcov-overlay textarea{background:#fff!important;color:#0f172a!important;border-color:#e2e8f0!important;}',
+    '.spcov-overlay .sp-type-card{background:#fff!important;color:#0f172a!important;}',
 
     /* modal box */
     '.spcov-overlay .sp-modal{',
