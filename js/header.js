@@ -180,7 +180,7 @@
     document.head.appendChild(ejsScript);
     var _qv = _src && _src.indexOf('?') >= 0 ? _src.substring(_src.indexOf('?') + 1) : ('t=' + Date.now());
     var spcovScript = document.createElement('script');
-    spcovScript.src = _base + '/js/contact-overlay.js?' + _qv;
+    spcovScript.src = _base + '/js/contact-form.js?' + _qv;
     spcovScript.defer = true;
     document.head.appendChild(spcovScript);
   }
