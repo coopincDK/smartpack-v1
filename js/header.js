@@ -170,11 +170,12 @@
     document.addEventListener('DOMContentLoaded', injectHeader);
   }
 
-  // Load contact overlay på alle sider
+  // Load contact overlay på alle sider (v= fra header.js URL = cache-bust ved deploy)
   if (!document.getElementById('spcov-root')) {
     window._spcovBase = _base;
+    var _qv = _src && _src.indexOf('?') >= 0 ? _src.substring(_src.indexOf('?') + 1) : ('t=' + Date.now());
     var spcovScript = document.createElement('script');
-    spcovScript.src = _base + '/js/contact-overlay.js';
+    spcovScript.src = _base + '/js/contact-overlay.js?' + _qv;
     spcovScript.defer = true;
     document.head.appendChild(spcovScript);
   }
