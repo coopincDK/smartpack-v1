@@ -581,30 +581,46 @@
 
       if (btn) { btn.disabled = true; btn.textContent = 'Sender...'; }
 
+      var data = collectData();
+
+      /* mailto fallback ─ bruges hvis /api/contact ikke svarer */
+      function openMailto() {
+        var to   = selectedType === 'learn' ? 'bundlinjeboost@smartpack.dk' : 'support@smartpack.dk';
+        var subj = encodeURIComponent((selectedType === 'learn' ? 'Forespørgsel' : selectedType === 'support' ? 'Support-sag' : 'Generel henvendelse') + ' fra ' + data.name + ' - ' + data.company);
+        var body = encodeURIComponent('Navn: ' + data.name + '\nFirma: ' + data.company + '\nEmail: ' + data.email +
+          (data.subject ? '\nEmne: ' + data.subject : '') +
+          (data.message ? '\nBesked: ' + data.message : '') +
+          (data.comment ? '\nKommentar: ' + data.comment : ''));
+        window.open('mailto:' + to + '?subject=' + subj + '&body=' + body);
+        /* vis success alligevel */
+        g('spcov-ok-title').textContent = data.name.split(' ')[0] + ', vi har sendt dig et udkast!';
+        g('spcov-ok-text').textContent  = 'Din email-klient er åbnet med dine oplysninger. Send den afsted, så vender vi tilbage inden for 24 timer.';
+        setDots(3); showStep('spcov-s3');
+      }
+
       try {
         var resp = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(collectData())
+          body: JSON.stringify(data)
         });
         if (resp.ok) {
-          /* success */
           var titles = { learn: 'Vi glæder os til en snak!', general: 'Tak for din besked!', support: 'Support-sag modtaget!' };
           var texts  = {
             learn:   'Vi kigger på jeres setup og vender tilbage inden for 24 timer. Ingen salgspitch.',
             general: 'Vi har modtaget din henvendelse og svarer inden for 24 timer.',
             support: 'Vi har modtaget din sag og kigger på det hurtigst muligt. Brænder det? Ring direkte.'
           };
-          g('spcov-ok-title').textContent = (g('spcov-name').value.trim().split(' ')[0] + ', ') + (titles[selectedType] || 'Tak!');
+          g('spcov-ok-title').textContent = (data.name.split(' ')[0] + ', ') + (titles[selectedType] || 'Tak!');
           g('spcov-ok-text').textContent  = texts[selectedType] || '';
           setDots(3); showStep('spcov-s3');
         } else {
-          showError(errId);
-          if (btn) { btn.disabled = false; btn.textContent = 'Prøv igen'; }
+          openMailto();
         }
       } catch (e) {
-        showError(errId);
-        if (btn) { btn.disabled = false; btn.textContent = 'Prøv igen'; }
+        openMailto();
+      } finally {
+        if (btn) { btn.disabled = false; }
       }
     }
   };
