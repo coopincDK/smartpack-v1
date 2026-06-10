@@ -172,6 +172,7 @@
 
   // Load contact overlay på alle sider
   if (!document.getElementById('spcov-root')) {
+    window._spcovBase = _base;
     var spcovScript = document.createElement('script');
     spcovScript.src = _base + '/js/contact-overlay.js';
     spcovScript.defer = true;
