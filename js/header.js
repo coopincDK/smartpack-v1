@@ -14,12 +14,7 @@
     if (!placeholder) return;
 
     var html = [
-      '<div class="site-announce" id="site-announce">',
-      '  <span class="site-announce__inner">',
-      '    <span>Brug for et løft på bundlinjen? Det starter typisk på lageret. <a href="mailto:bundlinjeboost@smartpack.dk" class="site-announce__link">Lad os se på jeres setup &rarr;</a></span>',
-      '  </span>',
-      '  <button class="site-announce__close" id="site-announce-close" aria-label="Luk">&#x2715;</button>',
-      '</div>',
+
       '<header class="site-header" id="site-header">',
       '  <nav class="nav container">',
       '    <a href="' + url('/') + '" class="nav__logo">',
