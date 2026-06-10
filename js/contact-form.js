@@ -257,7 +257,7 @@
   root.id = 'spcov-root';
   root.innerHTML = [
     '<div class="spcov-overlay" id="spcov-overlay">',
-    '<div class="sp-modal" id="spcov-modal">',
+    '<div class="sp-modal" id="spcov-modal" style="background:#fff;color:#0f172a;">',
 
     /* top bar: logo + close */
     '<div class="sp-topbar">',
@@ -564,6 +564,16 @@
     open: function () {
       g('spcov-overlay').classList.add('active');
       document.body.style.overflow = 'hidden';
+      /* force lys tema uanset dark mode */
+      var m = g('spcov-modal');
+      if (m) {
+        m.style.setProperty('background', '#fff', 'important');
+        m.style.setProperty('color', '#0f172a', 'important');
+        m.querySelectorAll('input,select,textarea').forEach(function(el){
+          el.style.setProperty('background','#fff','important');
+          el.style.setProperty('color','#0f172a','important');
+        });
+      }
     },
     close: function () {
       g('spcov-overlay').classList.remove('active');
