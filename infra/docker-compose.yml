@@ -28,8 +28,8 @@ services:
       context: ../api
     container_name: smartpack-contact-api
     restart: unless-stopped
-    environment:
-      - SMTP_PASS=${SMTP_PASS}
+    env_file:
+      - .env
     expose:
       - "3000"
     healthcheck:
