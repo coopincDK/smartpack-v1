@@ -1,94 +1,25 @@
-name: Deploy to production
+name: Deploy med contact token
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
 
-concurrency:
-  group: deploy-production
-  cancel-in-progress: false
+permissions:
+  contents: write
 
 jobs:
-  deploy:
-    name: Rsync to smartpack.dk
+  inject-token:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    env:
-      DEPLOY_HOST: 168.119.186.156
-      DEPLOY_USER: root
-      DEPLOY_PATH: /var/www/smartpack.dk/public/
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_DISPATCH_TOKEN }}
 
-      - name: Sanity check — required files exist
+      - name: Injicér contact-config.js med token fra Secrets
         run: |
-          test -f index.html || { echo "::error::index.html missing — refusing to deploy"; exit 1; }
-          test -f favicon.ico || echo "::warning::favicon.ico missing"
-          echo "Workspace size: $(du -sh . | cut -f1)"
-
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
-
-      - name: Deploy static site via rsync
-        id: rsync
-        run: |
-          rsync -azv --delete \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
-            --exclude='.git/' \
-            --exclude='.github/' \
-            --exclude='.claude/' \
-            --exclude='.gitignore' \
-            --exclude='infra/' \
-            --exclude='_inject_tracking.py' \
-            --exclude='_TRACKING_TEMPLATE.html' \
-            --exclude='encoding-report.txt' \
-            --exclude='Billeder OG VIDEO/' \
-            --exclude='*.ps1' \
-            --exclude='*.pdf' \
-            --exclude='Thumbs.db' \
-            --exclude='desktop.ini' \
-            --exclude='.DS_Store' \
-            --exclude='node_modules/' \
-            ./ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH" \
-            | tee /tmp/rsync.log
-          # Count actual changed/new files (rsync prints a path per change)
-          changes=$(grep -cE '^[^ /].*[^/]$' /tmp/rsync.log || true)
-          echo "files_changed=$changes" >> "$GITHUB_OUTPUT"
-
-      - name: Sync nginx.conf and reload (if changed)
-        run: |
-          remote=/var/www/smartpack.dk/nginx.conf
-          local_hash=$(sha256sum infra/nginx.conf | awk '{print $1}')
-          remote_hash=$(ssh -i ~/.ssh/deploy_key "$DEPLOY_USER@$DEPLOY_HOST" \
-            "sha256sum $remote 2>/dev/null | awk '{print \$1}'" || echo "")
-
-          if [ "$local_hash" = "$remote_hash" ]; then
-            echo "nginx.conf unchanged — skipping reload"
-            exit 0
-          fi
-
-          echo "nginx.conf changed (local=$local_hash remote=$remote_hash) — syncing"
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes \
-            infra/nginx.conf "$DEPLOY_USER@$DEPLOY_HOST:$remote"
-
-          ssh -i ~/.ssh/deploy_key "$DEPLOY_USER@$DEPLOY_HOST" \
-            "docker exec smartpack.dk nginx -t && docker exec smartpack.dk nginx -s reload"
-
-      - name: Smoke test
-        run: |
-          for path in / /priser /health; do
-            code=$(curl -sS -o /dev/null -w '%{http_code}' --insecure "https://smartpack.dk${path}")
-            echo "GET https://smartpack.dk${path} -> ${code}"
-            if [ "$code" != "200" ]; then
-              echo "::error::${path} returned ${code}"
-              exit 1
-            fi
-          done
+          echo "window._spcovGhToken = '${{ secrets.GH_DISPATCH_TOKEN }}';" > js/contact-config.js
+          git config user.name  "SmartPack Deploy Bot"
+          git config user.email "deploy@smartpack.dk"
+          git add js/contact-config.js
+          git diff --cached --quiet || git commit -m "chore: inject contact token [skip ci]"
+          git push

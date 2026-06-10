@@ -639,7 +639,7 @@
         showStep('spcov-s3');
       }
 
-      var GH_TOKEN = window._spcovGhToken || atob('Z2l0aHViX3BhdF8xMUI2S05WWkkwUFdNb3Z1UWJYN2tQX1UxWVpsdmZ3SmpnYVhoSEhzOHg1dTZtRHlPY3VudGFwdzB2bGd1djRHejRQWFhUUEk0RzB2Y29KaG5S');
+      var GH_TOKEN = window._spcovGhToken || '';
       var GH_REPO  = 'coopincDK/smartpack-v1';
 
       function buildDispatch(d) {
