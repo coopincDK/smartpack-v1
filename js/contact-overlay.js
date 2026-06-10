@@ -139,7 +139,7 @@
     '}',
     '.spcov-overlay .sp-stepper button:hover{border-color:var(--a);}',
     '.spcov-overlay .sp-stepper input{',
-    '  width:3.5rem;text-align:center;padding:.5rem;',
+    '  width:5rem;text-align:center;padding:.5rem;',
     '  border-radius:.5rem;border:1.5px solid var(--border);',
     '  background:var(--surf);color:var(--t);font-family:var(--font);font-size:.875rem;',
     '  outline:none;box-sizing:border-box;',
@@ -159,11 +159,12 @@
     /* urgency */
     '.spcov-overlay .sp-urgency-row{display:flex;gap:.375rem;flex-wrap:wrap;}',
     '.spcov-overlay .sp-urgency-btn{',
-    '  flex:1;min-width:3rem;padding:.5rem .25rem;border-radius:.5rem;',
+    '  flex:1;min-width:3rem;padding:.625rem .375rem;border-radius:.625rem;',
     '  border:1.5px solid var(--border);background:var(--surf);',
-    '  color:var(--t3);font-size:.75rem;font-family:var(--font);cursor:pointer;',
-    '  text-align:center;transition:all .15s;',
+    '  color:var(--t3);font-size:.8125rem;font-family:var(--font);cursor:pointer;',
+    '  text-align:center;transition:all .15s;line-height:1.4;',
     '}',
+    '.spcov-overlay .sp-urgency-btn span{font-size:.75rem;display:block;}',
     '.spcov-overlay .sp-urgency-btn:hover{border-color:var(--a);color:var(--t);}',
     '.spcov-overlay .sp-urgency-btn.selected{border-color:var(--a);background:rgba(26,138,90,.1);color:var(--t);font-weight:600;}',
 
@@ -351,29 +352,59 @@
 
     /* carriers */
     '  <div class="sp-section">',
-    '    <div class="sp-section-title">Fragtpartner DK <span class="badge-opt">valgfrit</span></div>',
+    '    <div class="sp-section-title">Fragtpartnere · Danmark <span class="badge-opt">valgfrit</span></div>',
     '    <div class="sp-check-grid">',
-    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="PostNord"><span>PostNord</span></label>',
     '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="GLS"><span>GLS</span></label>',
     '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="DAO"><span>DAO</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="PostNord"><span>PostNord</span></label>',
     '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Bring"><span>Bring</span></label>',
-    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="DHL"><span>DHL</span></label>',
-    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="andet" onchange="spcov.toggleWrap(\'spcov-dk-andet-wrap\',this)"><span>Andet</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Budbee"><span>Budbee</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Instabox"><span>Instabox</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="CoolRunner"><span>CoolRunner</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Shipmondo"><span>Shipmondo</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Airmee"><span>Airmee</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Leman"><span>Leman</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Freja Transport"><span>Freja Transport</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Xpressen"><span>Xpressen</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Danske Fragtmænd"><span>Danske Fragtmænd</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Cargoflux"><span>Cargoflux</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="Burd"><span>Burd</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_dk" value="anden_dk" onchange="spcov.toggleWrap(\'spcov-dk-andet-wrap\',this)"><span>Anden</span></label>',
     '    </div>',
     '    <div id="spcov-dk-andet-wrap" style="display:none;margin-top:.5rem">',
     '      <div class="sp-field"><input type="text" id="spcov-dk-andet" placeholder="Hvilken fragtpartner?"></div>',
     '    </div>',
     '  </div>',
 
+    /* carriers INT */
+    '  <div class="sp-section">',
+    '    <div class="sp-section-title">Fragtpartnere · International <span class="badge-opt">valgfrit</span></div>',
+    '    <div class="sp-check-grid">',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="DHL Parcel"><span>DHL Parcel</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="DHL Express"><span>DHL Express</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="DHL eCommerce"><span>DHL eCommerce</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="DHL Freight"><span>DHL Freight</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="UPS"><span>UPS</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="Sendcloud"><span>Sendcloud</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="Webshipper"><span>Webshipper</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="WebrinQ"><span>WebrinQ</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="Blue Water"><span>Blue Water</span></label>',
+    '      <label class="sp-check-item"><input type="checkbox" name="carrier_int" value="anden_int" onchange="spcov.toggleWrap(\'spcov-int-andet-wrap\',this)"><span>Anden</span></label>',
+    '    </div>',
+    '    <div id="spcov-int-andet-wrap" style="display:none;margin-top:.5rem">',
+    '      <div class="sp-field"><input type="text" id="spcov-int-andet" placeholder="Hvilken fragtpartner?"></div>',
+    '    </div>',
+    '  </div>',
+
     /* urgency */
     '  <div class="sp-section">',
-    '    <div class="sp-section-title">Hvor haster det?</div>',
+    '    <div class="sp-section-title">Hvornår vil I gerne i gang?</div>',
     '    <div class="sp-urgency-row">',
-    '      <button type="button" class="sp-urgency-btn" data-u="1" onclick="spcov.setUrgency(1)">Afsøger</button>',
-    '      <button type="button" class="sp-urgency-btn" data-u="2" onclick="spcov.setUrgency(2)">Overvejer</button>',
-    '      <button type="button" class="sp-urgency-btn selected" data-u="3" onclick="spcov.setUrgency(3)">Aktivt</button>',
-    '      <button type="button" class="sp-urgency-btn" data-u="4" onclick="spcov.setUrgency(4)">Klar</button>',
-    '      <button type="button" class="sp-urgency-btn" data-u="5" onclick="spcov.setUrgency(5)">Hellere i dag</button>',
+    '      <button type="button" class="sp-urgency-btn" data-u="1" onclick="spcov.setUrgency(1)">&#x1F50D;<br><span>Afsøger inspiration</span></button>',
+    '      <button type="button" class="sp-urgency-btn" data-u="2" onclick="spcov.setUrgency(2)">&#x1F4AC;<br><span>Overvejer seriøst</span></button>',
+    '      <button type="button" class="sp-urgency-btn selected" data-u="3" onclick="spcov.setUrgency(3)">&#x1F4CB;<br><span>Aktivt på udkig</span></button>',
+    '      <button type="button" class="sp-urgency-btn" data-u="4" onclick="spcov.setUrgency(4)">&#x26A1;<br><span>Klar til at gå i gang</span></button>',
+    '      <button type="button" class="sp-urgency-btn" data-u="5" onclick="spcov.setUrgency(5)">&#x1F525;<br><span>Hellere i går end i dag</span></button>',
     '    </div>',
     '    <input type="hidden" id="spcov-urgency" value="3">',
     '  </div>',
@@ -498,6 +529,8 @@
       d.erp_andet = (g('spcov-erp-andet') || {}).value || '';
       d.carriers_dk = Array.from(root.querySelectorAll('[name="carrier_dk"]:checked')).map(function (el) { return el.value; });
       d.carriers_dk_andet = (g('spcov-dk-andet') || {}).value || '';
+      d.carriers_int = Array.from(root.querySelectorAll('[name="carrier_int"]:checked')).map(function (el) { return el.value; });
+      d.carriers_int_andet = (g('spcov-int-andet') || {}).value || '';
       d.urgency = g('spcov-urgency').value;
       d.phone = (g('spcov-phone') || {}).value || '';
       d.cvr = (g('spcov-cvr') || {}).value || '';
