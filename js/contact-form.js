@@ -84,6 +84,8 @@
     '.spcov-overlay .sp-ql-desc{font-size:.8rem;color:var(--t3);}',
     '.spcov-overlay .sp-ql-arrow{margin-left:auto;color:var(--t3);}',
     '.spcov-overlay .sp-callout{display:flex;gap:.625rem;padding:.75rem 1rem;background:rgba(251,191,36,.08);border-radius:.625rem;border:1px solid rgba(251,191,36,.2);margin-bottom:1rem;font-size:.8125rem;color:var(--t2);line-height:1.5;}',
+    '.spcov-overlay .sp-nl-check{display:flex;align-items:flex-start;gap:.5rem;margin:.75rem 0;font-size:.8125rem;color:var(--t2);cursor:pointer;line-height:1.4;}',
+    '.spcov-overlay .sp-nl-check input[type=checkbox]{margin-top:.15rem;accent-color:var(--a);cursor:pointer;flex-shrink:0;}',
     '.spcov-overlay .sp-btn{width:100%;padding:.8125rem 1.5rem;border-radius:.625rem;border:none;cursor:pointer;background:var(--a);color:#fff;font-family:var(--font);font-size:.9375rem;font-weight:600;transition:background .15s,transform .1s;margin-top:1.25rem;}',
     '.spcov-overlay .sp-btn:hover{background:var(--a2);}',
     '.spcov-overlay .sp-btn:active{transform:scale(.99);}',
@@ -301,6 +303,7 @@
     '    <div class="sp-field"><textarea id="spcov-comment" placeholder="Fx særlige krav, nuværende udfordringer..."></textarea></div>',
     '  </div>',
 
+    '  <label class="sp-nl-check"><input type="checkbox" id="spcov-newsletter"> <span>Ja tak til praktiske tips om lager og logistik</span></label>',
     '  <div id="spcov-learn-error" class="sp-err">Noget gik galt. Prøv igen eller skriv direkte til os.</div>',
     '  <button class="sp-btn" id="spcov-learn-btn" onclick="spcov.submit()">Send forespørgsel &#8594;</button>',
     '</div>',
@@ -315,6 +318,7 @@
     '  </div>',
     '  <div class="sp-field"><label for="spcov-gen-subject">Emne <span class="req">*</span></label><input type="text" id="spcov-gen-subject" placeholder="Fx samarbejde, presse..."></div>',
     '  <div class="sp-field"><label for="spcov-gen-msg">Din besked <span class="req">*</span></label><textarea id="spcov-gen-msg" placeholder="Skriv hvad du har på hjerte..."></textarea></div>',
+    '  <label class="sp-nl-check"><input type="checkbox" id="spcov-newsletter"> <span>Ja tak til praktiske tips om lager og logistik</span></label>',
     '  <div id="spcov-general-error" class="sp-err">Noget gik galt. Prøv igen eller skriv direkte til os.</div>',
     '  <button class="sp-btn" id="spcov-general-btn" onclick="spcov.submit()">Send besked &#8594;</button>',
     '</div>',
@@ -335,6 +339,7 @@
     '  <div class="sp-callout"><span>&#x1F4DE;</span>&nbsp;<span>Akut problem? <strong>Ring til os direkte</strong> - superbrugere har fri telefon 24/7.</span></div>',
     '  <div class="sp-field"><label for="spcov-sup-subject">Emne <span class="req">*</span></label><input type="text" id="spcov-sup-subject" placeholder="Fx Scanner virker ikke..."></div>',
     '  <div class="sp-field"><label for="spcov-sup-msg">Beskriv problemet <span class="req">*</span></label><textarea id="spcov-sup-msg" placeholder="Hvad sker der? Hvornår startede det?"></textarea></div>',
+    '  <label class="sp-nl-check"><input type="checkbox" id="spcov-newsletter"> <span>Ja tak til praktiske tips om lager og logistik</span></label>',
     '  <div id="spcov-support-error" class="sp-err">Noget gik galt. Prøv igen eller skriv direkte til os.</div>',
     '  <button class="sp-btn" id="spcov-support-btn" onclick="spcov.submit()">Send support-sag &#8594;</button>',
     '</div>',
@@ -398,12 +403,15 @@
       d.source = src ? src.value : '';
       d.source_andet = (g('spcov-source-andet') || {}).value || '';
       d.comment = (g('spcov-comment') || {}).value || '';
+      d.newsletter = (g('spcov-newsletter') || {}).checked ? 'Ja' : 'Nej';
     } else if (selectedType === 'general') {
       d.subject = g('spcov-gen-subject').value.trim();
       d.message = g('spcov-gen-msg').value.trim();
+      d.newsletter = (g('spcov-newsletter') || {}).checked ? 'Ja' : 'Nej';
     } else if (selectedType === 'support') {
       d.subject = g('spcov-sup-subject').value.trim();
       d.message = g('spcov-sup-msg').value.trim();
+      d.newsletter = (g('spcov-newsletter') || {}).checked ? 'Ja' : 'Nej';
     }
     return d;
   }
@@ -533,9 +541,11 @@
           add('CVR', d.cvr);
           add('Hørt via', (d.source || '') + (d.source_andet ? ' (' + d.source_andet + ')' : ''));
           add('Kommentar', d.comment);
+          add('Nyhedsbrev', d.newsletter);
         } else {
           add('Emne', d.subject);
           add('Besked', d.message);
+          add('Nyhedsbrev', d.newsletter);
         }
         return lines.join('\n');
       }
