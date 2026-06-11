@@ -562,6 +562,24 @@
 
       try {
         await emailjs.send('service_otu5dlt', 'template_rbiz8zh', params);
+        // Gem nyhedsbrev tilmelding i Supabase hvis afkrydset
+        if (data.newsletter === 'Ja') {
+          try {
+            var nlBody = { email: data.email.toLowerCase().trim() };
+            if (data.name)    nlBody.name    = data.name.trim();
+            if (data.company) nlBody.company = data.company.trim();
+            fetch('https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers', {
+              method: 'POST',
+              headers: {
+                'Content-Type':  'application/json',
+                'apikey':        'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE',
+                'Authorization': 'Bearer sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE',
+                'Prefer':        'return=minimal'
+              },
+              body: JSON.stringify(nlBody)
+            }); // fire-and-forget, 409 = allerede tilmeldt er OK
+          } catch (nlErr) { /* ignorer - emailjs var OK */ }
+        }
         var sent = true;
         if (sent) {
           var titles = { learn: 'Vi gl\u00e6der os til en snak!', general: 'Tak for din besked!', support: 'Support-sag modtaget!' };
