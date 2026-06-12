@@ -541,11 +541,11 @@
           add('CVR', d.cvr);
           add('Hørt via', (d.source || '') + (d.source_andet ? ' (' + d.source_andet + ')' : ''));
           add('Kommentar', d.comment);
-          add('Nyhedsbrev', d.newsletter);
+          add('Nyhedsbrev', d.newsletter === 'Ja' ? 'Ja (' + d.email + ')' : 'Nej');
         } else {
           add('Emne', d.subject);
           add('Besked', d.message);
-          add('Nyhedsbrev', d.newsletter);
+          add('Nyhedsbrev', d.newsletter === 'Ja' ? 'Ja (' + d.email + ')' : 'Nej');
         }
         return lines.join('\n');
       }
