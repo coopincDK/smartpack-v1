@@ -528,6 +528,8 @@
       function buildMessage(d) {
         var lines = [];
         var add = function(label, val) { if (val) lines.push(label + ': ' + val); };
+        add('Navn', d.name);
+        add('Email', d.email);
         add('Virksomhed', d.company);
         if (d.type === 'learn') {
           add('Ordrer pr. dag', d.orders);
