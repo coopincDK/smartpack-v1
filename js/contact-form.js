@@ -514,12 +514,12 @@
         await new Promise(function (resolve, reject) {
           var s = document.createElement('script');
           s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-          s.onload = function () { emailjs.init({ publicKey: 'aF4PLh0ndPGtWwSLx' }); resolve(); };
+          s.onload = function () { emailjs.init({ publicKey: 'WMv1761Ap8h04kPxjz9mvANKgC0Ugc' }); resolve(); };
           s.onerror = reject;
           document.head.appendChild(s);
         });
       } else if (!window._ejsInited) {
-        emailjs.init({ publicKey: 'aF4PLh0ndPGtWwSLx' });
+        emailjs.init({ publicKey: 'WMv1761Ap8h04kPxjz9mvANKgC0Ugc' });
         window._ejsInited = true;
       }
 

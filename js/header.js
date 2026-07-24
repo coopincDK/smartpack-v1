@@ -173,7 +173,7 @@
     // EmailJS SDK
     var ejsScript = document.createElement('script');
     ejsScript.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    ejsScript.onload = function () { emailjs.init({ publicKey: 'aF4PLh0ndPGtWwSLx' }); };
+    ejsScript.onload = function () { emailjs.init({ publicKey: 'WMv1761Ap8h04kPxjz9mvANKgC0Ugc' }); };
     document.head.appendChild(ejsScript);
     var _qv = _src && _src.indexOf('?') >= 0 ? _src.substring(_src.indexOf('?') + 1) : ('t=' + Date.now());
     var spcovScript = document.createElement('script');
