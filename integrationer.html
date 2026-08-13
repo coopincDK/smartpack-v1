@@ -423,6 +423,23 @@
     .int-hub__api p { margin: 0; font-size: .95rem; color: var(--text-2); }
     .int-hub__api strong { color: var(--text-1); }
 
+    /* Via Wallbee badge */
+    .int-hub__card--via-wallbee::before {
+      content: 'via Wallbee';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      background: rgba(120,140,200,.12);
+      border-bottom: 1px solid rgba(120,140,200,.28);
+      color: var(--text-3);
+      font-size: .58rem;
+      font-weight: 700;
+      padding: 3px 6px;
+      text-align: center;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
     /* Label inkl. badge — direkte fragtintegrationer */
     .int-hub__card--label-incl::before {
       content: '\2713\00a0Label inkl. i pris';
@@ -502,7 +519,7 @@
 <body>
 
 <div id="sp-header"></div>
-<script src="js/header.js?v=1786610879"></script>
+<script src="js/header.js?v=1786611153"></script>
 
 <main id="main-content">
 
@@ -685,7 +702,7 @@
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/LEMAN.png" alt="Leman" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Leman</span>
         </a>
-        <a href="integrationer/leman-express" class="int-hub__card" data-cat="fragt" data-name="leman express">
+        <a href="integrationer/leman-express" class="int-hub__card int-hub__card--via-wallbee" data-cat="fragt" data-name="leman express">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Leman-Express.png" alt="Leman Express" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Leman Express</span>
         </a>
@@ -693,7 +710,7 @@
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Freja-Transport-Logistics.png" alt="Freja Transport" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Freja Transport</span>
         </a>
-        <a href="integrationer/freja-express" class="int-hub__card" data-cat="fragt" data-name="freja express">
+        <a href="integrationer/freja-express" class="int-hub__card int-hub__card--via-wallbee" data-cat="fragt" data-name="freja express">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Freja-Express.png" alt="Freja Express" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Freja Express</span>
         </a>
@@ -741,7 +758,7 @@
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/BFT-Logistik.png" alt="BFT Logistik" loading="lazy" width="225" height="225">
           <span class="int-hub__card-name">BFT Logistik</span>
         </a>
-        <a href="integrationer/strait-air" class="int-hub__card" data-cat="fragt" data-name="strait air">
+        <a href="integrationer/strait-air" class="int-hub__card int-hub__card--via-wallbee" data-cat="fragt" data-name="strait air">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Strait-Air.png" alt="Strait Air" loading="lazy" width="85" height="84">
           <span class="int-hub__card-name">Strait Air</span>
         </a>
@@ -918,9 +935,9 @@
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1786610879"></script>
+<script src="js/footer.js?v=1786611153"></script>
 
-<script src="js/main.js?v=1786610879" defer></script>
+<script src="js/main.js?v=1786611153" defer></script>
 <script>
 // Search & filter
 const searchEl = document.getElementById('int-search');
