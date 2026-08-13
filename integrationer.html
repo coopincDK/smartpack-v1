@@ -423,6 +423,23 @@
     .int-hub__api p { margin: 0; font-size: .95rem; color: var(--text-2); }
     .int-hub__api strong { color: var(--text-1); }
 
+    /* Label inkl. badge — direkte fragtintegrationer */
+    .int-hub__card--label-incl::before {
+      content: '\2713\00a0Label inkl. i pris';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      background: rgba(62,207,142,.1);
+      border-bottom: 1px solid rgba(62,207,142,.22);
+      color: var(--accent);
+      font-size: .58rem;
+      font-weight: 700;
+      padding: 3px 6px;
+      text-align: center;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+
     @media (max-width: 600px) {
       .int-hub__grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: .5rem; }
       .int-hub__stats { gap: 1.5rem; }
@@ -485,7 +502,7 @@
 <body>
 
 <div id="sp-header"></div>
-<script src="js/header.js?v=1784889142"></script>
+<script src="js/header.js?v=1786606455"></script>
 
 <main id="main-content">
 
@@ -568,8 +585,8 @@
       <div class="int-hub__filters">
         <button class="int-filter-btn active" data-filter="all">Alle</button>
         <button class="int-filter-btn" data-filter="webshop">Webshops</button>
-        <button class="int-filter-btn" data-filter="fragt-dk">Fragt &middot; DK</button>
-        <button class="int-filter-btn" data-filter="fragt-int">Fragt &middot; International</button>
+        <button class="int-filter-btn" data-filter="fragt">Fragt</button>
+        <button class="int-filter-btn" data-filter="portal">Fragtportaler</button>
         <button class="int-filter-btn" data-filter="erp">ERP &amp; &Oslash;konomi</button>
         <button class="int-filter-btn" data-filter="other">&Oslash;vrige</button>
       </div>
@@ -627,143 +644,146 @@
       </div>
     </div>
 
-    <!-- FRAGT DANMARK -->
-    <div class="int-category" data-category="fragt-dk">
+    <!-- FRAGT — DIREKTE FORBINDELSER -->
+    <div class="int-category" data-category="fragt">
       <div class="int-category__header">
-        <span class="int-category__title">Fragt &middot; Danmark</span>
+        <span class="int-category__title">Fragt &middot; Direkte forbindelser</span>
         <div class="int-category__line"></div>
-        <span class="int-category__count">18 fragtleverand&oslash;rer</span>
+        <span class="int-category__count">25 fragtleverand&oslash;rer</span>
       </div>
-      <p class="int-category__desc">Labels oprettes automatisk n&aring;r ordren er pakket. Du trykker send.</p>
+      <p class="int-category__desc">Labels oprettes direkte i SmartPack &mdash; ingen ekstra abonnement til en portal. Du trykker send, labelen printer.</p>
       <div class="int-hub__grid">
-        <a href="integrationer/gls" class="int-hub__card" data-cat="fragt-dk" data-name="gls">
+        <a href="integrationer/gls" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="gls">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS" loading="lazy" width="1024" height="1024">
           <span class="int-hub__card-name">GLS</span>
         </a>
-        <a href="integrationer/dao" class="int-hub__card" data-cat="fragt-dk" data-name="dao">
+        <a href="integrationer/dao" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="dao">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="DAO" loading="lazy" width="1024" height="1024">
           <span class="int-hub__card-name">DAO</span>
         </a>
-        <a href="integrationer/bring" class="int-hub__card" data-cat="fragt-dk" data-name="bring">
+        <a href="integrationer/bring" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="bring">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Bring.png" alt="Bring" loading="lazy" width="256" height="256">
           <span class="int-hub__card-name">Bring</span>
         </a>
-        <a href="integrationer/postnord" class="int-hub__card" data-cat="fragt-dk" data-name="postnord">
+        <a href="integrationer/postnord" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="postnord">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Postnord.png" alt="PostNord" loading="lazy" width="1024" height="1024">
           <span class="int-hub__card-name">PostNord</span>
         </a>
-        <a href="integrationer/budbee" class="int-hub__card" data-cat="fragt-dk" data-name="budbee">
+        <a href="integrationer/budbee" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="budbee">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/budbee.png" alt="Budbee" loading="lazy" width="367" height="367">
           <span class="int-hub__card-name">Budbee</span>
         </a>
-        <a href="integrationer/instabox" class="int-hub__card" data-cat="fragt-dk" data-name="instabox">
+        <a href="integrationer/instabox" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="instabox">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/instabox.png" alt="Instabox" loading="lazy" width="128" height="128">
           <span class="int-hub__card-name">Instabox</span>
         </a>
-        <a href="integrationer/coolrunner" class="int-hub__card" data-cat="fragt-dk" data-name="coolrunner">
-          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/CoolRunner.png" alt="CoolRunner" loading="lazy" width="128" height="128">
-          <span class="int-hub__card-name">CoolRunner</span>
-        </a>
-        <a href="integrationer/shipmondo" class="int-hub__card" data-cat="fragt-dk" data-name="shipmondo">
-          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Shipmondo.png" alt="Shipmondo" loading="lazy" width="256" height="256">
-          <span class="int-hub__card-name">Shipmondo</span>
-        </a>
-        <a href="integrationer/airmee" class="int-hub__card" data-cat="fragt-dk" data-name="airmee">
+        <a href="integrationer/airmee" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="airmee">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Airmee.png" alt="Airmee" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Airmee</span>
         </a>
-        <a href="integrationer/leman" class="int-hub__card" data-cat="fragt-dk" data-name="leman">
+        <a href="integrationer/leman" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="leman">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/LEMAN.png" alt="Leman" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Leman</span>
         </a>
-        <a href="integrationer/leman-express" class="int-hub__card" data-cat="fragt-dk" data-name="leman express">
+        <a href="integrationer/leman-express" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="leman express">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Leman-Express.png" alt="Leman Express" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Leman Express</span>
         </a>
-        <a href="integrationer/freja-transport" class="int-hub__card" data-cat="fragt-dk" data-name="freja transport">
+        <a href="integrationer/freja-transport" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="freja transport">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Freja-Transport-Logistics.png" alt="Freja Transport" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Freja Transport</span>
         </a>
-        <a href="integrationer/freja-express" class="int-hub__card" data-cat="fragt-dk" data-name="freja express">
+        <a href="integrationer/freja-express" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="freja express">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Freja-Express.png" alt="Freja Express" loading="lazy" width="800" height="800">
           <span class="int-hub__card-name">Freja Express</span>
         </a>
-        <a href="integrationer/xpressen" class="int-hub__card" data-cat="fragt-dk" data-name="xpressen">
+        <a href="integrationer/xpressen" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="xpressen">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Xpressen.png" alt="Xpressen" loading="lazy" width="256" height="256">
           <span class="int-hub__card-name">Xpressen</span>
         </a>
-        <a href="integrationer/danske-fragtmaend" class="int-hub__card" data-cat="fragt-dk" data-name="danske fragtmænd">
+        <a href="integrationer/danske-fragtmaend" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="danske fragtmænd">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Danske Fragtmænd.png" alt="Danske Fragtmænd" loading="lazy" width="180" height="180">
           <span class="int-hub__card-name">Danske Fragtmænd</span>
         </a>
-        <a href="integrationer/cargoflux" class="int-hub__card" data-cat="fragt-dk" data-name="cargoflux">
-          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Cargoflux.png" alt="Cargoflux" loading="lazy" width="225" height="225">
-          <span class="int-hub__card-name">Cargoflux</span>
-        </a>
-        <a href="integrationer/burd" class="int-hub__card" data-cat="fragt-dk" data-name="burd">
+        <a href="integrationer/burd" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="burd">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/burd.png" alt="Burd" loading="lazy" width="128" height="128">
           <span class="int-hub__card-name">Burd</span>
         </a>
-
-      </div>
-    </div>
-
-    <!-- FRAGT INTERNATIONAL -->
-    <div class="int-category" data-category="fragt-int">
-      <div class="int-category__header">
-        <span class="int-category__title">Fragt &middot; International</span>
-        <div class="int-category__line"></div>
-        <span class="int-category__count">12 fragtleverand&oslash;rer</span>
-      </div>
-      <p class="int-category__desc">Samme flow som danske fragtleverand&oslash;rer. Bare til resten af verden.</p>
-      <div class="int-hub__grid">
-        <a href="integrationer/dhl-parcel" class="int-hub__card" data-cat="fragt-int" data-name="dhl parcel">
+        <a href="integrationer/dsv" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="dsv">
+          <img src="assets/DSV-logo_500px.png" alt="DSV" loading="lazy" width="500" height="500">
+          <span class="int-hub__card-name">DSV</span>
+        </a>
+        <a href="integrationer/dhl-parcel" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="dhl parcel">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/DHL Parcel.png" alt="DHL Parcel" loading="lazy" width="250" height="250">
           <span class="int-hub__card-name">DHL Parcel</span>
         </a>
-        <a href="integrationer/dhl-ecommerce" class="int-hub__card" data-cat="fragt-int" data-name="dhl ecommerce">
+        <a href="integrationer/dhl-ecommerce" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="dhl ecommerce">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/DHL-eCommerce.png" alt="DHL eCommerce" loading="lazy" width="818" height="818">
           <span class="int-hub__card-name">DHL eCommerce</span>
         </a>
-        <a href="integrationer/dhl-express" class="int-hub__card" data-cat="fragt-int" data-name="dhl express">
+        <a href="integrationer/dhl-express" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="dhl express">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/DHL-Express.png" alt="DHL Express" loading="lazy" width="250" height="250">
           <span class="int-hub__card-name">DHL Express</span>
         </a>
-        <a href="integrationer/dhl-freight" class="int-hub__card" data-cat="fragt-int" data-name="dhl freight">
+        <a href="integrationer/dhl-freight" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="dhl freight">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/DHL-Freight.png" alt="DHL Freight" loading="lazy" width="150" height="150">
           <span class="int-hub__card-name">DHL Freight</span>
         </a>
-        <a href="integrationer/ups" class="int-hub__card" data-cat="fragt-int" data-name="ups">
+        <a href="integrationer/ups" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="ups">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/UPS.png" alt="UPS" loading="lazy" width="128" height="128">
           <span class="int-hub__card-name">UPS</span>
         </a>
-        <a href="integrationer/blue-water" class="int-hub__card" data-cat="fragt-int" data-name="blue water shipping">
+        <a href="integrationer/blue-water" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="blue water shipping">
           <img src="assets/blue water shipping blue.png" alt="Blue Water Shipping" loading="lazy" width="1200" height="904">
           <span class="int-hub__card-name">Blue Water</span>
         </a>
-        <a href="integrationer/bft-logistik" class="int-hub__card" data-cat="fragt-int" data-name="bft logistik">
+        <a href="integrationer/bft-logistik" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="bft logistik">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/BFT-Logistik.png" alt="BFT Logistik" loading="lazy" width="225" height="225">
           <span class="int-hub__card-name">BFT Logistik</span>
         </a>
-        <a href="integrationer/strait-air" class="int-hub__card" data-cat="fragt-int" data-name="strait air">
+        <a href="integrationer/strait-air" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="strait air">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Strait-Air.png" alt="Strait Air" loading="lazy" width="85" height="84">
           <span class="int-hub__card-name">Strait Air</span>
         </a>
-        <a href="integrationer/sendcloud" class="int-hub__card" data-cat="fragt-int" data-name="sendcloud">
+        <a href="integrationer/matkahuolto" class="int-hub__card int-hub__card--label-incl" data-cat="fragt" data-name="matkahuolto">
+          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Matkahuolto.png" alt="Matkahuolto" loading="lazy" width="512" height="512">
+          <span class="int-hub__card-name">Matkahuolto</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- FRAGTPORTALER -->
+    <div class="int-category" data-category="portal">
+      <div class="int-category__header">
+        <span class="int-category__title">Fragtportaler</span>
+        <div class="int-category__line"></div>
+        <span class="int-category__count">6 portaler</span>
+      </div>
+      <p class="int-category__desc">Bruger I en fragtportal til at booke labels? SmartPack sender ordrer videre automatisk og f&aring;r sporingsnumre retur.</p>
+      <div class="int-hub__grid">
+        <a href="integrationer/coolrunner" class="int-hub__card" data-cat="portal" data-name="coolrunner">
+          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/CoolRunner.png" alt="CoolRunner" loading="lazy" width="128" height="128">
+          <span class="int-hub__card-name">CoolRunner</span>
+        </a>
+        <a href="integrationer/shipmondo" class="int-hub__card" data-cat="portal" data-name="shipmondo">
+          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Shipmondo.png" alt="Shipmondo" loading="lazy" width="256" height="256">
+          <span class="int-hub__card-name">Shipmondo</span>
+        </a>
+        <a href="integrationer/cargoflux" class="int-hub__card" data-cat="portal" data-name="cargoflux">
+          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Cargoflux.png" alt="Cargoflux" loading="lazy" width="225" height="225">
+          <span class="int-hub__card-name">Cargoflux</span>
+        </a>
+        <a href="integrationer/sendcloud" class="int-hub__card" data-cat="portal" data-name="sendcloud">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Sendcloud.png" alt="Sendcloud" loading="lazy" width="256" height="256">
           <span class="int-hub__card-name">Sendcloud</span>
         </a>
-        <a href="integrationer/webshipper" class="int-hub__card" data-cat="fragt-int" data-name="webshipper">
+        <a href="integrationer/webshipper" class="int-hub__card" data-cat="portal" data-name="webshipper">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Webshipper.png" alt="Webshipper" loading="lazy" width="1024" height="1024">
           <span class="int-hub__card-name">Webshipper</span>
         </a>
-        <a href="integrationer/webrinq" class="int-hub__card" data-cat="fragt-int" data-name="webrinq">
+        <a href="integrationer/webrinq" class="int-hub__card" data-cat="portal" data-name="webrinq">
           <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/WebrinQ.png" alt="WebrinQ" loading="lazy" width="128" height="128">
           <span class="int-hub__card-name">WebrinQ</span>
-        </a>
-        <a href="integrationer/matkahuolto" class="int-hub__card" data-cat="fragt-int" data-name="matkahuolto">
-          <img src="assets/SmartPack-App-Icons/SmartPack/Carrier/Matkahuolto.png" alt="Matkahuolto" loading="lazy" width="512" height="512">
-          <span class="int-hub__card-name">Matkahuolto</span>
         </a>
       </div>
     </div>
@@ -890,9 +910,9 @@
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1784889142"></script>
+<script src="js/footer.js?v=1786606455"></script>
 
-<script src="js/main.js?v=1784889142" defer></script>
+<script src="js/main.js?v=1786606455" defer></script>
 <script>
 // Search & filter
 const searchEl = document.getElementById('int-search');
