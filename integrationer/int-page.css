@@ -37,3 +37,23 @@
 .int-page__direct strong{display:block;font-size:1.1rem;font-weight:800;color:var(--accent);margin:0 0 .45rem;line-height:1.3}
 .int-page__direct p{font-size:.92rem;color:var(--text-1);margin:0;line-height:1.65}
 @media(max-width:768px){.int-page__body{grid-template-columns:1fr}.int-page__sidebar{position:static}.int-page__hero{gap:1.5rem}}
+
+/* --- Udvidede integrationssider (v4) --- */
+.int-page__main p{font-size:.95rem;color:var(--text-2);line-height:1.7}
+.int-page__flow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.2rem 0 0}
+.int-page__flow-col{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:1.1rem 1.2rem}
+.int-page__flow-col h3{font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);margin:0 0 .7rem}
+.int-page__flow-col ul{margin:0;padding-left:1.1rem}
+.int-page__flow-col li{font-size:.88rem;color:var(--text-2);line-height:1.55;margin-bottom:.45rem}
+.int-page__flow-col li:last-child{margin-bottom:0}
+.int-page__limits{margin:1rem 0 0;padding-left:1.1rem}
+.int-page__limits li{font-size:.9rem;color:var(--text-2);line-height:1.6;margin-bottom:.5rem}
+.int-page__faq{margin-top:1.2rem;display:flex;flex-direction:column;gap:.6rem}
+.int-page__faq details{background:var(--surface-2);border:1px solid var(--border);border-radius:10px}
+.int-page__faq summary{cursor:pointer;padding:.9rem 2.6rem .9rem 1.2rem;font-weight:700;font-size:.93rem;list-style:none;position:relative;transition:color var(--t-fast)}
+.int-page__faq summary::-webkit-details-marker{display:none}
+.int-page__faq summary::after{content:"+";position:absolute;right:1.2rem;top:.8rem;font-size:1.2rem;font-weight:700;color:var(--accent);line-height:1.2}
+.int-page__faq details[open] summary::after{content:"\2212"}
+.int-page__faq summary:hover{color:var(--accent)}
+.int-page__faq details>div{padding:0 1.2rem 1.1rem;font-size:.9rem;color:var(--text-2);line-height:1.65}
+@media(max-width:768px){.int-page__flow{grid-template-columns:1fr}}

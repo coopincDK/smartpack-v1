@@ -1,10 +1,7 @@
-﻿??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
+<!DOCTYPE html>
 <!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
+     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
 ================================================================ -->
 
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
@@ -12,11 +9,11 @@
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
 <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<!-- 2. Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
+<!-- 3. Meta Pixel -->
 <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
@@ -39,107 +36,118 @@
 <!-- ================================================================
      SLUT PAA TRACKING BLOK
 ================================================================ -->
-  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head> -->
-
-<html lang="da">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartPack + Shoporama | WMS til Shoporama-butikker</title>
-  <meta property="og:url" content="https://smartpack.dk/integrationer/shoporama">
-  <meta property="og:description" content="Forbind din Shoporama-butik med SmartPack. Automatisk ordreimport, lageropdatering og fragtlabels uden manuel h&aring;ndtering.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="description" content="Forbind din Shoporama-butik med SmartPack. Automatisk ordreimport, lageropdatering og fragtlabels uden manuel h&aring;ndtering.">
-  <link rel="canonical" href="https://smartpack.dk/integrationer/shoporama">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="SmartPack + Shoporama">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css">
+<html lang="da"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartPack + Shoporama | WMS-integration</title>
+<meta name="description" content="Shoporama-integration til SmartPack WMS: webhooks p&aring; ordrer, varer og lager, disponibel beholdning retur og automatisk sent-status ved pakning.">
+<link rel="canonical" href="https://smartpack.dk/integrationer/shoporama">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="SmartPack + Shoporama">
+<meta property="og:description" content="Shoporama-integration til SmartPack WMS: webhooks p&aring; ordrer, varer og lager, disponibel beholdning retur og automatisk sent-status ved pakning.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://smartpack.dk/integrationer/shoporama">
+<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+<link rel="stylesheet" href="../css/style.css">
 <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=3">
-
-
-
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
-
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
-
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
-
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
-
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
-
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
-
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
-
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
-
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
-
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
+<link rel="stylesheet" href="int-page.css?v=4">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + Shoporama", "description": "Shoporama-integration til SmartPack WMS: webhooks p\u00e5 ordrer, varer og lager, disponibel beholdning retur og automatisk sent-status ved pakning.", "url": "https://smartpack.dk/integrationer/shoporama", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "Shoporama", "applicationCategory": "E-commerce platform"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Shoporama", "item": "https://smartpack.dk/integrationer/shoporama"}]}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad kr\u00e6ves der for at komme i gang?", "acceptedAnswer": {"@type": "Answer", "text": "En Shoporama API-n\u00f8gle. Derudover v\u00e6lger I hvilke ordrestatusser der skal importeres, og om SmartPack skal s\u00e6tte ordren til sent, n\u00e5r den er pakket."}}, {"@type": "Question", "name": "Hvordan beregnes prisen p\u00e5 ordrelinjerne?", "acceptedAnswer": {"@type": "Answer", "text": "Integrationen regner med 25 procent moms p\u00e5 ordrelinjer fra Shoporama. K\u00f8rer jeres butik med en anden momssats, skal det afklares f\u00f8r opstart."}}, {"@type": "Question", "name": "Hvad sker der ved negativ beholdning?", "acceptedAnswer": {"@type": "Answer", "text": "Den sendes som nul til Shoporama, fordi platformen ikke h\u00e5ndterer negative lagertal. I SmartPack kan I stadig se den faktiske difference."}}, {"@type": "Question", "name": "Opdateres lageret med det samme?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Shoporama sender webhook ved lager\u00e6ndringer, og SmartPack skubber disponibel beholdning tilbage, n\u00e5r den \u00e6ndrer sig i lageret."}}]}</script>
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head>
-<body>
+</head><body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content">
-<section class="int-page"><div class="container">
-  <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-  <div class="int-page__hero">
-    <div><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shoporama.webp" alt="Shoporama logo" class="int-page__logo" width="1024" height="1024"></div>
-    <div class="int-page__hero-content">
-      <div class="int-page__cat">Webshop</div>
-      <h1 class="int-page__title">SmartPack <span>+ Shoporama</span></h1>
-      <p class="int-page__intro">Shoporama er en danskudviklet webshopplatform med indbygget tracking, returcenter, nyhedsbreve, POS og REST API. SmartPack-integrationen kobler webshoppen direkte til et struktureret lagerflow: ordrer modtages og udf&oslash;res effektivt med bedre lagerstyring og ensartet status til kunden.</p>
-      <div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div>
-    </div>
-  </div>
-  <div class="int-page__body">
-    <div class="int-page__main">
-      <h2>Hvad g&oslash;r integrationen?</h2>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div><h3>Automatisk ordreimport</h3><p>Ordrer fra Shoporama hentes automatisk ind i SmartPack og er klar til pluk uden manuel input.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div><h3>Lagerstatus synkroniseres</h3><p>Lagerbeholdning opdateres automatisk i Shoporama n&aring;r varer plukkes og pakkes i SmartPack.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#127968;</div><div><h3>Fragtlabels og sporingsnumre</h3><p>Print labels til alle dine fragtleverand&oslash;rer direkte fra SmartPack og send sporingsnummer retur til Shoporama.</p></div></div>
-      <h2 class="int-page__steps-title">S&aring;dan forbinder du Shoporama med SmartPack</h2>
-      <div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Find Shoporama-integrationen</h3><p>Naviger til Integrationer &rarr; Webshops i SmartPack og v&aelig;lg Shoporama.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Forbind med API-n&oslash;gle</h3><p>Generere en API-n&oslash;gle i Shoporama og inds&aelig;t den i SmartPack.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Aktiv&eacute;r og kj&oslash;r</h3><p>Aktiv&eacute;r integrationen og test med en rigtig ordre.</p></div></div>
-    </div>
-    <div class="int-page__sidebar">
-      <div class="int-page__cta-box"><h3>K&oslash;rer I Shoporama?</h3><p>Book en demo og se integrationen i gang p&aring; dit lager.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div>
-      <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="dandomain" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" width="500" height="500">DanDomain</a><a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="1024" height="1024">WooCommerce</a><a href="dao" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="dao logo" width="1024" height="1024">DAO</a></div></div>
-    </div>
-  </div>
-</div></section>
-</main>
+<main id="main-content"><section class="int-page"><div class="container">
+<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+<div class="int-page__hero"><div>
+<img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shoporama.webp" alt="Shoporama logo" class="int-page__logo" width="1024" height="1024">
+</div><div class="int-page__hero-content">
+<div class="int-page__cat">Webshop</div>
+<h1 class="int-page__title">SmartPack <span>+ Shoporama</span></h1>
+<p class="int-page__intro">Shoporama er en dansk e-handelsplatform, og integrationen er tilsvarende enkel at komme i gang med. Der skal reelt kun &eacute;n API-n&oslash;gle til, s&aring; k&oslash;rer ordrer, varer og lager i realtid via webhooks.</p>
+<div class="int-page__cta-row">
+<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
+<a href="../priser" class="btn btn--ghost">Se priser</a>
+</div></div></div>
+<div class="int-page__body"><div class="int-page__main">
+<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
+<strong>Kort fortalt</strong>
+<p>Ops&aelig;tningen kr&aelig;ver &eacute;n ting: en Shoporama API-n&oslash;gle. Derefter kommer ordrer, produkter og lagerbev&aelig;gelser ind via webhooks, og SmartPack skriver disponibel beholdning, trackingnummer og status tilbage.</p>
+</div></div>
+<h2>Hvad er Shoporama?</h2>
+<p>Shoporama er en e-handelsplatform udviklet i Danmark og rettet mod det danske marked, med dansk support. Platformen er kendt for at v&aelig;re hurtig at komme i gang med og for at udvikle funktioner t&aelig;t p&aring; brugernes behov.</p>
+<p>For et lager betyder det, at der er f&aelig;rre ukendte end p&aring; en platform med tusindvis af tredjepartsplugins. Til geng&aelig;ld er der et par konkrete ting omkring moms og priser, som er v&aelig;rd at kende.</p>
+<h2>Hvad integrationen g&oslash;r</h2>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#9889;</div><div>
+<h3>Realtid p&aring; alle tre omr&aring;der</h3><p>Shoporama sender webhooks ved &aelig;ndringer p&aring; ordrer, produkter og lagerbeholdning, og SmartPack behandler alle tre typer.</p></div></div>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div>
+<h3>Disponibel beholdning retur</h3><p>Den disponible beholdning skubbes til Shoporama pr. SKU. Negativ beholdning sendes som nul, da Shoporama ikke h&aring;ndterer negative tal.</p></div></div>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128666;</div><div>
+<h3>Status og tracking automatisk</h3><p>N&aring;r ordren er pakket, s&aelig;ttes den til sent i Shoporama, og trackingnummeret sendes med. Annulleres ordren i SmartPack, s&aelig;ttes den til cancelled.</p></div></div>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#127991;</div><div>
+<h3>Toldkode og oprindelsesland med</h3><p>B&aring;de toldkode og oprindelsesland flytter sig begge veje, hvilket g&oslash;r forsendelser uden for EU nemmere at dokumentere.</p></div></div>
+<h2>Hvad synkroniseres hvilken vej?</h2>
+<p>Her er indholdet af de to retninger.</p>
+<div class="int-page__flow">
+<div class="int-page__flow-col"><h3>Shoporama til SmartPack</h3><ul>
+<li>Produktnavn, SKU, v&aelig;gt, billede-URL og stregkoder</li>
+<li>Kostpris, normalpris og udsalgspris</li>
+<li>Oprindelsesland og toldkode</li>
+<li>Lagerbeholdning pr. produkt</li>
+<li>Ordrenummer, ordredato, leveringsmetode og pakkeshop-ID</li>
+<li>Leveringsadresse, e-mail, telefon, valuta og betalingsmetode</li>
+<li>Ordrelinjer, samt en fragtlinje der tilf&oslash;jes automatisk n&aring;r der er en leveringsmetode</li>
+</ul></div>
+<div class="int-page__flow-col"><h3>SmartPack til Shoporama</h3><ul>
+<li>Disponibel beholdning pr. SKU</li>
+<li>SKU, v&aelig;gt, produktnavn og stregkoder</li>
+<li>Udsalgspris, normalpris og kostpris</li>
+<li>Toldkode og oprindelsesland</li>
+<li>Ordrestatus sent ved pakning og cancelled ved annullering</li>
+<li>Trackingnumre</li>
+<li>Leveringsadresse og kundekommentar</li>
+</ul></div></div>
+<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
+<div class="int-page__step"><div class="int-page__step-num">1</div>
+<div class="int-page__step-body"><h3>Hent jeres API-n&oslash;gle</h3><p>Find Shoporama API-n&oslash;glen i jeres Shoporama-ops&aelig;tning.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">2</div>
+<div class="int-page__step-body"><h3>Indtast n&oslash;glen i SmartPack</h3><p>Under Shoporama-indstillingerne i integrationsappen indtastes n&oslash;glen. Det er den eneste obligatoriske indstilling.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">3</div>
+<div class="int-page__step-body"><h3>V&aelig;lg hvilke ordrestatusser der importeres</h3><p>Tilf&oslash;j de statusser, I vil have ind, og sl&aring; dem til enkeltvis.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">4</div>
+<div class="int-page__step-body"><h3>Beslut om SmartPack skal lukke ordren</h3><p>Sl&aring; Fuldf&oslash;r ordrer til, hvis Shoporama skal opdateres til sent, n&aring;r ordren er pakket i SmartPack.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">5</div>
+<div class="int-page__step-body"><h3>Tjek en ordre igennem</h3><p>F&oslash;lg en testordre fra Shoporama til pakket ordre og tilbage, s&aring; I ser status og tracking lande rigtigt.</p></div></div>
+<h2>Det g&oslash;r integrationen ikke</h2>
+<p>F&oslash;lgende er ikke underst&oslash;ttet:</p>
+<ul class="int-page__limits">
+<li>Produktm&aring;l og dimensioner synkroniseres ikke til Shoporama.</li>
+<li>Billede-URL l&aelig;ses ind fra Shoporama, men skrives ikke tilbage.</li>
+<li>Ordrelinjer kan ikke opdateres tilbage til Shoporama.</li>
+<li>Leveringsmetoden p&aring; en ordre kan ikke &aelig;ndres tilbage til Shoporama.</li>
+<li>Ordrer med en samlet negativ pris importeres ikke.</li>
+</ul>
+<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
+<div class="int-page__faq">
+<details><summary>Hvad kr&aelig;ves der for at komme i gang?</summary><div>En Shoporama API-n&oslash;gle. Derudover v&aelig;lger I hvilke ordrestatusser der skal importeres, og om SmartPack skal s&aelig;tte ordren til sent, n&aring;r den er pakket.</div></details>
+<details><summary>Hvordan beregnes prisen p&aring; ordrelinjerne?</summary><div>Integrationen regner med 25 procent moms p&aring; ordrelinjer fra Shoporama. K&oslash;rer jeres butik med en anden momssats, skal det afklares f&oslash;r opstart.</div></details>
+<details><summary>Hvad sker der ved negativ beholdning?</summary><div>Den sendes som nul til Shoporama, fordi platformen ikke h&aring;ndterer negative lagertal. I SmartPack kan I stadig se den faktiske difference.</div></details>
+<details><summary>Opdateres lageret med det samme?</summary><div>Ja. Shoporama sender webhook ved lager&aelig;ndringer, og SmartPack skubber disponibel beholdning tilbage, n&aring;r den &aelig;ndrer sig i lageret.</div></details>
+</div>
+</div><div class="int-page__sidebar">
+<div class="int-page__cta-box"><h3>K&oslash;rer I Shoporama?</h3><p>Book en demo og se ordreflowet fra Shoporama til pakket ordre.</p>
+<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
+</div>
+<div class="int-page__related"><h3>Relaterede integrationer</h3>
+<div class="int-page__related-list">
+<a href="dandomain" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" width="128" height="128">DanDomain</a>
+<a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
+<a href="dao" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="DAO logo" width="128" height="128">DAO</a>
+</div></div>
+</div></div></div></section></main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script>
-</body>
-</html>
+<script src="../js/main.js"></script></body></html>

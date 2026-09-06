@@ -1,10 +1,7 @@
-﻿??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
+<!DOCTYPE html>
 <!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
+     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
+     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
 ================================================================ -->
 
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
@@ -12,11 +9,11 @@
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
 <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<!-- 2. Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
+<!-- 3. Meta Pixel -->
 <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
@@ -39,107 +36,118 @@
 <!-- ================================================================
      SLUT PAA TRACKING BLOK
 ================================================================ -->
-  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head> -->
-
-<html lang="da">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartPack + Magento 2 integration | WMS til Magento</title>
-  <meta property="og:url" content="https://smartpack.dk/integrationer/magento">
-  <meta property="og:description" content="Forbind Magento 2 med SmartPack WMS. H&aring;ndter store ordrem&aelig;ngder med automatisk lagerstyring og fragtlabels direkte fra lageret.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="description" content="Forbind Magento 2 med SmartPack WMS. H&aring;ndter store ordrem&aelig;ngder med automatisk lagerstyring og fragtlabels direkte fra lageret.">
-  <link rel="canonical" href="https://smartpack.dk/integrationer/magento">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="SmartPack + Magento 2">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css">
+<html lang="da"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartPack + Magento 2 | WMS-integration</title>
+<meta name="description" content="Magento 2-integration til SmartPack WMS: MSI-lager pr. kilde, delforsendelser, faktura og capture samt mapping af jeres egne attributter.">
+<link rel="canonical" href="https://smartpack.dk/integrationer/magento">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="SmartPack + Magento 2">
+<meta property="og:description" content="Magento 2-integration til SmartPack WMS: MSI-lager pr. kilde, delforsendelser, faktura og capture samt mapping af jeres egne attributter.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://smartpack.dk/integrationer/magento">
+<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+<link rel="stylesheet" href="../css/style.css">
 <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=3">
-
-
-
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok til din nye <head> inden   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
-
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
-
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
-
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
-
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
-
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
-
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
-
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
-
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
-
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
+<link rel="stylesheet" href="int-page.css?v=4">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + Magento 2", "description": "Magento 2-integration til SmartPack WMS: MSI-lager pr. kilde, delforsendelser, faktura og capture samt mapping af jeres egne attributter.", "url": "https://smartpack.dk/integrationer/magento", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "Magento 2", "applicationCategory": "E-commerce platform"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Magento 2", "item": "https://smartpack.dk/integrationer/magento"}]}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvordan undg\u00e5r vi dubletter p\u00e5 configurable produkter?", "acceptedAnswer": {"@type": "Answer", "text": "Ekskluder produkttypen configurable under produktfiltrene. S\u00e5 importeres kun varianterne, og de er dem, der rent faktisk skal plukkes."}}, {"@type": "Question", "name": "Kan Magento skjule varer, der er udsolgt?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. To indstillinger styrer det: produktet kan aktiveres automatisk, n\u00e5r lageret g\u00e5r over nul, og deaktiveres automatisk, n\u00e5r det rammer nul."}}, {"@type": "Question", "name": "Vi har bundle-produkter. Er der noget s\u00e6rligt?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Til butikker med bundles anbefaler vi at sl\u00e5 fulfillment p\u00e5 ordreniveau til. Det undg\u00e5r fejl, hvor en forsendelse ender uden produkter."}}, {"@type": "Question", "name": "Underst\u00f8tter integrationen Multi-Source Inventory?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. SmartPack-lokationer mappes til Magento-kilder, og beholdningen sendes pr. kilde i stedet for som et samlet tal."}}, {"@type": "Question", "name": "Synkroniseringen er stoppet helt. Hvor kigger vi f\u00f8rst?", "acceptedAnswer": {"@type": "Answer", "text": "P\u00e5 jeres bearer token. Er det forkert eller udl\u00f8bet, fejler alle kald med 401, og s\u00e5 st\u00e5r b\u00e5de vare- og ordresynkronisering stille."}}]}</script>
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head>
-<body>
+</head><body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content">
-<section class="int-page"><div class="container">
-  <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-  <div class="int-page__hero">
-    <div><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2 logo" class="int-page__logo" width="1024" height="1024"></div>
-    <div class="int-page__hero-content">
-      <div class="int-page__cat">Webshop</div>
-      <h1 class="int-page__title">SmartPack <span>+ Magento 2</span></h1>
-      <p class="int-page__intro">Adobe Commerce (Magento) er en enterprise commerce-platform til B2C og B2B med multisite, API-first arkitektur og avanceret B2B-funktionalitet. SmartPack WMS giver mest v&aelig;rdi i det operationelle lag, hvor komplekse ordreflows, flere lagre og h&oslash;j volumen skal h&aring;ndteres med pr&aelig;cis pluk/pak og synkroniseret status p&aring; tv&aelig;rs af butikker og markeder.</p>
-      <div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div>
-    </div>
-  </div>
-  <div class="int-page__body">
-    <div class="int-page__main">
-      <h2>Hvad g&oslash;r integrationen?</h2>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div><h3>H&oslash;jvolumen ordreimport</h3><p>SmartPack h&aring;ndterer store ordrem&aelig;ngder fra Magento uden forsinkelse. Plukkelister genereres automatisk efter prioritet.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div><h3>Flersprogede lagerlokationer</h3><p>Underst&oslash;tter multi-lager og multi-site ops�tninger i Magento. Perfekt til virksomheder med flere lagre.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#127968;</div><div><h3>Enterprise-fragtl&oslash;sninger</h3><p>Underst&oslash;tter alle fragtleverand&oslash;rer inkl. internationale l&oslash;sninger til eksport.</p></div></div>
-      <h2 class="int-page__steps-title">S&aring;dan forbinder du Magento 2 med SmartPack</h2>
-      <div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Konfigur&eacute;r Magento API</h3><p>Aktiv&eacute;r REST API-adgang i Magento og opret en dedikeret bruger til SmartPack.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Ops&aelig;t forbindelsen</h3><p>Inds&aelig;t API-endpoint og n&oslash;gler i SmartPack under Integrationer.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test og g&aring; live</h3><p>K&oslash;r en pilotperiode med et udvalg af ordrer inden fuld produktion.</p></div></div>
-    </div>
-    <div class="int-page__sidebar">
-      <div class="int-page__cta-box"><h3>K&oslash;rer I Magento 2?</h3><p>Book en teknisk demo, vi gennemg&aring;r ops&aelig;tningen specifikt til jeres Magento-milj&oslash;.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div>
-      <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="1024" height="1024">Shopify</a><a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="1024" height="1024">WooCommerce</a><a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="1024" height="1024">Dynamics 365</a></div></div>
-    </div>
-  </div>
-</div></section>
-</main>
+<main id="main-content"><section class="int-page"><div class="container">
+<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+<div class="int-page__hero"><div>
+<img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2 logo" class="int-page__logo" width="1024" height="1024">
+</div><div class="int-page__hero-content">
+<div class="int-page__cat">Webshop</div>
+<h1 class="int-page__title">SmartPack <span>+ Magento 2</span></h1>
+<p class="int-page__intro">Magento 2 er bygget til komplekse kataloger, og integrationen f&oslash;lger med: lager pr. Magento-kilde med MSI, delforsendelser, automatisk faktura og capture, og mapping af jeres egne produktattributter.</p>
+<div class="int-page__cta-row">
+<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
+<a href="../priser" class="btn btn--ghost">Se priser</a>
+</div></div></div>
+<div class="int-page__body"><div class="int-page__main">
+<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
+<strong>Kort fortalt</strong>
+<p>Integrationen forbindes med shop-URL og et bearer token. Produkter og ordrer hentes ind fra Magento, lageret skrives tilbage samlet eller pr. MSI-kilde, og ved afsendelse kan SmartPack oprette forsendelse, faktura og capture i Magento.</p>
+</div></div>
+<h2>Hvad er Magento 2?</h2>
+<p>Magento 2, i dag ogs&aring; kendt som Adobe Commerce, er en open source-baseret e-handelsplatform bygget til store og sammensatte kataloger. Den bruges typisk af virksomheder med mange varianter, flere butikker eller B2B- og B2C-salg i samme installation.</p>
+<p>Netop fleksibiliteten betyder, at to Magento-installationer sj&aelig;ldent har de samme attributter. Derfor er attribut-mapping en central del af ops&aelig;tningen frem for noget, der virker ud af boksen.</p>
+<h2>Hvad integrationen g&oslash;r</h2>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div>
+<h3>Lager pr. Magento-kilde</h3><p>Uden MSI sendes det samlede lagerantal. Med Multi-Source Inventory sendes beholdningen pr. SmartPack-lokation til den tilsvarende Magento-kilde, s&aring; lageret passer pr. lager.</p></div></div>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div>
+<h3>Delforsendelser underst&oslash;ttes</h3><p>En ordre kan sendes af flere omgange. SmartPack opretter forsendelse i Magento pr. afsendelse med trackingnummer og fragtmetode.</p></div></div>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#129534;</div><div>
+<h3>Faktura og capture med</h3><p>Ved afsendelse kan SmartPack oprette faktura i Magento og captura betalingen. Fejler capture, kan systemet fors&oslash;ge fakturaen igen uden capture, og for gateways der kr&aelig;ver det, kan capture ske i samme trin som fakturaen.</p></div></div>
+<div class="int-page__benefit"><div class="int-page__benefit-icon">&#127991;</div><div>
+<h3>Jeres egne attributter</h3><p>Stregkode, producent, leverand&oslash;r, kostpris, toldsatsnummer og oprindelsesland hentes fra pr&aelig;cis de Magento-attributter, I peger p&aring;. Produkter kan ogs&aring; ekskluderes ud fra en attributv&aelig;rdi.</p></div></div>
+<h2>Hvad synkroniseres hvilken vej?</h2>
+<p>Magento-integrationen k&oslash;rer p&aring; periodisk synkronisering frem for webhooks fra Magento. Her er indholdet hver vej.</p>
+<div class="int-page__flow">
+<div class="int-page__flow-col"><h3>Magento 2 til SmartPack</h3><ul>
+<li>SKU, navn, normalpris og tilbudspris, v&aelig;gt og billede-URL</li>
+<li>Stregkoder fra standardattributter eller fra en attribut, I selv v&aelig;lger</li>
+<li>Lagerbeholdning, samlet eller pr. MSI-kilde</li>
+<li>Producent, leverand&oslash;r, kostpris, toldsatsnummer og oprindelsesland, hvis attributterne er mappet</li>
+<li>Ordrelinjer med SKU, antal og pris, samt leveringsadresse og leveringsmetode</li>
+<li>Droppoint-information p&aring; pakkeshop-ordrer</li>
+<li>Kundekommentarer fra checkout-felter eller ordrehistorik</li>
+</ul></div>
+<div class="int-page__flow-col"><h3>SmartPack til Magento 2</h3><ul>
+<li>Lagerbeholdning, samlet eller pr. Magento-kilde ved MSI</li>
+<li>Automatisk aktivering eller deaktivering af produktet ud fra lagerstatus</li>
+<li>Forsendelse med trackingnummer og fragtmetode, ogs&aring; som delforsendelse</li>
+<li>Faktura og eventuelt capture af betalingen</li>
+<li>Opdateret ordrestatus i Magento</li>
+<li>Leveringsadresse, hvis det ekstra endpoint er installeret i Magento</li>
+</ul></div></div>
+<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
+<div class="int-page__step"><div class="int-page__step-num">1</div>
+<div class="int-page__step-body"><h3>Opret en integration i Magento</h3><p>Lav en integrationsbruger i Magento med fuld API-adgang og hent et bearer token.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">2</div>
+<div class="int-page__step-body"><h3>Forbind i SmartPack</h3><p>Indtast shop-URL og bearer token under integrationens indstillinger.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">3</div>
+<div class="int-page__step-body"><h3>Filtrer produktimporten</h3><p>Ekskluder de produkttyper, I ikke vil have som varer, typisk configurable-for&aelig;ldre s&aring; kun varianterne importeres. V&aelig;lg om deaktiverede produkter skal med.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">4</div>
+<div class="int-page__step-body"><h3>Map attributter og MSI-kilder</h3><p>Peg p&aring; de Magento-attributter, der indeholder stregkode, producent, leverand&oslash;r, kostpris, toldsatsnummer og oprindelsesland. Bruger I MSI, mappes SmartPack-lokationer til Magento-kilder.</p></div></div>
+<div class="int-page__step"><div class="int-page__step-num">5</div>
+<div class="int-page__step-body"><h3>V&aelig;lg ordrestatusser og fulfillment</h3><p>Angiv hvilke Magento-ordrestatusser der skal importeres, og hvad de svarer til. Sl&aring; til om SmartPack skal oprette forsendelse, sende tracking, oprette faktura og captura betaling.</p></div></div>
+<h2>Det g&oslash;r integrationen ikke</h2>
+<p>V&aelig;rd at vide, f&oslash;r I regner med noget bestemt:</p>
+<ul class="int-page__limits">
+<li>Magento sender ikke webhooks til SmartPack. Integrationen henter periodisk, s&aring; der g&aring;r lidt tid fra ordren oprettes til den er i SmartPack.</li>
+<li>Opdatering af leveringsadressen tilbage til Magento kr&aelig;ver et ekstra endpoint installeret i Magento. Uden det springes opdateringen over.</li>
+<li>Faste bundle-priser lander p&aring; for&aelig;lderlinjen, mens underlinjerne st&aring;r til nul. Det kan p&aring;virke tolddokumentation, men kan sl&aring;s om, s&aring; prisen fordeles ned p&aring; underlinjerne.</li>
+<li>Findes den samme SKU p&aring; to produkter i Magento, importeres kun det ene.</li>
+<li>Produktfiltrene g&aelig;lder kun katalogsynkroniseringen. Ordrer med en ekskluderet produkttype importeres stadig.</li>
+</ul>
+<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
+<div class="int-page__faq">
+<details><summary>Hvordan undg&aring;r vi dubletter p&aring; configurable produkter?</summary><div>Ekskluder produkttypen configurable under produktfiltrene. S&aring; importeres kun varianterne, og de er dem, der rent faktisk skal plukkes.</div></details>
+<details><summary>Kan Magento skjule varer, der er udsolgt?</summary><div>Ja. To indstillinger styrer det: produktet kan aktiveres automatisk, n&aring;r lageret g&aring;r over nul, og deaktiveres automatisk, n&aring;r det rammer nul.</div></details>
+<details><summary>Vi har bundle-produkter. Er der noget s&aelig;rligt?</summary><div>Ja. Til butikker med bundles anbefaler vi at sl&aring; fulfillment p&aring; ordreniveau til. Det undg&aring;r fejl, hvor en forsendelse ender uden produkter.</div></details>
+<details><summary>Underst&oslash;tter integrationen Multi-Source Inventory?</summary><div>Ja. SmartPack-lokationer mappes til Magento-kilder, og beholdningen sendes pr. kilde i stedet for som et samlet tal.</div></details>
+<details><summary>Synkroniseringen er stoppet helt. Hvor kigger vi f&oslash;rst?</summary><div>P&aring; jeres bearer token. Er det forkert eller udl&oslash;bet, fejler alle kald med 401, og s&aring; st&aring;r b&aring;de vare- og ordresynkronisering stille.</div></details>
+</div>
+</div><div class="int-page__sidebar">
+<div class="int-page__cta-box"><h3>K&oslash;rer I Magento 2?</h3><p>Book en demo, s&aring; gennemg&aring;r vi attribut-mapping og MSI-ops&aelig;tning for jeres katalog.</p>
+<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
+</div>
+<div class="int-page__related"><h3>Relaterede integrationer</h3>
+<div class="int-page__related-list">
+<a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+<a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
+<a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="128" height="128">Dynamics 365</a>
+</div></div>
+</div></div></div></section></main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script>
-</body>
-</html>
+<script src="../js/main.js"></script></body></html>
