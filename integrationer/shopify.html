@@ -243,16 +243,16 @@
     <!-- ─── STATS ─── -->
     <div class="sp-stats reveal">
       <div class="sp-stat">
-        <span class="sp-stat-val">&lt;&thinsp;1&thinsp;sek</span>
-        <span class="sp-stat-label">Webhook-behandling pr. ordre</span>
+        <span class="sp-stat-val">&lt;&thinsp;1&thinsp;sek.</span>
+        <span class="sp-stat-label">Ordrer lander automatisk i SmartPack</span>
       </div>
       <div class="sp-stat">
-        <span class="sp-stat-val">Live</span>
-        <span class="sp-stat-label">Lager, fulfillment og tracking opdateres automatisk</span>
+        <span class="sp-stat-val">Automatisk</span>
+        <span class="sp-stat-label">Ordrer ind. Lager, fulfillment og tracking tilbage.</span>
       </div>
       <div class="sp-stat">
-        <span class="sp-stat-val">2-vejs</span>
-        <span class="sp-stat-label">Synkronisering af ordrer, lager, tracking og retur</span>
+        <span class="sp-stat-val">Inkluderet</span>
+        <span class="sp-stat-label">Shopify-integrationen er en del af SmartPack-abonnementet. Opsætning sker som en del af jeres onboarding.</span>
       </div>
     </div>
 
@@ -263,14 +263,14 @@
         <!-- WMS-BRIDGE -->
         <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
           <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
-            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Shopify styrer</div>
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Shopify styrer salget</div>
             <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Produkter<br>Kunder<br>Checkout<br>Betaling<br>Webshop</div>
           </div>
           <div style="text-align:center;flex-shrink:0;">
             <div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div>
           </div>
           <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
-            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer</div>
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
             <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
           </div>
         </div>
@@ -280,8 +280,8 @@
         <div class="sp-fit-grid reveal">
           <div class="sp-fit-card">
             <span class="sp-fit-card-icon">&#128722;</span>
-            <h3>Online shop</h3>
-            <p>En Shopify-shop. SmartPack overtager alt det fysiske: pluk, pak, label og tracking. Du f&aring;r styr p&aring; lageret uden at skifte platform.</p>
+            <h3>Webshop</h3>
+            <p>En Shopify-shop. SmartPack overtager lagerflowet: pluk, pak, fragtlabel, lageropdatering og tracking. Du f&aring;r styr p&aring; lageret uden at skifte platform.</p>
           </div>
           <div class="sp-fit-card sp-fit-card--active">
             <span class="sp-fit-card-icon">&#128205;</span>
@@ -291,7 +291,7 @@
           <div class="sp-fit-card">
             <span class="sp-fit-card-icon">&#127970;</span>
             <h3>Kæde med centrallager</h3>
-            <p>Flere Shopify-shops og/eller butikker mod &eacute;t SmartPack. Lagerbeholdning pr. lokation. Ordreflows per kanal. Ens overblik.</p>
+            <p>Flere Shopify-shops og/eller butikker mod &eacute;t SmartPack. Lagerbeholdning pr. lokation. Hver kanal kan have sit eget ordreflow, mens I stadig har ét samlet overblik.</p>
           </div>
         </div>
 
@@ -351,7 +351,7 @@
             <ul class="sp-sync-list">
               <li>Lager (live pr. lokation)</li>
               <li>Fulfillment og tracking</li>
-              <li>Refundering og capture</li>
+              <li>Refundering og betalingstræk</li>
               <li>Gavekort</li>
             </ul>
           </div>
@@ -385,7 +385,7 @@
             <span class="sp-feat-icon">&#128202;</span>
             <div>
               <strong>Job Monitor</strong>
-              <span>Alle webhook-jobs logges i realtid. Du kan se pr&aelig;cist hvorn&aring;r en ordre lander, hvad der behandles og hvad der evt. fejler.</span>
+              <span>Alle webhook-jobs logges i realtid. Du kan se præcis, hvornår en ordre lander, hvad der behandles, og hvad der eventuelt fejler.</span>
             </div>
           </div>
           <div class="sp-feat">
@@ -424,7 +424,7 @@
             </div>
             <div class="sp-location-item">
               <strong>&#128202; Ens overblik</strong>
-              <span>Uanset antal kanaler og lokationer ser I alle ordrer, al lager og alle forsendelser samlet i &eacute;t SmartPack-dashboard.</span>
+              <span>Uanset antal kanaler og lokationer får I ét samlet overblik over ordrer, lager og forsendelser.</span>
             </div>
           </div>
         </div>
@@ -434,16 +434,12 @@
         <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:.75rem;">SmartPacks ShopCheckout-funktion viser jeres egne leveringsmetoder med live-priser direkte i Shopify-checkout. I definerer reglerne med en simpel prisformel.</p>
 
         <div class="sp-formula">
-          <span class="cm"># GLS PakkeShop: standardpris + gratis ved k&oslash;b over 499 kr.</span><br>
-          Pris #1: <span class="kw">45,00 DKK</span><br>
-          Pris #2: <span class="kw">0,00 DKK</span> &nbsp;n&aring;r: <span class="kw">price &gt; 499</span><br><br>
-          <span class="cm"># Gratis fragt kun n&aring;r rabatkode ogs&aring; bruges (Shopify-only)</span><br>
-          Regel: <span class="kw">discounted_price &gt;= 499</span><br><br>
-          <span class="cm"># Express kun i valgte postnumre</span><br>
-          Regel: <span class="kw">recipient.zipcode in '1000','1050','1100'</span>
+          <span class="cm"># GLS PakkeShop: gratis ved k&oslash;b over 499 kr.</span><br>
+          Pris: <span class="kw">45,00 DKK</span><br>
+          Gratis n&aring;r: <span class="kw">price &gt; 499</span>
         </div>
 
-        <p style="font-size:.82rem;color:var(--text-3);margin-bottom:.5rem;">Formlen kan kombinere: kurvsv&aelig;rdi, v&aelig;gt, antal varer, afsender- og modtageradresse. I Shopify-integrationen er rabatbel&oslash;b og pris-efter-rabat ogs&aring; tilg&aelig;ngelige som variabler.</p>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">I definerer priser og leveringsregler ud fra kurvsv&aelig;rdi, v&aelig;gt, postnummer og rabatter. I Shopify-integrationen er pris-efter-rabat ogs&aelig; tilg&aelig;ngelig som variabel.</p>
 
         <div class="sp-note">
           <span class="sp-note-icon">&#9888;&#65039;</span>
@@ -457,7 +453,7 @@
             <div class="sp-step-num">1</div>
             <div class="sp-step-body">
               <strong>Forbind jeres Shopify-shop til SmartPack</strong>
-              <p>SmartPack guider jer gennem forbindelsen. I autoriserer adgang fra SmartPack-siden , ingen teknisk opsaetning kraeves.</p>
+              <p>SmartPack guider jer gennem forbindelsen. I autoriserer adgang fra SmartPack-siden , ingen teknisk opsætning kræves.</p>
             </div>
           </div>
           <div class="sp-step">
@@ -531,10 +527,10 @@
 
         <!-- BOTTOM CTA -->
         <div class="sp-bottom-cta reveal">
-          <h2>K&oslash;rer I p&aring; Shopify?</h2>
-          <p>Vi viser jer pr&aelig;cist hvad der sker med jeres ordrer, lager og fragt , og hvilke indstillinger der passer til jeres setup. 15 minutter.</p>
+          <h2>Har I Shopify og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi viser jer præcis, hvad der sker med jeres ordrer, lager og fragt, og hvilke indstillinger der passer til jeres setup. 15 minutter.</p>
           <div class="sp-bottom-cta-btns">
-            <a href="../kontakt" class="btn btn--primary">Book en demo</a>
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
             <a href="../priser" class="btn btn--ghost">Se priser</a>
           </div>
         </div>
