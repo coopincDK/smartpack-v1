@@ -106,7 +106,7 @@ Oversigt: https://smartpack.dk/viden/
 - Plukruter er ineffektive , og det koster dig timer dagligt : https://smartpack.dk/viden/problemer/plukruter-er-ineffektive
 - Når returprocessen er kaos: hvad det koster og hvordan du stopper det : https://smartpack.dk/viden/problemer/returproces-er-kaos
 - Shopify er ikke nok, hvorn&#229;r webshop-platformen ikke kan h&#229;ndtere lageret : https://smartpack.dk/viden/problemer/shopify-er-ikke-nok
-- Vi ans&#230;tter for hurtigt, n&#229;r flere folk ikke l&#248;ser problemet : https://smartpack.dk/viden/problemer/vi-ansætter-for-hurtigt
+- Vi ans&#230;tter for hurtigt, n&#229;r flere folk ikke l&#248;ser problemet : https://smartpack.dk/viden/problemer/vi-ansaetter-for-hurtigt
 - Vi bruger for meget tid på pluk: årsager, konsekvenser og hvad du gør : https://smartpack.dk/viden/problemer/vi-bruger-for-meget-tid-paa-pluk
 - Vi kan ikke h&#229;ndtere peaks , kapacitetsproblemer ved h&#248;j ordrevolumen : https://smartpack.dk/viden/problemer/vi-kan-ikke-haandtere-peaks
 - Vi kender ikke vores lageromkostninger , og det er dyrt : https://smartpack.dk/viden/problemer/vi-kender-ikke-vores-lageromkostninger
@@ -259,8 +259,8 @@ Oversigt: https://smartpack.dk/viden/
 - Hvornår skal dit lager opdeles i zoner? : https://smartpack.dk/viden/vaekst/hvornaar-skal-lager-opdeles
 - Hvornår vokser du fra dit lager? : https://smartpack.dk/viden/vaekst/hvornaar-vokser-du-fra-dit-lager
 - Håndtering af kampagner på lageret, fra panik til system : https://smartpack.dk/viden/vaekst/haandtering-af-kampagner
-- Kapacitetsgrænser på lageret, kend dem før du rammer dem : https://smartpack.dk/viden/vaekst/kapacitetsgrænser-lager
-- Lagerets rolle i din vækst, motor eller håndbrems? : https://smartpack.dk/viden/vaekst/lagerets-rolle-i-vækst
+- Kapacitetsgrænser på lageret, kend dem før du rammer dem : https://smartpack.dk/viden/vaekst/kapacitetsgraenser-lager
+- Lagerets rolle i din vækst, motor eller håndbrems? : https://smartpack.dk/viden/vaekst/lagerets-rolle-i-vaekst
 - S&#229;dan optimerer du plukkehastighed: konkrete forbedringer : https://smartpack.dk/viden/vaekst/optimer-plukkehastighed
 - Ordrer pr. medarbejder, nøgletallet de fleste lagre aldrig måler : https://smartpack.dk/viden/vaekst/ordrer-pr-medarbejder
 - Peak season strategi for dit lager : https://smartpack.dk/viden/vaekst/peak-season-strategi
