@@ -1,51 +1,44 @@
 ﻿<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok til din nye <head> inden </head>
-     Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
-
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
-
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
-
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
-
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
-
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
-
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
-
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
-
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
-
 <html lang="da">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartPack + Shopify | WMS-integration der synkroniserer ordrer, lager og fragt</title>
-  <meta name="description" content="Forbind Shopify med SmartPack WMS. Ordrer, lagerstatus og tracking synkroniseres automatisk via webhooks. Fragtpriser i checkout, multi-location og POS inkluderet.">
-  <link rel="canonical" href="https://smartpack.dk/integrationer/shopify">
-  <meta name="robots" content="index, follow">
 
-  <meta property="og:title" content="SmartPack + Shopify | WMS-integration">
-  <meta property="og:description" content="Forbind Shopify med SmartPack. Ordrer lander automatisk, lagerstatus opdateres live, tracking sendes retur. Alt inkluderet.">
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til Shopify | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder Shopify med dit lager automatisk. Ordrer, beholdning og tracking synkroniseres live. Multi-location, POS og omnichannel understottet.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/shopify">
+
+  <meta property="og:title" content="Lagersystem til Shopify | SmartPack WMS">
+  <meta property="og:description" content="Fra &eacute;n Shopify-butik til kæde med centrallager. Ordrer lander automatisk, lager opdateres live, tracking sendes til kunden.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/shopify">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
@@ -57,38 +50,52 @@
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
-          {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"},
-          {"@type": "ListItem", "position": 3, "name": "Shopify", "item": "https://smartpack.dk/integrationer/shopify"}
+          {"@type":"ListItem","position":1,"name":"SmartPack","item":"https://smartpack.dk/"},
+          {"@type":"ListItem","position":2,"name":"Integrationer","item":"https://smartpack.dk/integrationer"},
+          {"@type":"ListItem","position":3,"name":"Shopify","item":"https://smartpack.dk/integrationer/shopify"}
         ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "SmartPack WMS",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "SmartPack er et dansk WMS (Warehouse Management System) der integrerer direkte med Shopify. Integrationen synkroniserer ordrer, lagerbeholdning, trackinginfo og refunderinger i realtid via webhooks.",
+        "url": "https://smartpack.dk",
+        "offers": {"@type":"Offer","priceCurrency":"DKK","price":"3000","priceSpecification":{"@type":"UnitPriceSpecification","priceType":"https://schema.org/MinimumAdvertisedPrice"}}
       },
       {
         "@type": "FAQPage",
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Synkroniseres lageret live eller med forsinkelse?",
-            "acceptedAnswer": {"@type": "Answer", "text": "Live. SmartPack bruger Shopify-webhooks, som behandles i under ét sekund. Der er ingen polling-forsinkelse."}
+            "name": "Hvad er SmartPack og hvordan virker det med Shopify?",
+            "acceptedAnswer": {"@type": "Answer", "text": "SmartPack er et dansk WMS (Warehouse Management System) der integrerer direkte med Shopify via webhooks og API. Nar en ordre placeres i Shopify, importeres den automatisk til SmartPacks plukke-koe. Nar ordren er pakket og afsendt, sender SmartPack trackingnummer og fulfillment-status tilbage til Shopify og notificerer kunden."}
+          },
+          {
+            "@type": "Question",
+            "name": "Virker SmartPack med flere Shopify-lokationer?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ja. SmartPack understotter multi-location. Du laver en mapping: for hver Shopify-lokation angiver du hvilken SmartPack-lokation der svarer til den. Lagerbeholdning synkroniseres da pr. lokation fremfor som en samlet bestand. SmartPack aktiverer automatisk varer pa Shopify-lokationer, hvis beholdningen findes i SmartPack men endnu ikke er registreret pa lokationen."}
+          },
+          {
+            "@type": "Question",
+            "name": "Kan SmartPack haandtere Shopify POS fra flere fysiske butikker?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ja. Med multi-location POS kan du mappe hver Shopify POS-lokation til sit eget SmartPack POS-flow. Nar en kasseordre ankommer, slaar SmartPack op hvilken butik den tilhorer og router den korrekt."}
           },
           {
             "@type": "Question",
             "name": "Hvad sker der hvis en ordre annulleres i Shopify mens den pakkes?",
-            "acceptedAnswer": {"@type": "Answer", "text": "Ordren pauses i SmartPack fremfor at annulleres direkte. Systemet stiller ikke varer tilbage automatisk, fordi pakkeprocessen kan v\u00e6re i gang. Du skal eksplicit bekr\u00e6fte annulleringen i SmartPack."}
+            "acceptedAnswer": {"@type": "Answer", "text": "Ordren pauses i SmartPack fremfor at annulleres direkte. Systemet stiller ikke varer tilbage automatisk, fordi pakkeprocessen kan vaere i gang med en tote. Du bekraefter annulleringen i SmartPack og koerer pakkeprocessen baglens."}
           },
           {
             "@type": "Question",
-            "name": "Virker integrationen med flere Shopify-butikker?",
-            "acceptedAnswer": {"@type": "Answer", "text": "Ja. SmartPack underst\u00f8tter multi-location, s\u00e5 lageret kan synkroniseres p\u00e5 tv\u00e6rs af flere Shopify-butikker og lokationer."}
+            "name": "Kan vi vise live fragtpriser i Shopify-checkout?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ja, via SmartPacks ShopCheckout-funktion. Du definerer leveringsmetoder med prisformler baseret pa kurvsvaerdi, vaegt og adresse. Kunden ser de reelle fragtpriser direkte i checkout. Kraever Shopify Advanced eller Shopify Plus."}
           },
           {
             "@type": "Question",
-            "name": "Kan vi vise fragtpriser live i Shopify-checkout?",
-            "acceptedAnswer": {"@type": "Answer", "text": "Ja, via SmartPacks ShopCheckout-funktion. Du definerer leveringsmetoder med prisformler (fx gratis fragt over 499 kr.) og de vises direkte i checkout. Kraver Shopify Advanced eller Shopify Plus."}
-          },
-          {
-            "@type": "Question",
-            "name": "Kan vi filtrere hvilke ordrer der importeres til SmartPack?",
-            "acceptedAnswer": {"@type": "Answer", "text": "Ja. Du kan filtrere p\u00e5 ordre-tags (kun importer ordrer med tag X, eller ignorer ordrer med tag Y), importdatointerval, og om ordrer med ubet\u00e6lt status skal importeres eller pauses."}
+            "name": "Er Shopify-integrationen inkluderet i prisen?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ja. Shopify-integrationen er inkluderet i SmartPacks standardpris. Der er ingen ekstra modul, ingen labelgebyr og ingen opssaetningsgebyr for integrationen."}
           }
         ]
       }
@@ -99,40 +106,105 @@
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
   <link rel="stylesheet" href="../css/style.css">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=3">
+  <link rel="stylesheet" href="int-page.css?v=4">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 
   <style>
-    /* Shopify-side ekstra styles */
-    .int-page__sync-section { margin-bottom: 2rem; }
-    .int-page__sync-section h3 { font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); margin: 0 0 .75rem; }
-    .int-page__sync-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
-    .int-page__sync-table tr { border-bottom: 1px solid var(--border); }
-    .int-page__sync-table tr:last-child { border-bottom: none; }
-    .int-page__sync-table td { padding: .5rem .6rem; color: var(--text-2); line-height: 1.4; }
-    .int-page__sync-table td:first-child { font-weight: 600; color: var(--text-1); width: 55%; }
-    .int-page__sync-dir { display: inline-flex; align-items: center; gap: .35rem; font-size: .75rem; font-weight: 700; color: var(--accent); background: rgba(62,207,142,.1); border: 1px solid rgba(62,207,142,.25); border-radius: 4px; padding: .2em .55em; white-space: nowrap; }
-    .int-page__sync-wrap { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+  /* ── Shopify-side: page-specifikke komponenter ── */
 
-    .int-page__feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
-    .int-page__feature-item { display: flex; align-items: flex-start; gap: .6rem; padding: .85rem 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; }
-    .int-page__feature-item-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
-    .int-page__feature-item-text strong { display: block; font-size: .85rem; font-weight: 700; color: var(--text-1); line-height: 1.3; }
-    .int-page__feature-item-text span { font-size: .78rem; color: var(--text-3); line-height: 1.4; }
-    @media (max-width: 600px) { .int-page__feature-grid { grid-template-columns: 1fr; } }
+  /* Hero connector */
+  .sp-hero-logos { display:flex; align-items:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap; }
+  .sp-hero-logo { width:72px; height:72px; border-radius:16px; object-fit:contain; background:var(--surface-2); padding:.75rem; border:1px solid var(--border); }
+  .sp-hero-connector { display:flex; flex-direction:column; align-items:center; gap:.3rem; }
+  .sp-hero-connector-line { width:48px; height:2px; background:linear-gradient(90deg, var(--border) 0%, var(--accent) 50%, var(--border) 100%); }
+  .sp-hero-connector-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); }
 
-    .int-page__formula-box { background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-family: monospace; font-size: .82rem; color: var(--text-2); line-height: 1.7; }
-    .int-page__formula-box strong { color: var(--accent); font-family: monospace; }
+  /* Stats strip */
+  .sp-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border-radius:12px; overflow:hidden; margin:2rem 0; }
+  .sp-stat { background:var(--surface-2); padding:1.25rem 1rem; text-align:center; }
+  .sp-stat-val { font-size:1.6rem; font-weight:900; color:var(--accent); line-height:1; display:block; margin-bottom:.3rem; }
+  .sp-stat-label { font-size:.75rem; color:var(--text-3); line-height:1.3; }
+  @media(max-width:500px){ .sp-stats { grid-template-columns:1fr; } }
 
-    .int-page__faq { margin-top: 2.5rem; }
-    .int-page__faq h2 { font-size: 1.4rem; margin: 0 0 1.2rem; }
-    .int-page__faq-item { border-bottom: 1px solid var(--border); padding: 1rem 0; }
-    .int-page__faq-item:last-child { border-bottom: none; }
-    .int-page__faq-q { font-size: .95rem; font-weight: 700; color: var(--text-1); margin: 0 0 .5rem; cursor: pointer; }
-    .int-page__faq-a { font-size: .88rem; color: var(--text-2); line-height: 1.65; margin: 0; }
+  /* Passer-til kort */
+  .sp-fit-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2.5rem; }
+  .sp-fit-card { padding:1.25rem; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; }
+  .sp-fit-card.sp-fit-card--active { border-color:var(--accent); background:var(--accent-glow2); }
+  .sp-fit-card-icon { font-size:1.5rem; margin-bottom:.75rem; display:block; }
+  .sp-fit-card h3 { font-size:.88rem; font-weight:800; margin:0 0 .4rem; }
+  .sp-fit-card p { font-size:.78rem; color:var(--text-3); margin:0; line-height:1.5; }
+  @media(max-width:680px){ .sp-fit-grid { grid-template-columns:1fr; } }
 
-    .int-page__note { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 1rem; background: rgba(255,193,7,.08); border: 1px solid rgba(255,193,7,.3); border-radius: 8px; font-size: .82rem; color: var(--text-2); line-height: 1.5; margin: .75rem 0 1.25rem; }
-    .int-page__note-icon { flex-shrink: 0; font-size: 1rem; }
+  /* Flow strip */
+  .sp-flow { display:flex; align-items:stretch; gap:0; margin:2.2rem 0; overflow-x:auto; padding-bottom:.5rem; }
+  .sp-flow-step { display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:100px; padding:.9rem .75rem; background:var(--surface-2); border:1px solid var(--border); text-align:center; position:relative; }
+  .sp-flow-step:first-child { border-radius:10px 0 0 10px; }
+  .sp-flow-step:last-child { border-radius:0 10px 10px 0; }
+  .sp-flow-step--accent { background:var(--accent-glow); border-color:rgba(62,207,142,.35); }
+  .sp-flow-icon { font-size:1.3rem; margin-bottom:.3rem; }
+  .sp-flow-label { font-size:.68rem; font-weight:700; color:var(--text-2); line-height:1.2; }
+  .sp-flow-arrow { display:flex; align-items:center; padding:0 .25rem; color:var(--accent); font-size:1.1rem; font-weight:900; flex-shrink:0; }
+
+  /* Sync tabeller */
+  .sp-sync-cols { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+  @media(max-width:600px){ .sp-sync-cols { grid-template-columns:1fr; } }
+  .sp-sync-box { background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:1.2rem 1.4rem; }
+  .sp-sync-box h3 { font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin:0 0 .9rem; }
+  .sp-sync-list { list-style:none; padding:0; margin:0; }
+  .sp-sync-list li { display:flex; align-items:baseline; gap:.5rem; padding:.32rem 0; border-bottom:1px solid var(--border); font-size:.82rem; color:var(--text-2); }
+  .sp-sync-list li:last-child { border-bottom:none; }
+  .sp-sync-list li::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:.18rem; }
+
+  /* Feature grid */
+  .sp-feat-grid { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:2rem; }
+  @media(max-width:560px){ .sp-feat-grid { grid-template-columns:1fr; } }
+  .sp-feat { display:flex; gap:.8rem; align-items:flex-start; padding:1rem 1.1rem; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; transition:border-color var(--t-fast); }
+  .sp-feat:hover { border-color:var(--accent); }
+  .sp-feat-icon { font-size:1.1rem; flex-shrink:0; width:28px; text-align:center; margin-top:.05rem; }
+  .sp-feat strong { display:block; font-size:.85rem; font-weight:700; color:var(--text-1); margin-bottom:.25rem; line-height:1.25; }
+  .sp-feat span { font-size:.78rem; color:var(--text-3); line-height:1.45; }
+
+  /* Location section */
+  .sp-location { background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; }
+  .sp-location h3 { font-size:1.05rem; font-weight:800; margin:0 0 .75rem; }
+  .sp-location-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+  @media(max-width:580px){ .sp-location-grid { grid-template-columns:1fr; } }
+  .sp-location-item { padding:.85rem 1rem; background:var(--bg-2); border:1px solid var(--border); border-radius:8px; }
+  .sp-location-item strong { display:block; font-size:.83rem; font-weight:700; margin-bottom:.3rem; }
+  .sp-location-item span { font-size:.76rem; color:var(--text-3); line-height:1.45; }
+
+  /* Formula box */
+  .sp-formula { background:var(--bg-2); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:.9rem 0; font-family:monospace; font-size:.8rem; color:var(--text-2); line-height:1.75; }
+  .sp-formula .kw { color:var(--accent); font-weight:700; }
+  .sp-formula .cm { color:var(--text-3); }
+
+  /* Note box */
+  .sp-note { display:flex; gap:.75rem; align-items:flex-start; padding:.85rem 1rem; background:rgba(217,119,6,.07); border:1px solid rgba(217,119,6,.25); border-radius:8px; font-size:.81rem; color:var(--text-2); line-height:1.55; margin:.75rem 0 1.5rem; }
+  .sp-note-icon { font-size:.95rem; flex-shrink:0; }
+
+  /* Steps */
+  .sp-steps { margin-bottom:2rem; }
+  .sp-step { display:flex; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--border); }
+  .sp-step:last-child { border-bottom:none; }
+  .sp-step-num { width:34px; height:34px; border-radius:50%; background:var(--accent); color:#000; font-weight:900; font-size:.85rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:.1rem; }
+  .sp-step-body strong { display:block; font-size:.92rem; font-weight:700; margin-bottom:.3rem; }
+  .sp-step-body p { font-size:.84rem; color:var(--text-3); margin:0; line-height:1.55; }
+
+  /* FAQ */
+  .sp-faq { margin-top:2.5rem; }
+  .sp-faq-item { border-bottom:1px solid var(--border); }
+  .sp-faq-item:first-child { border-top:1px solid var(--border); }
+  .sp-faq-q { display:flex; justify-content:space-between; align-items:center; padding:1rem 0; cursor:pointer; gap:1rem; }
+  .sp-faq-q p { font-size:.9rem; font-weight:700; color:var(--text-1); margin:0; flex:1; }
+  .sp-faq-toggle { font-size:.8rem; color:var(--accent); flex-shrink:0; transition:transform var(--t-fast); }
+  .sp-faq-a { font-size:.84rem; color:var(--text-2); line-height:1.65; padding-bottom:1rem; margin:0; }
+  .sp-faq-item.open .sp-faq-toggle { transform:rotate(180deg); }
+
+  /* Bottom CTA */
+  .sp-bottom-cta { background:linear-gradient(135deg, var(--accent-glow) 0%, var(--surface-2) 100%); border:1px solid rgba(62,207,142,.3); border-radius:16px; padding:2.5rem; text-align:center; margin-top:3rem; }
+  .sp-bottom-cta h2 { font-size:1.5rem; margin:0 0 .75rem; }
+  .sp-bottom-cta p { font-size:.92rem; color:var(--text-2); margin:0 0 1.5rem; max-width:480px; margin-inline:auto; }
+  .sp-bottom-cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
   </style>
 </head>
 <body>
@@ -144,13 +216,21 @@
   <div class="container">
     <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
 
-    <!-- HERO -->
+    <!-- ─── HERO ─── -->
     <div class="int-page__hero">
-      <div><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" class="int-page__logo" width="1024" height="1024"></div>
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector">
+          <div class="sp-hero-connector-dot"></div>
+          <div class="sp-hero-connector-line"></div>
+          <div class="sp-hero-connector-dot"></div>
+        </div>
+        <img src="../assets/smartpack-logo-icon.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
       <div class="int-page__hero-content">
-        <div class="int-page__cat">Webshop</div>
-        <h1 class="int-page__title">SmartPack <span>+ Shopify</span></h1>
-        <p class="int-page__intro">Ordrer fra Shopify lander automatisk i plukke-k&oslash;en. Lagerstatus opdateres live tilbage til shoppen via webhooks. Trackinginfo sendes til kunden uden manuel indsats. Alt det der ellers koster tid, k&oslash;rer af sig selv.</p>
+        <div class="int-page__cat">Webshop-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>Shopify</span></h1>
+        <p class="int-page__intro">SmartPack er et dansk WMS der integrerer direkte med Shopify via webhooks og API. N&aring;r en ordre placeres i Shopify, lander den automatisk i plukke-k&oslash;en. N&aring;r pakken er afsendt, sendes tracking og fulfillment-status tilbage &mdash; og kunden notificeres. Virker fra &eacute;n Shopify-shop til kæde med centrallager og flere fysiske butikker.</p>
         <div class="int-page__cta-row">
           <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
           <a href="../priser" class="btn btn--ghost">Se priser</a>
@@ -158,217 +238,349 @@
       </div>
     </div>
 
-    <!-- BODY -->
+    <!-- ─── STATS ─── -->
+    <div class="sp-stats reveal">
+      <div class="sp-stat">
+        <span class="sp-stat-val">&lt;&thinsp;1&thinsp;sek</span>
+        <span class="sp-stat-label">Webhook-behandling pr. ordre</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat-val">50+</span>
+        <span class="sp-stat-label">Fragt- og shop-integrationer klar</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat-val">0&thinsp;kr.</span>
+        <span class="sp-stat-label">Ekstra for Shopify-integrationen</span>
+      </div>
+    </div>
+
+    <!-- ─── BODY (2-col) ─── -->
     <div class="int-page__body">
       <div class="int-page__main">
 
-        <!-- HVAD SYNKRONISERES -->
-        <h2>Hvad synkroniseres automatisk?</h2>
-
-        <div class="int-page__sync-wrap">
-          <div class="int-page__sync-section">
-            <h3>Ordredata</h3>
-            <table class="int-page__sync-table">
-              <tr><td>Leveringsadresse</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Ordrelinjer (inkl. lokation)</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Leveringsdato</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Kundekommentar / ordrenote</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Annullering fra Shopify</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Lagerstatus (beholdning)</td><td><span class="int-page__sync-dir" style="color:#fff;background:rgba(62,207,142,.4);border-color:rgba(62,207,142,.5)">SmartPack &rarr; Shopify</span></td></tr>
-              <tr><td>Trackingnummer + fulfillment</td><td><span class="int-page__sync-dir" style="color:#fff;background:rgba(62,207,142,.4);border-color:rgba(62,207,142,.5)">SmartPack &rarr; Shopify</span></td></tr>
-              <tr><td>Refundering</td><td><span class="int-page__sync-dir" style="color:#fff;background:rgba(62,207,142,.4);border-color:rgba(62,207,142,.5)">SmartPack &rarr; Shopify</span></td></tr>
-            </table>
+        <!-- PASSER TIL -->
+        <h2>Passer til jer uanset st&oslash;rrelse</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card">
+            <span class="sp-fit-card-icon">&#128722;</span>
+            <h3>Online shop</h3>
+            <p>En Shopify-shop. SmartPack overtager alt det fysiske: pluk, pak, label og tracking. Du f&aring;r styr p&aring; lageret uden at skifte platform.</p>
+          </div>
+          <div class="sp-fit-card sp-fit-card--active">
+            <span class="sp-fit-card-icon">&#128205;</span>
+            <h3>Online + fysiske butikker</h3>
+            <p>Shopify POS i butikkerne, webshop online. SmartPack router ordrer til den rigtige lokation og holder lager synkroniseret p&aring; tv&aelig;rs.</p>
+          </div>
+          <div class="sp-fit-card">
+            <span class="sp-fit-card-icon">&#127970;</span>
+            <h3>Kæde med centrallager</h3>
+            <p>Flere Shopify-shops og/eller butikker mod &eacute;t SmartPack. Lagerbeholdning pr. lokation. Ordreflows per kanal. Ens overblik.</p>
           </div>
         </div>
 
-        <div class="int-page__sync-wrap">
-          <div class="int-page__sync-section">
-            <h3>Produktdata (Shopify &rarr; SmartPack)</h3>
-            <table class="int-page__sync-table">
-              <tr><td>SKU og stregkoder</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Produktnavn og beskrivelse</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Billed-URL</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>V&aelig;gt og dimensioner</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Salgspris / normalpris / kostpris</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Tags og kategorier</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Toldkode og oprindelsesland</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-              <tr><td>Leverand&oslash;rnavn og -nummer</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
-            </table>
+        <!-- FLOW -->
+        <h2>S&aring;dan fungerer ordreflowet</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step">
+            <span class="sp-flow-icon">&#128722;</span>
+            <span class="sp-flow-label">Shopify<br>ordre</span>
+          </div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent">
+            <span class="sp-flow-icon">&#9889;</span>
+            <span class="sp-flow-label">Webhook<br>&lt;1 sek</span>
+          </div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step">
+            <span class="sp-flow-icon">&#128203;</span>
+            <span class="sp-flow-label">Plukke<br>-k&oslash;</span>
+          </div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step">
+            <span class="sp-flow-icon">&#128230;</span>
+            <span class="sp-flow-label">Pak<br>&amp; label</span>
+          </div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent">
+            <span class="sp-flow-icon">&#128230;</span>
+            <span class="sp-flow-label">Tracking<br>afsendt</span>
+          </div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step">
+            <span class="sp-flow-icon">&#10003;</span>
+            <span class="sp-flow-label">Shopify<br>fulfilled</span>
+          </div>
+        </div>
+
+        <!-- HVAD SYNKRONISERES -->
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal">
+          <div class="sp-sync-box">
+            <h3>Shopify &rarr; SmartPack</h3>
+            <ul class="sp-sync-list">
+              <li>Ordrer med leveringsadresse og linjer</li>
+              <li>Leveringsdato fra ordre</li>
+              <li>Kundekommentar og ordrenote</li>
+              <li>Annullering og pause-signal</li>
+              <li>SKU, stregkode, produktnavn</li>
+              <li>Billede-URL, v&aelig;gt, dimensioner</li>
+              <li>Salgspris, normalpris, kostpris</li>
+              <li>Tags, kategorier, toldkode</li>
+              <li>Leverand&oslash;rnavn og -nummer</li>
+            </ul>
+          </div>
+          <div class="sp-sync-box">
+            <h3>SmartPack &rarr; Shopify</h3>
+            <ul class="sp-sync-list">
+              <li>Lagerbeholdning pr. lokation (live)</li>
+              <li>Trackingnummer ved afsendelse</li>
+              <li>Fulfillment-status</li>
+              <li>Kundenotifikation ved afsendelse</li>
+              <li>Kundenotifikation ved afhentning</li>
+              <li>Betalingsopkr&aelig;vning (capture)</li>
+              <li>Refundering</li>
+              <li>Gavekort</li>
+            </ul>
           </div>
         </div>
 
         <!-- SHOPIFY-SPECIFIKKE FEATURES -->
         <h2>Shopify-specifikke funktioner</h2>
-
-        <div class="int-page__feature-grid">
-          <div class="int-page__feature-item">
-            <span class="int-page__feature-item-icon">&#9889;</span>
-            <div class="int-page__feature-item-text">
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat">
+            <span class="sp-feat-icon">&#9889;</span>
+            <div>
               <strong>Live webhooks</strong>
-              <span>Ordrer og lagerstatus opdateres via Shopify-webhooks. Ingen polling. Behandlingstid under 1 sekund.</span>
+              <span>Ordrer og lageropdateringer behandles via Shopify-webhooks. Under 1 sekund pr. ordre. Ingen polling-forsinkelse.</span>
             </div>
           </div>
-          <div class="int-page__feature-item">
-            <span class="int-page__feature-item-icon">&#128205;</span>
-            <div class="int-page__feature-item-text">
-              <strong>Multi-location</strong>
-              <span>Synkroniser lagerbeholdning p&aring; tv&aelig;rs af flere fysiske lokationer og flere Shopify-butikker.</span>
-            </div>
-          </div>
-          <div class="int-page__feature-item">
-            <span class="int-page__feature-item-icon">&#128722;</span>
-            <div class="int-page__feature-item-text">
-              <strong>Shopify POS</strong>
-              <span>Kasseordrer fra Shopify POS h&aring;ndteres separat med eget POS-flow og lokationsstyring.</span>
-            </div>
-          </div>
-          <div class="int-page__feature-item">
-            <span class="int-page__feature-item-icon">&#127873;</span>
-            <div class="int-page__feature-item-text">
-              <strong>Gavekort</strong>
-              <span>SmartPack kan oprette og h&aring;ndtere Shopify-gavekort som del af fulfillment-flowet.</span>
-            </div>
-          </div>
-          <div class="int-page__feature-item">
-            <span class="int-page__feature-item-icon">&#128196;</span>
-            <div class="int-page__feature-item-text">
+          <div class="sp-feat">
+            <span class="sp-feat-icon">&#128196;</span>
+            <div>
               <strong>Ordrefiltrering</strong>
-              <span>Importer kun ordrer med bestemte tags. Ignorer ordrer med andre tags. Datofilter og regler for ubetalte ordrer.</span>
+              <span>Importer kun ordrer med bestemte tags. Ignorer andre tags. Datofilter og regler for ubetalte ordrer.</span>
             </div>
           </div>
-          <div class="int-page__feature-item">
-            <span class="int-page__feature-item-icon">&#128260;</span>
-            <div class="int-page__feature-item-text">
+          <div class="sp-feat">
+            <span class="sp-feat-icon">&#128260;</span>
+            <div>
               <strong>Fulfillment-kontrol</strong>
-              <span>V&aelig;lg om SmartPack m&aring; fuldfylde ordrer, notificere kunden, indfange betalinger og h&aring;ndtere retur og genopfyldning.</span>
+              <span>V&aelig;lg om SmartPack m&aring; fuldfylde ordrer, capture betaling, oprette gavekort og h&aring;ndtere retur og genopfyldning.</span>
+            </div>
+          </div>
+          <div class="sp-feat">
+            <span class="sp-feat-icon">&#128202;</span>
+            <div>
+              <strong>Job Monitor</strong>
+              <span>Alle webhook-jobs logges i realtid. Du kan se pr&aelig;cist hvorn&aring;r en ordre lander, hvad der behandles og hvad der evt. fejler.</span>
+            </div>
+          </div>
+          <div class="sp-feat">
+            <span class="sp-feat-icon">&#127978;</span>
+            <div>
+              <strong>Shipment parameter-mapping</strong>
+              <span>Map ordre-parametre (note attributes, delivery date format) til SmartPacks felter. S&aelig;rlig leveringsdato-format-support.</span>
+            </div>
+          </div>
+          <div class="sp-feat">
+            <span class="sp-feat-icon">&#128274;</span>
+            <div>
+              <strong>Autogenerer SKU</strong>
+              <span>Mangler en variant SKU i Shopify, genererer SmartPack et automatisk fremfor at afvise varen.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MULTI-LOCATION -->
+        <h2>Multi-location og omnichannel</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Har I &eacute;n Shopify-shop med lager i Aarhus og en butik i K&oslash;benhavn, eller kæder med centrallager og flere POS-steder? SmartPack h&aring;ndterer begge scenarier via location-mapping.</p>
+
+        <div class="sp-location reveal">
+          <div class="sp-location-grid">
+            <div class="sp-location-item">
+              <strong>&#127981; Lager-sync pr. lokation</strong>
+              <span>For hver Shopify-lokation mapper du hvilken SmartPack-lokation der svarer til den. Beholdning opdateres pr. lokation, ikke som en samlet beh&oslash;ldning. Er en vare ikke registreret p&aring; Shopify-lokationen endnu, aktiverer SmartPack den automatisk.</span>
+            </div>
+            <div class="sp-location-item">
+              <strong>&#128722; POS pr. butik</strong>
+              <span>Kasseordrer fra Shopify POS routes til den rigtige SmartPack POS-flow baseret p&aring; Shopify-lokation. Flere butikker f&aring;r hver sit flow og sit lager.</span>
+            </div>
+            <div class="sp-location-item">
+              <strong>&#127760; Flere Shopify-shops</strong>
+              <span>Har I to eller flere Shopify-shops (fx DK og SE), s&aelig;tter I en integration pr. shop. Ordrer fra alle shops lander i SmartPack med deres shopkilde markeret.</span>
+            </div>
+            <div class="sp-location-item">
+              <strong>&#128202; Ens overblik</strong>
+              <span>Uanset antal kanaler og lokationer ser I alle ordrer, al lager og alle forsendelser samlet i &eacute;t SmartPack-dashboard.</span>
             </div>
           </div>
         </div>
 
         <!-- SHOPCHECKKOUT -->
-        <h2>Live fragtpriser i checkout</h2>
-        <p style="font-size:.92rem;color:var(--text-2);line-height:1.7;margin-bottom:1rem;">SmartPacks ShopCheckout-funktion viser dine egne leveringsmetoder direkte i Shopify-checkout med live priser. Du definerer selv reglerne med en simpel prisformel.</p>
+        <h2>Live fragtpriser i Shopify-checkout</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:.75rem;">SmartPacks ShopCheckout-funktion viser jeres egne leveringsmetoder med live-priser direkte i Shopify-checkout. I definerer reglerne med en simpel prisformel.</p>
 
-        <div class="int-page__formula-box">
-          <strong># Eksempel: GLS PakkeShop gratis ved k&oslash;b over 499 kr.</strong><br>
-          Standardpris: 45,00 DKK<br>
-          Regel: <strong>price &gt; 499</strong> &rarr; 0,00 DKK (gratis fragt)<br><br>
-          <strong># Eksempel: Kun tilbyd ekspresfragt i visse postnumre</strong><br>
-          Regel: <strong>recipient.zipcode in '1000','1050','1100'</strong><br><br>
-          <strong># Eksempel: Gratis fragt ved rabatkode (kun Shopify)</strong><br>
-          Regel: <strong>discounted_price &gt;= 499</strong><br>
+        <div class="sp-formula">
+          <span class="cm"># GLS PakkeShop &mdash; standardpris + gratis ved k&oslash;b over 499 kr.</span><br>
+          Pris #1: <span class="kw">45,00 DKK</span><br>
+          Pris #2: <span class="kw">0,00 DKK</span> &nbsp;n&aring;r: <span class="kw">price &gt; 499</span><br><br>
+          <span class="cm"># Gratis fragt kun n&aring;r rabatkode ogs&aring; bruges (Shopify-only)</span><br>
+          Regel: <span class="kw">discounted_price &gt;= 499</span><br><br>
+          <span class="cm"># Express kun i valgte postnumre</span><br>
+          Regel: <span class="kw">recipient.zipcode in '1000','1050','1100'</span>
         </div>
 
-        <p style="font-size:.85rem;color:var(--text-2);margin-bottom:.5rem;">Formlen kan baseres p&aring;: <strong>pris, v&aelig;gt, antal varer, leveringsadresse, afsenderadresse</strong> og &mdash; kun i Shopify &mdash; <strong>rabatbel&oslash;b og pris efter rabat</strong>.</p>
+        <p style="font-size:.82rem;color:var(--text-3);margin-bottom:.5rem;">Formlen kan kombinere: kurvsv&aelig;rdi, v&aelig;gt, antal varer, afsender- og modtageradresse. I Shopify-integrationen er rabatbel&oslash;b og pris-efter-rabat ogs&aring; tilg&aelig;ngelige som variabler.</p>
 
-        <div class="int-page__note">
-          <span class="int-page__note-icon">&#9888;&#65039;</span>
-          <span>Live fragtpriser i checkout (ShopCheckout / Carrier Service) kr&aelig;ver Shopify Advanced eller Shopify Plus. P&aring; &aelig;ldre &aring;rlige Shopify-planer kan det muligg&oslash;res via Shopify support. Grundl&aelig;ggende ordreintegration virker p&aring; alle planer.</span>
+        <div class="sp-note">
+          <span class="sp-note-icon">&#9888;&#65039;</span>
+          <span>Live fragtpriser i checkout (Carrier Service) kr&aelig;ver <strong>Shopify Advanced</strong> eller <strong>Shopify Plus</strong>. P&aring; &aelig;ldre &aring;rlige Shopify-planer kan det muligg&oslash;res via Shopify support. Selve ordre- og lagersynkroniseringen virker p&aring; alle Shopify-planer.</span>
         </div>
 
-        <!-- OPSAETNING -->
-        <h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du det op</h2>
-
-        <div class="int-page__step">
-          <div class="int-page__step-num">1</div>
-          <div class="int-page__step-body">
-            <h3>Installer SmartPack-appen fra Shopify App Store</h3>
-            <p>S&oslash;g efter SmartPack i Shopify App Store. Installer og godkend de n&oslash;dvendige rettigheder. Du bliver logget direkte ind i integrationsops&aelig;tningen.</p>
+        <!-- SETUP -->
+        <h2>S&aring;dan forbinder du Shopify med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step">
+            <div class="sp-step-num">1</div>
+            <div class="sp-step-body">
+              <strong>Installer SmartPack-appen fra Shopify App Store</strong>
+              <p>S&oslash;g efter SmartPack og godkend adgang. Du bliver logget direkte ind i integrationsops&aelig;tningen i SmartPack.</p>
+            </div>
           </div>
-        </div>
-
-        <div class="int-page__step">
-          <div class="int-page__step-num">2</div>
-          <div class="int-page__step-body">
-            <h3>V&aelig;lg hvad der skal synkroniseres</h3>
-            <p>Konfigurer sync-retninger for ordrer og produkter, v&aelig;lg lokationer, aktiver webhooks og s&aelig;t regler for ordreimport (tags, datoer, ubetalte ordrer).</p>
+          <div class="sp-step">
+            <div class="sp-step-num">2</div>
+            <div class="sp-step-body">
+              <strong>Konfigurer lokationer og sync-regler</strong>
+              <p>V&aelig;lg hvilke Shopify-lokationer der matcher dine SmartPack-lokationer. Aktiver webhooks, angiv ordrefiltre (tags, dato, betaling) og konfigurer fulfillment-adf&aelig;rd.</p>
+            </div>
           </div>
-        </div>
-
-        <div class="int-page__step">
-          <div class="int-page__step-num">3</div>
-          <div class="int-page__step-body">
-            <h3>Test med en rigtig ordre</h3>
-            <p>L&aelig;g en testordre i Shopify og f&oslash;lg den i Job Monitor. Du kan se pr&aelig;cist hvorn&aring;r webhook'en modtages, om den behandles korrekt, og hvad der eventuelt fejler.</p>
+          <div class="sp-step">
+            <div class="sp-step-num">3</div>
+            <div class="sp-step-body">
+              <strong>Test og f&oslash;lg i Job Monitor</strong>
+              <p>L&aelig;g en testordre og f&oslash;lg den i realtid i Job Monitor. Du ser pr&aelig;cist hvorn&aring;r webhook'en modtages, om den behandles og hvad der evt. fejler med en klar fejlbesked.</p>
+            </div>
           </div>
         </div>
 
         <!-- FAQ -->
-        <div class="int-page__faq">
+        <div class="sp-faq">
           <h2>Sp&oslash;rgsm&aring;l og svar</h2>
 
-          <div class="int-page__faq-item">
-            <p class="int-page__faq-q">Synkroniseres lageret live eller med forsinkelse?</p>
-            <p class="int-page__faq-a">Live. SmartPack modtager Shopify-webhooks og behandler dem under ét sekund. Der er ingen polling-forsinkelse. Du kan se alle jobs i realtid i Job Monitor.</p>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)">
+              <p>Synkroniseres lageret live eller med forsinkelse?</p>
+              <span class="sp-faq-toggle">&#9660;</span>
+            </div>
+            <p class="sp-faq-a">Live. SmartPack modtager Shopify-webhooks og behandler dem under &eacute;t sekund. Der er ingen polling-forsinkelse. Alle jobs kan f&oslash;lges i realtid i Job Monitor.</p>
           </div>
 
-          <div class="int-page__faq-item">
-            <p class="int-page__faq-q">Hvad sker der hvis en ordre annulleres i Shopify, mens den pakkes?</p>
-            <p class="int-page__faq-a">Ordren pauses i SmartPack fremfor at annulleres direkte. Systemet stiller ikke varer tilbage automatisk, fordi pakkeprocessen kan v&aelig;re i gang med en tote. Du bekr&aelig;fter annulleringen eksplicit i SmartPack og k&oslash;rer pakkeprocessen bagl&aelig;ns.</p>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)">
+              <p>Hvad sker der hvis en ordre annulleres i Shopify mens den pakkes?</p>
+              <span class="sp-faq-toggle">&#9660;</span>
+            </div>
+            <p class="sp-faq-a">Ordren pauses i SmartPack fremfor at annulleres direkte. Systemet stiller ikke varer tilbage automatisk, fordi pakkeprocessen kan v&aelig;re i gang med en tote. Du bekr&aelig;fter annulleringen eksplicit i SmartPack og k&oslash;rer pakkeprocessen bagl&aelig;ns.</p>
           </div>
 
-          <div class="int-page__faq-item">
-            <p class="int-page__faq-q">Virker det med flere Shopify-butikker og lokationer?</p>
-            <p class="int-page__faq-a">Ja. Multi-location er underst&oslash;ttet, s&aring; lagerbeholdning kan synkroniseres p&aring; tv&aelig;rs af flere lokationer og butikker. Hver lokation konfigureres separat med eget import-flow.</p>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)">
+              <p>Virker det med flere Shopify-lokationer og POS-butikker?</p>
+              <span class="sp-faq-toggle">&#9660;</span>
+            </div>
+            <p class="sp-faq-a">Ja. Du laver en mapping: Shopify-lokation &rarr; SmartPack-lokation (for lagersync) og Shopify POS-lokation &rarr; SmartPack POS-flow (for kasseordrer). Lager-mapping og POS-mapping er uafh&aelig;ngige &mdash; du kan have det ene uden det andet.</p>
           </div>
 
-          <div class="int-page__faq-item">
-            <p class="int-page__faq-q">Kan vi vise vores egne fragtpriser live i Shopify-checkout?</p>
-            <p class="int-page__faq-a">Ja, via ShopCheckout. Du definerer leveringsmetoder (GLS PakkeShop, PostNord, etc.) med prisformler baseret p&aring; kurvsv&aelig;rdi, v&aelig;gt og adresse. Kraver Shopify Advanced eller Shopify Plus.</p>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)">
+              <p>Vi har to Shopify-shops (DK og SE) &mdash; kan SmartPack h&aring;ndtere begge?</p>
+              <span class="sp-faq-toggle">&#9660;</span>
+            </div>
+            <p class="sp-faq-a">Ja. Hver Shopify-shop f&aring;r sin egen integration i SmartPack. Ordrer fra begge shops lander i det samme SmartPack-system markeret med deres kilde. Du f&aring;r &eacute;t overblik over begge kanaler.</p>
           </div>
 
-          <div class="int-page__faq-item">
-            <p class="int-page__faq-q">Kan vi styre hvilke Shopify-ordrer der importeres?</p>
-            <p class="int-page__faq-a">Ja. Du kan importere kun ordrer med et bestemt tag (fx &rdquo;SmartPack&rdquo;), ignorere ordrer med tags (fx &rdquo;DropShipping&rdquo;, &rdquo;TestOrder&rdquo;), filtrere p&aring; importdato og v&aelig;lge om ordrer med ubetalt status skal importeres eller pauses.</p>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)">
+              <p>Kan vi filtrere hvilke Shopify-ordrer der importeres?</p>
+              <span class="sp-faq-toggle">&#9660;</span>
+            </div>
+            <p class="sp-faq-a">Ja. Du kan importere kun ordrer med bestemte tags, ignorere ordrer med andre tags (fx &laquo;DropShipping&raquo; eller &laquo;TestOrder&raquo;), filtrere p&aring; importdato og styre om ordrer med ubetalt status skal importeres eller pauses.</p>
           </div>
 
-          <div class="int-page__faq-item">
-            <p class="int-page__faq-q">Hvad er inkluderet i prisen &mdash; skal vi betale ekstra for integrationen?</p>
-            <p class="int-page__faq-a">Shopify-integrationen er inkluderet i SmartPacks standardpris. Ingen ekstra modul, ingen labelfee, ingen ops&aelig;tningsgebyr.</p>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)">
+              <p>Er Shopify-integrationen inkluderet i prisen?</p>
+              <span class="sp-faq-toggle">&#9660;</span>
+            </div>
+            <p class="sp-faq-a">Ja. Shopify-integrationen er inkluderet i SmartPacks standardpris. Ingen ekstra modul, ingen labelgebyr og ingen ops&aelig;tningsgebyr for integrationen.</p>
           </div>
         </div>
 
-      </div>
+        <!-- BOTTOM CTA -->
+        <div class="sp-bottom-cta reveal">
+          <h2>K&oslash;rer I p&aring; Shopify?</h2>
+          <p>Vi viser jer pr&aelig;cist hvad der sker med jeres ordrer, lager og fragt &mdash; og hvilke indstillinger der passer til jeres setup. 15 minutter.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Book en demo</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
 
-      <!-- SIDEBAR -->
+      </div><!-- /.int-page__main -->
+
+      <!-- ─── SIDEBAR ─── -->
       <div class="int-page__sidebar">
         <div class="int-page__cta-box">
           <h3>K&oslash;rer I Shopify?</h3>
           <p>Vi viser jer pr&aelig;cist hvad der sker med jeres ordrer, lager og fragt. 15 minutter.</p>
-          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
         </div>
 
-        <div class="int-page__cta-box" style="background:rgba(62,207,142,.06);border-color:rgba(62,207,142,.3)">
-          <h3 style="font-size:.95rem;">&#128202; Job Monitor</h3>
-          <p>Alle webhook-jobs logges i realtid. Du kan se hvorn&aring;r en ordre lander, hvad der behandles og om noget fejler &mdash; inkl. fejlbeskeder fra Shopify.</p>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);">
+          <h3 style="font-size:.92rem;">&#128202; Job Monitor</h3>
+          <p>Alle webhook-jobs logges i realtid. F&oslash;lg en ordre fra Shopify-webhook til fulfilled &mdash; inkl. klare fejlbeskeder hvis noget g&aring;r galt.</p>
+        </div>
+
+        <div class="int-page__cta-box" style="background:var(--surface-2);">
+          <h3 style="font-size:.88rem;">&#128640; Gratis at komme i gang</h3>
+          <p>Ingen binding. Vi importerer varer, s&aelig;tter lokationer op og forbinder jeres systemer. De fleste er i gang inden for en uge.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Onboarding-processen &rarr;</a>
         </div>
 
         <div class="int-page__related">
           <h3>Relaterede integrationer</h3>
           <div class="int-page__related-list">
             <a href="woocommerce" class="int-page__related-link">
-              <img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce
+              <img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce" width="128" height="128">WooCommerce
             </a>
             <a href="gls" class="int-page__related-link">
-              <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS
+              <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS" width="1024" height="1024">GLS
             </a>
             <a href="dao" class="int-page__related-link">
-              <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="DAO logo" width="1024" height="1024">DAO
+              <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="DAO" width="1024" height="1024">DAO
             </a>
-            <a href="stocky" class="int-page__related-link">
-              <img src="../assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky logo" width="512" height="512">Stocky (Shopify)
+            <a href="shopify-pos" class="int-page__related-link">
+              <img src="../assets/SmartPack-App-Icons/SmartPack/POS/ShopifyPOS.png" alt="Shopify POS" width="200" height="200">Shopify POS
             </a>
           </div>
         </div>
-      </div>
+      </div><!-- /.int-page__sidebar -->
 
-    </div>
-  </div>
+    </div><!-- /.int-page__body -->
+  </div><!-- /.container -->
 </section>
 </main>
 
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
 <script src="../js/main.js"></script>
+<script>
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.sp-faq-item').forEach(function(i){ i.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+</script>
 </body>
 </html>
