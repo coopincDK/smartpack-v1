@@ -1,154 +1,331 @@
 <!DOCTYPE html>
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
-================================================================ -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartPack + DanDomain | WMS-integration</title>
-<meta name="description" content="DanDomain-integration til SmartPack WMS. B&aring;de ny og Classic underst&oslash;ttes, med statusmapping, webhooks, OnPay-betalingsopsamling og tracking retur.">
-<link rel="canonical" href="https://smartpack.dk/integrationer/dandomain">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="SmartPack + DanDomain">
-<meta property="og:description" content="DanDomain-integration til SmartPack WMS. B&aring;de ny og Classic underst&oslash;ttes, med statusmapping, webhooks, OnPay-betalingsopsamling og tracking retur.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smartpack.dk/integrationer/dandomain">
-<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-<link rel="stylesheet" href="int-page.css?v=4">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + DanDomain", "description": "DanDomain-integration til SmartPack WMS. B\u00e5de ny og Classic underst\u00f8ttes, med statusmapping, webhooks, OnPay-betalingsopsamling og tracking retur.", "url": "https://smartpack.dk/integrationer/dandomain", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "DanDomain", "applicationCategory": "E-commerce platform"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "DanDomain", "item": "https://smartpack.dk/integrationer/dandomain"}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvilken version skal vi bruge?", "acceptedAnswer": {"@type": "Answer", "text": "Den der matcher jeres butik. Den nye platform bruger et SOAP-API og underst\u00f8tter kategorier, producent og brugerdefinerede datafelter. Classic bruger REST og har til geng\u00e6ld delvis betalingsopsamling og mapping af de fem reserverede ordrefelter."}}, {"@type": "Question", "name": "Vores bundleprodukter mangler i SmartPack.", "acceptedAnswer": {"@type": "Answer", "text": "I den nye version findes en indstilling, der udelader pakkeprodukter uden SKU fra synkroniseringen, og den er sl\u00e5et til som standard. Det er det f\u00f8rste sted at kigge."}}, {"@type": "Question", "name": "Fanger integrationen vores pakkeshop-valg?", "acceptedAnswer": {"@type": "Answer", "text": "P\u00e5 Classic genkendes pakkeshop-ID ud fra pr\u00e6fikset Pakkeshop: i adresselinje 2. Bruger jeres butik et andet format, skal det afklares f\u00f8rst."}}, {"@type": "Question", "name": "Kan vi sende faktura og statusmail automatisk?", "acceptedAnswer": {"@type": "Answer", "text": "I den nye version, ja. Faktura kan oprettes med en betalingsfrist, I selv s\u00e6tter, og faktura- og statusmail kan sendes automatisk."}}, {"@type": "Question", "name": "Vi bruger ogs\u00e5 Uniconta. H\u00e6nger det sammen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. DanDomain Classic-ordrer kan kobles til Uniconta via referencefelterne p\u00e5 ordren."}}]}</script>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til DanDomain | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder DanDomain med lageret. B&aring;de ny platform og Classic, med statusmapping, webhooks, OnPay-betalingsopsamling og tracking retur.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/dandomain">
+
+  <meta property="og:title" content="Lagersystem til DanDomain | SmartPack WMS">
+  <meta property="og:description" content="Fra DanDomain-ordre til pakket forsendelse. Statusmapping, webhooks, betalingsopsamling via OnPay og tracking tilbage.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/dandomain">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DanDomain",
+          "item": "https://smartpack.dk/integrationer/dandomain"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med DanDomain i to versioner: den nye SOAP-baserede platform og DanDomain Classic via REST. Ordrer, produkter og lager synkroniseres, og ordrestatus, trackingnummer og betalingsopsamling sendes tilbage.",
+      "url": "https://smartpack.dk/integrationer/dandomain",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvilken version skal vi bruge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Den, jeres butik k\u00f8rer. Den nye platform bruger et SOAP-API og underst\u00f8tter kategorier, producent og brugerdefinerede datafelter. Classic bruger REST og har til geng\u00e6ld delvis betalingsopsamling og mapping af de fem reserverede ordrefelter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vores bundleprodukter mangler i SmartPack.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I den nye version findes en indstilling, der udelader pakkeprodukter uden SKU fra synkroniseringen, og den er sl\u00e5et til som standard. Det er det f\u00f8rste sted at kigge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Fanger integrationen vores pakkeshopvalg?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "P\u00e5 Classic genkendes pakkeshop-ID ud fra pr\u00e6fikset Pakkeshop: i adresselinje 2. Bruger butikken et andet format, afklarer vi det ved opstart."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi sende faktura og statusmail automatisk?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I den nye version, ja. Faktura kan oprettes med en betalingsfrist, I selv s\u00e6tter, og faktura- og statusmail kan sendes automatisk ved f\u00e6rdigpakning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan betalingen opsamles pr. forsendelse?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "P\u00e5 Classic, ja. Den underst\u00f8tter delvis opsamling, s\u00e5 I kan opsamle pr. fulfillment i stedet for hele ordren p\u00e5 \u00e9n gang."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vi bruger ogs\u00e5 Uniconta. H\u00e6nger det sammen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. DanDomain Classic-ordrer kan kobles til Uniconta via referencefelterne p\u00e5 ordren, s\u00e5 de samme ordrer kan f\u00f8lges begge steder."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=5">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container">
-<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-<div class="int-page__hero"><div>
-<img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" class="int-page__logo" width="500" height="500">
-</div><div class="int-page__hero-content">
-<div class="int-page__cat">Webshop</div>
-<h1 class="int-page__title">SmartPack <span>+ DanDomain</span></h1>
-<p class="int-page__intro">Der findes to DanDomain-integrationer i SmartPack, en til den nye platform og en til DanDomain Classic. De deler grundlogik, men adskiller sig p&aring; ops&aelig;tning og enkelte funktioner. Vi s&aelig;tter jer op p&aring; den, jeres butik faktisk k&oslash;rer.</p>
-<div class="int-page__cta-row">
-<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
-<a href="../priser" class="btn btn--ghost">Se priser</a>
-</div></div></div>
-<div class="int-page__body"><div class="int-page__main">
-<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
-<strong>Kort fortalt</strong>
-<p>Ordrer, produkter og lager hentes fra DanDomain, og SmartPack skriver ordrestatus, trackingnummer og lagerbeholdning tilbage. Betalingsopsamling via OnPay underst&oslash;ttes i begge versioner, og Classic kan opsamle delvist pr. forsendelse.</p>
-</div></div>
-<h2>Hvad er DanDomain?</h2>
-<p>DanDomain er en dansk webshopplatform, som mange danske e-handlere har k&oslash;rt p&aring; i mange &aring;r. En stor del af butikkerne k&oslash;rer stadig p&aring; den &aelig;ldre Classic-platform, mens andre er flyttet til den nye.</p>
-<p>Forskellen betyder noget i praksis. Den nye version bruger et SOAP-baseret API, Classic bruger REST, og de to versioner underst&oslash;tter ikke helt de samme felter. Derfor er f&oslash;rste skridt altid at afklare, hvilken I k&oslash;rer.</p>
-<h2>Hvad integrationen g&oslash;r</h2>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128260;</div><div>
-<h3>Statusmapping i begge retninger</h3><p>I bestemmer selv, hvilke DanDomain-statusser der skal importeres, og hvilken status ordren f&aring;r, n&aring;r den er pakket, under behandling eller annulleret. Den nye version kan ogs&aring; s&aelig;tte en s&aelig;rlig status ved fejl.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128179;</div><div>
-<h3>Betalingsopsamling via OnPay</h3><p>Betalingen kan opsamles automatisk, n&aring;r ordren er f&aelig;rdigpakket. Classic underst&oslash;tter delvis opsamling pr. forsendelse og flere OnPay-tokens, &eacute;t pr. merchantnummer.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#9889;</div><div>
-<h3>Webhooks med debounce</h3><p>&AElig;ndringer i ordrer og produkter behandles med det samme. Sender DanDomain mange hurtige opdateringer p&aring; samme produkt, venter den nye version fem sekunder og behandler kun den seneste.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128203;</div><div>
-<h3>Jeres egne felter med</h3><p>Den nye version kan mappe brugerdefinerede datafelter begge veje. Classic kan mappe de fem reserverede ordrefelter til SmartPack-ordrefelter.</p></div></div>
-<h2>Hvad synkroniseres hvilken vej?</h2>
-<p>Begge versioner henter det samme grundlag. Forskellene st&aring;r noteret hvor de er der.</p>
-<div class="int-page__flow">
-<div class="int-page__flow-col"><h3>DanDomain til SmartPack</h3><ul>
-<li>SKU, produktnavn, variantnavn og leverand&oslash;rens varenummer</li>
-<li>V&aelig;gt, EAN, billede-URL, normalpris, kostpris og lagerbeholdning</li>
-<li>Kategorier og producent, i den nye version</li>
-<li>Ordrenummer, referencenummer og ordredato</li>
-<li>Leverings- og faktureringsadresse, ordrelinjer med pris og moms</li>
-<li>Fragtlinje og betalingsgebyr som selvst&aelig;ndige linjer</li>
-<li>Leveringsmetode, betalingsmetode og betalingstransaktions-ID</li>
-<li>Kundekommentar, intern note samt pakkeshop-ID og pakkeshop-adresse</li>
-</ul></div>
-<div class="int-page__flow-col"><h3>SmartPack til DanDomain</h3><ul>
-<li>SKU, v&aelig;gt, stregkode og kostpris p&aring; varen</li>
-<li>Lagerbeholdning, n&aring;r lagersynkronisering er sl&aring;et til</li>
-<li>Ordrestatus for pakket, under behandling og annulleret</li>
-<li>Trackingnummer ved f&aelig;rdigpakket ordre</li>
-<li>Intern note p&aring; ordren</li>
-<li>Droppoint-ID p&aring; ordren, i den nye version</li>
-<li>Brugerdefinerede datafelter, i den nye version</li>
-</ul></div></div>
-<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
-<div class="int-page__step"><div class="int-page__step-num">1</div>
-<div class="int-page__step-body"><h3>Afklar hvilken DanDomain I k&oslash;rer</h3><p>Den nye platform og Classic er to forskellige integrationer i SmartPack. Er I i tvivl, finder vi ud af det sammen.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">2</div>
-<div class="int-page__step-body"><h3>Udfyld forbindelsen</h3><p>Den nye version kr&aelig;ver brugernavn, adgangskode, shop-URL og en webhook-hemmelighed. Classic kr&aelig;ver API-n&oslash;gle og shop-URL.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">3</div>
-<div class="int-page__step-body"><h3>Map ordrestatusser</h3><p>N&aring;r indstillingerne gemmes, henter SmartPack automatisk jeres ordrestatusser fra DanDomain. Derefter v&aelig;lger I, hvilke der importeres, og hvad der s&aelig;ttes ved pakket, under behandling og annulleret.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">4</div>
-<div class="int-page__step-body"><h3>Sl&aring; betalingsopsamling til</h3><p>Skal betalingen opsamles ved f&aelig;rdigpakning, indtastes OnPay-token. P&aring; Classic kan I v&aelig;lge delvis opsamling pr. forsendelse.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">5</div>
-<div class="int-page__step-body"><h3>Test en ordre igennem</h3><p>Send en testordre hele vejen og tjek, at status og trackingnummer lander rigtigt i DanDomain.</p></div></div>
-<h2>Det g&oslash;r integrationen ikke</h2>
-<p>F&oslash;lgende er ikke underst&oslash;ttet fra SmartPack til DanDomain:</p>
-<ul class="int-page__limits">
-<li>Dimensioner, beskrivelse, billede-URL, salgspris, normalpris, toldtarif, oprindelsesland og tags kan ikke skrives tilbage p&aring; varen.</li>
-<li>Leveringsadresse, ordrelinjer og leveringsmetode kan ikke opdateres tilbage p&aring; ordren.</li>
-<li>DanDomain underst&oslash;tter kun &eacute;t stregkodefelt pr. produkt, s&aring; har varen flere stregkoder i SmartPack, sendes kun den f&oslash;rste.</li>
-<li>Ordrer, som DanDomain markerer som ufuldst&aelig;ndige, importeres ikke.</li>
-</ul>
-<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
-<div class="int-page__faq">
-<details><summary>Hvilken version skal vi bruge?</summary><div>Den der matcher jeres butik. Den nye platform bruger et SOAP-API og underst&oslash;tter kategorier, producent og brugerdefinerede datafelter. Classic bruger REST og har til geng&aelig;ld delvis betalingsopsamling og mapping af de fem reserverede ordrefelter.</div></details>
-<details><summary>Vores bundleprodukter mangler i SmartPack.</summary><div>I den nye version findes en indstilling, der udelader pakkeprodukter uden SKU fra synkroniseringen, og den er sl&aring;et til som standard. Det er det f&oslash;rste sted at kigge.</div></details>
-<details><summary>Fanger integrationen vores pakkeshop-valg?</summary><div>P&aring; Classic genkendes pakkeshop-ID ud fra pr&aelig;fikset Pakkeshop: i adresselinje 2. Bruger jeres butik et andet format, skal det afklares f&oslash;rst.</div></details>
-<details><summary>Kan vi sende faktura og statusmail automatisk?</summary><div>I den nye version, ja. Faktura kan oprettes med en betalingsfrist, I selv s&aelig;tter, og faktura- og statusmail kan sendes automatisk.</div></details>
-<details><summary>Vi bruger ogs&aring; Uniconta. H&aelig;nger det sammen?</summary><div>Ja. DanDomain Classic-ordrer kan kobles til Uniconta via referencefelterne p&aring; ordren.</div></details>
-</div>
-</div><div class="int-page__sidebar">
-<div class="int-page__cta-box"><h3>K&oslash;rer I DanDomain?</h3><p>Book en demo, s&aring; afklarer vi version og statusmapping for jeres butik.</p>
-<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
-</div>
-<div class="int-page__related"><h3>Relaterede integrationer</h3>
-<div class="int-page__related-list">
-<a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
-<a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
-<a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
-</div></div>
-</div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" class="sp-hero-logo" width="500" height="500">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Webshop-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>DanDomain</span></h1>
+        <p class="int-page__intro"><strong>F&aring; DanDomain og lageret til at arbejde som &eacute;t system.</strong><br><br>Der findes to DanDomain-integrationer i SmartPack, en til den nye platform og en til Classic. De deler grundlogik, men adskiller sig p&aring; ops&aelig;tning og enkelte funktioner, s&aring; vi s&aelig;tter jer op p&aring; den, jeres butik faktisk k&oslash;rer.<br><br>Ordrer og varer ind, status, tracking og lager tilbage.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Ny platform via SOAP-API. Classic via REST-API. Begge med webhooks.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">To versioner</span><span class="sp-stat-label">B&aring;de den nye DanDomain-platform og Classic underst&oslash;ttes</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">OnPay</span><span class="sp-stat-label">Betaling kan opsamles, n&aring;r ordren er f&aelig;rdigpakket</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">Integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">DanDomain styrer salget</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Produkter og varianter<br>Kunder<br>Checkout<br>Betaling<br>Webshop</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til jeres DanDomain-ops&aelig;tning</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128722;</span><h3>Ny DanDomain</h3><p>Den nye platform. Kategorier, producent og jeres egne datafelter kommer med begge veje.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128736;</span><h3>DanDomain Classic</h3><p>Classic via REST. Delvis betalingsopsamling pr. forsendelse og mapping af de fem reserverede ordrefelter.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127970;</span><h3>DanDomain plus ERP</h3><p>K&oslash;rer I ogs&aring; Uniconta, kan Classic-ordrer kobles til Uniconta via referencefelterne p&aring; ordren.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en DanDomain-ordre gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128722;</span><span class="sp-flow-label">DanDomain<br>ordre</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>modtager</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pluk</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pak<br>&amp; fragt</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128179;</span><span class="sp-flow-label">Status, tracking<br>&amp; betaling</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Webhooks fra DanDomain behandles med det samme. Ufuldst&aelig;ndige ordrer, som DanDomain markerer som kladder, hentes ikke ind.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Ordrer</h3>
+            <ul class="sp-sync-list">
+              <li>Ordrelinjer med pris og moms</li>
+              <li>Leverings- og faktureringsadresse</li>
+              <li>Fragtlinje og betalingsgebyr som egne linjer</li>
+              <li>Pakkeshop-ID og pakkeshopadresse</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>Produkter</h3>
+            <ul class="sp-sync-list">
+              <li>SKU, produktnavn og variantnavn</li>
+              <li>V&aelig;gt, EAN og billede-URL</li>
+              <li>Normalpris, kostpris og lager</li>
+              <li>Kategorier og producent i ny version</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til DanDomain</h3>
+            <ul class="sp-sync-list">
+              <li>Lagerbeholdning</li>
+              <li>Ordrestatus for pakket og annulleret</li>
+              <li>Trackingnummer</li>
+              <li>Intern note og droppoint-ID</li>
+            </ul></div>
+        </div>
+        <h2>DanDomain-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Statusmapping I selv styrer</strong><span>N&aring;r indstillingerne gemmes, henter SmartPack jeres ordrestatusser fra DanDomain. Derefter v&aelig;lger I hvilke der importeres, og hvad der s&aelig;ttes ved pakket, under behandling og annulleret.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128179;</span><div><strong>Betalingsopsamling via OnPay</strong><span>Betalingen kan opsamles automatisk ved f&aelig;rdigpakning. Classic underst&oslash;tter delvis opsamling pr. forsendelse og flere OnPay-tokens, &eacute;t pr. merchantnummer.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9889;</span><div><strong>Webhooks med debounce</strong><span>Sender DanDomain mange hurtige opdateringer p&aring; samme produkt, venter den nye version fem sekunder og behandler kun den seneste. Det holder API-kaldene nede.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Jeres egne felter</strong><span>Den nye version mapper brugerdefinerede datafelter begge veje. Classic mapper de fem reserverede ordrefelter til SmartPack-ordrefelter.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#129534;</span><div><strong>Faktura og statusmail</strong><span>Den nye version kan oprette faktura med en betalingsfrist, I selv s&aelig;tter, og sende faktura- og statusmail automatisk.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9888;&#65039;</span><div><strong>Fejlstatus i DanDomain</strong><span>Fejler en ordre i SmartPack, kan den nye version automatisk s&aelig;tte den til en bestemt status i DanDomain, s&aring; I kan se det i butikken.</span></div></div>
+        </div>
+        <h2>Statusmapping mellem DanDomain og SmartPack</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">N&aring;r indstillingerne gemmes, henter SmartPack jeres ordrestatusser fra DanDomain. Derefter beslutter I, hvad hver enkelt status betyder i lagerflowet.</p>
+        <div class="sp-formula">
+          <span class="cm"># Standardvaerdier i den nye version</span><br>
+          Faerdig &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-&gt; status <span class="kw">3</span> &nbsp;Afsendt<br>
+          Afhentning faerdig -&gt; status <span class="kw">6</span> &nbsp;Klar til afhentning<br>
+          Annulleret &nbsp; &nbsp; &nbsp;-&gt; status <span class="kw">5</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Derudover v&aelig;lger I, hvilke statusser der overhovedet importeres, og hvilken status ordren f&aring;r, mens den er under behandling.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Ordrer, som DanDomain markerer som ufuldst&aelig;ndige, hentes ikke ind. Den nye version kan ogs&aring; s&aelig;tte en s&aelig;rlig fejlstatus i DanDomain, hvis en ordre fejler i SmartPack.</span></div>
+        <h2>Forskellen p&aring; ny DanDomain og Classic</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">De to versioner ligner hinanden p&aring; overfladen, men underst&oslash;tter ikke de samme felter. Det afg&oslash;r, hvad der kan lade sig g&oslash;re i jeres ops&aelig;tning.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#127381; Ny platform</strong><span>SOAP-API. Kr&aelig;ver brugernavn, adgangskode, shop-URL og en webhook-hemmelighed. Underst&oslash;tter kategorier, producent, brugerdefinerede datafelter og droppoint-ID retur.</span></div>
+          <div class="sp-location-item"><strong>&#128736; Classic</strong><span>REST-API. Kr&aelig;ver API-n&oslash;gle og shop-URL. Underst&oslash;tter delvis betalingsopsamling, flere OnPay-tokens og mapping af de fem reserverede ordrefelter.</span></div>
+          <div class="sp-location-item"><strong>&#128230; Pakkeprodukter</strong><span>Den nye version udelader som standard pakkeprodukter uden SKU fra synkroniseringen. Mangler jeres bundles i SmartPack, er det f&oslash;rste sted at kigge.</span></div>
+          <div class="sp-location-item"><strong>&#128205; Pakkeshop i Classic</strong><span>Classic genkender pakkeshop-ID ud fra pr&aelig;fikset Pakkeshop: i adresselinje 2. Bruger butikken et andet format, afklarer vi det ved opstart.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Fra SmartPack til DanDomain kan <strong>ikke</strong> skrives: dimensioner, beskrivelse, billede-URL, salgspris, normalpris, toldtarif, oprindelsesland og tags. Leveringsadresse, ordrelinjer og leveringsmetode kan heller ikke opdateres tilbage p&aring; ordren.</span></div>
+        <h2>S&aring;dan forbinder du DanDomain med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Afklar hvilken version I k&oslash;rer</strong><p>Den nye platform og Classic er to forskellige integrationer i SmartPack. Er I i tvivl, finder vi ud af det sammen.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Udfyld forbindelsen</strong><p>Ny version: brugernavn, adgangskode, shop-URL og webhook-hemmelighed. Classic: API-n&oslash;gle og shop-URL.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Map statusser og sl&aring; betaling til</strong><p>V&aelig;lg hvilke statusser der importeres, og hvad der s&aelig;ttes ved pakket og annulleret. Indtast OnPay-token, hvis betalingen skal opsamles, og k&oslash;r en testordre igennem.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvilken version skal vi bruge?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Den, jeres butik k&oslash;rer. Den nye platform bruger et SOAP-API og underst&oslash;tter kategorier, producent og brugerdefinerede datafelter. Classic bruger REST og har til geng&aelig;ld delvis betalingsopsamling og mapping af de fem reserverede ordrefelter.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vores bundleprodukter mangler i SmartPack.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">I den nye version findes en indstilling, der udelader pakkeprodukter uden SKU fra synkroniseringen, og den er sl&aring;et til som standard. Det er det f&oslash;rste sted at kigge.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Fanger integrationen vores pakkeshopvalg?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">P&aring; Classic genkendes pakkeshop-ID ud fra pr&aelig;fikset Pakkeshop: i adresselinje 2. Bruger butikken et andet format, afklarer vi det ved opstart.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi sende faktura og statusmail automatisk?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">I den nye version, ja. Faktura kan oprettes med en betalingsfrist, I selv s&aelig;tter, og faktura- og statusmail kan sendes automatisk ved f&aelig;rdigpakning.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan betalingen opsamles pr. forsendelse?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">P&aring; Classic, ja. Den underst&oslash;tter delvis opsamling, s&aring; I kan opsamle pr. fulfillment i stedet for hele ordren p&aring; &eacute;n gang.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vi bruger ogs&aring; Uniconta. H&aelig;nger det sammen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. DanDomain Classic-ordrer kan kobles til Uniconta via referencefelterne p&aring; ordren, s&aring; de samme ordrer kan f&oslash;lges begge steder.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I DanDomain og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi afklarer version, statusmapping og betalingsopsamling for netop jeres butik.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I DanDomain?</h3><p>Vi afklarer om I er p&aring; ny platform eller Classic, og hvad det betyder for ops&aelig;tningen.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Alle webhooks og synkroniseringer logges, s&aring; I kan se hvad der er sket med en ordre.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+          <a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
+          <a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
+          <a href="dao" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="DAO logo" width="1024" height="1024">DAO</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

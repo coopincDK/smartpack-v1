@@ -1,156 +1,335 @@
 <!DOCTYPE html>
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
-================================================================ -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartPack + Visma Business | WMS-integration</title>
-<meta name="description" content="Visma Business-integration til SmartPack WMS: varer, ordrer og indk&oslash;b ind, afsendt og modtaget antal samt korrektionsposteringer retur.">
-<link rel="canonical" href="https://smartpack.dk/integrationer/visma-business">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="SmartPack + Visma Business">
-<meta property="og:description" content="Visma Business-integration til SmartPack WMS: varer, ordrer og indk&oslash;b ind, afsendt og modtaget antal samt korrektionsposteringer retur.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smartpack.dk/integrationer/visma-business">
-<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-<link rel="stylesheet" href="int-page.css?v=4">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + Visma Business", "description": "Visma Business-integration til SmartPack WMS: varer, ordrer og indk\u00f8b ind, afsendt og modtaget antal samt korrektionsposteringer retur.", "url": "https://smartpack.dk/integrationer/visma-business", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "Visma Business", "applicationCategory": "ERP"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Visma Business", "item": "https://smartpack.dk/integrationer/visma-business"}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Vores beholdning synkroniseres slet ikke.", "acceptedAnswer": {"@type": "Answer", "text": "Tjek listen over synkroniseringslokationer f\u00f8rst. Er den tom eller forkert udfyldt, indg\u00e5r ingen lokationer i synkroniseringen, og s\u00e5 sker der ingenting."}}, {"@type": "Question", "name": "Nogle ordrer kan ikke plukkes.", "acceptedAnswer": {"@type": "Answer", "text": "Ordrer uden leveringsmetode s\u00e6ttes automatisk p\u00e5 pause. De er synlige i SmartPack, men g\u00e5r ikke i pluk, f\u00f8r leveringsmetoden er sat i Visma."}}, {"@type": "Question", "name": "Hvorfor kr\u00e6ver integrationen SQL-adgang?", "acceptedAnswer": {"@type": "Answer", "text": "Fordi den l\u00e6ser og skriver direkte i Visma Business-databasen frem for udelukkende at g\u00e5 gennem webservicen. Det giver adgang til flere felter, men kr\u00e6ver til geng\u00e6ld, at SQL-brugeren har de rette rettigheder."}}, {"@type": "Question", "name": "Kan vi styre, hvad SmartPack m\u00e5 bogf\u00f8re?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Salgsordrer, indk\u00f8bsordrer, opt\u00e6llinger og varebev\u00e6gelser sl\u00e5s til hver for sig, s\u00e5 I kan starte forsigtigt og udvide bagefter."}}, {"@type": "Question", "name": "Hvilken kontaktinfo bruges p\u00e5 ordren?", "acceptedAnswer": {"@type": "Answer", "text": "Leveringsadressens kontaktoplysninger bruges, men er kundens e-mail eller telefon udfyldt, v\u00e6gter de h\u00f8jest. Privat telefon og mobil bruges som reserve, hvis hovedtelefonen er tom."}}]}</script>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til Visma Business | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder Visma Business med lageret. Varer, ordrer og indk&oslash;b ind, afsendt og modtaget antal samt korrektionsposteringer retur.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/visma-business">
+
+  <meta property="og:title" content="Lagersystem til Visma Business | SmartPack WMS">
+  <meta property="og:description" content="Fra Visma Business-ordre til pakket forsendelse. Afsendt antal, modtagelser og korrektionsposteringer tilbage i Visma.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/visma-business">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Visma Business",
+          "item": "https://smartpack.dk/integrationer/visma-business"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med ERP-systemet Visma Business. Varer, salgsordrer, indk\u00f8bsordrer og leverand\u00f8rer hentes ind, og afsendt antal, modtaget antal, varebev\u00e6gelser og korrektionsposteringer sendes tilbage.",
+      "url": "https://smartpack.dk/integrationer/visma-business",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Vores beholdning synkroniseres slet ikke.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tjek listen over synkroniseringslokationer f\u00f8rst. Er den tom eller forkert udfyldt, indg\u00e5r ingen lokationer i synkroniseringen, og s\u00e5 sker der ingenting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nogle ordrer kan ikke plukkes.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ordrer uden leveringsmetode s\u00e6ttes automatisk p\u00e5 pause. De er synlige i SmartPack, men g\u00e5r ikke i pluk, f\u00f8r leveringsmetoden er sat i Visma."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvorfor kr\u00e6ver integrationen SQL-adgang?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fordi den l\u00e6ser og skriver direkte i Visma Business-databasen frem for udelukkende at g\u00e5 gennem webservicen. Det giver adgang til flere felter, men kr\u00e6ver til geng\u00e6ld, at SQL-brugeren har de rette rettigheder."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi styre, hvad SmartPack m\u00e5 bogf\u00f8re?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Salgsordrer, indk\u00f8bsordrer, opt\u00e6llinger og varebev\u00e6gelser sl\u00e5s til hver for sig, s\u00e5 I kan starte forsigtigt og udvide bagefter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvilken kontaktinfo bruges p\u00e5 ordren?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Leveringsadressens kontaktoplysninger bruges, men er kundens e-mail eller telefon udfyldt, v\u00e6gter de h\u00f8jest. Privat telefon og mobil bruges som reserve, hvis hovedtelefonen er tom."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad sker der med ordrer uden varelinjer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De vises ikke i SmartPack. De filtreres fra ved den normale hentning, s\u00e5 de ikke ender som tomme plukopgaver."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=5">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container">
-<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-<div class="int-page__hero"><div>
-<img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" class="int-page__logo" width="128" height="128">
-</div><div class="int-page__hero-content">
-<div class="int-page__cat">ERP &amp; &Oslash;konomi</div>
-<h1 class="int-page__title">SmartPack <span>+ Visma Business</span></h1>
-<p class="int-page__intro">Visma Business-integrationen er bygget til virksomheder med flere lagerlokationer og krav til, at bev&aelig;gelserne bliver bogf&oslash;rt korrekt. I v&aelig;lger selv, hvilke lokationer der synkroniseres, og hvad SmartPack m&aring; postere.</p>
-<div class="int-page__cta-row">
-<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
-<a href="../priser" class="btn btn--ghost">Se priser</a>
-</div></div></div>
-<div class="int-page__body"><div class="int-page__main">
-<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
-<strong>Kort fortalt</strong>
-<p>Varer, salgsordrer, indk&oslash;bsordrer og leverand&oslash;rer hentes fra Visma Business. N&aring;r der pakkes, modtages, flyttes eller t&aelig;lles i SmartPack, sendes afsendt og modtaget antal samt korrektionsposteringer tilbage, men kun for de bogf&oslash;ringstyper, I har sl&aring;et til.</p>
-</div></div>
-<h2>Hvad er Visma Business?</h2>
-<p>Visma Business er et ERP-system til handels- og produktionsvirksomheder med behov for st&aelig;rk &oslash;konomistyring og detaljeret lagerbogf&oslash;ring. Det bruges typisk af virksomheder, der er vokset ud af et simpelt regnskabsprogram.</p>
-<p>Visma Business kan bogf&oslash;re lagerbev&aelig;gelser pr&aelig;cist, men beslutter ikke, hvordan lageret arbejder. SmartPack styrer plukruter, scanvalidering, lokationer og pakning og sender bev&aelig;gelserne tilbage som posteringer.</p>
-<h2>Hvad integrationen g&oslash;r</h2>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#9881;</div><div>
-<h3>I bestemmer hvad der posteres</h3><p>Fire selvst&aelig;ndige indstillinger styrer, om SmartPack m&aring; bogf&oslash;re salgsordrer, indk&oslash;bsordrer, opt&aelig;llinger og varebev&aelig;gelser. Sl&aring; kun det til, I vil have bogf&oslash;rt.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128205;</div><div>
-<h3>Lokationer I selv v&aelig;lger</h3><p>En liste over synkroniseringslokationer bestemmer, hvilke lagerlokationer der overhovedet indg&aring;r i beholdningssynkroniseringen. Resten r&oslash;res ikke.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div>
-<h3>Hele indk&oslash;bsflowet</h3><p>Indk&oslash;bsordrer og leverand&oslash;rer hentes fra Visma, og modtaget antal pr. indk&oslash;bslinje opdateres, n&aring;r varerne er modtaget p&aring; lageret.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128209;</div><div>
-<h3>Opt&aelig;lling som korrektionspostering</h3><p>Opt&aelig;llinger sendes til Visma som korrektionsposteringer med &aring;rsagsbeskrivelse og bruger, s&aring; der er sporbarhed p&aring;, hvem der har rettet hvad.</p></div></div>
-<h2>Hvad synkroniseres hvilken vej?</h2>
-<p>Integrationen henter fra og skriver til Visma Business. Her er indholdet.</p>
-<div class="int-page__flow">
-<div class="int-page__flow-col"><h3>Visma Business til SmartPack</h3><ul>
-<li>Varenummer, varebeskrivelse og variantnavn</li>
-<li>V&aelig;gt, toldtarifnummer og oprindelsesland</li>
-<li>Stregkode og kolli-stregkode med kollist&oslash;rrelse</li>
-<li>Kostpris og gennemsnitlig kostpris, samt to kategoriniveauer</li>
-<li>Lagerbeholdning pr. lokation</li>
-<li>Salgsordrer med leveringsadresse, leveringsmetode, leveringsdato og ordredato</li>
-<li>Ordrenote og leveringsinstruktioner, kundenummer, e-mail og telefon</li>
-<li>Indk&oslash;bsordrer med leverand&oslash;r, forventet leveringsdato og indk&oslash;bslinjer</li>
-<li>Leverand&oslash;rer med nummer, navn, e-mail og telefon</li>
-</ul></div>
-<div class="int-page__flow-col"><h3>SmartPack til Visma Business</h3><ul>
-<li>Afsendt antal pr. ordrelinje, n&aring;r ordren er pakket</li>
-<li>Modtaget antal pr. indk&oslash;bslinje, n&aring;r modtagelsen er afsluttet</li>
-<li>Varebev&aelig;gelse ved flytning mellem to forskellige lokationer</li>
-<li>Korrektionspostering ved opt&aelig;lling, med &aring;rsag og bruger</li>
-<li>Korrektionsposteringer for afvigelser ved daglig beholdningssynkronisering</li>
-<li>Stregkoder og v&aelig;gt, hvis synkroniseringsretningen er sl&aring;et til</li>
-</ul></div></div>
-<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
-<div class="int-page__step"><div class="int-page__step-num">1</div>
-<div class="int-page__step-body"><h3>Saml forbindelsesoplysningerne</h3><p>Der skal bruges service endpoint til Visma Business Service, site-ID, firma-ID og kontekstbruger med tilh&oslash;rende legitimationsoplysninger.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">2</div>
-<div class="int-page__step-body"><h3>Giv databaseadgang</h3><p>Integrationen l&aelig;ser og skriver direkte i Visma-databasen, s&aring; SQL-servernavn, SQL-brugernavn og adgangskode skal udfyldes, og brugeren skal have de rette rettigheder.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">3</div>
-<div class="int-page__step-body"><h3>Angiv korrektionskontogruppe</h3><p>Kontogruppen bruges b&aring;de ved opt&aelig;lling og ved den daglige beholdningssynkronisering og skal v&aelig;re sat korrekt, for at posteringerne g&aring;r igennem.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">4</div>
-<div class="int-page__step-body"><h3>V&aelig;lg synkroniseringslokationer</h3><p>Angiv de lagerlokationer, der skal indg&aring; i beholdningssynkroniseringen. Er listen tom, synkroniseres ingen beholdning.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">5</div>
-<div class="int-page__step-body"><h3>Sl&aring; bogf&oslash;ringstyperne til</h3><p>Beslut hver for sig, om SmartPack m&aring; bogf&oslash;re salgsordrer, indk&oslash;bsordrer, opt&aelig;llinger og varebev&aelig;gelser, og k&oslash;r derefter en afstemning.</p></div></div>
-<h2>Det g&oslash;r integrationen ikke</h2>
-<p>F&oslash;lgende felter er envejs fra Visma til SmartPack og kan ikke skrives tilbage:</p>
-<ul class="int-page__limits">
-<li>Varenummer kan ikke opdateres i Visma fra SmartPack.</li>
-<li>Tags kan ikke skrives til Visma.</li>
-<li>Dimensioner og m&aring;l kan ikke skrives til Visma.</li>
-<li>Varebeskrivelse kan ikke skrives til Visma.</li>
-<li>Billede-URL og producent kan ikke skrives til Visma.</li>
-<li>Bundtvarer indg&aring;r ikke i beholdningssynkroniseringen.</li>
-</ul>
-<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
-<div class="int-page__faq">
-<details><summary>Vores beholdning synkroniseres slet ikke.</summary><div>Tjek listen over synkroniseringslokationer f&oslash;rst. Er den tom eller forkert udfyldt, indg&aring;r ingen lokationer i synkroniseringen, og s&aring; sker der ingenting.</div></details>
-<details><summary>Nogle ordrer kan ikke plukkes.</summary><div>Ordrer uden leveringsmetode s&aelig;ttes automatisk p&aring; pause. De er synlige i SmartPack, men g&aring;r ikke i pluk, f&oslash;r leveringsmetoden er sat i Visma.</div></details>
-<details><summary>Hvorfor kr&aelig;ver integrationen SQL-adgang?</summary><div>Fordi den l&aelig;ser og skriver direkte i Visma Business-databasen frem for udelukkende at g&aring; gennem webservicen. Det giver adgang til flere felter, men kr&aelig;ver til geng&aelig;ld, at SQL-brugeren har de rette rettigheder.</div></details>
-<details><summary>Kan vi styre, hvad SmartPack m&aring; bogf&oslash;re?</summary><div>Ja. Salgsordrer, indk&oslash;bsordrer, opt&aelig;llinger og varebev&aelig;gelser sl&aring;s til hver for sig, s&aring; I kan starte forsigtigt og udvide bagefter.</div></details>
-<details><summary>Hvilken kontaktinfo bruges p&aring; ordren?</summary><div>Leveringsadressens kontaktoplysninger bruges, men er kundens e-mail eller telefon udfyldt, v&aelig;gter de h&oslash;jest. Privat telefon og mobil bruges som reserve, hvis hovedtelefonen er tom.</div></details>
-</div>
-</div><div class="int-page__sidebar">
-<div class="int-page__cta-box"><h3>K&oslash;rer I Visma Business?</h3><p>Book en demo, s&aring; gennemg&aring;r vi lokationer, kontogruppe og bogf&oslash;ringstyper.</p>
-<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
-</div>
-<div class="int-page__related"><h3>Relaterede integrationer</h3>
-<div class="int-page__related-list">
-<a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" width="128" height="128">e-conomic</a>
-<a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
-<a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="128" height="128">Dynamics 365</a>
-</div></div>
-</div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" class="sp-hero-logo" width="128" height="128">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">ERP-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>Visma Business</span></h1>
+        <p class="int-page__intro"><strong>F&aring; Visma Business og lageret til at arbejde som &eacute;t system.</strong><br><br>Visma Business-integrationen er bygget til virksomheder med flere lagerlokationer og krav til, at bev&aelig;gelserne bliver bogf&oslash;rt korrekt. I v&aelig;lger selv, hvilke lokationer der synkroniseres, og hvad SmartPack overhovedet m&aring; postere.<br><br>Fire selvst&aelig;ndige indstillinger styrer, om salgsordrer, indk&oslash;bsordrer, opt&aelig;llinger og varebev&aelig;gelser m&aring; bogf&oslash;res.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Integration via Visma Business Service og direkte SQL-adgang.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Fire kontakter</span><span class="sp-stat-label">I bestemmer hvad SmartPack m&aring; bogf&oslash;re i Visma</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Valgte lokationer</span><span class="sp-stat-label">Kun de lagre, I lister, indg&aring;r i synkroniseringen</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">Integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Visma Business styrer forretningen</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Finans og bogf&oslash;ring<br>Salgsordrer<br>Indk&oslash;b og kreditorer<br>Lagerbogf&oslash;ring<br>Rapportering</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til handel og produktion p&aring; Visma Business</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#129534;</span><h3>Ordrer fra Visma</h3><p>Salgsordrer plukkes i SmartPack, og afsendt antal opdateres pr. ordrelinje ved afsendelse.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128230;</span><h3>Indk&oslash;b og modtagelse</h3><p>Indk&oslash;bsordrer og leverand&oslash;rer hentes ind, og modtaget antal opdateres pr. indk&oslash;bslinje.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127981;</span><h3>Flere lokationer</h3><p>I lister selv de lagerlokationer, der skal synkroniseres, og bev&aelig;gelser posteres pr. lokation.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en Visma Business-ordre gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#129534;</span><span class="sp-flow-label">Visma<br>salgsordre</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>henter</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pluk</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pak<br>&amp; fragt</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128221;</span><span class="sp-flow-label">Afsendt antal<br>i Visma</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Ordrer uden leveringsmetode s&aelig;ttes automatisk p&aring; pause i SmartPack. De er synlige, men g&aring;r ikke i pluk, f&oslash;r metoden er sat i Visma.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra Visma</h3>
+            <ul class="sp-sync-list">
+              <li>Varenummer, beskrivelse og variantnavn</li>
+              <li>V&aelig;gt, toldtarifnummer og oprindelsesland</li>
+              <li>Stregkode og kolli-stregkode med kollist&oslash;rrelse</li>
+              <li>Salgsordrer, indk&oslash;bsordrer og leverand&oslash;rer</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>I SmartPack</h3>
+            <ul class="sp-sync-list">
+              <li>Plukruter og scanvalidering</li>
+              <li>Lagerplacering pr. lokation</li>
+              <li>Modtagelse og indplacering</li>
+              <li>Opt&aelig;lling og lagerflytning</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til Visma</h3>
+            <ul class="sp-sync-list">
+              <li>Afsendt antal pr. ordrelinje</li>
+              <li>Modtaget antal pr. indk&oslash;bslinje</li>
+              <li>Varebev&aelig;gelse ved flytning</li>
+              <li>Korrektionsposteringer ved opt&aelig;lling</li>
+            </ul></div>
+        </div>
+        <h2>Visma Business-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#9881;&#65039;</span><div><strong>I bestemmer hvad der posteres</strong><span>Fire selvst&aelig;ndige indstillinger styrer, om SmartPack m&aring; bogf&oslash;re salgsordrer, indk&oslash;bsordrer, opt&aelig;llinger og varebev&aelig;gelser. Sl&aring; kun det til, I vil have bogf&oslash;rt.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128205;</span><div><strong>Lokationer I selv v&aelig;lger</strong><span>En liste over synkroniseringslokationer bestemmer, hvilke lagerlokationer der indg&aring;r i beholdningssynkroniseringen. Resten r&oslash;res ikke.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128209;</span><div><strong>Opt&aelig;lling med sporbarhed</strong><span>Opt&aelig;llinger sendes som korrektionsposteringer med &aring;rsagsbeskrivelse og bruger, s&aring; det kan ses, hvem der har rettet hvad.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Kolli og emballage</strong><span>Kolli-stregkode med kollist&oslash;rrelse f&oslash;lger med, sammen med brugerdefinerede talfelter som kolli pr. lag og kolli pr. palle.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128221;</span><div><strong>Note og instruktioner</strong><span>Ordrenote og leveringsinstruktioner hentes fra to separate felter i Visma og sl&aring;s sammen, s&aring; plukkeren ser det hele.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9208;&#65039;</span><div><strong>Ordrer uden leveringsmetode</strong><span>De s&aelig;ttes automatisk p&aring; pause i SmartPack. Det er Vismas m&aring;de at signalere, at ordren ikke er klar til at blive plukket.</span></div></div>
+        </div>
+        <h2>Fire kontakter styrer hvad der bogf&oslash;res</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Visma Business-integrationen skriver kun det, I giver den lov til. Fire selvst&aelig;ndige indstillinger afg&oslash;r, hvad der overhovedet m&aring; posteres.</p>
+        <div class="sp-formula">
+          <span class="cm"># Bogfoeringstyper, slaas til hver for sig</span><br>
+          Bogfoer salgsordrer &nbsp; &nbsp; <span class="kw">til/fra</span><br>
+          Bogfoer indkoebsordrer &nbsp;<span class="kw">til/fra</span><br>
+          Bogfoer optaellinger &nbsp; &nbsp;<span class="kw">til/fra</span><br>
+          Bogfoer varebevaegelser <span class="kw">til/fra</span><br>
+          &nbsp;<br>
+          <span class="cm"># Kun disse lokationer indgaar</span><br>
+          Synkroniseringslokationer = <span class="kw">liste</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Listen over synkroniseringslokationer er afg&oslash;rende. Er den tom eller forkert udfyldt, indg&aring;r ingen lokationer i beholdningssynkroniseringen.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Korrektionskontogruppen bruges b&aring;de ved opt&aelig;lling og ved den daglige beholdningssynkronisering. Mangler den, fejler posteringerne i Visma.</span></div>
+        <h2>Adgang og ops&aelig;tning kr&aelig;ver lidt mere</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Integrationen l&aelig;ser og skriver direkte i Visma Business-databasen frem for udelukkende at g&aring; gennem webservicen. Det giver adgang til flere felter, men stiller ogs&aring; krav til ops&aelig;tningen.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128273; Service og firma</strong><span>Service endpoint til Visma Business Service, site-ID, firma-ID og en kontekstbruger med tilh&oslash;rende legitimationsoplysninger.</span></div>
+          <div class="sp-location-item"><strong>&#128451; SQL-adgang</strong><span>SQL-servernavn, brugernavn og adgangskode. Brugeren skal have de rette rettigheder, ellers giver det forbindelsesfejl frem for Visma-fejl.</span></div>
+          <div class="sp-location-item"><strong>&#128209; Korrektionskontogruppe</strong><span>Bruges b&aring;de ved opt&aelig;lling og ved den daglige beholdningssynkronisering. Mangler den, fejler posteringerne i Visma.</span></div>
+          <div class="sp-location-item"><strong>&#128205; Synkroniseringslokationer</strong><span>En liste over de lagerlokationer, der skal indg&aring;. Er listen tom, synkroniseres ingen beholdning overhovedet.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>F&oslash;lgende felter er envejs fra Visma til SmartPack og kan <strong>ikke</strong> skrives tilbage: varenummer, tags, dimensioner og m&aring;l, varebeskrivelse, billede-URL og producent. Bundtvarer indg&aring;r ikke i beholdningssynkroniseringen.</span></div>
+        <h2>S&aring;dan forbinder du Visma Business med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Saml forbindelsesoplysningerne</strong><p>Service endpoint, site-ID, firma-ID og kontekstbruger, plus SQL-servernavn, brugernavn og adgangskode.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Angiv kontogruppe og lokationer</strong><p>Udfyld korrektionskontogruppen og listen over de lagerlokationer, der skal synkroniseres.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Sl&aring; bogf&oslash;ringstyperne til og afstem</strong><p>Beslut hver for sig, om salgsordrer, indk&oslash;bsordrer, opt&aelig;llinger og varebev&aelig;gelser m&aring; bogf&oslash;res, og k&oslash;r derefter en afstemning.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vores beholdning synkroniseres slet ikke.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Tjek listen over synkroniseringslokationer f&oslash;rst. Er den tom eller forkert udfyldt, indg&aring;r ingen lokationer i synkroniseringen, og s&aring; sker der ingenting.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Nogle ordrer kan ikke plukkes.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ordrer uden leveringsmetode s&aelig;ttes automatisk p&aring; pause. De er synlige i SmartPack, men g&aring;r ikke i pluk, f&oslash;r leveringsmetoden er sat i Visma.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvorfor kr&aelig;ver integrationen SQL-adgang?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Fordi den l&aelig;ser og skriver direkte i Visma Business-databasen frem for udelukkende at g&aring; gennem webservicen. Det giver adgang til flere felter, men kr&aelig;ver til geng&aelig;ld, at SQL-brugeren har de rette rettigheder.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi styre, hvad SmartPack m&aring; bogf&oslash;re?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Salgsordrer, indk&oslash;bsordrer, opt&aelig;llinger og varebev&aelig;gelser sl&aring;s til hver for sig, s&aring; I kan starte forsigtigt og udvide bagefter.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvilken kontaktinfo bruges p&aring; ordren?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Leveringsadressens kontaktoplysninger bruges, men er kundens e-mail eller telefon udfyldt, v&aelig;gter de h&oslash;jest. Privat telefon og mobil bruges som reserve, hvis hovedtelefonen er tom.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad sker der med ordrer uden varelinjer?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">De vises ikke i SmartPack. De filtreres fra ved den normale hentning, s&aring; de ikke ender som tomme plukopgaver.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I Visma Business og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi gennemg&aring;r lokationer, kontogruppe og bogf&oslash;ringstyper, s&aring; I ved pr&aelig;cis hvad der posteres.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I Visma Business?</h3><p>Vi gennemg&aring;r lokationer, kontogruppe og hvilke posteringer I vil have sl&aring;et til.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver postering logges med &aring;rsag og bruger, s&aring; opt&aelig;llinger kan spores bagud.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" width="128" height="128">e-conomic</a>
+          <a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
+          <a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="128" height="128">Dynamics 365</a>
+          <a href="magento" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2 logo" width="128" height="128">Magento 2</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

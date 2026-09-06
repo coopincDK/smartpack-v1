@@ -1,146 +1,331 @@
 <!DOCTYPE html>
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
-================================================================ -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartPack + e-conomic | WMS-integration</title>
-<meta name="description" content="e-conomic-integration til SmartPack WMS: salgsordrer og varer ind, kladdefaktura ved afsendelse og automatisk bogf&oslash;ring af lagerv&aelig;rdi via kassekladde.">
-<link rel="canonical" href="https://smartpack.dk/integrationer/economic">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="SmartPack + e-conomic">
-<meta property="og:description" content="e-conomic-integration til SmartPack WMS: salgsordrer og varer ind, kladdefaktura ved afsendelse og automatisk bogf&oslash;ring af lagerv&aelig;rdi via kassekladde.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smartpack.dk/integrationer/economic">
-<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-<link rel="stylesheet" href="int-page.css?v=4">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + e-conomic", "description": "e-conomic-integration til SmartPack WMS: salgsordrer og varer ind, kladdefaktura ved afsendelse og automatisk bogf\u00f8ring af lagerv\u00e6rdi via kassekladde.", "url": "https://smartpack.dk/integrationer/economic", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "e-conomic", "applicationCategory": "ERP"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "e-conomic", "item": "https://smartpack.dk/integrationer/economic"}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Bogf\u00f8rer SmartPack vores fakturaer automatisk?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack kan oprette en fakturakladde i e-conomic, n\u00e5r ordren afsendes. Godkendelse og bogf\u00f8ring sker hos jer i e-conomic, s\u00e5 I bevarer kontrollen over regnskabet."}}, {"@type": "Question", "name": "Kan vi styre indk\u00f8b via e-conomic-integrationen?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Indk\u00f8bsordrer indg\u00e5r ikke i e-conomic-integrationen. Skal indk\u00f8b med i flowet, skal det l\u00f8ses via SmartPacks egen indk\u00f8bs- og prognosefunktionalitet eller via et ERP, der underst\u00f8tter det, for eksempel Business Central eller Uniconta."}}, {"@type": "Question", "name": "Hvordan fungerer lagerv\u00e6rdi-bogf\u00f8ringen?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPack sammenligner den samlede lagerv\u00e6rdi med sidste k\u00f8rsel og bogf\u00f8rer differencen i en kassekladde. Har systemet ingen tidligere v\u00e6rdi at sammenligne med, tager f\u00f8rste k\u00f8rsel udgangspunkt i nul, s\u00e5 den skal aftales som en del af opstarten."}}, {"@type": "Question", "name": "Vores ordrer holdt op med at komme ind.", "acceptedAnswer": {"@type": "Answer", "text": "Tjek ordrestatus-matrixen. \u00c6ldre ops\u00e6tninger brugte et simpelt til- og fravalg pr. spand, og matrixen opdateres f\u00f8rste gang indstillingssiden \u00e5bnes."}}, {"@type": "Question", "name": "Vi har mismatch p\u00e5 varenumre.", "acceptedAnswer": {"@type": "Answer", "text": "SKU'er fra e-conomic trimmes for mellemrum ved import. Mellemrum sidst i varenummeret i e-conomic er den hyppigste \u00e5rsag til, at to varer ikke matcher."}}]}</script>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til e-conomic | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder e-conomic med lageret. Salgsordrer og varer ind, kladdefaktura ved afsendelse og lagerv&aelig;rdi bogf&oslash;rt via kassekladde.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/economic">
+
+  <meta property="og:title" content="Lagersystem til e-conomic | SmartPack WMS">
+  <meta property="og:description" content="Fra e-conomic-ordre til pakket forsendelse. Kladdefaktura ved afsendelse og lagerv&aelig;rdi bogf&oslash;rt automatisk.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/economic">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "e-conomic",
+          "item": "https://smartpack.dk/integrationer/economic"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med regnskabsprogrammet e-conomic. Salgsordrer og varer hentes ind, ordren markeres som afsendt ved pakning, og lagerv\u00e6rdien kan bogf\u00f8res periodisk via en kassekladde.",
+      "url": "https://smartpack.dk/integrationer/economic",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Bogf\u00f8rer SmartPack vores fakturaer automatisk?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. SmartPack kan oprette en fakturakladde i e-conomic, n\u00e5r ordren afsendes. Godkendelse og bogf\u00f8ring sker hos jer, s\u00e5 I bevarer kontrollen over regnskabet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi styre indk\u00f8b via e-conomic-integrationen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. Indk\u00f8bsordrer indg\u00e5r ikke i e-conomic-integrationen. Skal indk\u00f8b med i flowet, l\u00f8ses det via SmartPacks egen indk\u00f8bs- og prognosefunktionalitet eller via et ERP, der underst\u00f8tter det, for eksempel Business Central eller Uniconta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvordan fungerer lagerv\u00e6rdi-bogf\u00f8ringen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SmartPack sammenligner den samlede lagerv\u00e6rdi med sidste k\u00f8rsel og bogf\u00f8rer differencen i en kassekladde med de konti, I har valgt. Frekvensen s\u00e6tter I selv, og den kan k\u00f8re p\u00e5 m\u00e5nedens sidste dag."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vores ordrer holdt op med at komme ind.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tjek ordrestatus-matrixen. \u00c6ldre ops\u00e6tninger brugte et simpelt til- og fravalg pr. spand, og matrixen opdateres f\u00f8rste gang indstillingssiden \u00e5bnes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vi har mismatch p\u00e5 varenumre.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SKU'er fra e-conomic trimmes for mellemrum ved import. Et efterstillet mellemrum i varenummeret i e-conomic er den hyppigste \u00e5rsag til, at to varer ikke matcher."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er e-conomic-integrationen inkluderet i prisen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=5">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container">
-<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-<div class="int-page__hero"><div>
-<img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" class="int-page__logo" width="1024" height="1024">
-</div><div class="int-page__hero-content">
-<div class="int-page__cat">ERP &amp; &Oslash;konomi</div>
-<h1 class="int-page__title">SmartPack <span>+ e-conomic</span></h1>
-<p class="int-page__intro">SmartPack henter salgsordrer og varer fra e-conomic, og n&aring;r ordren er pakket, kan den automatisk blive til en fakturakladde. Lagerv&aelig;rdien kan bogf&oslash;res periodisk til de konti, I selv v&aelig;lger.</p>
-<div class="int-page__cta-row">
-<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
-<a href="../priser" class="btn btn--ghost">Se priser</a>
-</div></div></div>
-<div class="int-page__body"><div class="int-page__main">
-<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
-<strong>Kort fortalt</strong>
-<p>Salgsordrer og varer hentes fra e-conomic ud fra en ordrestatus-matrix, I selv s&aelig;tter op. N&aring;r ordren pakkes i SmartPack, markeres den som afsendt, og hvis kladdefaktura er sl&aring;et til, konverteres ordren til en fakturakladde i e-conomic. Lagerv&aelig;rdien kan bogf&oslash;res periodisk via en kassekladde.</p>
-</div></div>
-<h2>Hvad er e-conomic?</h2>
-<p>e-conomic er et af Danmarks mest udbredte online regnskabsprogrammer og bruges af alt fra enkeltmandsvirksomheder til mellemstore handelsvirksomheder. Det d&aelig;kker bogf&oslash;ring, fakturering, ordrer og en lang r&aelig;kke integrationer.</p>
-<p>e-conomic er st&aelig;rkt p&aring; &oslash;konomien, men er ikke bygget til at styre fysisk lagerarbejde. Det er d&eacute;r SmartPack tager over: plukruter, scanvalidering, lokationer, pakning og fragt. Bagefter f&aring;r e-conomic det, den skal bruge til bogf&oslash;ringen.</p>
-<h2>Hvad integrationen g&oslash;r</h2>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128203;</div><div>
-<h3>Salgsordrer direkte ind</h3><p>Ordrer hentes l&oslash;bende fra e-conomic. I bestemmer selv, hvad der skal ske med ordrer i hver af e-conomics tre spande, kladder, sendte og arkiverede: import&eacute;r, s&aelig;t i gang, afslut eller annull&eacute;r.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#129534;</div><div>
-<h3>Kladdefaktura ved afsendelse</h3><p>Er indstillingen sl&aring;et til, konverteres ordren automatisk til en fakturakladde i e-conomic, n&aring;r den er pakket. Godkendelsen af fakturaen bliver hos jer.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128176;</div><div>
-<h3>Lagerv&aelig;rdi bogf&oslash;rt automatisk</h3><p>SmartPack kan periodisk sende &aelig;ndringen i den samlede lagerv&aelig;rdi til e-conomic som en postering i en kassekladde, med debet- og kreditkonto I selv v&aelig;lger. Frekvensen kan s&aelig;ttes, inkl. k&oslash;rsel p&aring; m&aring;nedens sidste dag.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128278;</div><div>
-<h3>Ordrenummer som I vil have det</h3><p>I styrer selv, hvad der bruges som ordrenummer og referencenummer i SmartPack, s&aring; numrene matcher det, I i forvejen arbejder efter.</p></div></div>
-<h2>Hvad synkroniseres hvilken vej?</h2>
-<p>Her er hvad der konkret flytter sig hver vej.</p>
-<div class="int-page__flow">
-<div class="int-page__flow-col"><h3>e-conomic til SmartPack</h3><ul>
-<li>Salgsordrer fra de ordrespande, I har aktiveret</li>
-<li>Ordrelinjer, leveringsoplysninger og reference</li>
-<li>Varer med varenummer og produktnavn</li>
-<li>Stregkoder, kostpris, vejledende pris og salgspris</li>
-</ul></div>
-<div class="int-page__flow-col"><h3>SmartPack til e-conomic</h3><ul>
-<li>Ordren markeres som afsendt, n&aring;r den er pakket i SmartPack</li>
-<li>Fakturakladde oprettes i e-conomic, hvis indstillingen er sl&aring;et til</li>
-<li>&AElig;ndring i samlet lagerv&aelig;rdi bogf&oslash;res via kassekladde p&aring; valgt debet- og kreditkonto</li>
-</ul></div></div>
-<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
-<div class="int-page__step"><div class="int-page__step-num">1</div>
-<div class="int-page__step-body"><h3>Hent jeres grant token</h3><p>Opret adgangen i e-conomic og inds&aelig;t grant token i SmartPacks e-conomic-indstillinger.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">2</div>
-<div class="int-page__step-body"><h3>S&aelig;t ordrestatus-matrixen op</h3><p>For hver af e-conomics tre ordrespande v&aelig;lger I, hvad der skal ske: import&eacute;r, s&aelig;t i gang, afslut eller annull&eacute;r. Ordrer i spande, I ikke har aktiveret, hentes slet ikke.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">3</div>
-<div class="int-page__step-body"><h3>V&aelig;lg ordrenummer og reference</h3><p>Angiv hvad der skal bruges som ordrenummer og referencenummer i SmartPack.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">4</div>
-<div class="int-page__step-body"><h3>Sl&aring; kladdefaktura til</h3><p>Beslut om ordren skal konverteres til en fakturakladde i e-conomic, n&aring;r den afsendes fra SmartPack.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">5</div>
-<div class="int-page__step-body"><h3>Ops&aelig;t lagerv&aelig;rdi-bogf&oslash;ring</h3><p>V&aelig;lg kassekladde, debetkonto, kreditkonto og hvor ofte lagerv&aelig;rdien skal bogf&oslash;res. F&oslash;rste k&oslash;rsel bruger den foreg&aring;ende dags v&aelig;rdi som udgangspunkt.</p></div></div>
-<h2>Det g&oslash;r integrationen ikke</h2>
-<p>Her er gr&aelig;nserne, s&aring; I ved det p&aring; forh&aring;nd:</p>
-<ul class="int-page__limits">
-<li>Indk&oslash;bsordrer synkroniseres ikke. Der hentes ingen indk&oslash;bsordrer fra e-conomic, og der oprettes ingen i e-conomic.</li>
-<li>Der oprettes kun fakturakladde. Selve bogf&oslash;ringen og godkendelsen sker manuelt i e-conomic.</li>
-<li>Refunderinger synkroniseres ikke.</li>
-<li>Leverand&oslash;rer synkroniseres ikke.</li>
-</ul>
-<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
-<div class="int-page__faq">
-<details><summary>Bogf&oslash;rer SmartPack vores fakturaer automatisk?</summary><div>Nej. SmartPack kan oprette en fakturakladde i e-conomic, n&aring;r ordren afsendes. Godkendelse og bogf&oslash;ring sker hos jer i e-conomic, s&aring; I bevarer kontrollen over regnskabet.</div></details>
-<details><summary>Kan vi styre indk&oslash;b via e-conomic-integrationen?</summary><div>Nej. Indk&oslash;bsordrer indg&aring;r ikke i e-conomic-integrationen. Skal indk&oslash;b med i flowet, skal det l&oslash;ses via SmartPacks egen indk&oslash;bs- og prognosefunktionalitet eller via et ERP, der underst&oslash;tter det, for eksempel Business Central eller Uniconta.</div></details>
-<details><summary>Hvordan fungerer lagerv&aelig;rdi-bogf&oslash;ringen?</summary><div>SmartPack sammenligner den samlede lagerv&aelig;rdi med sidste k&oslash;rsel og bogf&oslash;rer differencen i en kassekladde. Har systemet ingen tidligere v&aelig;rdi at sammenligne med, tager f&oslash;rste k&oslash;rsel udgangspunkt i nul, s&aring; den skal aftales som en del af opstarten.</div></details>
-<details><summary>Vores ordrer holdt op med at komme ind.</summary><div>Tjek ordrestatus-matrixen. &AElig;ldre ops&aelig;tninger brugte et simpelt til- og fravalg pr. spand, og matrixen opdateres f&oslash;rste gang indstillingssiden &aring;bnes.</div></details>
-<details><summary>Vi har mismatch p&aring; varenumre.</summary><div>SKU'er fra e-conomic trimmes for mellemrum ved import. Mellemrum sidst i varenummeret i e-conomic er den hyppigste &aring;rsag til, at to varer ikke matcher.</div></details>
-</div>
-</div><div class="int-page__sidebar">
-<div class="int-page__cta-box"><h3>K&oslash;rer I e-conomic?</h3><p>Book en demo, s&aring; gennemg&aring;r vi ordrestatusser og lagerv&aelig;rdi-bogf&oslash;ring for jeres ops&aelig;tning.</p>
-<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
-</div>
-<div class="int-page__related"><h3>Relaterede integrationer</h3>
-<div class="int-page__related-list">
-<a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
-<a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="128" height="128">Dynamics 365</a>
-<a href="visma-business" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" width="128" height="128">Visma Business</a>
-</div></div>
-</div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">ERP-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>e-conomic</span></h1>
+        <p class="int-page__intro"><strong>F&aring; e-conomic og lageret til at arbejde som &eacute;t system.</strong><br><br>SmartPack henter salgsordrer og varer fra e-conomic og overtager det fysiske arbejde: plukruter, scanvalidering, pakning og fragt. N&aring;r ordren er pakket, markeres den som afsendt, og den kan automatisk blive til en fakturakladde.<br><br>Lagerv&aelig;rdien kan bogf&oslash;res periodisk til de konti, I selv v&aelig;lger.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration via e-conomics API med grant token.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Kladdefaktura</span><span class="sp-stat-label">Ordren bliver til en fakturakladde, n&aring;r den afsendes</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Lagerv&aelig;rdi</span><span class="sp-stat-label">&AElig;ndringen bogf&oslash;res automatisk via kassekladde</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">Integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">e-conomic styrer &oslash;konomien</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Bogf&oslash;ring<br>Fakturering<br>Debitorer<br>Regnskab<br>Salgsordrer</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til handelsvirksomheder p&aring; e-conomic</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#129534;</span><h3>Ordrer fra e-conomic</h3><p>Salgsordrer oprettes i e-conomic og plukkes i SmartPack. Fakturakladden dannes automatisk ved afsendelse.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128722;</span><h3>Webshop plus e-conomic</h3><p>Webshopordrer kommer ind fra shoppen, mens e-conomic h&aring;ndterer bogf&oslash;ringen. Begge dele plukkes i samme flow.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128176;</span><h3>Styr p&aring; lagerv&aelig;rdien</h3><p>Lagerv&aelig;rdien bogf&oslash;res periodisk, s&aring; regnskabet afspejler det, der faktisk st&aring;r p&aring; hylderne.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en e-conomic-ordre gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#129534;</span><span class="sp-flow-label">e-conomic<br>salgsordre</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>henter</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pluk</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pak<br>&amp; fragt</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128221;</span><span class="sp-flow-label">Afsendt<br>&amp; kladdefaktura</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Kun ordrer i de ordrespande, I har aktiveret, hentes ind. Resten r&oslash;res ikke.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Ordrer</h3>
+            <ul class="sp-sync-list">
+              <li>Salgsordrer fra aktiverede spande</li>
+              <li>Ordrelinjer og leveringsoplysninger</li>
+              <li>Reference og ordrenummer efter jeres prioritet</li>
+              <li>Leveringsmetode fra leveringsbetingelsen</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>Varer</h3>
+            <ul class="sp-sync-list">
+              <li>Varenummer og produktnavn</li>
+              <li>Stregkoder</li>
+              <li>Kostpris og vejledende pris</li>
+              <li>Salgspris</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til e-conomic</h3>
+            <ul class="sp-sync-list">
+              <li>Ordren markeres som afsendt</li>
+              <li>Fakturakladde oprettes</li>
+              <li>Lagerv&aelig;rdi bogf&oslash;rt via kassekladde</li>
+              <li>Valgt debet- og kreditkonto</li>
+            </ul></div>
+        </div>
+        <h2>e-conomic-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Ordrestatus-matrix</strong><span>For hver af e-conomics tre ordrespande, kladder, sendte og arkiverede, v&aelig;lger I hvad der skal ske: import&eacute;r, s&aelig;t i gang, afslut eller annull&eacute;r.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#129534;</span><div><strong>Kladdefaktura ved afsendelse</strong><span>Er indstillingen sl&aring;et til, konverteres ordren automatisk til en fakturakladde i e-conomic, n&aring;r den er pakket.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128176;</span><div><strong>Lagerv&aelig;rdi til kassekladde</strong><span>&AElig;ndringen i den samlede lagerv&aelig;rdi bogf&oslash;res periodisk med debet- og kreditkonto, I selv v&aelig;lger, og kan k&oslash;re p&aring; m&aring;nedens sidste dag.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128278;</span><div><strong>Ordrenummer som I vil have det</strong><span>I styrer selv, hvad der bruges som ordrenummer og referencenummer i SmartPack, s&aring; numrene matcher det, I arbejder efter i forvejen.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Pakkeshop fra leveringsbetingelse</strong><span>Leveringsmetode og droppunktadresse kan udl&aelig;ses af e-conomics leveringsbetingelse, hvis feltet har det rigtige format.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128269;</span><div><strong>Varenumre trimmes</strong><span>SKU'er trimmes for mellemrum ved import, s&aring; et efterstillet mellemrum i e-conomic ikke bryder matchet mod lageret.</span></div></div>
+        </div>
+        <h2>Ordrestatus-matrixen bestemmer hvad der hentes</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">e-conomic har tre ordrespande. For hver af dem v&aelig;lger I, hvad der skal ske, n&aring;r SmartPack ser en ordre der. Ordrer i spande, I ikke har aktiveret, hentes slet ikke.</p>
+        <div class="sp-formula">
+          <span class="cm"># For hver ordrespand vaelger I en handling</span><br>
+          Kladder &nbsp; &nbsp;-&gt; <span class="kw">importer</span> / saet i gang / afslut / annuller<br>
+          Sendte &nbsp; &nbsp; -&gt; <span class="kw">importer</span> / saet i gang / afslut / annuller<br>
+          Arkiverede -&gt; <span class="kw">importer</span> / saet i gang / afslut / annuller
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Derudover styrer I selv, hvad der bruges som ordrenummer og referencenummer i SmartPack, s&aring; numrene matcher det, I arbejder efter i forvejen.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>&AElig;ldre ops&aelig;tninger brugte et simpelt til- og fravalg pr. spand. Matrixen opdateres f&oslash;rste gang indstillingssiden &aring;bnes, s&aring; holder ordrerne pludselig op med at komme ind, er det f&oslash;rste sted at kigge.</span></div>
+        <h2>Hvad e-conomic-integrationen ikke g&oslash;r</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Vi vil hellere v&aelig;re pr&aelig;cise end brede. Det her er gr&aelig;nserne, og de er v&aelig;rd at kende, f&oslash;r I planl&aelig;gger flowet.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128683; Ingen indk&oslash;bsordrer</strong><span>Der hentes ingen indk&oslash;bsordrer fra e-conomic, og der oprettes ingen i e-conomic. Skal indk&oslash;b med, l&oslash;ses det via SmartPacks egen indk&oslash;bsfunktionalitet eller et ERP der underst&oslash;tter det.</span></div>
+          <div class="sp-location-item"><strong>&#129534; Kun fakturakladde</strong><span>Selve bogf&oslash;ringen og godkendelsen af fakturaen sker manuelt i e-conomic. SmartPack danner kladden, I godkender.</span></div>
+          <div class="sp-location-item"><strong>&#128260; Ingen refunderinger</strong><span>Refunderinger posteres ikke til e-conomic fra SmartPack.</span></div>
+          <div class="sp-location-item"><strong>&#128100; Ingen leverand&oslash;rer</strong><span>Leverand&oslash;rer synkroniseres ikke mellem de to systemer.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Lagerv&aelig;rdi-synkroniseringen k&oslash;rer periodisk og sammenligner med sidste k&oslash;rsel. Har systemet ingen tidligere v&aelig;rdi at sammenligne med, tager f&oslash;rste k&oslash;rsel udgangspunkt i nul, s&aring; den aftales som en del af opstarten.</span></div>
+        <h2>S&aring;dan forbinder du e-conomic med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hent jeres grant token</strong><p>Opret adgangen i e-conomic og inds&aelig;t grant token i SmartPacks e-conomic-indstillinger.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>S&aelig;t ordrestatus-matrixen op</strong><p>V&aelig;lg for hver af de tre ordrespande, hvad der skal ske, og hvad der skal bruges som ordrenummer og referencenummer.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Sl&aring; kladdefaktura og lagerv&aelig;rdi til</strong><p>Beslut om ordren skal blive til en fakturakladde ved afsendelse, og ops&aelig;t kassekladde, debetkonto, kreditkonto og frekvens for lagerv&aelig;rdi-bogf&oslash;ringen.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Bogf&oslash;rer SmartPack vores fakturaer automatisk?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. SmartPack kan oprette en fakturakladde i e-conomic, n&aring;r ordren afsendes. Godkendelse og bogf&oslash;ring sker hos jer, s&aring; I bevarer kontrollen over regnskabet.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi styre indk&oslash;b via e-conomic-integrationen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. Indk&oslash;bsordrer indg&aring;r ikke i e-conomic-integrationen. Skal indk&oslash;b med i flowet, l&oslash;ses det via SmartPacks egen indk&oslash;bs- og prognosefunktionalitet eller via et ERP, der underst&oslash;tter det, for eksempel Business Central eller Uniconta.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvordan fungerer lagerv&aelig;rdi-bogf&oslash;ringen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">SmartPack sammenligner den samlede lagerv&aelig;rdi med sidste k&oslash;rsel og bogf&oslash;rer differencen i en kassekladde med de konti, I har valgt. Frekvensen s&aelig;tter I selv, og den kan k&oslash;re p&aring; m&aring;nedens sidste dag.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vores ordrer holdt op med at komme ind.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Tjek ordrestatus-matrixen. &AElig;ldre ops&aelig;tninger brugte et simpelt til- og fravalg pr. spand, og matrixen opdateres f&oslash;rste gang indstillingssiden &aring;bnes.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vi har mismatch p&aring; varenumre.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">SKU'er fra e-conomic trimmes for mellemrum ved import. Et efterstillet mellemrum i varenummeret i e-conomic er den hyppigste &aring;rsag til, at to varer ikke matcher.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er e-conomic-integrationen inkluderet i prisen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk&oslash;b.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I e-conomic og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi gennemg&aring;r ordrespande, kladdefaktura og lagerv&aelig;rdi-bogf&oslash;ring for jeres ops&aelig;tning.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I e-conomic?</h3><p>Vi gennemg&aring;r ordrestatus-matrix og lagerv&aelig;rdi-bogf&oslash;ring, s&aring; bogholderiet er med fra start.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver synkronisering og hver bogf&oslash;ring logges, s&aring; I kan se hvad der er sendt til e-conomic.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
+          <a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="128" height="128">Dynamics 365</a>
+          <a href="visma-business" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" width="128" height="128">Visma Business</a>
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

@@ -57,3 +57,105 @@
 .int-page__faq summary:hover{color:var(--accent)}
 .int-page__faq details>div{padding:0 1.2rem 1.1rem;font-size:.9rem;color:var(--text-2);line-height:1.65}
 @media(max-width:768px){.int-page__flow{grid-template-columns:1fr}}
+
+/* ================================================================
+   Integrationsside-komponenter (standarden fra Shopify-siden).
+   Delt af alle sider bygget til v2-standarden. Var tidligere inline
+   i shopify.html.
+   ================================================================ */
+/* ── Shopify-side: page-specifikke komponenter ── */
+
+  /* Hero connector */
+  .sp-hero-logos { display:flex; align-items:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap; }
+  .sp-hero-logo { width:72px; height:72px; border-radius:16px; object-fit:contain; background:var(--surface-2); padding:.75rem; border:1px solid var(--border); }
+  .sp-hero-connector { display:flex; flex-direction:row; align-items:center; gap:.4rem; }
+  .sp-hero-connector-line { width:40px; height:2px; background:linear-gradient(90deg, var(--border) 0%, var(--accent) 50%, var(--border) 100%); }
+  .sp-hero-connector-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+
+  /* Stats strip */
+  .sp-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border-radius:12px; overflow:hidden; margin:2rem 0; }
+  .sp-stat { background:var(--surface-2); padding:1.25rem 1rem; text-align:center; }
+  .sp-stat-val { font-size:1.6rem; font-weight:900; color:var(--accent); line-height:1; display:block; margin-bottom:.3rem; }
+  .sp-stat-label { font-size:.75rem; color:var(--text-3); line-height:1.3; }
+  @media(max-width:500px){ .sp-stats { grid-template-columns:1fr; } }
+
+  /* Passer-til kort */
+  .sp-fit-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2.5rem; }
+  .sp-fit-card { padding:1.25rem; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; }
+  .sp-fit-card.sp-fit-card--active { border-color:var(--accent); background:var(--accent-glow2); }
+  .sp-fit-card-icon { font-size:1.5rem; margin-bottom:.75rem; display:block; }
+  .sp-fit-card h3 { font-size:.88rem; font-weight:800; margin:0 0 .4rem; }
+  .sp-fit-card p { font-size:.78rem; color:var(--text-3); margin:0; line-height:1.5; }
+  @media(max-width:680px){ .sp-fit-grid { grid-template-columns:1fr; } }
+
+  /* Flow strip */
+  .sp-flow { display:flex; align-items:stretch; gap:0; margin:2.2rem 0; overflow-x:auto; padding-bottom:.5rem; }
+  .sp-flow-step { display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:100px; padding:.9rem .75rem; background:var(--surface-2); border:1px solid var(--border); text-align:center; position:relative; }
+  .sp-flow-step:first-child { border-radius:10px 0 0 10px; }
+  .sp-flow-step:last-child { border-radius:0 10px 10px 0; }
+  .sp-flow-step--accent { background:var(--accent-glow); border-color:rgba(62,207,142,.35); }
+  .sp-flow-icon { font-size:1.3rem; margin-bottom:.3rem; }
+  .sp-flow-label { font-size:.68rem; font-weight:700; color:var(--text-2); line-height:1.2; }
+  .sp-flow-arrow { display:flex; align-items:center; padding:0 .25rem; color:var(--accent); font-size:1.1rem; font-weight:900; flex-shrink:0; }
+
+  /* Sync tabeller */
+  .sp-sync-cols { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+  @media(max-width:600px){ .sp-sync-cols { grid-template-columns:1fr; } }
+  .sp-sync-box { background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:1.2rem 1.4rem; }
+  .sp-sync-box h3 { font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin:0 0 .9rem; }
+  .sp-sync-list { list-style:none; padding:0; margin:0; }
+  .sp-sync-list li { display:flex; align-items:baseline; gap:.5rem; padding:.32rem 0; border-bottom:1px solid var(--border); font-size:.82rem; color:var(--text-2); }
+  .sp-sync-list li:last-child { border-bottom:none; }
+  .sp-sync-list li::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:.18rem; }
+
+  /* Feature grid */
+  .sp-feat-grid { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:2rem; }
+  @media(max-width:560px){ .sp-feat-grid { grid-template-columns:1fr; } }
+  .sp-feat { display:flex; gap:.8rem; align-items:flex-start; padding:1rem 1.1rem; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; transition:border-color var(--t-fast); }
+  .sp-feat:hover { border-color:var(--accent); }
+  .sp-feat-icon { font-size:1.1rem; flex-shrink:0; width:28px; text-align:center; margin-top:.05rem; }
+  .sp-feat strong { display:block; font-size:.85rem; font-weight:700; color:var(--text-1); margin-bottom:.25rem; line-height:1.25; }
+  .sp-feat span { font-size:.78rem; color:var(--text-3); line-height:1.45; }
+
+  /* Location section */
+  .sp-location { background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; }
+  .sp-location h3 { font-size:1.05rem; font-weight:800; margin:0 0 .75rem; }
+  .sp-location-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+  @media(max-width:580px){ .sp-location-grid { grid-template-columns:1fr; } }
+  .sp-location-item { padding:.85rem 1rem; background:var(--bg-2); border:1px solid var(--border); border-radius:8px; }
+  .sp-location-item strong { display:block; font-size:.83rem; font-weight:700; margin-bottom:.3rem; }
+  .sp-location-item span { font-size:.76rem; color:var(--text-3); line-height:1.45; }
+
+  /* Formula box */
+  .sp-formula { background:var(--bg-2); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:.9rem 0; font-family:monospace; font-size:.8rem; color:var(--text-2); line-height:1.75; }
+  .sp-formula .kw { color:var(--accent); font-weight:700; }
+  .sp-formula .cm { color:var(--text-3); }
+
+  /* Note box */
+  .sp-note { display:flex; gap:.75rem; align-items:flex-start; padding:.85rem 1rem; background:rgba(217,119,6,.07); border:1px solid rgba(217,119,6,.25); border-radius:8px; font-size:.81rem; color:var(--text-2); line-height:1.55; margin:.75rem 0 1.5rem; }
+  .sp-note-icon { font-size:.95rem; flex-shrink:0; }
+
+  /* Steps */
+  .sp-steps { margin-bottom:2rem; }
+  .sp-step { display:flex; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--border); }
+  .sp-step:last-child { border-bottom:none; }
+  .sp-step-num { width:34px; height:34px; border-radius:50%; background:var(--accent); color:#000; font-weight:900; font-size:.85rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:.1rem; }
+  .sp-step-body strong { display:block; font-size:.92rem; font-weight:700; margin-bottom:.3rem; }
+  .sp-step-body p { font-size:.84rem; color:var(--text-3); margin:0; line-height:1.55; }
+
+  /* FAQ */
+  .sp-faq { margin-top:2.5rem; }
+  .sp-faq-item { border-bottom:1px solid var(--border); }
+  .sp-faq-item:first-child { border-top:1px solid var(--border); }
+  .sp-faq-q { display:flex; justify-content:space-between; align-items:center; padding:1rem 0; cursor:pointer; gap:1rem; }
+  .sp-faq-q p { font-size:.9rem; font-weight:700; color:var(--text-1); margin:0; flex:1; }
+  .sp-faq-toggle { font-size:.8rem; color:var(--accent); flex-shrink:0; transition:transform var(--t-fast); }
+  .sp-faq-a { font-size:.84rem; color:var(--text-2); line-height:1.65; padding-bottom:1rem; margin:0; display:none; }
+  .sp-faq-item.open .sp-faq-a { display:block; }
+  .sp-faq-item.open .sp-faq-toggle { transform:rotate(180deg); }
+
+  /* Bottom CTA */
+  .sp-bottom-cta { background:linear-gradient(135deg, var(--accent-glow) 0%, var(--surface-2) 100%); border:1px solid rgba(62,207,142,.3); border-radius:16px; padding:2.5rem; text-align:center; margin-top:3rem; }
+  .sp-bottom-cta h2 { font-size:1.5rem; margin:0 0 .75rem; }
+  .sp-bottom-cta p { font-size:.92rem; color:var(--text-2); margin:0 0 1.5rem; max-width:480px; margin-inline:auto; }
+  .sp-bottom-cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }

@@ -1,153 +1,335 @@
 <!DOCTYPE html>
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
-================================================================ -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartPack + Business Central | WMS-integration</title>
-<meta name="description" content="Business Central-integration til SmartPack WMS: ordrer og indk&oslash;b ind, postering af forsendelse og modtagelse retur, lagermaster pr. lokation.">
-<link rel="canonical" href="https://smartpack.dk/integrationer/dynamics-365">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="SmartPack + Dynamics 365 Business Central">
-<meta property="og:description" content="Business Central-integration til SmartPack WMS: ordrer og indk&oslash;b ind, postering af forsendelse og modtagelse retur, lagermaster pr. lokation.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smartpack.dk/integrationer/dynamics-365">
-<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-<link rel="stylesheet" href="int-page.css?v=4">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + Dynamics 365 Business Central", "description": "Business Central-integration til SmartPack WMS: ordrer og indk\u00f8b ind, postering af forsendelse og modtagelse retur, lagermaster pr. lokation.", "url": "https://smartpack.dk/integrationer/dynamics-365", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "Dynamics 365 Business Central", "applicationCategory": "ERP"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Dynamics 365 Business Central", "item": "https://smartpack.dk/integrationer/dynamics-365"}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad sker der, hvis en postering fejler i BC?", "acceptedAnswer": {"@type": "Answer", "text": "S\u00e5 s\u00e6ttes et fejlflag, og den efterf\u00f8lgende lagersynkronisering holdes tilbage, indtil fejlen er l\u00f8st. Det er bevidst, s\u00e5 I ikke f\u00e5r bogf\u00f8rt oven p\u00e5 en kendt fejl, men det betyder ogs\u00e5, at \u00e9n fejlet ordre skal ryddes af vejen hurtigt."}}, {"@type": "Question", "name": "Hvad hvis ordren allerede er posteret i BC?", "acceptedAnswer": {"@type": "Answer", "text": "S\u00e5 logges det, og pakkelinjerne markeres alligevel som h\u00e5ndterede i SmartPack, s\u00e5 ordren ikke bliver h\u00e6ngende."}}, {"@type": "Question", "name": "Skal vi selv gen\u00e5bne frigivne ordrer i BC?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Har en salgsordre eller indk\u00f8bsordre status Frigivet, gen\u00e5bner SmartPack den automatisk inden postering."}}, {"@type": "Question", "name": "Hvad sker der, n\u00e5r vi tilbageruller en op- eller nedskrivning?", "acceptedAnswer": {"@type": "Answer", "text": "Tilbagerulningen behandles som en almindelig auditpost og sendes derfor ogs\u00e5 til BC som en justering. Det er v\u00e6rd at vide, s\u00e5 posteringen ikke kommer bag p\u00e5 bogholderiet."}}, {"@type": "Question", "name": "Vores trackingnumre ser afkortede ud i BC.", "acceptedAnswer": {"@type": "Answer", "text": "Trackingnummeret afkortes til 30 tegn ved postering til BC. Har jeres fragtleverand\u00f8r l\u00e6ngere numre, ser I det her."}}, {"@type": "Question", "name": "Er der forskel p\u00e5 versionerne?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Der findes en \u00e6ldre og en nyere version af integrationen. Den nyere underst\u00f8tter multi-lokation med valg af lagermaster pr. lokation. Vi afklarer altid ved opstart, hvilken der passer til jeres ops\u00e6tning."}}]}</script>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til Business Central | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder Dynamics 365 Business Central med lageret. Ordrer, retur og indk&oslash;b ind, postering af forsendelse og modtagelse retur.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/dynamics-365">
+
+  <meta property="og:title" content="Lagersystem til Business Central | SmartPack WMS">
+  <meta property="og:description" content="Fra Business Central-ordre til pakket forsendelse. Forsendelse, modtagelse og lagerjusteringer posteres tilbage i BC.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/dynamics-365">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Business Central",
+          "item": "https://smartpack.dk/integrationer/dynamics-365"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med Microsoft Dynamics 365 Business Central. Salgsordrer, returordrer, indk\u00f8bsordrer og varer hentes ind, og forsendelser, modtagelser og lagerjusteringer posteres tilbage i BC.",
+      "url": "https://smartpack.dk/integrationer/dynamics-365",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvad sker der, hvis en postering fejler i BC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "S\u00e5 s\u00e6ttes et fejlflag, og den efterf\u00f8lgende lagersynkronisering holdes tilbage, indtil fejlen er l\u00f8st. Det er bevidst, s\u00e5 der ikke bogf\u00f8res oven p\u00e5 en kendt fejl, men det betyder ogs\u00e5, at en fejlet ordre skal ryddes af vejen hurtigt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad hvis ordren allerede er posteret i BC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "S\u00e5 logges det, og pakkelinjerne markeres alligevel som h\u00e5ndterede i SmartPack, s\u00e5 ordren ikke bliver h\u00e6ngende i systemet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Skal vi selv gen\u00e5bne frigivne ordrer i BC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. Har en salgsordre eller indk\u00f8bsordre status Frigivet, gen\u00e5bner SmartPack den automatisk inden postering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad sker der, n\u00e5r vi tilbageruller en op- eller nedskrivning?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tilbagerulningen behandles som en almindelig auditpost og sendes derfor ogs\u00e5 til BC som en justering. Det er v\u00e6rd at vide, s\u00e5 posteringen ikke kommer bag p\u00e5 bogholderiet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vores trackingnumre ser afkortede ud i BC.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Trackingnummeret afkortes til 30 tegn ved postering til BC. Har jeres fragtleverand\u00f8r l\u00e6ngere numre, ser I det her."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er der forskel p\u00e5 versionerne af integrationen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Der findes en \u00e6ldre og en nyere version. Den nyere underst\u00f8tter multi-lokation med valg af lagermaster pr. lokation, mens den \u00e6ldre er enklere. Vi afklarer altid ved opstart, hvilken der passer til jeres ops\u00e6tning."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=5">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container">
-<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-<div class="int-page__hero"><div>
-<img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" class="int-page__logo" width="1024" height="1024">
-</div><div class="int-page__hero-content">
-<div class="int-page__cat">ERP &amp; &Oslash;konomi</div>
-<h1 class="int-page__title">SmartPack <span>+ Dynamics 365 Business Central</span></h1>
-<p class="int-page__intro">Business Central holder styr p&aring; &oslash;konomi og ordrer. SmartPack holder styr p&aring; det fysiske lager. Integrationen posterer forsendelser og modtagelser tilbage i BC, s&aring; I ikke skal taste det samme to steder.</p>
-<div class="int-page__cta-row">
-<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
-<a href="../priser" class="btn btn--ghost">Se priser</a>
-</div></div></div>
-<div class="int-page__body"><div class="int-page__main">
-<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
-<strong>Kort fortalt</strong>
-<p>Salgsordrer, returordrer, indk&oslash;bsordrer og varer hentes fra Business Central. N&aring;r en ordre pakkes eller en modtagelse afsluttes i SmartPack, opdateres antal p&aring; linjerne i BC, og dokumentet posteres. Lagerjusteringer kan sendes med som posteringer.</p>
-</div></div>
-<h2>Hvad er Dynamics 365 Business Central?</h2>
-<p>Microsoft Dynamics 365 Business Central er et ERP-system til sm&aring; og mellemstore virksomheder og d&aelig;kker finans, salg, indk&oslash;b, projekt og lager. Det k&oslash;rer typisk i skyen, men findes ogs&aring; som on-premise-installation.</p>
-<p>BC har lagerfunktionalitet, men den er bygget til bogf&oslash;ring af lagerbev&aelig;gelser, ikke til at dirigere en plukker rundt p&aring; gulvet. SmartPack l&aelig;gger plukruter, scanvalidering og pakkelinjer ovenp&aring; og sender resultatet tilbage som posteringer.</p>
-<h2>Hvad integrationen g&oslash;r</h2>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div>
-<h3>Alle fire dokumenttyper</h3><p>Varer, salgsordrer, salgsreturordrer og indk&oslash;bsordrer kan hentes fra BC. Hver type kan sl&aring;s til og fra hver for sig, s&aring; I kun tager det ind, I faktisk skal bruge.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128221;</div><div>
-<h3>Postering tilbage til BC</h3><p>N&aring;r ordren er pakket, s&aelig;ttes antal til levering p&aring; linjerne, og ordren posteres i BC med trackingnummer. Ved modtagelse opdateres antal til modtagelse, og indk&oslash;bsordren posteres.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128205;</div><div>
-<h3>Lagermaster pr. lokation</h3><p>I den nyere version kan I pr. lokation v&aelig;lge, om SmartPack eller BC er master for lageret. Negativ beholdning sendes aldrig til BC, systemet s&aelig;tter gulv ved nul.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128209;</div><div>
-<h3>Lagerjusteringer med i bogf&oslash;ringen</h3><p>Op- og nedskrivninger i SmartPack kan sendes til BC som lagerjusteringer via den kladde og kladdeserie, I peger p&aring;.</p></div></div>
-<h2>Hvad synkroniseres hvilken vej?</h2>
-<p>Hver synkroniseringstype kan sl&aring;s til og fra. Her er indholdet.</p>
-<div class="int-page__flow">
-<div class="int-page__flow-col"><h3>Dynamics 365 Business Central til SmartPack</h3><ul>
-<li>Varer med varenummer, navn, kostpris og gennemsnitspris</li>
-<li>Stregkoder, kategorier, oprindelsesland, toldkode og v&aelig;gt</li>
-<li>Normalpriser og salgspriser</li>
-<li>Salgsordrer, nye og &aelig;ndrede</li>
-<li>Salgsreturordrer</li>
-<li>Indk&oslash;bsordrer som forventede modtagelser, dog kun ordrer med status &aring;ben</li>
-</ul></div>
-<div class="int-page__flow-col"><h3>SmartPack til Dynamics 365 Business Central</h3><ul>
-<li>Antal til levering p&aring; salgsordrelinjer, og postering af ordren</li>
-<li>Trackingnummer p&aring; den posterede forsendelse</li>
-<li>Antal til modtagelse p&aring; indk&oslash;bsordrelinjer, og postering af modtagelsen</li>
-<li>Postering af returordrer</li>
-<li>Lagerjusteringer fra op- og nedskrivninger</li>
-<li>Beholdningsdifferencer udlignet pr. vare eller ved fuld synkronisering</li>
-</ul></div></div>
-<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
-<div class="int-page__step"><div class="int-page__step-num">1</div>
-<div class="int-page__step-body"><h3>Opret adgangen i Azure</h3><p>Til cloud-versionen skal I bruge tenant-ID, client-ID og client secret. K&oslash;rer I on-premise, bruges brugernavn, adgangskode og endpoint-URL i stedet.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">2</div>
-<div class="int-page__step-body"><h3>Angiv milj&oslash; og firma</h3><p>Udfyld milj&oslash;navn og firmanavn i BC, s&aring; integrationen rammer den rigtige installation.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">3</div>
-<div class="int-page__step-body"><h3>V&aelig;lg kladde til lagerjusteringer</h3><p>Peg p&aring; den kladde og kladdeserie i BC, som SmartPack skal bruge, n&aring;r der posteres lagerjusteringer.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">4</div>
-<div class="int-page__step-body"><h3>Sl&aring; de rigtige moduler til</h3><p>Vare-, salgsordre-, returordre- og indk&oslash;bsordresynkronisering sl&aring;s til hver for sig. Det samme g&aelig;lder postering af forsendelse, modtagelse, returordre og lagerjusteringer.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">5</div>
-<div class="int-page__step-body"><h3>V&aelig;lg lagermaster pr. lokation</h3><p>Beslut for hver lokation, om SmartPack eller BC er master for beholdningen, og k&oslash;r en f&oslash;rste afstemning.</p></div></div>
-<h2>Det g&oslash;r integrationen ikke</h2>
-<p>Det her er v&aelig;rd at kende, f&oslash;r I g&aring;r i luften:</p>
-<ul class="int-page__limits">
-<li>Bundtvarer og servicevarer indg&aring;r ikke i lagersynkroniseringen, da de ikke har en fysisk beholdning.</li>
-<li>Varer uden matchende BC-vare synkroniseres ikke.</li>
-<li>Negativ beholdning sendes aldrig til BC.</li>
-<li>Kun salgsordrer posteres. Interne ordrer posteres ikke til BC.</li>
-<li>Kun indk&oslash;bsordrer med status &aring;ben oprettes som forventede modtagelser. Allerede modtagne eller lukkede ordrer springes over.</li>
-</ul>
-<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
-<div class="int-page__faq">
-<details><summary>Hvad sker der, hvis en postering fejler i BC?</summary><div>S&aring; s&aelig;ttes et fejlflag, og den efterf&oslash;lgende lagersynkronisering holdes tilbage, indtil fejlen er l&oslash;st. Det er bevidst, s&aring; I ikke f&aring;r bogf&oslash;rt oven p&aring; en kendt fejl, men det betyder ogs&aring;, at &eacute;n fejlet ordre skal ryddes af vejen hurtigt.</div></details>
-<details><summary>Hvad hvis ordren allerede er posteret i BC?</summary><div>S&aring; logges det, og pakkelinjerne markeres alligevel som h&aring;ndterede i SmartPack, s&aring; ordren ikke bliver h&aelig;ngende.</div></details>
-<details><summary>Skal vi selv gen&aring;bne frigivne ordrer i BC?</summary><div>Nej. Har en salgsordre eller indk&oslash;bsordre status Frigivet, gen&aring;bner SmartPack den automatisk inden postering.</div></details>
-<details><summary>Hvad sker der, n&aring;r vi tilbageruller en op- eller nedskrivning?</summary><div>Tilbagerulningen behandles som en almindelig auditpost og sendes derfor ogs&aring; til BC som en justering. Det er v&aelig;rd at vide, s&aring; posteringen ikke kommer bag p&aring; bogholderiet.</div></details>
-<details><summary>Vores trackingnumre ser afkortede ud i BC.</summary><div>Trackingnummeret afkortes til 30 tegn ved postering til BC. Har jeres fragtleverand&oslash;r l&aelig;ngere numre, ser I det her.</div></details>
-<details><summary>Er der forskel p&aring; versionerne?</summary><div>Ja. Der findes en &aelig;ldre og en nyere version af integrationen. Den nyere underst&oslash;tter multi-lokation med valg af lagermaster pr. lokation. Vi afklarer altid ved opstart, hvilken der passer til jeres ops&aelig;tning.</div></details>
-</div>
-</div><div class="int-page__sidebar">
-<div class="int-page__cta-box"><h3>K&oslash;rer I Business Central?</h3><p>Book en demo, s&aring; gennemg&aring;r vi posteringsflowet og lagermaster pr. lokation.</p>
-<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
-</div>
-<div class="int-page__related"><h3>Relaterede integrationer</h3>
-<div class="int-page__related-list">
-<a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" width="128" height="128">e-conomic</a>
-<a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
-<a href="visma-business" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" width="128" height="128">Visma Business</a>
-</div></div>
-</div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">ERP-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>Business Central</span></h1>
+        <p class="int-page__intro"><strong>F&aring; Business Central og lageret til at arbejde som &eacute;t system.</strong><br><br>Business Central holder styr p&aring; &oslash;konomi og ordrer. SmartPack holder styr p&aring; det fysiske lager: hvor varen st&aring;r, hvem der plukker den, og om scanningen stemmer. Bagefter posteres forsendelser og modtagelser tilbage i BC.<br><br>Fra &eacute;t lager til flere lokationer med valg af lagermaster pr. lokation.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Cloud via OAuth. On-premise via endpoint-URL og login.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Fire typer</span><span class="sp-stat-label">Varer, salgsordrer, returordrer og indk&oslash;bsordrer</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Pr. lokation</span><span class="sp-stat-label">V&aelig;lg om SmartPack eller BC er lagermaster</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">Integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Business Central styrer forretningen</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Finans og bogf&oslash;ring<br>Salgsordrer<br>Indk&oslash;b<br>Debitorer<br>Rapportering</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til virksomheder p&aring; Business Central</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#129534;</span><h3>Ordrer fra BC</h3><p>Salgsordrer oprettes i BC og plukkes i SmartPack. Forsendelsen posteres tilbage med trackingnummer.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128230;</span><h3>Indk&oslash;b og modtagelse</h3><p>Indk&oslash;bsordrer bliver til forventede modtagelser i SmartPack, og modtagelsen posteres tilbage i BC.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127981;</span><h3>Flere lokationer</h3><p>V&aelig;lg pr. lokation om SmartPack eller BC er master for beholdningen, og lad resten k&oslash;re u&aelig;ndret.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en Business Central-ordre gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#129534;</span><span class="sp-flow-label">BC<br>salgsordre</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>henter</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pluk</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pak<br>&amp; fragt</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128221;</span><span class="sp-flow-label">Posteret<br>i BC</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Der er bevidst korte pauser mellem kald til BC, s&aring; API'et ikke overbelastes ved store synkroniseringer.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra BC</h3>
+            <ul class="sp-sync-list">
+              <li>Varer med kostpris og gennemsnitspris</li>
+              <li>Stregkoder, kategorier og v&aelig;gt</li>
+              <li>Oprindelsesland og toldkode</li>
+              <li>Salgsordrer, returordrer og indk&oslash;bsordrer</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>I SmartPack</h3>
+            <ul class="sp-sync-list">
+              <li>Plukruter og scanvalidering</li>
+              <li>Lokationer og lagerplacering</li>
+              <li>Modtagelse og indplacering</li>
+              <li>Opt&aelig;lling og lagerjusteringer</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til BC</h3>
+            <ul class="sp-sync-list">
+              <li>Antal til levering og postering</li>
+              <li>Trackingnummer p&aring; forsendelsen</li>
+              <li>Antal til modtagelse og postering</li>
+              <li>Lagerjusteringer fra op- og nedskrivning</li>
+            </ul></div>
+        </div>
+        <h2>Business Central-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128221;</span><div><strong>Postering fra SmartPack</strong><span>N&aring;r ordren er pakket, s&aelig;ttes antal til levering p&aring; linjerne, og ordren posteres i BC med trackingnummer. Ved modtagelse opdateres antal til modtagelse, og indk&oslash;bsordren posteres.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128205;</span><div><strong>Lagermaster pr. lokation</strong><span>I den nyere version v&aelig;lger I for hver lokation, om SmartPack eller BC er master for beholdningen. Negativ beholdning sendes aldrig til BC.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Gen&aring;bner frigivne ordrer</strong><span>Har en salgsordre eller indk&oslash;bsordre status Frigivet i BC, gen&aring;bner SmartPack den automatisk inden postering, s&aring; I ikke skal g&oslash;re det manuelt.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128209;</span><div><strong>Lagerjusteringer med</strong><span>Op- og nedskrivninger sendes til BC som lagerjusteringer via den kladde og kladdeserie, I peger p&aring;.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9888;&#65039;</span><div><strong>Stopper ved fejl</strong><span>Fejler en postering, holdes den efterf&oslash;lgende lagersynkronisering tilbage, indtil fejlen er l&oslash;st. Det er bevidst, s&aring; der ikke bogf&oslash;res oven p&aring; en kendt fejl.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9729;&#65039;</span><div><strong>Cloud og on-premise</strong><span>Cloud forbindes med tenant-ID, client-ID og client secret. On-premise forbindes med brugernavn, adgangskode og endpoint-URL.</span></div></div>
+        </div>
+        <h2>I bestemmer hvad SmartPack m&aring; postere i BC</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Hver synkroniserings- og posteringstype sl&aring;s til og fra hver for sig. Det g&oslash;r det muligt at starte forsigtigt og udvide, n&aring;r I er trygge ved flowet.</p>
+        <div class="sp-formula">
+          <span class="cm"># Hentes fra BC</span><br>
+          Varer &nbsp;&middot; Salgsordrer &nbsp;&middot; Returordrer &nbsp;&middot; Indkoebsordrer<br>
+          &nbsp;<br>
+          <span class="cm"># Posteres tilbage til BC</span><br>
+          Forsendelse af salgsordre &nbsp; &nbsp;<span class="kw">til/fra</span><br>
+          Modtagelse af indkoebsordre &nbsp;<span class="kw">til/fra</span><br>
+          Returordre &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="kw">til/fra</span><br>
+          Lagerjusteringer &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="kw">til/fra</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Lagerjusteringer posteres via den kladde og kladdeserie, I peger p&aring;, s&aring; bogf&oslash;ringen lander det rigtige sted i BC.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Fejler en postering, holdes den efterf&oslash;lgende lagersynkronisering tilbage, indtil fejlen er l&oslash;st. Det er bevidst, men det betyder ogs&aring;, at en fejlet ordre skal ryddes af vejen hurtigt.</span></div>
+        <h2>Hvad der ikke posteres, og hvorfor</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Integrationen er bevidst afgr&aelig;nset p&aring; nogle punkter. Det er v&aelig;rd at kende, f&oslash;r I planl&aelig;gger flowet.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128683; Bundt- og servicevarer</strong><span>De indg&aring;r ikke i lagersynkroniseringen, fordi de ikke har en fysisk beholdning, der giver mening at afstemme.</span></div>
+          <div class="sp-location-item"><strong>&#128202; Negativ beholdning</strong><span>Sendes aldrig til BC. Systemet s&aelig;tter gulv ved nul og beskytter aktivt mod det.</span></div>
+          <div class="sp-location-item"><strong>&#129534; Kun salgsordrer</strong><span>Interne ordrer posteres ikke til BC. Kun ordrer af typen salgsordre med et gyldigt eksternt ID.</span></div>
+          <div class="sp-location-item"><strong>&#128230; Kun &aring;bne indk&oslash;bsordrer</strong><span>Kun indk&oslash;bsordrer med status &aring;ben bliver til forventede modtagelser. Allerede modtagne eller lukkede ordrer springes over.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Tilbagerul af en op- eller nedskrivning behandles som en almindelig auditpost og sendes derfor <strong>ogs&aring;</strong> til BC som en justering. Sig det videre til bogholderiet, s&aring; posteringen ikke kommer bag p&aring; nogen.</span></div>
+        <h2>S&aring;dan forbinder du Business Central med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Opret adgangen</strong><p>Til cloud bruges tenant-ID, client-ID og client secret. Til on-premise bruges brugernavn, adgangskode og endpoint-URL. Angiv derefter milj&oslash;navn og firmanavn i BC.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Peg p&aring; kladde og sl&aring; moduler til</strong><p>V&aelig;lg den kladde og kladdeserie, der skal bruges til lagerjusteringer, og sl&aring; vare-, salgsordre-, returordre- og indk&oslash;bsordresynkronisering til hver for sig.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>V&aelig;lg lagermaster og afstem</strong><p>Beslut for hver lokation om SmartPack eller BC er master for beholdningen, k&oslash;r en f&oslash;rste afstemning og send derefter en testordre igennem.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad sker der, hvis en postering fejler i BC?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">S&aring; s&aelig;ttes et fejlflag, og den efterf&oslash;lgende lagersynkronisering holdes tilbage, indtil fejlen er l&oslash;st. Det er bevidst, s&aring; der ikke bogf&oslash;res oven p&aring; en kendt fejl, men det betyder ogs&aring;, at en fejlet ordre skal ryddes af vejen hurtigt.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad hvis ordren allerede er posteret i BC?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">S&aring; logges det, og pakkelinjerne markeres alligevel som h&aring;ndterede i SmartPack, s&aring; ordren ikke bliver h&aelig;ngende i systemet.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Skal vi selv gen&aring;bne frigivne ordrer i BC?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. Har en salgsordre eller indk&oslash;bsordre status Frigivet, gen&aring;bner SmartPack den automatisk inden postering.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad sker der, n&aring;r vi tilbageruller en op- eller nedskrivning?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Tilbagerulningen behandles som en almindelig auditpost og sendes derfor ogs&aring; til BC som en justering. Det er v&aelig;rd at vide, s&aring; posteringen ikke kommer bag p&aring; bogholderiet.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vores trackingnumre ser afkortede ud i BC.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Trackingnummeret afkortes til 30 tegn ved postering til BC. Har jeres fragtleverand&oslash;r l&aelig;ngere numre, ser I det her.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er der forskel p&aring; versionerne af integrationen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Der findes en &aelig;ldre og en nyere version. Den nyere underst&oslash;tter multi-lokation med valg af lagermaster pr. lokation, mens den &aelig;ldre er enklere. Vi afklarer altid ved opstart, hvilken der passer til jeres ops&aelig;tning.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I Business Central og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi gennemg&aring;r posteringsflowet, lagermaster pr. lokation og hvad ops&aelig;tningen kr&aelig;ver af jer.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I Business Central?</h3><p>Vi gennemg&aring;r posteringsflow og lagermaster, s&aring; bogf&oslash;ringen stemmer fra f&oslash;rste ordre.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver postering logges. Fejler noget i BC, kan I se pr&aelig;cis hvilken ordre og hvorfor.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" width="128" height="128">e-conomic</a>
+          <a href="uniconta" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" width="128" height="128">Uniconta</a>
+          <a href="visma-business" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" width="128" height="128">Visma Business</a>
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

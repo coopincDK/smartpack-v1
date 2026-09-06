@@ -1,153 +1,332 @@
 <!DOCTYPE html>
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
-================================================================ -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartPack + PrestaShop | WMS-integration</title>
-<meta name="description" content="PrestaShop-integration til SmartPack WMS: varianter som selvst&aelig;ndige varer, statusmapping, droppoint i tre formater og trackingnummer p&aring; fragtlinjen.">
-<link rel="canonical" href="https://smartpack.dk/integrationer/prestashop">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="SmartPack + PrestaShop">
-<meta property="og:description" content="PrestaShop-integration til SmartPack WMS: varianter som selvst&aelig;ndige varer, statusmapping, droppoint i tre formater og trackingnummer p&aring; fragtlinjen.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smartpack.dk/integrationer/prestashop">
-<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-<link rel="stylesheet" href="int-page.css?v=4">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + PrestaShop", "description": "PrestaShop-integration til SmartPack WMS: varianter som selvst\u00e6ndige varer, statusmapping, droppoint i tre formater og trackingnummer p\u00e5 fragtlinjen.", "url": "https://smartpack.dk/integrationer/prestashop", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "PrestaShop", "applicationCategory": "E-commerce platform"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "PrestaShop", "item": "https://smartpack.dk/integrationer/prestashop"}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvorfor ser variantpriserne anderledes ud?", "acceptedAnswer": {"@type": "Answer", "text": "PrestaShop gemmer variantens pris som et till\u00e6g til basisproduktet. SmartPack l\u00e6gger de to bel\u00f8b sammen ved import, s\u00e5 prisen i SmartPack er den samlede pris."}}, {"@type": "Question", "name": "Vores deaktiverede produkter kommer ikke ind.", "acceptedAnswer": {"@type": "Answer", "text": "Det er som designet. Inaktive produkter importeres ikke, medmindre I sl\u00e5r Importer inaktive produkter til."}}, {"@type": "Question", "name": "Genkendes vores pakkeshopmodul?", "acceptedAnswer": {"@type": "Answer", "text": "Hvis det gemmer data i SmartPacks eget format, Shipmondo-format eller Webshipper-format, ja. Bruger I et andet modul, skal formatet afklares f\u00f8rst."}}, {"@type": "Question", "name": "Kan vi begr\u00e6nse hvilke ordrer der hentes?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Ud over statusmapping kan I s\u00e6tte et interval for hvilke ordrenumre der importeres, hvilket er nyttigt ved opstart p\u00e5 en butik med historik."}}, {"@type": "Question", "name": "Hvor lander trackingnummeret i PrestaShop?", "acceptedAnswer": {"@type": "Answer", "text": "P\u00e5 fragtlinjen p\u00e5 ordren, n\u00e5r ordren afsluttes i SmartPack."}}]}</script>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til PrestaShop | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder PrestaShop med lageret. Varianter som selvst&aelig;ndige varer, statusmapping, droppoint i tre formater og tracking p&aring; fragtlinjen.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/prestashop">
+
+  <meta property="og:title" content="Lagersystem til PrestaShop | SmartPack WMS">
+  <meta property="og:description" content="Fra PrestaShop-ordre til pakket forsendelse. Varianter som egne varer, statusmapping og tracking tilbage p&aring; fragtlinjen.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/prestashop">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "PrestaShop",
+          "item": "https://smartpack.dk/integrationer/prestashop"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med PrestaShop. Ordrer, produkter og varianter hentes ind, og lagerbeholdning, ordrestatus og trackingnummer sendes tilbage til butikken.",
+      "url": "https://smartpack.dk/integrationer/prestashop",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvorfor ser variantpriserne anderledes ud?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PrestaShop gemmer variantens pris som et till\u00e6g til basisproduktet. SmartPack l\u00e6gger de to bel\u00f8b sammen ved import, s\u00e5 prisen i SmartPack er den samlede pris kunden betaler."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vores deaktiverede produkter kommer ikke ind.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Det er som designet. Inaktive produkter importeres ikke, medmindre I sl\u00e5r Importer inaktive produkter til i indstillingerne."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Genkendes vores pakkeshopmodul?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hvis det gemmer data i SmartPacks eget format, Shipmondo-format eller Webshipper-format, ja. Bruger I et andet modul, afklarer vi formatet ved opstart."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi begr\u00e6nse hvilke ordrer der hentes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Ud over statusmapping kan I s\u00e6tte et interval for hvilke ordrenumre der importeres, hvilket er nyttigt ved opstart p\u00e5 en butik med historik."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvor lander trackingnummeret i PrestaShop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "P\u00e5 fragtlinjen p\u00e5 ordren, n\u00e5r ordren afsluttes i SmartPack. Det er d\u00e9r kunden og jeres support kigger."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvorfor kommer moms ikke automatisk med?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PrestaShop leverer priser uden moms via API'et. Derfor angiver I selv den sats, der skal l\u00e6gges p\u00e5 ved import, s\u00e5 tallene i SmartPack matcher butikken."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=5">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container">
-<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-<div class="int-page__hero"><div>
-<img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Prestashop.png" alt="PrestaShop logo" class="int-page__logo" width="512" height="512">
-</div><div class="int-page__hero-content">
-<div class="int-page__cat">Webshop</div>
-<h1 class="int-page__title">SmartPack <span>+ PrestaShop</span></h1>
-<p class="int-page__intro">PrestaShop-integrationen henter ordrer, varer og varianter ind i SmartPack og skriver lager, status og trackingnummer tilbage. Varianter bliver selvst&aelig;ndige varer med eget SKU, s&aring; plukket rammer den rigtige st&oslash;rrelse og farve.</p>
-<div class="int-page__cta-row">
-<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
-<a href="../priser" class="btn btn--ghost">Se priser</a>
-</div></div></div>
-<div class="int-page__body"><div class="int-page__main">
-<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
-<strong>Kort fortalt</strong>
-<p>Ordrer og produkter hentes fra PrestaShop med statusmapping, I selv styrer. SmartPack skriver disponibel beholdning, ordrestatus og trackingnummer tilbage, og trackingnummeret lander p&aring; fragtlinjen p&aring; ordren.</p>
-</div></div>
-<h2>Hvad er PrestaShop?</h2>
-<p>PrestaShop er en open source e-handelsplatform, som k&oslash;rer p&aring; jeres eget hosting og udvides med moduler. Den bruges bredt i Europa og findes i mange forskellige ops&aelig;tninger.</p>
-<p>Ligesom p&aring; andre open source-platforme er det modulerne, der afg&oslash;r, hvordan data ser ud i ordren. Det g&aelig;lder is&aelig;r pakkeshopvalg og priser p&aring; varianter.</p>
-<h2>Hvad integrationen g&oslash;r</h2>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div>
-<h3>Varianter som rigtige varer</h3><p>Hver variant bliver en selvst&aelig;ndig vare i SmartPack med eget SKU og et eksternt ID p&aring; formen produkt-id:variant-id. Det er varianten, der plukkes, ikke for&aelig;lderproduktet.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128260;</div><div>
-<h3>Statusmapping I selv styrer</h3><p>I v&aelig;lger, hvilke PrestaShop-statusser der importeres, og hvad de svarer til i SmartPack. Der er separate statusser for afsluttet, afhentning, annulleret, under behandling og fejl.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128205;</div><div>
-<h3>Droppoint i tre formater</h3><p>Integrationen l&aelig;ser pakkeshopoplysninger i SmartPacks eget format samt i Shipmondo- og Webshipper-format direkte fra leveringsadressens felter.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128666;</div><div>
-<h3>Tracking p&aring; fragtlinjen</h3><p>N&aring;r ordren afsluttes, skrives trackingnummeret p&aring; fragtlinjen p&aring; ordren i PrestaShop, s&aring; kunden kan se det det rigtige sted.</p></div></div>
-<h2>Hvad synkroniseres hvilken vej?</h2>
-<p>S&aring;dan fordeler dataene sig.</p>
-<div class="int-page__flow">
-<div class="int-page__flow-col"><h3>PrestaShop til SmartPack</h3><ul>
-<li>Ordrelinjer, leveringsadresse, faktureringsadresse og fragtlinje</li>
-<li>Gavepakke-linje, betalingsmetode og kundebem&aelig;rkning</li>
-<li>Ordrenummer og reference</li>
-<li>SKU, navn, v&aelig;gt, normalpris og kostpris</li>
-<li>Stregkoder, kategorier og billede-URL</li>
-<li>Lagerbeholdning og varianter som selvst&aelig;ndige varer</li>
-<li>Droppoint-information i SmartPack-, Shipmondo- eller Webshipper-format</li>
-</ul></div>
-<div class="int-page__flow-col"><h3>SmartPack til PrestaShop</h3><ul>
-<li>Disponibel lagerbeholdning</li>
-<li>SKU, v&aelig;gt og stregkoder</li>
-<li>Normalpris og kostpris, hvis retningen er sl&aring;et til</li>
-<li>Modtageradresse og ordrenote</li>
-<li>Ordrestatus for under behandling, afsluttet, afhentning og annulleret</li>
-<li>Trackingnummer p&aring; fragtlinjen ved afslutning</li>
-</ul></div></div>
-<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
-<div class="int-page__step"><div class="int-page__step-num">1</div>
-<div class="int-page__step-body"><h3>Forbind butikken</h3><p>Indtast URL til jeres PrestaShop-butik under PrestaShop-indstillingerne.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">2</div>
-<div class="int-page__step-body"><h3>S&aelig;t momssats og billedst&oslash;rrelse</h3><p>PrestaShop leverer priser uden moms. Angiv den procentsats, der skal l&aelig;gges p&aring; ved import, og v&aelig;lg hvilken billedvariant der skal hentes.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">3</div>
-<div class="int-page__step-body"><h3>Map ordrestatusser</h3><p>V&aelig;lg hvilke PrestaShop-statusser der importeres, og hvilke statusser der skal s&aelig;ttes ved afsluttet, afhentning, annulleret, under behandling og fejl.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">4</div>
-<div class="int-page__step-body"><h3>Beslut om inaktive produkter skal med</h3><p>Som standard importeres deaktiverede produkter ikke. Skal de med, sl&aring;s indstillingen til.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">5</div>
-<div class="int-page__step-body"><h3>Sl&aring; automatisk afslutning til</h3><p>Hvis PrestaShop skal opdateres, n&aring;r ordren er pakket, sl&aring;s Afslut ordrer automatisk til. Test derefter en ordre igennem.</p></div></div>
-<h2>Det g&oslash;r integrationen ikke</h2>
-<p>F&oslash;lgende er ikke underst&oslash;ttet:</p>
-<ul class="int-page__limits">
-<li>Dimensioner p&aring; produkter synkroniseres ikke.</li>
-<li>Produktbeskrivelse synkroniseres ikke.</li>
-<li>Producent synkroniseres ikke.</li>
-<li>Ordrelinjer kan ikke opdateres tilbage til PrestaShop.</li>
-<li>Leveringsmetoden p&aring; en ordre kan ikke &aelig;ndres tilbage til PrestaShop.</li>
-</ul>
-<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
-<div class="int-page__faq">
-<details><summary>Hvorfor ser variantpriserne anderledes ud?</summary><div>PrestaShop gemmer variantens pris som et till&aelig;g til basisproduktet. SmartPack l&aelig;gger de to bel&oslash;b sammen ved import, s&aring; prisen i SmartPack er den samlede pris.</div></details>
-<details><summary>Vores deaktiverede produkter kommer ikke ind.</summary><div>Det er som designet. Inaktive produkter importeres ikke, medmindre I sl&aring;r Importer inaktive produkter til.</div></details>
-<details><summary>Genkendes vores pakkeshopmodul?</summary><div>Hvis det gemmer data i SmartPacks eget format, Shipmondo-format eller Webshipper-format, ja. Bruger I et andet modul, skal formatet afklares f&oslash;rst.</div></details>
-<details><summary>Kan vi begr&aelig;nse hvilke ordrer der hentes?</summary><div>Ja. Ud over statusmapping kan I s&aelig;tte et interval for hvilke ordrenumre der importeres, hvilket er nyttigt ved opstart p&aring; en butik med historik.</div></details>
-<details><summary>Hvor lander trackingnummeret i PrestaShop?</summary><div>P&aring; fragtlinjen p&aring; ordren, n&aring;r ordren afsluttes i SmartPack.</div></details>
-</div>
-</div><div class="int-page__sidebar">
-<div class="int-page__cta-box"><h3>K&oslash;rer I PrestaShop?</h3><p>Book en demo, s&aring; gennemg&aring;r vi statusmapping og pakkeshopmodul for jeres butik.</p>
-<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
-</div>
-<div class="int-page__related"><h3>Relaterede integrationer</h3>
-<div class="int-page__related-list">
-<a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
-<a href="magento" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2 logo" width="128" height="128">Magento 2</a>
-<a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
-</div></div>
-</div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Prestashop.png" alt="PrestaShop logo" class="sp-hero-logo" width="512" height="512">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Webshop-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>PrestaShop</span></h1>
+        <p class="int-page__intro"><strong>F&aring; PrestaShop og lageret til at arbejde som &eacute;t system.</strong><br><br>SmartPack henter ordrer, varer og varianter ind fra PrestaShop og skriver lager, status og trackingnummer tilbage. Varianter bliver selvst&aelig;ndige varer med eget SKU, s&aring; plukket rammer den rigtige st&oslash;rrelse og farve.<br><br>Statusmapping og ordrenummerinterval g&oslash;r det til at g&aring; til, ogs&aring; p&aring; en butik med lang historik.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration via PrestaShops API.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Pr. variant</span><span class="sp-stat-label">Hver variant bliver en selvst&aelig;ndig vare med eget SKU i SmartPack</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Tre formater</span><span class="sp-stat-label">Droppoint l&aelig;ses i SmartPack-, Shipmondo- og Webshipper-format</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">PrestaShop-integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">PrestaShop styrer salget</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Produkter og varianter<br>Kunder<br>Checkout<br>Betaling<br>Webshop</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til jeres PrestaShop-butik</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128722;</span><h3>Webshop</h3><p>En PrestaShop-butik. SmartPack overtager lagerflowet og skriver lager, status og tracking tilbage.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#127917;</span><h3>Mange varianter</h3><p>S&aelig;lger I t&oslash;j, sko eller andet med mange varianter, plukkes den konkrete variant, ikke for&aelig;lderproduktet.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128337;</span><h3>Butik med historik</h3><p>Skal kun nye ordrer med over, kan importen begr&aelig;nses til et interval af ordrenumre.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en PrestaShop-ordre gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128722;</span><span class="sp-flow-label">PrestaShop<br>ordre</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>modtager</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pluk</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pak<br>&amp; fragt</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Status<br>&amp; tracking</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Kommer der flere beskeder om samme ordre hurtigt efter hinanden, venter systemet 15 sekunder og behandler den kun &eacute;n gang.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Ordrer</h3>
+            <ul class="sp-sync-list">
+              <li>Ordrelinjer, fragtlinje og gavepakke-linje</li>
+              <li>Leverings- og faktureringsadresse</li>
+              <li>Betalingsmetode og kundebem&aelig;rkning</li>
+              <li>Droppoint i tre formater</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>Produkter</h3>
+            <ul class="sp-sync-list">
+              <li>SKU, navn, v&aelig;gt og priser</li>
+              <li>Stregkoder, kategorier og billede-URL</li>
+              <li>Varianter som selvst&aelig;ndige varer</li>
+              <li>Lagerbeholdning</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til PrestaShop</h3>
+            <ul class="sp-sync-list">
+              <li>Disponibel lagerbeholdning</li>
+              <li>Ordrestatus for behandling, afslutning og annullering</li>
+              <li>Trackingnummer p&aring; fragtlinjen</li>
+              <li>Modtageradresse og ordrenote</li>
+            </ul></div>
+        </div>
+        <h2>PrestaShop-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Varianter som rigtige varer</strong><span>Hver variant bliver en selvst&aelig;ndig vare med eget SKU og et eksternt ID p&aring; formen produkt-id:variant-id.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Statusmapping I selv styrer</strong><span>I v&aelig;lger hvilke statusser der importeres, og hvad der s&aelig;ttes ved afsluttet, afhentning, annulleret, under behandling og fejl.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128205;</span><div><strong>Droppoint i tre formater</strong><span>Pakkeshopoplysninger l&aelig;ses i SmartPacks eget format samt i Shipmondo- og Webshipper-format direkte fra leveringsadressens felter.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128666;</span><div><strong>Tracking p&aring; fragtlinjen</strong><span>N&aring;r ordren afsluttes, skrives trackingnummeret p&aring; fragtlinjen p&aring; ordren, s&aring; kunden ser det det rigtige sted.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128181;</span><div><strong>Momssats I selv s&aelig;tter</strong><span>PrestaShop leverer priser uden moms. I angiver den procentsats, der skal l&aelig;gges p&aring; ved import.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128278;</span><div><strong>Ordrenummerinterval</strong><span>Importen kan begr&aelig;nses til bestemte ordrenumre, hvilket er nyttigt ved opstart p&aring; en butik med lang historik.</span></div></div>
+        </div>
+        <h2>S&aring;dan bliver en PrestaShop-variant til en vare</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Varianter er ikke undervarer i SmartPack. Hver variant bliver en selvst&aelig;ndig vare med sit eget eksterne ID, s&aring; plukket rammer den rigtige st&oslash;rrelse og farve.</p>
+        <div class="sp-formula">
+          <span class="cm"># Eksternt ID paa varianten</span><br>
+          eksternt id = <span class="kw">produkt-id:variant-id</span><br>
+          &nbsp;<br>
+          <span class="cm"># Pris paa varianten</span><br>
+          pris = basispris + <span class="kw">varianttillaeg</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">PrestaShop gemmer variantens pris som et till&aelig;g til basisproduktet. SmartPack l&aelig;gger de to bel&oslash;b sammen, s&aring; prisen i SmartPack er den samlede pris.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Deaktiverede produkter importeres ikke som standard. Skal de med, sl&aring;s Importer inaktive produkter til eksplicit.</span></div>
+        <h2>Priser, varianter og inaktive produkter</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Tre ting i PrestaShop opf&oslash;rer sig anderledes end i andre platforme. Kender I dem p&aring; forh&aring;nd, undg&aring;r I overraskelser ved opstart.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128181; Variantpris er et till&aelig;g</strong><span>PrestaShop gemmer variantens pris som et till&aelig;g til basisproduktet. SmartPack l&aelig;gger de to bel&oslash;b sammen, s&aring; prisen i SmartPack er den samlede pris.</span></div>
+          <div class="sp-location-item"><strong>&#128683; Inaktive produkter</strong><span>Deaktiverede produkter importeres ikke som standard. Skal de med, sl&aring;s indstillingen til eksplicit.</span></div>
+          <div class="sp-location-item"><strong>&#128202; Momssats ved import</strong><span>Priserne kommer uden moms fra PrestaShop. Den sats, I angiver i indstillingerne, l&aelig;gges p&aring; ved import.</span></div>
+          <div class="sp-location-item"><strong>&#128337; Dobbeltbehandling</strong><span>Kommer der flere beskeder om samme ordre hurtigt efter hinanden, venter systemet 15 sekunder og behandler den kun &eacute;n gang.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Dimensioner, produktbeskrivelse og producent synkroniseres <strong>ikke</strong>. Ordrelinjer og leveringsmetode kan heller ikke opdateres tilbage til PrestaShop.</span></div>
+        <h2>S&aring;dan forbinder du PrestaShop med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Forbind butikken</strong><p>Indtast URL til jeres PrestaShop-butik under PrestaShop-indstillingerne.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>S&aelig;t momssats og billedst&oslash;rrelse</strong><p>Angiv den momssats, der skal l&aelig;gges p&aring; PrestaShops priser uden moms, og v&aelig;lg hvilken billedvariant der skal hentes.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Map statusser og test</strong><p>V&aelig;lg hvilke statusser der importeres, og hvilke der s&aelig;ttes ved afsluttet, afhentning, annulleret, under behandling og fejl. K&oslash;r derefter en testordre igennem.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvorfor ser variantpriserne anderledes ud?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">PrestaShop gemmer variantens pris som et till&aelig;g til basisproduktet. SmartPack l&aelig;gger de to bel&oslash;b sammen ved import, s&aring; prisen i SmartPack er den samlede pris kunden betaler.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vores deaktiverede produkter kommer ikke ind.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Det er som designet. Inaktive produkter importeres ikke, medmindre I sl&aring;r Importer inaktive produkter til i indstillingerne.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Genkendes vores pakkeshopmodul?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Hvis det gemmer data i SmartPacks eget format, Shipmondo-format eller Webshipper-format, ja. Bruger I et andet modul, afklarer vi formatet ved opstart.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi begr&aelig;nse hvilke ordrer der hentes?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Ud over statusmapping kan I s&aelig;tte et interval for hvilke ordrenumre der importeres, hvilket er nyttigt ved opstart p&aring; en butik med historik.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvor lander trackingnummeret i PrestaShop?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">P&aring; fragtlinjen p&aring; ordren, n&aring;r ordren afsluttes i SmartPack. Det er d&eacute;r kunden og jeres support kigger.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvorfor kommer moms ikke automatisk med?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">PrestaShop leverer priser uden moms via API'et. Derfor angiver I selv den sats, der skal l&aelig;gges p&aring; ved import, s&aring; tallene i SmartPack matcher butikken.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I PrestaShop og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi gennemg&aring;r statusmapping, momssats og pakkeshopmodul for jeres butik.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I PrestaShop?</h3><p>Vi gennemg&aring;r statusmapping og pakkeshopmodul, s&aring; ordrerne lander rigtigt fra start.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver ordre og hver synkronisering logges, s&aring; I kan se hvad der er sket og hvorn&aring;r.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+          <a href="magento" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2 logo" width="128" height="128">Magento 2</a>
+          <a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

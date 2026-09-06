@@ -1,150 +1,334 @@
 <!DOCTYPE html>
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
-================================================================ -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartPack + WooCommerce | WMS-integration</title>
-<meta name="description" content="WooCommerce-integration til SmartPack WMS: webhooks oprettes automatisk, ordrer og varianter ind, lager pr. variant og trackingnummer retur.">
-<link rel="canonical" href="https://smartpack.dk/integrationer/woocommerce">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="SmartPack + WooCommerce">
-<meta property="og:description" content="WooCommerce-integration til SmartPack WMS: webhooks oprettes automatisk, ordrer og varianter ind, lager pr. variant og trackingnummer retur.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smartpack.dk/integrationer/woocommerce">
-<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-<link rel="stylesheet" href="int-page.css?v=4">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + WooCommerce", "description": "WooCommerce-integration til SmartPack WMS: webhooks oprettes automatisk, ordrer og varianter ind, lager pr. variant og trackingnummer retur.", "url": "https://smartpack.dk/integrationer/woocommerce", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "WooCommerce", "applicationCategory": "E-commerce platform"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "WooCommerce", "item": "https://smartpack.dk/integrationer/woocommerce"}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Skal vi selv ops\u00e6tte webhooks i WooCommerce?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack opretter dem selv efter f\u00f8rste fulde synkronisering og genopretter dem, hvis de bliver slettet eller peger et forkert sted hen."}}, {"@type": "Question", "name": "En ordre kom ikke ind i SmartPack. Hvad er der galt?", "acceptedAnswer": {"@type": "Answer", "text": "Ni ud af ti gange er ordrestatussen ikke p\u00e5 importlisten. Ordrer med en status, der ikke er valgt i indstillingerne, springes over, og det fremg\u00e5r af jobloggen."}}, {"@type": "Question", "name": "Vi f\u00e5r 401-fejl selvom n\u00f8glerne er rigtige.", "acceptedAnswer": {"@type": "Answer", "text": "Det sker typisk, n\u00e5r webserveren fjerner Authorization-headeren, hvilket blandt andet ses p\u00e5 ops\u00e6tninger bag Plesk og nginx. Sl\u00e5 Brug query string-autentificering til i indstillingerne."}}, {"@type": "Question", "name": "Hvordan h\u00e5ndteres variable produkter?", "acceptedAnswer": {"@type": "Answer", "text": "Hver variant bliver en selvst\u00e6ndig vare i SmartPack med reference til for\u00e6lderen. SmartPack henter varianterne pr. for\u00e6lderprodukt, s\u00e5 f\u00f8rste fulde synkronisering tager l\u00e6ngere tid ved mange produkter."}}, {"@type": "Question", "name": "Virker pakkeshop-valg fra vores checkout?", "acceptedAnswer": {"@type": "Answer", "text": "Det afh\u00e6nger af checkout-pluginnet. SmartPacks eget checkout-plugin, SmartCheckout og Homerunner, Webshipper, Shipmondo og Instabox l\u00e6ses korrekt. Bruger I et andet plugin, skal formatet afklares f\u00f8rst."}}]}</script>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til WooCommerce | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder WooCommerce med lageret. Webhooks oprettes automatisk, ordrer og varianter kommer ind, lager og tracking sendes tilbage.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/woocommerce">
+
+  <meta property="og:title" content="Lagersystem til WooCommerce | SmartPack WMS">
+  <meta property="og:description" content="Fra WooCommerce-ordre til pakket forsendelse. Webhooks oprettes automatisk, lager opdateres pr. variant, tracking sendes tilbage.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/woocommerce">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "WooCommerce",
+          "item": "https://smartpack.dk/integrationer/woocommerce"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med WooCommerce via butikkens REST API og webhooks. Ordrer, produkter og varianter synkroniseres ind, lagerbeholdning og ordrestatus sendes tilbage.",
+      "url": "https://smartpack.dk/integrationer/woocommerce",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Skal vi selv ops\u00e6tte webhooks i WooCommerce?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. SmartPack opretter dem selv efter f\u00f8rste fulde synkronisering, og genopretter dem hvis de bliver slettet eller peger et forkert sted hen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "En ordre kom ikke ind i SmartPack. Hvad er der galt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oftest er ordrestatussen ikke p\u00e5 importlisten. Ordrer med en status, der ikke er valgt i indstillingerne, springes over, og \u00e5rsagen st\u00e5r i jobloggen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vi f\u00e5r 401-fejl, selvom API-n\u00f8glerne er rigtige.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Det sker typisk, n\u00e5r webserveren fjerner Authorization-headeren, hvilket blandt andet ses p\u00e5 ops\u00e6tninger bag Plesk og nginx. L\u00f8sningen er at sl\u00e5 query string-autentificering til i indstillingerne."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvordan h\u00e5ndteres variable produkter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hver variant bliver en selvst\u00e6ndig vare i SmartPack med reference til for\u00e6lderen, og lageret opdateres p\u00e5 varianten. SmartPack henter varianterne pr. for\u00e6lderprodukt, s\u00e5 f\u00f8rste fulde synkronisering tager l\u00e6ngere tid ved store kataloger."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Virker pakkeshopvalg fra vores checkout?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Det afh\u00e6nger af pluginnet. SmartPacks eget checkout-plugin, SmartCheckout og Homerunner, Webshipper, Shipmondo og Instabox l\u00e6ses korrekt. Bruger I et andet plugin, afklarer vi formatet ved opstart."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er WooCommerce-integrationen inkluderet i prisen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=5">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container">
-<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-<div class="int-page__hero"><div>
-<img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" class="int-page__logo" width="1024" height="1024">
-</div><div class="int-page__hero-content">
-<div class="int-page__cat">Webshop</div>
-<h1 class="int-page__title">SmartPack <span>+ WooCommerce</span></h1>
-<p class="int-page__intro">SmartPack forbinder til WooCommerce via butikkens REST API og opretter selv de webhooks, der skal til. Ordrer og produkter kommer ind i realtid, og lagerbeholdningen skubbes tilbage pr. produkt og variant.</p>
-<div class="int-page__cta-row">
-<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
-<a href="../priser" class="btn btn--ghost">Se priser</a>
-</div></div></div>
-<div class="int-page__body"><div class="int-page__main">
-<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
-<strong>Kort fortalt</strong>
-<p>SmartPack registrerer automatisk seks webhooks i WooCommerce ved f&oslash;rste fulde synkronisering, s&aring; ordrer og produkter kommer ind uden polling. Lagerbeholdningen skrives tilbage pr. variant, og ordren kan s&aelig;ttes til completed i WooCommerce, n&aring;r den er pakket.</p>
-</div></div>
-<h2>Hvad er WooCommerce?</h2>
-<p>WooCommerce er e-handelspluginnet til WordPress og er en af de mest udbredte m&aring;der at drive webshop p&aring; i Danmark. Butikken k&oslash;rer p&aring; jeres eget hosting, og funktionaliteten udvides med plugins.</p>
-<p>Den frihed er ogs&aring; grunden til, at to WooCommerce-butikker sj&aelig;ldent ser ens ud. Derfor er der en r&aelig;kke indstillinger i integrationen, som skal matche netop jeres ops&aelig;tning, is&aelig;r omkring ordrestatusser og checkout-plugin.</p>
-<h2>Hvad integrationen g&oslash;r</h2>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128279;</div><div>
-<h3>Webhooks oprettes automatisk</h3><p>SmartPack registrerer selv seks webhooks i WooCommerce ved f&oslash;rste fulde synkronisering, og genregistrerer dem, hvis de forsvinder eller peger forkert. I skal ikke ind i WooCommerce og ops&aelig;tte noget manuelt.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div>
-<h3>Ordrer og varianter ind</h3><p>Nye, &aelig;ndrede og slettede ordrer og produkter kommer ind via webhooks. Variable produkter hentes som selvst&aelig;ndige varer i SmartPack med reference til for&aelig;lderproduktet.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div>
-<h3>Lager pr. variant retur</h3><p>N&aring;r beholdningen &aelig;ndrer sig i SmartPack, opdateres stock_quantity p&aring; den konkrete variant i WooCommerce, ikke p&aring; for&aelig;lderproduktet. Lagerstyring sl&aring;s automatisk til, n&aring;r der er beholdning.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#9989;</div><div>
-<h3>Ordren lukkes automatisk</h3><p>Er Afslut ordrer sl&aring;et til, s&aelig;ttes ordren til completed i WooCommerce, n&aring;r den pakkes i SmartPack. Annulleres den i SmartPack, s&aelig;ttes den til cancelled.</p></div></div>
-<h2>Hvad synkroniseres hvilken vej?</h2>
-<p>Integrationen k&oslash;rer p&aring; WooCommerces REST API og webhooks. Her er hvad der flytter sig hver vej.</p>
-<div class="int-page__flow">
-<div class="int-page__flow-col"><h3>WooCommerce til SmartPack</h3><ul>
-<li>Ordrer via webhook ved oprettelse, opdatering og sletning</li>
-<li>Leveringsadresse, med fallback til faktureringsadressen hvis den er tom</li>
-<li>E-mail og telefon fra faktureringsadressen</li>
-<li>Ordrelinjer med SKU, antal, pris og momssats</li>
-<li>Leveringsmetode og pakkeshop-adresse</li>
-<li>Produkter og varianter via webhook, filtreret p&aring; produktstatus</li>
-</ul></div>
-<div class="int-page__flow-col"><h3>SmartPack til WooCommerce</h3><ul>
-<li>Lagerbeholdning pr. produkt og variant</li>
-<li>SKU, v&aelig;gt, m&aring;l, stregkoder, salgspris, normalpris og indk&oslash;bspris</li>
-<li>Producentnavn, leverand&oslash;rnavn og leverand&oslash;rnummer</li>
-<li>Leveringsadresse og kundekommentar p&aring; ordren</li>
-<li>Ordrestatus completed ved pakning og cancelled ved annullering</li>
-</ul></div></div>
-<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
-<div class="int-page__step"><div class="int-page__step-num">1</div>
-<div class="int-page__step-body"><h3>Opret API-n&oslash;gler i WooCommerce</h3><p>Lav et n&oslash;glepar i WooCommerce og not&eacute;r Consumer Key og Consumer Secret.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">2</div>
-<div class="int-page__step-body"><h3>Udfyld forbindelsen i SmartPack</h3><p>Under WooCommerce-fanen indtastes butiks-URL uden skr&aring;streg til sidst, API-n&oslash;gle og API-hemmelighed.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">3</div>
-<div class="int-page__step-body"><h3>V&aelig;lg hvilke statusser der skal med</h3><p>Angiv hvilke ordrestatusser (typisk processing) og hvilke produktstatusser (typisk publish) der skal importeres. Ordrer med en status uden for listen bliver ikke hentet ind.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">4</div>
-<div class="int-page__step-body"><h3>K&oslash;r f&oslash;rste fulde synkronisering</h3><p>N&aring;r den er k&oslash;rt igennem, opretter SmartPack selv de seks webhooks i WooCommerce. Derefter kommer &aelig;ndringer ind i realtid.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">5</div>
-<div class="int-page__step-body"><h3>Sl&aring; Afslut ordrer til</h3><p>Hvis WooCommerce skal opdateres til completed, n&aring;r ordren pakkes, sl&aring;s indstillingen til her. Test med en ordre bagefter.</p></div></div>
-<h2>Det g&oslash;r integrationen ikke</h2>
-<p>F&oslash;lgende er bevidst ikke underst&oslash;ttet i integrationen:</p>
-<ul class="int-page__limits">
-<li>Ordrelinjer kan ikke opdateres tilbage til WooCommerce.</li>
-<li>Leveringsmetoden p&aring; en ordre kan ikke &aelig;ndres tilbage til WooCommerce.</li>
-<li>Produktbeskrivelser og billeder synkroniseres ikke til WooCommerce.</li>
-<li>Toldtarif, oprindelsesland og produkttags synkroniseres ikke til WooCommerce.</li>
-</ul>
-<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
-<div class="int-page__faq">
-<details><summary>Skal vi selv ops&aelig;tte webhooks i WooCommerce?</summary><div>Nej. SmartPack opretter dem selv efter f&oslash;rste fulde synkronisering og genopretter dem, hvis de bliver slettet eller peger et forkert sted hen.</div></details>
-<details><summary>En ordre kom ikke ind i SmartPack. Hvad er der galt?</summary><div>Ni ud af ti gange er ordrestatussen ikke p&aring; importlisten. Ordrer med en status, der ikke er valgt i indstillingerne, springes over, og det fremg&aring;r af jobloggen.</div></details>
-<details><summary>Vi f&aring;r 401-fejl selvom n&oslash;glerne er rigtige.</summary><div>Det sker typisk, n&aring;r webserveren fjerner Authorization-headeren, hvilket blandt andet ses p&aring; ops&aelig;tninger bag Plesk og nginx. Sl&aring; Brug query string-autentificering til i indstillingerne.</div></details>
-<details><summary>Hvordan h&aring;ndteres variable produkter?</summary><div>Hver variant bliver en selvst&aelig;ndig vare i SmartPack med reference til for&aelig;lderen. SmartPack henter varianterne pr. for&aelig;lderprodukt, s&aring; f&oslash;rste fulde synkronisering tager l&aelig;ngere tid ved mange produkter.</div></details>
-<details><summary>Virker pakkeshop-valg fra vores checkout?</summary><div>Det afh&aelig;nger af checkout-pluginnet. SmartPacks eget checkout-plugin, SmartCheckout og Homerunner, Webshipper, Shipmondo og Instabox l&aelig;ses korrekt. Bruger I et andet plugin, skal formatet afklares f&oslash;rst.</div></details>
-</div>
-</div><div class="int-page__sidebar">
-<div class="int-page__cta-box"><h3>K&oslash;rer I WooCommerce?</h3><p>Book en demo, s&aring; gennemg&aring;r vi jeres ordrestatusser og checkout-plugin sammen.</p>
-<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
-</div>
-<div class="int-page__related"><h3>Relaterede integrationer</h3>
-<div class="int-page__related-list">
-<a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
-<a href="magento" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2 logo" width="128" height="128">Magento 2</a>
-<a href="prestashop" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Prestashop.png" alt="PrestaShop logo" width="128" height="128">PrestaShop</a>
-</div></div>
-</div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Webshop-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>WooCommerce</span></h1>
+        <p class="int-page__intro"><strong>F&aring; WooCommerce og lageret til at arbejde som &eacute;t system.</strong><br><br>SmartPack overtager lagerarbejdet, n&aring;r ordren er lagt i WooCommerce. Ordrer og produkter kommer ind via webhooks, plukket bliver styret og scanvalideret, og lagerbeholdningen skrives tilbage pr. variant.<br><br>Fra &eacute;n WooCommerce-butik til flere butikker mod samme lager.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration via WooCommerce REST API og webhooks.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Realtid</span><span class="sp-stat-label">Ordrer og produkter kommer ind via webhooks, ikke polling</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">6 webhooks</span><span class="sp-stat-label">Oprettes automatisk. I skal ikke ind i WooCommerce</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">Integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">WooCommerce styrer salget</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Produkter<br>Kunder<br>Checkout<br>Betaling<br>Webshop</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Fra &eacute;n WooCommerce-butik til flere lagre</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128722;</span><h3>Webshop</h3><p>En WooCommerce-butik. SmartPack overtager lagerflowet: pluk, pak, fragtlabel og lageropdatering tilbage til shoppen.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#127760;</span><h3>Flere butikker</h3><p>K&oslash;rer I flere WooCommerce-installationer, f&aring;r hver sin integration i SmartPack, men de deler lager og pluk.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127970;</span><h3>Butik plus B2B</h3><p>Webshoppen k&oslash;rer i WooCommerce, mens B2B-ordrer kommer fra ERP. Begge dele lander i samme plukflow i SmartPack.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en WooCommerce-ordre gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128722;</span><span class="sp-flow-label">WooCommerce<br>ordre</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>modtager</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pluk</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pak<br>&amp; fragt</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Status<br>tilbage</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Via webhooks fra WooCommerce, ikke polling. Kun ordrer med en status I har valgt bliver hentet ind.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Ordrer</h3>
+            <ul class="sp-sync-list">
+              <li>Ordrelinjer med SKU, antal, pris og moms</li>
+              <li>Leveringsadresse med fallback til fakturaadressen</li>
+              <li>E-mail og telefon</li>
+              <li>Leveringsmetode og pakkeshop</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>Produkter</h3>
+            <ul class="sp-sync-list">
+              <li>SKU og stregkoder</li>
+              <li>Varianter som selvst&aelig;ndige varer</li>
+              <li>V&aelig;gt og m&aring;l</li>
+              <li>Priser og leverand&oslash;r</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til WooCommerce</h3>
+            <ul class="sp-sync-list">
+              <li>Lager pr. variant</li>
+              <li>Ordrestatus completed ved pakning</li>
+              <li>Annullering</li>
+              <li>Leveringsadresse og kundekommentar</li>
+            </ul></div>
+        </div>
+        <h2>WooCommerce-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128279;</span><div><strong>Webhooks uden ops&aelig;tning</strong><span>SmartPack registrerer selv seks webhooks i butikken ved f&oslash;rste fulde synkronisering og genopretter dem, hvis de forsvinder eller peger forkert.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128196;</span><div><strong>Statusfiltrering</strong><span>I v&aelig;lger hvilke ordrestatusser og produktstatusser der importeres. Ordrer uden for listen springes over, og det fremg&aring;r af jobloggen.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#127991;</span><div><strong>Varianter som rigtige varer</strong><span>Variable produkter hentes som selvst&aelig;ndige varer med reference til for&aelig;lderen, s&aring; plukket rammer den rigtige st&oslash;rrelse og farve.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Lagerstyring sl&aring;s til selv</strong><span>N&aring;r der er beholdning p&aring; en vare, aktiverer SmartPack lagerstyring p&aring; den i WooCommerce og fjerner den igen ved nul.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128274;</span><div><strong>Autentificering bag proxy</strong><span>K&oslash;rer butikken bag en reverse proxy der fjerner Authorization-headeren, kan integrationen skifte til query string-autentificering.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Pakkeshop fra checkout</strong><span>Pakkeshopvalg l&aelig;ses fra SmartPacks eget checkout-plugin, SmartCheckout og Homerunner, Webshipper, Shipmondo og Instabox.</span></div></div>
+        </div>
+        <h2>De seks webhooks SmartPack opretter</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Ved f&oslash;rste fulde synkronisering registrerer SmartPack selv seks webhooks i butikken. De d&aelig;kker hele livscyklussen p&aring; b&aring;de ordrer og produkter, s&aring; der ikke skal polles.</p>
+        <div class="sp-formula">
+          <span class="cm"># Webhooks SmartPack registrerer i WooCommerce</span><br>
+          order.created &nbsp; &nbsp; <span class="kw">ny ordre</span><br>
+          order.updated &nbsp; &nbsp; <span class="kw">aendret ordre</span><br>
+          order.deleted &nbsp; &nbsp; <span class="kw">slettet ordre</span><br>
+          product.created &nbsp; <span class="kw">ny vare</span><br>
+          product.updated &nbsp; <span class="kw">aendret vare</span><br>
+          product.deleted &nbsp; <span class="kw">slettet vare</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Forsvinder en webhook, eller peger den forkert, genregistrerer SmartPack den ved n&aelig;ste fulde synkronisering. I skal ikke selv holde &oslash;je.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Kun ordrer med en status, I har valgt i indstillingerne, hentes ind. Ankommer en ordre med en anden status, springes den over, og &aring;rsagen fremg&aring;r af jobloggen.</span></div>
+        <h2>Hvad SmartPack skriver tilbage til WooCommerce</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Tilbagesynkroniseringen er bevidst afgr&aelig;nset. Lager og status skrives altid, mens produktdata kun skrives, hvis I sl&aring;r retningen til.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128202; Lager pr. variant</strong><span>Beholdningen skrives p&aring; den konkrete variant. Lagerstyring aktiveres automatisk, n&aring;r der er beholdning, og fjernes igen ved nul.</span></div>
+          <div class="sp-location-item"><strong>&#127991; Produktdata</strong><span>SKU, v&aelig;gt, m&aring;l, stregkoder, salgspris, normalpris, indk&oslash;bspris, producent og leverand&oslash;r kan skrives tilbage.</span></div>
+          <div class="sp-location-item"><strong>&#9989; Ordrestatus</strong><span>Ordren s&aelig;ttes til completed, n&aring;r den pakkes, og til cancelled, hvis den annulleres i SmartPack.</span></div>
+          <div class="sp-location-item"><strong>&#128205; Adresse og note</strong><span>Leveringsadresse og kundekommentar kan opdateres p&aring; ordren i WooCommerce.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Produktbeskrivelser, billeder, toldtarif, oprindelsesland og produkttags skrives <strong>ikke</strong> til WooCommerce. Det samme g&aelig;lder ordrelinjer og leveringsmetode: de kan ikke opdateres tilbage.</span></div>
+        <h2>S&aring;dan forbinder du WooCommerce med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Opret API-n&oslash;gler i WooCommerce</strong><p>Lav et n&oslash;glepar i WooCommerce og not&eacute;r Consumer Key og Consumer Secret.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Udfyld forbindelsen i SmartPack</strong><p>Indtast butiks-URL uden skr&aring;streg til sidst, API-n&oslash;gle og API-hemmelighed. V&aelig;lg hvilke ordre- og produktstatusser der skal importeres.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>K&oslash;r f&oslash;rste synkronisering og test</strong><p>Efter f&oslash;rste fulde synkronisering opretter SmartPack selv webhooks i WooCommerce. L&aelig;g derefter en testordre og f&oslash;lg den til pakket ordre.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Skal vi selv ops&aelig;tte webhooks i WooCommerce?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. SmartPack opretter dem selv efter f&oslash;rste fulde synkronisering, og genopretter dem hvis de bliver slettet eller peger et forkert sted hen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>En ordre kom ikke ind i SmartPack. Hvad er der galt?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Oftest er ordrestatussen ikke p&aring; importlisten. Ordrer med en status, der ikke er valgt i indstillingerne, springes over, og &aring;rsagen st&aring;r i jobloggen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vi f&aring;r 401-fejl, selvom API-n&oslash;glerne er rigtige.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Det sker typisk, n&aring;r webserveren fjerner Authorization-headeren, hvilket blandt andet ses p&aring; ops&aelig;tninger bag Plesk og nginx. L&oslash;sningen er at sl&aring; query string-autentificering til i indstillingerne.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvordan h&aring;ndteres variable produkter?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Hver variant bliver en selvst&aelig;ndig vare i SmartPack med reference til for&aelig;lderen, og lageret opdateres p&aring; varianten. SmartPack henter varianterne pr. for&aelig;lderprodukt, s&aring; f&oslash;rste fulde synkronisering tager l&aelig;ngere tid ved store kataloger.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Virker pakkeshopvalg fra vores checkout?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Det afh&aelig;nger af pluginnet. SmartPacks eget checkout-plugin, SmartCheckout og Homerunner, Webshipper, Shipmondo og Instabox l&aelig;ses korrekt. Bruger I et andet plugin, afklarer vi formatet ved opstart.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er WooCommerce-integrationen inkluderet i prisen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk&oslash;b.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I WooCommerce og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi viser jer pr&aelig;cis, hvad der sker med jeres ordrer, lager og fragt, og hvad ops&aelig;tningen kr&aelig;ver af jer.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I WooCommerce?</h3><p>Vi gennemg&aring;r jeres ordrestatusser og checkout-plugin, s&aring; I ved hvad der skal s&aelig;ttes op.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver webhook og hver synkronisering logges. Kom en ordre ikke ind, kan I se pr&aelig;cis hvorfor, og hvilken status den havde.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+          <a href="magento" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Magento2.png" alt="Magento 2 logo" width="128" height="128">Magento 2</a>
+          <a href="prestashop" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Prestashop.png" alt="PrestaShop logo" width="128" height="128">PrestaShop</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

@@ -1,155 +1,331 @@
 <!DOCTYPE html>
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PAA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se _TRACKING_TEMPLATE.html i roden.
-================================================================ -->
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartPack + Uniconta | WMS-integration</title>
-<meta name="description" content="Uniconta-integration til SmartPack WMS: ordrer, indk&oslash;b og leverand&oslash;rer ind, f&oslash;lgeseddel, faktura og lagerkladder til opt&aelig;lling og flytning retur.">
-<link rel="canonical" href="https://smartpack.dk/integrationer/uniconta">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="SmartPack + Uniconta">
-<meta property="og:description" content="Uniconta-integration til SmartPack WMS: ordrer, indk&oslash;b og leverand&oslash;rer ind, f&oslash;lgeseddel, faktura og lagerkladder til opt&aelig;lling og flytning retur.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smartpack.dk/integrationer/uniconta">
-<meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-<link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-<link rel="stylesheet" href="int-page.css?v=4">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "SmartPack + Uniconta", "description": "Uniconta-integration til SmartPack WMS: ordrer, indk\u00f8b og leverand\u00f8rer ind, f\u00f8lgeseddel, faktura og lagerkladder til opt\u00e6lling og flytning retur.", "url": "https://smartpack.dk/integrationer/uniconta", "inLanguage": "da-DK", "isPartOf": {"@type": "WebSite", "name": "SmartPack", "url": "https://smartpack.dk"}, "about": {"@type": "SoftwareApplication", "name": "Uniconta", "applicationCategory": "ERP"}, "publisher": {"@type": "Organization", "name": "SmartPack", "url": "https://smartpack.dk"}, "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Uniconta", "item": "https://smartpack.dk/integrationer/uniconta"}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Vi f\u00e5r en ItemIsOnHold-fejl. Hvad betyder det?", "acceptedAnswer": {"@type": "Answer", "text": "Varen er sp\u00e6rret i Uniconta. Det blokerer posteringen for hele den ber\u00f8rte ordre, og sp\u00e6rringen skal fjernes i Uniconta, f\u00f8r handlingen kan gennemf\u00f8res."}}, {"@type": "Question", "name": "Hvor hurtigt kommer en ordre ind?", "acceptedAnswer": {"@type": "Answer", "text": "\u00c6ndrede varer, ordrer og leverand\u00f8rer synkroniseres hvert tiende minut, og ordrer og fulfillments behandles hvert femte. Ved en ordreh\u00e6ndelse fra Uniconta venter SmartPack fem sekunder, s\u00e5 Uniconta n\u00e5r at f\u00e6rdigg\u00f8re sine egne opdateringer p\u00e5 ordren."}}, {"@type": "Question", "name": "Hvad sker der med blokerede kunder?", "acceptedAnswer": {"@type": "Answer", "text": "Ordren importeres, men tagges automatisk, s\u00e5 I kan holde den ude af plukket. Det g\u00e6lder b\u00e5de blokerede debitorer og kunder, der overskrider kreditgr\u00e6nsen."}}, {"@type": "Question", "name": "Kan vi bruge integrationen med flere lagre?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. I normal tilstand mappes hvert Uniconta-lagersted til en SmartPack-lokation, og bev\u00e6gelser posteres pr. lokation."}}, {"@type": "Question", "name": "Kan vi filtrere plukket p\u00e5 dimensioner?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. DIM1 til DIM5 fra ordren bliver til tags i SmartPack, og tags kan bruges i plukprofilerne."}}]}</script>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til Uniconta | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder Uniconta med lageret. Ordrer, indk&oslash;b og leverand&oslash;rer ind, f&oslash;lgeseddel, faktura og lagerkladder til opt&aelig;lling og flytning retur.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/uniconta">
+
+  <meta property="og:title" content="Lagersystem til Uniconta | SmartPack WMS">
+  <meta property="og:description" content="Fra Uniconta-ordre til pakket forsendelse. F&oslash;lgeseddel, faktura, opt&aelig;lling og flytning posteres tilbage via lagerkladder.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/uniconta">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Uniconta",
+          "item": "https://smartpack.dk/integrationer/uniconta"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med ERP-systemet Uniconta. Varer, salgsordrer, indk\u00f8bsordrer og leverand\u00f8rer hentes ind, og f\u00f8lgesedler, fakturaer, modtagelser, opt\u00e6llinger og lagerflytninger posteres tilbage via lagerkladder.",
+      "url": "https://smartpack.dk/integrationer/uniconta",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Vi f\u00e5r en ItemIsOnHold-fejl. Hvad betyder det?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Varen er sp\u00e6rret i Uniconta. Det blokerer posteringen for hele den ber\u00f8rte ordre, og sp\u00e6rringen skal fjernes i Uniconta, f\u00f8r handlingen kan gennemf\u00f8res."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvor hurtigt kommer en ordre ind?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "\u00c6ndrede varer, ordrer og leverand\u00f8rer synkroniseres hvert tiende minut, og ordrer og fulfillments behandles hvert femte. Ved en ordreh\u00e6ndelse fra Uniconta venter SmartPack fem sekunder, s\u00e5 Uniconta n\u00e5r at f\u00e6rdigg\u00f8re eventuelle samtidige opdateringer p\u00e5 ordren."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad sker der med blokerede kunder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ordren importeres, men tagges automatisk, s\u00e5 I kan holde den ude af plukket. Det g\u00e6lder b\u00e5de blokerede debitorer og kunder, der overskrider kreditgr\u00e6nsen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi bruge integrationen med flere lagre?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. I normal tilstand mappes hvert Uniconta-lagersted til en SmartPack-lokation, og bev\u00e6gelser posteres pr. lokation. I simpel tilstand samles alt p\u00e5 \u00e9n lokation, men s\u00e5 posteres flytninger og opt\u00e6llinger ikke."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi filtrere plukket p\u00e5 dimensioner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. DIM1 til DIM5 fra ordren bliver til tags i SmartPack, og tags kan bruges direkte i plukprofilerne."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posteres returvarer og refunderinger?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. Refunderinger posteres ikke til Uniconta fra SmartPack. Selve returh\u00e5ndteringen p\u00e5 lageret sker i SmartPack."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=5">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container">
-<a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-<div class="int-page__hero"><div>
-<img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" class="int-page__logo" width="1024" height="1024">
-</div><div class="int-page__hero-content">
-<div class="int-page__cat">ERP &amp; &Oslash;konomi</div>
-<h1 class="int-page__title">SmartPack <span>+ Uniconta</span></h1>
-<p class="int-page__intro">Uniconta-integrationen er en af de dybeste i SmartPack. Ud over ordrer og varer h&aring;ndterer den indk&oslash;bsmodtagelse, lageropt&aelig;lling, lagerflytning og beholdningsafstemning, alt sammen posteret tilbage til Uniconta via lagerkladder.</p>
-<div class="int-page__cta-row">
-<a href="../kontakt" class="btn btn--primary">Book demo &rarr;</a>
-<a href="../priser" class="btn btn--ghost">Se priser</a>
-</div></div></div>
-<div class="int-page__body"><div class="int-page__main">
-<div class="int-page__direct"><div class="int-page__direct-icon">i</div><div>
-<strong>Kort fortalt</strong>
-<p>Varer, salgsordrer, indk&oslash;bsordrer og leverand&oslash;rer hentes fra Uniconta hvert tiende minut. SmartPack posterer f&oslash;lgeseddel, eventuel faktura, trackingnummer, indk&oslash;bsmodtagelser, opt&aelig;llinger og flytninger tilbage via de lagerkladder, I har sat op.</p>
-</div></div>
-<h2>Hvad er Uniconta?</h2>
-<p>Uniconta er et komplet cloud-baseret ERP-system udviklet af Erik Damgaard, manden bag C5. Systemet d&aelig;kker &oslash;konomi, ordre og indk&oslash;b, lagerstyring, projekt, produktion og CRM.</p>
-<p>Uniconta kan f&oslash;lge lageret regnskabsm&aelig;ssigt. SmartPack tager sig af den fysiske del: hvor varen st&aring;r, hvem der plukker den, om scanningen stemmer, og hvad der skal posteres bagefter.</p>
-<h2>Hvad integrationen g&oslash;r</h2>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div>
-<h3>Hele indk&oslash;bsflowet med</h3><p>Indk&oslash;bsordrer og leverand&oslash;rer hentes fra Uniconta. N&aring;r varerne modtages p&aring; lageret, opdateres linjeantal, ordren markeres til fakturering, k&oslash;bsf&oslash;lgesedlen posteres, og ordren godkendes ved fuld modtagelse.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128209;</div><div>
-<h3>Opt&aelig;lling og flytning posteres</h3><p>Lageropt&aelig;llinger og flytninger mellem lagersteder posteres til Uniconta via de lagerkladder, I peger p&aring;. Beholdningsafstemning opretter reguleringslinjer for differencer.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#128274;</div><div>
-<h3>Blokerede kunder markeres</h3><p>Ordrer fra blokerede debitorer eller kunder over kreditgr&aelig;nsen tagges automatisk i SmartPack, s&aring; de ikke bare glider med i plukket.</p></div></div>
-<div class="int-page__benefit"><div class="int-page__benefit-icon">&#127991;</div><div>
-<h3>Dimensioner som tags</h3><p>Dimensionerne DIM1 til DIM5 p&aring; ordren mappes automatisk til tags i SmartPack, s&aring; I kan filtrere p&aring; dem i plukprofiler.</p></div></div>
-<h2>Hvad synkroniseres hvilken vej?</h2>
-<p>Integrationen synkroniserer &aelig;ndrede varer, ordrer og leverand&oslash;rer hvert tiende minut og behandler ordrer og fulfillments hvert femte.</p>
-<div class="int-page__flow">
-<div class="int-page__flow-col"><h3>Uniconta til SmartPack</h3><ul>
-<li>Varenummer, navn, stregkoder og priser, herunder kost, lager, normal og salg</li>
-<li>V&aelig;gt, toldtarifkode, oprindelsesland og leverand&oslash;rens varenummer</li>
-<li>Lagerbeholdning, samt varetyper som standard, fragt, bundt, produktion og service</li>
-<li>Salgsordrer med modtageroplysninger, CVR, leveringsmetode og pakkeshop-ID</li>
-<li>Ordrelinjer med linjetype, pris efter rabat, batch- eller serienummer og lokation</li>
-<li>Indk&oslash;bsordrer med leverand&oslash;r, forventet leveringsdato og allerede modtaget antal</li>
-<li>Leverand&oslash;rer med nummer, navn, e-mail og telefon</li>
-</ul></div>
-<div class="int-page__flow-col"><h3>SmartPack til Uniconta</h3><ul>
-<li>Opdaterede linjeantal, posteret f&oslash;lgeseddel og valgfri faktura p&aring; salgsordren</li>
-<li>Trackingnummer og godkendelse af ordren</li>
-<li>Indk&oslash;bsmodtagelse med posteret k&oslash;bsf&oslash;lgeseddel</li>
-<li>Reguleringslinjer fra lageropt&aelig;lling via lagerkladde</li>
-<li>Lagerflytning mellem lagersteder via lagerkladde</li>
-<li>Beholdningsafstemning som reguleringslinjer for differencer</li>
-<li>Varefelter som varenummer, navn, stregkoder, priser, toldtarifkode, v&aelig;gt og dimensioner</li>
-<li>Ordrefelter som status, prioritering, delleverance, pauseret og besked til pakker</li>
-</ul></div></div>
-<h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du integrationen op</h2>
-<div class="int-page__step"><div class="int-page__step-num">1</div>
-<div class="int-page__step-body"><h3>Udfyld forbindelsen</h3><p>Brugernavn, adgangskode og firma-ID i Uniconta indtastes i integrationens indstillinger.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">2</div>
-<div class="int-page__step-body"><h3>V&aelig;lg lokationstilstand</h3><p>Normal tilstand mapper Uniconta-lagersteder til SmartPack-lokationer &eacute;n til &eacute;n. Simpel tilstand samler alle Uniconta-lagre p&aring; &eacute;n SmartPack-lokation og bruges, n&aring;r I kun har &eacute;t lager i SmartPack.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">3</div>
-<div class="int-page__step-body"><h3>Map brugerdefinerede felter</h3><p>Felter som billede-URL, lagerpladser, serie og batch, dimensioner, besked til plukker, skr&oslash;belig og farligt gods mappes til brugerdefinerede felter i Uniconta. Det samme g&aelig;lder ordrefelter som leveringsmetode og pakkeshop-ID.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">4</div>
-<div class="int-page__step-body"><h3>Ops&aelig;t lagerkladder</h3><p>Der bruges separate kladder til beholdningsafstemning, opt&aelig;lling og flytning. Peg p&aring; dem i indstillingerne.</p></div></div>
-<div class="int-page__step"><div class="int-page__step-num">5</div>
-<div class="int-page__step-body"><h3>K&oslash;r en afstemning</h3><p>Start med en beholdningsafstemning, s&aring; I ser differencerne inden den daglige drift g&aring;r i gang.</p></div></div>
-<h2>Det g&oslash;r integrationen ikke</h2>
-<p>F&oslash;lgende er ikke underst&oslash;ttet:</p>
-<ul class="int-page__limits">
-<li>Refunderinger posteres ikke til Uniconta.</li>
-<li>Leverand&oslash;rer kan kun importeres fra Uniconta, ikke oprettes eller opdateres derfra.</li>
-<li>Produktionsordrer kan ikke opdateres via den almindelige ordreopdatering, de h&aring;ndteres separat.</li>
-<li>Bundtvarer indg&aring;r ikke i beholdningsafstemningen.</li>
-<li>I simpel lokationstilstand posteres flytninger og opt&aelig;llinger ikke, kun aggregeret beholdning sendes til Uniconta.</li>
-</ul>
-<h2>Ofte stillede sp&oslash;rgsm&aring;l</h2>
-<div class="int-page__faq">
-<details><summary>Vi f&aring;r en ItemIsOnHold-fejl. Hvad betyder det?</summary><div>Varen er sp&aelig;rret i Uniconta. Det blokerer posteringen for hele den ber&oslash;rte ordre, og sp&aelig;rringen skal fjernes i Uniconta, f&oslash;r handlingen kan gennemf&oslash;res.</div></details>
-<details><summary>Hvor hurtigt kommer en ordre ind?</summary><div>&AElig;ndrede varer, ordrer og leverand&oslash;rer synkroniseres hvert tiende minut, og ordrer og fulfillments behandles hvert femte. Ved en ordreh&aelig;ndelse fra Uniconta venter SmartPack fem sekunder, s&aring; Uniconta n&aring;r at f&aelig;rdigg&oslash;re sine egne opdateringer p&aring; ordren.</div></details>
-<details><summary>Hvad sker der med blokerede kunder?</summary><div>Ordren importeres, men tagges automatisk, s&aring; I kan holde den ude af plukket. Det g&aelig;lder b&aring;de blokerede debitorer og kunder, der overskrider kreditgr&aelig;nsen.</div></details>
-<details><summary>Kan vi bruge integrationen med flere lagre?</summary><div>Ja. I normal tilstand mappes hvert Uniconta-lagersted til en SmartPack-lokation, og bev&aelig;gelser posteres pr. lokation.</div></details>
-<details><summary>Kan vi filtrere plukket p&aring; dimensioner?</summary><div>Ja. DIM1 til DIM5 fra ordren bliver til tags i SmartPack, og tags kan bruges i plukprofilerne.</div></details>
-</div>
-</div><div class="int-page__sidebar">
-<div class="int-page__cta-box"><h3>K&oslash;rer I Uniconta?</h3><p>Book en demo, s&aring; gennemg&aring;r vi lagerkladder, feltmapping og indk&oslash;bsflow.</p>
-<a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
-</div>
-<div class="int-page__related"><h3>Relaterede integrationer</h3>
-<div class="int-page__related-list">
-<a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" width="128" height="128">e-conomic</a>
-<a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="128" height="128">Dynamics 365</a>
-<a href="visma-business" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" width="128" height="128">Visma Business</a>
-</div></div>
-</div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Uniconta.png" alt="Uniconta logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">ERP-integration</div>
+        <h1 class="int-page__title">Lagersystem til <span>Uniconta</span></h1>
+        <p class="int-page__intro"><strong>F&aring; Uniconta og lageret til at arbejde som &eacute;t system.</strong><br><br>Uniconta-integrationen er en af de dybeste i SmartPack. Ud over ordrer og varer h&aring;ndterer den indk&oslash;bsmodtagelse, lageropt&aelig;lling, lagerflytning og beholdningsafstemning, alt sammen posteret tilbage via de lagerkladder, I peger p&aring;.<br><br>Dimensionerne DIM1 til DIM5 bliver til tags i SmartPack, s&aring; I kan filtrere plukket p&aring; dem.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration via Unicontas API med brugernavn, adgangskode og firma-ID.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Hvert 10. min</span><span class="sp-stat-label">Varer, ordrer og leverand&oslash;rer synkroniseres l&oslash;bende</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Fire typer</span><span class="sp-stat-label">F&oslash;lgeseddel, modtagelse, opt&aelig;lling og flytning posteres</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">Integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Uniconta styrer forretningen</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Finans og bogf&oslash;ring<br>Salgsordrer<br>Indk&oslash;b og kreditorer<br>Produktion<br>Rapportering</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til virksomheder p&aring; Uniconta</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#129534;</span><h3>Ordrer fra Uniconta</h3><p>Salgsordrer plukkes i SmartPack, og f&oslash;lgeseddel og eventuel faktura posteres tilbage ved afsendelse.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128230;</span><h3>Indk&oslash;b og modtagelse</h3><p>Indk&oslash;bsordrer og leverand&oslash;rer hentes ind, og modtagelsen posteres tilbage med k&oslash;bsf&oslash;lgeseddel.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127981;</span><h3>Flere lagersteder</h3><p>Uniconta-lagersteder mappes til SmartPack-lokationer, og bev&aelig;gelser posteres pr. lokation.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en Uniconta-ordre gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#129534;</span><span class="sp-flow-label">Uniconta<br>salgsordre</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>henter</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pluk</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pak<br>&amp; fragt</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128221;</span><span class="sp-flow-label">F&oslash;lgeseddel<br>&amp; faktura</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Ordrer og fulfillments behandles hvert femte minut. Ved en ordreh&aelig;ndelse ventes fem sekunder, s&aring; Uniconta n&aring;r at f&aelig;rdigg&oslash;re sine egne opdateringer.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra Uniconta</h3>
+            <ul class="sp-sync-list">
+              <li>Varer med priser, v&aelig;gt og stregkoder</li>
+              <li>Toldtarifkode og oprindelsesland</li>
+              <li>Salgsordrer med CVR, leveringsmetode og pakkeshop-ID</li>
+              <li>Indk&oslash;bsordrer og leverand&oslash;rer</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>I SmartPack</h3>
+            <ul class="sp-sync-list">
+              <li>Plukruter og scanvalidering</li>
+              <li>Batch- og serienumre</li>
+              <li>Lokationer og lagerflytning</li>
+              <li>Opt&aelig;lling og afstemning</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til Uniconta</h3>
+            <ul class="sp-sync-list">
+              <li>Posteret f&oslash;lgeseddel og valgfri faktura</li>
+              <li>Trackingnummer og godkendelse</li>
+              <li>K&oslash;bsf&oslash;lgeseddel ved modtagelse</li>
+              <li>Regulerings- og flyttelinjer via lagerkladde</li>
+            </ul></div>
+        </div>
+        <h2>Uniconta-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Hele indk&oslash;bsflowet</strong><span>Indk&oslash;bsordrer og leverand&oslash;rer hentes ind. Ved modtagelse opdateres linjeantal, ordren markeres til fakturering, k&oslash;bsf&oslash;lgesedlen posteres, og ordren godkendes ved fuld modtagelse.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128209;</span><div><strong>Opt&aelig;lling og flytning posteres</strong><span>Lageropt&aelig;llinger og flytninger mellem lagersteder posteres via de lagerkladder, I peger p&aring;. Beholdningsafstemning opretter reguleringslinjer for differencer.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128274;</span><div><strong>Blokerede kunder markeres</strong><span>Ordrer fra blokerede debitorer eller kunder over kreditgr&aelig;nsen tagges automatisk, s&aring; de ikke bare glider med i plukket.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#127991;</span><div><strong>Dimensioner som tags</strong><span>DIM1 til DIM5 p&aring; ordren mappes automatisk til tags i SmartPack, s&aring; de kan bruges til filtrering i plukprofiler.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Jeres egne felter</strong><span>Billede-URL, lagerpladser, serie og batch, dimensioner, besked til plukker, skr&oslash;belig og farligt gods mappes til brugerdefinerede felter i Uniconta.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Ordrefelter retur</strong><span>Status, prioritering, delleverance, pauseret og besked til pakker skrives tilbage til brugerdefinerede felter p&aring; salgsordren.</span></div></div>
+        </div>
+        <h2>Hvor ofte synkroniseres der?</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Uniconta-integrationen k&oslash;rer p&aring; faste intervaller frem for webhooks. Det giver et forudsigeligt flow, hvor I ved, hvorn&aring;r &aelig;ndringer sl&aring;r igennem.</p>
+        <div class="sp-formula">
+          <span class="cm"># Synkroniseringsfrekvens</span><br>
+          hvert <span class="kw">10.</span> minut &nbsp;aendrede varer, ordrer og leverandoerer<br>
+          hvert <span class="kw">5.</span> minut &nbsp; ordrer og fulfillments<br>
+          <span class="kw">5</span> sekunder &nbsp; &nbsp; &nbsp;forsinkelse ved en ordrehaendelse
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">De fem sekunders forsinkelse er bevidst: den sikrer, at Uniconta har afsluttet eventuelle samtidige opdateringer p&aring; ordren, f&oslash;r SmartPack behandler den.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Efter en fuld synkronisering k&oslash;res lageropt&aelig;llinger, fulfillments, modtagelser, flytninger og beholdningsafstemning i forl&aelig;ngelse af hinanden.</span></div>
+        <h2>To lokationstilstande, to m&aring;der at arbejde p&aring;</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Uniconta-integrationen kan k&oslash;re p&aring; to m&aring;der, og valget afg&oslash;r, hvad der posteres tilbage.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#127981; Normal tilstand</strong><span>Uniconta-lagersteder mappes til SmartPack-lokationer &eacute;n til &eacute;n. Flytninger og opt&aelig;llinger posteres pr. lokation.</span></div>
+          <div class="sp-location-item"><strong>&#128230; Simpel tilstand</strong><span>Alle Uniconta-lagre samles p&aring; &eacute;n SmartPack-lokation. Bruges n&aring;r I kun har &eacute;t lager, men sl&aring;r postering af flytninger og opt&aelig;llinger fra.</span></div>
+          <div class="sp-location-item"><strong>&#128274; ItemIsOnHold</strong><span>Melder Uniconta denne fejl ved postering, er varen sp&aelig;rret i Uniconta. Det blokerer hele den ber&oslash;rte ordre, indtil sp&aelig;rringen fjernes.</span></div>
+          <div class="sp-location-item"><strong>&#128181; Kreditgr&aelig;nse</strong><span>Kunder over kreditgr&aelig;nsen tagges automatisk. Beregningen bruger 25 procent moms som dansk standard.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Refunderinger posteres <strong>ikke</strong> til Uniconta. Leverand&oslash;rer kan kun importeres, ikke oprettes eller opdateres fra SmartPack, og produktionsordrer h&aring;ndteres separat fra den almindelige ordreopdatering.</span></div>
+        <h2>S&aring;dan forbinder du Uniconta med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Udfyld forbindelsen</strong><p>Brugernavn, adgangskode og firma-ID i Uniconta indtastes i integrationens indstillinger.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>V&aelig;lg lokationstilstand og map felter</strong><p>Beslut om I k&oslash;rer normal eller simpel tilstand, og map jeres brugerdefinerede felter p&aring; b&aring;de vare og salgsordre.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Ops&aelig;t lagerkladder og afstem</strong><p>Peg p&aring; separate kladder til beholdningsafstemning, opt&aelig;lling og flytning, og k&oslash;r en f&oslash;rste afstemning, s&aring; I ser differencerne inden driften g&aring;r i gang.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vi f&aring;r en ItemIsOnHold-fejl. Hvad betyder det?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Varen er sp&aelig;rret i Uniconta. Det blokerer posteringen for hele den ber&oslash;rte ordre, og sp&aelig;rringen skal fjernes i Uniconta, f&oslash;r handlingen kan gennemf&oslash;res.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvor hurtigt kommer en ordre ind?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">&AElig;ndrede varer, ordrer og leverand&oslash;rer synkroniseres hvert tiende minut, og ordrer og fulfillments behandles hvert femte. Ved en ordreh&aelig;ndelse fra Uniconta venter SmartPack fem sekunder, s&aring; Uniconta n&aring;r at f&aelig;rdigg&oslash;re eventuelle samtidige opdateringer p&aring; ordren.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad sker der med blokerede kunder?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ordren importeres, men tagges automatisk, s&aring; I kan holde den ude af plukket. Det g&aelig;lder b&aring;de blokerede debitorer og kunder, der overskrider kreditgr&aelig;nsen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi bruge integrationen med flere lagre?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. I normal tilstand mappes hvert Uniconta-lagersted til en SmartPack-lokation, og bev&aelig;gelser posteres pr. lokation. I simpel tilstand samles alt p&aring; &eacute;n lokation, men s&aring; posteres flytninger og opt&aelig;llinger ikke.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi filtrere plukket p&aring; dimensioner?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. DIM1 til DIM5 fra ordren bliver til tags i SmartPack, og tags kan bruges direkte i plukprofilerne.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Posteres returvarer og refunderinger?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. Refunderinger posteres ikke til Uniconta fra SmartPack. Selve returh&aring;ndteringen p&aring; lageret sker i SmartPack.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I Uniconta og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi gennemg&aring;r lagerkladder, feltmapping og indk&oslash;bsflow for jeres ops&aelig;tning.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I Uniconta?</h3><p>Vi gennemg&aring;r lagerkladder og feltmapping, s&aring; posteringerne rammer rigtigt fra start.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver synkronisering og postering logges, s&aring; I kan f&oslash;lge en ordre hele vejen.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" width="128" height="128">e-conomic</a>
+          <a href="dynamics-365" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Dynamics-365-Business-Central.png" alt="Dynamics 365 Business Central logo" width="128" height="128">Dynamics 365</a>
+          <a href="visma-business" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" width="128" height="128">Visma Business</a>
+          <a href="dandomain" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" width="500" height="500">DanDomain</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>
