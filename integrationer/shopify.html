@@ -35,18 +35,340 @@
 <!-- 8. Leadinfo -->
 <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SmartPack + Shopify | WMS-integration til din webshop</title>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartPack + Shopify | WMS-integration der synkroniserer ordrer, lager og fragt</title>
+  <meta name="description" content="Forbind Shopify med SmartPack WMS. Ordrer, lagerstatus og tracking synkroniseres automatisk via webhooks. Fragtpriser i checkout, multi-location og POS inkluderet.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/shopify">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:title" content="SmartPack + Shopify | WMS-integration">
+  <meta property="og:description" content="Forbind Shopify med SmartPack. Ordrer lander automatisk, lagerstatus opdateres live, tracking sendes retur. Alt inkluderet.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/shopify">
-  <meta property="og:description" content="Forbind Shopify med SmartPack WMS. Ordrer synkroniseres automatisk, lager opdateres live og returh&aring;ndtering g&aring;r direkte tilbage til Shopify.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630"><meta name="description" content="Forbind Shopify med SmartPack WMS. Ordrer synkroniseres automatisk, lager opdateres live og returh&aring;ndtering g&aring;r direkte tilbage til Shopify."><link rel="canonical" href="https://smartpack.dk/integrationer/shopify"><meta name="robots" content="index, follow"><meta property="og:title" content="SmartPack + Shopify"><meta property="og:type" content="website"><link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script><link rel="stylesheet" href="int-page.css?v=3">
-<script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
+          {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"},
+          {"@type": "ListItem", "position": 3, "name": "Shopify", "item": "https://smartpack.dk/integrationer/shopify"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Synkroniseres lageret live eller med forsinkelse?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Live. SmartPack bruger Shopify-webhooks, som behandles i under ét sekund. Der er ingen polling-forsinkelse."}
+          },
+          {
+            "@type": "Question",
+            "name": "Hvad sker der hvis en ordre annulleres i Shopify mens den pakkes?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ordren pauses i SmartPack fremfor at annulleres direkte. Systemet stiller ikke varer tilbage automatisk, fordi pakkeprocessen kan v\u00e6re i gang. Du skal eksplicit bekr\u00e6fte annulleringen i SmartPack."}
+          },
+          {
+            "@type": "Question",
+            "name": "Virker integrationen med flere Shopify-butikker?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ja. SmartPack underst\u00f8tter multi-location, s\u00e5 lageret kan synkroniseres p\u00e5 tv\u00e6rs af flere Shopify-butikker og lokationer."}
+          },
+          {
+            "@type": "Question",
+            "name": "Kan vi vise fragtpriser live i Shopify-checkout?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ja, via SmartPacks ShopCheckout-funktion. Du definerer leveringsmetoder med prisformler (fx gratis fragt over 499 kr.) og de vises direkte i checkout. Kraver Shopify Advanced eller Shopify Plus."}
+          },
+          {
+            "@type": "Question",
+            "name": "Kan vi filtrere hvilke ordrer der importeres til SmartPack?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Ja. Du kan filtrere p\u00e5 ordre-tags (kun importer ordrer med tag X, eller ignorer ordrer med tag Y), importdatointerval, og om ordrer med ubet\u00e6lt status skal importeres eller pauses."}
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=3">
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+
+  <style>
+    /* Shopify-side ekstra styles */
+    .int-page__sync-section { margin-bottom: 2rem; }
+    .int-page__sync-section h3 { font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); margin: 0 0 .75rem; }
+    .int-page__sync-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+    .int-page__sync-table tr { border-bottom: 1px solid var(--border); }
+    .int-page__sync-table tr:last-child { border-bottom: none; }
+    .int-page__sync-table td { padding: .5rem .6rem; color: var(--text-2); line-height: 1.4; }
+    .int-page__sync-table td:first-child { font-weight: 600; color: var(--text-1); width: 55%; }
+    .int-page__sync-dir { display: inline-flex; align-items: center; gap: .35rem; font-size: .75rem; font-weight: 700; color: var(--accent); background: rgba(62,207,142,.1); border: 1px solid rgba(62,207,142,.25); border-radius: 4px; padding: .2em .55em; white-space: nowrap; }
+    .int-page__sync-wrap { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+
+    .int-page__feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
+    .int-page__feature-item { display: flex; align-items: flex-start; gap: .6rem; padding: .85rem 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; }
+    .int-page__feature-item-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
+    .int-page__feature-item-text strong { display: block; font-size: .85rem; font-weight: 700; color: var(--text-1); line-height: 1.3; }
+    .int-page__feature-item-text span { font-size: .78rem; color: var(--text-3); line-height: 1.4; }
+    @media (max-width: 600px) { .int-page__feature-grid { grid-template-columns: 1fr; } }
+
+    .int-page__formula-box { background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-family: monospace; font-size: .82rem; color: var(--text-2); line-height: 1.7; }
+    .int-page__formula-box strong { color: var(--accent); font-family: monospace; }
+
+    .int-page__faq { margin-top: 2.5rem; }
+    .int-page__faq h2 { font-size: 1.4rem; margin: 0 0 1.2rem; }
+    .int-page__faq-item { border-bottom: 1px solid var(--border); padding: 1rem 0; }
+    .int-page__faq-item:last-child { border-bottom: none; }
+    .int-page__faq-q { font-size: .95rem; font-weight: 700; color: var(--text-1); margin: 0 0 .5rem; cursor: pointer; }
+    .int-page__faq-a { font-size: .88rem; color: var(--text-2); line-height: 1.65; margin: 0; }
+
+    .int-page__note { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 1rem; background: rgba(255,193,7,.08); border: 1px solid rgba(255,193,7,.3); border-radius: 8px; font-size: .82rem; color: var(--text-2); line-height: 1.5; margin: .75rem 0 1.25rem; }
+    .int-page__note-icon { flex-shrink: 0; font-size: 1rem; }
+  </style>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container"><a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a><div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" class="int-page__logo" width="1024" height="1024"></div><div class="int-page__hero-content"><div class="int-page__cat">Webshop</div><h1 class="int-page__title">SmartPack <span>+ Shopify</span></h1><p class="int-page__intro">Shopify er verdens mest brugte e-handelsplatform. SmartPack-integrationen tr&aelig;kker ordrer automatisk fra Shopify, opdaterer lagerstatus live og sender trackinginfo tilbage til kunden, s&aring; du aldrig selv skal kopiere data mellem systemer.</p><div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div></div></div><div class="int-page__body"><div class="int-page__main"><h2>Hvad g&oslash;r integrationen?</h2><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div><h3>Ordrer landet automatisk</h3><p>S&aring; snart en ordre er betalt i Shopify, lander den i SmartPacks plukke-k&oslash; uden manuel indsats. Ingen copy-paste, ingen forsinkelse.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div><h3>Lager synkroniseret live</h3><p>N&aring;r en vare plukkes i SmartPack, opdateres lagerbeh oldningen automatisk i Shopify. Kunder ser altid det korrekte lager.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128666;</div><div><h3>Tracking sendt automatisk</h3><p>N&aring;r pakken er sendt, g&aring;r trackingnummeret automatisk tilbage til Shopify-ordren og kunden f&aring;r besked.</p></div></div><h2 class="int-page__steps-title">S&aring;dan forbinder du Shopify med SmartPack</h2><div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Installer SmartPack-appen</h3><p>Find SmartPack i Shopify App Store og installer. Log ind med din SmartPack-konto og godkend adgang.</p></div></div><div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Map produkter og lagerlokationer</h3><p>SmartPack matcher automatisk dine Shopify-produkter med SKU'er p&aring; lageret. Juster eventuelt manuelt.</p></div></div><div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test med en ordre</h3><p>Opret en testordre i Shopify og f&oslash;lg den hele vejen til pakken er sendt og tracking er registreret.</p></div></div></div><div class="int-page__sidebar"><div class="int-page__cta-box"><h3>K&oslash;rer I Shopify?</h3><p>Book en demo og se Shopify + SmartPack-integrationen i pr&aelig;cis jeres ops&aelig;tning.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div><div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a><a href="dandomain" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" width="128" height="128">Dandomain</a><a href="stocky" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky Shopify logo" width="128" height="128">Stocky</a></div></div></div></div></div></section></main>
+
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+
+    <!-- HERO -->
+    <div class="int-page__hero">
+      <div><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" class="int-page__logo" width="1024" height="1024"></div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Webshop</div>
+        <h1 class="int-page__title">SmartPack <span>+ Shopify</span></h1>
+        <p class="int-page__intro">Ordrer fra Shopify lander automatisk i plukke-k&oslash;en. Lagerstatus opdateres live tilbage til shoppen via webhooks. Trackinginfo sendes til kunden uden manuel indsats. Alt det der ellers koster tid, k&oslash;rer af sig selv.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="int-page__body">
+      <div class="int-page__main">
+
+        <!-- HVAD SYNKRONISERES -->
+        <h2>Hvad synkroniseres automatisk?</h2>
+
+        <div class="int-page__sync-wrap">
+          <div class="int-page__sync-section">
+            <h3>Ordredata</h3>
+            <table class="int-page__sync-table">
+              <tr><td>Leveringsadresse</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Ordrelinjer (inkl. lokation)</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Leveringsdato</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Kundekommentar / ordrenote</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Annullering fra Shopify</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Lagerstatus (beholdning)</td><td><span class="int-page__sync-dir" style="color:#fff;background:rgba(62,207,142,.4);border-color:rgba(62,207,142,.5)">SmartPack &rarr; Shopify</span></td></tr>
+              <tr><td>Trackingnummer + fulfillment</td><td><span class="int-page__sync-dir" style="color:#fff;background:rgba(62,207,142,.4);border-color:rgba(62,207,142,.5)">SmartPack &rarr; Shopify</span></td></tr>
+              <tr><td>Refundering</td><td><span class="int-page__sync-dir" style="color:#fff;background:rgba(62,207,142,.4);border-color:rgba(62,207,142,.5)">SmartPack &rarr; Shopify</span></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="int-page__sync-wrap">
+          <div class="int-page__sync-section">
+            <h3>Produktdata (Shopify &rarr; SmartPack)</h3>
+            <table class="int-page__sync-table">
+              <tr><td>SKU og stregkoder</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Produktnavn og beskrivelse</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Billed-URL</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>V&aelig;gt og dimensioner</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Salgspris / normalpris / kostpris</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Tags og kategorier</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Toldkode og oprindelsesland</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+              <tr><td>Leverand&oslash;rnavn og -nummer</td><td><span class="int-page__sync-dir">Shopify &rarr; SmartPack</span></td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- SHOPIFY-SPECIFIKKE FEATURES -->
+        <h2>Shopify-specifikke funktioner</h2>
+
+        <div class="int-page__feature-grid">
+          <div class="int-page__feature-item">
+            <span class="int-page__feature-item-icon">&#9889;</span>
+            <div class="int-page__feature-item-text">
+              <strong>Live webhooks</strong>
+              <span>Ordrer og lagerstatus opdateres via Shopify-webhooks. Ingen polling. Behandlingstid under 1 sekund.</span>
+            </div>
+          </div>
+          <div class="int-page__feature-item">
+            <span class="int-page__feature-item-icon">&#128205;</span>
+            <div class="int-page__feature-item-text">
+              <strong>Multi-location</strong>
+              <span>Synkroniser lagerbeholdning p&aring; tv&aelig;rs af flere fysiske lokationer og flere Shopify-butikker.</span>
+            </div>
+          </div>
+          <div class="int-page__feature-item">
+            <span class="int-page__feature-item-icon">&#128722;</span>
+            <div class="int-page__feature-item-text">
+              <strong>Shopify POS</strong>
+              <span>Kasseordrer fra Shopify POS h&aring;ndteres separat med eget POS-flow og lokationsstyring.</span>
+            </div>
+          </div>
+          <div class="int-page__feature-item">
+            <span class="int-page__feature-item-icon">&#127873;</span>
+            <div class="int-page__feature-item-text">
+              <strong>Gavekort</strong>
+              <span>SmartPack kan oprette og h&aring;ndtere Shopify-gavekort som del af fulfillment-flowet.</span>
+            </div>
+          </div>
+          <div class="int-page__feature-item">
+            <span class="int-page__feature-item-icon">&#128196;</span>
+            <div class="int-page__feature-item-text">
+              <strong>Ordrefiltrering</strong>
+              <span>Importer kun ordrer med bestemte tags. Ignorer ordrer med andre tags. Datofilter og regler for ubetalte ordrer.</span>
+            </div>
+          </div>
+          <div class="int-page__feature-item">
+            <span class="int-page__feature-item-icon">&#128260;</span>
+            <div class="int-page__feature-item-text">
+              <strong>Fulfillment-kontrol</strong>
+              <span>V&aelig;lg om SmartPack m&aring; fuldfylde ordrer, notificere kunden, indfange betalinger og h&aring;ndtere retur og genopfyldning.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHOPCHECKKOUT -->
+        <h2>Live fragtpriser i checkout</h2>
+        <p style="font-size:.92rem;color:var(--text-2);line-height:1.7;margin-bottom:1rem;">SmartPacks ShopCheckout-funktion viser dine egne leveringsmetoder direkte i Shopify-checkout med live priser. Du definerer selv reglerne med en simpel prisformel.</p>
+
+        <div class="int-page__formula-box">
+          <strong># Eksempel: GLS PakkeShop gratis ved k&oslash;b over 499 kr.</strong><br>
+          Standardpris: 45,00 DKK<br>
+          Regel: <strong>price &gt; 499</strong> &rarr; 0,00 DKK (gratis fragt)<br><br>
+          <strong># Eksempel: Kun tilbyd ekspresfragt i visse postnumre</strong><br>
+          Regel: <strong>recipient.zipcode in '1000','1050','1100'</strong><br><br>
+          <strong># Eksempel: Gratis fragt ved rabatkode (kun Shopify)</strong><br>
+          Regel: <strong>discounted_price &gt;= 499</strong><br>
+        </div>
+
+        <p style="font-size:.85rem;color:var(--text-2);margin-bottom:.5rem;">Formlen kan baseres p&aring;: <strong>pris, v&aelig;gt, antal varer, leveringsadresse, afsenderadresse</strong> og &mdash; kun i Shopify &mdash; <strong>rabatbel&oslash;b og pris efter rabat</strong>.</p>
+
+        <div class="int-page__note">
+          <span class="int-page__note-icon">&#9888;&#65039;</span>
+          <span>Live fragtpriser i checkout (ShopCheckout / Carrier Service) kr&aelig;ver Shopify Advanced eller Shopify Plus. P&aring; &aelig;ldre &aring;rlige Shopify-planer kan det muligg&oslash;res via Shopify support. Grundl&aelig;ggende ordreintegration virker p&aring; alle planer.</span>
+        </div>
+
+        <!-- OPSAETNING -->
+        <h2 class="int-page__steps-title">S&aring;dan s&aelig;tter du det op</h2>
+
+        <div class="int-page__step">
+          <div class="int-page__step-num">1</div>
+          <div class="int-page__step-body">
+            <h3>Installer SmartPack-appen fra Shopify App Store</h3>
+            <p>S&oslash;g efter SmartPack i Shopify App Store. Installer og godkend de n&oslash;dvendige rettigheder. Du bliver logget direkte ind i integrationsops&aelig;tningen.</p>
+          </div>
+        </div>
+
+        <div class="int-page__step">
+          <div class="int-page__step-num">2</div>
+          <div class="int-page__step-body">
+            <h3>V&aelig;lg hvad der skal synkroniseres</h3>
+            <p>Konfigurer sync-retninger for ordrer og produkter, v&aelig;lg lokationer, aktiver webhooks og s&aelig;t regler for ordreimport (tags, datoer, ubetalte ordrer).</p>
+          </div>
+        </div>
+
+        <div class="int-page__step">
+          <div class="int-page__step-num">3</div>
+          <div class="int-page__step-body">
+            <h3>Test med en rigtig ordre</h3>
+            <p>L&aelig;g en testordre i Shopify og f&oslash;lg den i Job Monitor. Du kan se pr&aelig;cist hvorn&aring;r webhook'en modtages, om den behandles korrekt, og hvad der eventuelt fejler.</p>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="int-page__faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+
+          <div class="int-page__faq-item">
+            <p class="int-page__faq-q">Synkroniseres lageret live eller med forsinkelse?</p>
+            <p class="int-page__faq-a">Live. SmartPack modtager Shopify-webhooks og behandler dem under ét sekund. Der er ingen polling-forsinkelse. Du kan se alle jobs i realtid i Job Monitor.</p>
+          </div>
+
+          <div class="int-page__faq-item">
+            <p class="int-page__faq-q">Hvad sker der hvis en ordre annulleres i Shopify, mens den pakkes?</p>
+            <p class="int-page__faq-a">Ordren pauses i SmartPack fremfor at annulleres direkte. Systemet stiller ikke varer tilbage automatisk, fordi pakkeprocessen kan v&aelig;re i gang med en tote. Du bekr&aelig;fter annulleringen eksplicit i SmartPack og k&oslash;rer pakkeprocessen bagl&aelig;ns.</p>
+          </div>
+
+          <div class="int-page__faq-item">
+            <p class="int-page__faq-q">Virker det med flere Shopify-butikker og lokationer?</p>
+            <p class="int-page__faq-a">Ja. Multi-location er underst&oslash;ttet, s&aring; lagerbeholdning kan synkroniseres p&aring; tv&aelig;rs af flere lokationer og butikker. Hver lokation konfigureres separat med eget import-flow.</p>
+          </div>
+
+          <div class="int-page__faq-item">
+            <p class="int-page__faq-q">Kan vi vise vores egne fragtpriser live i Shopify-checkout?</p>
+            <p class="int-page__faq-a">Ja, via ShopCheckout. Du definerer leveringsmetoder (GLS PakkeShop, PostNord, etc.) med prisformler baseret p&aring; kurvsv&aelig;rdi, v&aelig;gt og adresse. Kraver Shopify Advanced eller Shopify Plus.</p>
+          </div>
+
+          <div class="int-page__faq-item">
+            <p class="int-page__faq-q">Kan vi styre hvilke Shopify-ordrer der importeres?</p>
+            <p class="int-page__faq-a">Ja. Du kan importere kun ordrer med et bestemt tag (fx &rdquo;SmartPack&rdquo;), ignorere ordrer med tags (fx &rdquo;DropShipping&rdquo;, &rdquo;TestOrder&rdquo;), filtrere p&aring; importdato og v&aelig;lge om ordrer med ubetalt status skal importeres eller pauses.</p>
+          </div>
+
+          <div class="int-page__faq-item">
+            <p class="int-page__faq-q">Hvad er inkluderet i prisen &mdash; skal vi betale ekstra for integrationen?</p>
+            <p class="int-page__faq-a">Shopify-integrationen er inkluderet i SmartPacks standardpris. Ingen ekstra modul, ingen labelfee, ingen ops&aelig;tningsgebyr.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box">
+          <h3>K&oslash;rer I Shopify?</h3>
+          <p>Vi viser jer pr&aelig;cist hvad der sker med jeres ordrer, lager og fragt. 15 minutter.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a>
+        </div>
+
+        <div class="int-page__cta-box" style="background:rgba(62,207,142,.06);border-color:rgba(62,207,142,.3)">
+          <h3 style="font-size:.95rem;">&#128202; Job Monitor</h3>
+          <p>Alle webhook-jobs logges i realtid. Du kan se hvorn&aring;r en ordre lander, hvad der behandles og om noget fejler &mdash; inkl. fejlbeskeder fra Shopify.</p>
+        </div>
+
+        <div class="int-page__related">
+          <h3>Relaterede integrationer</h3>
+          <div class="int-page__related-list">
+            <a href="woocommerce" class="int-page__related-link">
+              <img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce
+            </a>
+            <a href="gls" class="int-page__related-link">
+              <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS
+            </a>
+            <a href="dao" class="int-page__related-link">
+              <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/dao.png" alt="DAO logo" width="1024" height="1024">DAO
+            </a>
+            <a href="stocky" class="int-page__related-link">
+              <img src="../assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky logo" width="512" height="512">Stocky (Shopify)
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+</body>
+</html>
