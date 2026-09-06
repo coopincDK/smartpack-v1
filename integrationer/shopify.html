@@ -197,7 +197,8 @@
   .sp-faq-q { display:flex; justify-content:space-between; align-items:center; padding:1rem 0; cursor:pointer; gap:1rem; }
   .sp-faq-q p { font-size:.9rem; font-weight:700; color:var(--text-1); margin:0; flex:1; }
   .sp-faq-toggle { font-size:.8rem; color:var(--accent); flex-shrink:0; transition:transform var(--t-fast); }
-  .sp-faq-a { font-size:.84rem; color:var(--text-2); line-height:1.65; padding-bottom:1rem; margin:0; }
+  .sp-faq-a { font-size:.84rem; color:var(--text-2); line-height:1.65; padding-bottom:1rem; margin:0; display:none; }
+  .sp-faq-item.open .sp-faq-a { display:block; }
   .sp-faq-item.open .sp-faq-toggle { transform:rotate(180deg); }
 
   /* Bottom CTA */
