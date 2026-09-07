@@ -228,6 +228,11 @@
       object-fit: contain;
       border-radius: 8px;
     }
+    .int-hub__card img.int-hub__img--wide {
+      width: 88px;
+      height: 34px;
+      border-radius: 0;
+    }
     .int-hub__card-name {
       font-size: .78rem;
       color: var(--text-2);
@@ -560,6 +565,7 @@
       <div class="int-hub__filters">
         <button class="int-filter-btn active" data-filter="all">Alle</button>
         <button class="int-filter-btn" data-filter="webshop">Webshops</button>
+        <button class="int-filter-btn" data-filter="pos">POS &amp; Kassesystemer</button>
         <button class="int-filter-btn" data-filter="fragt">Fragt</button>
         <button class="int-filter-btn" data-filter="portal">Fragtportaler</button>
         <button class="int-filter-btn" data-filter="erp">ERP &amp; &Oslash;konomi</button>
@@ -572,7 +578,7 @@
       <div class="int-category__header">
         <span class="int-category__title">Webshops</span>
         <div class="int-category__line"></div>
-        <span class="int-category__count">10 platforme</span>
+        <span class="int-category__count">9 platforme</span>
       </div>
       <p class="int-category__desc">Ordrer hentes automatisk og lander direkte i lageret. Du taster ingenting.</p>
       <div class="int-hub__grid">
@@ -608,10 +614,6 @@
           <img src="assets/SmartPack-App-Icons/SmartPack/Shop/sumoshop.png" alt="Sumoshop" loading="lazy" width="256" height="256">
           <span class="int-hub__card-name">Sumoshop</span>
         </a>
-        <a href="integrationer/shopbox" class="int-hub__card" data-cat="webshop" data-name="shopbox">
-          <img src="assets/SmartPack-App-Icons/SmartPack/POS/Shopbox.png" alt="Shopbox" loading="lazy" width="300" height="300">
-          <span class="int-hub__card-name">Shopbox</span>
-        </a>
         <a href="integrationer/ideal-shop" class="int-hub__card" data-cat="webshop" data-name="ideal.shop">
           <img src="assets/idealshop lille.jpg" alt="ideal.shop" loading="lazy" width="200" height="200">
           <span class="int-hub__card-name">ideal.shop</span>
@@ -620,11 +622,42 @@
     </div>
 
     <!-- FRAGT — DIREKTE FORBINDELSER -->
+    <div class="int-category" data-category="pos">
+      <div class="int-category__header">
+        <span class="int-category__title">POS &amp; Kassesystemer</span>
+        <div class="int-category__line"></div>
+        <span class="int-category__count">5 kassesystemer</span>
+      </div>
+      <p class="int-category__desc">Kassesalg tr&aelig;kker fra lageret med det samme, og butikker mappes til lokationer. Samme lager i butik og webshop.</p>
+      <div class="int-hub__grid">
+        <a href="integrationer/shopify#shopify-pos" class="int-hub__card" data-cat="pos" data-name="shopify pos kassesystem butik">
+          <img src="assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify POS" loading="lazy" width="1024" height="1024">
+          <span class="int-hub__card-name">Shopify POS</span>
+        </a>
+        <a href="integrationer/shopbox" class="int-hub__card" data-cat="pos" data-name="shopbox">
+          <img src="assets/SmartPack-App-Icons/SmartPack/POS/Shopbox.png" alt="Shopbox" loading="lazy" width="300" height="300">
+          <span class="int-hub__card-name">Shopbox</span>
+        </a>
+        <a href="integrationer/flexpos" class="int-hub__card" data-cat="pos" data-name="flexpos amero kassesystem">
+          <img src="assets/SmartPack-App-Icons/SmartPack/POS/FlexPOS.png" alt="FlexPOS" loading="lazy" width="128" height="128">
+          <span class="int-hub__card-name">FlexPOS</span>
+        </a>
+        <a href="integrationer/customers-1st" class="int-hub__card" data-cat="pos" data-name="customers 1st">
+          <img src="assets/SmartPack-App-Icons/SmartPack/POS/Customers-1st.png" alt="Customers 1st" loading="lazy" width="128" height="128">
+          <span class="int-hub__card-name">Customers 1st</span>
+        </a>
+        <a href="integrationer/dandomain#dandomain-pos" class="int-hub__card" data-cat="pos" data-name="dandomain pos kassesystem butik">
+          <img src="assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain POS" loading="lazy" width="128" height="128">
+          <span class="int-hub__card-name">DanDomain POS</span>
+        </a>
+      </div>
+    </div>
+
     <div class="int-category" data-category="fragt">
       <div class="int-category__header">
         <span class="int-category__title">Fragt &middot; Direkte forbindelser</span>
         <div class="int-category__line"></div>
-        <span class="int-category__count">26 fragtleverand&oslash;rer</span>
+        <span class="int-category__count">25 fragtleverand&oslash;rer</span>
       </div>
       <p class="int-category__desc">Labels oprettes direkte i SmartPack &mdash; ingen ekstra abonnement til en portal. Du trykker send, labelen printer.</p>
       <div class="int-hub__grid">
@@ -818,16 +851,8 @@
         <div class="int-category__line"></div>
         <span class="int-category__count">10 systemer</span>
       </div>
-      <p class="int-category__desc">Kassesystem, retur og robotlager. Kobles p&aring; n&oslash;jagtig samme m&aring;de.</p>
+      <p class="int-category__desc">Retur, kundeservice, indk&oslash;b, pakkerobot og robotlager. Kobles p&aring; n&oslash;jagtig samme m&aring;de.</p>
       <div class="int-hub__grid">
-        <a href="integrationer/flexpos" class="int-hub__card" data-cat="other" data-name="flexpos kassesystem">
-          <img src="assets/SmartPack-App-Icons/SmartPack/POS/FlexPOS.png" alt="FlexPOS" loading="lazy" width="128" height="128">
-          <span class="int-hub__card-name">FlexPOS</span>
-        </a>
-        <a href="integrationer/customers-1st" class="int-hub__card" data-cat="other" data-name="customers 1st">
-          <img src="assets/SmartPack-App-Icons/SmartPack/POS/Customers-1st.png" alt="Customers 1st" loading="lazy" width="128" height="128">
-          <span class="int-hub__card-name">Customers 1st</span>
-        </a>
         <a href="integrationer/reversio" class="int-hub__card" data-cat="other" data-name="reversio returh&aring;ndtering">
           <img src="assets/SmartPack-App-Icons/Reversio/Return/Reversio.png" alt="Reversio" loading="lazy" width="2000" height="2000">
           <span class="int-hub__card-name">Reversio</span>
@@ -848,6 +873,10 @@
           <img src="assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky" loading="lazy" width="512" height="512">
           <span class="int-hub__card-name">Stocky</span>
         </a>
+        <a href="integrationer/panotec-opera" class="int-hub__card" data-cat="other" data-name="panotec opera pakkerobot kassemaskine box on demand emballage">
+          <img src="assets/panotec-logo.png" alt="Panotec" loading="lazy" width="1232" height="204" class="int-hub__img--wide">
+          <span class="int-hub__card-name">Panotec Opera</span>
+        </a>
         <a href="integrationer/kangaroo-robotics" class="int-hub__card" data-cat="other" data-name="kangaroo robotics">
           <img src="assets/kangaroo-robotics.png" alt="Kangaroo Robotics" loading="lazy" width="1268" height="585">
           <span class="int-hub__card-name">Kangaroo Robotics</span>
@@ -861,7 +890,7 @@
           <span class="int-hub__card-name">AutoStore</span>
         </a>
         <a href="integrationer/geek-plus" class="int-hub__card int-hub__card--dark" data-cat="other" data-name="geek plus robotics amr">
-          <img src="https://www.geekplus.com/hubfs/Investor%20Relation/Group%20177%20(1).svg" alt="Geek+" loading="lazy" width="320" height="80" style="object-fit:contain">
+          <img src="assets/geek-plus-logo.png" alt="Geek+" loading="lazy" width="520" height="130" style="object-fit:contain">
           <span class="int-hub__card-name">Geek+</span>
         </a>
       </div>

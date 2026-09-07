@@ -70,6 +70,7 @@
   .sp-hero-logos { display:flex; align-items:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap; }
   .sp-hero-logo { width:72px; height:72px; border-radius:16px; object-fit:contain; background:var(--surface-2); padding:.75rem; border:1px solid var(--border); }
   .sp-hero-logo--wide { width:150px; }
+  .sp-hero-logo--xwide { width:200px; padding:.55rem .8rem; }
   /* Logokortet holdes lyst i begge temaer. Mange leverandoerlogoer har
      moerk tekst og forsvinder ellers helt i darkmode. */
   [data-theme="dark"] .sp-hero-logo,

@@ -50,3 +50,7 @@ infra/.env
 api/.env
 
 js/contact-config.js
+
+# Claude-genererede backups og output (lokale, skal ikke i repoet)
+_backup_tracking_*/
+Claude outputs/
