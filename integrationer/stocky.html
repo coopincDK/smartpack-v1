@@ -1,54 +1,325 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("sp-js");</script>
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SmartPack + Stocky | Indkøb og lagerstyring for Shopify</title>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Stocky og SmartPack | Indk&amp;oslash;b til Shopify</title>
+  <meta name="description" content="SmartPack henter indk&oslash;bsordrer fra Stocky, Shopifys eget indk&oslash;bsv&aelig;rkt&oslash;j, s&aring; lagerpersonalet kan modtage varerne med scanning og indplacering.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/stocky">
+
+  <meta property="og:title" content="Stocky og SmartPack | Indk&amp;oslash;b til Shopify">
+  <meta property="og:description" content="Indk&oslash;bsordrer fra Stocky bliver til forventede modtagelser i SmartPack, klar til scanning og indplacering.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/stocky">
-  <meta property="og:description" content="Forbind Stocky med SmartPack WMS. F&aring; Shopify-baserede indk&oslash;bsforeslag med realtids lagerdata fra SmartPack.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630"><meta name="description" content="Forbind Stocky med SmartPack WMS. F&aring; Shopify-baserede indk&oslash;bsforeslag med realtids lagerdata fra SmartPack."><link rel="canonical" href="https://smartpack.dk/integrationer/stocky"><meta name="robots" content="index, follow"><meta property="og:title" content="SmartPack + Stocky"><meta property="og:type" content="website"><link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script><link rel="stylesheet" href="int-page.css?v=3">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Stocky",
+          "item": "https://smartpack.dk/integrationer/stocky"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med Stocky, Shopifys indk\u00f8bsplanl\u00e6gningsv\u00e6rkt\u00f8j. Indk\u00f8bsordrer hentes fra Stocky og importeres i SmartPack, s\u00e5 varerne kan modtages p\u00e5 lageret.",
+      "url": "https://smartpack.dk/integrationer/stocky",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvad g\u00f8r integrationen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Den henter indk\u00f8bsordrer fra Stocky og importerer dem i SmartPack, s\u00e5 lagerpersonalet kan modtage varerne med scanning og indplacering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "G\u00e5r der data tilbage til Stocky?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. Flowet er ensrettet, fra Stocky til SmartPack. Lageropdateringen mod Shopify sker gennem Shopify-integrationen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi modtage en ordre delvist?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Delmodtagelser h\u00e5ndteres p\u00e5 lageret som ved alle andre indk\u00f8bsordrer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Stocky er udfaset af Shopify. Virker integrationen stadig?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, integrationen findes fortsat i SmartPack. Men det er v\u00e6rd at have en plan for, hvad der skal afl\u00f8se Stocky p\u00e5 sigt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad er alternativet til Stocky?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Inventory Planner har sin egen integration, og SmartPack har ogs\u00e5 egen indk\u00f8bs- og prognosefunktionalitet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er integrationen inkluderet i prisen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container"><a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a><div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky logo" class="int-page__logo" width="512" height="512"></div><div class="int-page__hero-content"><div class="int-page__cat">Indk&oslash;bsplanl&aelig;gning</div><h1 class="int-page__title">SmartPack <span>+ Stocky</span></h1><p class="int-page__intro">Stocky er Shopifys lager- og indk&oslash;bsapp til POS Pro med forecast, purchase orders og stocktakes. SmartPack forbinder butiksen&aelig;re lagerbeslutninger med den centrale lagerdrift. Bem&aelig;rk: Shopify udfaser Stocky efter august 2026, kontakt os for migrationsr&aring;dgivning.</p><div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div></div></div><div class="int-page__body"><div class="int-page__main"><h2>Hvad g&oslash;r integrationen?</h2><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div><h3>Indk&oslash;bsforeslag fra SmartPack-data</h3><p>Stocky bruger SmartPack lagerdata og Shopify-salgshistorik til at generere pr&aelig;cise indk&oslash;bsforeslag.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128338;</div><div><h3>Altid de rigtige varer p&aring; lager</h3><p>Foresl&aring;ede ordrem&aelig;ngder tager h&oslash;jde for salgstempo, leadtider og sikkerhedslager.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div><h3>Indk&oslash;bsordrer til SmartPack</h3><p>Godkendte indk&oslash;bsordrer fra Stocky synkroniseres til SmartPack klar til varemodtagelse.</p></div></div><h2 class="int-page__steps-title">S&aring;dan forbinder du Stocky med SmartPack</h2><div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Aktiv&eacute;r Stocky-integrationen</h3><p>Forbind Stocky med SmartPack via Shopify og API. Aktiv&eacute;r adgang til lagerdata.</p></div></div><div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Konfigur&eacute;r sikkerhedslager</h3><p>S&aelig;t minimumslagre og leadtider per produkt eller produktgruppe i Stocky.</p></div></div><div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Se f&oslash;rste foreslag</h3><p>Gennemg&aring; Stockys f&oslash;rste indk&oslash;bsforeslag og juster parametre efter behov.</p></div></div></div><div class="int-page__sidebar"><div class="int-page__cta-box"><h3>K&oslash;rer I Shopify og Stocky?</h3><p>Book en demo og f&aring; vist den kombinerede ops&aelig;tning.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div><div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="inventory-planner" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Inventory-Planner.png" alt="Inventory Planner" width="50" height="49">Inventory Planner</a><a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="1024" height="1024">Shopify</a><a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e conomic logo" width="1024" height="1024">e-conomic</a></div></div></div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky logo" class="sp-hero-logo" width="512" height="512">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Indk&oslash;bsplanl&aelig;gning</div>
+        <h1 class="int-page__title">Varemodtagelse fra <span>Stocky</span></h1>
+        <p class="int-page__intro"><strong>Planl&aelig;g indk&oslash;bet i Stocky, modtag varerne i SmartPack.</strong><br><br>Stocky er Shopifys eget indk&oslash;bsv&aelig;rkt&oslash;j. Integrationen henter indk&oslash;bsordrer fra Stocky og importerer dem i SmartPack, s&aring; lagerpersonalet kan modtage varerne med scanning og indplacering i stedet for at taste dem ind.<br><br>Flowet er ensrettet: fra Stocky til SmartPack.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration mod Stocky. Indk&oslash;bsordrer ind i SmartPack.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Indk&oslash;b ind</span><span class="sp-stat-label">Indk&oslash;bsordrer fra Stocky bliver til forventede modtagelser</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Ensrettet</span><span class="sp-stat-label">Flowet g&aring;r fra Stocky til SmartPack</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Inkluderet</span><span class="sp-stat-label">Integrationen er en del af SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Stocky styrer indk&oslash;bet</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Indk&oslash;bsforslag<br>Leverand&oslash;rer<br>Indk&oslash;bsordrer<br>Shopify-data<br>Rapportering</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til jer der bruger Stocky</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128722;</span><h3>Shopify-butikker</h3><p>K&oslash;rer I Shopify og planl&aelig;gger indk&oslash;b i Stocky, passer flowet direkte.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128230;</span><h3>Varemodtagelse p&aring; lageret</h3><p>Indk&oslash;bsordren bliver til en forventet modtagelse, som kan scannes ind.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128203;</span><h3>Ingen dobbelttastning</h3><p>Ordrerne skal ikke oprettes igen i SmartPack for at kunne modtages.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en ordre fra Stocky gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordre<br>oprettes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>henter</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pluk<br>&amp; pak</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128666;</span><span class="sp-flow-label">Fragt<br>&amp; label</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Status<br>retur</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Flowet er ensrettet: indk&oslash;bsordrer hentes fra Stocky og importeres i SmartPack. Selve planl&aelig;gningen bliver i Stocky.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra Stocky</h3>
+            <ul class="sp-sync-list">
+              <li>Indk&oslash;bsordrer</li>
+              <li>Ordrelinjer med antal</li>
+              <li>Leverand&oslash;roplysninger</li>
+              <li>Forventede leveringer</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>I SmartPack</h3>
+            <ul class="sp-sync-list">
+              <li>Forventet modtagelse</li>
+              <li>Scanning ved varemodtagelse</li>
+              <li>Indplacering p&aring; lokation</li>
+              <li>Afvigelser og delmodtagelser</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til Shopify</h3>
+            <ul class="sp-sync-list">
+              <li>Lagerbeholdning efter modtagelse</li>
+              <li>Opdateret beholdning pr. lokation</li>
+              <li>Via Shopify-integrationen</li>
+              <li>Klar til salg</li>
+            </ul></div>
+        </div>
+        <h2>Stocky-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Indk&oslash;bsordrer som modtagelser</strong><span>Ordrer fra Stocky importeres i SmartPack, s&aring; varerne kan modtages med scanning i stedet for at blive tastet ind.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128722;</span><div><strong>Passer til Shopify-setups</strong><span>Stocky er Shopifys eget v&aelig;rkt&oslash;j, s&aring; integrationen giver mest mening sammen med Shopify-integrationen.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128200;</span><div><strong>Planl&aelig;gning bliver i Stocky</strong><span>SmartPack blander sig ikke i indk&oslash;bsforslagene. Lagerdelen er det, SmartPack overtager.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Delmodtagelser</strong><span>Kommer kun en del af ordren, h&aring;ndteres det p&aring; lageret.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9888;&#65039;</span><div><strong>Stocky er under udfasning</strong><span>Shopify har udfaset Stocky. Integrationen findes stadig, men det er v&aelig;rd at have en plan for, hvad der skal afl&oslash;se den.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128202;</span><div><strong>Joblog</strong><span>Hver import logges, s&aring; I kan se hvilke ordrer der kom ind.</span></div></div>
+        </div>
+        <h2>Ensrettet flow, og hvad det betyder</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Stocky-integrationen g&oslash;r &eacute;n ting: den henter indk&oslash;bsordrer ind, s&aring; de kan modtages p&aring; lageret.</p>
+        <div class="sp-formula">
+          <span class="cm"># Retning</span><br>
+          Stocky -&gt; <span class="kw">SmartPack</span><br>
+          indkoebsordre -&gt; <span class="kw">forventet modtagelse</span><br>
+          &nbsp;<br>
+          <span class="cm"># Efter modtagelse</span><br>
+          beholdning -&gt; <span class="kw">Shopify via shop-integrationen</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Selve lageropdateringen mod Shopify sker gennem Shopify-integrationen, ikke gennem Stocky.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Shopify har udfaset Stocky. Integrationen virker fortsat, men overvejer I et nyt indk&oslash;bsv&aelig;rkt&oslash;j, kan vi kigge p&aring; Inventory Planner eller SmartPacks egen indk&oslash;bsfunktionalitet.</span></div>
+        <h2>S&aring;dan forbinder du Stocky med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav jeres Stocky-adgang klar</strong><p>Vi bruger adgangen til Stocky til at forbinde integrationen.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Afklar varenumre</strong><p>SKU'er skal matche mellem Stocky og SmartPack, for at ordrelinjerne kan modtages.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Test en indk&oslash;bsordre</strong><p>K&oslash;r en ordre fra Stocky til registreret varemodtagelse i SmartPack.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad g&oslash;r integrationen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Den henter indk&oslash;bsordrer fra Stocky og importerer dem i SmartPack, s&aring; lagerpersonalet kan modtage varerne med scanning og indplacering.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>G&aring;r der data tilbage til Stocky?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. Flowet er ensrettet, fra Stocky til SmartPack. Lageropdateringen mod Shopify sker gennem Shopify-integrationen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi modtage en ordre delvist?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Delmodtagelser h&aring;ndteres p&aring; lageret som ved alle andre indk&oslash;bsordrer.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Stocky er udfaset af Shopify. Virker integrationen stadig?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja, integrationen findes fortsat i SmartPack. Men det er v&aelig;rd at have en plan for, hvad der skal afl&oslash;se Stocky p&aring; sigt.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad er alternativet til Stocky?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Inventory Planner har sin egen integration, og SmartPack har ogs&aring; egen indk&oslash;bs- og prognosefunktionalitet.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er integrationen inkluderet i prisen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk&oslash;b.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I Stocky og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi viser jer pr&aelig;cis, hvad der sker med jeres ordrer, lager og fragt, og hvad ops&aelig;tningen kr&aelig;ver af jer.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I Stocky?</h3><p>Vi afklarer SKU-match og modtageflow, s&aring; indk&oslash;bsordrerne kan scannes ind uden besv&aelig;r.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver synkronisering logges, s&aring; I kan se pr&aelig;cis hvad der blev sendt og modtaget.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="inventory-planner" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Inventory-Planner.png" alt="Inventory Planner logo" width="50" height="49">Inventory Planner</a>
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+          <a href="economic" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/e-conomic.png" alt="e-conomic logo" width="128" height="128">e-conomic</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

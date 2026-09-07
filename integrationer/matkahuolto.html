@@ -1,61 +1,341 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("sp-js");</script>
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SmartPack + Matkahuolto integration | Finsk fragt fra WMS</title>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Matkahuolto fra lageret | SmartPack WMS</title>
+  <meta name="description" content="SmartPack booker Matkahuolto direkte fra pakkebordet. Tolv metoder til Finland og internationalt, med pakkeautomater, paller og retur.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/matkahuolto">
+
+  <meta property="og:title" content="Matkahuolto fra lageret | SmartPack WMS">
+  <meta property="og:description" content="Matkahuolto bookes fra pakkebordet. Tolv metoder til Finland og internationalt, inkl. pakkeautomat og pallefragt.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/matkahuolto">
-  <meta property="og:description" content="Forbind Matkahuolto med SmartPack WMS. Send pakker til Finland med automatisk labelprint og sporingssynk direkte fra lageret.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630"><meta name="description" content="Forbind Matkahuolto med SmartPack WMS. Send pakker til Finland med automatisk labelprint og sporingssynk direkte fra lageret."><link rel="canonical" href="https://smartpack.dk/integrationer/matkahuolto"><meta name="robots" content="index, follow"><meta property="og:title" content="SmartPack + Matkahuolto"><meta property="og:type" content="website"><link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script><link rel="stylesheet" href="int-page.css?v=3">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Matkahuolto",
+          "item": "https://smartpack.dk/integrationer/matkahuolto"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS med direkte Matkahuolto-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
+      "url": "https://smartpack.dk/integrationer/matkahuolto",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "D\u00e6kker integrationen hele Finland?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Hjemmelevering, erhvervslevering, afhentningssteder og pakkeautomater er alle med, sammen med pallefragt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi sende internationalt med Matkahuolto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Pickup Point, Return, Business Delivery og Home Delivery findes ogs\u00e5 som internationale metoder."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Underst\u00f8tter I pakkeautomater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. XXS Locker Delivery er en selvst\u00e6ndig metode, og kundens valg fra checkout f\u00f8lger med til Matkahuolto."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi sende paller?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Pallet Freight Home og Freight d\u00e6kker pallefragt, og pakketyperne omfatter EUR-palle, FIN-palle, halvpalle, rullebur og specialpalle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er der tilvalg som farligt gods?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, blandt andet farligt gods, ADR, forh\u00e5ndslevering og forl\u00e6ngelse af returfristen med syv dage. De er ikke aktive som standard og skal sl\u00e5s til p\u00e5 metoden."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Koster labels ekstra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. SmartPack er forbundet direkte til Matkahuolto, s\u00e5 der er ingen labelfee."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container"><a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a><div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Matkahuolto.png" alt="Matkahuolto logo" class="int-page__logo" width="512" height="512"></div><div class="int-page__hero-content"><div class="int-page__cat">Fragt &middot; International</div><h1 class="int-page__title">SmartPack <span>+ Matkahuolto</span></h1><p class="int-page__intro">Integrer Matkahuolto, Finlands st&oslash;rste fraleverand&oslash;r til pakkebokse, med SmartPack og send pakker til finske kunder direkte fra lageret. Automatisk labelprint og track &amp; trace.</p><div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div></div></div><div class="int-page__body"><div class="int-page__main"><h2>Hvad g&oslash;r integrationen?</h2>
-      <div class="int-page__direct">
-        <div class="int-page__direct-icon">&#10003;</div>
-        <div>
-          <strong>Ingen labelfee. Labels er inkluderet i prisen.</strong>
-          <p>SmartPack er forbundet direkte til denne transport&oslash;r. Andre WMS-l&oslash;sninger kr&aelig;ver typisk en fragtportal oven i, med sit eget abonnement og labelfee pr. forsendelse. Vi g&oslash;r det direkte, s&aring; du betaler ikke det ekstra led.</p>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Matkahuolto.png" alt="Matkahuolto logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Fragt &middot; International</div>
+        <h1 class="int-page__title">Fragtlabels til <span>Matkahuolto</span> direkte fra lageret</h1>
+        <p class="int-page__intro"><strong>Matkahuolto-labelen printes, i det &oslash;jeblik pakkeren trykker print.</strong><br><br>Matkahuolto er vejen ind p&aring; det finske marked. Integrationen d&aelig;kker tolv metoder, fra XXS-pakkeautomat til pallefragt til hjemmeadressen, og de fleste findes i b&aring;de en finsk og en international variant.<br><br>S&aelig;lger I til Finland, er det her, I finder afhentningsstederne og pakkeautomaterne.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
         </div>
-      </div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#127758;</div><div><h3>Levering i hele Finland</h3><p>Matkahuolto d&aelig;kker hele Finland med pakkebutikker og hjemlevering. SmartPack underst&oslash;tter alle services.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128666;</div><div><h3>Matkahuolto-labels direkte</h3><p>Print Matkahuolto-labelen automatisk fra SmartPack n&aring;r den finske ordre er pakket.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128204;</div><div><h3>Track &amp; trace til finske kunder</h3><p>Sporingsnummer sendes automatisk og den finske kunde f&aring;r Matkahuolto-sporing p&aring; sin forsendelse.</p></div></div><h2 class="int-page__steps-title">S&aring;dan forbinder du Matkahuolto med SmartPack</h2><div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Aktiv&eacute;r Matkahuolto</h3><p>G&aring; til Integrationer i SmartPack og v&aelig;lg Matkahuolto. Inds&aelig;t dine aftaleoplysninger.</p></div></div><div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Konfigur&eacute;r finsk service</h3><p>V&aelig;lg standard leveringstype for det finske marked.</p></div></div><div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test en finsk ordre</h3><p>Send en testforsendelse til Finland og bekr&aelig;ft label og tracking.</p></div></div></div><div class="int-page__sidebar"><div class="int-page__cta-box"><h3>S&aelig;lger I til det finske marked?</h3><p>Book en demo og f&aring; vist Matkahuolto-integrationen til det nordiske marked.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div><div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="bring" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Bring.png" alt="Bring logo" width="256" height="256">Bring</a><a href="dhl-parcel" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/DHL Parcel.png" alt="DHL Parcel logo" width="250" height="250">DHL Parcel</a><a href="ups" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/UPS.png" alt="UPS logo" width="128" height="128">UPS</a></div></div></div></div></div></section></main>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration mod Matkahuolto. Tracking via matkahuolto.fi.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">12 metoder</span><span class="sp-stat-label">Finsk og international, inkl. retur</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Pakkeautomater</span><span class="sp-stat-label">XXS-locker og afhentningssteder som droppoint</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Ingen labelfee</span><span class="sp-stat-label">Labels er inkluderet i SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="int-page__direct"><div class="int-page__direct-icon">&#10003;</div><div>
+          <strong>Ingen labelfee. Labels er inkluderet i prisen.</strong>
+          <p>SmartPack er forbundet direkte til denne transport&oslash;r. Andre WMS-l&oslash;sninger sender typisk labels gennem en fragtportal og l&aelig;gger et gebyr oven i hver forsendelse.</p>
+        </div></div>
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Matkahuolto styrer transporten</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Afhentning<br>Finsk distribution<br>Pakkeautomater<br>Afhentningssteder<br>Levering</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Pluk og scanning<br>Pakning og kolli<br>Label og tracking<br>Retur og returlabel<br>Fragtdata til shoppen</div>
+          </div>
+        </div>
+        <h2>Passer til jeres Matkahuolto-aftale</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127467;&#127470;</span><h3>Finland</h3><p>Hele det finske net, fra hjemmelevering til afhentningssted og pakkeautomat.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#127760;</span><h3>Internationalt</h3><p>De fleste metoder findes i en international variant, ogs&aring; retur.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127981;</span><h3>Paller og gods</h3><p>Pallefragt til b&aring;de hjemmeadresse og erhverv, med flere pakketyper.</p></div>
+        </div>
+        <h2>S&aring;dan bliver en ordre til en Matkahuolto-pakke</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordre<br>klar</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pluk<br>&amp; pak</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128424;&#65039;</span><span class="sp-flow-label">Label<br>printes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128666;</span><span class="sp-flow-label">Pakken<br>afsendes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Tracking<br>til shoppen</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Labelen dannes synkront ved pakning. Svarer Matkahuolto med en fejl, vises den til pakkeren med det samme, og der oprettes ingen pakke.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra ordren</h3>
+            <ul class="sp-sync-list">
+              <li>Modtageradresse og kontaktoplysninger</li>
+              <li>Valgt leveringsmetode fra checkout</li>
+              <li>Pakkeshop-ID hvor det er relevant</li>
+              <li>Leveringsinstruktion og kundekommentar</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>P&aring; labelen</h3>
+            <ul class="sp-sync-list">
+              <li>Reference fra ordren</li>
+              <li>V&aelig;gt og m&aring;l p&aring; kolliet</li>
+              <li>Valgt service og tilvalg</li>
+              <li>Afsenderoplysninger fra lokationen</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til webshoppen</h3>
+            <ul class="sp-sync-list">
+              <li>Trackingnummer og tracking-URL</li>
+              <li>Fragtfirmaets navn</li>
+              <li>Alle kolli ved flere pakker</li>
+              <li>Fulfillment p&aring; ordren</li>
+            </ul></div>
+        </div>
+        <h2>Matkahuolto-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128274;</span><div><strong>Pakkeautomater og afhentningssteder</strong><span>B&aring;de XXS-locker og almindelige afhentningssteder fungerer som droppoint, s&aring; kundens valg i checkout f&oslash;lger med til Matkahuolto.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#127760;</span><div><strong>Internationale varianter</strong><span>Pickup Point, Return, Business Delivery og Home Delivery findes ogs&aring; som internationale metoder, s&aring; udenlandske ordrer ikke kr&aelig;ver et andet system.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#127981;</span><div><strong>Flere pakketyper</strong><span>EUR-palle, FIN-palle, halvpalle, rullebur og specialpalle underst&oslash;ttes ved siden af almindelige pakker.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Retur i to varianter</strong><span>Domestic Return til Finland og International Return til udlandet.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9888;&#65039;</span><div><strong>Tilvalg findes</strong><span>Blandt andet farligt gods, ADR, forh&aring;ndslevering og forl&aelig;ngelse af returfristen med syv dage. De er ikke aktive som standard.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128279;</span><div><strong>Tracking p&aring; matkahuolto.fi</strong><span>Trackingnummeret bliver til et link hos Matkahuolto og sendes tilbage til webshoppen.</span></div></div>
+        </div>
+        <h2>Leveringsmetoder SmartPack underst&oslash;tter</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Metoderne oprettes i SmartPack, og hver enkelt kan f&aring; sine egne tilvalg, parametre og method keys.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#127970; Business Daytime Delivery</strong><span>Erhvervslevering i dagtimerne.</span></div>
+          <div class="sp-location-item"><strong>&#127968; Home Delivery</strong><span>Hjemmelevering til privatadresse.</span></div>
+          <div class="sp-location-item"><strong>&#128274; XXS Locker Delivery</strong><span>Levering til pakkeautomat.</span></div>
+          <div class="sp-location-item"><strong>&#128717;&#65039; Pickup Point</strong><span>Levering til afhentningssted.</span></div>
+          <div class="sp-location-item"><strong>&#128233; XXS Pickup Point</strong><span>Lille pakke til afhentningssted.</span></div>
+          <div class="sp-location-item"><strong>&#127981; Pallet Freight Home og Freight</strong><span>Pallefragt til hjemmeadresse og erhvervsfragt.</span></div>
+          <div class="sp-location-item"><strong>&#128260; Domestic Return</strong><span>Indenlandsk retur i Finland.</span></div>
+          <div class="sp-location-item"><strong>&#127760; International-varianterne</strong><span>Pickup Point, Return, Business Delivery og Home Delivery findes ogs&aring; internationalt.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Pakketyperne d&aelig;kker pakke, EUR-palle, FIN-palle, halvpalle, rullebur og specialpalle, s&aring; b&aring;de stykgods og pakker kan bookes fra samme sted.</span></div>
+        <h2>Finsk og international i samme ops&aelig;tning</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">De fleste metoder findes i to varianter, s&aring; en finsk og en udenlandsk ordre kan k&oslash;re fra samme pakkebord.</p>
+        <div class="sp-formula">
+          <span class="cm"># Indenlandsk og international variant</span><br>
+          Pickup Point &nbsp; &nbsp; -&gt; <span class="kw">Domestic</span> / <span class="kw">International</span><br>
+          Return &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -&gt; <span class="kw">Domestic</span> / <span class="kw">International</span><br>
+          Home Delivery &nbsp; &nbsp;-&gt; <span class="kw">Domestic</span> / <span class="kw">International</span><br>
+          Business Delivery -&gt; <span class="kw">Domestic</span> / <span class="kw">International</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Derudover findes XXS-metoderne til de sm&aring; pakker og pallemetoderne til det tunge gods.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>V&aelig;lg den variant der matcher destinationen. Den internationale variant bruger andre produkter hos Matkahuolto end den finske.</span></div>
+        <h2>S&aring;dan forbinder du Matkahuolto med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav jeres Matkahuolto-aftale klar</strong><p>Vi bruger kundeoplysninger fra jeres aftale med Matkahuolto til at forbinde integrationen.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Opret metoderne</strong><p>De metoder, I rent faktisk bruger, oprettes med de rigtige pakketyper og eventuelle tilvalg.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>S&aelig;t method keys og test</strong><p>N&oslash;glerne fra jeres finske checkout kobles p&aring; metoderne, og I booker en testforsendelse, f&oslash;r I g&aring;r i produktion.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>D&aelig;kker integrationen hele Finland?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Hjemmelevering, erhvervslevering, afhentningssteder og pakkeautomater er alle med, sammen med pallefragt.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi sende internationalt med Matkahuolto?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Pickup Point, Return, Business Delivery og Home Delivery findes ogs&aring; som internationale metoder.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Underst&oslash;tter I pakkeautomater?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. XXS Locker Delivery er en selvst&aelig;ndig metode, og kundens valg fra checkout f&oslash;lger med til Matkahuolto.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi sende paller?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Pallet Freight Home og Freight d&aelig;kker pallefragt, og pakketyperne omfatter EUR-palle, FIN-palle, halvpalle, rullebur og specialpalle.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er der tilvalg som farligt gods?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja, blandt andet farligt gods, ADR, forh&aring;ndslevering og forl&aelig;ngelse af returfristen med syv dage. De er ikke aktive som standard og skal sl&aring;s til p&aring; metoden.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Koster labels ekstra?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. SmartPack er forbundet direkte til Matkahuolto, s&aring; der er ingen labelfee.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Sender I med Matkahuolto og vil se det fra pakkebordet?</h2>
+          <p>Vi viser jer hele vejen fra ordren lander til labelen ligger i printeren og trackingnummeret st&aring;r i webshoppen.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>Sender I med Matkahuolto?</h3><p>Vi gennemg&aring;r de finske metoder og pakketyper, s&aring; b&aring;de pakker og paller rammer rigtigt.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver booking logges med svaret fra fragtfirmaet, s&aring; en fejlet label kan spores pr&aelig;cist.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi forbinder fragtaftalen, opretter metoderne og tester med jer, f&oslash;r I g&aring;r i luften.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="postnord" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Postnord.png" alt="PostNord logo" width="1024" height="1024">PostNord</a>
+          <a href="bring" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Bring.png" alt="Bring logo" width="1024" height="1024">Bring</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

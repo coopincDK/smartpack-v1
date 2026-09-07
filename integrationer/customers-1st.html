@@ -1,54 +1,325 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("sp-js");</script>
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SmartPack + Customers 1st integration | CRM og WMS</title>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til Customers 1st | SmartPack</title>
+  <meta name="description" content="SmartPack forbinder Customers 1st med lageret. Salgsordrer og serviceopgaver ind, prissynkronisering begge veje og indk&oslash;b med.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/customers-1st">
+
+  <meta property="og:title" content="Lagersystem til Customers 1st | SmartPack">
+  <meta property="og:description" content="Fra Customers 1st til pakket ordre. Salgsordrer og tickets ind, priser begge veje, indk&oslash;b og audit med.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/customers-1st">
-  <meta property="og:description" content="Forbind Customers 1st med SmartPack WMS. Synkroniser kundedata og ordrer automatisk mellem CRM og lagersystem.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630"><meta name="description" content="Forbind Customers 1st med SmartPack WMS. Synkroniser kundedata og ordrer automatisk mellem CRM og lagersystem."><link rel="canonical" href="https://smartpack.dk/integrationer/customers-1st"><meta name="robots" content="index, follow"><meta property="og:title" content="SmartPack + Customers 1st"><meta property="og:type" content="website"><link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script><link rel="stylesheet" href="int-page.css?v=3">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Customers 1st",
+          "item": "https://smartpack.dk/integrationer/customers-1st"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med Customers 1st. Varer, priser, lager, ordrer, serviceopgaver, indk\u00f8bsordrer, leverand\u00f8rer og lagerbev\u00e6gelser synkroniseres.",
+      "url": "https://smartpack.dk/integrationer/customers-1st",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvordan h\u00e5ndteres serviceopgaver?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tickets med materialer bliver selvst\u00e6ndige ordrer i SmartPack med en s\u00e6rlig leveringsmetode, s\u00e5 de kan plukkes og skelnes fra almindelige salgsordrer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan priser synkroniseres begge veje?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Salgspris, normalpris og kostpris kan g\u00e5 i to retninger, hvilket er us\u00e6dvanligt. Til geng\u00e6ld skal I v\u00e6re enige om, hvilket system der er master."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "F\u00f8lger indk\u00f8b og leverand\u00f8rer med?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Indk\u00f8bsordrer og leverand\u00f8rer er en del af integrationen, s\u00e5 varemodtagelsen kan ske i SmartPack."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvor ofte synkroniseres der?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Et baggrundsjob k\u00f8rer hvert tiende minut. Integrationen bruger desuden rate limiting, s\u00e5 Customers 1st ikke overbelastes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi spore \u00e6ndringer bagud?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Lagerbev\u00e6gelser og audit-log er en del af integrationen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er integrationen inkluderet i prisen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container"><a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a><div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/SmartPack/POS/Customers-1st.png" alt="Customers 1st logo" class="int-page__logo" width="128" height="128"></div><div class="int-page__hero-content"><div class="int-page__cat">Loyalitet &amp; CRM</div><h1 class="int-page__title">SmartPack <span>+ Customers 1st</span></h1><p class="int-page__intro">Customers 1st er en dansk POS- og retail-platform med omnichannel, lagerstyring, kundeklub og integrationer. SmartPack-integrationen skaber &eacute;t sammenh&aelig;ngende flow fra butikssalg til central lagerstyring, s&aring; lagerstatus, ordrer og kundeinformation synkroniseres automatisk.</p><div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div></div></div><div class="int-page__body"><div class="int-page__main"><h2>Hvad g&oslash;r integrationen?</h2><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div><h3>Kundedata synkroniseres</h3><p>Ordrer fra Customers 1st synkroniseres til SmartPack. Kundehistorik og loyalitetsdata opdateres automatisk.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128221;</div><div><h3>Loyalitetspoint ved afsendelse</h3><p>N&aring;r en ordre afsendtes i SmartPack opdateres kundens loyalitetspoint automatisk i Customers 1st.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128666;</div><div><h3>Ordrestatus til CRM</h3><p>Ordrestatus og sporingsnummer synkroniseres til Customers 1st s&aring; kundeservice altid er opdateret.</p></div></div><h2 class="int-page__steps-title">S&aring;dan forbinder du Customers 1st med SmartPack</h2><div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Aktiv&eacute;r Customers 1st</h3><p>G&aring; til Integrationer i SmartPack og v&aelig;lg Customers 1st. Inds&aelig;t dine API-oplysninger.</p></div></div><div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Konfigur&eacute;r kundesynk</h3><p>V&aelig;lg hvilke kundedata og ordrestatuser der synkroniseres til Customers 1st.</p></div></div><div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test og aktiv&eacute;r</h3><p>Gennemf&oslash;r en testordre og verificer at kundedata og point opdateres korrekt.</p></div></div></div><div class="int-page__sidebar"><div class="int-page__cta-box"><h3>K&oslash;rer I Customers 1st?</h3><p>Book en demo og f&aring; vist Customers 1st + SmartPack-integrationen.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div><div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="flexpos" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/POS/FlexPOS.png" alt="FlexPOS" width="128" height="128">FlexPOS</a><a href="herodesk" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/Herodesk/Other/Herodesk.png" alt="Herodesk logo" width="280" height="280">Herodesk</a><a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="1024" height="1024">Shopify</a></div></div></div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/POS/Customers-1st.png" alt="Customers 1st logo" class="sp-hero-logo" width="128" height="128">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Loyalitet &amp; CRM</div>
+        <h1 class="int-page__title">Lagersystem til <span>Customers 1st</span></h1>
+        <p class="int-page__intro"><strong>F&aring; Customers 1st og lageret til at arbejde som &eacute;t system.</strong><br><br>Customers 1st er en retail- og serviceplatform til butiksstyring, serviceopgaver og salgsordrer. Integrationen er bred: ud over varer og lager d&aelig;kker den ordrer, serviceopgaver, indk&oslash;bsordrer, leverand&oslash;rer, lagerbev&aelig;gelser og audit.<br><br>Den kan noget, de fleste webshopintegrationer ikke kan: synkronisere priser i begge retninger.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration mod Customers 1st. Baggrundsjob hvert tiende minut.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">To ordretyper</span><span class="sp-stat-label">Salgsordrer og serviceopgaver med materialer</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Priser begge veje</span><span class="sp-stat-label">Salgspris, normalpris og kostpris kan g&aring; i to retninger</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Hvert 10. minut</span><span class="sp-stat-label">Baggrundsjob henter og sender l&oslash;bende</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Customers 1st styrer butik og service</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Butiksstyring<br>Kunder og loyalitet<br>Serviceopgaver<br>Salgsordrer<br>Betaling</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til jer der bruger Customers 1st</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128736;</span><h3>Serviceopgaver</h3><p>Tickets med materialer behandles som egne ordrer i SmartPack med en s&aelig;rlig leveringsmetode.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128176;</span><h3>Priser begge veje</h3><p>Salgspris, normalpris og kostpris kan synkroniseres i to retninger, hvilket er us&aelig;dvanligt.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128230;</span><h3>Indk&oslash;b med</h3><p>Indk&oslash;bsordrer og leverand&oslash;rer f&oslash;lger med, s&aring; varemodtagelse kan ske i SmartPack.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en ordre fra Customers 1st gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordre<br>oprettes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>henter</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pluk<br>&amp; pak</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128666;</span><span class="sp-flow-label">Fragt<br>&amp; label</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Status<br>retur</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Der synkroniseres to ordretyper ind: almindelige salgsordre-fulfillments og tickets, alts&aring; serviceopgaver med materialer.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra Customers 1st</h3>
+            <ul class="sp-sync-list">
+              <li>Varer med priser og varedata</li>
+              <li>Salgsordrer til fulfillment</li>
+              <li>Tickets med materialer</li>
+              <li>Indk&oslash;bsordrer og leverand&oslash;rer</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>I SmartPack</h3>
+            <ul class="sp-sync-list">
+              <li>Lagerbeholdning pr. lokation</li>
+              <li>Plukruter og scanvalidering</li>
+              <li>Varemodtagelse og indplacering</li>
+              <li>Lagerbev&aelig;gelser og audit</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til Customers 1st</h3>
+            <ul class="sp-sync-list">
+              <li>Lagerantal</li>
+              <li>Priser hvor retningen er sl&aring;et til</li>
+              <li>Ordrestatus og fulfillment</li>
+              <li>Bekr&aelig;ftede lagerbev&aelig;gelser</li>
+            </ul></div>
+        </div>
+        <h2>Customers 1st-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128736;</span><div><strong>Tickets som egne ordrer</strong><span>Serviceopgaver med materialer bliver selvst&aelig;ndige ordrer i SmartPack med en s&aelig;rlig leveringsmetode, s&aring; de kan plukkes som alt andet.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128176;</span><div><strong>Prissynkronisering begge veje</strong><span>Salgspris, normalpris og kostpris kan synkroniseres i to retninger. Det har de fleste andre integrationer ikke.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Indk&oslash;b og leverand&oslash;rer</strong><span>Indk&oslash;bsordrer og leverand&oslash;rer er en del af integrationen, s&aring; varemodtagelsen kan ske i SmartPack.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128209;</span><div><strong>Lagerbev&aelig;gelser og audit</strong><span>Bev&aelig;gelser og audit-log f&oslash;lger med, s&aring; &aelig;ndringer kan spores bagud.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128337;</span><div><strong>Baggrundsjob</strong><span>Et job hvert tiende minut henter og sender l&oslash;bende, s&aring; data ikke st&aring;r stille.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128721;</span><div><strong>Rate limiting</strong><span>Integrationen bruger en bucket-mekanisme, s&aring; Customers 1st ikke overbelastes ved store synkroniseringer.</span></div></div>
+        </div>
+        <h2>To ordretyper, to flows</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Det, der adskiller Customers 1st fra en webshopintegration, er serviceopgaverne. De skal plukkes ligesom en ordre, men de kommer fra et andet sted.</p>
+        <div class="sp-formula">
+          <span class="cm"># Hvad der hentes ind</span><br>
+          salgsordre-fulfillment -&gt; <span class="kw">almindelig ordre</span><br>
+          ticket med materialer -&gt; <span class="kw">ordre med saerlig leveringsmetode</span><br>
+          &nbsp;<br>
+          <span class="cm"># Priser</span><br>
+          salgspris, normalpris, kostpris -&gt; <span class="kw">begge veje</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Tickets f&aring;r en s&aelig;rlig leveringsmetode, s&aring; de kan skelnes fra almindelige ordrer i plukprofiler og statistik.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Prissynkronisering begge veje skal konfigureres bevidst. Sl&aring;r I den til i begge retninger, skal I v&aelig;re enige om, hvilket system der er master for prisen.</span></div>
+        <h2>S&aring;dan forbinder du Customers 1st med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav jeres Customers 1st-adgang klar</strong><p>Vi bruger API-adgangen til at forbinde integrationen.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Beslut retningen p&aring; priser</strong><p>Salgspris, normalpris og kostpris kan g&aring; begge veje. Aftal hvilket system der er master.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Sl&aring; modulerne til og afstem</strong><p>Ordrer, tickets, indk&oslash;b, leverand&oslash;rer og audit sl&aring;s til efter behov, og I k&oslash;rer en f&oslash;rste afstemning.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvordan h&aring;ndteres serviceopgaver?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Tickets med materialer bliver selvst&aelig;ndige ordrer i SmartPack med en s&aelig;rlig leveringsmetode, s&aring; de kan plukkes og skelnes fra almindelige salgsordrer.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan priser synkroniseres begge veje?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Salgspris, normalpris og kostpris kan g&aring; i to retninger, hvilket er us&aelig;dvanligt. Til geng&aelig;ld skal I v&aelig;re enige om, hvilket system der er master.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>F&oslash;lger indk&oslash;b og leverand&oslash;rer med?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Indk&oslash;bsordrer og leverand&oslash;rer er en del af integrationen, s&aring; varemodtagelsen kan ske i SmartPack.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvor ofte synkroniseres der?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Et baggrundsjob k&oslash;rer hvert tiende minut. Integrationen bruger desuden rate limiting, s&aring; Customers 1st ikke overbelastes.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi spore &aelig;ndringer bagud?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Lagerbev&aelig;gelser og audit-log er en del af integrationen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er integrationen inkluderet i prisen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk&oslash;b.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I Customers 1st og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi viser jer pr&aelig;cis, hvad der sker med jeres ordrer, lager og fragt, og hvad ops&aelig;tningen kr&aelig;ver af jer.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I Customers 1st?</h3><p>Vi gennemg&aring;r ordretyper og prisretninger, s&aring; tickets og priser rammer rigtigt.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver synkronisering logges, s&aring; I kan se pr&aelig;cis hvad der blev sendt og modtaget.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="shopbox" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/POS/Shopbox.png" alt="Shopbox logo" width="300" height="300">Shopbox</a>
+          <a href="flexpos" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/POS/FlexPOS.png" alt="FlexPOS logo" width="128" height="128">FlexPOS</a>
+          <a href="gofact" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/GoFact.png" alt="GoFact logo" width="78" height="78">GoFact</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

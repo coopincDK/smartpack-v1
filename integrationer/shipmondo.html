@@ -1,95 +1,337 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
-
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
-
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
-
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
-
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
-
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
-
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
-
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
-
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
-
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
+<!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartPack + Shipmondo | Multi-carrier fragtportal fra WMS</title>
-  <meta property="og:url" content="https://smartpack.dk/integrationer/shipmondo">
-  <meta property="og:description" content="Forbind Shipmondo med SmartPack WMS. Adgang til alle Shipmondos fragtleverand&oslash;rer og print labels direkte fra lageret.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="description" content="Forbind Shipmondo med SmartPack WMS. Adgang til alle Shipmondos fragtleverand&oslash;rer og print labels direkte fra lageret.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("sp-js");</script>
+
+
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Shipmondo-labels fra lageret | SmartPack WMS</title>
+  <meta name="description" content="SmartPack booker labels gennem Shipmondo fra pakkebordet. Metoderne hentes efter afsender- og modtagerland, og egne fragtaftaler kan bruges.">
   <link rel="canonical" href="https://smartpack.dk/integrationer/shipmondo">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="SmartPack + Shipmondo">
+
+  <meta property="og:title" content="Shipmondo-labels fra lageret | SmartPack WMS">
+  <meta property="og:description" content="Labels bookes gennem Shipmondo fra pakkebordet. Metoder efter land, pakkepunkter og egne aftaler.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/shipmondo">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Shipmondo",
+          "item": "https://smartpack.dk/integrationer/shipmondo"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der booker fragtlabels gennem fragtportalen Shipmondo. Labels dannes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
+      "url": "https://smartpack.dk/integrationer/shipmondo",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Kan vi bruge vores egne fragtaftaler?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Der er en indstilling pr. leveringsmetode, der styrer, om forsendelsen faktureres via jeres egne fragtaftaler eller Shipmondos standardpriser. Aftalerne skal ogs\u00e5 v\u00e6re sat op hos Shipmondo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvordan hentes leveringsmetoderne?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fra Shipmondos API, inklusive hvilke transport\u00f8rprodukter der er tilg\u00e6ngelige mellem afsender- og modtagerland. S\u00e5 I ser kun det, der faktisk kan bookes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Underst\u00f8tter I pakkepunkter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Kundens valgte pakkepunkt fra checkout f\u00f8lger med p\u00e5 ordren til Shipmondo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi tilf\u00f8je en ny transport\u00f8r senere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Den s\u00e6ttes op hos Shipmondo, og integrationen i SmartPack skal ikke \u00e6ndres."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi k\u00f8re Shipmondo sammen med direkte aftaler?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Begge dele k\u00f8res fra samme pakkeflow i SmartPack, s\u00e5 pakkeren m\u00e6rker ikke forskel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad skal vi selv have p\u00e5 plads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En aftale med Shipmondo og API-adgang, plus jeres egne fragtaftaler hos Shipmondo, hvis I vil bruge dem."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
   <link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=3">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
 <main id="main-content">
-<section class="int-page"><div class="container">
-  <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-  <div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Shipmondo.png" alt="Shipmondo logo" class="int-page__logo" width="256" height="256"></div>
-    <div class="int-page__hero-content">
-      <div class="int-page__cat">Fragt &middot; Danmark</div>
-      <h1 class="int-page__title">SmartPack <span>+ Shipmondo</span></h1>
-      <p class="int-page__intro">Integrer Shipmondo med SmartPack og f&aring; adgang til alle Shipmondos fragtleverand&oslash;rer i &eacute;t flow. Print labels, sporingsnumre og ordrestatussynk, alt k&oslash;rer automatisk.</p>
-      <div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div>
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Shipmondo.png" alt="Shipmondo logo" class="sp-hero-logo" width="256" height="256">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Fragt &middot; Danmark</div>
+        <h1 class="int-page__title">Fragtlabels via <span>Shipmondo</span></h1>
+        <p class="int-page__intro"><strong>Labelen printes, i det &oslash;jeblik pakkeren trykker print.</strong><br><br>Shipmondo samler transport&oslash;rerne under &eacute;n aftale. SmartPack henter de tilg&aelig;ngelige metoder fra Shipmondo, inklusive hvilke produkter der findes mellem afsender- og modtagerland, og booker labelen derfra.<br><br>I kan v&aelig;lge pr. leveringsmetode, om forsendelsen skal faktureres via jeres egne fragtaftaler eller Shipmondos priser.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Integration mod Shipmondos API. I har aftalen med Shipmondo.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Metoder efter land</span><span class="sp-stat-label">Kun de produkter der findes mellem afsender og modtager</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Egne aftaler</span><span class="sp-stat-label">V&aelig;lg pr. metode om jeres egne priser skal bruges</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Ved pakning</span><span class="sp-stat-label">Labelen hentes live, ikke i en natlig k&oslash;rsel</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Shipmondo styrer fragtaftalerne</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Transportoeraftaler<br>Priser<br>Labelformater<br>Pakkeshops<br>Track &amp; Trace</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Pluk og scanning<br>Pakning og kolli<br>Label og tracking<br>Retur<br>Fragtdata til shoppen</div>
+          </div>
+        </div>
+        <h2>Passer til jer der bruger Shipmondo</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128230;</span><h3>Flere transport&oslash;rer</h3><p>Adgang til Shipmondos transport&oslash;rer uden en aftale med hver enkelt.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128176;</span><h3>Egne fragtpriser</h3><p>Har I egne aftaler, for eksempel egne GLS-priser, kan de bruges gennem Shipmondo.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127760;</span><h3>Landebaseret udvalg</h3><p>Metoderne hentes ud fra afsender- og modtagerland, s&aring; I kun ser det, der faktisk kan bookes.</p></div>
+        </div>
+        <h2>S&aring;dan bliver en ordre til en pakke via Shipmondo</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordre<br>klar</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pluk<br>&amp; pak</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128424;&#65039;</span><span class="sp-flow-label">Label via<br>portalen</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128666;</span><span class="sp-flow-label">Pakken<br>afsendes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Tracking<br>til shoppen</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Set fra pakkebordet er flowet det samme som ved en direkte fragtaftale. Forskellen ligger i, hvem I har aftalen med.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra ordren</h3>
+            <ul class="sp-sync-list">
+              <li>Modtageradresse og kontaktoplysninger</li>
+              <li>Valgt leveringsmetode fra checkout</li>
+              <li>Pakkeshop-ID hvor det er relevant</li>
+              <li>Leveringsinstruktion og kundekommentar</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>Til portalen</h3>
+            <ul class="sp-sync-list">
+              <li>Afsender- og modtageradresse</li>
+              <li>Pakkedimensioner og v&aelig;gt</li>
+              <li>Valgt service og tilvalg</li>
+              <li>Varelinjer hvor portalen kr&aelig;ver det</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til webshoppen</h3>
+            <ul class="sp-sync-list">
+              <li>Trackingnummer og tracking-URL</li>
+              <li>Fragtfirmaets navn</li>
+              <li>Alle kolli ved flere pakker</li>
+              <li>Fulfillment p&aring; ordren</li>
+            </ul></div>
+        </div>
+        <h2>Shipmondo-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#127760;</span><div><strong>Metoder efter land</strong><span>Shipmondo returnerer de produkter, der findes mellem afsender- og modtagerland, s&aring; I ikke f&aring;r metoder, der alligevel ikke kan bookes.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128176;</span><div><strong>Egne aftaler pr. metode</strong><span>Indstillingen eget aftale afg&oslash;r, om forsendelsen faktureres via jeres egne fragtaftaler eller Shipmondos standardpriser.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128717;&#65039;</span><div><strong>Pakkepunkter fra checkout</strong><span>Kundens valgte pakkepunkt f&oslash;lger med p&aring; ordren til Shipmondo.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128424;&#65039;</span><div><strong>Label ved pakkebordet</strong><span>Labelen bookes live, n&aring;r pakkeren trykker print. Fejler bookingen, ses fejlbeskeden med det samme.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Ny transport&oslash;r uden udvikling</strong><span>Skal I bruge en ny fragtmand, s&aelig;ttes den op hos Shipmondo. Integrationen i SmartPack &aelig;ndres ikke.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128202;</span><div><strong>Joblog p&aring; hver booking</strong><span>Svaret fra Shipmondo logges, s&aring; en fejlet label kan spores pr&aelig;cist bagefter.</span></div></div>
+        </div>
+        <h2>Leveringsmetoder og hvad de kr&aelig;ver</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Metoderne kommer fra portalen, ikke fra en fast liste i SmartPack, s&aring; de matcher det jeres aftale d&aelig;kker.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128295; Metoder fra Shipmondo</strong><span>Alle tilg&aelig;ngelige produkter for afsender- og modtagerland hentes fra API'et.</span></div>
+          <div class="sp-location-item"><strong>&#128717;&#65039; Pakkepunkter</strong><span>Pakkepunkter underst&oslash;ttes og sendes med p&aring; ordren.</span></div>
+          <div class="sp-location-item"><strong>&#128176; Eget aftale-flag</strong><span>En indstilling pr. leveringsmetode styrer, om jeres egne fragtaftaler bruges.</span></div>
+          <div class="sp-location-item"><strong>&#128424;&#65039; Label fra API</strong><span>Labelen bookes og hentes direkte gennem Shipmondo.</span></div>
+          <div class="sp-location-item"><strong>&#128273; API-adgang</strong><span>Adgangsoplysninger fra Shipmondo indtastes i indstillingerne.</span></div>
+          <div class="sp-location-item"><strong>&#128202; Joblog</strong><span>Svaret fra Shipmondo logges pr. booking.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Vil I bruge jeres egne fragtaftaler gennem Shipmondo, skal det ogs&aring; v&aelig;re sat op hos Shipmondo. Indstillingen i SmartPack styrer kun, hvilken vej den enkelte forsendelse faktureres.</span></div>
+        <h2>Portal eller direkte aftale?</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Begge dele virker i SmartPack, og mange k&oslash;rer med begge. Forskellen er, hvem I har aftalen med, og hvor prisen forhandles.</p>
+        <div class="sp-formula">
+          <span class="cm"># Direkte aftale</span><br>
+          I har aftalen med <span class="kw">transportoeren</span><br>
+          SmartPack taler med transportoerens API<br>
+          &nbsp;<br>
+          <span class="cm"># Fragtportal</span><br>
+          I har aftalen med <span class="kw">portalen</span><br>
+          portalen haandterer transportoererne
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">En portal g&oslash;r det lettere at skifte eller tilf&oslash;je transport&oslash;r, fordi integrationen i SmartPack ikke skal &aelig;ndres. En direkte aftale fjerner mellemleddet og dets gebyr.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Har I b&aring;de direkte aftaler og en portal, k&oslash;res begge dele fra samme pakkeflow. Pakkeren m&aelig;rker ikke forskel.</span></div>
+        <h2>S&aring;dan forbinder du Shipmondo med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav jeres Shipmondo-aftale klar</strong><p>I skal have en aftale med Shipmondo og API-adgang.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Beslut om egne aftaler skal bruges</strong><p>Har I egne fragtaftaler gennem Shipmondo, skal de ogs&aring; v&aelig;re sat op hos Shipmondo.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Hent metoder og test</strong><p>SmartPack henter de tilg&aelig;ngelige metoder, I s&aelig;tter method keys p&aring; dem, og I booker en testforsendelse.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi bruge vores egne fragtaftaler?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Der er en indstilling pr. leveringsmetode, der styrer, om forsendelsen faktureres via jeres egne fragtaftaler eller Shipmondos standardpriser. Aftalerne skal ogs&aring; v&aelig;re sat op hos Shipmondo.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvordan hentes leveringsmetoderne?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Fra Shipmondos API, inklusive hvilke transport&oslash;rprodukter der er tilg&aelig;ngelige mellem afsender- og modtagerland. S&aring; I ser kun det, der faktisk kan bookes.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Underst&oslash;tter I pakkepunkter?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Kundens valgte pakkepunkt fra checkout f&oslash;lger med p&aring; ordren til Shipmondo.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi tilf&oslash;je en ny transport&oslash;r senere?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Den s&aelig;ttes op hos Shipmondo, og integrationen i SmartPack skal ikke &aelig;ndres.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi k&oslash;re Shipmondo sammen med direkte aftaler?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Begge dele k&oslash;res fra samme pakkeflow i SmartPack, s&aring; pakkeren m&aelig;rker ikke forskel.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad skal vi selv have p&aring; plads?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">En aftale med Shipmondo og API-adgang, plus jeres egne fragtaftaler hos Shipmondo, hvis I vil bruge dem.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Bruger I Shipmondo og vil se det fra pakkebordet?</h2>
+          <p>Vi viser jer hele vejen fra ordren lander til labelen ligger i printeren og trackingnummeret st&aring;r i webshoppen.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>Bruger I Shipmondo?</h3><p>Vi gennemg&aring;r jeres Shipmondo-aftale og afklarer, om egne fragtaftaler skal bruges.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver synkronisering logges, s&aring; I kan se pr&aelig;cis hvad der blev sendt og modtaget.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="coolrunner" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/CoolRunner.png" alt="CoolRunner logo" width="128" height="128">CoolRunner</a>
+          <a href="webshipper" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Webshipper.png" alt="Webshipper logo" width="1024" height="1024">Webshipper</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+          <a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
+        </div></div>
+      </div>
     </div>
   </div>
-  <div class="int-page__body">
-    <div class="int-page__main">
-      <h2>Hvad g&oslash;r integrationen?</h2>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#127758;</div><div><h3>Alle Shipmondo-carriers</h3><p>Shipmondo giver adgang til GLS, PostNord, DAO, DHL, UPS og mange flere via &eacute;t integreret API i SmartPack.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#127968;</div><div><h3>Print labels fra SmartPack</h3><p>V&aelig;lg carrier per ordre og print label direkte fra pakkelinjen. Sporingsnummer synkroniseres automatisk.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128204;</div><div><h3>Automatisk ordrestatus</h3><p>N&aring;r pakken er afsendt opdateres ordrestatus i din webshop via Shipmondo.</p></div></div>
-      <h2 class="int-page__steps-title">S&aring;dan forbinder du Shipmondo med SmartPack</h2>
-      <div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Aktiv&eacute;r Shipmondo</h3><p>G&aring; til Integrationer i SmartPack og v&aelig;lg Shipmondo. Log ind med din Shipmondo-konto.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Konfigur&eacute;r carriers og regler</h3><p>S&aelig;t standardcarrier og konfigur&eacute;r eventuelle automatiske fragtvalgsregler.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test og g&aring; live</h3><p>Send en testforsendelse gennem Shipmondo og verificer hele flowet.</p></div></div>
-    </div>
-    <div class="int-page__sidebar">
-      <div class="int-page__cta-box"><h3>Bruger I Shipmondo?</h3><p>Book en demo og f&aring; vist Shipmondo + SmartPack i aktion.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div>
-      <div class="int-page__related"><h3>Andre fragtintegrationer</h3><div class="int-page__related-list"><a href="coolrunner" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/CoolRunner.png" alt="CoolRunner logo" width="128" height="128">CoolRunner</a><a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a><a href="postnord" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Postnord.png" alt="Postnord logo" width="1024" height="1024">PostNord</a></div></div>
-    </div>
-  </div>
-</div></section>
+</section>
 </main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
 <script src="../js/main.js"></script>
-</body></html>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

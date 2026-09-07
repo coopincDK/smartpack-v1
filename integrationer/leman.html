@@ -1,61 +1,338 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("sp-js");</script>
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SmartPack + Leman integration | B2B fragt fra WMS</title>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Leman-fragtbreve fra lageret | SmartPack WMS</title>
+  <meta name="description" content="SmartPack booker Leman direkte fra pakkebordet. Leveringsmetoderne hentes dynamisk fra Lemans API ud fra jeres produktkode.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/leman">
+
+  <meta property="og:title" content="Leman-fragtbreve fra lageret | SmartPack WMS">
+  <meta property="og:description" content="Leman bookes fra pakkebordet. Metoderne hentes fra Lemans API ud fra jeres produktkode.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/leman">
-  <meta property="og:description" content="Forbind Leman med SmartPack WMS. Print Leman-fragtlabels direkte fra lageret og f&aring; automatisk sporingsopdatering.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630"><meta name="description" content="Forbind Leman med SmartPack WMS. Print Leman-fragtlabels direkte fra lageret og f&aring; automatisk sporingsopdatering."><link rel="canonical" href="https://smartpack.dk/integrationer/leman"><meta name="robots" content="index, follow"><meta property="og:title" content="SmartPack + Leman"><meta property="og:type" content="website"><link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script><link rel="stylesheet" href="int-page.css?v=3">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Leman",
+          "item": "https://smartpack.dk/integrationer/leman"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS med direkte Leman-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
+      "url": "https://smartpack.dk/integrationer/leman",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvilke leveringsmetoder f\u00e5r vi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dem jeres aftale d\u00e6kker. Metoderne hentes dynamisk fra Lemans API ud fra den produktkode, der er konfigureret i indstillingerne, i stedet for fra en fast liste."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad sker der, hvis vi udvider vores Leman-aftale?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De nye produkter f\u00f8lger med, n\u00e5r metoderne hentes igen, uden at der skal \u00e6ndres noget i selve integrationen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad er produktkoden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Den kode, Leman bruger til at identificere jeres produkter. Den s\u00e6ttes i integrationens indstillinger og afg\u00f8r, hvad der er tilg\u00e6ngeligt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvorn\u00e5r dannes fragtbrevet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "N\u00e5r pakkeren er f\u00e6rdig ved pakkebordet. Leman kaldes live, og svaret kommer retur med det samme."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi sende flere kolli?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Flere pakker p\u00e5 samme ordre h\u00e5ndteres i samme pakkeflow som resten af jeres forsendelser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Koster fragtbreve ekstra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. SmartPack er forbundet direkte til Leman, s\u00e5 der er ingen labelfee."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container"><a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a><div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/LEMAN.png" alt="Leman logo" class="int-page__logo" width="800" height="800"></div><div class="int-page__hero-content"><div class="int-page__cat">Fragt &middot; Danmark</div><h1 class="int-page__title">SmartPack <span>+ Leman</span></h1><p class="int-page__intro">Integrer Leman med SmartPack og h&aring;ndter B2B-forsendelser direkte fra lageret. Labels printes automatisk og sporingsnumre synkroniseres uden manuel h&aring;ndtering.</p><div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div></div></div><div class="int-page__body"><div class="int-page__main"><h2>Hvad g&oslash;r integrationen?</h2>
-      <div class="int-page__direct">
-        <div class="int-page__direct-icon">&#10003;</div>
-        <div>
-          <strong>Ingen labelfee. Labels er inkluderet i prisen.</strong>
-          <p>SmartPack er forbundet direkte til denne transport&oslash;r. Andre WMS-l&oslash;sninger kr&aelig;ver typisk en fragtportal oven i, med sit eget abonnement og labelfee pr. forsendelse. Vi g&oslash;r det direkte, s&aring; du betaler ikke det ekstra led.</p>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/LEMAN.png" alt="Leman logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Fragt &middot; International</div>
+        <h1 class="int-page__title">Fragtlabels til <span>Leman</span> direkte fra lageret</h1>
+        <p class="int-page__intro"><strong>Fragtbrevet dannes, i det &oslash;jeblik pakkeren er f&aelig;rdig.</strong><br><br>Leman-integrationen har ingen fast metodeliste. Metoderne hentes fra Lemans eget API ud fra den produktkode, I konfigurerer, s&aring; I f&aring;r pr&aelig;cis de produkter, jeres aftale d&aelig;kker.<br><br>Det betyder ogs&aring;, at nye produkter i jeres Leman-aftale kan tages i brug uden &aelig;ndringer i SmartPack.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
         </div>
-      </div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128666;</div><div><h3>Leman-labels direkte fra lageret</h3><p>SmartPack printer Leman-labelen automatisk n&aring;r B2B-ordren er klar til afsendelse.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128204;</div><div><h3>Automatisk sporingssynk</h3><p>Sporingsnummer og forventet leveringsdato sendes automatisk til jeres system og kunden.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#127758;</div><div><h3>B2B-fragt til hele landet</h3><p>Leman d&aelig;kker Danmark og Europa med p&aring;lidelig B2B-fragt. Alle serviceniveauer underst&oslash;ttet.</p></div></div><h2 class="int-page__steps-title">S&aring;dan forbinder du Leman med SmartPack</h2><div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Aktiv&eacute;r Leman</h3><p>G&aring; til Integrationer i SmartPack og v&aelig;lg Leman. Inds&aelig;t dine Leman-aftaleoplysninger.</p></div></div><div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Konfigur&eacute;r serviceniveau</h3><p>V&aelig;lg standardservice og eventuelle tillags-services for specielle forsendelser.</p></div></div><div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test og g&aring; live</h3><p>Send en testforsendelse og verificer label og sporingsnummer.</p></div></div></div><div class="int-page__sidebar"><div class="int-page__cta-box"><h3>Bruger I Leman?</h3><p>Book en demo og f&aring; vist Leman-integrationen p&aring; jeres lager.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div><div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="leman-express" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Leman-Express.png" alt="Leman Express" width="800" height="800">Leman Express</a><a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a><a href="freja-transport" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Freja-Transport-Logistics.png" alt="Freja Transport Logistics" width="800" height="800">Freja Transport</a></div></div></div></div></div></section></main>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration mod Lemans API med produktkode.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Dynamiske metoder</span><span class="sp-stat-label">Hentes fra Lemans API ud fra jeres produktkode</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Ved pakning</span><span class="sp-stat-label">Fragtbrevet dannes live, ikke i en natlig k&oslash;rsel</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Ingen labelfee</span><span class="sp-stat-label">Fragtbreve er inkluderet i SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="int-page__direct"><div class="int-page__direct-icon">&#10003;</div><div>
+          <strong>Ingen labelfee. Labels er inkluderet i prisen.</strong>
+          <p>SmartPack er forbundet direkte til denne transport&oslash;r. Andre WMS-l&oslash;sninger sender typisk labels gennem en fragtportal og l&aelig;gger et gebyr oven i hver forsendelse.</p>
+        </div></div>
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Leman styrer transporten</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Afhentning<br>Terminaler<br>International fremf&oslash;ring<br>Distribution<br>Levering</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Pluk og scanning<br>Pakning og kolli<br>Label og tracking<br>Retur og returlabel<br>Fragtdata til shoppen</div>
+          </div>
+        </div>
+        <h2>Passer til jeres Leman-aftale</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127760;</span><h3>International fragt</h3><p>Leman k&oslash;rer transport i Norden og videre ud i Europa og verden.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128736;</span><h3>Jeres produkter</h3><p>Metoderne kommer fra jeres egen aftale, ikke fra en fast liste i SmartPack.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128666;</span><h3>Vej, luft og s&oslash;</h3><p>Leman d&aelig;kker flere transportformer, og produktkoden afg&oslash;r hvilken der bookes.</p></div>
+        </div>
+        <h2>S&aring;dan bliver en ordre til en Leman-pakke</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordre<br>klar</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pluk<br>&amp; pak</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128424;&#65039;</span><span class="sp-flow-label">Label<br>printes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128666;</span><span class="sp-flow-label">Pakken<br>afsendes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Tracking<br>til shoppen</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Labelen dannes synkront ved pakning. Svarer Leman med en fejl, vises den til pakkeren med det samme, og der oprettes ingen pakke.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra ordren</h3>
+            <ul class="sp-sync-list">
+              <li>Modtageradresse og kontaktoplysninger</li>
+              <li>Valgt leveringsmetode fra checkout</li>
+              <li>Pakkeshop-ID hvor det er relevant</li>
+              <li>Leveringsinstruktion og kundekommentar</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>P&aring; labelen</h3>
+            <ul class="sp-sync-list">
+              <li>Reference fra ordren</li>
+              <li>V&aelig;gt og m&aring;l p&aring; kolliet</li>
+              <li>Valgt service og tilvalg</li>
+              <li>Afsenderoplysninger fra lokationen</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til webshoppen</h3>
+            <ul class="sp-sync-list">
+              <li>Trackingnummer og tracking-URL</li>
+              <li>Fragtfirmaets navn</li>
+              <li>Alle kolli ved flere pakker</li>
+              <li>Fulfillment p&aring; ordren</li>
+            </ul></div>
+        </div>
+        <h2>Leman-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Metoder hentes dynamisk</strong><span>Leveringsmetoderne kommer fra Lemans eget API ud fra produktkoden i indstillingerne. Der er ingen fast liste, der skal vedligeholdes i SmartPack.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128295;</span><div><strong>Produktkode styrer alt</strong><span>Koden afg&oslash;r, hvilke produkter der er tilg&aelig;ngelige. Udvider I aftalen, f&oslash;lger metoderne med.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128424;&#65039;</span><div><strong>Fragtbrev ved pakkebordet</strong><span>Leman kaldes live, n&aring;r pakkeren er f&aelig;rdig. Fejler bookingen, ses fejlbeskeden med det samme.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Flere kolli</strong><span>Har ordren flere pakker, h&aring;ndteres de i samme pakkeflow som resten.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128279;</span><div><strong>Tracking retur</strong><span>Trackingnummeret sendes tilbage til webshoppen som del af fulfillment.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128202;</span><div><strong>Joblog p&aring; hver booking</strong><span>Svaret fra Leman logges, s&aring; en fejlet booking kan spores pr&aelig;cist bagefter.</span></div></div>
+        </div>
+        <h2>Leveringsmetoder SmartPack underst&oslash;tter</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Metoderne oprettes i SmartPack, og hver enkelt kan f&aring; sine egne tilvalg, parametre og method keys.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128295; Produktkode</strong><span>Konfigureres i indstillingerne og afg&oslash;r, hvilke metoder der hentes.</span></div>
+          <div class="sp-location-item"><strong>&#128260; Dynamisk hentning</strong><span>Metoderne kommer fra Lemans API, ikke fra en fast liste.</span></div>
+          <div class="sp-location-item"><strong>&#128666; Road</strong><span>Vejtransport, hvis jeres aftale d&aelig;kker det.</span></div>
+          <div class="sp-location-item"><strong>&#9889; Express</strong><span>Ekspresprodukt, hvis jeres aftale d&aelig;kker det.</span></div>
+          <div class="sp-location-item"><strong>&#128230; Kolli</strong><span>Flere kolli pr. forsendelse h&aring;ndteres i pakkeflowet.</span></div>
+          <div class="sp-location-item"><strong>&#128279; Tracking</strong><span>Trackingnummer sendes tilbage til webshoppen ved afsendelse.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Fordi metoderne hentes fra Lemans API, afh&aelig;nger listen af jeres aftale. Vi afklarer ved opstart, hvilke produktkoder I har adgang til.</span></div>
+        <h2>S&aring;dan hentes metoderne fra Leman</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">I stedet for en fast liste i SmartPack henter integrationen jeres produkter direkte hos Leman.</p>
+        <div class="sp-formula">
+          <span class="cm"># Fra produktkode til metoder</span><br>
+          produktkode i indstillinger -&gt; <span class="kw">Lemans API</span><br>
+          Lemans API &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-&gt; <span class="kw">jeres produkter</span><br>
+          produkter &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-&gt; leveringsmetoder i SmartPack
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Fordelen er, at listen altid matcher jeres aftale. Ulempen er, at vi ikke kan vise en fast metodeliste her p&aring; siden.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Er I i tvivl om, hvilke produkter jeres aftale d&aelig;kker, finder vi ud af det sammen ved opstart.</span></div>
+        <h2>S&aring;dan forbinder du Leman med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav jeres Leman-aftale og produktkode klar</strong><p>Produktkoden afg&oslash;r, hvilke leveringsmetoder der hentes fra Leman.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Hent metoderne</strong><p>SmartPack henter de tilg&aelig;ngelige metoder fra Lemans API ud fra koden.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>S&aelig;t method keys og test</strong><p>N&oslash;glerne fra jeres checkout kobles p&aring; metoderne, og I booker en testforsendelse, f&oslash;r I g&aring;r i produktion.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvilke leveringsmetoder f&aring;r vi?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Dem jeres aftale d&aelig;kker. Metoderne hentes dynamisk fra Lemans API ud fra den produktkode, der er konfigureret i indstillingerne, i stedet for fra en fast liste.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad sker der, hvis vi udvider vores Leman-aftale?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">De nye produkter f&oslash;lger med, n&aring;r metoderne hentes igen, uden at der skal &aelig;ndres noget i selve integrationen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad er produktkoden?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Den kode, Leman bruger til at identificere jeres produkter. Den s&aelig;ttes i integrationens indstillinger og afg&oslash;r, hvad der er tilg&aelig;ngeligt.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvorn&aring;r dannes fragtbrevet?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">N&aring;r pakkeren er f&aelig;rdig ved pakkebordet. Leman kaldes live, og svaret kommer retur med det samme.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi sende flere kolli?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Flere pakker p&aring; samme ordre h&aring;ndteres i samme pakkeflow som resten af jeres forsendelser.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Koster fragtbreve ekstra?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. SmartPack er forbundet direkte til Leman, s&aring; der er ingen labelfee.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Sender I med Leman og vil se det fra pakkebordet?</h2>
+          <p>Vi viser jer hele vejen fra ordren lander til labelen ligger i printeren og trackingnummeret st&aring;r i webshoppen.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>Sender I med Leman?</h3><p>Vi afklarer jeres produktkode, s&aring; I f&aring;r pr&aelig;cis de metoder, aftalen d&aelig;kker.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver booking logges med svaret fra fragtfirmaet, s&aring; en fejlet label kan spores pr&aelig;cist.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi forbinder fragtaftalen, opretter metoderne og tester med jer, f&oslash;r I g&aring;r i luften.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="freja-transport" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Freja-Transport-Logistics.png" alt="Freja logo" width="1024" height="1024">Freja</a>
+          <a href="dhl-freight" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/DHL-Freight.png" alt="DHL Freight logo" width="1024" height="1024">DHL Freight</a>
+          <a href="danske-fragtmaend" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Danske-Fragtmaend.png" alt="Danske Fragtmaend logo" width="1024" height="1024">Danske Fragtm&aelig;nd</a>
+          <a href="visma-business" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/ERP/Visma-Business.png" alt="Visma Business logo" width="128" height="128">Visma Business</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

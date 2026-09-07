@@ -1,54 +1,325 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("sp-js");</script>
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SmartPack + Herodesk | Kundeservice med lagerdata</title>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Herodesk og SmartPack WMS | Kundeservice</title>
+  <meta name="description" content="Herodesks SmartPack-widget viser ordre, lagerstatus og sporingskode direkte i ticketen, s&aring; kundeservice ikke skal skifte system.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/herodesk">
+
+  <meta property="og:title" content="Herodesk og SmartPack WMS | Kundeservice">
+  <meta property="og:description" content="Ordre, lagerstatus og sporingskode vises direkte i Herodesk-ticketen, uden at skifte system.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/herodesk">
-  <meta property="og:description" content="Forbind Herodesk med SmartPack WMS. Lager- og ordredata vises direkte i supporttickets s&aring; kundeservice altid har de rigtige oplysninger.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630"><meta name="description" content="Forbind Herodesk med SmartPack WMS. Lager- og ordredata vises direkte i supporttickets s&aring; kundeservice altid har de rigtige oplysninger."><link rel="canonical" href="https://smartpack.dk/integrationer/herodesk"><meta name="robots" content="index, follow"><meta property="og:title" content="SmartPack + Herodesk"><meta property="og:type" content="website"><link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script><link rel="stylesheet" href="int-page.css?v=3">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Herodesk",
+          "item": "https://smartpack.dk/integrationer/herodesk"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS. Herodesk henter ordre-, lager- og sporingsdata fra SmartPack og viser dem i supportticketen, s\u00e5 kundeservice kan svare uden at skifte system.",
+      "url": "https://smartpack.dk/integrationer/herodesk",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvor er integrationen bygget?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "P\u00e5 Herodesks side. Det er en SmartPack-widget i Herodesk, der henter ordre-, lager- og sporingsdata fra SmartPack og viser dem i ticketen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad ser supporten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Kundens ordrer med ordredetaljer, aktuel status, lagerstatus p\u00e5 varerne og sporingskoder, direkte i ticketen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er dataene realtid?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Widgetten sl\u00e5r op i SmartPack, s\u00e5 det viste er den aktuelle status og ikke en kopi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan Herodesk \u00e6ndre noget i SmartPack?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Herodesks AI kan identificere ordre\u00e6ndringer og prioritere eller annullere pakker. Hvad der konkret er sl\u00e5et til, afh\u00e6nger af jeres ops\u00e6tning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vises returordrer ogs\u00e5?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Returordrer og reklamationer i SmartPack vises i den relevante ticket."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vi mangler et felt i widgetten.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Widgetten vedligeholdes i Herodesk, s\u00e5 vejen g\u00e5r derigennem. Vi hj\u00e6lper gerne med at afklare, hvad SmartPack kan levere af data."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container"><a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a><div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/Herodesk/Other/Herodesk.png" alt="Herodesk logo" class="int-page__logo" width="280" height="280"></div><div class="int-page__hero-content"><div class="int-page__cat">Kundeservice</div><h1 class="int-page__title">SmartPack <span>+ Herodesk</span></h1><p class="int-page__intro">Herodesk er et af de helpdesk-systemer der integrerer direkte med SmartPack WMS. SmartPack-widgetten finder automatisk kundens ordrer og viser dem i Herodesk med ordredetaljer, lagerstatus og sporingskoder. Med AI kan Herodesk identificere ordre&aelig;ndringer og prioritere eller annullere pakker direkte i SmartPack. Ingen skift mellem systemer, kundeservice og lagerstyring i &eacute;t flow.</p><div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div></div></div><div class="int-page__body"><div class="int-page__main"><h2>Hvad g&oslash;r integrationen?</h2><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128221;</div><div><h3>Ordredata i supporttickets</h3><p>N&aring;r en kunde sender en besked vises ordre-, lager- og sporingsinfo automatisk i Herodesk-ticketen.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div><h3>Realtids ordrestatus</h3><p>Kundeservice ser altid den aktuelle ordrestatus direkte fra SmartPack i Herodesk-interfacet.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div><h3>Retur- og reklamationsdata</h3><p>Returordrer og reklamationer i SmartPack vises i den relevante Herodesk-ticket.</p></div></div><h2 class="int-page__steps-title">S&aring;dan forbinder du Herodesk med SmartPack</h2><div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Aktiv&eacute;r Herodesk</h3><p>G&aring; til Integrationer i SmartPack og v&aelig;lg Herodesk. Inds&aelig;t din Herodesk API-n&oslash;gle.</p></div></div><div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Konfigur&eacute;r datasynk</h3><p>V&aelig;lg hvilke SmartPack-data der skal vises i Herodesk-tickets.</p></div></div><div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test med en ticket</h3><p>Opret en testticket og verificer at ordredata vises korrekt.</p></div></div></div><div class="int-page__sidebar"><div class="int-page__info-box" style="background:var(--surface-2);border-radius:12px;padding:1.25rem;margin-bottom:1rem;"><h3 style="font-size:1rem;margin:0 0 .5rem">&#128218; Vil du vide mere?</h3><p style="font-size:.9rem;margin:0 0 .75rem;color:var(--text-2)">Læs hvordan Herodesk og SmartPack fungerer i praksis, hvad det koster, og hvornår det giver mening.</p><a href="../viden/tech/herodesk-helpdesk-smartpack" style="font-size:.9rem;font-weight:600;color:var(--accent);">Helpdesk til SmartPack: komplet guide &rarr;</a></div><div class="int-page__cta-box"><h3>K&oslash;rer I Herodesk?</h3><p>Book en demo og f&aring; vist Herodesk + SmartPack-integrationen.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div><div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="reversio" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/Reversio/Return/Reversio.png" alt="Reversio" width="2000" height="2000">Reversio</a><a href="customers-1st" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/POS/Customers-1st.png" alt="Customers 1st" width="128" height="128">Customers 1st</a><a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="1024" height="1024">Shopify</a></div></div></div></div></div></section></main>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/Herodesk/Other/Herodesk.png" alt="Herodesk logo" class="sp-hero-logo" width="280" height="280">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Kundeservice</div>
+        <h1 class="int-page__title">Ordredata i <span>Herodesk</span></h1>
+        <p class="int-page__intro"><strong>Kundeservice f&aring;r ordren op, uden at skifte sk&aelig;rm.</strong><br><br>Herodesk er et helpdesk-system, og integrationen ligger p&aring; Herodesks side: en SmartPack-widget, der finder kundens ordrer og viser dem i ticketen med ordredetaljer, lagerstatus og sporingskoder.<br><br>Det sparer det klassiske hop mellem supportsystem og lagersystem, hver gang en kunde sp&oslash;rger til sin pakke.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Integrationen er bygget i Herodesk og henter data fra SmartPack.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">I ticketen</span><span class="sp-stat-label">Ordre, lager og tracking vises hvor supporten arbejder</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Realtid</span><span class="sp-stat-label">Statussen kommer fra SmartPack, ikke fra en kopi</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">F&aelig;rre skift</span><span class="sp-stat-label">Ingen grund til at &aring;bne lagersystemet for at svare</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Herodesk styrer kundedialogen</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Tickets<br>Kanaler<br>Svar og makroer<br>Historik<br>Teamfordeling</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til jer der bruger Herodesk</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128172;</span><h3>Kundeservice</h3><p>Til teams der besvarer ordresp&oslash;rgsm&aring;l og skal have svaret hurtigt.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128230;</span><h3>Ordresp&oslash;rgsm&aring;l</h3><p>Hvor er min pakke, hvad mangler der, hvorn&aring;r kommer den.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128260;</span><h3>Retur og reklamation</h3><p>Returordrer og reklamationer vises i den relevante ticket.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en ordre fra Herodesk gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128172;</span><span class="sp-flow-label">Kunden<br>skriver</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128269;</span><span class="sp-flow-label">Partner<br>slaar op</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>svarer</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordredata<br>vises</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Kunden<br>faar svar</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Widgetten sl&aring;r op i SmartPack, n&aring;r ticketen &aring;bnes, s&aring; det viste er den aktuelle status og ikke et &oslash;jebliksbillede fra i g&aring;r.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Herodesk sp&oslash;rger om</h3>
+            <ul class="sp-sync-list">
+              <li>Kundens ordrer</li>
+              <li>Ordrestatus</li>
+              <li>Lagerstatus p&aring; varerne</li>
+              <li>Sporingskoder</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>SmartPack svarer med</h3>
+            <ul class="sp-sync-list">
+              <li>Ordredetaljer</li>
+              <li>Aktuel status i pakkeflowet</li>
+              <li>Beholdning p&aring; varen</li>
+              <li>Trackingnummer og link</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Supporten kan</h3>
+            <ul class="sp-sync-list">
+              <li>Se status uden at skifte system</li>
+              <li>Svare p&aring; hvorn&aring;r pakken sendes</li>
+              <li>Se retur og reklamation</li>
+              <li>Prioritere eller annullere via Herodesks AI</li>
+            </ul></div>
+        </div>
+        <h2>Herodesk-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Ordredata i ticketen</strong><span>N&aring;r en kunde skriver, vises ordre-, lager- og sporingsinfo automatisk i Herodesk-ticketen.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9201;</span><div><strong>Realtids ordrestatus</strong><span>Statussen hentes fra SmartPack, s&aring; supporten ser det samme som lageret.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Retur og reklamation</strong><span>Returordrer og reklamationer i SmartPack vises i den relevante ticket.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#129302;</span><div><strong>AI-handlinger</strong><span>Herodesks AI kan identificere ordre&aelig;ndringer og prioritere eller annullere pakker.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128269;</span><div><strong>Automatisk opslag</strong><span>Widgetten finder kundens ordrer selv, uden at supporten skal s&oslash;ge.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>F&aelig;rre afbrydelser p&aring; lageret</strong><span>N&aring;r supporten kan svare selv, ringer de ikke ned p&aring; lageret.</span></div></div>
+        </div>
+        <h2>Hvor integrationen bor</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Det er v&aelig;rd at vide, hvilken vej integrationen vender, n&aring;r noget skal fejls&oslash;ges eller udvides.</p>
+        <div class="sp-formula">
+          <span class="cm"># Retning</span><br>
+          Herodesk-widget -&gt; <span class="kw">spoerger SmartPack</span><br>
+          SmartPack &nbsp; &nbsp; &nbsp; &nbsp;-&gt; <span class="kw">svarer med ordredata</span><br>
+          &nbsp;<br>
+          <span class="cm"># Hvad supporten ser</span><br>
+          ordre &middot; status &middot; lager &middot; <span class="kw">tracking</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Widgetten er bygget og vedligeholdt i Herodesk. SmartPack leverer data.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Skal widgetten vise noget, den ikke viser i dag, g&aring;r vejen gennem Herodesk. Vi hj&aelig;lper gerne med at afklare, hvad SmartPack kan levere.</span></div>
+        <h2>S&aring;dan forbinder du Herodesk med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav begge systemer klar</strong><p>I skal have b&aring;de Herodesk og SmartPack, og en bruger der kan give widgetten adgang.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Aktiv&eacute;r SmartPack-widgetten</strong><p>Widgetten aktiveres i Herodesk og forbindes til jeres SmartPack.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Test p&aring; en rigtig ticket</strong><p>&Aring;bn en ticket fra en kunde med en ordre, og se at ordre, lager og tracking vises korrekt.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvor er integrationen bygget?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">P&aring; Herodesks side. Det er en SmartPack-widget i Herodesk, der henter ordre-, lager- og sporingsdata fra SmartPack og viser dem i ticketen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad ser supporten?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Kundens ordrer med ordredetaljer, aktuel status, lagerstatus p&aring; varerne og sporingskoder, direkte i ticketen.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er dataene realtid?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Widgetten sl&aring;r op i SmartPack, s&aring; det viste er den aktuelle status og ikke en kopi.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan Herodesk &aelig;ndre noget i SmartPack?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Herodesks AI kan identificere ordre&aelig;ndringer og prioritere eller annullere pakker. Hvad der konkret er sl&aring;et til, afh&aelig;nger af jeres ops&aelig;tning.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vises returordrer ogs&aring;?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Returordrer og reklamationer i SmartPack vises i den relevante ticket.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vi mangler et felt i widgetten.</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Widgetten vedligeholdes i Herodesk, s&aring; vejen g&aring;r derigennem. Vi hj&aelig;lper gerne med at afklare, hvad SmartPack kan levere af data.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I Herodesk og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi viser jer pr&aelig;cis, hvad der sker med jeres ordrer, lager og fragt, og hvad ops&aelig;tningen kr&aelig;ver af jer.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I Herodesk?</h3><p>Vi afklarer hvilke data widgetten skal vise, og hvad SmartPack kan levere.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver synkronisering logges, s&aring; I kan se pr&aelig;cis hvad der blev sendt og modtaget.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="zuzana" class="int-page__related-link"><img src="../assets/zuzana.png" alt="Zuzana logo" width="500" height="500">Zuzana</a>
+          <a href="reversio" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/Reversio/Return/Reversio.png" alt="Reversio logo" width="2000" height="2000">Reversio</a>
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

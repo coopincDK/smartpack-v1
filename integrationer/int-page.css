@@ -159,3 +159,14 @@
   .sp-bottom-cta h2 { font-size:1.5rem; margin:0 0 .75rem; }
   .sp-bottom-cta p { font-size:.92rem; color:var(--text-2); margin:0 0 1.5rem; max-width:480px; margin-inline:auto; }
   .sp-bottom-cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+
+/* ================================================================
+   Scroll-reveal med fallback uden JavaScript.
+   style.css saetter .reveal til opacity:0, saa indholdet er usynligt,
+   hvis JavaScript ikke koerer. Paa integrationssiderne gaar vi den
+   anden vej: synligt som udgangspunkt, og animationen aktiveres kun
+   naar <html> har klassen sp-js, som saettes af et script i <head>.
+   ================================================================ */
+.int-page .reveal { opacity: 1; transform: none; }
+html.sp-js .int-page .reveal { opacity: 0; transform: translateY(28px); }
+html.sp-js .int-page .reveal.is-visible { opacity: 1; transform: none; }

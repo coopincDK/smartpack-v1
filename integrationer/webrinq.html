@@ -1,61 +1,338 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add("sp-js");</script>
 
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
 
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
 
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
 
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
 
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
 
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
-<html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>SmartPack + WebrinQ integration | Fragt fra WMS</title>
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>WebrinQ-labels fra lageret | SmartPack WMS</title>
+  <meta name="description" content="SmartPack opretter leveringsordren hos WebrinQ fra pakkebordet. Same-day, CityHubs og 24/7-bokse, med label og tracking retur.">
+  <link rel="canonical" href="https://smartpack.dk/integrationer/webrinq">
+
+  <meta property="og:title" content="WebrinQ-labels fra lageret | SmartPack WMS">
+  <meta property="og:description" content="WebrinQ bookes fra pakkebordet. Same-day, CityHubs og 24/7-bokse, med label og tracking retur.">
   <meta property="og:url" content="https://smartpack.dk/integrationer/webrinq">
-  <meta property="og:description" content="Forbind WebrinQ med SmartPack WMS. Print WebrinQ-labels direkte fra lageret og f&aring; automatisk sporingssynk.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630"><meta name="description" content="Forbind WebrinQ med SmartPack WMS. Print WebrinQ-labels direkte fra lageret og f&aring; automatisk sporingssynk."><link rel="canonical" href="https://smartpack.dk/integrationer/webrinq"><meta name="robots" content="index, follow"><meta property="og:title" content="SmartPack + WebrinQ"><meta property="og:type" content="website"><link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png"><link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script><link rel="stylesheet" href="int-page.css?v=3">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "WebrinQ",
+          "item": "https://smartpack.dk/integrationer/webrinq"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS med direkte WebrinQ-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
+      "url": "https://smartpack.dk/integrationer/webrinq",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvad sender SmartPack til WebrinQ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En leveringsordre med modtager- og afsenderadresse, pakkedata og \u00f8nsket leveringsdato. WebrinQ returnerer labelen som PDF sammen med trackingnummeret."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvordan h\u00e5ndteres flere pakker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De sendes som \u00e9n leveringsordre med samlet antal kolli i stedet for som separate forsendelser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad er afsender-ID?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En ekstern afsender-identifikator, I f\u00e5r fra WebrinQ. Den konfigureres i indstillingerne og skal v\u00e6re p\u00e5 plads, f\u00f8r en leveringsordre kan oprettes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi sende en \u00f8nsket leveringsdato med?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Leveringsdatoen kan f\u00f8lge med p\u00e5 ordren, hvilket er relevant, n\u00e5r kunden har valgt et tidspunkt i checkout."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvorfor peger trackinglinket p\u00e5 PinDeliver?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "WebrinQ bygger deres platform p\u00e5 PinDeliver, s\u00e5 trackingsiden ligger der. Kunden ser fortsat WebrinQ som afsender."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Koster labels ekstra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. SmartPack er forbundet direkte til WebrinQ, s\u00e5 der er ingen labelfee. Labels er inkluderet i abonnementet."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
-</head><body>
+</head>
+<body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
-<main id="main-content"><section class="int-page"><div class="container"><a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a><div class="int-page__hero"><div><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/WebrinQ.png" alt="WebrinQ logo" class="int-page__logo" width="128" height="128"></div><div class="int-page__hero-content"><div class="int-page__cat">Fragt &middot; International</div><h1 class="int-page__title">SmartPack <span>+ WebrinQ</span></h1><p class="int-page__intro">WebrinQ er en dansk logistik- og leveringspartner med same-day levering, b&aelig;redygtig transport, 24/7 bokse/CityHubs og eget TMS. SmartPack sikrer korrekt og rettidig frigivelse af ordrer fra lageret, mens WebrinQ tager sig af ruteoptimering, sporbarhed og hurtig leverance til kunden.</p><div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div></div></div><div class="int-page__body"><div class="int-page__main"><h2>Hvad g&oslash;r integrationen?</h2>
-      <div class="int-page__direct">
-        <div class="int-page__direct-icon">&#10003;</div>
-        <div>
-          <strong>Ingen labelfee. Labels er inkluderet i prisen.</strong>
-          <p>SmartPack er forbundet direkte til denne transport&oslash;r. Andre WMS-l&oslash;sninger kr&aelig;ver typisk en fragtportal oven i, med sit eget abonnement og labelfee pr. forsendelse. Vi g&oslash;r det direkte, s&aring; du betaler ikke det ekstra led.</p>
+<main id="main-content">
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/WebrinQ.png" alt="WebrinQ logo" class="sp-hero-logo" width="1024" height="1024">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Fragt &middot; International</div>
+        <h1 class="int-page__title">Fragtlabels til <span>WebrinQ</span> direkte fra lageret</h1>
+        <p class="int-page__intro"><strong>Labelen printes, i det &oslash;jeblik pakkeren trykker print.</strong><br><br>WebrinQ er en dansk logistik- og leveringspartner med same-day levering, b&aelig;redygtig transport, 24/7-bokse og CityHubs samt eget TMS. SmartPack opretter leveringsordren direkte hos WebrinQ, n&aring;r pakken er klar.<br><br>Har ordren flere pakker, sendes de som &eacute;n ordre med samlet antal kolli.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
         </div>
-      </div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128666;</div><div><h3>WebrinQ-labels direkte</h3><p>SmartPack printer WebrinQ-labelen automatisk n&aring;r ordren er klar til afsendelse.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#128204;</div><div><h3>Automatisk sporingssynk</h3><p>Sporingsnummer sendes automatisk retur til webshop og kunden holdes opdateret under leveringen.</p></div></div><div class="int-page__benefit"><div class="int-page__benefit-icon">&#127758;</div><div><h3>P&aring;lidelig fragtl&oslash;sning</h3><p>WebrinQ tilbyder p&aring;lidelige fragtl&oslash;sninger til e-handelskunder med direkte SmartPack-integration.</p></div></div><h2 class="int-page__steps-title">S&aring;dan forbinder du WebrinQ med SmartPack</h2><div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Aktiv&eacute;r WebrinQ</h3><p>Find WebrinQ under Integrationer i SmartPack og inds&aelig;t dine aftaleoplysninger.</p></div></div><div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Konfigur&eacute;r standardservice</h3><p>V&aelig;lg standardservice for WebrinQ-forsendelser og eventuelle alternativservices.</p></div></div><div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>Test og g&aring; live</h3><p>Send en testforsendelse og verificer label og tracking.</p></div></div></div><div class="int-page__sidebar"><div class="int-page__cta-box"><h3>Bruger I WebrinQ?</h3><p>Book en demo og f&aring; vist integrationen i aktion.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div><div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="webshipper" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Webshipper.png" alt="Webshipper logo" width="1024" height="1024">Webshipper</a><a href="sendcloud" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Sendcloud.png" alt="Sendcloud" width="256" height="256">Sendcloud</a><a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a></div></div></div></div></div></section></main>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration mod WebrinQ. Tracking via PinDeliver-platformen.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">Same-day</span><span class="sp-stat-label">Levering samme dag, hvor WebrinQ d&aelig;kker</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">24/7-bokse</span><span class="sp-stat-label">CityHubs og bokse med d&oslash;gnadgang</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Ingen labelfee</span><span class="sp-stat-label">Labels er inkluderet i SmartPack-abonnementet</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="int-page__direct"><div class="int-page__direct-icon">&#10003;</div><div>
+          <strong>Ingen labelfee. Labels er inkluderet i prisen.</strong>
+          <p>SmartPack er forbundet direkte til denne transport&oslash;r. Andre WMS-l&oslash;sninger sender typisk labels gennem en fragtportal og l&aelig;gger et gebyr oven i hver forsendelse.</p>
+        </div></div>
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">WebrinQ styrer transporten</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Afhentning<br>CityHubs<br>Byfordeling<br>24/7-bokse<br>Levering</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Pluk og scanning<br>Pakning og kolli<br>Label og tracking<br>Retur og returlabel<br>Fragtdata til shoppen</div>
+          </div>
+        </div>
+        <h2>Passer til jeres WebrinQ-aftale</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#9889;</span><h3>Same-day</h3><p>Levering samme dag i de omr&aring;der, WebrinQ d&aelig;kker.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128274;</span><h3>24/7-bokse</h3><p>Bokse og CityHubs med d&oslash;gnadgang, s&aring; kunden selv v&aelig;lger hvorn&aring;r.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#127807;</span><h3>B&aelig;redygtig transport</h3><p>WebrinQ k&oslash;rer med fokus p&aring; b&aelig;redygtig bydistribution.</p></div>
+        </div>
+        <h2>S&aring;dan bliver en ordre til en WebrinQ-pakke</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordre<br>klar</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pluk<br>&amp; pak</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128424;&#65039;</span><span class="sp-flow-label">Label<br>printes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128666;</span><span class="sp-flow-label">Pakken<br>afsendes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Tracking<br>til shoppen</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Labelen dannes synkront ved pakning. Svarer WebrinQ med en fejl, vises den til pakkeren med det samme, og der oprettes ingen pakke.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra ordren</h3>
+            <ul class="sp-sync-list">
+              <li>Modtageradresse og kontaktoplysninger</li>
+              <li>Valgt leveringsmetode fra checkout</li>
+              <li>Pakkeshop-ID hvor det er relevant</li>
+              <li>Leveringsinstruktion og kundekommentar</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>P&aring; labelen</h3>
+            <ul class="sp-sync-list">
+              <li>Reference fra ordren</li>
+              <li>V&aelig;gt og m&aring;l p&aring; kolliet</li>
+              <li>Valgt service og tilvalg</li>
+              <li>Afsenderoplysninger fra lokationen</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til webshoppen</h3>
+            <ul class="sp-sync-list">
+              <li>Trackingnummer og tracking-URL</li>
+              <li>Fragtfirmaets navn</li>
+              <li>Alle kolli ved flere pakker</li>
+              <li>Fulfillment p&aring; ordren</li>
+            </ul></div>
+        </div>
+        <h2>WebrinQ-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Leveringsordre frem for enkelt label</strong><span>SmartPack opretter en leveringsordre hos WebrinQ med modtager, afsender, pakkedata og &oslash;nsket leveringsdato, og f&aring;r label og trackingnummer retur.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Kolli samles p&aring; ordren</strong><span>Har ordren flere pakker, sendes de som &eacute;n leveringsordre med samlet antal kolli i stedet for som separate forsendelser.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128273;</span><div><strong>Afsender-ID er p&aring;kr&aelig;vet</strong><span>Den eksterne afsender-identifikator konfigureres i indstillingerne og skal v&aelig;re der, f&oslash;r ordren kan oprettes.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128197;</span><div><strong>&Oslash;nsket leveringsdato</strong><span>Datoen kan sendes med, hvilket er relevant, n&aring;r kunden har valgt et leveringstidspunkt i checkout.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128279;</span><div><strong>Tracking via PinDeliver</strong><span>WebrinQ bygger p&aring; PinDeliver, og trackinglinket peger derhen. Kunden ser WebrinQ som afsender.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128202;</span><div><strong>Joblog p&aring; hver booking</strong><span>Svaret fra WebrinQ logges, s&aring; en fejlet label kan spores pr&aelig;cist bagefter.</span></div></div>
+        </div>
+        <h2>Leveringsmetoder SmartPack underst&oslash;tter</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Metoderne oprettes i SmartPack, og hver enkelt kan f&aring; sine egne tilvalg, parametre og method keys.</p>
+        <div class="sp-location reveal"><div class="sp-location-grid">
+          <div class="sp-location-item"><strong>&#128203; Leveringsordre</strong><span>SmartPack opretter en leveringsordre med modtager, afsender, pakkedata og &oslash;nsket leveringsdato.</span></div>
+          <div class="sp-location-item"><strong>&#128424;&#65039; Label som PDF</strong><span>WebrinQ returnerer labelen som PDF sammen med trackingnummeret.</span></div>
+          <div class="sp-location-item"><strong>&#128230; Kolli samlet</strong><span>Flere pakker sendes som &eacute;n ordre med samlet antal kolli.</span></div>
+          <div class="sp-location-item"><strong>&#128197; &Oslash;nsket leveringsdato</strong><span>Leveringsdatoen kan sendes med p&aring; ordren.</span></div>
+          <div class="sp-location-item"><strong>&#128273; Afsender-ID</strong><span>En ekstern afsender-identifikator skal konfigureres i indstillingerne.</span></div>
+          <div class="sp-location-item"><strong>&#128279; Tracking</strong><span>Trackingnummeret bliver til et link p&aring; PinDeliver-platformen.</span></div>
+        </div></div>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Afsender-ID er den ene ting, der skal p&aring; plads ud over adgangsoplysningerne. Uden det kan leveringsordren ikke oprettes hos WebrinQ.</span></div>
+        <h2>S&aring;dan rammer ordren den rigtige metode</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">Leveringsmetoden tildeles automatisk ved import ud fra en method key, alts&aring; den tekst webshoppen sender med ordren.</p>
+        <div class="sp-formula">
+          <span class="cm"># Fra checkout til leveringsmetode</span><br>
+          webshop sender &nbsp;-&gt; <span class="kw">method key</span><br>
+          method key &nbsp; &nbsp; &nbsp;-&gt; leveringsmetode i SmartPack<br>
+          leveringsmetode -&gt; <span class="kw">service hos WebrinQ</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Matcher ingen n&oslash;gle, f&aring;r ordren ingen leveringsmetode, og pakkeren v&aelig;lger manuelt ved pakkebordet.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Ender ordrer hos den forkerte fragtmand, ligger en method key under den forkerte leveringsmetode. Fjern den der, og l&aelig;g den p&aring; den rigtige, s&aring; retter nye ordrer sig selv.</span></div>
+        <h2>S&aring;dan forbinder du WebrinQ med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav jeres WebrinQ-aftale klar</strong><p>Vi bruger adgangsoplysninger fra jeres aftale samt den eksterne afsender-identifikator.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>Udfyld afsender-ID</strong><p>Afsender-ID konfigureres i indstillingerne. Uden det kan leveringsordren ikke oprettes.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>S&aelig;t method keys og test</strong><p>N&oslash;glerne fra jeres checkout kobles p&aring; metoderne, og I booker en testforsendelse, f&oslash;r I g&aring;r i produktion.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad sender SmartPack til WebrinQ?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">En leveringsordre med modtager- og afsenderadresse, pakkedata og &oslash;nsket leveringsdato. WebrinQ returnerer labelen som PDF sammen med trackingnummeret.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvordan h&aring;ndteres flere pakker?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">De sendes som &eacute;n leveringsordre med samlet antal kolli i stedet for som separate forsendelser.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad er afsender-ID?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">En ekstern afsender-identifikator, I f&aring;r fra WebrinQ. Den konfigureres i indstillingerne og skal v&aelig;re p&aring; plads, f&oslash;r en leveringsordre kan oprettes.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi sende en &oslash;nsket leveringsdato med?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Leveringsdatoen kan f&oslash;lge med p&aring; ordren, hvilket er relevant, n&aring;r kunden har valgt et tidspunkt i checkout.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvorfor peger trackinglinket p&aring; PinDeliver?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">WebrinQ bygger deres platform p&aring; PinDeliver, s&aring; trackingsiden ligger der. Kunden ser fortsat WebrinQ som afsender.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Koster labels ekstra?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. SmartPack er forbundet direkte til WebrinQ, s&aring; der er ingen labelfee. Labels er inkluderet i abonnementet.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Sender I med WebrinQ og vil se det fra pakkebordet?</h2>
+          <p>Vi viser jer hele vejen fra ordren lander til labelen ligger i printeren og trackingnummeret st&aring;r i webshoppen.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>Sender I med WebrinQ?</h3><p>Vi gennemg&aring;r afsender-ID og metoder, s&aring; leveringsordrerne oprettes rigtigt fra start.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver booking logges med svaret fra fragtfirmaet, s&aring; en fejlet label kan spores pr&aelig;cist.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi forbinder fragtaftalen, opretter metoderne og tester med jer, f&oslash;r I g&aring;r i luften.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="burd" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/burd.png" alt="Burd logo" width="1024" height="1024">Burd</a>
+          <a href="budbee" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/budbee.png" alt="Budbee logo" width="1024" height="1024">Budbee</a>
+          <a href="airmee" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/Airmee.png" alt="Airmee logo" width="1024" height="1024">Airmee</a>
+          <a href="shopify" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shopify.png" alt="Shopify logo" width="128" height="128">Shopify</a>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js"></script></body></html>
+<script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
+</body>
+</html>

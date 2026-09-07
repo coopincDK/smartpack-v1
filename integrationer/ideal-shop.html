@@ -1,98 +1,325 @@
-??<!DOCTYPE html>
-<!-- ADVARSEL: NY SIDE? Kopier tracking-blokken fra _TRACKING_TEMPLATE.html til din 
-<!-- ================================================================
-     SMARTPACK TRACKING -- SKAL MED PA ALLE NYE SIDER
-     Kopier hele denne blok ind foer <html>. Se ogsaa: _TRACKING_TEMPLATE.html i roden
-================================================================ -->
-
-<!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
-<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
-<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
-
-<!-- 2. Google Analytics 4 (styret af iubenda) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
-
-<!-- 3. Meta Pixel (styret af iubenda) -->
-<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
-
-<!-- 4. LinkedIn Insight Tag -->
-<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
-<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
-
-<!-- 5. Microsoft Clarity -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
-
-<!-- 6. Leadfeeder -->
-<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
-
-<!-- 7. PostHog -->
-<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
-
-<!-- 8. Leadinfo -->
-<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
-
-<!-- ================================================================
-     SLUT PAA TRACKING BLOK
-================================================================ -->
+<!DOCTYPE html>
 <html lang="da">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartPack + ideal.shop integration | WMS til ideal.shop</title>
-  <meta property="og:url" content="https://smartpack.dk/integrationer/ideal-shop">
-  <meta property="og:description" content="Forbind ideal.shop med SmartPack WMS. Automatisk ordreimport, lagerstyring og fragtlabels direkte fra lageret.">
-  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="description" content="Forbind ideal.shop med SmartPack WMS. Automatisk ordreimport, lagerstyring og fragtlabels direkte fra lageret.">
+  <script>document.documentElement.classList.add("sp-js");</script>
+
+
+  <!-- 1. Iubenda Cookie Consent -->
+  <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+  <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+  <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+  <!-- 2. Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+  <!-- 3. Meta Pixel -->
+  <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+  <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+  <!-- 4. LinkedIn -->
+  <script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+  <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+  <!-- 5. Microsoft Clarity -->
+  <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+  <!-- 6. Leadfeeder -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <!-- 7. PostHog -->
+  <script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+  <!-- 8. Leadinfo -->
+  <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+  <title>Lagersystem til ideal.shop | SmartPack WMS</title>
+  <meta name="description" content="SmartPack forbinder ideal.shop med lageret. Ordrer ind, varer og varianter synkroniseret, og SmartPack som master for lageret.">
   <link rel="canonical" href="https://smartpack.dk/integrationer/ideal-shop">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="SmartPack + ideal.shop">
+
+  <meta property="og:title" content="Lagersystem til ideal.shop | SmartPack WMS">
+  <meta property="og:description" content="Fra ideal.shop-ordre til pakket forsendelse. Varianter underst&oslash;ttes, og SmartPack er master for lageret.">
+  <meta property="og:url" content="https://smartpack.dk/integrationer/ideal-shop">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Integrationer",
+          "item": "https://smartpack.dk/integrationer"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "ideal.shop",
+          "item": "https://smartpack.dk/integrationer/ideal-shop"
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "SmartPack er et dansk WMS der integrerer med webshopplatformen ideal.shop. Ordrer hentes ind, varer og varianter synkroniseres, og lagerantal skubbes til shoppen med SmartPack som master.",
+      "url": "https://smartpack.dk/integrationer/ideal-shop",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvem bestemmer lagertallet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SmartPack. Beholdningen skubbes til ideal.shop, s\u00e5 manuelle rettelser i shoppen bliver overskrevet ved n\u00e6ste synkronisering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Underst\u00f8ttes varianter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Produkter med varianter opdateres gennem et separat endpoint, s\u00e5 beholdningen lander p\u00e5 den rigtige variant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi styre, hvor ofte der synkroniseres?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. B\u00e5de ordre- og varesynkronisering har konfigurerbare intervaller, for b\u00e5de l\u00f8bende og fuld k\u00f8rsel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvordan mappes ordrestatusser?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De konfigureres i indstillingerne, s\u00e5 I selv bestemmer hvilke der importeres, og hvad der s\u00e6ttes ved pakket og annulleret."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan vi k\u00f8re ideal.shop sammen med andre kanaler?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Ordrer fra flere kanaler plukkes side om side i samme flow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er integrationen inkluderet i prisen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
   <link rel="stylesheet" href="../css/style.css">
-<script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=3">
+  <script src="../js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="int-page.css?v=6">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>
 <div id="sp-header"></div>
 <script src="../js/header.js"></script>
 <main id="main-content">
-<section class="int-page"><div class="container">
-  <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
-  <div class="int-page__hero">
-    <div><div class="int-page__logo--text">ideal.shop</div></div>
-    <div class="int-page__hero-content">
-      <div class="int-page__cat">Webshop</div>
-      <h1 class="int-page__title">SmartPack <span>+ ideal.shop</span></h1>
-      <p class="int-page__intro">Ideal.Shop er en dansk webshopplatform med fokus p&aring; enkelhed, SEO og hurtig ops&aelig;tning. SmartPack WMS giver Ideal.Shop-kunder et professionelt lagerflow bag webshoppen: ordrer sendes automatisk til pluk/pak, og lagerstatus holdes opdateret i realtid.</p>
-      <div class="int-page__cta-row"><a href="../kontakt" class="btn btn--primary">Kom i gang &rarr;</a><a href="../priser" class="btn btn--ghost">Se priser</a></div>
+<section class="int-page">
+  <div class="container">
+    <a href="../integrationer" class="int-page__back">&larr; Alle integrationer</a>
+    <div class="int-page__hero">
+      <div class="sp-hero-logos">
+        <img src="../assets/idealshop.png" alt="ideal.shop logo" class="sp-hero-logo" width="300" height="300">
+        <div class="sp-hero-connector"><div class="sp-hero-connector-dot"></div><div class="sp-hero-connector-line"></div><div class="sp-hero-connector-dot"></div></div>
+        <img src="../assets/cropped-favicon-smartpack.png" alt="SmartPack logo" class="sp-hero-logo" width="200" height="200">
+      </div>
+      <div class="int-page__hero-content">
+        <div class="int-page__cat">Webshop</div>
+        <h1 class="int-page__title">Lagersystem til <span>ideal.shop</span></h1>
+        <p class="int-page__intro"><strong>F&aring; ideal.shop og lageret til at arbejde som &eacute;t system.</strong><br><br>ideal.shop er en dansk webshopplatform. Integrationen henter ordrer ind i SmartPack, synkroniserer varer og varianter, og skubber lagerantallet tilbage til shoppen.<br><br>SmartPack er master for lageret, s&aring; beholdningen p&aring; lageret er den, kunderne ser.</p>
+        <div class="int-page__cta-row">
+          <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+          <a href="../priser" class="btn btn--ghost">Se priser</a>
+        </div>
+        <p style="font-size:.75rem;color:var(--text-3);margin-top:.75rem;">Direkte integration mod ideal.shop med konfigurerbare synkroniseringsintervaller.</p>
+      </div>
+    </div>
+    <div class="sp-stats reveal">
+      <div class="sp-stat"><span class="sp-stat-val">SmartPack er master</span><span class="sp-stat-label">Lagerantallet skubbes til shoppen fra lageret</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Varianter</span><span class="sp-stat-label">Produkter med varianter opdateres via eget endpoint</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Egne intervaller</span><span class="sp-stat-label">Synkroniseringsfrekvens s&aelig;ttes for b&aring;de ordrer og varer</span></div>
+    </div>
+    <div class="int-page__body">
+      <div class="int-page__main">
+        <div class="sp-wms-bridge reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;margin-bottom:2.5rem;">
+          <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">ideal.shop styrer salget</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Produkter<br>Kunder<br>Checkout<br>Betaling<br>Webshop</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;"><div style="width:36px;height:36px;border-radius:50%;background:var(--accent);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto;">+</div></div>
+          <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
+            <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">SmartPack styrer lageret</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Varemodtagelse<br>Lagerplacering<br>Plukruter &amp; scanning<br>Pakning &amp; fragt<br>Retur</div>
+          </div>
+        </div>
+        <h2>Passer til jer der bruger ideal.shop</h2>
+        <div class="sp-fit-grid reveal">
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128722;</span><h3>Webshop</h3><p>SmartPack overtager lagerflowet: pluk, pak, fragtlabel og lager tilbage til shoppen.</p></div>
+          <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#127917;</span><h3>Varianter</h3><p>Produkter med varianter h&aring;ndteres via et separat endpoint, s&aring; den rigtige variant rammes.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#9201;</span><h3>Egne intervaller</h3><p>I s&aelig;tter selv, hvor ofte ordrer og varer synkroniseres, b&aring;de l&oslash;bende og fuldt.</p></div>
+        </div>
+        <h2>S&aring;dan flyder en ordre fra ideal.shop gennem SmartPack</h2>
+        <div class="sp-flow reveal">
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Ordre<br>oprettes</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#9881;&#65039;</span><span class="sp-flow-label">SmartPack<br>henter</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pluk<br>&amp; pak</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128666;</span><span class="sp-flow-label">Fragt<br>&amp; label</span></div>
+          <div class="sp-flow-arrow">&rsaquo;</div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Status<br>retur</span></div>
+        </div>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">B&aring;de l&oslash;bende synkronisering og fuld synkronisering har konfigurerbare intervaller, s&aring; I kan tilpasse belastningen til jeres volumen.</p>
+        <h2>Hvad synkroniseres automatisk?</h2>
+        <div class="sp-sync-cols reveal" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="sp-sync-box"><h3>Fra ideal.shop</h3>
+            <ul class="sp-sync-list">
+              <li>Ordrer med ordrelinjer</li>
+              <li>Leveringsoplysninger</li>
+              <li>Varer og varedata</li>
+              <li>Varianter</li>
+            </ul></div>
+          <div class="sp-sync-box"><h3>I SmartPack</h3>
+            <ul class="sp-sync-list">
+              <li>Plukruter og scanvalidering</li>
+              <li>Lokationer og lagerplacering</li>
+              <li>Pakning og fragt</li>
+              <li>Opt&aelig;lling og bev&aelig;gelser</li>
+            </ul></div>
+          <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
+            <h3 style="color:var(--accent);">Tilbage til ideal.shop</h3>
+            <ul class="sp-sync-list">
+              <li>Lagerantal, med SmartPack som master</li>
+              <li>Ordrestatus</li>
+              <li>Trackingnummer</li>
+              <li>Varedata hvor retningen er sl&aring;et til</li>
+            </ul></div>
+        </div>
+        <h2>ideal.shop-specifikke funktioner</h2>
+        <div class="sp-feat-grid reveal">
+          <div class="sp-feat"><span class="sp-feat-icon">&#128202;</span><div><strong>SmartPack er lagermaster</strong><span>Antallet skubbes til ideal.shop fra lageret, s&aring; det kunderne ser, er det der faktisk st&aring;r p&aring; hylden.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#127917;</span><div><strong>Varianter via eget endpoint</strong><span>Produkter med varianter opdateres gennem et separat endpoint, s&aring; beholdningen lander p&aring; den rigtige variant.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9201;</span><div><strong>Konfigurerbare intervaller</strong><span>B&aring;de ordre- og varesynkronisering har egne intervaller, for b&aring;de l&oslash;bende og fuld k&oslash;rsel.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Statusmapping</strong><span>Ordrestatusserne konfigureres i indstillingerne p&aring; samme m&aring;de som i DanDomain Classic.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Samme plukflow</strong><span>ideal.shop-ordrer plukkes side om side med ordrer fra andre kanaler.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128202;</span><div><strong>Joblog</strong><span>Hver synkronisering logges, s&aring; I kan se hvad der kom ind og hvad der gik ud.</span></div></div>
+        </div>
+        <h2>Hvem bestemmer lagertallet?</h2>
+        <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">P&aring; ideal.shop er svaret entydigt: SmartPack. Det g&oslash;r det enkelt at r&aelig;sonnere om, hvor beholdningen kommer fra.</p>
+        <div class="sp-formula">
+          <span class="cm"># Lagerretning</span><br>
+          SmartPack -&gt; <span class="kw">ideal.shop</span><br>
+          &nbsp;<br>
+          <span class="cm"># Synkroniseringsintervaller</span><br>
+          ordrer &nbsp;-&gt; <span class="kw">loebende + fuld</span><br>
+          varer &nbsp; -&gt; <span class="kw">loebende + fuld</span>
+        </div>
+        <p style="font-size:.86rem;color:var(--text-2);line-height:1.65;margin-bottom:.5rem;">Manuelle rettelser i shoppen bliver overskrevet ved n&aelig;ste synkronisering, fordi lageret er kilden.</p>
+        <div class="sp-note"><span class="sp-note-icon">&#9888;&#65039;</span><span>Har I varianter, opdateres de gennem et separat endpoint. Det er v&aelig;rd at kende, hvis en variant ikke f&aring;r det forventede antal.</span></div>
+        <h2>S&aring;dan forbinder du ideal.shop med SmartPack</h2>
+        <div class="sp-steps">
+          <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Hav jeres ideal.shop-adgang klar</strong><p>Vi bruger API-adgangen til at forbinde integrationen.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>S&aelig;t intervaller og statusser</strong><p>Synkroniseringsintervaller for ordrer og varer s&aelig;ttes, og ordrestatusserne mappes.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>K&oslash;r f&oslash;rste synkronisering og test</strong><p>Efter f&oslash;rste fulde synkronisering k&oslash;rer I en testordre hele vejen igennem.</p></div></div>
+        </div>
+        <div class="sp-faq">
+          <h2>Sp&oslash;rgsm&aring;l og svar</h2>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvem bestemmer lagertallet?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">SmartPack. Beholdningen skubbes til ideal.shop, s&aring; manuelle rettelser i shoppen bliver overskrevet ved n&aelig;ste synkronisering.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Underst&oslash;ttes varianter?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Produkter med varianter opdateres gennem et separat endpoint, s&aring; beholdningen lander p&aring; den rigtige variant.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi styre, hvor ofte der synkroniseres?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. B&aring;de ordre- og varesynkronisering har konfigurerbare intervaller, for b&aring;de l&oslash;bende og fuld k&oslash;rsel.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvordan mappes ordrestatusser?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">De konfigureres i indstillingerne, s&aring; I selv bestemmer hvilke der importeres, og hvad der s&aelig;ttes ved pakket og annulleret.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi k&oslash;re ideal.shop sammen med andre kanaler?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Ordrer fra flere kanaler plukkes side om side i samme flow.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Er integrationen inkluderet i prisen?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk&oslash;b.</p>
+          </div>
+        </div>
+        <div class="sp-bottom-cta reveal">
+          <h2>Har I ideal.shop og vil se, hvordan SmartPack passer til jeres lager?</h2>
+          <p>Vi viser jer pr&aelig;cis, hvad der sker med jeres ordrer, lager og fragt, og hvad ops&aelig;tningen kr&aelig;ver af jer.</p>
+          <div class="sp-bottom-cta-btns">
+            <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
+            <a href="../priser" class="btn btn--ghost">Se priser</a>
+          </div>
+        </div>
+      </div>
+      <div class="int-page__sidebar">
+        <div class="int-page__cta-box"><h3>K&oslash;rer I ideal.shop?</h3><p>Vi gennemg&aring;r intervaller, varianter og statusmapping, s&aring; ordrer og lager rammer rigtigt.</p>
+          <a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block;">Book demo &rarr;</a>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--accent-glow2);border-color:rgba(62,207,142,.25);"><h3 style="font-size:.9rem;">&#128202; Joblog</h3><p>Hver synkronisering logges, s&aring; I kan se pr&aelig;cis hvad der blev sendt og modtaget.</p>
+        </div>
+        <div class="int-page__cta-box" style="background:var(--surface-2);"><h3 style="font-size:.9rem;">&#128640; Vi klarer ops&aelig;tningen</h3><p>Full-service onboarding. Vi importerer varer, tegner lageret op og forbinder jeres systemer. I skal ikke selv konfigurere noget.</p>
+          <a href="../onboarding" style="font-size:.82rem;color:var(--accent);">Se onboarding-processen &rarr;</a>
+        </div>
+        <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list">
+          <a href="sumoshop" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/sumoshop.png" alt="SumoShop logo" width="256" height="256">SumoShop</a>
+          <a href="dandomain" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" width="500" height="500">DanDomain</a>
+          <a href="woocommerce" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/WooCommerce.png" alt="WooCommerce logo" width="128" height="128">WooCommerce</a>
+          <a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a>
+        </div></div>
+      </div>
     </div>
   </div>
-  <div class="int-page__body">
-    <div class="int-page__main">
-      <h2>Hvad g&oslash;r integrationen?</h2>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128230;</div><div><h3>Automatisk ordreimport</h3><p>Ordrer fra ideal.shop hentes automatisk. Plukkelister genereres straks n&aring;r ordren er bekr&aelig;ftet.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#128202;</div><div><h3>Lagerbeholdning opdateres</h3><p>SmartPack sender lagerstatus tilbage til ideal.shop i realtid s&aring; kunderne ser korrekt beholdning.</p></div></div>
-      <div class="int-page__benefit"><div class="int-page__benefit-icon">&#127968;</div><div><h3>Fragtlabels klar til print</h3><p>Print labels fra alle fragtleverand&oslash;rer direkte fra SmartPack. Sporingsnummer sendes automatisk retur.</p></div></div>
-      <h2 class="int-page__steps-title">S&aring;dan forbinder du ideal.shop med SmartPack</h2>
-      <div class="int-page__step"><div class="int-page__step-num">1</div><div class="int-page__step-body"><h3>Konfigur&eacute;r API-adgang</h3><p>Log ind i SmartPack og aktiv&eacute;r ideal.shop under Integrationer ved hj&aelig;lp af din API-n&oslash;gle.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">2</div><div class="int-page__step-body"><h3>Test forbindelsen</h3><p>Verificer at ordrer flyder korrekt fra ideal.shop til SmartPack.</p></div></div>
-      <div class="int-page__step"><div class="int-page__step-num">3</div><div class="int-page__step-body"><h3>G&aring; i produktion</h3><p>Aktiv&eacute;r for alle ordrer og monitorer de f&oslash;rste dages ordreflow.</p></div></div>
-    </div>
-    <div class="int-page__sidebar">
-      <div class="int-page__cta-box"><h3>Bruger I ideal.shop?</h3><p>Book en demo og f&aring; vist den fulde ordreprocess.</p><a href="../kontakt" class="btn btn--primary" style="width:100%;text-align:center;display:block">Book demo</a></div>
-      <div class="int-page__related"><h3>Relaterede integrationer</h3><div class="int-page__related-list"><a href="dandomain" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/DanDomain.png" alt="DanDomain logo" width="500" height="500">DanDomain</a><a href="shoporama" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Shop/Shoporama.webp" alt="Shoporama" width="1024" height="1024">Shoporama</a><a href="gls" class="int-page__related-link"><img src="../assets/SmartPack-App-Icons/SmartPack/Carrier/GLS.png" alt="GLS logo" width="1024" height="1024">GLS</a></div></div>
-    </div>
-  </div>
-</div></section>
+</section>
 </main>
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
 <script src="../js/main.js"></script>
+<script src="../js/int-page.js"></script>
 </body>
 </html>
