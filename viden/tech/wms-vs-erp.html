@@ -77,12 +77,12 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Mandag morgen kl. 08:34. 220 ordrer/dag. Kun ERP (Business Central). Ingen WMS. Plukker får papirliste fra BC. Linje 47: &quot;Vare 8472B, hylde 7C&quot;. Går til 7C. Varen er ikke der. Spoerger kollega. &quot;Den er vist flyttet til 9A.&quot; Finder den. 8 minutter spildt. Sker 12 gange/dag. 96 min/dag x 200 kr./time = 320 kr./dag = 80.000 kr./år i spildt gangtid.</p>
+    <p>Mandag morgen kl. 08:34. 220 ordrer/dag. Kun ERP (Business Central). Ingen WMS. Plukker får papirliste fra BC. Linje 47: &quot;Vare 8472B, hylde 7C&quot;. Går til 7C. Varen er ikke der. Spørger kollega. &quot;Den er vist flyttet til 9A.&quot; Finder den. 8 minutter spildt. Sker 12 gange/dag. 96 min/dag x 200 kr./time = 320 kr./dag = 80.000 kr./år i spildt gangtid.</p>
     <p>Det er virkeligheden for mange virksomheder der vokser ud af ERP-baseret lagerstyring. Her er hvad der giver mening, og hvornår.</p>
 
     <h2>Hvad er WMS og ERP?</h2>
     <p><strong>WMS (Warehouse Management System)</strong> styrer det fysiske lager. Det handler om, hvad der sker inde i lagerbygningen: modtagelse af varer, placering, plukoptimering, batch picking, pakning og afsendelse. Et WMS ved, hvem der plukkede hvad, hvornår, og via hvilken rute.</p>
-    <p><strong>ERP (Enterprise Resource Planning)</strong> styrer forretningen og okonomien. Ordrer, fakturaer, indkob, leverandoerforhold, bogfoering og rapportering. ERP ser lageret som tal i et regneark, antal p&aring; lager, kostpris, reserverede enheder.</p>
+    <p><strong>ERP (Enterprise Resource Planning)</strong> styrer forretningen og okonomien. Ordrer, fakturaer, indkob, leverandørforhold, bogføring og rapportering. ERP ser lageret som tal i et regneark, antal p&aring; lager, kostpris, reserverede enheder.</p>
     <p>Forskellen er fundamental: ERP h&aring;ndterer <em>data om</em> lageret. WMS h&aring;ndterer <em>operationerne på</em> lageret.</p>
 
     <h2>Hvad koster det IKKE at have WMS?</h2>
@@ -102,16 +102,16 @@
       <li><strong>Over 200 ordrer om dagen:</strong> P&aring; dette niveau er manuel ordrehåndtering direkte ineffektiv. Fejlprocenten stiger, og pick-hastighed bliver en flaskehals.</li>
       <li><strong>Flere lagermedarbejdere:</strong> Uden WMS har du ingen sporbarhed på, hvem der plukkede hvad. Det gør fejlfinding til gaetvark.</li>
       <li><strong>Kompleks lagertopologi:</strong> Mehrlagersystemer, pick-zoner, bulk-lokationer og pakningstationer kræver styring, som ERP ikke kan levere.</li>
-      <li><strong>Returnering og sporbarhed:</strong> Lot-/serienummerstyring og returnering med lokationsregistrering er WMS-domaene.</li>
+      <li><strong>Returnering og sporbarhed:</strong> Lot-/serienummerstyring og returnering med lokationsregistrering er WMS-domæne.</li>
     </ul>
 
     <h2>Typisk arbejdsdeling WMS og ERP</h2>
-    <p>ERP modtager ordren og sender den til WMS via integration. WMS behandler ordren: opdeler i plukliste, beregner TSP-optimeret rute, plukker får opgave p&aring; haandterminal, varer scannes ved pluk, pakkes og vejes ved pakkestation, fragtlabel genereres og printes. WMS sender status tilbage til ERP: ordren er afsendt, tracking-nummer, eventuelle mangler.</p>
+    <p>ERP modtager ordren og sender den til WMS via integration. WMS behandler ordren: opdeler i plukliste, beregner TSP-optimeret rute, plukker får opgave p&aring; håndterminal, varer scannes ved pluk, pakkes og vejes ved pakkestation, fragtlabel genereres og printes. WMS sender status tilbage til ERP: ordren er afsendt, tracking-nummer, eventuelle mangler.</p>
     <p>Dataudveksling sker typisk via REST API (pull), Webhooks (push) eller filintegration (ældre systemer: CSV/XML-filer p&aring; FTP).</p>
 
     <h2>Typiske fejl</h2>
     <ul>
-      <li><strong>Antager at ERP &quot;klarer det&quot;:</strong> ERP-leverandoerer markedsfører ofte lagermoduler. De kan holde styr p&aring; beholdning, men mangler plukoptimering, batch picking og medarbejder-tracking.</li>
+      <li><strong>Antager at ERP &quot;klarer det&quot;:</strong> ERP-leverandører markedsfører ofte lagermoduler. De kan holde styr p&aring; beholdning, men mangler plukoptimering, batch picking og medarbejder-tracking.</li>
       <li><strong>Implementerer WMS men springer integrationen over:</strong> Hvis WMS og ERP ikke taler samme sprog i realtid, opstår dobbelt-registrering og synkroniseringsfejl.</li>
       <li><strong>Overser masterdata-problemet:</strong> WMS og ERP skal have identiske varenumre, stregkoder og enheder.</li>
     </ul>
@@ -135,7 +135,7 @@
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Kan mit ERP erstatte et WMS?</summary><div class="faq-item__body"><p>Til simple lageroperationer: ja. Over 100-200 ordrer/dag med pluk p&aring; tværs af lokationer: nej. ERP mangler plukoptimering, batch picking og medarbejder-tracking.</p></div></details>
-    <details class="faq-item"><summary>Hvad koster det ikke at have WMS?</summary><div class="faq-item__body"><p>Primaert via fejlpluk (5-15x ekstraomkostning pr. fejlordre) og ineffektiv gangtid. Sekundaert via manglende sporbarhed og svår skalerbarhed.</p></div></details>
+    <details class="faq-item"><summary>Hvad koster det ikke at have WMS?</summary><div class="faq-item__body"><p>Primært via fejlpluk (5-15x ekstraomkostning pr. fejlordre) og ineffektiv gangtid. Sekundært via manglende sporbarhed og svår skalerbarhed.</p></div></details>
     <details class="faq-item"><summary>Kan WMS og ERP have forskellig beholdning?</summary><div class="faq-item__body"><p>Det sker, hvis integrationen ikke er realtids, eller hvis der er manuelle korrektioner i eet system. Det bør aktivere alarm, det er symptom p&aring; integrationsproblemer.</p></div></details>
     <details class="faq-item"><summary>Hvornår bør jeg implementere begge?</summary><div class="faq-item__body"><p>Senest ved 150-200 daglige ordrer eller ved første gang en lagermedarbejder ikke kan finde en vare p&aring; hylden.</p></div></details>
     <details class="faq-item"><summary>Hvad er forskellen p&aring; batch picking og normal pluk?</summary><div class="faq-item__body"><p>Batch picking samler pluk fra flere ordrer i een lagerrunde. Det reducerer gangtid dramatisk, men kræver WMS til at styre sortering og fordeling. ERP kan ikke dette.</p></div></details>

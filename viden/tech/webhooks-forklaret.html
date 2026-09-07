@@ -77,7 +77,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Forestil dig at du hele dagen ringer til postvaesenet og spoerger: &quot;Er der breve til mig?&quot; Det er API-polling. En webhook er det modsatte: postvaesenet ringer til dig, når der er et brev. Det er ikke en lille forskel, det er fundamentalt anderledes i e-handelssammenhaeng.</p>
+    <p>Forestil dig at du hele dagen ringer til postvaesenet og spørger: &quot;Er der breve til mig?&quot; Det er API-polling. En webhook er det modsatte: postvaesenet ringer til dig, når der er et brev. Det er ikke en lille forskel, det er fundamentalt anderledes i e-handelssammenhaeng.</p>
     <p>Her er alt du skal vide om webhooks: tekniske krav, hvad de koster når de fejler, og hvordan du bygger en robust webhook-modtager.</p>
 
     <h2>Hvad er en webhook?</h2>
@@ -97,7 +97,7 @@
     <p>For at modtage webhooks korrekt er der tre ufravigelige krav:</p>
 
     <h3>1. HTTPS er obligatorisk</h3>
-    <p>Shopify og alle andre moderne platforme afviser HTTP-endpoints. Du skal have et gyldigt SSL-certifikat. Self-signed certifikater accepteres ikke i produktionsmiljoeer.</p>
+    <p>Shopify og alle andre moderne platforme afviser HTTP-endpoints. Du skal have et gyldigt SSL-certifikat. Self-signed certifikater accepteres ikke i produktionsmiljøer.</p>
 
     <h3>2. Svartid under 30 sekunder</h3>
     <p>Shopify forventer HTTP 200 inden for 30 sekunder. Overskrides det, anses leveringen som mislykket, og Shopify forsøger retry. Tunge processer bør aldrig ske synkront i webhook-handleren, put jobbet i en koe og returner 200 straks.</p>
@@ -143,7 +143,7 @@
 
     <h2>Det opdager de fleste for sent</h2>
     <ul>
-      <li><strong>At Shopify deaktiverer webhook-abonnement efter 5 dage med fejl:</strong> Dit system er nede i 12 timer. Shopify proever retry. Efter 5 dage: webhook deaktiveret. Ingen alarm blev sendt.</li>
+      <li><strong>At Shopify deaktiverer webhook-abonnement efter 5 dage med fejl:</strong> Dit system er nede i 12 timer. Shopify prøver retry. Efter 5 dage: webhook deaktiveret. Ingen alarm blev sendt.</li>
       <li><strong>At en webhook kan sendes FLERE gange:</strong> I bygger ikke idempotent handler. Shopify sender samme ordre to gange. I opretter to ordrer, sender to pakker.</li>
       <li><strong>At HTTPS ikke er det samme som HMAC-validering:</strong> I har HTTPS men validerer ikke HMAC. Enhver kan sende falske webhooks til jeres endpoint.</li>
     </ul>

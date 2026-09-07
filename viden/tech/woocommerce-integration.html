@@ -78,7 +78,7 @@
   </header>
   <div class="article-body" data-pagefind-body="true">
     <p>WooCommerce er open source og fleksibelt. Det er også det, der gør integration mere komplekst end med Shopify. Ingen hosted infrastruktur, ingen API-rate limits fra Shopify, men heller ingen standard webhook-forvaltning. Her er hvad du skal vide.</p>
-    <p>Den haardeste sandhed: WooCommerce-sites varierer enormt. Et WooCommerce site med 50 plugins og et custom tema er et andet dyr end et rent WooCommerce-site. Integrationens stabilitet afhænger delvist af WordPress-setup.</p>
+    <p>Den hårdeste sandhed: WooCommerce-sites varierer enormt. Et WooCommerce site med 50 plugins og et custom tema er et andet dyr end et rent WooCommerce-site. Integrationens stabilitet afhænger delvist af WordPress-setup.</p>
 
     <h2>Hvad er WooCommerce-WMS integration?</h2>
     <p>WooCommerce-WMS integration er en bi-direktionel forbindelse:</p>
@@ -107,7 +107,7 @@
 
     <h3>Betalingsstatus-håndtering</h3>
     <p>Den vigtigste gotcha i WooCommerce-integration: WooCommerce bruger ordre-status <code>processing</code> til betalte ordrer. WMS maa kun importere ordrer der er <code>processing</code> eller <code>completed</code>, aldrig <code>pending</code> eller <code>on-hold</code>.</p>
-    <p>En <code>pending</code> ordre er ikke betalt endnu. Behandler WMS den, sender I en vare ud for en ordre der aldrig betales. Det er den nemmeste maade at miste penge i WooCommerce-integration.</p>
+    <p>En <code>pending</code> ordre er ikke betalt endnu. Behandler WMS den, sender I en vare ud for en ordre der aldrig betales. Det er den nemmeste måde at miste penge i WooCommerce-integration.</p>
 
     <h3>Lageropdatering via REST API</h3>
     <p>Lagertal opdateres via <code>PUT /wp-json/wc/v3/products/{id}</code> med <code>stock_quantity</code>. For produktvarianter bruges <code>PUT /wp-json/wc/v3/products/{id}/variations/{id}</code>. SKU bruges til at matche WMS-vare med WooCommerce-produkt. Uden korrekt SKU-mapping: ingen lageropdatering.</p>
@@ -150,7 +150,7 @@
     <details class="faq-item"><summary>Hvad er forskellen p&aring; WooCommerce og Shopify integration?</summary><div class="faq-item__body"><p>Shopify er hosted og standardiseret. WooCommerce kjoerer p&aring; WordPress og varierer per installation. WooCommerce koeraever mere opmærksomhed p&aring; plugin-kompatibilitet og betalingsstatus-håndtering.</p></div></details>
     <details class="faq-item"><summary>Kan jeg bruge WooCommerce API uden plugin?</summary><div class="faq-item__body"><p>Ja. WooCommerce REST API er bygget ind og kræver ikke ekstra plugin. Du skal kun aktivere API-adgang og generere Consumer Key/Secret.</p></div></details>
     <details class="faq-item"><summary>Hvad er WooCommerce Consumer Key?</summary><div class="faq-item__body"><p>En API-nogle der bruges til autentificering. Genereres i WooCommerce admin, Settings, Advanced, REST API. Bruges som username i HTTP Basic Auth.</p></div></details>
-    <details class="faq-item"><summary>Hvornår er ordre-status &quot;processing&quot; i WooCommerce?</summary><div class="faq-item__body"><p>Når betaling er bekraeftet. Det er standardstatus for succesfulde betalte ordrer. &quot;Pending&quot; er ikke betalt endnu.</p></div></details>
+    <details class="faq-item"><summary>Hvornår er ordre-status &quot;processing&quot; i WooCommerce?</summary><div class="faq-item__body"><p>Når betaling er bekræftet. Det er standardstatus for succesfulde betalte ordrer. &quot;Pending&quot; er ikke betalt endnu.</p></div></details>
     <details class="faq-item"><summary>Kan WooCommerce h&aring;ndtere variable produkter i WMS-integration?</summary><div class="faq-item__body"><p>Ja. Variable produkter (størrelse, farve) har separate variation-IDs og SKUs. Mapping i WMS er p&aring; variation-niveau, ikke produkt-niveau.</p></div></details>
   </div>
 </div></div>
@@ -160,6 +160,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen p&aring; WooCommerce og Shopify integration?","acceptedAnswer":{"@type":"Answer","text":"Shopify er hosted og standardiseret. WooCommerce varierer per installation og kræver mere opmærksomhed."}},{"@type":"Question","name":"Hvornår er ordre-status processing i WooCommerce?","acceptedAnswer":{"@type":"Answer","text":"Når betaling er bekraeftet. Det er standardstatus for betalte ordrer. Pending er ikke betalt."}},{"@type":"Question","name":"Hvad er WooCommerce Consumer Key?","acceptedAnswer":{"@type":"Answer","text":"En API-nogle til autentificering, genereret i WooCommerce admin under Settings, Advanced, REST API."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen p&aring; WooCommerce og Shopify integration?","acceptedAnswer":{"@type":"Answer","text":"Shopify er hosted og standardiseret. WooCommerce varierer per installation og kræver mere opmærksomhed."}},{"@type":"Question","name":"Hvornår er ordre-status processing i WooCommerce?","acceptedAnswer":{"@type":"Answer","text":"Når betaling er bekræftet. Det er standardstatus for betalte ordrer. Pending er ikke betalt."}},{"@type":"Question","name":"Hvad er WooCommerce Consumer Key?","acceptedAnswer":{"@type":"Answer","text":"En API-nogle til autentificering, genereret i WooCommerce admin under Settings, Advanced, REST API."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WooCommerce integration med WMS: opsætning og gotchas","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
 </body></html>

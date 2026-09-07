@@ -599,7 +599,7 @@
           <div class="inp-preview__title">&#128200; Potentiale med frigivne timer</div>
           <div class="inp-preview__rows">
             <div class="inp-preview__row"><span class="inp-preview__lbl">Ekstra ordrer/md med SP</span><span class="inp-preview__val" id="pv-ok-ordrer">,</span></div>
-            <div class="inp-preview__row"><span class="inp-preview__lbl">Yderligere omsaetning/md</span><span class="inp-preview__val" id="pv-ok-oms">,</span></div>
+            <div class="inp-preview__row"><span class="inp-preview__lbl">Yderligere omsætning/md</span><span class="inp-preview__val" id="pv-ok-oms">,</span></div>
           </div>
           <div class="inp-preview__total"><span style="color:var(--text-2)">Yderligere avance/md</span><span style="color:var(--accent)" id="pv-ok-avance">,</span></div>
         </div>
@@ -799,7 +799,7 @@
     </div>
 
     <!-- OMSæTNINGSPOTENTIALE -->
-    <div class="breakdown" id="omsaetning-section" style="display:none">
+    <div class="breakdown" id="omsætning-section" style="display:none">
       <div class="breakdown__title">Omsætningspotentiale med ekstra kapacitet</div>
       <div class="breakdown__row">
         <span class="breakdown__lbl">Ekstra ordrer/md med SmartPack</span>
@@ -1445,7 +1445,7 @@ function updateDOM(r) {
 
   // Omsætning
   const showOms = r.ordrevaerdi > 0 && r.ekstraOrdrer > 0;
-  show('omsaetning-section', showOms);
+  show('omsætning-section', showOms);
   if (showOms) {
     el('r-ekstraordrer').textContent = fmtN(Math.round(r.ekstraOrdrer)) + ' stk.';
     el('r-extraoms').textContent     = fmtKr(r.extraOms);
@@ -1864,7 +1864,7 @@ document.addEventListener('DOMContentLoaded', function() {
     { target:'#fejl',     wizTab:0,    title:'Pakkefejl',                        text:'Procent af pakker med fejl: forkert vare, antal eller adresse. Branchen ligger typisk p\u00e5 1,2%.' },
     { target:'#fejlomk',  wizTab:0,    title:'Omkostning pr. fejl',              text:'Returfragt + kundeservice-tid + kreditnota. Typisk 300\u2013600 kr. per fejl.' },
     { target:'#vaekst',   wizTab:0,    title:'Forventet m\u00e5nedlig v\u00e6kst', text:'Bruges til at beregne hvorn\u00e5r I rammer kapacitetsloftet. Vigtigt for 24-m\u00e5nedsgrafen.' },
-    { target:'#ordrevaerdi', wizTab:1, title:'Gns. ordrev\u00e6rdi',             text:'Gennemsnitlig omsaetning pr. ordre inkl. moms. Bruges til at beregne ekstra omsaetning med frigivne timer.' },
+    { target:'#ordrevaerdi', wizTab:1, title:'Gns. ordrev\u00e6rdi',             text:'Gennemsnitlig omsætning pr. ordre inkl. moms. Bruges til at beregne ekstra omsætning med frigivne timer.' },
     { target:'#avance',   wizTab:1,    title:'Avance p\u00e5 varerne',           text:'Jeres typiske bruttomarginal. Typisk 25\u201350% i e-handel. Bruges til netto-potentialet.' },
     { target:'#returrate',wizTab:1,    title:'Returrate',                        text:'Hvor mange procent af ordrerne returneres? SmartPack bringer fejlbetingede returner tact p\u00e5 0.' },
     { target:'#fragtRetur',wizTab:1,   title:'Fragtpris pr. returnering',        text:'Returfragt + h\u00e5ndteringstid. Typisk 60\u2013120 kr. ekskl. arbejdstid.' },

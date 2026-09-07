@@ -76,7 +76,7 @@
       },
       {
         "@type": "Question",
-        "name": "Hvornaar giver zone picking mening?",
+        "name": "Hvornår giver zone picking mening?",
         "acceptedAnswer": {"@type": "Answer", "text": "Zone picking giver klart udbytte ved mere end 150-200 ordrer per dag, et lager over 500 kvm og et sortiment på mindst 500 SKUer. Under de niveauer er gangtiden ikke stor nok til at retfærdiggøre koordinationsomkostningen."}
       },
       {
@@ -87,12 +87,12 @@
       {
         "@type": "Question",
         "name": "Kan zone picking bruges uden et WMS?",
-        "acceptedAnswer": {"@type": "Answer", "text": "Teknisk ja, men effektivt nej. Uden et WMS mangler du realtidsoverblik over, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og oeger fejlrisikoen ved konsolidering."}
+        "acceptedAnswer": {"@type": "Answer", "text": "Teknisk ja, men effektivt nej. Uden et WMS mangler du realtidsoverblik over, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og øger fejlrisikoen ved konsolidering."}
       },
       {
         "@type": "Question",
         "name": "Hvor mange zoner skal et lager have?",
-        "acceptedAnswer": {"@type": "Answer", "text": "De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner oeger koordinationsomkostningen og giver ikke proportionel gevinst."}
+        "acceptedAnswer": {"@type": "Answer", "text": "De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner øger koordinationsomkostningen og giver ikke proportionel gevinst."}
       }
     ]
   }
@@ -113,11 +113,11 @@
   <div class="article-body" data-pagefind-body="true">
     <p>Dine plukkere bruger 15-20 procent af deres arbejdstid på at vente på varer fra andre zoner. Det er ikke fordi de er langsomme. Det er fordi I har implementeret zone picking baseret på gulvareal i stedet for ordredata.</p>
     <p><strong>Zone picking opdeler lageret i zoner med én plukker per zone. Ordrer med varer fra flere zoner samles ved et konsolideringspunkt inden pakning.</strong></p>
-    <p>Det lyder enkelt. Det er det ikke. De fleste lagre implementerer det forkert: zone A er konstant overbelastet, zone B staar halvtom, og konsolideringspunktet bliver en flaskehals. Forkert implementeret koster zone picking 3.000-8.000 kr per maaned i spildt arbejdstid, mere end I ville have tabt ved at fortsætte uden zoner.</p>
+    <p>Det lyder enkelt. Det er det ikke. De fleste lagre implementerer det forkert: zone A er konstant overbelastet, zone B står halvtom, og konsolideringspunktet bliver en flaskehals. Forkert implementeret koster zone picking 3.000-8.000 kr per måned i spildt arbejdstid, mere end I ville have tabt ved at fortsætte uden zoner.</p>
 
     <h2>Hvorfor zone picking reducerer gangtid markant</h2>
-    <p>I et lager uden zoneopdeling vandrer plukkeren fra én ende til den anden for at samle én ordre. Med 150 ordrer per dag og et lager på 800 kvm bruger en plukker typisk 60-70 procent af sin arbejdstid på at gaa. Zone picking eliminerer den vandring på tvaers af lageret. Plukkeren lærer sit omraade ud og ind, arbejder i et kompakt areal og naar markant højere picks per time.</p>
-    <p><strong>Eksempel fra virkeligheden:</strong> En e-commerce-virksomhed med 180 ordrer/dag og et 750 kvm lager koerte uden zoner indtil november 2024. I uge 47 (Black Friday) steg volumen til 320 ordrer/dag. Gangtiden eksploderede, fejlraten ramte 3,2%, og de maatte hyre 2 ekstra vikarer for at naa deadline. Efter implementering af 3 zoner i januar 2025 håndterer de nu 280 ordrer/dag med samme bemanding og en fejlrate på 0,6%.</p>
+    <p>I et lager uden zoneopdeling vandrer plukkeren fra én ende til den anden for at samle én ordre. Med 150 ordrer per dag og et lager på 800 kvm bruger en plukker typisk 60-70 procent af sin arbejdstid på at gaa. Zone picking eliminerer den vandring på tværs af lageret. Plukkeren lærer sit område ud og ind, arbejder i et kompakt areal og naar markant højere picks per time.</p>
+    <p><strong>Eksempel fra virkeligheden:</strong> En e-commerce-virksomhed med 180 ordrer/dag og et 750 kvm lager kørte uden zoner indtil november 2024. I uge 47 (Black Friday) steg volumen til 320 ordrer/dag. Gangtiden eksploderede, fejlraten ramte 3,2%, og de måtte hyre 2 ekstra vikarer for at naa deadline. Efter implementering af 3 zoner i januar 2025 håndterer de nu 280 ordrer/dag med samme bemanding og en fejlrate på 0,6%.</p>
     <p>Konkrete tal fra SMV-lagre med zone picking versus ingen zoneopdeling:</p>
     <table>
       <thead><tr><th>Metrik</th><th>Ingen zoner</th><th>Zone picking</th></tr></thead>
@@ -132,7 +132,7 @@
     <h2>Hvad koster zone picking, og hvad sparer du?</h2>
     <p>Eksempel: lager med 200 ordrer per dag, 3 plukkere, 800 kvm.</p>
     <table>
-      <thead><tr><th>Gevinst</th><th>Foer zone picking</th><th>Efter zone picking</th><th>Besparelse/maaned</th></tr></thead>
+      <thead><tr><th>Gevinst</th><th>Foer zone picking</th><th>Efter zone picking</th><th>Besparelse/måned</th></tr></thead>
       <tbody>
         <tr><td>Picks per time</td><td>60</td><td>95</td><td>+58% kapacitet</td></tr>
         <tr><td>Gangtid (% af arbejdstid)</td><td>65%</td><td>35%</td><td>ca. 4 timer/dag frigivet</td></tr>
@@ -140,13 +140,13 @@
         <tr><td>Onboarding ny plukker</td><td>3 uger</td><td>1,5 uge</td><td>ca. 15.000 kr sparet per ny medarbejder</td></tr>
       </tbody>
     </table>
-    <p><strong>Samlet maanedlig gevinst:</strong> 12.000-18.000 kr. <strong>Payback-tid:</strong> 3-7 maaneder ved korrekt implementering.</p>
+    <p><strong>Samlet månedlig gevinst:</strong> 12.000-18.000 kr. <strong>Payback-tid:</strong> 3-7 måneder ved korrekt implementering.</p>
 
     <h2>Det opdager de fleste for sent</h2>
     <ul>
       <li><strong>Onboarding tager 3-4 uger i stedet for 1-2:</strong> Nye plukkere skal lære hele lageret. I Black Friday-perioden (uge 46-48) betyder det, at vikarer aldrig naar fuld hastighed.</li>
-      <li><strong>Fejlraten stiger ved vaekst:</strong> Ved 100 ordrer/dag ligger fejlraten på 1,2%. Ved 180 ordrer/dag - uden zoneopdeling - rammer den 2,5-3,0%, fordi plukkerne skifter mellem for mange SKUer.</li>
-      <li><strong>Gangtiden spiser kapaciteten:</strong> En plukker der bruger 65% af sin tid på at gaa, naar 55-60 picks/time. Med zoner naar samme plukker 90-100 picks/time - det er 50% mere output uden ekstra loenomkostning.</li>
+      <li><strong>Fejlraten stiger ved vækst:</strong> Ved 100 ordrer/dag ligger fejlraten på 1,2%. Ved 180 ordrer/dag - uden zoneopdeling - rammer den 2,5-3,0%, fordi plukkerne skifter mellem for mange SKUer.</li>
+      <li><strong>Gangtiden spiser kapaciteten:</strong> En plukker der bruger 65% af sin tid på at gaa, naar 55-60 picks/time. Med zoner naar samme plukker 90-100 picks/time - det er 50% mere output uden ekstra lønomkostning.</li>
     </ul>
 
     <p class="inline-cta">&#x1F449; Se hvordan SmartPack implementerer zone picking med automatisk belastningsfordeling. <a href="../../kontakt">Book en gratis demo</a></p>
@@ -157,15 +157,15 @@
     <p>Eksporter de seneste 90 dages ordrer fra dit WMS eller ERP (CSV med kolonnerne: ordre-ID, SKU, antal). Brug Excel eller Google Sheets til at lave en pivot-tabel der viser:</p>
     <ul>
       <li>Hvilke SKUer plukkes oftest (top 20% = A-varer)</li>
-      <li>Hvilke SKUer optraeder sammen i samme ordre (brug COUNTIFS eller pivot)</li>
+      <li>Hvilke SKUer optræder sammen i samme ordre (brug COUNTIFS eller pivot)</li>
     </ul>
-    <p>SKUer der hyppigt optraeder sammen i ordrer <strong>skal</strong> ligge i samme zone, eller i nabozoner. Hver gang en ordre kræver konsolidering på tvaers af zoner, mister du 45-90 sekunder per ordre. Ved 150 ordrer/dag svarer det til 1,5-2 timer tabt tid dagligt.</p>
+    <p>SKUer der hyppigt optræder sammen i ordrer <strong>skal</strong> ligge i samme zone, eller i nabozoner. Hver gang en ordre kræver konsolidering på tværs af zoner, mister du 45-90 sekunder per ordre. Ved 150 ordrer/dag svarer det til 1,5-2 timer tabt tid dagligt.</p>
     <h3>Trin 2: Definer zonegraenser</h3>
-    <p>Start med 2-3 zoner. Mange lagre overkomplicerer det med 6-8 zoner fra dag ét. Resultatet er koordinationshelvede. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. Udvid, naar data viser at yderligere opdeling reducerer koordinationsomkostning mere end det oeger den.</p>
+    <p>Start med 2-3 zoner. Mange lagre overkomplicerer det med 6-8 zoner fra dag ét. Resultatet er koordinationshelvede. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. Udvid, naar data viser at yderligere opdeling reducerer koordinationsomkostning mere end det øger den.</p>
     <h3>Trin 3: Placer A-varer strategisk</h3>
-    <p>A-varer udgjoer typisk 20 procent af sortimentet men 80 procent af plukvolumen. De skal ligge centralt i zonen, naermest pakkestation, på ergonomisk højde (80-150 cm). Plukkeren bruger færrest skridt og mindst tid per pick på A-varerne.</p>
+    <p>A-varer udgjør typisk 20 procent af sortimentet men 80 procent af plukvolumen. De skal ligge centralt i zonen, nærmest pakkestation, på ergonomisk højde (80-150 cm). Plukkeren bruger færrest skridt og mindst tid per pick på A-varerne.</p>
     <h3>Trin 4: Definer konsolideringspunkt</h3>
-    <p>Alle zoner skal have et klart mødeunkt for ordrer der samles på tvaers af zoner. Det kan vaere et rulleband, en samlebane eller et dedikeret bord. Det vigtige er, at processen er entydig og at ingen ordre forlader konsolideringspunktet uden at vaere komplet.</p>
+    <p>Alle zoner skal have et klart mødeunkt for ordrer der samles på tværs af zoner. Det kan være et rulleband, en samlebane eller et dedikeret bord. Det vigtige er, at processen er entydig og at ingen ordre forlader konsolideringspunktet uden at være komplet.</p>
 
     <h2>Zone picking versus andre plukkemetoder</h2>
     <p>Zone picking er ikke det rigtige svar for alle lagre. Her er en direkte sammenligning:</p>
@@ -184,39 +184,39 @@
     <ul>
       <li><strong>For mange zoner fra start:</strong> 6 zoner på et 600 kvm lager er overdimensionering. Start med 2-3 og udvid kun naar data begrunder det.</li>
       <li><strong>Zoner baseret på areal, ikke ordredata:</strong> Lager opdelt i lige store kvadrater ignorerer, at 80% af plukvolumen kommer fra 20% af sortimentet.</li>
-      <li><strong>Intet konsolideringspunkt:</strong> Hvis det er uklart, hvor ordrer fra flere zoner samles, opstaar der fejl og forsinkelser ved pakkestation.</li>
-      <li><strong>Statisk zoneopdeling:</strong> Sortimentet ændrer sig. En zoneopdeling der var optimal for 18 maaneder siden er naeppe optimal i dag. Genanalyser hver 6. maaned, ellers mister du 8-12% effektivitet.</li>
+      <li><strong>Intet konsolideringspunkt:</strong> Hvis det er uklart, hvor ordrer fra flere zoner samles, opstår der fejl og forsinkelser ved pakkestation.</li>
+      <li><strong>Statisk zoneopdeling:</strong> Sortimentet ændrer sig. En zoneopdeling der var optimal for 18 måneder siden er naeppe optimal i dag. Genanalyser hver 6. måned, ellers mister du 8-12% effektivitet.</li>
       <li><strong>Manglende belastningsbalancering:</strong> Hvis zone A altid er overbelastet mens zone B er ledig, er zoneopdelingen forkert. Et WMS loser dette dynamisk.</li>
       <li><strong>Ingen plan for sygdom og ferie:</strong> Hvis zone A's plukker er syg og ingen andre kender zonen, stopper produktionen. Krav: cross-training eller dynamisk zoneomdeling i WMS.</li>
     </ul>
 
-    <h2>Hvornaar er du klar til zone picking?</h2>
-    <p>Tre kriterier skal alle vaere opfyldt:</p>
+    <h2>Hvornår er du klar til zone picking?</h2>
+    <p>Tre kriterier skal alle være opfyldt:</p>
     <ol>
       <li><strong>Volumen over 150 ordrer per dag:</strong> Under det er koordinationsomkostningen ofte større end gangtidsbesparelsen.</li>
       <li><strong>Lager over 500 kvm med mere end 500 aktive SKUer:</strong> På et kompakt lager giver specialisering ikke nok gevinst.</li>
       <li><strong>WMS eller plukkesystem der understotter zonerouting:</strong> Manuel zonehendelse er teknisk muligt, men du mister 40-60% af gevinsten og fordobler fejlraten.</li>
     </ol>
-    <p>Er alle tre til stede, og din nuvaerende fejlrate er over 1%, eller din gangtid er over 55% af arbejdstiden, er zone picking det næste logiske skridt.</p>
+    <p>Er alle tre til stede, og din nuværende fejlrate er over 1%, eller din gangtid er over 55% af arbejdstiden, er zone picking det næste logiske skridt.</p>
 
-    <h2>Sådan hjaelper SmartPack med zone picking</h2>
-    <p>SmartPack WMS understoetter zone picking med automatisk belastningsfordeling: systemet sender ordrer til den mindst belastede zone, og konsoliderer automatisk ved pakkestation. Det giver mening fra 150+ ordrer/dag og 500+ kvm lager.</p>
-    <p><strong>Hvornaar giver SmartPack IKKE mening:</strong> Under 100 ordrer/dag er manuelt setup med Excel og labels billigere. Ved 50-100 ordrer/dag er batch picking uden zoner ofte mere effektivt end zone picking.</p>
-    <p><strong>Alternativets cost:</strong> Manuel zonehåndtering uden WMS kræver 30-45 minutter dagligt til koordinering (plukkelister, konsolidering, fejlretning). Det svarer til 8.500-12.500 kr./maaned i tabt tid.</p>
+    <h2>Sådan hjælper SmartPack med zone picking</h2>
+    <p>SmartPack WMS understøtter zone picking med automatisk belastningsfordeling: systemet sender ordrer til den mindst belastede zone, og konsoliderer automatisk ved pakkestation. Det giver mening fra 150+ ordrer/dag og 500+ kvm lager.</p>
+    <p><strong>Hvornår giver SmartPack IKKE mening:</strong> Under 100 ordrer/dag er manuelt setup med Excel og labels billigere. Ved 50-100 ordrer/dag er batch picking uden zoner ofte mere effektivt end zone picking.</p>
+    <p><strong>Alternativets cost:</strong> Manuel zonehåndtering uden WMS kræver 30-45 minutter dagligt til koordinering (plukkelister, konsolidering, fejlretning). Det svarer til 8.500-12.500 kr./måned i tabt tid.</p>
   </div>
   <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Tallene er fra reelle SMV-lagre. <a href="../../kontakt">Kontakt os</a> for at se om zone picking giver mening for dit lager.</p></div>
-  <div class="bottom-cta"><p>Vil du have hjaelp til at designe din zoneopdeling?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
+  <div class="bottom-cta"><p>Vil du have hjælp til at designe din zoneopdeling?</p><a href="../../kontakt" class="btn">Book gratis demo</a></div>
   <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
     <a href="./hvad-er-batch-picking" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er batch picking?</span></a>
     <a href="./hvad-er-wms" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er et WMS?</span></a>
     <a href="./hvad-er-demand-planning" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er demand planning?</span></a>
   </div></div>
-  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spoergsmaal</h2>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er forskellen på zone picking og batch picking?</summary><div class="faq-item__body"><p>Zone picking opdeler lageret i geografiske zoner med en fast plukker per zone. Batch picking samler flere ordrer på én tur uanset zone. De to metoder kombineres ofte: plukkere arbejder i zoner og håndterer flere ordrer per tur inden for deres zone.</p></div></details>
-    <details class="faq-item"><summary>Hvornaar giver zone picking mening?</summary><div class="faq-item__body"><p>Zone picking giver klart udbytte ved mere end 150-200 ordrer per dag, et lager over 500 kvm og et sortiment på mindst 500 SKUer. Under de niveauer er gangtiden ikke stor nok til at retfærdiggøre koordinationsomkostningen.</p></div></details>
+    <details class="faq-item"><summary>Hvornår giver zone picking mening?</summary><div class="faq-item__body"><p>Zone picking giver klart udbytte ved mere end 150-200 ordrer per dag, et lager over 500 kvm og et sortiment på mindst 500 SKUer. Under de niveauer er gangtiden ikke stor nok til at retfærdiggøre koordinationsomkostningen.</p></div></details>
     <details class="faq-item"><summary>Hvad er ulempen ved zone picking?</summary><div class="faq-item__body"><p>Koordinering mellem zoner er den største udfordring. Ordrer med varer fra flere zoner kræver et konsolideringspunkt, og hvis en zone er overbelastet mens en anden er ledig, kan det skabe flaskehalse. Et WMS loser dette ved dynamisk belastningsfordeling.</p></div></details>
-    <details class="faq-item"><summary>Kan zone picking bruges uden et WMS?</summary><div class="faq-item__body"><p>Teknisk ja, men effektivt nej. Uden et WMS mangler du realtidsoverblik over, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og oeger fejlrisikoen ved konsolidering.</p></div></details>
-    <details class="faq-item"><summary>Hvor mange zoner skal et lager have?</summary><div class="faq-item__body"><p>De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner oeger koordinationsomkostningen og giver ikke proportionel gevinst.</p></div></details>
+    <details class="faq-item"><summary>Kan zone picking bruges uden et WMS?</summary><div class="faq-item__body"><p>Teknisk ja, men effektivt nej. Uden et WMS mangler du realtidsoverblik over, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og øger fejlrisikoen ved konsolidering.</p></div></details>
+    <details class="faq-item"><summary>Hvor mange zoner skal et lager have?</summary><div class="faq-item__body"><p>De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner øger koordinationsomkostningen og giver ikke proportionel gevinst.</p></div></details>
   </div>
 </div></div>
 </main>
