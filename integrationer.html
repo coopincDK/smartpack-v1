@@ -120,6 +120,21 @@
       gap: .5rem;
       flex-wrap: wrap;
     }
+    @media (max-width: 760px) {
+      .int-hub__filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: .25rem;
+        margin-inline: -1rem;
+        padding-inline: 1rem;
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 1rem, #000 calc(100% - 2.5rem), transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 1rem, #000 calc(100% - 2.5rem), transparent 100%);
+      }
+      .int-hub__filters::-webkit-scrollbar { display: none; }
+      .int-hub__filter-btn, .int-filter-btn { flex: 0 0 auto; }
+    }
     .int-filter-btn {
       padding: .45rem 1.1rem;
       border-radius: 2rem;
@@ -574,11 +589,14 @@
       <div class="int-hub__filters">
         <button class="int-filter-btn active" data-filter="all">Alle</button>
         <button class="int-filter-btn" data-filter="webshop">Webshops</button>
-        <button class="int-filter-btn" data-filter="pos">POS &amp; Kassesystemer</button>
+        <button class="int-filter-btn" data-filter="pos">POS</button>
         <button class="int-filter-btn" data-filter="fragt">Fragt</button>
         <button class="int-filter-btn" data-filter="portal">Fragtportaler</button>
         <button class="int-filter-btn" data-filter="erp">ERP &amp; &Oslash;konomi</button>
-        <button class="int-filter-btn" data-filter="other">&Oslash;vrige</button>
+        <button class="int-filter-btn" data-filter="robot">Robotter</button>
+        <button class="int-filter-btn" data-filter="support">Support</button>
+        <button class="int-filter-btn" data-filter="retur">Retur</button>
+        <button class="int-filter-btn" data-filter="indkoeb">Indk&oslash;b</button>
       </div>
     </div>
 
@@ -858,68 +876,102 @@
     </div>
 
     <!-- ØVRIGE -->
-    <div class="int-category" data-category="other">
+    <div class="int-category" data-category="robot">
       <div class="int-category__header">
-        <span class="int-category__title">&Oslash;vrige</span>
+        <span class="int-category__title">Robotter &amp; Automatisering</span>
         <div class="int-category__line"></div>
-        <span class="int-category__count">13 systemer</span>
+        <span class="int-category__count">5 systemer</span>
       </div>
-      <p class="int-category__desc">Retur, kundeservice, indk&oslash;b, pakkerobot og robotlager. Kobles p&aring; n&oslash;jagtig samme m&aring;de.</p>
+      <p class="int-category__desc">Robotlager og pakkelinjer. SmartPack beslutter hvad der skal flyttes og pakkes, maskinen g&oslash;r det fysiske.</p>
       <div class="int-hub__grid">
-        <a href="integrationer/returnflows" class="int-hub__card" data-cat="other" data-name="returnflows retur bytte reklamation fortrydelsesret">
-          <img src="assets/returnflows-logo.png" alt="Returnflows" loading="lazy" width="1200" height="217" class="int-hub__img--wide">
-          <span class="int-hub__card-name">Returnflows</span>
-        </a>
-        <a href="integrationer/reversio" class="int-hub__card" data-cat="other" data-name="reversio returh&aring;ndtering">
-          <img src="assets/SmartPack-App-Icons/Reversio/Return/Reversio.png" alt="Reversio" loading="lazy" width="2000" height="2000">
-          <span class="int-hub__card-name">Reversio</span>
-        </a>
-        <a href="integrationer/sitesage" class="int-hub__card" data-cat="other" data-name="sitesage ai kundeservice helpdesk support">
-          <img src="assets/sitesage-logo.png" alt="SiteSage" loading="lazy" width="1200" height="294" class="int-hub__img--wide">
-          <span class="int-hub__card-name">SiteSage</span>
-        </a>
-        <a href="integrationer/wilmo-ai" class="int-hub__card" data-cat="other" data-name="wilmo wilmo.ai ai kundeservice helpdesk support">
-          <img src="assets/wilmo-logo.png" alt="Wilmo.ai" loading="lazy" width="998" height="216" class="int-hub__img--wide">
-          <span class="int-hub__card-name">Wilmo.ai</span>
-        </a>
-        <a href="integrationer/zuzana" class="int-hub__card" data-cat="other" data-name="zuzana ai support kundeservice">
-          <img src="assets/zuzana.png" alt="Zuzana" loading="lazy" width="500" height="500">
-          <span class="int-hub__card-name">Zuzana</span>
-        </a>
-        <a href="integrationer/herodesk" class="int-hub__card" data-cat="other" data-name="herodesk kundeservice">
-          <img src="assets/SmartPack-App-Icons/Herodesk/Other/Herodesk.png" alt="Herodesk" loading="lazy" width="280" height="280">
-          <span class="int-hub__card-name">Herodesk</span>
-        </a>
-        <a href="integrationer/inventory-planner" class="int-hub__card" data-cat="other" data-name="inventory planner indkøb">
-          <img src="assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Inventory-Planner.png" alt="Inventory Planner" loading="lazy" width="50" height="49">
-          <span class="int-hub__card-name">Inventory Planner</span>
-        </a>
-        <a href="integrationer/stocky" class="int-hub__card" data-cat="other" data-name="stocky shopify">
-          <img src="assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky" loading="lazy" width="512" height="512">
-          <span class="int-hub__card-name">Stocky</span>
-        </a>
-        <a href="integrationer/panotec-opera" class="int-hub__card" data-cat="other" data-name="panotec opera pakkerobot kassemaskine box on demand emballage">
-          <img src="assets/panotec-logo.png" alt="Panotec" loading="lazy" width="1232" height="204" class="int-hub__img--wide">
-          <span class="int-hub__card-name">Panotec Opera</span>
-        </a>
-        <a href="integrationer/kangaroo-robotics" class="int-hub__card" data-cat="other" data-name="kangaroo robotics">
-          <img src="assets/kangaroo-robotics.png" alt="Kangaroo Robotics" loading="lazy" width="1268" height="585">
-          <span class="int-hub__card-name">Kangaroo Robotics</span>
-        </a>
-        <a href="integrationer/element-logic" class="int-hub__card int-hub__card--dark" data-cat="other" data-name="element logic autostore">
-          <img src="assets/element-logic-logo.png" alt="Element Logic" loading="lazy" width="1200" height="416">
-          <span class="int-hub__card-name">Element Logic</span>
-        </a>
-        <a href="integrationer/autostore" class="int-hub__card" data-cat="other" data-name="autostore robotlager">
+        <a href="integrationer/autostore" class="int-hub__card" data-cat="robot" data-name="autostore robotlager">
           <img src="assets/autostore-logo.png" alt="AutoStore" loading="lazy" width="225" height="225">
           <span class="int-hub__card-name">AutoStore</span>
         </a>
-        <a href="integrationer/geek-plus" class="int-hub__card int-hub__card--dark" data-cat="other" data-name="geek plus robotics amr">
+        <a href="integrationer/geek-plus" class="int-hub__card int-hub__card--dark" data-cat="robot" data-name="geek plus robotics amr">
           <img src="assets/geek-plus-logo.png" alt="Geek+" loading="lazy" width="520" height="130" style="object-fit:contain">
           <span class="int-hub__card-name">Geek+</span>
         </a>
+        <a href="integrationer/element-logic" class="int-hub__card int-hub__card--dark" data-cat="robot" data-name="element logic autostore">
+          <img src="assets/element-logic-logo.png" alt="Element Logic" loading="lazy" width="1200" height="416">
+          <span class="int-hub__card-name">Element Logic</span>
+        </a>
+        <a href="integrationer/kangaroo-robotics" class="int-hub__card" data-cat="robot" data-name="kangaroo robotics">
+          <img src="assets/kangaroo-robotics.png" alt="Kangaroo Robotics" loading="lazy" width="1268" height="585">
+          <span class="int-hub__card-name">Kangaroo Robotics</span>
+        </a>
+        <a href="integrationer/panotec-opera" class="int-hub__card" data-cat="robot" data-name="panotec opera pakkerobot kassemaskine box on demand emballage">
+          <img src="assets/panotec-logo.png" alt="Panotec" loading="lazy" width="1232" height="204" class="int-hub__img--wide">
+          <span class="int-hub__card-name">Panotec Opera</span>
+        </a>
       </div>
     </div>
+
+    <div class="int-category" data-category="support">
+      <div class="int-category__header">
+        <span class="int-category__title">Kundeservice &amp; Support</span>
+        <div class="int-category__line"></div>
+        <span class="int-category__count">4 systemer</span>
+      </div>
+      <p class="int-category__desc">AI og helpdesk der sl&aring;r op i lageret, s&aring; kunden f&aring;r status og sporing uden at en agent skal lede.</p>
+      <div class="int-hub__grid">
+        <a href="integrationer/herodesk" class="int-hub__card" data-cat="support" data-name="herodesk kundeservice">
+          <img src="assets/SmartPack-App-Icons/Herodesk/Other/Herodesk.png" alt="Herodesk" loading="lazy" width="280" height="280">
+          <span class="int-hub__card-name">Herodesk</span>
+        </a>
+        <a href="integrationer/zuzana" class="int-hub__card" data-cat="support" data-name="zuzana ai support kundeservice">
+          <img src="assets/zuzana.png" alt="Zuzana" loading="lazy" width="500" height="500">
+          <span class="int-hub__card-name">Zuzana</span>
+        </a>
+        <a href="integrationer/wilmo-ai" class="int-hub__card" data-cat="support" data-name="wilmo wilmo.ai ai kundeservice helpdesk support">
+          <img src="assets/wilmo-logo.png" alt="Wilmo.ai" loading="lazy" width="998" height="216" class="int-hub__img--wide">
+          <span class="int-hub__card-name">Wilmo.ai</span>
+        </a>
+        <a href="integrationer/sitesage" class="int-hub__card" data-cat="support" data-name="sitesage ai kundeservice helpdesk support">
+          <img src="assets/sitesage-logo.png" alt="SiteSage" loading="lazy" width="1200" height="294" class="int-hub__img--wide">
+          <span class="int-hub__card-name">SiteSage</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="int-category" data-category="retur">
+      <div class="int-category__header">
+        <span class="int-category__title">Retur</span>
+        <div class="int-category__line"></div>
+        <span class="int-category__count">2 systemer</span>
+      </div>
+      <p class="int-category__desc">Returportal og bytte hos leverand&oslash;ren. SmartPack modtager varen og l&aelig;gger den p&aring; plads.</p>
+      <div class="int-hub__grid">
+        <a href="integrationer/reversio" class="int-hub__card" data-cat="retur" data-name="reversio returh&aring;ndtering">
+          <img src="assets/SmartPack-App-Icons/Reversio/Return/Reversio.png" alt="Reversio" loading="lazy" width="2000" height="2000">
+          <span class="int-hub__card-name">Reversio</span>
+        </a>
+        <a href="integrationer/returnflows" class="int-hub__card" data-cat="retur" data-name="returnflows retur bytte reklamation fortrydelsesret">
+          <img src="assets/returnflows-logo.png" alt="Returnflows" loading="lazy" width="1200" height="217" class="int-hub__img--wide">
+          <span class="int-hub__card-name">Returnflows</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="int-category" data-category="indkoeb">
+      <div class="int-category__header">
+        <span class="int-category__title">Indk&oslash;b &amp; Forecast</span>
+        <div class="int-category__line"></div>
+        <span class="int-category__count">2 systemer</span>
+      </div>
+      <p class="int-category__desc">Indk&oslash;bsforslag og prognoser bygget p&aring; lagerets faktiske tal.</p>
+      <div class="int-hub__grid">
+        <a href="integrationer/inventory-planner" class="int-hub__card" data-cat="indkoeb" data-name="inventory planner indkøb">
+          <img src="assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Inventory-Planner.png" alt="Inventory Planner" loading="lazy" width="50" height="49">
+          <span class="int-hub__card-name">Inventory Planner</span>
+        </a>
+        <a href="integrationer/stocky" class="int-hub__card" data-cat="indkoeb" data-name="stocky shopify">
+          <img src="assets/SmartPack-App-Icons/SmartPack/PurchaseOrder/Stocky-Shopify.png" alt="Stocky" loading="lazy" width="512" height="512">
+          <span class="int-hub__card-name">Stocky</span>
+        </a>
+      </div>
+    </div>
+
 
     <!-- API STRIP -->
     <div class="int-hub__api">
