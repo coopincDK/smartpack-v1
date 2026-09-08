@@ -4,15 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Typiske integrationsfejl i lagerstyring | SmartPack Viden</title>
+  <title>Typiske integrationsfejl i lagerstyring | SmartPack</title>
   <meta property="og:type" content="article">
   <meta property="og:title" content="Typiske integrationsfejl i lagerstyring">
   <meta property="og:url" content="https://smartpack.dk/viden/tech/typiske-integrationsfejl">
-  <meta property="og:description" content="Integrationsfejl i WMS sker oftest usynligt og opdages sent. Laer om stille fejl, BC client secret, leveringsmetode-mapping og hvordan du undgår dem.">
+  <meta property="og:description" content="Integrationsfejl i WMS sker oftest usynligt og opdages sent. Lær om stille fejl, BC client secret, leveringsmetode-mapping og hvordan du undgår dem.">
   <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta name="description" content="Integrationsfejl i WMS sker oftest usynligt og opdages sent. Laer om stille fejl, BC client secret, leveringsmetode-mapping og hvordan du undgår dem.">
+  <meta name="description" content="Integrationsfejl i WMS sker oftest usynligt og opdages sent. Lær om stille fejl, BC client secret, leveringsmetode-mapping og hvordan du undgår dem.">
   <link rel="canonical" href="https://smartpack.dk/viden/tech/typiske-integrationsfejl">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
@@ -112,7 +112,7 @@
     <h3>2. BC client secret udløber</h3>
     <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
     <p><strong>årsag:</strong> Business Central bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 år. Det er den hyppigste årsag til BC-integrationsnedbrud. De fleste virksomheder sætter det op og glemmer det.</p>
-    <p><strong>Losning:</strong> sæt kalenderreminder 30 og 60 dage foer udløb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. måned.</p>
+    <p><strong>Losning:</strong> sæt kalenderreminder 30 og 60 dage før udløb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. måned.</p>
 
     <h3>3. Leveringsmetode-mapping fejler</h3>
     <p><strong>Hvad sker:</strong> Kunden vælger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
@@ -147,7 +147,7 @@
     </ol>
 
     <h2>SmartPack</h2>
-    <p>SmartPack monitorerer alle integrationsforbindelser aktivt og viser status i administrationspanelet. Ved integrationsfejl logges detaljer med payload og fejlkode. Ordrer der fejler ved import, placeres i manuelt review, de forsvinder aldrig stille. SmartPack advarer om kommende token-udløb (60 dage foer BC client secret udløber) og har built-in retry-logik p&aring; alle webhook- og API-kald.</p>
+    <p>SmartPack monitorerer alle integrationsforbindelser aktivt og viser status i administrationspanelet. Ved integrationsfejl logges detaljer med payload og fejlkode. Ordrer der fejler ved import, placeres i manuelt review, de forsvinder aldrig stille. SmartPack advarer om kommende token-udløb (60 dage før BC client secret udløber) og har built-in retry-logik p&aring; alle webhook- og API-kald.</p>
   </div>
   <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
 <div class="bottom-cta"><p>Vil du undgå stille fejl og token-udløb?</p><a href="../../kontakt" class="btn">Se SmartPacks integration-monitoring</a></div>

@@ -4,15 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webhooks forklaret | SmartPack Viden</title>
+  <title>Webhooks forklaret | SmartPack</title>
   <meta property="og:type" content="article">
   <meta property="og:title" content="Webhooks forklaret">
   <meta property="og:url" content="https://smartpack.dk/viden/tech/webhooks-forklaret">
-  <meta property="og:description" content="Hvad er webhooks? Laer forskellen p&aring; API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.">
+  <meta property="og:description" content="Hvad er webhooks? Lær forskellen p&aring; API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.">
   <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta name="description" content="Hvad er webhooks? Laer forskellen p&aring; API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.">
+  <meta name="description" content="Hvad er webhooks? Lær forskellen p&aring; API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.">
   <link rel="canonical" href="https://smartpack.dk/viden/tech/webhooks-forklaret">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
@@ -103,7 +103,7 @@
     <p>Shopify forventer HTTP 200 inden for 30 sekunder. Overskrides det, anses leveringen som mislykket, og Shopify forsøger retry. Tunge processer bør aldrig ske synkront i webhook-handleren, put jobbet i en koe og returner 200 straks.</p>
 
     <h3>3. HMAC-SHA256 signaturvalidering</h3>
-    <p>Shopify inkluderer en header <code>X-Shopify-Hmac-Sha256</code> med en hash af payload, signeret med dit webhook secret. Du skal validere denne signatur foer du behandler payload. Gør du det ikke, accepterer du potentielt falske requests.</p>
+    <p>Shopify inkluderer en header <code>X-Shopify-Hmac-Sha256</code> med en hash af payload, signeret med dit webhook secret. Du skal validere denne signatur før du behandler payload. Gør du det ikke, accepterer du potentielt falske requests.</p>
 
     <h2>Hvad koster webhook-fejl?</h2>
     <table>
