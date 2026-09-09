@@ -78,12 +78,7 @@
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
       "description": "SmartPack er et dansk WMS. IEX er en dansk integrationsplatform, der forbinder webshops og \u00f8konomisystemer med SmartPack, s\u00e5 ordrer sendes til lageret og lagertal sendes tilbage til shoppen.",
-      "url": "https://smartpack.dk/integrationer/iex",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
-      }
+      "url": "https://smartpack.dk/integrationer/iex"
     },
     {
       "@type": "FAQPage",
@@ -109,7 +104,7 @@
           "name": "Hvem er master p\u00e5 lagertallet?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "SmartPack. Lagertallet skrives fra lageret til shoppen. Det er den rigtige retning, fordi det fysiske lager er sandheden."
+            "text": "Lagersystemet. IEX skriver det direkte: lagersystemet er master for webshoppens lager, og manuelle rettelser i antal skal laves i lagersystemet, hvorefter \u00e6ndringen overf\u00f8res til shoppen."
           }
         },
         {
@@ -117,7 +112,7 @@
           "name": "Hvorn\u00e5r sendes ordren til lageret?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "N\u00e5r den n\u00e5r en status I selv v\u00e6lger i webshoppen. Det er en af de vigtigste beslutninger i ops\u00e6tningen, fordi den afg\u00f8r hvor tidligt lageret kan g\u00e5 i gang."
+            "text": "IEX skriver at ordren overf\u00f8res n\u00e5r den rammer et ordrestadie, der er angivet til overf\u00f8rsel. Hvilket stadie det er, er en af de vigtigste beslutninger i ops\u00e6tningen, fordi den afg\u00f8r hvor tidligt lageret kan g\u00e5 i gang."
           }
         },
         {
@@ -125,7 +120,7 @@
           "name": "Hvad koster det?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Det f\u00e5r I hos IEX. De priss\u00e6tter efter antal systemer, m\u00e5nedlige transaktioner og tilvalg, og feltmapning er et separat modul. SmartPacks API er en del af jeres abonnement."
+            "text": "Det f\u00e5r I hos IEX. De oplyser ikke en fast pris, men beregner den ud fra hvilke systemer I v\u00e6lger og hvor meget der overf\u00f8res om m\u00e5neden, og ops\u00e6tningen ved deres tekniker er en p\u00e5kr\u00e6vet ydelse oveni. Mapping er et selvst\u00e6ndigt modul. De skriver at der er 14 dages gratis pr\u00f8ve."
           }
         },
         {
@@ -143,9 +138,9 @@
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1788943672">
+  <link rel="stylesheet" href="../css/style.css?v=1788959320">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1788943672">
+  <link rel="stylesheet" href="int-page.css?v=1788959320">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>
@@ -182,7 +177,7 @@
         <div class="sp-wms-bridge reveal">
           <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
             <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">IEX styrer opkoblingen</div>
-            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Forbindelsen mellem systemerne<br>Feltmapning og overs&aelig;ttelse<br>Tidsplan for synkronisering<br>Ops&aelig;tning ved en tekniker<br>Support p&aring; selve integrationen</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Forbindelsen mellem systemerne<br>Mapping-modulet som tilvalg<br>Ops&aelig;tning ved deres tekniker<br>Support p&aring; selve integrationen</div>
           </div>
           <div class="sp-wms-bridge-plus"><span>+</span></div>
           <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
@@ -208,22 +203,18 @@
           <div class="sp-flow-arrow">&rsaquo;</div>
           <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#10003;</span><span class="sp-flow-label">Status og lagertal<br>tilbage til shoppen</span></div>
         </div>
-        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Ordren flytter sig, n&aring;r den n&aring;r en status I selv bestemmer i shoppen. N&aring;r den er afsendt fra lageret, kommer status tilbage, s&aring; fakturaen kan lukkes og betalingen h&aelig;ves.</p>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">IEX skriver at ordren overf&oslash;res n&aring;r den rammer et ordrestadie, der er angivet til overf&oslash;rsel. N&aring;r ordren er afsendt, kan der sendes en opdateret ordrestatus tilbage til webshoppen. Hvilke felter der f&oslash;lger med, aftales i ops&aelig;tningen.</p>
         <h2>Hvad synkroniseres automatisk?</h2>
         <div class="sp-sync-cols sp-sync-cols--3 reveal">
           <div class="sp-sync-box"><h3>IEX sender til SmartPack</h3>
             <ul class="sp-sync-list">
-              <li>Ordrer ved valgt status</li>
-              <li>Kunde- og leveringsoplysninger</li>
-              <li>Varelinjer med SKU og antal</li>
-              <li>Valgt leveringsmetode</li>
+              <li>Ordren ved et valgt ordrestadie</li>
+              <li>Klar til pluk og pakning</li>
             </ul></div>
           <div class="sp-sync-box"><h3>SmartPack sender tilbage</h3>
             <ul class="sp-sync-list">
-              <li>Lagertal, hvor lageret er master</li>
-              <li>Status n&aring;r ordren er afsendt</li>
-              <li>Sporingsnummer p&aring; pakken</li>
-              <li>Grundlag for at lukke fakturaen</li>
+              <li>Lagerantal til webshoppen</li>
+              <li>Ordrestatus n&aring;r pakken er afsendt</li>
             </ul></div>
           <div class="sp-sync-box" style="border-color:rgba(62,207,142,.3);background:var(--accent-glow2);">
             <h3 style="color:var(--accent);">IEX kan ogs&aring; koble</h3>
@@ -236,11 +227,11 @@
         </div>
         <h2>Det du skal vide om IEX</h2>
         <div class="sp-feat-grid reveal">
-          <div class="sp-feat"><span class="sp-feat-icon">&#128273;</span><div><strong>Lageret er master p&aring; lagertal</strong><span>IEX s&aelig;tter SmartPack som master. N&aring;r der s&aelig;lges, skrives det nye lagertal til shoppen. Det er den rigtige vej, fordi det fysiske lager er sandheden, ikke shoppen.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#9881;&#65039;</span><div><strong>Ops&aelig;tning ved en tekniker</strong><span>IEX oplyser selv, at ops&aelig;tningen varetages af en IEX-tekniker. I udfylder adgangsformularer, og de aftaler en tidsplan. I skal ikke selv bygge mod vores API.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#128209;</span><div><strong>Feltmapning koster ekstra</strong><span>Skal felter overs&aelig;ttes p&aring; en s&aelig;rlig m&aring;de, har IEX et mapningsmodul, der priss&aelig;ttes separat. Det er v&aelig;rd at afklare, f&oslash;r I regner p&aring; det.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#128176;</span><div><strong>Prisen afh&aelig;nger af volumen</strong><span>IEX priss&aelig;tter efter antal systemer, m&aring;nedlige transaktioner og tilvalg. Der er rabat ved &aring;rlig betaling. Prisen f&aring;r I hos dem, ikke hos os.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#9200;</span><div><strong>Status lukker fakturaen</strong><span>N&aring;r SmartPack melder ordren afsendt, kommer status tilbage til shoppen. Det er det, der g&oslash;r at faktura og betaling kan afsluttes automatisk.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128273;</span><div><strong>Lageret er master p&aring; lagertal</strong><span>IEX skriver selv, at lagersystemet er master for webshoppens lager, og at manuelle opdateringer af antal skal foreg&aring; i lagersystemet, hvorefter &aelig;ndringen overf&oslash;res til webshoppen. Det er den rigtige vej, fordi det fysiske lager er sandheden.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9881;&#65039;</span><div><strong>Ops&aelig;tning ved en tekniker</strong><span>IEX skriver at integrationen p&aring;kr&aelig;ver ops&aelig;tning varetaget af en IEX-tekniker, og at det er en p&aring;kr&aelig;vet ydelse. I skal ikke selv bygge mod vores API.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128209;</span><div><strong>Feltmapning er et modul</strong><span>Skal data tilpasses undervejs, beskriver IEX et Mapping-modul som en udvidelse til at tilpasse dataoverf&oslash;rslen. Det er et tilvalg, s&aring; det er v&aelig;rd at afklare, f&oslash;r I regner p&aring; det.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128176;</span><div><strong>Prisen f&aring;r I hos IEX</strong><span>IEX oplyser ikke en fast pris. Den beregnes i deres eget prisv&aelig;rkt&oslash;j ud fra hvilke systemer der v&aelig;lges og hvor meget der overf&oslash;res om m&aring;neden, og ops&aelig;tningen er en p&aring;kr&aelig;vet ydelse oveni. De skriver ogs&aring; at der er 14 dages gratis pr&oslash;ve.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9200;</span><div><strong>Status tilbage er et tilvalg</strong><span>IEX formulerer det som at der <em>kan</em> sendes en opdateret ordrestatus tilbage, n&aring;r ordren er afsendt. Skal shoppen opdateres automatisk, er det alts&aring; noget der skal aftales i ops&aelig;tningen, ikke noget der f&oslash;lger af sig selv.</span></div></div>
           <div class="sp-feat"><span class="sp-feat-icon">&#128736;&#65039;</span><div><strong>Et alternativ, ikke en erstatning</strong><span>Har vi en direkte integration til jeres shop, er den som regel den korteste vej. IEX er der, hvor en direkte integration ikke findes, eller hvor &oslash;konomisystemet skal med i samme hug.</span></div></div>
         </div>
         <h2 id="hvorn&aring;r">N&aring;r IEX er det rigtige valg, og n&aring;r det ikke er</h2>
@@ -284,15 +275,15 @@
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvem er master p&aring; lagertallet?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">SmartPack. Lagertallet skrives fra lageret til shoppen. Det er den rigtige retning, fordi det fysiske lager er sandheden.</p>
+            <p class="sp-faq-a">Lagersystemet. IEX skriver det direkte: lagersystemet er master for webshoppens lager, og manuelle rettelser i antal skal laves i lagersystemet, hvorefter &aelig;ndringen overf&oslash;res til shoppen.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvorn&aring;r sendes ordren til lageret?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">N&aring;r den n&aring;r en status I selv v&aelig;lger i webshoppen. Det er en af de vigtigste beslutninger i ops&aelig;tningen, fordi den afg&oslash;r hvor tidligt lageret kan g&aring; i gang.</p>
+            <p class="sp-faq-a">IEX skriver at ordren overf&oslash;res n&aring;r den rammer et ordrestadie, der er angivet til overf&oslash;rsel. Hvilket stadie det er, er en af de vigtigste beslutninger i ops&aelig;tningen, fordi den afg&oslash;r hvor tidligt lageret kan g&aring; i gang.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad koster det?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">Det f&aring;r I hos IEX. De priss&aelig;tter efter antal systemer, m&aring;nedlige transaktioner og tilvalg, og feltmapning er et separat modul. SmartPacks API er en del af jeres abonnement.</p>
+            <p class="sp-faq-a">Det f&aring;r I hos IEX. De oplyser ikke en fast pris, men beregner den ud fra hvilke systemer I v&aelig;lger og hvor meget der overf&oslash;res om m&aring;neden, og ops&aelig;tningen ved deres tekniker er en p&aring;kr&aelig;vet ydelse oveni. Mapping er et selvst&aelig;ndigt modul. De skriver at der er 14 dages gratis pr&oslash;ve.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvor fejls&oslash;ger vi, hvis en ordre mangler?</p><span class="sp-faq-toggle">&#9660;</span></div>
