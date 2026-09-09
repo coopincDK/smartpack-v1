@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plukprofiler: styr hvem der plukker hvad | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Plukprofiler: styr hvem der plukker hvad">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/plukprofiler">
+  <meta property="og:description" content="En plukprofil afgør hvilke ordrer en plukker ser, og hvordan plukket foregår. Se matchreglerne, indstillingerne og hvorfor eksklusivitet afgør alt.">
+  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="En plukprofil afgør hvilke ordrer en plukker ser, og hvordan plukket foregår. Se matchreglerne, indstillingerne og hvorfor eksklusivitet afgør alt.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/plukprofiler">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1788968849">
+  <script src="../../js/theme-toggle.js"></script>
+<!-- ================================================================
+     SMARTPACK TRACKING
+================================================================ -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+<nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Plukprofiler</span></nav>
+<header class="article-header"><span class="article-cat-badge">Tech &amp; Integration</span>
+  <h1 class="article-title">Plukprofiler: sådan styrer du hvilke ordrer der bliver plukket hvordan</h1>
+  <div class="article-meta"><time datetime="2026-09-09">9. september 2026</time><span>SmartPack</span></div>
+</header>
+<!-- ARTIKELTYPE: ADVANCED | VINKEL: Ordrer er ikke ens, saa plukket skal ikke vaere ens | HOOK TYPE: Konkret driftsfriktion -->
+<div class="article-body" data-pagefind-body="true">
+
+<p>To plukkere går ud på lageret. Den ene får en ordre på 38 kilo fodervarer. Den anden får en ordre med et halskæde.</p>
+<p>De har fået samme vogn, samme rute og samme flow, fordi de kom fra samme liste.</p>
+<p>Det er ikke plukkerens fejl. Det er en opsætning der behandler alle ordrer som den samme slags arbejde.</p>
+
+<h2>Problemet er ikke plukruten. Det er køen.</h2>
+<p>De fleste lagre optimerer plukruten og stopper der. Men før ruten kommer et valg der betyder mere: <strong>hvilke ordrer hører sammen, og hvordan skal netop de plukkes?</strong></p>
+<p>Ligger den tunge ordre, ekspresordren, enkeltlinjeordren og den med 30 linjer i samme kø, får du fire problemer på én gang. Den tunge kommer på den forkerte vogn. Ekspresordren venter bag ti normale. Enkeltlinjeordren tvinges gennem et flow bygget til store ordrer. Og den store bliver plukket uden den scanning den burde have.</p>
+<p><strong>En plukprofil er svaret på det valg.</strong> Den binder et sæt regler for hvilke ordrer der hører til, sammen med et sæt regler for hvordan de plukkes. Du kan have mange profiler, og systemet vurderer løbende alle aktive ordrer mod alle aktive profiler.</p>
+
+<p class="inline-cta">👉 Vil du se hvordan profilerne ser ud i praksis? <a href="../../kontakt">Kontakt SmartPack</a></p>
+
+<h2>Del 1: hvilke ordrer hører til profilen</h2>
+<p>Det her er matchreglerne. De afgør om en ordre overhovedet dukker op under profilen. En ordre skal opfylde dem alle.</p>
+<table>
+<thead><tr><th>Gruppe</th><th>Hvad du kan sætte</th><th>Bruges typisk til</th></tr></thead>
+<tbody>
+<tr><td><strong>Størrelse</strong></td><td>Min og maks vægt i gram, volumen i cm&sup3;, antal varelinjer, antal styk, antal SKU'er. Maks vægt og volumen på en <em>enkelt</em> vare. Maks plukhøjde i cm.</td><td>Skille tungt fra let, og store ordrer fra enkeltlinjer</td></tr>
+<tr><td><strong>Varen</strong></td><td>Varetags, kategorier og enheder, som inkluder eller ekskluder. Om der kræves stregkode, ingen stregkode, eller om det er lige meget.</td><td>Farligt gods, kølevarer, varer uden stregkode</td></tr>
+<tr><td><strong>Ordren</strong></td><td>Ordretype, leveringsmetode, lande, postnumre, kundenumre, konkrete kunder. Ordrealder i timer, fra og til.</td><td>B2B for sig, eksport for sig, en enkelt storkunde for sig</td></tr>
+<tr><td><strong>Lageret</strong></td><td>Lokationer, afsnit og haller som inkluder eller ekskluder. Opfyldningslokation.</td><td>Zoneopdeling, køl mod tørvarer, flere haller</td></tr>
+<tr><td><strong>Særregler</strong></td><td>Kun prioriterede ordrer. Kræv korrekt kolli-division. Tillad parallelle forsendelser. Ekskluder ordrer der matcher en anden profil.</td><td>Ekspreskø, og at holde profiler fri af hinanden</td></tr>
+</tbody>
+</table>
+<p>Bemærk detaljen med <em>maks vægt på en enkelt vare</em>. Den har en matchtype: skal <strong>alle</strong> varer i ordren være under grænsen, eller er det nok at <strong>mindst én</strong> er? Det er forskellen på "denne ordre kan bæres" og "denne ordre indeholder noget der ikke kan bæres".</p>
+
+<h2>Et designvalg der er værd at kende</h2>
+<p>Størrelsesberegningen bruger de <strong>bestilte</strong> mængder, ikke den aktuelle lagerbeholdning.</p>
+<p>Det lyder som en detalje. Det er det ikke. Brugte systemet lagertal, ville en tung ordre midlertidigt krympe og glide over i den forkerte profil, netop mens en anden plukrunde reserverede lager fra samme vare. Så ville den samme ordre skifte profil frem og tilbage mens folk arbejdede.</p>
+<p>Det er den slags man kun opdager når man har haft to plukkere i gang samtidigt på samme vare.</p>
+
+<h2>Del 2: hvordan plukket foregår</h2>
+<p>Når ordren er landet i en profil, styrer profilen selve arbejdet.</p>
+<h3>Pluklistetypen</h3>
+<ul>
+<li><strong>Standard:</strong> én ordre per plukliste</li>
+<li><strong>Gruppe:</strong> flere ordrer samlet på én liste, plukket vare for vare</li>
+<li><strong>Simpel:</strong> forenklet flow uden manuel bekræftelse</li>
+</ul>
+<p>Dertil et maks for hvor mange ordrer der samles i én liste.</p>
+<h3>Rute og rækkefølge</h3>
+<ul>
+<li>Plukalgoritme og afstandspræference</li>
+<li>Plukprioritet: foretrukken placering, alle på samme lokation, tættest på, eller mindste lagerantal</li>
+<li>Start- og slutlokation for ruten</li>
+<li>Arranger rute efter vare eller efter SKU</li>
+</ul>
+<h3>Scanning og bekræftelse</h3>
+<ul>
+<li>Tving stregkodescanning af varen, så et tryk ikke er nok</li>
+<li>Tving vejning</li>
+<li>Tillad lokationsscanning, scanning af pakkesamling, scanning af plukvogn</li>
+</ul>
+<p>Det er her profiler tjener sig hjem på fejl. Du kan kræve scanning på profilen med de dyre varer og lade den være på profilen med brochurer, i stedet for at vælge én regel for hele lageret.</p>
+<h3>Totes</h3>
+<ul>
+<li>Multi-tote, så én ordre må fordeles på flere bakker</li>
+<li>Automatisk udfyld pakke fra tote</li>
+<li>Gruppepluk med enkelt-scan, eller med fordeling til én tote per ordre</li>
+<li>Tilføj tote-navnet til ordrenummer eller reference</li>
+</ul>
+<h3>Print, og resten</h3>
+<ul>
+<li>Automatisk labelprint, print af alle labels ved afslutning, asynkront print, antal labels efter kolli-størrelse</li>
+<li>Kræv følgeseddel, hurtigpakning, tillad placeringsændring, vis ordrelinjebeskrivelse</li>
+<li>Benchmark for mål om pluk per time</li>
+<li><strong>Tilgængeligheds-tidsplan:</strong> profilen er kun aktiv i bestemte tidsrum</li>
+</ul>
+
+<h2>To indstillinger der lyder ens og gør noget forskelligt</h2>
+<p>Her går folk galt, så det er værd at læse to gange.</p>
+<p><strong>FIFO på vareniveau</strong> afgør hvilken <em>lagerbatch</em> der plukkes fra. Tving FIFO for ældste lager først, tving LIFO for nyeste, eller lad FIFO regne på produktionsdato i stedet for ankomstdato. Der er også en indstilling for at samle pluk fra samme lot.</p>
+<p><strong>Ordre-FIFO</strong> afgør i hvilken rækkefølge ordrer <em>sendes afsted</em> i forhold til hinanden. Den har en rå FIFO-tilstand og tidstolerancer fra 1 til 96 timer.</p>
+<p>Den første handler om varen. Den anden handler om kunden. De to har intet med hinanden at gøre, og de sidder i samme skærmbillede.</p>
+
+<h2>Eksklusiv eller ikke: det afgør alt</h2>
+<p>Systemet vurderer profilerne i prioritetsrækkefølge, og der er kun to tilstande at forstå.</p>
+<ol>
+<li><strong>Eksklusiv profil:</strong> matcher en ordre den, stjæler profilen ordren fra alle lavere prioriterede profiler. Ordren kan kun ligge i én eksklusiv profil ad gangen.</li>
+<li><strong>Ikke-eksklusiv profil:</strong> ordren kan vises i flere profiler samtidigt. De stjæler ikke fra hinanden.</li>
+</ol>
+<p>Prioritetstallet afgør hvem der vinder når flere eksklusive profiler matcher. Sorteringsindekset styrer kun visningsrækkefølgen for de ikke-eksklusive.</p>
+<p>Konkret: en ekspresprofil sat til eksklusiv med høj prioritet, og en normalprofil sat til ikke-eksklusiv. En ekspresordre matcher begge, men forsvinder fra normalprofilen fordi ekspres er eksklusiv og står højere. Plukkeren på normalprofilen ser den ikke, og kan derfor ikke tage den ved en fejl.</p>
+<p>Det er den mekanisme der gør at en ekspreskø faktisk virker, i stedet for at være en liste nogen skal huske at kigge på.</p>
+
+<h2>Tre ting der gør profiler til rod</h2>
+<ol>
+<li><strong>Alt sat til eksklusivt.</strong> Så konkurrerer profilerne om hver ordre, og prioritetstallene bliver det eneste der styrer lageret. Brug eksklusivitet hvor en ordre <em>skal</em> tages ud af den normale kø, ikke som standard.</li>
+<li><strong>Overlappende matchregler uden prioritet.</strong> To profiler der begge tager ordrer på 5 til 15 kilo giver ingen fejlmeddelelse. Den giver bare en ordre der dukker op et andet sted end du regnede med.</li>
+<li><strong>Scanning slået til overalt.</strong> Tvungen scanning på hver profil koster sekunder per linje på varer hvor det ikke reducerer fejl. Det er derfor indstillingen ligger på profilen og ikke på lageret.</li>
+</ol>
+
+<h2>SmartPack og plukprofiler</h2>
+<p>Alt herover er indstillinger i SmartPack, ikke en model for hvordan man kunne bygge det. Profilerne oprettes per kunde, og der er ingen grænse for hvor mange man har.</p>
+<p>Det du skal bruge tid på er ikke opsætningen. Det er at beslutte <strong>hvilke slags arbejde dit lager egentlig har</strong>. De fleste finder tre til fem: normal, tung, ekspres, og noget der kræver særlig behandling. Når først den beslutning er taget, er profilerne en formiddags arbejde.</p>
+<p>Vi sætter dem op sammen med jer under onboarding, og justerer dem når I har kørt med dem i en uge. Det er næsten altid der man opdager at grænsen mellem tung og normal skal flyttes.</p>
+</div>
+<div class="article-disclaimer"><p>Har du spørgsmål til hvordan profiler passer til jeres ordrer? <a href="../../kontakt">Tag en snak med os</a>.</p></div>
+  <div class="bottom-cta"><p>Vil du se hvordan plukprofiler passer til jeres ordrer?</p><a href="../../kontakt" class="btn">Få en uforpligtende gennemgang</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./batch-picking-teknologi" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Batch picking teknologi</span></a>
+    <a href="../problemer/plukruter-er-ineffektive" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Plukruter er ineffektive</span></a>
+    <a href="../fundamentals/hvad-er-zone-picking" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er zone picking?</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvad er en plukprofil?</summary><div class="faq-item__body"><p>En plukprofil er et sæt regler der afgør hvilke ordrer en plukker ser, og hvordan plukket foregår. Den har to dele: matchregler for hvilke ordrer der hører til, og adfærdsindstillinger for pluklistetype, rute, scanning, totes og print.</p></div></details>
+    <details class="faq-item"><summary>Hvor mange profiler skal man have?</summary><div class="faq-item__body"><p>De fleste lagre ender på tre til fem. Typisk en normal, en til tunge ordrer, en ekspres, og en til noget der kræver særlig behandling. Antallet er ikke begrænset, men flere profiler end du har slags arbejde giver kun rod.</p></div></details>
+    <details class="faq-item"><summary>Hvad betyder eksklusiv profil?</summary><div class="faq-item__body"><p>Matcher en ordre en eksklusiv profil, fjernes den fra alle lavere prioriterede profiler. Ordren kan kun ligge i én eksklusiv profil ad gangen. En ikke-eksklusiv profil deler gerne ordren med andre profiler. Det er den mekanisme der gør en ekspreskø til noget der virker af sig selv.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen på FIFO og ordre-FIFO?</summary><div class="faq-item__body"><p>FIFO på vareniveau afgør hvilken lagerbatch der plukkes fra, altså ældste eller nyeste lager, eventuelt regnet på produktionsdato. Ordre-FIFO afgør i hvilken rækkefølge ordrer sendes afsted i forhold til hinanden, med tidstolerancer fra 1 til 96 timer. De to har intet med hinanden at gøre.</p></div></details>
+    <details class="faq-item"><summary>Bruger profilen bestilt antal eller lagerbeholdning?</summary><div class="faq-item__body"><p>Bestilt antal. Det er bevidst. Brugte den lagertal, ville en tung ordre midlertidigt krympe og glide i den forkerte profil netop mens en anden plukrunde reserverede lager fra samme vare.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad er en plukprofil?", "acceptedAnswer": {"@type": "Answer", "text": "En plukprofil er et saet regler der afgoer hvilke ordrer en plukker ser, og hvordan plukket foregaar. Den har matchregler for hvilke ordrer der hoerer til, og adfaerdsindstillinger for pluklistetype, rute, scanning, totes og print."}}, {"@type": "Question", "name": "Hvor mange plukprofiler skal man have?", "acceptedAnswer": {"@type": "Answer", "text": "De fleste lagre ender paa tre til fem: normal, tung, ekspres, og en til saerlig behandling. Antallet er ikke begraenset."}}, {"@type": "Question", "name": "Hvad betyder eksklusiv plukprofil?", "acceptedAnswer": {"@type": "Answer", "text": "Matcher en ordre en eksklusiv profil, fjernes den fra alle lavere prioriterede profiler. En ikke-eksklusiv profil deler gerne ordren med andre profiler."}}, {"@type": "Question", "name": "Hvad er forskellen paa FIFO og ordre-FIFO?", "acceptedAnswer": {"@type": "Answer", "text": "FIFO paa vareniveau afgoer hvilken lagerbatch der plukkes fra. Ordre-FIFO afgoer i hvilken raekkefoelge ordrer sendes afsted, med tidstolerancer fra 1 til 96 timer."}}, {"@type": "Question", "name": "Bruger plukprofilen bestilt antal eller lagerbeholdning?", "acceptedAnswer": {"@type": "Answer", "text": "Bestilt antal. Brugte den lagertal, ville en tung ordre midlertidigt krympe og glide i den forkerte profil mens en anden plukrunde reserverede lager fra samme vare."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Plukprofiler: sådan styrer du hvilke ordrer der bliver plukket hvordan", "datePublished": "2026-09-09", "dateModified": "2026-09-09", "author": {"@type": "Organization", "name": "SmartPack"}, "publisher": {"@type": "Organization", "name": "SmartPack"}, "url": "https://smartpack.dk/viden/tech/plukprofiler", "description": "En plukprofil afgør hvilke ordrer en plukker ser, og hvordan plukket foregår. Se matchreglerne, indstillingerne og hvorfor eksklusivitet afgør alt."}</script>
+</body></html>

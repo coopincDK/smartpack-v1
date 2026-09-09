@@ -1792,6 +1792,20 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   top: .05em;
   font-weight: 700;
 }
+/* Funktionspunkter der peger paa en artikel. Samme farve som teksten,
+   prikket streg som hint. Rigtige links, saa de ogsaa virker paa touch. */
+.fov__list li a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255,255,255,.18);
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+.fov__list li a:hover,
+.fov__list li a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 .fov__footer {
   margin-top: 3.5rem;
   padding-top: 2rem;
