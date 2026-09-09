@@ -82,7 +82,7 @@
       "offers": {
         "@type": "Offer",
         "priceCurrency": "DKK",
-        "description": "Integrationen er inkluderet i SmartPack-abonnementet."
+        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
       }
     },
     {
@@ -117,7 +117,7 @@
           "name": "Kan Herodesk \u00e6ndre noget i SmartPack?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Herodesks AI kan identificere ordre\u00e6ndringer og prioritere eller annullere pakker. Hvad der konkret er sl\u00e5et til, afh\u00e6nger af jeres ops\u00e6tning."
+            "text": "Herodesk lister annull\u00e9r ordre, s\u00e6t p\u00e5 hold og frigiv igen, samt ret leveringsadressen. Deres AI-agent kan selv annullere en ordre og frigive en ordre p\u00e5 hold. Hvad der konkret er sl\u00e5et til, afh\u00e6nger af jeres ops\u00e6tning."
           }
         },
         {
@@ -125,7 +125,7 @@
           "name": "Vises returordrer ogs\u00e5?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ja. Returordrer og reklamationer i SmartPack vises i den relevante ticket."
+            "text": "Forsendelser og tracking vises i ticketen, og det omfatter ogs\u00e5 returforsendelser. Herodesk beskriver ikke reklamationer som et selvst\u00e6ndigt felt, s\u00e5 tag den detalje med dem."
           }
         },
         {
@@ -143,9 +143,9 @@
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1788959403">
+  <link rel="stylesheet" href="../css/style.css?v=1788961147">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1788959403">
+  <link rel="stylesheet" href="int-page.css?v=1788961147">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>
@@ -194,7 +194,7 @@
         <div class="sp-fit-grid reveal">
           <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128172;</span><h3>Kundeservice</h3><p>Til teams der besvarer ordresp&oslash;rgsm&aring;l og skal have svaret hurtigt.</p></div>
           <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#128230;</span><h3>Ordresp&oslash;rgsm&aring;l</h3><p>Hvor er min pakke, hvad mangler der, hvorn&aring;r kommer den.</p></div>
-          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128260;</span><h3>Retur og reklamation</h3><p>Returordrer og reklamationer vises i den relevante ticket.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128260;</span><h3>Returforsendelser med</h3><p>Forsendelser og tracking vises i ticketen, og det g&aelig;lder ogs&aring; returforsendelser.</p></div>
         </div>
         <h2>S&aring;dan flyder en ordre fra Herodesk gennem SmartPack</h2>
         <div class="sp-flow reveal">
@@ -230,16 +230,16 @@
             <ul class="sp-sync-list">
               <li>Se status uden at skifte system</li>
               <li>Svare p&aring; hvorn&aring;r pakken sendes</li>
-              <li>Se retur og reklamation</li>
-              <li>Prioritere eller annullere via Herodesks AI</li>
+              <li>Se returforsendelser</li>
+              <li>Annullere og frigive ordrer via Herodesks AI</li>
             </ul></div>
         </div>
         <h2>Herodesk-specifikke funktioner</h2>
         <div class="sp-feat-grid reveal">
           <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Ordredata i ticketen</strong><span>N&aring;r en kunde skriver, vises ordre-, lager- og sporingsinfo automatisk i Herodesk-ticketen.</span></div></div>
           <div class="sp-feat"><span class="sp-feat-icon">&#9201;</span><div><strong>Realtids ordrestatus</strong><span>Statussen hentes fra SmartPack, s&aring; supporten ser det samme som lageret.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Retur og reklamation</strong><span>Returordrer og reklamationer i SmartPack vises i den relevante ticket.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#129302;</span><div><strong>AI-handlinger</strong><span>Herodesks AI kan identificere ordre&aelig;ndringer og prioritere eller annullere pakker.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128260;</span><div><strong>Returforsendelser med</strong><span>Forsendelser og tracking i ticketen omfatter ogs&aring; returforsendelser.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#129302;</span><div><strong>Handlinger fra ticketen</strong><span>Herodesk lister selv annull&eacute;r ordre, s&aelig;t ordre p&aring; hold og frigiv den igen, samt ret leveringsadressen. Deres AI-agent kan selv annullere en ordre og frigive en ordre der er sat p&aring; hold.</span></div></div>
           <div class="sp-feat"><span class="sp-feat-icon">&#128269;</span><div><strong>Automatisk opslag</strong><span>Widgetten finder kundens ordrer selv, uden at supporten skal s&oslash;ge.</span></div></div>
           <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>F&aelig;rre afbrydelser p&aring; lageret</strong><span>N&aring;r supporten kan svare selv, ringer de ikke ned p&aring; lageret.</span></div></div>
         </div>
@@ -277,11 +277,11 @@
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan Herodesk &aelig;ndre noget i SmartPack?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">Herodesks AI kan identificere ordre&aelig;ndringer og prioritere eller annullere pakker. Hvad der konkret er sl&aring;et til, afh&aelig;nger af jeres ops&aelig;tning.</p>
+            <p class="sp-faq-a">Herodesk lister annull&eacute;r ordre, s&aelig;t p&aring; hold og frigiv igen, samt ret leveringsadressen. Deres AI-agent kan selv annullere en ordre og frigive en ordre p&aring; hold. Hvad der konkret er sl&aring;et til, afh&aelig;nger af jeres ops&aelig;tning.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vises returordrer ogs&aring;?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">Ja. Returordrer og reklamationer i SmartPack vises i den relevante ticket.</p>
+            <p class="sp-faq-a">Forsendelser og tracking vises i ticketen, og det omfatter ogs&aring; returforsendelser. Herodesk beskriver ikke reklamationer som et selvst&aelig;ndigt felt, s&aring; tag den detalje med dem.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Vi mangler et felt i widgetten.</p><span class="sp-faq-toggle">&#9660;</span></div>
