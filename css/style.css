@@ -839,7 +839,9 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
     gap: 2.5rem;
     padding-top: 3rem;
   }
-  .hero { overflow: visible; padding-top: 2rem; }
+  /* 4.5rem + announce-h rydder den fixed header paa 77px. Var 2rem,
+     hvilket lagde eyebrow-pillen 21px inde bag headeren. */
+  .hero { overflow: visible; padding-top: calc(var(--announce-h, 0px) + 4.5rem); }
 
   .hero__inner { padding-top: 1.5rem; }
   .hero__demo-img { max-width: 100%; }
