@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://smartpack.dk/</loc><lastmod>2026-09-08</lastmod><priority>1</priority></url>
   <url><loc>https://smartpack.dk/funktioner</loc><lastmod>2026-09-08</lastmod><priority>0.9</priority></url>
-  <url><loc>https://smartpack.dk/integrationer</loc><lastmod>2026-09-08</lastmod><priority>0.9</priority></url>
+  <url><loc>https://smartpack.dk/integrationer</loc><lastmod>2026-09-09</lastmod><priority>0.9</priority></url>
   <url><loc>https://smartpack.dk/priser</loc><lastmod>2026-09-08</lastmod><priority>0.9</priority></url>
   <url><loc>https://smartpack.dk/simpel-roi</loc><lastmod>2026-09-06</lastmod><priority>0.85</priority></url>
   <url><loc>https://smartpack.dk/udvidet-roi</loc><lastmod>2026-09-07</lastmod><priority>0.8</priority></url>
@@ -24,7 +24,7 @@
   <url><loc>https://smartpack.dk/viden/hardware/oversete-ting-paa-lager</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/pakkebord-flaskehalsen</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/manuel-vs-elektrisk-pallelofter</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
-  <url><loc>https://smartpack.dk/viden/hardware/overemballering-omkostning</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
+  <url><loc>https://smartpack.dk/viden/hardware/overemballering-omkostning</loc><lastmod>2026-09-09</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/pakkestation-setup</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/rullebaner-paa-lager</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/single-vs-multi-order-plukkevogn</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
@@ -69,7 +69,7 @@
   <url><loc>https://smartpack.dk/viden/tech/wms-vs-shopify</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/woocommerce-integration</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/wms-vs-erp</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/wms-vs-excel</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
+  <url><loc>https://smartpack.dk/viden/tech/wms-vs-excel</loc><lastmod>2026-09-09</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/okonomi/fragtforhandling</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/anti-fatigue-maatter</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/hardware/arbejdshoejde-pakkebord</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
@@ -211,7 +211,7 @@
   <url><loc>https://smartpack.dk/viden/tech/hvad-er-wms</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/lager-automatisering-teknologi</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/lager-api-integration</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
-  <url><loc>https://smartpack.dk/viden/tech/herodesk-helpdesk-smartpack</loc><lastmod>2026-05-16</lastmod><priority>0.7</priority></url>
+  <url><loc>https://smartpack.dk/viden/tech/herodesk-helpdesk-smartpack</loc><lastmod>2026-09-09</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/edi-integrationer</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/economic-integration</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
   <url><loc>https://smartpack.dk/viden/tech/fulfillment-sync</loc><lastmod>2026-09-08</lastmod><priority>0.7</priority></url>
@@ -312,7 +312,7 @@
   <url><loc>https://smartpack.dk/cases/den-sidste-flaske</loc><lastmod>2026-09-06</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/cases/sygeplejebutikken</loc><lastmod>2026-09-08</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/cases/skagen-clothing</loc><lastmod>2026-08-13</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/cases/muramura</loc><lastmod>2026-08-13</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/muramura</loc><lastmod>2026-09-09</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/cases/vinhuset</loc><lastmod>2026-09-08</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/cases/uniq-perler</loc><lastmod>2026-09-08</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/cases/totteland</loc><lastmod>2026-09-06</lastmod><priority>0.6</priority></url>
@@ -322,5 +322,5 @@
   <url><loc>https://smartpack.dk/cases/firstgrade</loc><lastmod>2026-09-08</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/cases/luksushund</loc><lastmod>2026-09-08</lastmod><priority>0.6</priority></url>
   <url><loc>https://smartpack.dk/cases/littleunbox</loc><lastmod>2026-09-08</lastmod><priority>0.6</priority></url>
-  <url><loc>https://smartpack.dk/cases/lakuda-batteribyen</loc><lastmod>2026-09-06</lastmod><priority>0.6</priority></url>
+  <url><loc>https://smartpack.dk/cases/lakuda-batteribyen</loc><lastmod>2026-09-09</lastmod><priority>0.6</priority></url>
 </urlset>
