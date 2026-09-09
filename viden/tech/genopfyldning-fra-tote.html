@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genopfyldning fra tote: systemet finder pladsen | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Genopfyldning fra tote: systemet finder pladsen">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/genopfyldning-fra-tote">
+  <meta property="og:description" content="Ved genopfyldning fra tote allokerer SmartPack pladsen selv i fem trin og optimerer ruten. Se kæden, og hvad gangafstand i meter betyder i praksis.">
+  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="Ved genopfyldning fra tote allokerer SmartPack pladsen selv i fem trin og optimerer ruten. Se kæden, og hvad gangafstand i meter betyder i praksis.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/genopfyldning-fra-tote">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1788969176">
+  <script src="../../js/theme-toggle.js"></script>
+<!-- ================================================================
+     SMARTPACK TRACKING
+================================================================ -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+<nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Genopfyldning fra tote</span></nav>
+<header class="article-header"><span class="article-cat-badge">Tech &amp; Integration</span>
+  <h1 class="article-title">Genopfyldning fra tote: sådan finder systemet selv pladsen</h1>
+  <div class="article-meta"><time datetime="2026-09-09">9. september 2026</time><span>SmartPack</span></div>
+</header>
+<!-- ARTIKELTYPE: ADVANCED | VINKEL: Indlagring er ruteoptimering baglaens, og det er der ingen der optimerer | HOOK TYPE: Skjult tidsforbrug -->
+<div class="article-body" data-pagefind-body="true">
+
+<p>Alle optimerer plukruten. Næsten ingen optimerer vejen tilbage.</p>
+<p>Men manden med toten fuld af varer går præcis samme gange som plukkeren. Han går dem bare i tilfældig rækkefølge, fordi ingen har fortalt ham hvor han skal starte.</p>
+<p>Og han går dem ofte to gange, fordi han opdager undervejs at hylden er fuld.</p>
+
+<h2>Hvor genopfyldning taber tid</h2>
+<p>Genopfyldning ser ud som en simpel opgave: tag varerne fra toten, sæt dem på plads. I praksis er der tre beslutninger i hver enkelt vare, og de træffes typisk af en medarbejder der står med toten i hånden.</p>
+<ul>
+<li><strong>Hvor skal varen hen?</strong> Hjemstedet, en plads hvor den allerede ligger, eller et helt nyt sted.</li>
+<li><strong>Er der plads?</strong> Det ved man først når man står der.</li>
+<li><strong>I hvilken rækkefølge?</strong> Uden en rute bliver det den rækkefølge varerne tilfældigt ligger i toten.</li>
+</ul>
+<p>Tre beslutninger gange 40 varer i en tote. Det er ikke fysisk arbejde der koster, det er tvivl.</p>
+
+<p class="inline-cta">👉 Vil du se hvordan ruten regnes i jeres lager? <a href="../../kontakt">Kontakt SmartPack</a></p>
+
+<h2>Allokeringen sker i fem trin</h2>
+<p>Når du opretter en genopfyldningsrute i SmartPack, gennemgår systemet varerne i toten og beslutter for hver af dem hvor de skal hen. Beslutningen følger en fast rækkefølge, og den stopper så snart der er plads til hele den resterende mængde.</p>
+<table>
+<thead><tr><th>Trin</th><th>Systemet forsøger</th><th>Betingelse</th></tr></thead>
+<tbody>
+<tr><td><strong>1</strong></td><td>Varens foretrukne placering, altså hjemstedet</td><td>Skal være den rigtige type plads, og have volumen til mindst én enhed. Er der ikke plads, springes den over og udelukkes fra resten af søgningen</td></tr>
+<tr><td><strong>2</strong></td><td>Pladser hvor varen allerede har et aktivt lagerlot</td><td>Skal have fri volumen til mindst én enhed</td></tr>
+<tr><td><strong>3</strong></td><td>Helt tomme pladser</td><td>Ingen lagerlots overhovedet. Sorteres efter afstand</td></tr>
+<tr><td><strong>4</strong></td><td>Frie pladser, også hvor der ligger andre varer</td><td>Blot fri volumen nok. Sorteres efter afstand</td></tr>
+<tr><td><strong>5</strong></td><td>Ingen plads fundet</td><td>Linjen oprettes alligevel, uden destination. Medarbejderen vælger selv på terminalen</td></tr>
+</tbody>
+</table>
+<p><strong>Trin 3 og 4 er de interessante.</strong> Systemet søger i hele lageret, på tværs af haller og sektioner, og kan foreslå en placering varen aldrig har ligget på. Det eneste der kræves er at pladsen er aktiv på lagertegningen, er den rigtige type, og har fri volumen til mindst én enhed regnet på varens volumen i cm&sup3;.</p>
+<p>Der er ingen binding mellem en vare og en plads der forhindrer det. Hjemstedet er et forslag, ikke en lås.</p>
+
+<h2>Hvad "tættest på" faktisk betyder</h2>
+<p>Det er her de fleste systemer nøjes med at sortere efter placeringsnavn og kalde det nærhed. Gang 3, hylde 4 lyder tæt på gang 3, hylde 5, men er det ikke hvis der står en palletruck imellem.</p>
+<p>SmartPack beregner den <strong>faktiske gangafstand i meter</strong> mellem to lagerenheder med A* pathfinding, altså korteste vej rundt om forhindringer på lagertegningen. Afstandene caches løbende.</p>
+<p>Det afgørende er hvad afstanden måles fra. Systemet regner ikke fra dig til én kandidat. Det regner fra <strong>alle allerede allokerede pladser</strong>, altså startpunktet plus alt der er valgt i denne rute, ud til alle kandidater, og vælger den der ligger tættest på den samlede klump.</p>
+<p>Konsekvensen er at ruten trækker sig sammen mens den bygges. Jo flere pladser der er allokeret, jo bedre kan systemet finde naboer til dem. Det er forskellen på en rute der spreder sig over fire haller og en der bliver i to gange.</p>
+<p>Til sidst køres en TSP-optimering over alle destinationerne, så rækkefølgen giver kortest mulig gåtur. Terminalen viser rutens samlede længde i meter. Det er samme matematik som på <a href="../vaekst/optimer-plukkehastighed">plukruten</a>, brugt modsat vej.</p>
+
+<h2>Plukplads eller bulk: systemet vælger</h2>
+<p>Ikke alt skal på plukpladsen. Systemet vurderer per vare om plukpladsen skal fyldes op, eller om resten skal direkte i bulk. Tre indstillinger styrer det.</p>
+<ol>
+<li><strong>Refill Max</strong> på varen, eventuelt per lokationsnøgle. Det maksimale antal der må ligge på plukpladsen. Har varen allerede nok plukbart lager, sendes resten til en refill-plads.</li>
+<li><strong>Maks antal plukpladser per vare.</strong> Er grænsen nået, går yderligere mængder til bulk.</li>
+<li><strong>Tving alt til refill</strong>, som en valgmulighed når ruten oprettes.</li>
+</ol>
+<p>Det er den mekanisme der holder plukzonen fri af overskud. Uden den ender bestsellerens plukplads med tre måneders lager, og de meter du sparede på ruten taber du på at gå rundt om en fuld hylde.</p>
+
+<h2>Sådan kører du en rute</h2>
+<p>På terminalen, i appen Flyt lager.</p>
+<ol>
+<li>Åbn appen. Du ser totes med indhold og eventuelle igangværende ruter.</li>
+<li>Sæt flueben ved de totes du vil genopfylde fra.</li>
+<li>Opret genopfyldningslisten.</li>
+<li>Vælg en <strong>startplacering</strong>, altså hvor du fysisk står. Den bruges til at beregne rutens rækkefølge.</li>
+<li>Ruten åbner med linjer i formen fra tote til placering.</li>
+</ol>
+<p>Hver linje kan swipes, hvis du vil slette den eller vælge en anden destination. Systemets forslag er et forslag.</p>
+<p><strong>Én faldgrube:</strong> er en tote allerede på en aktiv rute, kan den ikke tilføjes en ny. Systemet afviser det. Toten skal først afsluttes eller fjernes fra den eksisterende rute. Det rammer typisk når to medarbejdere arbejder på samme lager og den ene har oprettet en rute uden at køre den færdig.</p>
+
+<h2>Hvad det betyder i praksis</h2>
+<p>Startplaceringen er den ene beslutning der har uforholdsmæssig stor effekt. Vælger du samme sted hver gang uden at stå der, regner systemet en rute fra et forkert udgangspunkt, og de første linjer sender dig tilbage hvor du kom fra.</p>
+<p>Den anden er hjemstedet. Har varen ingen foretrukken placering, springer systemet direkte til trin 2, og så bygger lageret sig selv efter hvor der tilfældigvis var plads den dag. Det virker, men du mister muligheden for at holde A-varer tæt på pakkebordet.</p>
+<p>Er varerne først spredt, koster det en <a href="../fundamentals/slotting-hvad-koster-det-ikke">slotting-runde</a> at samle dem igen.</p>
+
+<h2>SmartPack og genopfyldning</h2>
+<p>Alt herover er indstillinger og adfærd i SmartPack, ikke en model for hvad man kunne bygge. Afstandsberegningen forudsætter at lageret er tegnet op i Lagerdesigner, for det er tegningen der giver systemet noget at regne på.</p>
+<p>Er lageret ikke tegnet, virker genopfyldning stadig, men trin 3 og 4 falder tilbage på en svagere sortering. Det er den ene forudsætning der er værd at få på plads først.</p>
+</div>
+<div class="article-disclaimer"><p>Vil du vide hvad ruten ville se ud som på jeres lager? <a href="../../kontakt">Tag en snak med os</a>.</p></div>
+  <div class="bottom-cta"><p>Vil du se genopfyldning regnet på jeres eget lagerlayout?</p><a href="../../kontakt" class="btn">Få en uforpligtende gennemgang</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./plukprofiler" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Plukprofiler: styr hvem der plukker hvad</span></a>
+    <a href="../vaekst/optimer-plukkehastighed" class="article-related__item"><span class="article-related__item-cat">Vaekst</span><span class="article-related__item-title">Optimer plukkehastighed</span></a>
+    <a href="../problemer/forkert-vareplacering" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Forkert vareplacering</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Kan systemet foreslå en plads varen aldrig har ligget på?</summary><div class="faq-item__body"><p>Ja. Trin 3 og 4 i allokeringen søger hele lageret for tomme eller frie pladser. Kravene er at pladsen er aktiv på lagertegningen, har den rigtige type, og har fri volumen til mindst én enhed regnet på varens volumen i cm&sup3;.</p></div></details>
+    <details class="faq-item"><summary>Hvad betyder tættest på, teknisk?</summary><div class="faq-item__body"><p>Faktisk gangafstand i meter, beregnet med A* pathfinding rundt om forhindringer på lagertegningen. Afstanden måles fra alle allerede allokerede pladser i ruten til alle kandidater, så ruten trækker sig sammen mens den bygges.</p></div></details>
+    <details class="faq-item"><summary>Hvad hvis der ikke er plads nogen steder?</summary><div class="faq-item__body"><p>Linjen oprettes alligevel, men uden destination. Medarbejderen vælger selv en placering på terminalen. Ruten går altså ikke i stå, du får blot en linje der kræver en beslutning.</p></div></details>
+    <details class="faq-item"><summary>Hvornår ender varen i bulk frem for på plukpladsen?</summary><div class="faq-item__body"><p>Når Refill Max på varen er nået, eller når varen allerede har det maksimale antal plukpladser. Du kan også tvinge alt til refill-pladser når ruten oprettes.</p></div></details>
+    <details class="faq-item"><summary>Kræver det at lageret er tegnet op?</summary><div class="faq-item__body"><p>Til afstandsberegningen, ja. Det er lagertegningen der giver systemet noget at regne gangafstand på. Uden den virker genopfyldning stadig, men trin 3 og 4 falder tilbage på en svagere sortering.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Kan SmartPack foreslaa en plads varen aldrig har ligget paa?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Trin 3 og 4 i allokeringen soeger hele lageret for tomme eller frie pladser. Pladsen skal vaere aktiv paa lagertegningen, have den rigtige type, og have fri volumen til mindst en enhed."}}, {"@type": "Question", "name": "Hvad betyder taettest paa ved genopfyldning?", "acceptedAnswer": {"@type": "Answer", "text": "Faktisk gangafstand i meter, beregnet med A-star pathfinding rundt om forhindringer paa lagertegningen. Afstanden maales fra alle allerede allokerede pladser i ruten til alle kandidater."}}, {"@type": "Question", "name": "Hvad sker der hvis der ikke er plads nogen steder?", "acceptedAnswer": {"@type": "Answer", "text": "Linjen oprettes uden destination, og medarbejderen vaelger selv en placering paa terminalen. Ruten gaar ikke i staa."}}, {"@type": "Question", "name": "Hvornaar ender varen i bulk frem for paa plukpladsen?", "acceptedAnswer": {"@type": "Answer", "text": "Naar Refill Max paa varen er naaet, eller naar varen allerede har det maksimale antal plukpladser. Man kan ogsaa tvinge alt til refill-pladser."}}, {"@type": "Question", "name": "Kraever genopfyldning at lageret er tegnet op?", "acceptedAnswer": {"@type": "Answer", "text": "Til afstandsberegningen ja. Lagertegningen giver systemet noget at regne gangafstand paa. Uden den falder trin 3 og 4 tilbage paa en svagere sortering."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Genopfyldning fra tote: sådan finder systemet selv pladsen", "datePublished": "2026-09-09", "dateModified": "2026-09-09", "author": {"@type": "Organization", "name": "SmartPack"}, "publisher": {"@type": "Organization", "name": "SmartPack"}, "url": "https://smartpack.dk/viden/tech/genopfyldning-fra-tote", "description": "Ved genopfyldning fra tote allokerer SmartPack pladsen selv i fem trin og optimerer ruten. Se kæden, og hvad gangafstand i meter betyder i praksis."}</script>
+</body></html>

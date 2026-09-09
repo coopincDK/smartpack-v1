@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1788968849">
+  <link rel="stylesheet" href="../../css/style.css?v=1788969176">
   <script src="../../js/theme-toggle.js"></script>
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
@@ -108,14 +108,15 @@
   <li>Over 180 picks/time: h&#248;jt specialiseret operation med meget homogene ordrer</li>
 </ul>
 
-<h2>SmartPack: TSM-algoritme og A* pathfinding</h2>
-<p>SmartPack beregner optimale plukruter med TSM-algoritmen (Travelling Salesman Method) og A* pathfinding. Korteste mulige rute p&#229; tv&#230;rs af alle aktive ordrer i en batch beregnes automatisk f&#248;r plukrunden starter.</p>
+<h2>SmartPack: TSP-algoritme og A* pathfinding</h2>
+<p>SmartPack beregner optimale plukruter med TSP-algoritmen (Travelling Salesman Problem) og A* pathfinding. Korteste mulige rute p&#229; tv&#230;rs af alle aktive ordrer i en batch beregnes automatisk f&#248;r plukrunden starter.</p>
 <p>Lagerdesigner-funktionen lader dig tegne dit lager digitalt og teste historiske plukruter mod alternativer. Du kan se n&#248;jagtigt hvor mange meter der spares ved at flytte en A-vare fra gang 5 til gang 1.</p>
-<p>Batch picking konfigureres p&#229; profil-niveau: antal ordrer per batch, max v&#230;gt, max volumen. Systemet sammens&#230;tter optimale batches automatisk baseret p&#229; de regler du s&#230;tter.</p>
+<p>Batch picking konfigureres p&#229; <a href="../tech/plukprofiler">plukprofil-niveau</a>: antal ordrer per batch, max v&#230;gt, max volumen. Systemet sammens&#230;tter optimale batches automatisk baseret p&#229; de regler du s&#230;tter.</p>
   </div>
   <div class="bottom-cta"><p>Vil du vide din nuv&#230;rende picks-per-hour og hvad potentialet er?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
   <div class="article-disclaimer"><p>Benchmarks er vejledende baseret p&#229; dansk og europ&#230;isk e-commerce lagerdrift. Dit resultat afh&#230;nger af produkt-mix, lager-layout og nuv&#230;rende processer.</p></div>
-  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../okonomi/tidsforbrug-lager" class="article-related__item"><span class="article-related__item-cat">&Oslash;konomi</span><span class="article-related__item-title">Tidsforbrug p&#229; lager: hvor forsvinder timerne?</span></a><a href="../okonomi/spare-medarbejdere-wms" class="article-related__item"><span class="article-related__item-cat">&Oslash;konomi</span><span class="article-related__item-title">Hvor mange medarbejdere kan du spare med et WMS?</span></a></div></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../okonomi/tidsforbrug-lager" class="article-related__item"><span class="article-related__item-cat">&Oslash;konomi</span><span class="article-related__item-title">Tidsforbrug p&#229; lager: hvor forsvinder timerne?</span></a><a href="../okonomi/spare-medarbejdere-wms" class="article-related__item"><span class="article-related__item-cat">&Oslash;konomi</span><span class="article-related__item-title">Hvor mange medarbejdere kan du spare med et WMS?</span></a>
+    <a href="../tech/genopfyldning-fra-tote" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Genopfyldning fra tote</span></a></div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&#248;rgsm&#229;l</h2>
     <details class="faq-item"><summary>Hvad er et realistisk picks-per-hour m&#229;l for et e-commerce lager?</summary><div class="faq-item__body"><p>Et ikke-optimeret lager klarer typisk 80-100 picks/time. Med ABC-slotting, batch picking og scanner-vejledning n&#229;r de fleste 140-180. Over 180 kr&#230;ver meget homogene ordrer eller h&#248;jt specialiseret layout.</p></div></details>
     <details class="faq-item"><summary>Hvad er batch picking og hvorn&#229;r giver det mening?</summary><div class="faq-item__body"><p>Batch picking samler 3-5 ordrer i en plukrunde. Det giver 40-60% h&#248;jere effektivitet end enkeltordre-pluk. Det giver bedst mening ved h&#248;j ordrefrekvens med mange ordrer der deler varer. Kr&#230;ver god styring for ikke at blande ordrer.</p></div></details>
