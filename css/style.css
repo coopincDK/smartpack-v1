@@ -3450,7 +3450,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 =========================================== */
 
 /* Hub page */
-.viden-hub { padding: var(--section-py) 0; }
+.viden-hub { padding: max(var(--section-py), calc(var(--announce-h, 0px) + 6rem)) 0; }
 .viden-hub__header { text-align: center; margin-bottom: 3rem; }
 .viden-hub__eyebrow {
   display: inline-block;
@@ -3511,7 +3511,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 .viden-article-card__title { font-size: .95rem; font-weight: 600; color: var(--text-1); line-height: 1.45; }
 
 /* Article page */
-.article-page { padding: var(--section-py) 0; }
+.article-page { padding: max(var(--section-py), calc(var(--announce-h, 0px) + 6rem)) 0; }
 .article-wrap { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
 
 /* Breadcrumb */
@@ -3713,6 +3713,7 @@ html.theme-transition *::after {
 /* ============================================
    KATEGORI INDEX SIDER (viden/kategori/)
    ============================================ */
+.cat-index { padding: max(var(--section-py), calc(var(--announce-h, 0px) + 6rem)) 0; }
 .cat-index__grid {
   display: grid;
   grid-template-columns: 1fr;
