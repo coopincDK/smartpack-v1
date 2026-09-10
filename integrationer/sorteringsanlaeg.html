@@ -36,7 +36,7 @@
   <script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
 
   <title>Sorteringsanl&aelig;g: kobl maskinen til lageret | SmartPack</title>
-  <meta name="description" content="SmartPack finder selv hvilken sorteringszone en pakke h&oslash;rer til: fragtmetode, kunde, land, postnummer. Det svar kan et anl&aelig;g f&aring; over et endpoint.">
+  <meta name="description" content="Pakken f&aring;r zone og pakkesamling automatisk ved pakning, ud fra fragtmetode, kunde, land og postnummer. Det svar kan et anl&aelig;g l&aelig;se over et endpoint.">
   <link rel="canonical" href="https://smartpack.dk/integrationer/sorteringsanlaeg">
 
   <meta property="og:title" content="Sorteringsanl&aelig;g: kobl maskinen til lageret | SmartPack">
@@ -77,7 +77,7 @@
       "name": "SmartPack WMS",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web",
-      "description": "SmartPack har sorteringszoner der automatisk finder den rigtige destination for en pakke ud fra fragtmetode, kunde, land og postnummer, med include- og exclude-regler, prioritet og cutoff-tider. Samme beslutning kan udstilles til et sorteringsanl\u00e6g over et API-endpoint, uafh\u00e6ngigt af fabrikat.",
+      "description": "SmartPack har sorteringszoner der automatisk finder den rigtige destination for en pakke ud fra fragtmetode, kunde, land og postnummer, med include- og exclude-regler, prioritet og cutoff-tider. Ved pakning tilknyttes pakken selv en aaben pakkesamling i den rigtige zone, uden at nogen scanner. Samme beslutning kan udstilles til et sorteringsanlaeg over et API-endpoint, uafhaengigt af fabrikat.",
       "url": "https://smartpack.dk/integrationer/sorteringsanlaeg",
       "offers": {
         "@type": "Offer",
@@ -98,6 +98,22 @@
         },
         {
           "@type": "Question",
+          "name": "Skal nogen scanne pakken for at sorteringen virker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej, ikke n\u00f8dvendigvis. N\u00e5r pakken lukkes ved pakkebordet, finder systemet selv en \u00e5ben pakkesamling i den rigtige sorteringszone og l\u00e6gger pakken i. Der er ogs\u00e5 en indstilling per leveringsmetode for om scanning af pakkesamlingen skal v\u00e6re p\u00e5kr\u00e6vet. Terminalens Scan to Pallet er til den manuelle proces efter pakning."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "G\u00e6lder automatikken ogs\u00e5 returpakker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. Pakker med en returleveringsmetode springes over, s\u00e5 de f\u00e5r ikke en pakkesamling ad den vej. Skal retur ogs\u00e5 over anl\u00e6gget, er det en selvst\u00e6ndig snak. Vi siger det hellere nu end n\u00e5r anl\u00e6gget st\u00e5r p\u00e5 gulvet."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "Hvad koster integrationen l\u00f8bende?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -109,7 +125,7 @@
           "name": "Kan vi sortere uden et anl\u00e6g?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Ja, og det er s\u00e5dan de fleste g\u00f8r. Pakkeren scanner pakken p\u00e5 terminalen og f\u00e5r at vide hvilken sorteringszone og pakkesamling den h\u00f8rer til. Det er den samme logik, bare med et menneske i stedet for en maskine."
+            "text": "Ja, og det er s\u00e5dan de fleste g\u00f8r. Pakken f\u00e5r sin sorteringszone og pakkesamling automatisk ved pakning, og pakkeren kan bekr\u00e6fte den ind p\u00e5 terminalen hvis I vil have scanningen med. Det er den samme logik, bare uden en maskine til at flytte kassen."
           }
         },
         {
@@ -125,7 +141,7 @@
           "name": "Hvad hvis anl\u00e6gget st\u00e5r stille?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "S\u00e5 tager en pakker beslutningen p\u00e5 terminalen. Sorteringszonerne er en del af SmartPack og virker uafh\u00e6ngigt af om der st\u00e5r en maskine. Det er ogs\u00e5 derfor vi anbefaler at k\u00f8re flowet i h\u00e5nden f\u00f8rst."
+            "text": "S\u00e5 overtager en pakker den fysiske sortering p\u00e5 terminalen. Sorteringszonerne og pakkesamlingerne er en del af SmartPack og virker uafh\u00e6ngigt af om der st\u00e5r en maskine. Registreringen bliver den samme, det er kun h\u00e6nderne der skifter. Derfor anbefaler vi ogs\u00e5 at k\u00f8re sorteringen uden anl\u00e6g f\u00f8rst."
           }
         },
         {
@@ -133,7 +149,7 @@
           "name": "Kan anl\u00e6gget skrive tilbage til SmartPack?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Det afh\u00e6nger af hvad anl\u00e6gget kan, og det er en af de ting vi tager stilling til i ops\u00e6tningen. Vi lover ikke en returvej vi ikke har set anl\u00e6gget levere. F\u00e5 sorteringen rigtig f\u00f8rst, og tag resten derfra."
+            "text": "Registreringen i SmartPack afh\u00e6nger ikke af det. Pakken har f\u00e5et sin sorteringszone og sin pakkesamling ved pakning, uanset om der st\u00e5r en maskine. Det en returvej ville tilf\u00f8je, er en bekr\u00e6ftelse p\u00e5 at anl\u00e6gget faktisk lagde kassen i den rigtige bane. Om anl\u00e6gget kan det, afh\u00e6nger af anl\u00e6gget, og det tager vi stilling til i ops\u00e6tningen. Vi lover ikke en returvej vi ikke har set virke."
           }
         }
       ]
@@ -143,9 +159,9 @@
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789042426">
+  <link rel="stylesheet" href="../css/style.css?v=1789045957">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789042426">
+  <link rel="stylesheet" href="int-page.css?v=1789045957">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>
@@ -164,7 +180,7 @@
       <div class="int-page__hero-content">
         <div class="int-page__cat">Sorteringsanl&aelig;g &middot; Automatisering</div>
         <h1 class="int-page__title">Kobl jeres <span>sorteringsanl&aelig;g</span> til lageret</h1>
-        <p class="int-page__intro"><strong>Anl&aelig;gget skal ikke kende jeres lager. Det skal have svar p&aring; &eacute;t sp&oslash;rgsm&aring;l: hvor skal denne pakke hen?</strong><br><br>SmartPack tager allerede den beslutning. N&aring;r en pakke er pakket og har f&aring;et fragtlabel, finder systemet selv den sorteringszone pakken h&oslash;rer til, ud fra fragtmetode, kunde, land og postnummer. I dag l&aelig;ser en pakker svaret p&aring; terminalen.<br><br>Derfor betyder det mindre hvilket anl&aelig;g I har k&oslash;bt. Vi udstiller de felter en sortering skal bygge p&aring;, og den der konfigurerer anl&aelig;gget l&aelig;ser dem. Vi binder os ikke til et fabrikat, og I skal ikke v&aelig;lge anl&aelig;g efter hvad vores WMS underst&oslash;tter.</p>
+        <p class="int-page__intro"><strong>Anl&aelig;gget skal ikke kende jeres lager. Det skal have svar p&aring; &eacute;t sp&oslash;rgsm&aring;l: hvor skal denne pakke hen?</strong><br><br>SmartPack tager allerede den beslutning, og den bliver taget n&aring;r ordren lukkes. Systemet finder selv den sorteringszone pakken h&oslash;rer til, ud fra fragtmetode, kunde, land og postnummer, og l&aelig;gger den i en &aring;ben pakkesamling i den zone. Det sker i backend, s&aring; det g&aelig;lder ogs&aring; n&aring;r ordren er lukket af en pakkemaskine eller over API, ikke kun n&aring;r en pakker trykker f&aelig;rdig p&aring; terminalen.<br><br>Derfor er sortering et selvst&aelig;ndigt trin. Ordren er lukket, og pakken ved hvor den skal hen, inden den bliver stillet p&aring; b&aring;ndet. Anl&aelig;gget skal l&aelig;se svaret og flytte kassen. I kan s&aelig;tte et anl&aelig;g p&aring; uden at bygge om p&aring; pakkeflowet, og I skal ikke v&aelig;lge anl&aelig;g efter hvad et WMS underst&oslash;tter.</p>
         <div class="int-page__cta-row">
           <a href="../kontakt" class="btn btn--primary">Se det i jeres setup &rarr;</a>
           <a href="../priser" class="btn btn--ghost">Se priser</a>
@@ -174,7 +190,7 @@
     </div>
     <div class="sp-stats reveal">
       <div class="sp-stat"><span class="sp-stat-val">4 felter</span><span class="sp-stat-label">Fragtmetode, kunde, land og postnummer afg&oslash;r zonen</span></div>
-      <div class="sp-stat"><span class="sp-stat-val">Prioriteret</span><span class="sp-stat-label">Matcher en pakke flere zoner, vinder den med h&oslash;jest prioritet</span></div>
+      <div class="sp-stat"><span class="sp-stat-val">Ved ordrelukning</span><span class="sp-stat-label">Zone og samling s&aelig;ttes i backend, uanset hvem der lukker</span></div>
       <div class="sp-stat"><span class="sp-stat-val">0 kr.</span><span class="sp-stat-label">Intet l&oslash;bende for maskiner og systemer I kobler p&aring;</span></div>
     </div>
     <div class="int-page__body">
@@ -182,7 +198,7 @@
         <div class="sp-wms-bridge reveal">
           <div style="background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
             <div style="font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:.6rem;">Anl&aelig;gget skal bare vide</div>
-            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Hvilken pakke der er scannet<br>Hvilken destination den h&oslash;rer til<br>Om zonen har en deadline</div>
+            <div style="font-size:.85rem;color:var(--text-2);line-height:1.9;">Hvilken pakke der er scannet<br>Hvilken bane den h&oslash;rer til<br>Om samlingen er lukket</div>
           </div>
           <div class="sp-wms-bridge-plus"><span>+</span></div>
           <div style="background:var(--accent-glow2);border:1px solid rgba(62,207,142,.3);border-radius:12px;padding:1.25rem 1.5rem;">
@@ -192,23 +208,23 @@
         </div>
         <h2>Passer til jer hvis en af de her ting g&aelig;lder</h2>
         <div class="sp-fit-grid reveal">
-          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128230;</span><h3>I sorterer i h&aring;nden i dag</h3><p>Pakkerne bliver scannet og stillet i den rigtige bunke af et menneske. Det virker, men det er et led der kan g&aring; galt n&aring;r der er travlt, og det skalerer kun med flere h&aelig;nder.</p></div>
+          <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128230;</span><h3>I sorterer i h&aring;nden i dag</h3><p>Pakkeren bekr&aelig;fter pakken ind i den rigtige samling p&aring; terminalen og stiller den i bunken. Det virker, men det er en scanning og en beslutning per pakke, og det skalerer kun med flere h&aelig;nder.</p></div>
           <div class="sp-fit-card sp-fit-card--active"><span class="sp-fit-card-icon">&#127981;</span><h3>I har k&oslash;bt et anl&aelig;g der skal have data</h3><p>Anl&aelig;gget kan scanne og skubbe. Det ved bare ikke hvad der er i pakken, eller hvor den skal hen. Det er det stykke vi svarer p&aring;.</p></div>
           <div class="sp-fit-card"><span class="sp-fit-card-icon">&#128290;</span><h3>I har mange fragtmetoder og lande</h3><p>Er der tre destinationer, kan man huske dem. Er der tredive, og skifter de med cutoff-tider, lande og postnumre, er det ikke l&aelig;ngere noget man holder i hovedet.</p></div>
         </div>
         <h2>S&aring;dan kommer en pakke gennem sorteringen</h2>
         <div class="sp-flow reveal">
-          <div class="sp-flow-step"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pakket og<br>label sat</span></div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128230;</span><span class="sp-flow-label">Pakke lukkes,<br>zone fundet</span></div>
           <div class="sp-flow-arrow">&rsaquo;</div>
-          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128269;</span><span class="sp-flow-label">Anl&aelig;gget<br>scanner</span></div>
+          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Samling valgt<br>automatisk</span></div>
           <div class="sp-flow-arrow">&rsaquo;</div>
-          <div class="sp-flow-step sp-flow-step--accent"><span class="sp-flow-icon">&#128225;</span><span class="sp-flow-label">Sl&aring;r op<br>i SmartPack</span></div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128269;</span><span class="sp-flow-label">Anl&aelig;gget<br>scanner</span></div>
           <div class="sp-flow-arrow">&rsaquo;</div>
           <div class="sp-flow-step"><span class="sp-flow-icon">&#11015;&#65039;</span><span class="sp-flow-label">Ud i den<br>rigtige bane</span></div>
           <div class="sp-flow-arrow">&rsaquo;</div>
-          <div class="sp-flow-step"><span class="sp-flow-icon">&#128203;</span><span class="sp-flow-label">Pakkesamling<br>lukkes</span></div>
+          <div class="sp-flow-step"><span class="sp-flow-icon">&#128274;</span><span class="sp-flow-label">Samling<br>lukkes</span></div>
         </div>
-        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">Opslaget er det samme som terminalen laver i dag. G&aring;r anl&aelig;gget i st&aring;, tager en pakker den samme beslutning p&aring; terminalen, og flowet k&oslash;rer videre i h&aring;nden.</p>
+        <p style="font-size:.78rem;color:var(--text-3);margin:.5rem 0 2rem;">De to f&oslash;rste trin er taget f&oslash;r anl&aelig;gget ser pakken, og de sker uanset om ordren blev lukket i h&aring;nden eller af en pakkemaskine. Derfor kan I s&aelig;tte et anl&aelig;g p&aring; uden at bygge om p&aring; pakkeflowet. G&aring;r anl&aelig;gget i st&aring;, overtager en pakker den fysiske sortering p&aring; terminalen.</p>
         <h2>Hvem bestemmer hvad</h2>
         <div class="sp-sync-cols sp-sync-cols--3 reveal">
           <div class="sp-sync-box"><h3>Det kan anl&aelig;gget l&aelig;se</h3>
@@ -223,9 +239,9 @@
           <div class="sp-sync-box"><h3>Det bestemmer SmartPack</h3>
             <ul class="sp-sync-list">
               <li>Hvilken zone en pakke matcher</li>
+              <li>Hvilken samling den lander i</li>
               <li>R&aelig;kkef&oslash;lgen n&aring;r flere matcher</li>
               <li>Hvad der sker uden match</li>
-              <li>Hvorn&aring;r en pakkesamling lukkes</li>
               <li>Hvad der st&aring;r p&aring; fragtlabelen</li>
               <li>Hvad der meldes til webshoppen</li>
             </ul></div>
@@ -233,9 +249,9 @@
             <h3 style="color:var(--accent);">Det aftaler vi i ops&aelig;tningen</h3>
             <ul class="sp-sync-list">
               <li>Hvilke felter anl&aelig;gget f&aring;r,</li>
-              <li>og om det l&aelig;ser vores zone</li>
-              <li>eller selv regner p&aring; felterne.</li>
-              <li>Begge veje kan bygges.</li>
+              <li>og i hvilket format.</li>
+              <li>Om det melder tilbage at</li>
+              <li>kassen landede rigtigt.</li>
               <li>Det afh&aelig;nger af hvad anl&aelig;gget</li>
               <li>kan konfigureres til.</li>
             </ul></div>
@@ -245,9 +261,10 @@
           <div class="sp-feat"><span class="sp-feat-icon">&#127919;</span><div><strong>Zonen findes automatisk</strong><span>N&aring;r en pakke har f&aring;et fragtlabel, finder SmartPack selv den sorteringszone den h&oslash;rer til. Beslutningen bygger p&aring; fragtmetode, kunde, land og postnummer. I skal ikke s&aelig;tte et m&aelig;rke p&aring; pakken manuelt.</span></div></div>
           <div class="sp-feat"><span class="sp-feat-icon">&#128203;</span><div><strong>Include og exclude, med prioritet</strong><span>Zonerne s&aelig;ttes op med regler der b&aring;de kan tage noget med og holde noget ude, p&aring; alle fire parametre. Matcher en pakke flere zoner, vinder den med h&oslash;jest prioritet. Det er den samme r&aelig;kkef&oslash;lge hver gang.</span></div></div>
           <div class="sp-feat"><span class="sp-feat-icon">&#10071;</span><div><strong>Ingen pakker forsvinder</strong><span>Matcher en pakke ingen zone, ryger den ikke ud i ingenting. Den lander i en Unsorted-zone som systemet selv opretter, s&aring; den kan findes og h&aring;ndteres, i stedet for at blive opdaget p&aring; gulvet dagen efter.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Pakkesamlinger, ikke l&oslash;se pakker</strong><span>Inde i en zone samles pakkerne i pakkesamlinger, det I sandsynligvis kalder en palle eller en vogn. De kan &aring;bnes, lukkes og gen&aring;bnes, og der kan printes en label til samlingen.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#9889;</span><div><strong>Samlingen s&aelig;ttes i backend, ikke i terminalen</strong><span>Tilknytningen ligger i den centrale metode der lukker en pakke. Derfor g&aelig;lder den ogs&aring; n&aring;r ordren bliver lukket af en pakkemaskine eller over API, ikke kun n&aring;r en pakker trykker f&aelig;rdig p&aring; terminalen. Har pakken allerede en samling, r&oslash;rer systemet den ikke.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128683;</span><div><strong>Forkert bane bliver afvist</strong><span>En pakke kan ikke l&aelig;gges i en samling der h&oslash;rer til en anden sorteringszone. Fors&oslash;get fejler i stedet for at g&aring; igennem. En samling der allerede er sat p&aring; et fragtbrev kan heller ikke f&aring; flere pakker.</span></div></div>
           <div class="sp-feat"><span class="sp-feat-icon">&#9200;</span><div><strong>Deadlines og cutoff</strong><span>En zone kan have en cutoff-tid, s&aring; den lukker i tid til en bestemt afhentning. Det er ogs&aring; den information et anl&aelig;g skal have, hvis det skal vide hvorn&aring;r en bane senest skal v&aelig;re t&oslash;mt.</span></div></div>
-          <div class="sp-feat"><span class="sp-feat-icon">&#128273;</span><div><strong>Adgangen er jeres egen, og gratis</strong><span>N&oslash;glerne opretter I selv under Indstillinger, Apps og Integrationer. Vi tager intet l&oslash;bende for en app, for antallet af apps, eller for de maskiner og systemer I kobler p&aring;.</span></div></div>
+          <div class="sp-feat"><span class="sp-feat-icon">&#128230;</span><div><strong>Pakkesamlinger, ikke l&oslash;se pakker</strong><span>Inde i en zone samles pakkerne i pakkesamlinger, det I sandsynligvis kalder en palle eller en vogn. De kan &aring;bnes, lukkes og gen&aring;bnes, og der printes en palle-label til samlingen.</span></div></div>
         </div>
         <h2 id="fabrikat">Hvorfor vi ikke sp&oslash;rger hvilket anl&aelig;g I har k&oslash;bt</h2>
         <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.2rem;">De fleste integrationer p&aring; det her site har et navn. Den her har ikke, og det er med vilje. Et sorteringsanl&aelig;g er mekanik, en scanner og nogle baner. Det interessante er ikke m&aelig;rket p&aring; siden, men om det kan konfigureres til at sp&oslash;rge om vejen.</p>
@@ -263,7 +280,7 @@
           <div class="sp-step"><div class="sp-step-num">1</div><div class="sp-step-body"><strong>Fort&aelig;l hvad anl&aelig;gget skal sortere efter</strong><p>Fragtmetode, land, postnummer, kunde, eller en kombination. Det er den samme logik sorteringszonerne bruger, s&aring; vi kan s&aelig;tte det op i systemet f&oslash;r anl&aelig;gget st&aring;r p&aring; gulvet.</p></div></div>
           <div class="sp-step"><div class="sp-step-num">2</div><div class="sp-step-body"><strong>S&aelig;t sorteringszonerne op</strong><p>En zone per bane eller destination, med include- og exclude-regler og en prioritet. Zonen kan f&aring; en cutoff-tid, hvis banen skal v&aelig;re t&oslash;mt til en bestemt afhentning.</p></div></div>
           <div class="sp-step"><div class="sp-step-num">3</div><div class="sp-step-body"><strong>Aftal endpointet med den der s&aelig;tter anl&aelig;gget op</strong><p>Vi gennemg&aring;r hvilke felter anl&aelig;gget skal have, og i hvilket format. Det er typisk et m&oslash;de med integratoren, ikke et forprojekt.</p></div></div>
-          <div class="sp-step"><div class="sp-step-num">4</div><div class="sp-step-body"><strong>K&oslash;r flowet i h&aring;nden f&oslash;rst</strong><p>Terminalen laver det samme opslag som anl&aelig;gget skal lave. K&oslash;r en dag p&aring; terminalen, se om zonerne rammer rigtigt, og s&aelig;t s&aring; anl&aelig;gget p&aring; bagefter. S&aring; fejls&oslash;ger I logikken f&oslash;r mekanikken.</p></div></div>
+          <div class="sp-step"><div class="sp-step-num">4</div><div class="sp-step-body"><strong>K&oslash;r sorteringen uden anl&aelig;g f&oslash;rst</strong><p>Zonerne virker allerede uden en maskine. Lad dem k&oslash;re et par dage, se om pakkerne lander i de rigtige samlinger, og s&aelig;t s&aring; anl&aelig;gget p&aring; bagefter. S&aring; fejls&oslash;ger I logikken f&oslash;r mekanikken.</p></div></div>
         </div>
         <div class="sp-faq">
           <h2>Sp&oslash;rgsm&aring;l og svar</h2>
@@ -272,12 +289,20 @@
             <p class="sp-faq-a">Vi binder os ikke til et fabrikat. Kan anl&aelig;gget kalde et endpoint efter det har scannet en pakke, kan det f&aring; svar fra SmartPack. Hvilke felter der skal med, aftaler vi sammen med den der konfigurerer anl&aelig;gget.</p>
           </div>
           <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Skal nogen scanne pakken for at sorteringen virker?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej, ikke n&oslash;dvendigvis. N&aring;r pakken lukkes ved pakkebordet, finder systemet selv en &aring;ben pakkesamling i den rigtige sorteringszone og l&aelig;gger pakken i. Der er ogs&aring; en indstilling per leveringsmetode for om scanning af pakkesamlingen skal v&aelig;re p&aring;kr&aelig;vet. Terminalens Scan to Pallet er til den manuelle proces efter pakning.</p>
+          </div>
+          <div class="sp-faq-item">
+            <div class="sp-faq-q" onclick="toggleFaq(this)"><p>G&aelig;lder automatikken ogs&aring; returpakker?</p><span class="sp-faq-toggle">&#9660;</span></div>
+            <p class="sp-faq-a">Nej. Pakker med en returleveringsmetode springes over, s&aring; de f&aring;r ikke en pakkesamling ad den vej. Skal retur ogs&aring; over anl&aelig;gget, er det en selvst&aelig;ndig snak. Vi siger det hellere nu end n&aring;r anl&aelig;gget st&aring;r p&aring; gulvet.</p>
+          </div>
+          <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad koster integrationen l&oslash;bende?</p><span class="sp-faq-toggle">&#9660;</span></div>
             <p class="sp-faq-a">Ingenting. Vi opkr&aelig;ver ikke gebyr for apps, private apps eller for de maskiner, computere og systemer I kobler p&aring;. Skal vi bygge noget ud over at udstille et endpoint, aftaler vi det separat.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan vi sortere uden et anl&aelig;g?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">Ja, og det er s&aring;dan de fleste g&oslash;r. Pakkeren scanner pakken p&aring; terminalen og f&aring;r at vide hvilken sorteringszone og pakkesamling den h&oslash;rer til. Det er den samme logik, bare med et menneske i stedet for en maskine.</p>
+            <p class="sp-faq-a">Ja, og det er s&aring;dan de fleste g&oslash;r. Pakken f&aring;r sin sorteringszone og pakkesamling automatisk ved pakning, og pakkeren kan bekr&aelig;fte den ind p&aring; terminalen hvis I vil have scanningen med. Det er den samme logik, bare uden en maskine til at flytte kassen.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad sker der med en pakke der ikke passer i nogen bane?</p><span class="sp-faq-toggle">&#9660;</span></div>
@@ -285,11 +310,11 @@
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Hvad hvis anl&aelig;gget st&aring;r stille?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">S&aring; tager en pakker beslutningen p&aring; terminalen. Sorteringszonerne er en del af SmartPack og virker uafh&aelig;ngigt af om der st&aring;r en maskine. Det er ogs&aring; derfor vi anbefaler at k&oslash;re flowet i h&aring;nden f&oslash;rst.</p>
+            <p class="sp-faq-a">S&aring; overtager en pakker den fysiske sortering p&aring; terminalen. Sorteringszonerne og pakkesamlingerne er en del af SmartPack og virker uafh&aelig;ngigt af om der st&aring;r en maskine. Registreringen bliver den samme, det er kun h&aelig;nderne der skifter. Derfor anbefaler vi ogs&aring; at k&oslash;re sorteringen uden anl&aelig;g f&oslash;rst.</p>
           </div>
           <div class="sp-faq-item">
             <div class="sp-faq-q" onclick="toggleFaq(this)"><p>Kan anl&aelig;gget skrive tilbage til SmartPack?</p><span class="sp-faq-toggle">&#9660;</span></div>
-            <p class="sp-faq-a">Det afh&aelig;nger af hvad anl&aelig;gget kan, og det er en af de ting vi tager stilling til i ops&aelig;tningen. Vi lover ikke en returvej vi ikke har set anl&aelig;gget levere. F&aring; sorteringen rigtig f&oslash;rst, og tag resten derfra.</p>
+            <p class="sp-faq-a">Registreringen i SmartPack afh&aelig;nger ikke af det. Pakken har f&aring;et sin sorteringszone og sin pakkesamling ved pakning, uanset om der st&aring;r en maskine. Det en returvej ville tilf&oslash;je, er en bekr&aelig;ftelse p&aring; at anl&aelig;gget faktisk lagde kassen i den rigtige bane. Om anl&aelig;gget kan det, afh&aelig;nger af anl&aelig;gget, og det tager vi stilling til i ops&aelig;tningen. Vi lover ikke en returvej vi ikke har set virke.</p>
           </div>
         </div>
         <div class="sp-bottom-cta reveal">
