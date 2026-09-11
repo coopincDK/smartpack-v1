@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789045957">
+  <link rel="stylesheet" href="../../css/style.css?v=1789133033">
   <script src="../../js/theme-toggle.js"></script>
 <!-- ================================================================
      SMARTPACK TRACKING
@@ -126,21 +126,44 @@
 <p>Den første handler om varen. Den anden handler om kunden. De to har intet med hinanden at gøre, og de sidder i samme skærmbillede.</p>
 
 <h2>Eksklusiv eller ikke: det afgør alt</h2>
-<p>Systemet vurderer profilerne i prioritetsrækkefølge, og der er kun to tilstande at forstå.</p>
+<p>Der er kun to tilstande at forstå, og forskellen på dem afgør om en ekspreskø virker.</p>
 <ol>
 <li><strong>Eksklusiv profil:</strong> matcher en ordre den, stjæler profilen ordren fra alle lavere prioriterede profiler. Ordren kan kun ligge i én eksklusiv profil ad gangen.</li>
 <li><strong>Ikke-eksklusiv profil:</strong> ordren kan vises i flere profiler samtidigt. De stjæler ikke fra hinanden.</li>
 </ol>
-<p>Prioritetstallet afgør hvem der vinder når flere eksklusive profiler matcher. Sorteringsindekset styrer kun visningsrækkefølgen for de ikke-eksklusive.</p>
+<p>Prioritetstallet er hierarkiet <em>for de eksklusive</em> profiler. Det afgør hvem der vinder når flere eksklusive matcher. Sorteringsindekset er noget andet: det styrer rækkefølgen profilerne står i på håndterminalen.</p>
 <p>Konkret: en ekspresprofil sat til eksklusiv med høj prioritet, og en normalprofil sat til ikke-eksklusiv. En ekspresordre matcher begge, men forsvinder fra normalprofilen fordi ekspres er eksklusiv og står højere. Plukkeren på normalprofilen ser den ikke, og kan derfor ikke tage den ved en fejl.</p>
 <p>Det er den mekanisme der gør at en ekspreskø faktisk virker, i stedet for at være en liste nogen skal huske at kigge på.</p>
+
+<h2>Byg dem som en tragt: specifikt før generelt</h2>
+<p>Rækkefølgen er ikke en detalje, den er arkitekturen. En robust opsætning ser sådan ud:</p>
+<ol>
+<li><strong>Specifikke profiler først.</strong> Enkeltlinjeordrer, afhentning, den ene storkunde. De tager den type ordre de er bygget til, og de er typisk eksklusive.</li>
+<li><strong>Den brede normalprofil derefter.</strong> Den tager alt det almindelige arbejde.</li>
+<li><strong>En bred kontrolprofil nederst.</strong> Ikke til normaldrift. Den er sikkerhedsnettet der viser de ordrer som ellers ville falde mellem profilerne.</li>
+</ol>
+<p>Kontrolprofilen er den de fleste glemmer, og den der gør mest. Uden den har du ingen måde at se en ordre der ikke matcher noget. Med den kan du kigge én gang om ugen og opdage at grænsen mellem to profiler har et hul.</p>
+
+<h2>Test før du aktiverer, med tre ordrer</h2>
+<p>En ny eller ændret profil skal prøves med tre konkrete ordrer, ikke med én:</p>
+<ol>
+<li><strong>En ordre der skal med.</strong> Bekræfter at profilen fanger den rigtige type.</li>
+<li><strong>En ordre der ikke skal med.</strong> Bekræfter at profilen ikke er blevet for bred. Det er den halvdel folk springer over.</li>
+<li><strong>Et grænsetilfælde.</strong> En ordre lige på grænsen i vægt, alder, linjer eller kategori.</li>
+</ol>
+<p>Og så det vigtigste: et grønt svar i systemet er ikke en godkendelse. Kør et lille fysisk run og se om håndterminal, vogn, scanning, pakning og label også opfører sig som ventet. Systemmatch er kun det første af fem lag.</p>
 
 <h2>Tre ting der gør profiler til rod</h2>
 <ol>
 <li><strong>Alt sat til eksklusivt.</strong> Så konkurrerer profilerne om hver ordre, og prioritetstallene bliver det eneste der styrer lageret. Brug eksklusivitet hvor en ordre <em>skal</em> tages ud af den normale kø, ikke som standard.</li>
 <li><strong>Overlappende matchregler uden prioritet.</strong> To profiler der begge tager ordrer på 5 til 15 kilo giver ingen fejlmeddelelse. Den giver bare en ordre der dukker op et andet sted end du regnede med.</li>
+<li><strong>Ingen kontrolprofil.</strong> Uden et bredt sikkerhedsnet nederst bliver en ordre der ikke matcher noget usynlig. Den bliver ikke fejlmeldt, den bliver bare ikke plukket.</li>
 <li><strong>Scanning slået til overalt.</strong> Tvungen scanning på hver profil koster sekunder per linje på varer hvor det ikke reducerer fejl. Det er derfor indstillingen ligger på profilen og ikke på lageret.</li>
 </ol>
+
+<h2>Profilen siger hvad og hvordan. Zonen siger hvornår</h2>
+<p>Plukprofiler er ikke det eneste lag. Efter pakningen ligger <a href="../../integrationer/sorteringsanlaeg">sorteringszonerne</a>, og de svarer på et andet spørgsmål: hvilken bane eller palle pakken hører til, og hvornår den bane lukker. Profilen styrer arbejdet frem til pakkebordet. Zonen styrer hvad der sker bagefter, og den kan have deadlines og cutoff-tider knyttet til en bestemt afhentning.</p>
+<p>Leder du efter en cutoff-indstilling inde i plukprofilen, er det derfor sandsynligvis zonen du skal ind i i stedet.</p>
 
 <h2>SmartPack og plukprofiler</h2>
 <p>Alt herover er indstillinger i SmartPack, ikke en model for hvordan man kunne bygge det. Profilerne oprettes per kunde, og der er ingen grænse for hvor mange man har.</p>
