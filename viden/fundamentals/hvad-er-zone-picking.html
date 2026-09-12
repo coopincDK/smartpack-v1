@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 
 <!-- ================================================================
@@ -116,7 +116,7 @@
     <p>Det lyder enkelt. Det er det ikke. De fleste lagre implementerer det forkert: zone A er konstant overbelastet, zone B står halvtom, og konsolideringspunktet bliver en flaskehals. Forkert implementeret koster zone picking 3.000-8.000 kr per måned i spildt arbejdstid, mere end I ville have tabt ved at fortsætte uden zoner.</p>
 
     <h2>Hvorfor zone picking reducerer gangtid markant</h2>
-    <p>I et lager uden zoneopdeling vandrer plukkeren fra én ende til den anden for at samle én ordre. Med 150 ordrer per dag og et lager på 800 kvm bruger en plukker typisk 60-70 procent af sin arbejdstid på at gaa. Zone picking eliminerer den vandring på tværs af lageret. Plukkeren lærer sit område ud og ind, arbejder i et kompakt areal og når markant højere picks per time.</p>
+    <p>I et lager uden zoneopdeling vandrer plukkeren fra én ende til den anden for at samle én ordre. Med 150 ordrer per dag og et lager på 800 kvm bruger en plukker typisk 60-70 procent af sin arbejdstid på at gå. Zone picking fjerner den vandring på tværs af lageret. Plukkeren lærer sit område ud og ind, arbejder i et kompakt areal og når markant højere picks per time.</p>
     <p><strong>Eksempel fra virkeligheden:</strong> En e-commerce-virksomhed med 180 ordrer/dag og et 750 kvm lager kørte uden zoner indtil november 2024. I uge 47 (Black Friday) steg volumen til 320 ordrer/dag. Gangtiden eksploderede, fejlraten ramte 3,2%, og de måtte hyre 2 ekstra vikarer for at nå deadline. Efter implementering af 3 zoner i januar 2025 håndterer de nu 280 ordrer/dag med samme bemanding og en fejlrate på 0,6%.</p>
     <p>Konkrete tal fra SMV-lagre med zone picking versus ingen zoneopdeling:</p>
     <table>
@@ -146,7 +146,7 @@
     <ul>
       <li><strong>Onboarding tager 3-4 uger i stedet for 1-2:</strong> Nye plukkere skal lære hele lageret. I Black Friday-perioden (uge 46-48) betyder det, at vikarer aldrig når fuld hastighed.</li>
       <li><strong>Fejlraten stiger ved vækst:</strong> Ved 100 ordrer/dag ligger fejlraten på 1,2%. Ved 180 ordrer/dag - uden zoneopdeling - rammer den 2,5-3,0%, fordi plukkerne skifter mellem for mange SKUer.</li>
-      <li><strong>Gangtiden spiser kapaciteten:</strong> En plukker der bruger 65% af sin tid på at gaa, når 55-60 picks/time. Med zoner når samme plukker 90-100 picks/time - det er 50% mere output uden ekstra lønomkostning.</li>
+      <li><strong>Gangtiden spiser kapaciteten:</strong> En plukker der bruger 65% af sin tid på at gå, når 55-60 picks/time. Med zoner når samme plukker 90-100 picks/time - det er 50% mere output uden ekstra lønomkostning.</li>
     </ul>
 
     <p class="inline-cta">&#x1F449; Se hvordan SmartPack implementerer zone picking med automatisk belastningsfordeling. <a href="../../kontakt">Book en gratis demo</a></p>
@@ -160,20 +160,20 @@
       <li>Hvilke SKUer optræder sammen i samme ordre (brug COUNTIFS eller pivot)</li>
     </ul>
     <p>SKUer der hyppigt optræder sammen i ordrer <strong>skal</strong> ligge i samme zone, eller i nabozoner. Hver gang en ordre kræver konsolidering på tværs af zoner, mister du 45-90 sekunder per ordre. Ved 150 ordrer/dag svarer det til 1,5-2 timer tabt tid dagligt.</p>
-    <h3>Trin 2: Definer zonegraenser</h3>
+    <h3>Trin 2: Definer zonegrænser</h3>
     <p>Start med 2-3 zoner. Mange lagre overkomplicerer det med 6-8 zoner fra dag ét. Resultatet er koordinationshelvede. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. Udvid, når data viser at yderligere opdeling reducerer koordinationsomkostning mere end det øger den.</p>
     <h3>Trin 3: Placer A-varer strategisk</h3>
-    <p>A-varer udgjør typisk 20 procent af sortimentet men 80 procent af plukvolumen. De skal ligge centralt i zonen, nærmest pakkestation, på ergonomisk højde (80-150 cm). Plukkeren bruger færrest skridt og mindst tid per pick på A-varerne.</p>
+    <p>A-varer udgør typisk 20 procent af sortimentet men 80 procent af plukvolumen. De skal ligge centralt i zonen, nærmest pakkestation, på ergonomisk højde (80-150 cm). Plukkeren bruger færrest skridt og mindst tid per pick på A-varerne.</p>
     <h3>Trin 4: Definer konsolideringspunkt</h3>
-    <p>Alle zoner skal have et klart mødeunkt for ordrer der samles på tværs af zoner. Det kan være et rulleband, en samlebane eller et dedikeret bord. Det vigtige er, at processen er entydig og at ingen ordre forlader konsolideringspunktet uden at være komplet.</p>
+    <p>Alle zoner skal have et klart mødepunkt for ordrer der samles på tværs af zoner. Det kan være et rulleband, en samlebane eller et dedikeret bord. Det vigtige er, at processen er entydig og at ingen ordre forlader konsolideringspunktet uden at være komplet.</p>
 
     <h2>Zone picking versus andre plukkemetoder</h2>
     <p>Zone picking er ikke det rigtige svar for alle lagre. Her er en direkte sammenligning:</p>
     <table>
       <thead><tr><th>Metode</th><th>Styrke</th><th>Svaghed</th><th>Bedst til</th></tr></thead>
       <tbody>
-        <tr><td>Ordreplukning (én ordre ad gangen)</td><td>Simpel, ingen koordination</td><td>Hoej gangtid, lav kapacitet</td><td>Under 50 ordrer/dag</td></tr>
-        <tr><td>Batch picking</td><td>Reducerer gangtid per ordre</td><td>Sortering krævert tid</td><td>50-200 ordrer/dag, kompakt lager</td></tr>
+        <tr><td>Ordreplukning (én ordre ad gangen)</td><td>Simpel, ingen koordination</td><td>Høj gangtid, lav kapacitet</td><td>Under 50 ordrer/dag</td></tr>
+        <tr><td>Batch picking</td><td>Reducerer gangtid per ordre</td><td>Sortering kræver tid</td><td>50-200 ordrer/dag, kompakt lager</td></tr>
         <tr><td>Zone picking</td><td>Specialisering, lav fejlrate</td><td>Kræver koordination</td><td>150+ ordrer/dag, 500+ kvm</td></tr>
         <tr><td>Zone-batch picking</td><td>Kombination af begge gevinster</td><td>Kræver WMS</td><td>200+ ordrer/dag, stort sortiment</td></tr>
       </tbody>
@@ -185,7 +185,7 @@
       <li><strong>For mange zoner fra start:</strong> 6 zoner på et 600 kvm lager er overdimensionering. Start med 2-3 og udvid kun når data begrunder det.</li>
       <li><strong>Zoner baseret på areal, ikke ordredata:</strong> Lager opdelt i lige store kvadrater ignorerer, at 80% af plukvolumen kommer fra 20% af sortimentet.</li>
       <li><strong>Intet konsolideringspunkt:</strong> Hvis det er uklart, hvor ordrer fra flere zoner samles, opstår der fejl og forsinkelser ved pakkestation.</li>
-      <li><strong>Statisk zoneopdeling:</strong> Sortimentet ændrer sig. En zoneopdeling der var optimal for 18 måneder siden er naeppe optimal i dag. Genanalyser hver 6. måned, ellers mister du 8-12% effektivitet.</li>
+      <li><strong>Statisk zoneopdeling:</strong> Sortimentet ændrer sig. En zoneopdeling der var optimal for 18 måneder siden er næppe optimal i dag. Genanalyser hver 6. måned, ellers mister du 8-12% effektivitet.</li>
       <li><strong>Manglende belastningsbalancering:</strong> Hvis zone A altid er overbelastet mens zone B er ledig, er zoneopdelingen forkert. Et WMS loser dette dynamisk.</li>
       <li><strong>Ingen plan for sygdom og ferie:</strong> Hvis zone A's plukker er syg og ingen andre kender zonen, stopper produktionen. Krav: cross-training eller dynamisk zoneomdeling i WMS.</li>
     </ul>
@@ -195,12 +195,12 @@
     <ol>
       <li><strong>Volumen over 150 ordrer per dag:</strong> Under det er koordinationsomkostningen ofte større end gangtidsbesparelsen.</li>
       <li><strong>Lager over 500 kvm med mere end 500 aktive SKUer:</strong> På et kompakt lager giver specialisering ikke nok gevinst.</li>
-      <li><strong>WMS eller plukkesystem der understotter zonerouting:</strong> Manuel zonehendelse er teknisk muligt, men du mister 40-60% af gevinsten og fordobler fejlraten.</li>
+      <li><strong>WMS eller plukkesystem der understotter zonerouting:</strong> Manuel zonehåndtering er teknisk muligt, men du mister 40-60% af gevinsten og fordobler fejlraten.</li>
     </ol>
     <p>Er alle tre til stede, og din nuværende fejlrate er over 1%, eller din gangtid er over 55% af arbejdstiden, er zone picking det næste logiske skridt.</p>
 
     <h2>Sådan hjælper SmartPack med zone picking</h2>
-    <p>SmartPack WMS understøtter zone picking med automatisk belastningsfordeling: systemet sender ordrer til den mindst belastede zone, og konsoliderer automatisk ved pakkestation. Det giver mening fra 150+ ordrer/dag og 500+ kvm lager.</p>
+    <p>SmartPack WMS understøtter zone picking med automatisk belastningsfordeling: systemet sender ordrer til den mindst belastede zone, og samler automatisk ved pakkestation. Det giver mening fra 150+ ordrer/dag og 500+ kvm lager.</p>
     <p><strong>Hvornår giver SmartPack IKKE mening:</strong> Under 100 ordrer/dag er manuelt setup med Excel og labels billigere. Ved 50-100 ordrer/dag er batch picking uden zoner ofte mere effektivt end zone picking.</p>
     <p><strong>Alternativets cost:</strong> Manuel zonehåndtering uden WMS kræver 30-45 minutter dagligt til koordinering (plukkelister, konsolidering, fejlretning). Det svarer til 8.500-12.500 kr./måned i tabt tid.</p>
   </div>

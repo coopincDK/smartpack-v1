@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -99,7 +99,7 @@ Authorization: Bearer {access_token}</code></pre>
         <tr><td>Access token udløber (3 timer downtime)</td><td>0 kr. (ordrer venter)</td><td>Forsinkelse: ~8.000 kr. (kundeservice)</td><td><strong>8.000 kr. per episode</strong></td></tr>
         <tr><td>Rate limiting ramt (429) uden retry</td><td>25% af ordrer tabes i 1 time</td><td>12 ordrer × 350 kr. = 4.200 kr.</td><td><strong>4.200 kr. per time</strong></td></tr>
         <tr><td>Pagination ikke implementeret</td><td>750+ ordrer hentes ikke (kun første 250)</td><td>500 ordrer × 0,43 × 2.400 = 516.000 kr.</td><td><strong>516.000 kr. per episode</strong></td></tr>
-        <tr><td>Hardkodet token i kode (udløber efter 90 dage)</td><td>0 kr. (ordrer venter)</td><td>Downtime 1 dag: ~40.000 kr.</td><td><strong>40.000 kr. per episode</strong></td></tr>
+        <tr><td>Hårdkodet token i kode (udløber efter 90 dage)</td><td>0 kr. (ordrer venter)</td><td>Downtime 1 dag: ~40.000 kr.</td><td><strong>40.000 kr. per episode</strong></td></tr>
       </tbody>
     </table>
     <p><strong>Konklusion:</strong> Pagination-fejl er den dyreste. Rate limiting uden retry er den hyppigste.</p>
@@ -155,7 +155,7 @@ Authorization: Bearer {access_token}</code></pre>
     <h2>Typiske fejl</h2>
     <ol>
       <li><strong>Ingen håndtering af rate limiting.</strong> System poller for hyppigt, rammer 429, og fejler stiltiende. Løsning: implementér exponential backoff og respektér Retry-After-header.</li>
-      <li><strong>Hardkodet access token.</strong> Token gemmes direkte i konfigurationsfil eller kode. Udløber tokenet, fejler integrationen. Gem tokens sikkert (Azure Key Vault, environment variables) og implementér automatisk refresh.</li>
+      <li><strong>Hårdkodet access token.</strong> Token gemmes direkte i konfigurationsfil eller kode. Udløber tokenet, fejler integrationen. Gem tokens sikkert (Azure Key Vault, environment variables) og implementér automatisk refresh.</li>
       <li><strong>Ingen pagination-håndtering.</strong> API'er returnerer typisk max 250 resultater pr. kald (Shopify-standard). Har du 1.000 nye ordrer, kræver det 4 kald med pagination. Springer du dette over, mister du ordrer.</li>
     </ol>
 
@@ -178,7 +178,7 @@ Authorization: Bearer {access_token}</code></pre>
     <h2>SmartPack: Ja eller nej?</h2>
     <p><strong>Ja,</strong> hvis du vil undgå pagination-fejl og token-udløb.</p>
     <p>SmartPack har implementeret pagination på alle list-endpoints (Shopify, WooCommerce, e-conomic, Business Central). Access tokens håndteres sikkert med auto-refresh. Rate limiting håndteres automatisk med exponential backoff (1 min, 5 min, 30 min). Alle API-kald logges med request/response og vises i integrationspanelet.</p>
-    <p><strong>Alternativet:</strong> Bygge egen API-integration: 60.000-120.000 kr. udvikling + 15.000 kr./år vedligehold. Ingen pagination: risiko for 516.000 kr. tab ved Black Friday. Hardkodet token: risiko for 40.000 kr. tab ved udløb. Ingen rate limiting-håndtering: 25% ordretab ved spidslast.</p>
+    <p><strong>Alternativet:</strong> Bygge egen API-integration: 60.000-120.000 kr. udvikling + 15.000 kr./år vedligehold. Ingen pagination: risiko for 516.000 kr. tab ved Black Friday. Hårdkodet token: risiko for 40.000 kr. tab ved udløb. Ingen rate limiting-håndtering: 25% ordretab ved spidslast.</p>
     <p><strong>SmartPack-omkostning:</strong> 60.000 kr./år (inkl. alle integrationer + monitoring). <strong>Breakeven:</strong> Hvis SmartPack forhindrer én pagination-fejl (516.000 kr.) = 456.000 kr. sparet, ROI: 760%.</p>
   </div>
   <div class="bottom-cta"><p>Vil du se SmartPacks integrationer i dit setup?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>

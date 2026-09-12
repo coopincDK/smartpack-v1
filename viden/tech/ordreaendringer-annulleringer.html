@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Ordreændringer og annulleringer: hvad webshops håndterer forkert","author":{"@type":"Organization","name":"SmartPack"},"publisher":{"@type":"Organization","name":"SmartPack","url":"https://smartpack.dk"},"datePublished":"2025-05-01","inLanguage":"da"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den største fejl webshops laver ved annulleringer?","acceptedAnswer":{"@type":"Answer","text":"Den største fejl er manglende synkronisering mellem annullering i webshop-systemet og lagersystemet. Kunden annullerer ordren i webshoppen, men varen er allerede plukket og pakket på lageret. Resultatet er en returlogistik-udfordring og et lager der tror varen er afsendt naer den faktisk er på hylden."}},{"@type":"Question","name":"Hvornår er det for sent at annullere en ordre?","acceptedAnswer":{"@type":"Answer","text":"Det afhænger af din ekspeditionsproces. Mange webshops sætter 15-30 minutter som annulleringsvinduet efter ordreafgivelse. Naer ordren er plukket og pakket, er det typisk for sent til annullering, og kunden maa i stedet returnere varen."}},{"@type":"Question","name":"Hvordan håndterer man ordreændringer uden at skabe lagerkompleksitet?","acceptedAnswer":{"@type":"Answer","text":"Med en klar annulleringsmaessig tidslinje og systemintegration. Ordreændringer skal gå direkte til WMS-systemet foer plukning starter. Naer plukning er påbegyndt, er ændringer ikke længere mulige uden en ny ordre. Klare regler og automatisering reducerer fejl og lagerkompleksitet markant."}}]}</script>
@@ -58,7 +58,7 @@
     <ol>
       <li><strong>Annullering i webshoppen opdaterer ikke lagersystemet.</strong> Kunden annullerer via webshoppen, men varen er allerede reserveret eller plukket på lageret. Lagerbeholdningen stemmer ikke længere.</li>
       <li><strong>Ordreændring håndteres via email til kundeservice.</strong> En manuel proces er langsom og fejlbehæftet. Når meddelelsen naår lageret, er ordren allerede ekspederet.</li>
-      <li><strong>Ingen klar granse for annulleringsvinduet.</strong> Kunden forventer at kunne annullere i 24 timer. Lageret ekspederer ordren indenfor 2 timer. Konflikten er garanteret.</li>
+      <li><strong>Ingen klar grænse for annulleringsvinduet.</strong> Kunden forventer at kunne annullere i 24 timer. Lageret ekspederer ordren indenfor 2 timer. Konflikten er garanteret.</li>
       <li><strong>Dobbeltbooking ved adressekorrektioner.</strong> Når kunden ændrer leveringsadressen og systemet opretter en ny ordrelinje fremfor at opdatere den eksisterende.</li>
     </ol>
 
@@ -68,18 +68,18 @@
     <p><strong>3. Statusbaseret ekspedition.</strong> Når en ordre skifter status til "plukning påbegyndt", lukkes annulleringsvinduet automatisk og kunden informeres om at de skal returnere varen.</p>
 
     <h2>Sådan fungerer det i SmartPack</h2>
-    <p>SmartPack synkroniserer ordrestatus i realtid. Naer en annullering modtages, tjekkes ordrestatus automatisk: er den ikke plukket, annulleres og frigives lageret straks. Er plukning påbegyndt, notificeres kundeservice og kunden får besked om returproceduren.</p>
+    <p>SmartPack synkroniserer ordrestatus i realtid. Nær en annullering modtages, tjekkes ordrestatus automatisk: er den ikke plukket, annulleres og frigives lageret straks. Er plukning påbegyndt, notificeres kundeservice og kunden får besked om returproceduren.</p>
   </div>
 
   <div class="article-faq">
     <h2>Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er den største fejl webshops laver ved annulleringer?</summary><p>Den største fejl er manglende synkronisering mellem annullering i webshop-systemet og lagersystemet. Kunden annullerer i webshoppen, men varen er allerede plukket på lageret. Resultatet er returlogistik-udfordringer og en lagerbeholdning der ikke stemmer.</p></details>
-    <details class="faq-item"><summary>Hvornår er det for sent at annullere en ordre?</summary><p>Det afhænger af din ekspeditionsproces. Mange webshops sætter 15-30 minutter som annulleringsvinduet. Naer ordren er plukket og pakket, er det typisk for sent, og kunden maa i stedet returnere varen.</p></details>
-    <details class="faq-item"><summary>Hvordan håndterer man ordreændringer uden at skabe lagerkompleksitet?</summary><p>Med en klar annulleringsmaessig tidslinje og direkte systemintegration. Ordreændringer skal gå direkte til WMS før plukning starter. Naer plukning er påbegyndt, er ændringer ikke længere mulige uden en ny ordre.</p></details>
+    <details class="faq-item"><summary>Hvornår er det for sent at annullere en ordre?</summary><p>Det afhænger af din ekspeditionsproces. Mange webshops sætter 15-30 minutter som annulleringsvinduet. Nær ordren er plukket og pakket, er det typisk for sent, og kunden må i stedet returnere varen.</p></details>
+    <details class="faq-item"><summary>Hvordan håndterer man ordreændringer uden at skabe lagerkompleksitet?</summary><p>Med en klar annulleringsmæssig tidslinje og direkte systemintegration. Ordreændringer skal gå direkte til WMS før plukning starter. Nær plukning er påbegyndt, er ændringer ikke længere mulige uden en ny ordre.</p></details>
   </div>
 
   <div class="bottom-cta">
-    <p>Har du klare processer for ordreændringer og annulleringer i din webshop? SmartPack giver dig realtidssynkroniseringen der eliminerer de typiske fejl.</p>
+    <p>Har du klare processer for ordreændringer og annulleringer i din webshop? SmartPack giver dig realtidssynkroniseringen der fjerner de typiske fejl.</p>
     <a href="../../kontakt" class="btn btn--primary">Se SmartPacks ordrehåndtering</a>
   </div>
   <div class="article-disclaimer"><p>Procesanbefalinger er baseret på erfaringer fra eCommerce-drift. Tilpas altid til din egen forretningsmodel og kundernes forventninger.</p></div>

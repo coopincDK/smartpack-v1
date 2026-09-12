@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -107,7 +107,7 @@
 
     <h2>Uden integration: hvad sker der?</h2>
     <p><strong>Scenarie 1:</strong> 200 ordrer/dag. Medarbejder kopierer ordrer manuelt fra webshop til WMS. 1-3% fejl i kopiering. 2-4 fejlordrer per dag x 500 kr. = 365.000-730.000 kr./år.</p>
-    <p><strong>Scenarie 2:</strong> Webshop opdateres dagligt med beholdning. I loobet af dagen sælger WMS ned. Webshop viser stadig 5 p&aring; lager. Kunden bestiller. Varen er udsolgt. Oversalg og kundefrustration.</p>
+    <p><strong>Scenarie 2:</strong> Webshop opdateres dagligt med beholdning. I løbet af dagen sælger WMS ned. Webshop viser stadig 5 p&aring; lager. Kunden bestiller. Varen er udsolgt. Oversalg og kundefrustration.</p>
     <p><strong>Scenarie 3:</strong> Tracking-numre kopieres manuelt. eet glemmes. Kunden har ikke modtaget pakken men finder ikke tracking-info. Kontakter support. Unodvendig support-håndtering: 30 min x 250 kr./time = 125 kr. per tilfælde.</p>
 
     <h2>Standard webshop-platforme og integration</h2>
@@ -139,7 +139,7 @@
 
     <h2>Typiske fejl</h2>
     <ul>
-      <li><strong>Bruger een-vejs integration:</strong> Ordrer fra webshop til WMS, men beholdning opdateres ikke tilbage. Oversalg er uundgålig.</li>
+      <li><strong>Bruger een-vejs integration:</strong> Ordrer fra webshop til WMS, men beholdning opdateres ikke tilbage. Oversalg er uundgåelig.</li>
       <li><strong>Ingen error-handling:</strong> En fejlet API-ordre havner ikke i WMS. Ingen alarm. Ordren behandles aldrig. Kunden klager.</li>
       <li><strong>Tester ikke under spidsbelastning:</strong> Integration der virker ved 50 ordrer/dag kan fejle ved 500.</li>
     </ul>
@@ -165,7 +165,7 @@
     <details class="faq-item"><summary>Hvad er forskellen p&aring; App og API-integration?</summary><div class="faq-item__body"><p>App (fx Shopify App Store): Forudbygget, hurtig opsætning, begrænset tilpasning. API: Fuld fleksibilitet, kræver mere teknisk setup.</p></div></details>
     <details class="faq-item"><summary>Kan jeg integrere med Shopify og en B2B-platform simultant?</summary><div class="faq-item__body"><p>Ja. Multi-channel integration er standard i moderne WMS. Alle ordrer samles og behandles i eet system.</p></div></details>
     <details class="faq-item"><summary>Hvad koster custom webshop-integration?</summary><div class="faq-item__body"><p>50.000-200.000 kr. for en robust custom-integration. Det er en af de vigtigste grunde til at vælge standard-platforme.</p></div></details>
-    <details class="faq-item"><summary>Hvad sker der med ordre der fejler i API-kald?</summary><div class="faq-item__body"><p>De bør havne i en fejlkoe med alarm til operations-team. Uden dette er de usynlige, og kunden venter forgæves.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der med ordre der fejler i API-kald?</summary><div class="faq-item__body"><p>De bør havne i en fejlkø med alarm til operations-team. Uden dette er de usynlige, og kunden venter forgæves.</p></div></details>
     <details class="faq-item"><summary>Kan integration h&aring;ndtere returns automatisk?</summary><div class="faq-item__body"><p>Ja. Mange integrationer understøtter automatisk returregistrering: kunden logger retur p&aring; webshop, WMS modtager automatisk og opretter returordre.</p></div></details>
   </div>
 </div></div>

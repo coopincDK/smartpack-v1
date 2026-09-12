@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -59,7 +59,7 @@
     <p>De fleste virksomheder støder på de samme tre problemer, når de begynder at sælge på flere kanaler uden et dedikeret system til at koordinere det.</p>
 
     <h3>Oversalg</h3>
-    <p>Du har 10 enheder på lager. Din webshop viser 10. Amazon viser 10. En B2B-kunde reserverer 8 via telefon. Inden beholdningen er opdateret manuelt i alle systemer, har webshopen solgt 5 og Amazon solgt 4. Du skylder nu 7 enheder du ikke har.</p>
+    <p>Du har 10 enheder på lager. Din webshop viser 10. Amazon viser 10. En B2B-kunde reserverer 8 via telefon. Inden beholdningen er opdateret manuelt i alle systemer, har webshoppen solgt 5 og Amazon solgt 4. Du skylder nu 7 enheder du ikke har.</p>
     <p>Oversalg er ikke kun et logistikproblem. Det er et omdømmeproblem. En kunde der har betalt og ikke modtager sin ordre klager. En marketplace-kanal der registrerer for mange annulleringer suspenderer din konto.</p>
 
     <h3>Manuelt arbejde der ikke skalerer</h3>
@@ -83,8 +83,8 @@
     <h3>Kanalspecifikke pakke- og forsendelsesregler</h3>
     <p>Amazon kræver typisk en bestemt emballage og etiket. Din webshop sender med PostNord og din B2B-kunde afhenter selv. Et WMS der håndterer multi-channel skal kunne anvende forskellige pakkeregler, fragtaftaler og etiketter afhængigt af hvilken kanal ordren kom fra, uden manuel indgriben fra lagerpersonalet.</p>
 
-    <h3>Kanal-til-lager allokering</h3>
-    <p>Ved høj efterspørgsel kan du have brug for at reservere en del af beholdningen til én kanal. Hvis du har 100 enheder og forventer stor B2B-efterspørgsel, kan du allokere 60 til B2B og frigive 40 til webshop og marketplace. Det beskytter kritiske ordrer og forhindrer at én kanal udtømmer lageret for de andre.</p>
+    <h3>Kanal-til-lager tildeling</h3>
+    <p>Ved høj efterspørgsel kan du have brug for at reservere en del af beholdningen til én kanal. Hvis du har 100 enheder og forventer stor B2B-efterspørgsel, kan du tildele 60 til B2B og frigive 40 til webshop og marketplace. Det beskytter kritiske ordrer og forhindrer at én kanal udtømmer lageret for de andre.</p>
 
     <h3>Samlet rapportering på tværs af kanaler</h3>
     <p>Du skal kunne se din samlede omsætning, dit gennemsnitlige ekspeditionstid og dine returprocenter på tværs af alle kanaler i ét dashboard. Hvis tallene sidder i tre separate systemer, bruger du tid på at samle dem i stedet for at handle på dem.</p>
@@ -98,7 +98,7 @@
     <p>En virksomhed der håndterer multi-channel effektivt har typisk følgende arkitektur:</p>
     <ul>
       <li><strong>WMS som central ordremotor:</strong> Alle ordrer, uanset kanal, samles i WMS og behandles efter de samme operationelle processer. WMS er det eneste system der kender den faktiske beholdning.</li>
-      <li><strong>API-integration til alle kanaler:</strong> Webshopen, marketplace-platformene og B2B-portalen er alle forbundet via API til WMS. Ordrer flyder ind automatisk. Beholdningsopdateringer flyder ud automatisk.</li>
+      <li><strong>API-integration til alle kanaler:</strong> Webshoppen, marketplace-platformene og B2B-portalen er alle forbundet via API til WMS. Ordrer flyder ind automatisk. Beholdningsopdateringer flyder ud automatisk.</li>
       <li><strong>ERP til økonomi og fakturering:</strong> WMS sender forsendelsesbekræftelser til ERP, der håndterer fakturering, kreditnoter og bogføring pr. kanal. WMS er master of record for beholdning. ERP er master of record for økonomi.</li>
       <li><strong>Automatisk prioriteringskø:</strong> WMS beregner automatisk plukrækkefølge baseret på SLA, kanal og ordretidspunkt. Plukkerne ser én prioriteret kø, ikke tre separate ordrelister.</li>
     </ul>
@@ -109,7 +109,7 @@
     <ul>
       <li><strong>Manuel synkronisering:</strong> 1,5 time/dag × 250 kr./time × 250 arbejdsdage = 93.750 kr./år</li>
       <li><strong>Oversalg:</strong> 2 oversalg/måned × 800 kr. gennemsnitlig ordreværdi × 12 måneder = 19.200 kr. tabt salg</li>
-      <li><strong>Marketplace-advarsler:</strong> 1 Amazon-advarsel = nedrangering i søgeresultater = estimeret 15.000-40.000 kr. tabt salg over 3 måneder</li>
+      <li><strong>Marketplace-advarsler:</strong> 1 Amazon-advarsel = nedrangering i søgeresultater = anslået 15.000-40.000 kr. tabt salg over 3 måneder</li>
       <li><strong>Kundeservice på fejl:</strong> 8 timer/måned × 300 kr./time × 12 = 28.800 kr./år</li>
     </ul>
     <p><strong>Samlet årlig omkostning:</strong> minimum 156.750 kr. uden at regne omdømmeskade og tabte gentagne køb.</p>
@@ -129,8 +129,8 @@
 
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Kan jeg bruge mit nuværende ERP til multi-channel lagerstyring?</summary><div class="faq-item__body"><p>ERP-systemer har typisk et lagermodul, men det er ikke designet til realtids multi-channel koordination. Det mangler kanalspecifik prioritering, automatisk beholdningssynkronisering til marketplace-API'er og operationel plukstyring. ERP egner sig til økonomi og indkøb. Et WMS egner sig til den daglige lageroperation. Du har brug for begge og en integration imellem dem.</p></div></details>
-    <details class="faq-item"><summary>Hvad sker der med min Amazon-konto hvis jeg overskrider SLA for mange gange?</summary><div class="faq-item__body"><p>Amazon måler løbende din Order Defect Rate (ODR), Late Shipment Rate og Cancellation Rate. Overskrider du Amazons grænseværdier, modtager du en advarsel. Fortsætter du, kan din salgstilladelse suspenderes eller lukkes permanent. Et WMS der prioriterer marketplace-ordrer automatisk og bekræfter forsendelse til Amazon via API eliminerer langt de fleste SLA-overtrædelser.</p></div></details>
-    <details class="faq-item"><summary>Hvordan håndterer jeg B2B-kunder der bestiller store mængder og risikerer at tømme mit lager for andre kanaler?</summary><div class="faq-item__body"><p>Via kanalallokering. Du sætter en maksimal andel af beholdningen der kan sælges til én kanal og reserverer resten til andre. Når en B2B-ordre overstiger den tilgængelige allokering, kan systemet enten bede om bekræftelse, sætte ordren på bagordre eller automatisk opdele den i delleverancer. Det kræver at dit WMS understøtter kanalspecifikke beholdningsgrænser.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der med min Amazon-konto hvis jeg overskrider SLA for mange gange?</summary><div class="faq-item__body"><p>Amazon måler løbende din Order Defect Rate (ODR), Late Shipment Rate og Cancellation Rate. Overskrider du Amazons grænseværdier, modtager du en advarsel. Fortsætter du, kan din salgstilladelse suspenderes eller lukkes permanent. Et WMS der prioriterer marketplace-ordrer automatisk og bekræfter forsendelse til Amazon via API fjerner langt de fleste SLA-overtrædelser.</p></div></details>
+    <details class="faq-item"><summary>Hvordan håndterer jeg B2B-kunder der bestiller store mængder og risikerer at tømme mit lager for andre kanaler?</summary><div class="faq-item__body"><p>Via kanalallokering. Du sætter en maksimal andel af beholdningen der kan sælges til én kanal og reserverer resten til andre. Når en B2B-ordre overstiger den tilgængelige tildeling, kan systemet enten bede om bekræftelse, sætte ordren på bagordre eller automatisk opdele den i delleverancer. Det kræver at dit WMS understøtter kanalspecifikke beholdningsgrænser.</p></div></details>
     <details class="faq-item"><summary>Hvad koster det at opsætte et multi-channel WMS?</summary><div class="faq-item__body"><p>Det afhænger af antallet af kanaler og om WMS-systemet har native integrationer til dine platforme. Med native integrationer til f.eks. Shopify og Amazon er opsætning typisk inkluderet i WMS-prisen eller koster 5.000-20.000 kr. i implementering. Custom integrationer til proprietære B2B-portaler eller EDI koster mere, typisk 20.000-80.000 kr. plus løbende vedligeholdelse. Sæt altid det op mod hvad du bruger i mandetid på manuel koordination i dag.</p></div></details>
   </div>
 

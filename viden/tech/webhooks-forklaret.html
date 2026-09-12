@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -75,7 +75,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Forestil dig at du hele dagen ringer til postvaesenet og spørger: &quot;Er der breve til mig?&quot; Det er API-polling. En webhook er det modsatte: postvaesenet ringer til dig, når der er et brev. Det er ikke en lille forskel, det er fundamentalt anderledes i e-handelssammenhaeng.</p>
+    <p>Forestil dig at du hele dagen ringer til postvæsenet og spørger: &quot;Er der breve til mig?&quot; Det er API-polling. En webhook er det modsatte: postvæsenet ringer til dig, når der er et brev. Det er ikke en lille forskel, det er fundamentalt anderledes i e-handelssammenhaeng.</p>
     <p>Her er alt du skal vide om webhooks: tekniske krav, hvad de koster når de fejler, og hvordan du bygger en robust webhook-modtager.</p>
 
     <h2>Hvad er en webhook?</h2>
@@ -98,7 +98,7 @@
     <p>Shopify og alle andre moderne platforme afviser HTTP-endpoints. Du skal have et gyldigt SSL-certifikat. Self-signed certifikater accepteres ikke i produktionsmiljøer.</p>
 
     <h3>2. Svartid under 30 sekunder</h3>
-    <p>Shopify forventer HTTP 200 inden for 30 sekunder. Overskrides det, anses leveringen som mislykket, og Shopify forsøger retry. Tunge processer bør aldrig ske synkront i webhook-handleren, put jobbet i en koe og returner 200 straks.</p>
+    <p>Shopify forventer HTTP 200 inden for 30 sekunder. Overskrides det, anses leveringen som mislykket, og Shopify forsøger retry. Tunge processer bør aldrig ske synkront i webhook-handleren, put jobbet i en kø og returner 200 straks.</p>
 
     <h3>3. HMAC-SHA256 signaturvalidering</h3>
     <p>Shopify inkluderer en header <code>X-Shopify-Hmac-Sha256</code> med en hash af payload, signeret med dit webhook secret. Du skal validere denne signatur før du behandler payload. Gør du det ikke, accepterer du potentielt falske requests.</p>
@@ -125,7 +125,7 @@
     </ul>
 
     <h2>Idempotency, den usynlige fejlkilde</h2>
-    <p>Fordi Shopify kan sende samme webhook flere gange, skal din handler være idempotent: behandling af samme event to gange maa ikke resultere i to ordrer, to fragtlabels eller to lagerafjusteringer.</p>
+    <p>Fordi Shopify kan sende samme webhook flere gange, skal din handler være idempotent: behandling af samme event to gange må ikke resultere i to ordrer, to fragtlabels eller to lagerafjusteringer.</p>
     <p>Implementering: Gem <code>webhook_id</code> eller ordre-ID i en processed_events-tabel. Tjek ved modtagelse: er dette event allerede behandlet? Returner 200 OK, ikke 409 eller fejl, så Shopify stopper med at gensende.</p>
 
     <h2>Webhooks vs. API polling</h2>
@@ -155,13 +155,13 @@
 
     <h2>S&aring;dan gør du det rigtigt</h2>
     <ol>
-      <li><strong>Returner 200 straks, behandl asynkront:</strong> Webhook-handler gemmer event i koe og returnerer 200. Baggrundsjob behandler fra koen.</li>
-      <li><strong>Log raat payload ved modtagelse:</strong> Gem det raa JSON-payload ved modtagelse inden det behandles. Hvis behandling fejler, har du payloaden til re-behandling.</li>
+      <li><strong>Returner 200 straks, behandl asynkront:</strong> Webhook-handler gemmer event i kø og returnerer 200. Baggrundsjob behandler fra køen.</li>
+      <li><strong>Log råt payload ved modtagelse:</strong> Gem det rå JSON-payload ved modtagelse inden det behandles. Hvis behandling fejler, har du payloaden til re-behandling.</li>
       <li><strong>Monitorer webhook-abonnementsstatus:</strong> Tjek regelmæssigt at dine webhook-abonnementer er aktive hos Shopify.</li>
     </ol>
 
     <h2>SmartPack</h2>
-    <p>SmartPack modtager webhooks fra Shopify, WooCommerce og andre platforme med fuld HMAC-SHA256 validering. Alle webhooks puttes i en intern event-koe og behandles asynkront. Svartid til platform er typisk under 200ms. Systemet er fuldt idempotent p&aring; ordre-ID-niveau. Webhook-aktivitet vises i SmartPack administrationspanel med status, tidsstempler og eventuelle fejl.</p>
+    <p>SmartPack modtager webhooks fra Shopify, WooCommerce og andre platforme med fuld HMAC-SHA256 validering. Alle webhooks puttes i en intern event-kø og behandles asynkront. Svartid til platform er typisk under 200ms. Systemet er fuldt idempotent p&aring; ordre-ID-niveau. Webhook-aktivitet vises i SmartPack administrationspanel med status, tidsstempler og eventuelle fejl.</p>
   </div>
   <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
 <div class="bottom-cta"><p>Vil du undgå webhook-tab og sikkerhedsbrud?</p><a href="../../kontakt" class="btn">Se SmartPacks webhook-håndtering</a></div>

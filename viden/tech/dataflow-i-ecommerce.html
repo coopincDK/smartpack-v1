@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -75,7 +75,7 @@
     <p>Torsdag kl. 14:23. En kunde klikker "Køb". Ordren oprettes i Shopify. Webhook sendes til WMS. WMS modtager ingenting. Webhook-endpoint var nede i 12 sekunder under deployment. Ordren forsvinder. Stille fejl. Opdages først fredag morgen når kunden ringer: "Hvorfor er min ordre ikke afsendt?"</p>
 
     <h2>Hvad er dataflow i e-handel?</h2>
-    <p>Dataflow beskriver, hvordan information bevæger sig mellem systemer i håndteringen af en ordre. Fra kundens klik i webshopen til pakken er afleveret hos fragtmanden involverer en moderne e-handelsoperation typisk 4-7 systemer, der udveksler data med hinanden.</p>
+    <p>Dataflow beskriver, hvordan information bevæger sig mellem systemer i håndteringen af en ordre. Fra kundens klik i webshoppen til pakken er afleveret hos fragtmanden involverer en moderne e-handelsoperation typisk 4-7 systemer, der udveksler data med hinanden.</p>
     <p>De primære systemer:</p>
     <ul>
       <li><strong>Webshop</strong> (Shopify, WooCommerce): ordremodtagelse, kundekommunikation</li>
@@ -91,7 +91,7 @@
     <h3>Trin 2: WMS modtager og validerer ordre</h3>
     <p>WMS modtager webhook, validerer HMAC-signatur og opretter intern ordre. Validering: kendes alle varenumre? Er der tilstrækkelig beholdning? Er leveringsadresse komplet? Matcher fragtmetode en konfigureret fragtprofil? Fejler validering: ordre placeres i review-kø med fejlårsag.</p>
     <h3>Trin 3: Plukopgave genereres</h3>
-    <p>WMS opretter plukopgave, beregner TSP-optimeret rute for plukkeren, konsoliderer eventuelt med andre ordrer i batch pick og tildeler til ledig medarbejder via håndterminal.</p>
+    <p>WMS opretter plukopgave, beregner TSP-optimeret rute for plukkeren, samler eventuelt med andre ordrer i batch pick og tildeler til ledig medarbejder via håndterminal.</p>
     <h3>Trin 4: Pluk udføres</h3>
     <p>Plukker modtager opgave på håndterminal. Rute vises trin for trin. Hvert pluk bekræftes med scanning (stregkode/QR). WMS opdaterer reserveret lager i realtid.</p>
     <h3>Trin 5: Pakning</h3>
@@ -161,7 +161,7 @@
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er det vigtigste trin i e-handels dataflowet?</summary><div class="faq-item__body"><p>Trin 6, fulfillment-bekræftelse til webshop, overses hyppigst og har direkte kundesynlig effekt. Glemmes dette, tror kunden, at ordren ikke er afsendt.</p></div></details>
     <details class="faq-item"><summary>Kan et WMS køre uden ERP-integration?</summary><div class="faq-item__body"><p>Ja. WMS kan håndtere lagerdriften selvstændigt. ERP-integrationen er nødvendig for bogføring og fakturering, men ikke for selve pluk/pak/forsendelse.</p></div></details>
-    <details class="faq-item"><summary>Hvad er realtidslager, og hvornår er det kritisk?</summary><div class="faq-item__body"><p>Realtidslager er, at webshopen altid viser den faktiske beholdning. Det er kritisk ved kampagner, Black Friday og for varer med lav lagerbeholdning, hvor oversalg er en reel risiko.</p></div></details>
+    <details class="faq-item"><summary>Hvad er realtidslager, og hvornår er det kritisk?</summary><div class="faq-item__body"><p>Realtidslager er, at webshoppen altid viser den faktiske beholdning. Det er kritisk ved kampagner, Black Friday og for varer med lav lagerbeholdning, hvor oversalg er en reel risiko.</p></div></details>
     <details class="faq-item"><summary>Hvor lang tid tager det fulde flow?</summary><div class="faq-item__body"><p>I et godt integreret system: ordre modtaget til plukopgave klar: under 2 minutter. Pluk og pak: 5-15 minutter pr. ordre. Fulfillment tilbage til webshop: sekunder efter afsendelse.</p></div></details>
     <details class="faq-item"><summary>Hvad er TSP-optimering?</summary><div class="faq-item__body"><p>Travelling Salesman Problem-algoritme der beregner den korteste rute for at besøge alle plukpunkter i et lager. Reducerer gangtid med 20-35%.</p></div></details>
   </div>

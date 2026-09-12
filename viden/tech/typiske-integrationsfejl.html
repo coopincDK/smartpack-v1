@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -79,7 +79,7 @@
     <p>Her er de mest typiske fejl, hvad der forarsager dem, og hvad du gør ved det.</p>
 
     <h2>Hvad er integrationsfejl?</h2>
-    <p>En integrationsfejl opstår, når to systemer ikke kan kommunikere som forventet. Det kan skyldes tekniske problemer (server nede, netvaerksfejl, timeout), datamassige problemer (forkert format, manglende felt) eller logiske problemer (mapping-fejl, duplikater, timing-konflikter).</p>
+    <p>En integrationsfejl opstår, når to systemer ikke kan kommunikere som forventet. Det kan skyldes tekniske problemer (server nede, netværksfejl, timeout), datamassige problemer (forkert format, manglende felt) eller logiske problemer (mapping-fejl, duplikater, timing-konflikter).</p>
     <p>Integrationsfejl har fire grundlæggende former:</p>
     <ul>
       <li><strong>Stille fejl (silent failure):</strong> Systemet fejler, men rapporterer det ikke. Den farligste type, fordi den er usynlig.</li>
@@ -103,9 +103,9 @@
     <h2>Gennemgang af de mest typiske fejl</h2>
 
     <h3>1. Webhook leveres ikke/ignoreres</h3>
-    <p><strong>Hvad sker:</strong> Shopify sender webhook-event, men dit WMS er utilgængeligt i det øjeblik (deployment, server-restart, netvaerksfejl). Eventet forsvinder.</p>
-    <p><strong>årsag:</strong> Manglende retry-håndtering, timeout under deployment, ingen koe som buffer.</p>
-    <p><strong>Losning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra koen, ikke direkte fra webhook.</p>
+    <p><strong>Hvad sker:</strong> Shopify sender webhook-event, men dit WMS er utilgængeligt i det øjeblik (deployment, server-restart, netværksfejl). Eventet forsvinder.</p>
+    <p><strong>årsag:</strong> Manglende retry-håndtering, timeout under deployment, ingen kø som buffer.</p>
+    <p><strong>Losning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra køen, ikke direkte fra webhook.</p>
 
     <h3>2. BC client secret udløber</h3>
     <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
@@ -114,12 +114,12 @@
 
     <h3>3. Leveringsmetode-mapping fejler</h3>
     <p><strong>Hvad sker:</strong> Kunden vælger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
-    <p><strong>årsag:</strong> Shopify bruger interne nogler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
+    <p><strong>årsag:</strong> Shopify bruger interne nøgler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
     <p><strong>Losning:</strong> Gennemgå og test alle leveringsmetode-mappings i staging-miljo inden go-live.</p>
 
     <h3>4. Delvis synkronisering af ordrelinjer</h3>
     <p><strong>Hvad sker:</strong> En ordre med 5 varelinjer importeres, men kun 4 linjer med. Den femte linje mangler fordi varen ikke findes i WMS-produktkatalog.</p>
-    <p><strong>Losning:</strong> Implementer validering ved ordreimport. Ordrer med ukendte varenumre skal holdes i fejlkoe, ikke stiltiende delvis importeres.</p>
+    <p><strong>Losning:</strong> Implementer validering ved ordreimport. Ordrer med ukendte varenumre skal holdes i fejlkø, ikke stiltiende delvis importeres.</p>
 
     <h3>5. Timing-fejl ved lageroprettelse</h3>
     <p><strong>Hvad sker:</strong> En ny vare tilføjes i Shopify og bestilles straks. Webhook for ordren ankommer til WMS inden varestamdata er synkroniseret. WMS kender ikke varen og fejler.</p>
@@ -155,11 +155,11 @@
     <a href="./shopify-integration" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Shopify integration</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
-    <details class="faq-item"><summary>Hvad er den farligste type integrationsfejl?</summary><div class="faq-item__body"><p>Stille fejl. Systemet rapporterer intet, men data overføres ikke. Det opdages typisk af kunder eller ved manuel optellingel. Dage kan gå inden nogen opdager det.</p></div></details>
+    <details class="faq-item"><summary>Hvad er den farligste type integrationsfejl?</summary><div class="faq-item__body"><p>Stille fejl. Systemet rapporterer intet, men data overføres ikke. Det opdages typisk af kunder eller ved manuel optælling. Dage kan gå inden nogen opdager det.</p></div></details>
     <details class="faq-item"><summary>Hvorfor udløber BC client secret?</summary><div class="faq-item__body"><p>Microsoft kræver rotation af client secrets i Azure AD/Entra ID. Maksimal levetid er 2 år. Det er en sikkerhedsforanstaltning der sniger sig op p&aring; dig uden reminder.</p></div></details>
     <details class="faq-item"><summary>Hvad sker der, hvis en webhook sendes to gange?</summary><div class="faq-item__body"><p>Shopify sender retries ved manglende kvittering. Hvis dit system ikke er idempotent, oprettes der duplikat-ordrer. Implementer idempotency-nogler baseret p&aring; ordre-ID.</p></div></details>
     <details class="faq-item"><summary>Kan jeg teste integrationer uden rigtige ordrer?</summary><div class="faq-item__body"><p>Ja. Shopify har &quot;Send test notification&quot; for webhooks. Business Central og e-conomic kan testes med testmiljøer/sandbox. Brug altid sandbox ved opsætning.</p></div></details>
-    <details class="faq-item"><summary>Hvad er delvis synkronisering, og hvad gør jeg ved det?</summary><div class="faq-item__body"><p>Kun dele af data overføres, fx ordren importeres men adresse mangler. Detekteres via validering ved import og fejlkoe med notifikation.</p></div></details>
+    <details class="faq-item"><summary>Hvad er delvis synkronisering, og hvad gør jeg ved det?</summary><div class="faq-item__body"><p>Kun dele af data overføres, fx ordren importeres men adresse mangler. Detekteres via validering ved import og fejlkø med notifikation.</p></div></details>
   </div>
 </div></div>
 

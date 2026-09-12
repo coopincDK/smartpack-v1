@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 <!-- ================================================================
      SMARTPACK TRACKING
@@ -72,8 +72,8 @@
 <thead><tr><th>Trin</th><th>Systemet forsøger</th><th>Betingelse</th></tr></thead>
 <tbody>
 <tr><td><strong>1</strong></td><td>Varens foretrukne placering, altså hjemstedet</td><td>Skal være den rigtige type plads, og have volumen til mindst én enhed. Er der ikke plads, springes den over og udelukkes fra resten af søgningen</td></tr>
-<tr><td><strong>2</strong></td><td>Pladser hvor varen allerede har et aktivt lagerlot</td><td>Skal have fri volumen til mindst én enhed</td></tr>
-<tr><td><strong>3</strong></td><td>Helt tomme pladser</td><td>Ingen lagerlots overhovedet. Sorteres efter afstand</td></tr>
+<tr><td><strong>2</strong></td><td>Pladser hvor varen allerede har et aktivt lagerparti</td><td>Skal have fri volumen til mindst én enhed</td></tr>
+<tr><td><strong>3</strong></td><td>Helt tomme pladser</td><td>Ingen lagerpartier overhovedet. Sorteres efter afstand</td></tr>
 <tr><td><strong>4</strong></td><td>Frie pladser, også hvor der ligger andre varer</td><td>Blot fri volumen nok. Sorteres efter afstand</td></tr>
 <tr><td><strong>5</strong></td><td>Ingen plads fundet</td><td>Linjen oprettes alligevel, uden destination. Medarbejderen vælger selv på terminalen</td></tr>
 </tbody>
@@ -122,11 +122,11 @@
   <div class="bottom-cta"><p>Vil du se genopfyldning regnet på jeres eget lagerlayout?</p><a href="../../kontakt" class="btn">Få en uforpligtende gennemgang</a></div>
   <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
     <a href="./plukprofiler" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Plukprofiler: styr hvem der plukker hvad</span></a>
-    <a href="../vaekst/optimer-plukkehastighed" class="article-related__item"><span class="article-related__item-cat">Vaekst</span><span class="article-related__item-title">Optimer plukkehastighed</span></a>
+    <a href="../vaekst/optimer-plukkehastighed" class="article-related__item"><span class="article-related__item-cat">Vækst</span><span class="article-related__item-title">Optimer plukkehastighed</span></a>
     <a href="../problemer/forkert-vareplacering" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Forkert vareplacering</span></a>
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
-    <details class="faq-item"><summary>Kan systemet foreslå en plads varen aldrig har ligget på?</summary><div class="faq-item__body"><p>Ja. Trin 3 og 4 i allokeringen søger hele lageret for tomme eller frie pladser. Kravene er at pladsen er aktiv på lagertegningen, har den rigtige type, og har fri volumen til mindst én enhed regnet på varens volumen i cm&sup3;.</p></div></details>
+    <details class="faq-item"><summary>Kan systemet foreslå en plads varen aldrig har ligget på?</summary><div class="faq-item__body"><p>Ja. Trin 3 og 4 i tildelingen søger hele lageret for tomme eller frie pladser. Kravene er at pladsen er aktiv på lagertegningen, har den rigtige type, og har fri volumen til mindst én enhed regnet på varens volumen i cm&sup3;.</p></div></details>
     <details class="faq-item"><summary>Hvad betyder tættest på, teknisk?</summary><div class="faq-item__body"><p>Faktisk gangafstand i meter, beregnet med A* pathfinding rundt om forhindringer på lagertegningen. Afstanden måles fra alle allerede allokerede pladser i ruten til alle kandidater, så ruten trækker sig sammen mens den bygges.</p></div></details>
     <details class="faq-item"><summary>Hvad hvis der ikke er plads nogen steder?</summary><div class="faq-item__body"><p>Linjen oprettes alligevel, men uden destination. Medarbejderen vælger selv en placering på terminalen. Ruten går altså ikke i stå, du får blot en linje der kræver en beslutning.</p></div></details>
     <details class="faq-item"><summary>Hvornår ender varen i bulk frem for på plukpladsen?</summary><div class="faq-item__body"><p>Når Refill Max er nået, enten den globale eller den der er sat per vare per lokation, eller når varen allerede har det maksimale antal plukpladser. Du kan også tvinge alt til refill-pladser når ruten oprettes.</p></div></details>

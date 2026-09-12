@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789232089">
+  <link rel="stylesheet" href="../../css/style.css?v=1789254939">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -87,14 +87,14 @@
     <ul>
       <li><strong>Leveringstid er konkurrenceulempe</strong>, kunder i Jylland taber 1-2 dage vs. konkurrenter med lokalt lager</li>
       <li><strong>Kapaciteten er maxed</strong>, du kan ikke fysisk håndtere mere volumen på ét sted</li>
-      <li><strong>Fragtkostnader dominerer</strong>, høj pris per forsendelse pga. afstand til slutkunde</li>
+      <li><strong>Fragtudgifter dominerer</strong>, høj pris per forsendelse pga. afstand til slutkunde</li>
       <li><strong>Black Friday kræver 6× kapacitet</strong>, ét lager kan ikke skalere det, men to lager og 3PL kan</li>
       <li><strong>Du sælger internationalt</strong>, toldregler og leveringstid gør lokalt lager i markedet nødvendigt</li>
     </ul>
     <h2>Hvorfor det er vigtigt, i kroner</h2>
     <p><strong>Regnestykke: 500 ordrer/dag, 60% Sjælland, 40% Jylland</strong></p>
     <table>
-      <thead><tr><th>Scenario</th><th>Fragtkostnad/ordre</th><th>årlig cost (125.000 ordrer)</th></tr></thead>
+      <thead><tr><th>Scenario</th><th>Fragtpris/ordre</th><th>årlig cost (125.000 ordrer)</th></tr></thead>
       <tbody>
         <tr><td>Ét lager (Sjælland)</td><td>38 kr. gennemsnit</td><td>4.750.000 kr.</td></tr>
         <tr><td>To lagre (Sjælland og Jylland)</td><td>28 kr. gennemsnit</td><td>3.500.000 kr.</td></tr>
@@ -103,8 +103,8 @@
     </table>
     <p>Ekstra husleje Jylland: 180.000 kr./år. Ekstra personale (0,5 FTE): 210.000 kr./år. WMS multi-location: 30.000 kr./år ekstra. <strong>Total ekstra cost: 420.000 kr./år. Netto-gevinst: 830.000 kr./år.</strong></p>
     <h2>Det opdager de fleste for sent</h2>
-    <p><strong>Scenarie 1: åbner Jylland-lager uden WMS</strong><br>Webshop åbner lager i Aarhus. Excel-ark til begge lokationer. Uge 2: Sælger vare der kun er på Sjælland-lageret. Ordre allokeres til Aarhus. Ordre forsinkes 3 dage. Kunden annullerer. Uge 4: 18 dobbeltbookinger. Cost: 18 × 450 kr. = 8.100 kr. Måned 3: Opgiver Jylland-lager. <strong>Tabt: 140.000 kr.</strong></p>
-    <p><strong>Scenarie 2: Venter for længe</strong><br>Webshop ved 420 ordrer/dag. 45% af kunder i Jylland. 420 × 45% × 20 kr. ekstra fragt × 250 dage = <strong>472.500 kr./år i unødvendig fragtkostnad</strong>. Konkurrent åbner Jylland-lager. Mister 12% markedsandel. <strong>Tabt omsætning: 680.000 kr./år.</strong></p>
+    <p><strong>Scenarie 1: åbner Jylland-lager uden WMS</strong><br>Webshop åbner lager i Aarhus. Excel-ark til begge lokationer. Uge 2: Sælger vare der kun er på Sjælland-lageret. Ordre tildeles til Aarhus. Ordre forsinkes 3 dage. Kunden annullerer. Uge 4: 18 dobbeltbookinger. Cost: 18 × 450 kr. = 8.100 kr. Måned 3: Opgiver Jylland-lager. <strong>Tabt: 140.000 kr.</strong></p>
+    <p><strong>Scenarie 2: Venter for længe</strong><br>Webshop ved 420 ordrer/dag. 45% af kunder i Jylland. 420 × 45% × 20 kr. ekstra fragt × 250 dage = <strong>472.500 kr./år i unødvendig fragtudgift</strong>. Konkurrent åbner Jylland-lager. Mister 12% markedsandel. <strong>Tabt omsætning: 680.000 kr./år.</strong></p>
     <h2>Typiske fejl</h2>
     <ol>
       <li><strong>åbner nyt lager uden WMS</strong>, to lagre styret i Excel er opskriften på lagerubalancer, dobbeltforsendelser og utilfredse kunder.</li>
@@ -115,10 +115,10 @@
     <ol>
       <li><strong>Analysér kundedistribution</strong>, brug ordrernes postnumre til at kortlægge, om et ekstra lager reelt reducerer leveringstid og fragtomkostning markant.</li>
       <li><strong>Start med 3PL, ikke eget lager</strong>, test markedet med en eksisterende 3PL-operatør, inden du investerer i lokale kvadratmetre.</li>
-      <li><strong>Kræv realtidsintegration</strong>, dit WMS skal opdatere beh oldningen på tværs af lokationer i realtid. Ingen manuelle Excel-overførsler.</li>
+      <li><strong>Kræv realtidsintegration</strong>, dit WMS skal opdatere beholdningen på tværs af lokationer i realtid. Ingen manuelle Excel-overførsler.</li>
     </ol>
     <h2>SmartPacks understøttelse</h2>
-    <p>SmartPack understøtter multi-location lagerstyring med realtids-synkronisering på tværs af lokationer. Systemet allokerer ordrer til den mest optimale lokation baseret på distance, beholdning og kapacitet, og advarer dig, hvis du er ved at sælge en vare der kun findes ét sted. Integration med 3PL-partnere sker via API. Uden WMS er to lagre en risiko. Med SmartPack er det en konkurrencefordel.</p>
+    <p>SmartPack understøtter multi-location lagerstyring med realtids-synkronisering på tværs af lokationer. Systemet tildeler ordrer til den mest optimale lokation baseret på distance, beholdning og kapacitet, og advarer dig, hvis du er ved at sælge en vare der kun findes ét sted. Integration med 3PL-partnere sker via API. Uden WMS er to lagre en risiko. Med SmartPack er det en konkurrencefordel.</p>
   </div>
   <div class="bottom-cta"><p>Klar til næste vækststep?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
   <div class="article-disclaimer"><p>Vejledende tal baseret på dansk e-handelspraksis.</p></div>
@@ -127,7 +127,7 @@
     <details class="faq-item"><summary>Hvornår er to lagre bedre end ét?</summary><div class="faq-item__body"><p>300 ordrer/dag med 40% Jylland-kunder giver 830.000 kr. netto-gevinst ved 2 lokationer. Under 300 ordrer/dag er ét lager typisk billigere.</p></div></details>
     <details class="faq-item"><summary>Kan SmartPack håndtere to lagre?</summary><div class="faq-item__body"><p>Ja. SmartPack er bygget til multi-location og opdaterer beholdning realtid på tværs af adresser.</p></div></details>
     <details class="faq-item"><summary>Er 3PL det samme som et ekstra lager?</summary><div class="faq-item__body"><p>Nej, men det kan fungere som ét. 3PL er en outsourcet partner. Du betaler per ordre og opbevaringsplads frem for fast husleje og personale.</p></div></details>
-    <details class="faq-item"><summary>Hvad sker der, hvis jeg sælger en vare der kun er på ét lager?</summary><div class="faq-item__body"><p>Uden WMS: du sender delordre eller fejlordre. Med SmartPack: systemet allokerer automatisk fra den rigtige lokation og informerer pakkeprocessen.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis jeg sælger en vare der kun er på ét lager?</summary><div class="faq-item__body"><p>Uden WMS: du sender delordre eller fejlordre. Med SmartPack: systemet tildeler automatisk fra den rigtige lokation og informerer pakkeprocessen.</p></div></details>
     <details class="faq-item"><summary>Hvornår er internationalt lager relevant?</summary><div class="faq-item__body"><p>Når du sælger nok i et land til, at toldmæssig forsinkelse og leveringstid er konkurrenceulempe. Typisk ved 50+ ordrer/dag fra ét land.</p></div></details>
   </div>
 </div></div>
