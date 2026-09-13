@@ -3100,6 +3100,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .footer__top { grid-template-columns: 1fr; gap: 2.5rem; }
   .footer__nav { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
   .authority__img--book { max-width: 280px; max-height: 360px; }
+  .ww-badge { left: 0; top: 6%; bottom: auto; width: 110px; }
 }
 @media (max-width: 560px) {
   .footer__nav { grid-template-columns: 1fr 1fr; }
@@ -3129,7 +3130,8 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
   .signature__quote-icon { top: -2.5rem; font-size: 3.5rem; }
   /* Authority book on small screens */
   .authority__img--book { max-width: 220px; max-height: 300px; }
-  .ww-badge { left: 2%; bottom: 5%; width: 100px; }
+  /* Badge flyttes op, saa den ikke daekker Dansk Erhverv-logoet paa forsiden af bogen */
+  .ww-badge { left: 0; top: 5%; bottom: auto; width: 88px; }
   .authority__visual { overflow: hidden; }
   /* Video section */
 }
