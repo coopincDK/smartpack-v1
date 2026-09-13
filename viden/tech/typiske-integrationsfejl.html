@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789309906">
+  <link rel="stylesheet" href="../../css/style.css?v=1789310477">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -30,7 +30,7 @@
 ================================================================ -->
 
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
-<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
 <script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
 
@@ -72,7 +72,7 @@
   <header class="article-header">
     <span class="article-cat-badge">Tech &amp; Integration</span>
     <h1 class="article-title">Typiske integrationsfejl i lagerstyring: og hvordan du undgår dem</h1>
-    <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~7 min</span></div>
+  <div class="article-meta"><time datetime="2025-04-30">April 2025</time><span>SmartPack</span><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
     <p>Integrationen virker. Ordrer flyder ind, lager opdateres, pakker sendes. Og så en dag opdager I, at 47 ordrer ikke er behandlet siden i går morges, og ingen vidste det. Det er integrationsfejlenes natur: de sker oftest usynligt, opdages sent og koster dyrt.</p>
@@ -104,17 +104,17 @@
 
     <h3>1. Webhook leveres ikke/ignoreres</h3>
     <p><strong>Hvad sker:</strong> Shopify sender webhook-event, men dit WMS er utilgængeligt i det øjeblik (deployment, server-restart, netværksfejl). Eventet forsvinder.</p>
-    <p><strong>Årsag:</strong> Manglende retry-håndtering, timeout under deployment, ingen kø som buffer.</p>
+    <p><strong>årsag:</strong> Manglende retry-håndtering, timeout under deployment, ingen kø som buffer.</p>
     <p><strong>Løsning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra køen, ikke direkte fra webhook.</p>
 
     <h3>2. BC client secret udløber</h3>
     <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
-    <p><strong>Årsag:</strong> <a href="business-central-integration">Business Central</a> bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 år. Det er den hyppigste årsag til BC-integrationsnedbrud. De fleste virksomheder sætter det op og glemmer det.</p>
+    <p><strong>årsag:</strong> <a href="business-central-integration">Business Central</a> bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 år. Det er den hyppigste årsag til BC-integrationsnedbrud. De fleste virksomheder sætter det op og glemmer det.</p>
     <p><strong>Løsning:</strong> sæt kalenderreminder 30 og 60 dage før udløb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. måned.</p>
 
     <h3>3. Leveringsmetode-mapping fejler</h3>
     <p><strong>Hvad sker:</strong> Kunden vælger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
-    <p><strong>Årsag:</strong> Shopify bruger interne nøgler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
+    <p><strong>årsag:</strong> Shopify bruger interne nøgler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
     <p><strong>Løsning:</strong> Gennemgå og test alle leveringsmetode-mappings i staging-miljø inden go-live.</p>
 
     <h3>4. Delvis synkronisering af ordrelinjer</h3>
@@ -127,7 +127,7 @@
 
     <h3>6. e-conomic Grant Token er trukket tilbage</h3>
     <p><strong>Hvad sker:</strong> e-conomic-integration holder op med at virke. Ordrer hentes ikke, fakturakladder oprettes ikke.</p>
-    <p><strong>Årsag:</strong> <a href="economic-integration">e-conomic</a> bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratrådt medarbejder), invalideres tokenet.</p>
+    <p><strong>årsag:</strong> <a href="economic-integration">e-conomic</a> bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratrådt medarbejder), invalideres tokenet.</p>
     <p><strong>Løsning:</strong> Brug en servicebruger/systembruger i e-conomic til integration, ikke en personlig bruger.</p>
 
     <h2>Det opdager de fleste for sent</h2>
