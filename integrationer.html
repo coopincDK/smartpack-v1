@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Integrationer | til Shopify, fragt og ERP | SmartPack</title>
-  <meta name="description" content="SmartPack integrerer med Shopify, WooCommerce, GLS, PostNord, e-conomic og 40+ andre. Ingen konsulent. Under 2 minutter pr. integration.">
+  <meta name="description" content="SmartPack integrerer med Shopify, WooCommerce, GLS, PostNord, e-conomic og 70+ andre. Ingen konsulent. Under 2 minutter pr. integration.">
   <link rel="canonical" href="https://smartpack.dk/integrationer">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0c1117">
@@ -38,7 +38,7 @@
         "@id": "https://smartpack.dk/integrationer.html",
         "url": "https://smartpack.dk/integrationer.html",
         "name": "Integrationer - til Shopify, fragt og ERP | SmartPack",
-        "description": "SmartPack integrerer med Shopify, WooCommerce, GLS, PostNord, e-conomic og 40+ andre systemer. Under 2 minutter pr. integration.",
+        "description": "SmartPack integrerer med Shopify, WooCommerce, GLS, PostNord, e-conomic og 70+ andre systemer. Under 2 minutter pr. integration.",
         "isPartOf": {"@id": "https://smartpack.dk/#website"},
         "publisher": {"@id": "https://smartpack.dk/#organization"}
       },
@@ -78,7 +78,7 @@
   <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=1789328162">
+  <link rel="stylesheet" href="css/style.css?v=1789328851">
   <script src="js/theme-toggle.js"></script>
 
   <style>
@@ -496,7 +496,7 @@
 <body>
 
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789328162"></script>
+<script src="js/header.js?v=1789328851"></script>
 
 <main id="main-content">
 
@@ -547,7 +547,7 @@
 
     <!-- Stats -->
     <div class="int-hub__stats">
-      <div class="int-hub__stat"><strong>50+</strong><span>integrationer klar til brug</span></div>
+      <div class="int-hub__stat"><strong class="int-count-dynamic">71</strong><span>integrationer klar til brug</span></div>
       <div class="int-hub__stat"><strong>&lt;2 min</strong><span>pr. integration</span></div>
       <div class="int-hub__stat"><strong>&Aring;bent</strong><span>API til alt andet</span></div>
     </div>
@@ -1029,9 +1029,9 @@
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789328162"></script>
+<script src="js/footer.js?v=1789328851"></script>
 
-<script src="js/main.js?v=1789328162" defer></script>
+<script src="js/main.js?v=1789328851" defer></script>
 <script>
 // Search & filter
 const searchEl = document.getElementById('int-search');
@@ -1071,5 +1071,6 @@ filterBtns.forEach(btn => {
 
 </script>
 
+<script>document.addEventListener("DOMContentLoaded",function(){var s=new Set();document.querySelectorAll('a[href*="integrationer/"]').forEach(function(a){var h=(a.getAttribute("href")||"").replace(/^\.?\//,"");if(/^integrationer\/[a-z0-9-]+$/.test(h))s.add(h);});if(s.size)document.querySelectorAll(".int-count-dynamic").forEach(function(e){e.textContent=s.size;});});</script>
 </body>
 </html>
