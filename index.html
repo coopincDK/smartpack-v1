@@ -43,11 +43,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Preload kritiske ressourcer -->
-  <link rel="preload" href="css/style.css?v=1789329590" as="style">
+  <link rel="preload" href="css/style.css?v=1789330564" as="style">
   <link rel="preload" href="assets/SmartPack-WMS-PDA.webp" as="image">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=1789329590">
+  <link rel="stylesheet" href="css/style.css?v=1789330564">
   <script src="js/theme-toggle.js"></script>
 
   <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
@@ -232,14 +232,14 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789329590"></script>
+<script src="js/header.js?v=1789330564"></script>
 
 <main id="main-content">
 
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero__bg">
-    <img height="1024" width="1536" src="assets/futurewarehuse.webp" alt="futurewarehuse" class="hero__bg-img">
+    <img height="1024" width="1536" src="assets/futurewarehuse.webp" alt="" fetchpriority="high" decoding="async" class="hero__bg-img">
     <div class="hero__bg-overlay"></div>
   </div>
 
@@ -271,15 +271,18 @@ Du vokser.<br>
                class="hero__phone-img">
           <!-- Scan animation overlay -->
           <div class="hero__scan-wrap">
-            <img height="480" width="480" src="assets/scan.webp" alt="Scanning af varer pÃ¥ lager" class="hero__scan-gif" aria-hidden="true">
+            <img height="480" width="480" src="assets/scan.webp" alt="" loading="lazy" decoding="async" class="hero__scan-gif" aria-hidden="true">
           </div>
         </div>
 
         <!-- LAG 2: Warehouse grid animation -->
         <div class="hero__dashboard">
-          <img height="640" width="1138" src="assets/aerial-view-warehouse-grid.webp"
-               alt="SmartPack ruteoptimering"
-               class="hero__dashboard-img">
+          <video class="hero__dashboard-img" width="1138" height="640"
+                 autoplay muted loop playsinline preload="none"
+                 poster="assets/aerial-view-warehouse-grid-poster.webp"
+                 aria-label="SmartPack ruteoptimering">
+            <source src="assets/aerial-view-warehouse-grid.mp4" type="video/mp4">
+          </video>
         </div>
 
         <!-- LAG 3: Flow-linje fra telefon ned til GIF -->
@@ -355,55 +358,55 @@ Du vokser.<br>
     <div class="logo-carousel">
       <div class="logo-carousel__track">
         <!-- S&aelig;t 1 -->
-        <img height="225" width="225" src="assets/totteland-removebg.png"                      alt="Totteland"        class="hero__logo-img">
-        <img height="80" width="200" src="assets/Maya_Freya_Logo_Sort-2.svg"                  alt="Maya Freya"       class="hero__logo-img">
-        <img height="234" width="562" src="assets/firstgrade.png"                              alt="First Grade"      class="hero__logo-img">
-        <img height="328" width="1200" src="assets/DanGuitar-logo.png"                          alt="DanGuitar"        class="hero__logo-img">
-        <img height="80" width="200" src="assets/julesweaters-logo0.svg"                      alt="Jule-Sweaters"    class="hero__logo-img">
-        <img height="103" width="200" src="assets/billigfitness-logo-removebg.png"             alt="Billig Fitness"   class="hero__logo-img">
-        <img height="591" width="1181" src="assets/Geekd0.png"                                  alt="Geekd"            class="hero__logo-img">
-        <img height="255" width="1187" src="assets/noovall_logo.png"                            alt="Noovall"          class="hero__logo-img">
-        <img height="139" width="285" src="assets/BFT-logo.png"                                alt="BFT"              class="hero__logo-img">
-        <img height="162" width="311" src="assets/uniqperler-removebg.png"                     alt="Uniq Perler"      class="hero__logo-img">
-        <img height="80" width="200" src="assets/nimara-logo.webp"                            alt="Nimara"           class="hero__logo-img">
-        <img height="80" width="200" src="assets/white_specktrum_logo.webp"                   alt="Specktrum"        class="hero__logo-img">
-        <img height="63" width="155" src="assets/TrendyLiving.dk_-removebg-preview.png"       alt="Trendy Living"    class="hero__logo-img">
-        <img height="93" width="610" src="assets/Fashion_By_Strand_logo-removebg-preview.png" alt="Fashion by Strand" class="hero__logo-img">
-        <img height="80" width="200" src="assets/SBP+logo+sort.webp"                          alt="SBP"              class="hero__logo-img">
-        <img height="240" width="1280" src="assets/Rhenus logo.png"               alt="Rhenus"            class="hero__logo-img">
-        <img height="200" width="480" src="assets/klaedeskabet-removebg.png"       alt="Kl&aelig;deskabet"       class="hero__logo-img">
-        <img height="406" width="406" src="assets/Skagen-removebg-preview.png"     alt="Skagen"            class="hero__logo-img">
-        <img height="80" width="200" src="assets/logo-vinhuset.webp"              alt="Vinhuset"          class="hero__logo-img">
-        <img height="256" width="1108" src="assets/DressForSuccess_Logo_1000x.png"  alt="Dress for Success" class="hero__logo-img">
-        <img height="225" width="400" src="assets/Pitaya-logo--400x225.png"        alt="Pitaya"            class="hero__logo-img">
-        <img height="195" width="200" src="assets/littleunbox-logo.png"            alt="Little Unbox"      class="hero__logo-img">
-        <img height="225" width="225" src="assets/batteribyen-logo.png"     alt="Batteribyen"       class="hero__logo-img">
-        <img height="727" width="727" src="assets/ume-asian-supermarket-logo.webp" alt="Ume Asian Supermarket" class="hero__logo-img">
+        <img height="225" width="225" src="assets/totteland-removebg.png"                      alt="Totteland"        class="hero__logo-img" decoding="async">
+        <img height="80" width="200" src="assets/Maya_Freya_Logo_Sort-2.svg"                  alt="Maya Freya"       class="hero__logo-img" decoding="async">
+        <img height="234" width="562" src="assets/firstgrade.png"                              alt="First Grade"      class="hero__logo-img" decoding="async">
+        <img height="328" width="1200" src="assets/DanGuitar-logo.png"                          alt="DanGuitar"        class="hero__logo-img" decoding="async">
+        <img height="80" width="200" src="assets/julesweaters-logo0.svg"                      alt="Jule-Sweaters"    class="hero__logo-img" decoding="async">
+        <img height="103" width="200" src="assets/billigfitness-logo-removebg.png"             alt="Billig Fitness"   class="hero__logo-img" decoding="async">
+        <img height="591" width="1181" src="assets/Geekd0.png"                                  alt="Geekd"            class="hero__logo-img" decoding="async">
+        <img height="255" width="1187" src="assets/noovall_logo.png"                            alt="Noovall"          class="hero__logo-img" decoding="async">
+        <img height="139" width="285" src="assets/BFT-logo.png"                                alt="BFT"              class="hero__logo-img" decoding="async">
+        <img height="162" width="311" src="assets/uniqperler-removebg.png"                     alt="Uniq Perler"      class="hero__logo-img" decoding="async">
+        <img height="80" width="200" src="assets/nimara-logo.webp"                            alt="Nimara"           class="hero__logo-img" decoding="async">
+        <img height="80" width="200" src="assets/white_specktrum_logo.webp"                   alt="Specktrum"        class="hero__logo-img" decoding="async">
+        <img height="63" width="155" src="assets/TrendyLiving.dk_-removebg-preview.png"       alt="Trendy Living"    class="hero__logo-img" decoding="async">
+        <img height="93" width="610" src="assets/Fashion_By_Strand_logo-removebg-preview.png" alt="Fashion by Strand" class="hero__logo-img" decoding="async">
+        <img height="80" width="200" src="assets/SBP+logo+sort.webp"                          alt="SBP"              class="hero__logo-img" decoding="async">
+        <img height="240" width="1280" src="assets/Rhenus logo.png"               alt="Rhenus"            class="hero__logo-img" decoding="async">
+        <img height="200" width="480" src="assets/klaedeskabet-removebg.png"       alt="Kl&aelig;deskabet"       class="hero__logo-img" decoding="async">
+        <img height="406" width="406" src="assets/Skagen-removebg-preview.png"     alt="Skagen"            class="hero__logo-img" decoding="async">
+        <img height="80" width="200" src="assets/logo-vinhuset.webp"              alt="Vinhuset"          class="hero__logo-img" decoding="async">
+        <img height="256" width="1108" src="assets/DressForSuccess_Logo_1000x.png"  alt="Dress for Success" class="hero__logo-img" decoding="async">
+        <img height="225" width="400" src="assets/Pitaya-logo--400x225.png"        alt="Pitaya"            class="hero__logo-img" decoding="async">
+        <img height="195" width="200" src="assets/littleunbox-logo.png"            alt="Little Unbox"      class="hero__logo-img" decoding="async">
+        <img height="225" width="225" src="assets/batteribyen-logo.png"     alt="Batteribyen"       class="hero__logo-img" decoding="async">
+        <img height="727" width="727" src="assets/ume-asian-supermarket-logo.webp" alt="Ume Asian Supermarket" class="hero__logo-img" decoding="async">
         <!-- S&aelig;t 2 (kopi for seamless loop) -->
-        <img height="225" width="225" src="assets/totteland-removebg.png"                      alt="totteland removebg"  class="hero__logo-img" aria-hidden="true">
-        <img height="80" width="200" src="assets/Maya_Freya_Logo_Sort-2.svg"                  alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="234" width="562" src="assets/firstgrade.png"                              alt="firstgrade"  class="hero__logo-img" aria-hidden="true">
-        <img height="328" width="1200" src="assets/DanGuitar-logo.png"                          alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="80" width="200" src="assets/julesweaters-logo0.svg"                      alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="103" width="200" src="assets/billigfitness-logo-removebg.png"             alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="591" width="1181" src="assets/Geekd0.png"                                  alt="Geekd0"  class="hero__logo-img" aria-hidden="true">
-        <img height="255" width="1187" src="assets/noovall_logo.png"                            alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="139" width="285" src="assets/BFT-logo.png"                                alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="162" width="311" src="assets/uniqperler-removebg.png"                     alt="uniqperler removebg"  class="hero__logo-img" aria-hidden="true">
-        <img height="80" width="200" src="assets/nimara-logo.webp"                            alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="80" width="200" src="assets/white_specktrum_logo.webp"                   alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="63" width="155" src="assets/TrendyLiving.dk_-removebg-preview.png"       alt="TrendyLiving.dk removebg preview"  class="hero__logo-img" aria-hidden="true">
-        <img height="93" width="610" src="assets/Fashion_By_Strand_logo-removebg-preview.png" alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true">
-        <img height="80" width="200" src="assets/SBP+logo+sort.webp"                          alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
-        <img height="240" width="1280" src="assets/Rhenus logo.png"                              alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
-        <img height="200" width="480" src="assets/klaedeskabet-removebg.png"                    alt="klaedeskabet removebg" class="hero__logo-img" aria-hidden="true">
-        <img height="406" width="406" src="assets/Skagen-removebg-preview.png"                  alt="Skagen removebg preview" class="hero__logo-img" aria-hidden="true">
-        <img height="80" width="200" src="assets/logo-vinhuset.webp"                           alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
-        <img height="256" width="1108" src="assets/DressForSuccess_Logo_1000x.png"               alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
-        <img height="225" width="400" src="assets/Pitaya-logo--400x225.png"                     alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
-        <img height="195" width="200" src="assets/littleunbox-logo.png"                         alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
-        <img height="225" width="225" src="assets/batteribyen-logo.png"                  alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
-        <img height="727" width="727" src="assets/ume-asian-supermarket-logo.webp"          alt="SmartPack logo" class="hero__logo-img" aria-hidden="true">
+        <img height="225" width="225" src="assets/totteland-removebg.png"                      alt="totteland removebg"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="80" width="200" src="assets/Maya_Freya_Logo_Sort-2.svg"                  alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="234" width="562" src="assets/firstgrade.png"                              alt="firstgrade"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="328" width="1200" src="assets/DanGuitar-logo.png"                          alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="80" width="200" src="assets/julesweaters-logo0.svg"                      alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="103" width="200" src="assets/billigfitness-logo-removebg.png"             alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="591" width="1181" src="assets/Geekd0.png"                                  alt="Geekd0"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="255" width="1187" src="assets/noovall_logo.png"                            alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="139" width="285" src="assets/BFT-logo.png"                                alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="162" width="311" src="assets/uniqperler-removebg.png"                     alt="uniqperler removebg"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="80" width="200" src="assets/nimara-logo.webp"                            alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="80" width="200" src="assets/white_specktrum_logo.webp"                   alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="63" width="155" src="assets/TrendyLiving.dk_-removebg-preview.png"       alt="TrendyLiving.dk removebg preview"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="93" width="610" src="assets/Fashion_By_Strand_logo-removebg-preview.png" alt="SmartPack logo"  class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="80" width="200" src="assets/SBP+logo+sort.webp"                          alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="240" width="1280" src="assets/Rhenus logo.png"                              alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="200" width="480" src="assets/klaedeskabet-removebg.png"                    alt="klaedeskabet removebg" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="406" width="406" src="assets/Skagen-removebg-preview.png"                  alt="Skagen removebg preview" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="80" width="200" src="assets/logo-vinhuset.webp"                           alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="256" width="1108" src="assets/DressForSuccess_Logo_1000x.png"               alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="225" width="400" src="assets/Pitaya-logo--400x225.png"                     alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="195" width="200" src="assets/littleunbox-logo.png"                         alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="225" width="225" src="assets/batteribyen-logo.png"                  alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
+        <img height="727" width="727" src="assets/ume-asian-supermarket-logo.webp"          alt="SmartPack logo" class="hero__logo-img" aria-hidden="true" decoding="async">
       </div>
     </div>
 </div>
@@ -1083,10 +1086,10 @@ Du vokser.<br>
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789329590"></script>
+<script src="js/footer.js?v=1789330564"></script>
 
 
-  <script src="js/main.js?v=1789329590" defer></script>
+  <script src="js/main.js?v=1789330564" defer></script>
   <script src="js/hero-editor.js" defer></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
