@@ -43,81 +43,146 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Preload kritiske ressourcer -->
-  <link rel="preload" href="css/style.css?v=1789296944" as="style">
+  <link rel="preload" href="css/style.css?v=1789297783" as="style">
   <link rel="preload" href="assets/SmartPack-WMS-PDA.webp" as="image">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=1789296944">
+  <link rel="stylesheet" href="css/style.css?v=1789297783">
   <script src="js/theme-toggle.js"></script>
 
   <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://smartpack.dk/#organization",
-        "name": "SmartPack",
-        "url": "https://smartpack.dk",
-        "logo": "https://smartpack.dk/assets/cropped-favicon-smartpack.png",
-        "description": "Dansk warehouse management system (WMS) bygget af e-købmænd siden 2005.",
-        "foundingDate": "2005",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Østerbrogade 67A",
-          "postalCode": "8500",
-          "addressLocality": "Grenaa",
-          "addressCountry": "DK"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://smartpack.dk/#organization",
+      "name": "SmartPack",
+      "legalName": "SmartPack ApS",
+      "url": "https://smartpack.dk",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"
+      },
+      "description": "Dansk warehouse management system bygget af e-købmænd siden 2005. Scan-verificeret pluk og pakning, batch picking, A* ruteoptimering og 40+ integrationer.",
+      "foundingDate": "2005",
+      "vatID": "DK42007617",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Østerbrogade 67A",
+        "postalCode": "8500",
+        "addressLocality": "Grenaa",
+        "addressCountry": "DK"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+4588202019",
+          "contactType": "sales",
+          "availableLanguage": "Danish"
         },
-        "contactPoint": {
+        {
           "@type": "ContactPoint",
           "telephone": "+4588202019",
           "email": "support@smartpack.dk",
           "contactType": "customer service",
           "availableLanguage": "Danish"
-        },
-        "sameAs": [
-          "https://www.linkedin.com/company/smartpackwms",
-          "https://www.youtube.com/@SmartPackWMS"
-        ]
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://smartpack.dk/#software",
-        "name": "SmartPack WMS",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "description": "Dansk warehouse management system med ruteoptimering, scan-verificering, retur og integrationer til 57+ systemer.",
-        "offers": {
-          "@type": "Offer",
-          "priceCurrency": "DKK",
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "DKK",
-            "unitText": "afregnet pakke",
-            "minPrice": "0.69",
-            "maxPrice": "3.00"
-          },
-          "description": "Betaling pr. afregnet pakke. Fra 3,00 kr. ned til 0,69 kr. efter mængde. Minimumsafregning 3.000 kr./md. Ingen opstartsfee. Ingen binding."
-        },
-        "publisher": {"@id": "https://smartpack.dk/#organization"}
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://smartpack.dk/#website",
-        "url": "https://smartpack.dk",
-        "name": "SmartPack",
-        "publisher": {"@id": "https://smartpack.dk/#organization"},
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://smartpack.dk/?s={search_term_string}",
-          "query-input": "required name=search_term_string"
         }
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/company/smartpackwms",
+        "https://www.youtube.com/@SmartPackWMS",
+        "https://www.tiktok.com/@smartpackwms"
+      ],
+      "knowsAbout": [
+        "Warehouse management system",
+        "Lagerstyring",
+        "E-handelslogistik",
+        "Pluk og pak",
+        "Fulfillment",
+        "3PL",
+        "Returhåndtering"
+      ]
+    },
+    {
+      "@type": "Book",
+      "@id": "https://smartpack.dk/#elogistikguide",
+      "name": "E-logistik Guide 2026, lagerhåndbog for den voksende webshop",
+      "author": [
+        {
+          "@id": "https://smartpack.dk/#organization"
+        },
+        {
+          "@type": "Organization",
+          "name": "Dansk Erhverv",
+          "url": "https://www.danskerhverv.dk"
+        }
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Dansk Erhverv",
+        "url": "https://www.danskerhverv.dk"
+      },
+      "datePublished": "2026",
+      "inLanguage": "da-DK",
+      "url": "https://www.danskerhverv.dk/presse-og-nyheder/nyheder/2026/april/e-handelslogistikguiden-2026-er-klar-sadan-gor-du-dit-lager-til-en-konkurrencefordel/",
+      "about": [
+        "Lagerindretning",
+        "ABC-analyse",
+        "Plukkestrategi",
+        "Pakkefejl",
+        "Returhåndtering",
+        "Nøgletal på lageret",
+        "3PL"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://smartpack.dk/#website",
+      "url": "https://smartpack.dk",
+      "name": "SmartPack",
+      "description": "WMS til webshops og 3PL",
+      "inLanguage": "da-DK",
+      "publisher": {
+        "@id": "https://smartpack.dk/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://smartpack.dk/?s={search_term_string}",
+        "query-input": "required name=search_term_string"
       }
-    ]
-  }
-  </script>
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://smartpack.dk/#software",
+      "name": "SmartPack WMS",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "da-DK",
+      "description": "Dansk warehouse management system til webshops og 3PL-lagre. Scan-verificeret pluk og pakning, batch picking, A* ruteoptimering og 40+ integrationer.",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "DKK",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "priceCurrency": "DKK",
+          "unitText": "afregnet pakke",
+          "minPrice": "0.69",
+          "maxPrice": "3.00"
+        },
+        "description": "Betaling pr. afregnet pakke. Fra 3,00 kr. ned til 0,69 kr. efter mængde. Minimumsafregning 3.000 kr./md. Ingen opstartsfee. Ingen binding."
+      },
+      "publisher": {
+        "@id": "https://smartpack.dk/#organization"
+      },
+      "provider": {
+        "@id": "https://smartpack.dk/#organization"
+      }
+    }
+  ]
+}
+</script>
 
 <!-- ================================================================
      SMARTPACK TRACKING. Skal med paa alle nye sider.
@@ -162,7 +227,7 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789296944"></script>
+<script src="js/header.js?v=1789297783"></script>
 
 <main id="main-content">
 
@@ -1014,10 +1079,10 @@ Vi bruger tiden p&aring; forretningen, ikke lageret.&rdquo;
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789296944"></script>
+<script src="js/footer.js?v=1789297783"></script>
 
 
-  <script src="js/main.js?v=1789296944" defer></script>
+  <script src="js/main.js?v=1789297783" defer></script>
   <script src="js/hero-editor.js" defer></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -1072,13 +1137,7 @@ Vi bruger tiden p&aring; forretningen, ikke lageret.&rdquo;
     }, 300);
   });
   </script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
-{"@type":"Organization","@id":"https://smartpack.dk/#organization","name":"SmartPack","url":"https://smartpack.dk","logo":{"@type":"ImageObject","url":"https://smartpack.dk/assets/favicon-smartpack0.png"},"description":"Cloudbaseret WMS til webshops og 3PL-lagre. Scan-verificeret pluk og pakning, batch picking, A* ruteoptimering og 40+ integrationer.","address":{"@type":"PostalAddress","streetAddress":"Østerbrogade 67A","addressLocality":"Grenaa","postalCode":"8500","addressCountry":"DK"},"contactPoint":[{"@type":"ContactPoint","telephone":"+45-88-20-20-19","contactType":"sales","availableLanguage":"Danish"},{"@type":"ContactPoint","email":"support@smartpack.dk","contactType":"customer service"}],"sameAs":["https://www.linkedin.com/company/smartpackwms"]},
-{"@type":"WebSite","@id":"https://smartpack.dk/#website","url":"https://smartpack.dk","name":"SmartPack","description":"WMS til webshops og 3PL","publisher":{"@id":"https://smartpack.dk/#organization"},"inLanguage":"da"},
-{"@type":"SoftwareApplication","@id":"https://smartpack.dk/#product","name":"SmartPack WMS","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"Warehouse Management System til eCommerce og 3PL. Scan-verificeret pluk, batch picking, A* pathfinding, 40+ integrationer.","offers":{"@type":"Offer","priceCurrency":"DKK","priceSpecification":{"@type":"UnitPriceSpecification","priceCurrency":"DKK","unitText":"afregnet pakke","minPrice":"0.69","maxPrice":"3.00"},"description":"Betaling pr. afregnet pakke. Fra 3,00 kr. ned til 0,69 kr. efter mængde. Minimumsafregning 3.000 kr./md. Ingen opstartsfee. Ingen binding."},"provider":{"@id":"https://smartpack.dk/#organization"}}
-]}
-</script>
+
 </body>
 </html>
 
