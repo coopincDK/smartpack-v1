@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789299222">
+  <link rel="stylesheet" href="../../css/style.css?v=1789300075">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -172,7 +172,7 @@
   </div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er en webhook?</summary><div class="faq-item__body"><p>En push-notifikation fra et eksternt system (fx Shopify) til dit system. Shopify sender automatisk en HTTP POST til din URL, når en ordre oprettes, ændres eller annulleres.</p></div></details>
-    <details class="faq-item"><summary>Hvorfor kræver webhooks HTTPS?</summary><div class="faq-item__body"><p>Uden HTTPS kan data aflyttes, og HMAC-signaturen kan ikke betros. Alle seriose platforme kræver HTTPS-endpoints.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor kræver webhooks HTTPS?</summary><div class="faq-item__body"><p>Uden HTTPS kan data aflyttes, og HMAC-signaturen kan ikke betros. Alle seriøse platforme kræver HTTPS-endpoints.</p></div></details>
     <details class="faq-item"><summary>Hvad sker der, hvis min webhook-handler er for langsom?</summary><div class="faq-item__body"><p>Shopify anser leveringen som fejlet og forsøger retry. Hvis din handler er langsom, risikerer du at modtage og behandle samme event to gange.</p></div></details>
     <details class="faq-item"><summary>Hvad er HMAC-SHA256, og hvorfor er det vigtigt?</summary><div class="faq-item__body"><p>En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke er manipuleret undervejs. Uden validering kan hvem som helst sende falske events.</p></div></details>
     <details class="faq-item"><summary>Kan jeg teste webhooks lokalt?</summary><div class="faq-item__body"><p>Ja, med tunneling-værktøjer som ngrok eller Tailscale Funnel. De giver et offentligt HTTPS-endpoint der tunneler til din lokale server. Brug til udvikling, aldrig i produktion.</p></div></details>

@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789299222">
+  <link rel="stylesheet" href="../../css/style.css?v=1789300075">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -76,7 +76,7 @@
   </header>
   <div class="article-body" data-pagefind-body="true">
     <p>Integrationen virker. Ordrer flyder ind, lager opdateres, pakker sendes. Og så en dag opdager I, at 47 ordrer ikke er behandlet siden i går morges, og ingen vidste det. Det er integrationsfejlenes natur: de sker oftest usynligt, opdages sent og koster dyrt.</p>
-    <p>Her er de mest typiske fejl, hvad der forarsager dem, og hvad du gør ved det.</p>
+    <p>Her er de mest typiske fejl, hvad der forårsager dem, og hvad du gør ved det.</p>
 
     <h2>Hvad er integrationsfejl?</h2>
     <p>En integrationsfejl opstår, når to systemer ikke kan kommunikere som forventet. Det kan skyldes tekniske problemer (server nede, netværksfejl, timeout), datamassige problemer (forkert format, manglende felt) eller logiske problemer (mapping-fejl, duplikater, timing-konflikter).</p>
@@ -105,30 +105,30 @@
     <h3>1. Webhook leveres ikke/ignoreres</h3>
     <p><strong>Hvad sker:</strong> Shopify sender webhook-event, men dit WMS er utilgængeligt i det øjeblik (deployment, server-restart, netværksfejl). Eventet forsvinder.</p>
     <p><strong>årsag:</strong> Manglende retry-håndtering, timeout under deployment, ingen kø som buffer.</p>
-    <p><strong>Losning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra køen, ikke direkte fra webhook.</p>
+    <p><strong>Løsning:</strong> Brug en message queue (Azure Service Bus, RabbitMQ) som buffer. WMS behandler fra køen, ikke direkte fra webhook.</p>
 
     <h3>2. BC client secret udløber</h3>
     <p><strong>Hvad sker:</strong> Business Central-integrationen holder op med at virke, pludseligt, uden varsel. Ordrer synkroniseres ikke.</p>
     <p><strong>årsag:</strong> <a href="business-central-integration">Business Central</a> bruger OAuth2 med client secret der har maksimal levetid p&aring; 2 år. Det er den hyppigste årsag til BC-integrationsnedbrud. De fleste virksomheder sætter det op og glemmer det.</p>
-    <p><strong>Losning:</strong> sæt kalenderreminder 30 og 60 dage før udløb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. måned.</p>
+    <p><strong>Løsning:</strong> sæt kalenderreminder 30 og 60 dage før udløb. Dokumenter, hvem der har adgang til Azure App Registration. Overvej at rotere secret proaktivt hvert 18. måned.</p>
 
     <h3>3. Leveringsmetode-mapping fejler</h3>
     <p><strong>Hvad sker:</strong> Kunden vælger &quot;GLS Pakkeshop&quot; i Shopify-checkout. I WMS mappes det til forkert fragtprodukt. Pakken sendes med forkert service.</p>
     <p><strong>årsag:</strong> Shopify bruger interne nøgler til leveringsmetoder. Fejl i mapping giver forkert fragtvalg eller mislykket fulfillment.</p>
-    <p><strong>Losning:</strong> Gennemgå og test alle leveringsmetode-mappings i staging-miljo inden go-live.</p>
+    <p><strong>Løsning:</strong> Gennemgå og test alle leveringsmetode-mappings i staging-miljø inden go-live.</p>
 
     <h3>4. Delvis synkronisering af ordrelinjer</h3>
     <p><strong>Hvad sker:</strong> En ordre med 5 varelinjer importeres, men kun 4 linjer med. Den femte linje mangler fordi varen ikke findes i WMS-produktkatalog.</p>
-    <p><strong>Losning:</strong> Implementer validering ved ordreimport. Ordrer med ukendte varenumre skal holdes i fejlkø, ikke stiltiende delvis importeres.</p>
+    <p><strong>Løsning:</strong> Implementer validering ved ordreimport. Ordrer med ukendte varenumre skal holdes i fejlkø, ikke stiltiende delvis importeres.</p>
 
     <h3>5. Timing-fejl ved lageroprettelse</h3>
     <p><strong>Hvad sker:</strong> En ny vare tilføjes i Shopify og bestilles straks. Webhook for ordren ankommer til WMS inden varestamdata er synkroniseret. WMS kender ikke varen og fejler.</p>
-    <p><strong>Losning:</strong> WMS skal kunne h&aring;ndtere &quot;ukendt vare&quot; gracefully, ved at placere ordren i manuelt review-koe og hente varestamdata on-demand.</p>
+    <p><strong>Løsning:</strong> WMS skal kunne h&aring;ndtere &quot;ukendt vare&quot; gracefully, ved at placere ordren i manuelt review-kø og hente varestamdata on-demand.</p>
 
     <h3>6. e-conomic Grant Token er trukket tilbage</h3>
     <p><strong>Hvad sker:</strong> e-conomic-integration holder op med at virke. Ordrer hentes ikke, fakturakladder oprettes ikke.</p>
     <p><strong>årsag:</strong> <a href="economic-integration">e-conomic</a> bruger Grant Token-autentificering. Hvis brugeren der oprettede token, er slettet i e-conomic (fx en fratrådt medarbejder), invalideres tokenet.</p>
-    <p><strong>Losning:</strong> Brug en servicebruger/systembruger i e-conomic til integration, ikke en personlig bruger.</p>
+    <p><strong>Løsning:</strong> Brug en servicebruger/systembruger i e-conomic til integration, ikke en personlig bruger.</p>
 
     <h2>Det opdager de fleste for sent</h2>
     <ul>
@@ -157,7 +157,7 @@
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er den farligste type integrationsfejl?</summary><div class="faq-item__body"><p>Stille fejl. Systemet rapporterer intet, men data overføres ikke. Det opdages typisk af kunder eller ved manuel optælling. Dage kan gå inden nogen opdager det.</p></div></details>
     <details class="faq-item"><summary>Hvorfor udløber BC client secret?</summary><div class="faq-item__body"><p>Microsoft kræver rotation af client secrets i Azure AD/Entra ID. Maksimal levetid er 2 år. Det er en sikkerhedsforanstaltning der sniger sig op p&aring; dig uden reminder.</p></div></details>
-    <details class="faq-item"><summary>Hvad sker der, hvis en webhook sendes to gange?</summary><div class="faq-item__body"><p>Shopify sender retries ved manglende kvittering. Hvis dit system ikke er idempotent, oprettes der duplikat-ordrer. Implementer idempotency-nogler baseret p&aring; ordre-ID.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der, hvis en webhook sendes to gange?</summary><div class="faq-item__body"><p>Shopify sender retries ved manglende kvittering. Hvis dit system ikke er idempotent, oprettes der duplikat-ordrer. Implementer idempotency-nøgler baseret p&aring; ordre-ID.</p></div></details>
     <details class="faq-item"><summary>Kan jeg teste integrationer uden rigtige ordrer?</summary><div class="faq-item__body"><p>Ja. Shopify har &quot;Send test notification&quot; for webhooks. Business Central og e-conomic kan testes med testmiljøer/sandbox. Brug altid sandbox ved opsætning.</p></div></details>
     <details class="faq-item"><summary>Hvad er delvis synkronisering, og hvad gør jeg ved det?</summary><div class="faq-item__body"><p>Kun dele af data overføres, fx ordren importeres men adresse mangler. Detekteres via validering ved import og fejlkø med notifikation.</p></div></details>
   </div>
