@@ -34,57 +34,132 @@
 
   <!-- JSON-LD: BreadcrumbList + AboutPage -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
-          {"@type": "ListItem", "position": 2, "name": "Om os", "item": "https://smartpack.dk/om-os.html"}
-        ]
-      },
-      {
-        "@type": "AboutPage",
-        "@id": "https://smartpack.dk/om-os.html",
-        "url": "https://smartpack.dk/om-os.html",
-        "name": "Om SmartPack",
-        "description": "SmartPack er e-købmænd der byggede det WMS, de selv manglede. Siden 2005.",
-        "isPartOf": {"@id": "https://smartpack.dk/#website"},
-        "publisher": {"@id": "https://smartpack.dk/#organization"},
-        "about": {"@id": "https://smartpack.dk/#organization"}
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://smartpack.dk/#organization",
-        "name": "SmartPack ApS",
-        "url": "https://smartpack.dk",
-        "logo": "https://smartpack.dk/assets/cropped-favicon-smartpack.png",
-        "foundingDate": "2021",
-        "description": "Dansk WMS til webshops og 3PL. Bygget af e-k\u00f8bm\u00e6nd der selv har drevet lager siden 2005.",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Østerbrogade 67A",
-          "addressLocality": "Grenaa",
-          "postalCode": "8500",
-          "addressCountry": "DK"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
         },
-        "contactPoint": {
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Om os",
+          "item": "https://smartpack.dk/om-os.html"
+        }
+      ]
+    },
+    {
+      "@type": "AboutPage",
+      "@id": "https://smartpack.dk/om-os.html",
+      "url": "https://smartpack.dk/om-os.html",
+      "name": "Om SmartPack",
+      "description": "SmartPack er e-købmænd der byggede det WMS, de selv manglede. Siden 2005.",
+      "isPartOf": {
+        "@id": "https://smartpack.dk/#website"
+      },
+      "publisher": {
+        "@id": "https://smartpack.dk/#organization"
+      },
+      "about": {
+        "@id": "https://smartpack.dk/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://smartpack.dk/#organization",
+      "name": "SmartPack",
+      "legalName": "SmartPack ApS",
+      "url": "https://smartpack.dk",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"
+      },
+      "description": "Dansk warehouse management system til webshops og 3PL-lagre, bygget af e-købmænd der selv har drevet lager siden 2005.",
+      "foundingDate": "2021",
+      "vatID": "DK42007617",
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": 15
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Østerbrogade 67A",
+        "postalCode": "8500",
+        "addressLocality": "Grenaa",
+        "addressCountry": "DK"
+      },
+      "contactPoint": [
+        {
           "@type": "ContactPoint",
           "telephone": "+4588202019",
-          "contactType": "customer service",
+          "email": "bundlinjeboost@smartpack.dk",
+          "contactType": "sales",
           "availableLanguage": "Danish"
         },
-        "sameAs": [
-          "https://www.linkedin.com/company/smartpackwms",
-          "https://www.youtube.com/@SmartPackWMS",
-          "https://www.tiktok.com/@smartpackwms"
-        ],
-        "numberOfEmployees": {"@type": "QuantitativeValue", "value": 15}
-      }
-    ]
-  }
-  </script>
+        {
+          "@type": "ContactPoint",
+          "telephone": "+4588202019",
+          "email": "support@smartpack.dk",
+          "contactType": "customer service",
+          "availableLanguage": "Danish"
+        }
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/company/smartpackwms",
+        "https://www.youtube.com/@SmartPackWMS",
+        "https://www.tiktok.com/@smartpackwms"
+      ],
+      "knowsAbout": [
+        "Warehouse management system",
+        "Lagerstyring",
+        "E-handelslogistik",
+        "Pluk og pak",
+        "Fulfillment",
+        "3PL",
+        "Returhåndtering"
+      ]
+    },
+    {
+      "@type": "Book",
+      "@id": "https://smartpack.dk/#elogistikguide",
+      "name": "E-logistik Guide 2026, lagerhåndbog for den voksende webshop",
+      "author": [
+        {
+          "@id": "https://smartpack.dk/#organization"
+        },
+        {
+          "@type": "Organization",
+          "name": "Dansk Erhverv",
+          "url": "https://www.danskerhverv.dk"
+        }
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Dansk Erhverv",
+        "url": "https://www.danskerhverv.dk"
+      },
+      "datePublished": "2026",
+      "inLanguage": "da-DK",
+      "url": "https://www.danskerhverv.dk/presse-og-nyheder/nyheder/2026/april/e-handelslogistikguiden-2026-er-klar-sadan-gor-du-dit-lager-til-en-konkurrencefordel/",
+      "about": [
+        "Lagerindretning",
+        "ABC-analyse",
+        "Plukkestrategi",
+        "Pakkefejl",
+        "Returhåndtering",
+        "Nøgletal på lageret",
+        "3PL"
+      ]
+    }
+  ]
+}
+</script>
 
   <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,7 +167,7 @@
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1789297783">
+  <link rel="stylesheet" href="css/style.css?v=1789299222">
   <script src="js/theme-toggle.js"></script>
   <style>
     /* Hero grid */
@@ -238,7 +313,7 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789297783"></script>
+<script src="js/header.js?v=1789299222"></script>
 
 <!-- HERO -->
 <section class="page-hero" id="hero">
@@ -628,9 +703,9 @@
 </section>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789297783"></script>
+<script src="js/footer.js?v=1789299222"></script>
 
-<script src="js/main.js?v=1789297783" defer></script>
+<script src="js/main.js?v=1789299222" defer></script>
 </body>
 </html>
 

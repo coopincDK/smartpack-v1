@@ -35,50 +35,104 @@
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"},
-          {"@type": "ListItem", "position": 2, "name": "Kontakt", "item": "https://smartpack.dk/kontakt.html"}
-        ]
-      },
-      {
-        "@type": "ContactPage",
-        "@id": "https://smartpack.dk/kontakt.html",
-        "url": "https://smartpack.dk/kontakt.html",
-        "name": "Kontakt SmartPack",
-        "description": "Kontaktside for SmartPack WMS. Ring eller skriv, vi svarer hurtigt.",
-        "isPartOf": {"@id": "https://smartpack.dk/#website"},
-        "publisher": {"@id": "https://smartpack.dk/#organization"}
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://smartpack.dk/#organization",
-        "name": "SmartPack",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Østerbrogade 67A",
-          "postalCode": "8500",
-          "addressLocality": "Grenaa",
-          "addressCountry": "DK"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "SmartPack",
+          "item": "https://smartpack.dk/"
         },
-        "telephone": "+4588202019",
-        "email": "bundlinjeboost@smartpack.dk",
-        "taxID": "42007617"
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Kontakt",
+          "item": "https://smartpack.dk/kontakt.html"
+        }
+      ]
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://smartpack.dk/kontakt.html",
+      "url": "https://smartpack.dk/kontakt.html",
+      "name": "Kontakt SmartPack",
+      "description": "Kontaktside for SmartPack WMS. Ring eller skriv, vi svarer hurtigt.",
+      "isPartOf": {
+        "@id": "https://smartpack.dk/#website"
+      },
+      "publisher": {
+        "@id": "https://smartpack.dk/#organization"
       }
-    ]
-  }
-  </script>
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://smartpack.dk/#organization",
+      "name": "SmartPack",
+      "legalName": "SmartPack ApS",
+      "url": "https://smartpack.dk",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"
+      },
+      "description": "Dansk warehouse management system til webshops og 3PL-lagre, bygget af e-købmænd der selv har drevet lager siden 2005.",
+      "foundingDate": "2021",
+      "vatID": "DK42007617",
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": 15
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Østerbrogade 67A",
+        "postalCode": "8500",
+        "addressLocality": "Grenaa",
+        "addressCountry": "DK"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+4588202019",
+          "email": "bundlinjeboost@smartpack.dk",
+          "contactType": "sales",
+          "availableLanguage": "Danish"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+4588202019",
+          "email": "support@smartpack.dk",
+          "contactType": "customer service",
+          "availableLanguage": "Danish"
+        }
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/company/smartpackwms",
+        "https://www.youtube.com/@SmartPackWMS",
+        "https://www.tiktok.com/@smartpackwms"
+      ],
+      "knowsAbout": [
+        "Warehouse management system",
+        "Lagerstyring",
+        "E-handelslogistik",
+        "Pluk og pak",
+        "Fulfillment",
+        "3PL",
+        "Returhåndtering"
+      ]
+    }
+  ]
+}
+</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1789297783">
+  <link rel="stylesheet" href="css/style.css?v=1789299222">
   <script src="js/theme-toggle.js"></script>
   <style>
     /* â”€â”€ Page hero â”€â”€ */
@@ -263,7 +317,7 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789297783"></script>
+<script src="js/header.js?v=1789299222"></script>
 
 <!-- PAGE HERO -->
 <section class="page-hero" id="hero">
@@ -427,9 +481,9 @@
 </section>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789297783"></script>
+<script src="js/footer.js?v=1789299222"></script>
 
-  <script src="js/main.js?v=1789297783" defer></script>
+  <script src="js/main.js?v=1789299222" defer></script>
 
 </body>
 </html>
