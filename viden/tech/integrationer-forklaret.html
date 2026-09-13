@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789296690">
+  <link rel="stylesheet" href="../../css/style.css?v=1789296944">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -136,7 +136,7 @@
     <ul>
       <li><strong>Ingen retry-logik:</strong> Webhooks og API-kald fejler. Netværket fejler. Servere er nede. Uden automatisk retry mister du data. Implementer eksponentiel backoff: prøv igen efter 1 min, 5 min, 30 min.</li>
       <li><strong>Manglende signaturvalidering:</strong> Webhooks fra Shopify indeholder en HMAC-SHA256-signatur. Validerer du den ikke, kan hvem som helst sende falske ordre-events til dit endpoint.</li>
-      <li><strong>Polling for hyppigt eller for sjældent:</strong> API-polling hvert 30. sekund giver unodvendig belastning. Polling hvert 30. minut giver for lang forsinkelse. Juster interval til faktisk behov.</li>
+      <li><strong>Polling for hyppigt eller for sjældent:</strong> API-polling hvert 30. sekund giver unødvendig belastning. Polling hvert 30. minut giver for lang forsinkelse. Juster interval til faktisk behov.</li>
       <li><strong>Ignorer integration health monitoring:</strong> Uden monitoring ved du ikke, hvornår en integration sidst kørte succesfuldt.</li>
     </ul>
 
