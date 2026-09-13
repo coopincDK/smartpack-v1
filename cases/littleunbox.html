@@ -14,7 +14,7 @@
   <meta property="og:image:height" content="630">
   <link rel="canonical" href="https://smartpack.dk/cases/littleunbox">
 <meta name="description" content="Se hvordan LittleUnbox bruger SmartPack til at effektivisere lageret og skalere forretningen.">
-<link rel="stylesheet" href="../css/style.css?v=1789311758">
+<link rel="stylesheet" href="../css/style.css?v=1789318595">
 <script src="../js/theme-toggle.js"></script>
 <style>
 .case-hero{padding:clamp(7rem,12vw,11rem) 0 3rem;background:var(--bg-1)}
@@ -29,6 +29,24 @@
 .case-cta h2{font-size:1.6rem;font-weight:900;margin-bottom:.75rem}
 .case-cta p{color:var(--text-2);margin-bottom:1.5rem}
 .case-logo{max-height:60px;margin-bottom:1.5rem;filter:brightness(0) invert(1);opacity:.7}
+.case-body h2{font-size:1.4rem;font-weight:800;margin:2.5rem 0 1rem}
+.case-body p{color:var(--text-2);line-height:1.8;margin-bottom:1.2rem}
+.case-body ul{color:var(--text-2);line-height:1.8;margin:0 0 1.2rem 1.2rem}
+.case-body li{margin-bottom:.5rem}
+.case-quote{margin:2.5rem 0;padding:1.75rem 2rem;border-left:4px solid var(--accent);background:var(--surface-1);border-radius:0 var(--r-md) var(--r-md) 0}
+.case-quote blockquote{font-size:1.15rem;font-style:italic;line-height:1.7;color:var(--text-1);margin:0 0 .75rem}
+.case-quote cite{font-size:.85rem;font-weight:700;color:var(--text-3);font-style:normal}
+.case-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem 0;padding:2rem;background:var(--surface-1);border-radius:var(--r-md);border:1px solid var(--border)}
+.case-metric{text-align:center}
+.case-metric strong{display:block;font-size:1.9rem;font-weight:900;color:var(--accent);margin-bottom:.25rem;line-height:1.1}
+.case-metric span{font-size:.8rem;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;line-height:1.4;display:block}
+.case-udskrift{margin:2.5rem 0;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface-1)}
+.case-udskrift summary{cursor:pointer;padding:1.1rem 1.4rem;font-weight:700;color:var(--text-1);list-style:none}
+.case-udskrift summary::-webkit-details-marker{display:none}
+.case-udskrift__body{padding:0 1.4rem 1.4rem;color:var(--text-2);line-height:1.8;font-size:.95rem}
+.case-udskrift__body p{margin-bottom:1rem}
+.case-udskrift__note{font-size:.8rem;color:var(--text-3);margin-top:1rem}
+@media(max-width:600px){.case-metrics{grid-template-columns:1fr}}
 </style>
 
 
@@ -85,10 +103,63 @@
     
     <div class="case-eyebrow">Abonnements-bokse</div>
     <h1 class="case-title">LittleUnbox: Abonnements-logistik p&aring; autopilot</h1>
-    <p class="case-hero__sub">LittleUnBox driver en abonnementsforretning med månedlige bokse til gravide, babyer og småbørn, håndplukkede legetøjskasser tilpasset barnets alder og udvikling. Når precision og timing er afgørende for kundeoplevelsen, er SmartPack det rette match til at skabe struktur i pluk, pak og tilbagevendende ordreflows. Se casen i videoen herunder.</p>
+    <p class="case-hero__sub">LittleUnbox sender m&aring;nedlige bokse til gravide, babyer og sm&aring;b&oslash;rn. Indholdet er h&aring;ndplukket efter barnets alder, og det skifter n&aring;r noget bliver udsolgt. Det er dét, der g&oslash;r lageret sv&aelig;rt.</p>
 
     <div class="case-video">
       <iframe src="https://www.youtube.com/embed/OHEn5vkpw0o" title="LittleUnbox - SmartPack kundecase" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    
+    <div class="case-body">
+
+    <h2>Om LittleUnbox</h2>
+    <p>LittleUnbox er en abonnementsforretning. Hver m&aring;ned g&aring;r der en boks ud til gravide, babyer og sm&aring;b&oslash;rn, med indhold der er h&aring;ndplukket efter barnets alder og udvikling.</p>
+
+    <h2>Udfordringen: boksen har et fast indhold, indtil den ikke har</h2>
+    <p>En abonnementsboks ser simpel ud udefra. Én boks, ét indhold, samme dag hver m&aring;ned. Problemet ligger i det, der sker undervejs.</p>
+    <p>N&aring;r en af varerne i boksen bliver udsolgt, skal den skiftes ud med noget andet, mens abonnementet k&oslash;rer videre. Og de ordrer, der allerede er pakket med det gamle indhold, m&aring; ikke pludselig blive skrevet om til det nye. Der skal v&aelig;re to versioner af den samme boks i systemet samtidig, og lageret skal t&aelig;lle ned p&aring; hver enkelt vare inde i hver af dem.</p>
+    <p>Det er den slags, der ender med at nogen sidder og holder &oslash;je manuelt.</p>
+
+    <div class="case-quote">
+      <blockquote>&ldquo;Det skal ligesom v&aelig;re givet, at vi ikke skal sidde hele tiden manuelt og holde &oslash;je med, om tingene de k&oslash;rer som de skal.&rdquo;</blockquote>
+      <cite>LittleUnbox</cite>
+    </div>
+
+    <h2>Hvad der afgjorde valget</h2>
+    <p>De lavede det, de selv kalder den helt store research, for at finde &laquo;det bedste af det bedste&raquo;. To ting i SmartPack afgjorde det:</p>
+    <ul>
+      <li><strong>Bundles med lager p&aring; hver enkelt vare.</strong> En boks er ét produkt udadtil, men systemet t&aelig;ller ned p&aring; hvert enkelt produkt inde i den.</li>
+      <li><strong>Udskiftning af indhold der kun g&aelig;lder fremad.</strong> N&aring;r indholdet skiftes, beholder de ordrer der allerede er pakket det indhold, de faktisk blev pakket med.</li>
+    </ul>
+
+    <div class="case-quote">
+      <blockquote>&ldquo;Det er et ret stort puslespil af produkter, der ligger i bokse, der skal spille sammen. Hele den her logistiske del, som vi jo virkelig skal have til at spille max n&aring;r vi er den her abonnementsforretning, den er SmartPack virkelig med til at l&oslash;fte.&rdquo;</blockquote>
+      <cite>LittleUnbox</cite>
+    </div>
+
+    <h2>Det de fremh&aelig;ver mest, er ikke en funktion</h2>
+    <p>Da de blev spurgt om det bedste ved SmartPack, handlede svaret ikke om systemet. Det handlede om, hvad der sker n&aring;r de ringer.</p>
+
+    <div class="case-quote">
+      <blockquote>&ldquo;S&aring; er de meget s&aring;dan: &laquo;det lyder interessant, det kan vi godt forst&aring;&raquo;. Og s&aring; dagen efter skriver de: &laquo;hey, pr&oslash;v lige at trykke opdater p&aring; jeres app&raquo;. Og s&aring; har de lavet en eller anden tilpasning for os.&rdquo;</blockquote>
+      <cite>LittleUnbox</cite>
+    </div>
+
+    <p>LittleUnbox siger selv, at de ikke ville kunne forestille sig at f&aring; et lagersystem, der passer s&aring; godt til deres forretning, et andet sted.</p>
+
+    <details class="case-udskrift">
+      <summary>L&aelig;s hele samtalen</summary>
+      <div class="case-udskrift__body">
+        <p>&ldquo;Det bedste ved at have SmartPack, tror jeg faktisk er netop det der med, at de er s&aring; s&oslash;de til at lytte p&aring; hvad vores udfordringer er. Fordi vi har virkelig f&aring;et et lagersystem, jeg slet ikke ville kunne forestille mig at vi kunne f&aring; et andet sted, som passer s&aring; godt p&aring; vores forretning.&rdquo;</p>
+        <p>&ldquo;LittleUnbox er p&aring; mange m&aring;der lidt en kompleks forretning, fordi det er en abonnementsforretning med kurateret indhold i de her bokse, som de gravide og som b&oslash;rnene f&aring;r. Der er en udfordring i, at der hver m&aring;ned skal sendes nogle bokse ud med et fast indhold, og s&aring; kan vi l&oslash;be t&oslash;r for noget indhold, og det skal skiftes ud med noget nyt. Og det skal ligesom v&aelig;re givet, at vi ikke skal sidde hele tiden manuelt og holde &oslash;je med, om tingene de k&oslash;rer som de skal.&rdquo;</p>
+        <p>&ldquo;S&aring; min partner og jeg gik i gang med den helt store research, fordi vi ligesom skulle finde det bedste af det bedste. Og s&aring; fik vi fat i SmartPack.&rdquo;</p>
+        <p>&ldquo;SmartPack var f&oslash;rst og fremmest en rigtig god l&oslash;sning for os, fordi de kunne lave de her bundles af produkter, hvor lageret styrer hvert enkelt produkt der er i en bundle. Og s&aring; ogs&aring; det der med, at vi har udskiftning af indholdet. S&aring;dan at hvis vi nu har pakket x antal ordrer med det her indhold, og s&aring; f&aring;r vi flere ordrer ind p&aring; det indhold, s&aring; skal vi ligesom kunne skifte ud uden at den pludselig erstatter det der var f&oslash;r, som skulle v&aelig;re udsolgt.&rdquo;</p>
+        <p>&ldquo;Det er et ret stort puslespil af produkter, der ligger i bokse, der skal spille sammen. S&aring; hele den her logistiske del, som vi jo virkelig skal have til at spille max n&aring;r vi er den her abonnementsforretning, den er SmartPack virkelig med til at l&oslash;fte og hj&aelig;lpe os med.&rdquo;</p>
+        <p>&ldquo;For os er kundeservice alfa omega, og det synes jeg faktisk ogs&aring; man kan m&aelig;rke med SmartPack. De har virkelig form&aring;et at v&aelig;re sindssygt behj&aelig;lpsomme, n&aring;r man har brug for enten r&aring;d eller sparring i forhold til en problemstilling: hvordan de t&aelig;nker vi kan gribe det an, eller l&oslash;se det. Og s&aring; er de meget s&aring;dan: &laquo;det lyder interessant, det kan vi godt forst&aring;&raquo;. Og s&aring; dagen efter skriver de: &laquo;hey, pr&oslash;v lige at trykke opdater p&aring; jeres app&raquo;. Og s&aring; har de lavet en eller anden tilpasning for os.&rdquo;</p>
+        <p class="case-udskrift__note">Udskrift af videoen. Let redigeret for l&aelig;sbarhed, meningen er kundens egen.</p>
+      </div>
+    </details>
+
     </div>
 
     <div class="case-cta">
@@ -101,6 +172,6 @@
 
 <div id="sp-footer"></div>
 <script src="../js/footer.js"></script>
-<script src="../js/main.js?v=1789311758" defer></script>
+<script src="../js/main.js?v=1789318595" defer></script>
 </body>
 </html>
