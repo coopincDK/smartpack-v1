@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -46,7 +46,7 @@
     <p>AI er ikke én teknologi. Det er en samlebetegnelse for en række teknikker der bruges til at automatisere beslutninger og forudsige mønstre. På lageret dækker AI typisk over fire distinkte anvendelsesområder:</p>
     <ul>
       <li><strong>Efterspørgselsprognoser:</strong> Maskinlæringsmodeller der analyserer historiske salgsdata, sæsonudsving, kampagner og eksterne faktorer for at forudsige fremtidig efterspørgsel. Formålet er at reducere over- og underlagring.</li>
-      <li><strong>Plukoptimering:</strong> Algoritmer der beregner den korteste og mest effektive plukrute i lageret baseret på ordresammensætning, lagergeografi og aktuelle plukopgaver. Ikke nødvendigvis dyb AI, men ofte markedsført som det.</li>
+      <li><strong>Plukoptimering:</strong> Algoritmer der beregner den korteste og mest effektive <a href="../problemer/plukruter-er-ineffektive">plukrute</a> i lageret baseret på ordresammensætning, lagergeografi og aktuelle plukopgaver. Ikke nødvendigvis dyb AI, men ofte markedsført som det.</li>
       <li><strong>Computervision og billedgenkendelse:</strong> Kameraer og modeller der automatisk identificerer varer, kontrollerer kvalitet, tæller beholdning eller verificerer forsendelser uden manuel scanning.</li>
       <li><strong>Autonome robotter og AGV:</strong> Selvkørende enheder der transporterer varer mellem lokationer, understøttet af AI til navigation og kollisionsundgåelse.</li>
     </ul>
@@ -89,7 +89,7 @@
 
     <h3>Overprognosticering: du køber for meget ind</h3>
     <p>En maskinlæringsmodel ser en stigning i salget af en varekategori i Q4 2025 og ekstrapolerer trenden. Du bestiller 3.000 enheder baseret på prognosen. Salget falder tilbage til normalt niveau i Q1 2026. Du sidder nu med 1.800 enheder du ikke kan sælge inden produktet bliver forældet eller skal sælges med rabat.</p>
-    <p>Konsekvens: 1.800 enheder × 150 kr./stk. = 270.000 kr. bundet i dødt lager. Hvis du må sælge med 40 % rabat for at komme af med det, taber du 108.000 kr. direkte.</p>
+    <p>Konsekvens: 1.800 enheder × 150 kr./stk. = 270.000 kr. bundet i <a href="../okonomi/dead-stock-omkostninger">dødt lager</a>. Hvis du må sælge med 40 % rabat for at komme af med det, taber du 108.000 kr. direkte.</p>
 
     <h3>Underprognosticering: du mister salg</h3>
     <p>Modellen undervurderer efterspørgslen på en populær vare fordi den ikke fanger en kampagne eller en ekstern trend. Du har 200 enheder på lager. Efterspørgslen er 450. Du mister 250 salg.</p>
@@ -97,7 +97,7 @@
 
     <h3>Modelforældelse: AI'en lærer af forkerte mønstre</h3>
     <p>En AI-model trænet på 2020-2023 data har lært at forudsige baseret på mønstre der ikke længere gælder. Eksempel: en model der tror Black Friday-salg altid stiger 60 % fordi det gjorde det i 2021-2022, men i 2025 er markedet mættet og stigningen er kun 15 %. Du har indkøbt til 60 % vækst.</p>
-    <p>Konsekvens: Overskudslager der skal håndteres manuelt, ekstra lageromkostninger og binding af kapital der kunne bruges andre steder.</p>
+    <p>Konsekvens: Overskudslager der skal håndteres manuelt, ekstra <a href="../okonomi/lageromkostninger-beregning">lageromkostninger</a> og binding af kapital der kunne bruges andre steder.</p>
 
     <p><strong>Fallback-reglen:</strong> En AI-prognose skal altid have en manuel override-mulighed og en maksimal afvigelse fra historisk gennemsnit. Hvis modellen anbefaler 300 % stigning i indkøb uden klar forklaring, skal systemet blokere og bede om bekræftelse. Hvis din leverandør ikke har den funktion, er løsningen ikke produktionsklar.</p>
 

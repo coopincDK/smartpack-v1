@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -72,7 +72,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Torsdag kl. 15:34. Pakken er forseglet. Fragtlablen er printet. Scanner pakken ved afsendelse. WMS registrerer: "Afsendt". Fulfillment-API-kald til Shopify, timeout. Retry, fejler. Pakken er afsendt. Shopify ved intet. Kunden modtager ingen forsendelsesmail. Fredag morgen: "Hvorfor er min ordre ikke afsendt?" Pakken er allerede hos GLS.</p>
+    <p>Torsdag kl. 15:34. Pakken er forseglet. Fragtlablen er printet. Scanner pakken ved afsendelse. WMS registrerer: "Afsendt". Fulfillment-API-kald til <a href="shopify-integration">Shopify</a>, timeout. Retry, fejler. Pakken er afsendt. Shopify ved intet. Kunden modtager ingen forsendelsesmail. Fredag morgen: "Hvorfor er min ordre ikke afsendt?" Pakken er allerede hos GLS.</p>
 
     <h2>Hvad er fulfillment sync?</h2>
     <p>Fulfillment sync er processen, hvor WMS bekræfter til webshoppen, at en ordre er plukket, pakket og afsendt, komplet med tracking-nummer og fragtinformation. Det er den sidste del af ordreflowet, der lukker cirklen og fortæller kunden: "Pakken er på vej."</p>
@@ -133,7 +133,7 @@
     <ol>
       <li><strong>Log fulfillment-ID fra Shopify:</strong> Gem Shopify's fulfillment-ID i WMS ved succesfuldt kald. Det er din kvittering.</li>
       <li><strong>Verificér fulfillment næste dag:</strong> Daglig kontrol: har alle "afsendt" ordrer i WMS en tilsvarende fulfilled-status i Shopify? Afvigelser er fejlsignal.</li>
-      <li><strong>Test med alle fragtmænd:</strong> Fulfillment-sync varierer lidt pr. fragtmand. Test eksplicit med GLS, PostNord, Bring og eventuelt med delvise forsendelser.</li>
+      <li><strong>Test med alle fragtmænd:</strong> Fulfillment-sync varierer lidt pr. <a href="fragtintegrationer-forklaret">fragtmand</a>. Test eksplicit med GLS, PostNord, Bring og eventuelt med delvise forsendelser.</li>
     </ol>
 
     <h2>Tjekliste</h2>

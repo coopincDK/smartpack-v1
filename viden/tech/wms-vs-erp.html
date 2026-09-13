@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -79,7 +79,7 @@
     <p>Det er virkeligheden for mange virksomheder der vokser ud af ERP-baseret lagerstyring. Her er hvad der giver mening, og hvornår.</p>
 
     <h2>Hvad er WMS og ERP?</h2>
-    <p><strong>WMS (Warehouse Management System)</strong> styrer det fysiske lager. Det handler om, hvad der sker inde i lagerbygningen: modtagelse af varer, placering, plukoptimering, batch picking, pakning og afsendelse. Et WMS ved, hvem der plukkede hvad, hvornår, og via hvilken rute.</p>
+    <p><strong>WMS (Warehouse Management System)</strong> styrer det fysiske lager. Det handler om, hvad der sker inde i lagerbygningen: modtagelse af varer, placering, plukoptimering, <a href="batch-picking-teknologi">batch picking</a>, pakning og afsendelse. Et WMS ved, hvem der plukkede hvad, hvornår, og via hvilken rute.</p>
     <p><strong>ERP (Enterprise Resource Planning)</strong> styrer forretningen og okonomien. Ordrer, fakturaer, indkøb, leverandørforhold, bogføring og rapportering. ERP ser lageret som tal i et regneark, antal p&aring; lager, kostpris, reserverede enheder.</p>
     <p>Forskellen er fundamental: ERP h&aring;ndterer <em>data om</em> lageret. WMS h&aring;ndterer <em>operationerne på</em> lageret.</p>
 
@@ -104,7 +104,7 @@
     </ul>
 
     <h2>Typisk arbejdsdeling WMS og ERP</h2>
-    <p>ERP modtager ordren og sender den til WMS via integration. WMS behandler ordren: opdeler i plukliste, beregner TSP-optimeret rute, plukker får opgave p&aring; håndterminal, varer scannes ved pluk, pakkes og vejes ved pakkestation, fragtlabel genereres og printes. WMS sender status tilbage til ERP: ordren er afsendt, tracking-nummer, eventuelle mangler.</p>
+    <p>ERP modtager ordren og sender den til WMS via integration. WMS behandler ordren: opdeler i plukliste, beregner TSP-optimeret rute, plukker får opgave p&aring; <a href="mobile-scanning-lager">håndterminal</a>, varer scannes ved pluk, pakkes og vejes ved pakkestation, fragtlabel genereres og printes. WMS sender status tilbage til ERP: ordren er afsendt, tracking-nummer, eventuelle mangler.</p>
     <p>Dataudveksling sker typisk via REST API (pull), Webhooks (push) eller filintegration (ældre systemer: CSV/XML-filer p&aring; FTP).</p>
 
     <h2>Typiske fejl</h2>
@@ -118,7 +118,7 @@
     <ol>
       <li><strong>Definer ejerskab klart:</strong> ERP ejer ordredata og økonomi. WMS ejer lokationer og lageroperationer. Definer, hvem der er &quot;master&quot; for beholdningsdata.</li>
       <li><strong>Prioriter realtidsintegration:</strong> Lagerstatus bør aldrig være mere end minutter forsinket. Batchkørsler fra nat til nat skaber oversalg og fejl i pluklister.</li>
-      <li><strong>Test med reelle ordrescenarier:</strong> Enkeltlinje, multilinje, restordre, returordre. Ikke kun happy path.</li>
+      <li><strong>Test med reelle ordrescenarier:</strong> Enkeltlinje, multilinje, <a href="../problemer/vi-loeber-toer-for-varer">restordre</a>, returordre. Ikke kun happy path.</li>
     </ol>
 
     <h2>SmartPack</h2>

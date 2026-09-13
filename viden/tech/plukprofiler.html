@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 <!-- ================================================================
      SMARTPACK TRACKING
@@ -99,7 +99,7 @@
 </ul>
 <h3>Scanning og bekræftelse</h3>
 <ul>
-<li>Tving stregkodescanning af varen, så et tryk ikke er nok</li>
+<li>Tving <a href="stregkode-scanning-lager">stregkodescanning</a> af varen, så et tryk ikke er nok</li>
 <li>Tving vejning</li>
 <li>Tillad lokationsscanning, scanning af pakkesamling, scanning af plukvogn</li>
 </ul>
@@ -121,7 +121,7 @@
 
 <h2>To indstillinger der lyder ens og gør noget forskelligt</h2>
 <p>Her går folk galt, så det er værd at læse to gange.</p>
-<p><strong>FIFO på vareniveau</strong> afgør hvilken <em>lagerbatch</em> der plukkes fra. Tving FIFO for ældste lager først, tving LIFO for nyeste, eller lad FIFO regne på produktionsdato i stedet for ankomstdato. Der er også en indstilling for at samle pluk fra samme lot.</p>
+<p><strong>FIFO på vareniveau</strong> afgør hvilken <em>lagerbatch</em> der plukkes fra. Tving <a href="../fundamentals/hvad-er-fifo">FIFO</a> for ældste lager først, tving LIFO for nyeste, eller lad FIFO regne på produktionsdato i stedet for ankomstdato. Der er også en indstilling for at samle pluk fra samme lot.</p>
 <p><strong>Ordre-FIFO</strong> afgør i hvilken rækkefølge ordrer <em>sendes afsted</em> i forhold til hinanden. Den har en rå FIFO-tilstand og tidstolerancer fra 1 til 96 timer.</p>
 <p>Den første handler om varen. Den anden handler om kunden. De to har intet med hinanden at gøre, og de sidder i samme skærmbillede.</p>
 
@@ -131,7 +131,7 @@
 <li><strong>Eksklusiv profil:</strong> matcher en ordre den, stjæler profilen ordren fra alle lavere prioriterede profiler. Ordren kan kun ligge i én eksklusiv profil ad gangen.</li>
 <li><strong>Ikke-eksklusiv profil:</strong> ordren kan vises i flere profiler samtidigt. De stjæler ikke fra hinanden.</li>
 </ol>
-<p>Prioritetstallet er hierarkiet <em>for de eksklusive</em> profiler. Det afgør hvem der vinder når flere eksklusive matcher. Sorteringsindekset er noget andet: det styrer rækkefølgen profilerne står i på håndterminalen.</p>
+<p>Prioritetstallet er hierarkiet <em>for de eksklusive</em> profiler. Det afgør hvem der vinder når flere eksklusive matcher. Sorteringsindekset er noget andet: det styrer rækkefølgen profilerne står i på <a href="mobile-scanning-lager">håndterminalen</a>.</p>
 <p>Konkret: en ekspresprofil sat til eksklusiv med høj prioritet, og en normalprofil sat til ikke-eksklusiv. En ekspresordre matcher begge, men forsvinder fra normalprofilen fordi ekspres er eksklusiv og står højere. Plukkeren på normalprofilen ser den ikke, og kan derfor ikke tage den ved en fejl.</p>
 <p>Det er den mekanisme der gør at en ekspreskø faktisk virker, i stedet for at være en liste nogen skal huske at kigge på.</p>
 

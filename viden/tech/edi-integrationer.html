@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -46,7 +46,7 @@
     <p>EDI står for Electronic Data Interchange. Det er en standardiseret metode til at udveksle forretningsdokumenter elektronisk mellem to parter uden menneskelig indgriben. Ingen e-mails. Ingen PDF'er. Ingen manuelle indtastninger. Dokumenterne sendes direkte fra system til system i et format begge parter kan læse og behandle automatisk.</p>
     <p>De mest almindelige EDI-dokumenttyper i lagersammenhæng er:</p>
     <ul>
-      <li><strong>ORDERS (850):</strong> Indkøbsordre fra kunden til dig. Kunden lægger en ordre i sit system, og den lander automatisk i dit WMS eller ERP som en salgsordre.</li>
+      <li><strong>ORDERS (850):</strong> Indkøbsordre fra kunden til dig. Kunden lægger en ordre i sit system, og den lander automatisk i dit WMS eller <a href="wms-erp-integration">ERP</a> som en salgsordre.</li>
       <li><strong>DESADV (856) / ASN:</strong> Advance Ship Notice. Du sender en forsendelsesadvisering til kunden inden pakken ankommer. Kunden ved præcis hvad der kommer, i hvilke kolli og med hvilke stregkoder.</li>
       <li><strong>INVOIC (810):</strong> Elektronisk faktura. Sendes automatisk ved forsendelse og lander direkte i kundens kreditorsystem.</li>
       <li><strong>ORDRSP:</strong> Ordrebekræftelse. Dit system bekræfter tilbage til kunden at ordren er modtaget og kan leveres.</li>
@@ -78,7 +78,7 @@
       <li><strong>AS2:</strong> Direkte forbindelse over internet med kryptering og kvittering. Bruges af store detailkæder. Kræver certifikater og teknisk opsætning.</li>
       <li><strong>SFTP:</strong> Filer overføres til en sikker FTP-server. Simpel opsætning men filbaseret, altså ikke realtid.</li>
       <li><strong>VAN (Value Added Network):</strong> En tredjepartsnetværksudbyder der fungerer som posthus mellem alle parter. GXS, SPS Commerce og Descartes er store VAN-udbydere. Fordelen er at du kun opretter én forbindelse og kan nå mange kunder.</li>
-      <li><strong>API-baseret EDI:</strong> Moderne alternativ hvor EDI-formater transporteres via REST API. Lettere at integrere med moderne WMS-systemer.</li>
+      <li><strong>API-baseret EDI:</strong> Moderne alternativ hvor EDI-formater transporteres via REST <a href="api-i-lagerstyring">API</a>. Lettere at integrere med moderne WMS-systemer.</li>
     </ul>
 
     <h3>Lag 2: Konvertering og mapping</h3>

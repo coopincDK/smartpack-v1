@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -75,7 +75,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~6 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>WooCommerce er open source og fleksibelt. Det er også det, der gør integration mere komplekst end med Shopify. Ingen hosted infrastruktur, ingen API-rate limits fra Shopify, men heller ingen standard webhook-forvaltning. Her er hvad du skal vide.</p>
+    <p>WooCommerce er open source og fleksibelt. Det er også det, der gør integration mere komplekst end med <a href="shopify-integration">Shopify</a>. Ingen hosted infrastruktur, ingen API-rate limits fra Shopify, men heller ingen standard webhook-forvaltning. Her er hvad du skal vide.</p>
     <p>Den hårdeste sandhed: WooCommerce-sites varierer enormt. Et WooCommerce site med 50 plugins og et custom tema er et andet dyr end et rent WooCommerce-site. Integrationens stabilitet afhænger delvist af WordPress-setup.</p>
 
     <h2>Hvad er WooCommerce-WMS integration?</h2>
@@ -100,7 +100,7 @@
     <p>WooCommerce bruger Consumer Key og Consumer Secret genereret i WooCommerce admin under Settings, Advanced, REST API. Tilladte metoder: read/write for orders og products. Gem keys sikkert, de vises kun een gang.</p>
 
     <h3>Webhooks i WooCommerce</h3>
-    <p>WooCommerce webhooks konfigureres i Settings, Advanced, Webhooks. Registrer events: Order created, Order updated, Order deleted. Endpoint-URL: dit WMS webhook-endpoint (HTTPS påkrævet). WooCommerce genererer webhook-secret automatisk, gem og brug til HMAC-validering.</p>
+    <p>WooCommerce <a href="webhooks-forklaret">webhooks</a> konfigureres i Settings, Advanced, Webhooks. Registrer events: Order created, Order updated, Order deleted. Endpoint-URL: dit WMS webhook-endpoint (HTTPS påkrævet). WooCommerce genererer webhook-secret automatisk, gem og brug til HMAC-validering.</p>
     <p><strong>WooCommerce webhook-validering:</strong> WooCommerce signerer webhooks med <code>X-WC-Webhook-Signature</code> header. Signeringsmetoden er HMAC-SHA256 af payload med webhook-secret.</p>
 
     <h3>Betalingsstatus-håndtering</h3>

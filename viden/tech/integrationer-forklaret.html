@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -97,7 +97,7 @@
     <p>Det kræver: AppId og AccessToken (autentifikation), et endpoint (URL til APIet), og en planlagt hentning (polling), typisk hvert 1-5. minut. API egner sig godt til periodisk synkronisering, opslag og opdatering af lagertal.</p>
 
     <h3>Webhook, systemet fortæller dig, når noget sker</h3>
-    <p>En webhook er en push-notifikation. Shopify sender dig automatisk en besked, når en ordre oprettes, du behøver ikke spørge. Det sker i realtid. Webhooks egner sig godt til: ordremodtagelse, betalingsbekræftelse og statusopdateringer.</p>
+    <p>En <a href="webhooks-forklaret">webhook</a> er en push-notifikation. Shopify sender dig automatisk en besked, når en ordre oprettes, du behøver ikke spørge. Det sker i realtid. Webhooks egner sig godt til: ordremodtagelse, betalingsbekræftelse og statusopdateringer.</p>
     <p>Krav til webhook-modtagelse:</p>
     <ul>
       <li>HTTPS-endpoint (usikret HTTP accepteres ikke)</li>
@@ -148,7 +148,7 @@
     </ol>
 
     <h2>SmartPack</h2>
-    <p>SmartPack bruger event-drevet integration med webhook-support og periodisk API-polling. Alle webhooks valideres med HMAC-SHA256. Integrationer til Shopify, WooCommerce, e-conomic og Business Central er prækonfigurerede. SmartPack logger alle integrationshændelser og viser integration health i administrationspanelet.</p>
+    <p>SmartPack bruger event-drevet integration med webhook-support og periodisk API-polling. Alle webhooks valideres med HMAC-SHA256. Integrationer til Shopify, <a href="woocommerce-integration">WooCommerce</a>, e-conomic og <a href="business-central-integration">Business Central</a> er prækonfigurerede. SmartPack logger alle integrationshændelser og viser integration health i administrationspanelet.</p>
   </div>
   <div class="article-disclaimer"><p>Denne artikel er skrevet af SmartPack-teamet baseret på erfaring fra lageroperation siden 2005. Indholdet er generelt vejledende og bør tilpasses din specifikke situation. <a href="../../kontakt">Kontakt os</a> for konkret rådgivning.</p></div>
 <div class="bottom-cta"><p>Vil du have stabile integrationer der virker?</p><a href="../../kontakt" class="btn">Se SmartPacks integrationer</a></div>

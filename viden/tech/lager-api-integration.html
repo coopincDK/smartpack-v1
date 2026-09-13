@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -47,7 +47,7 @@
 
     <h3>REST API (realtidsintegration)</h3>
     <p>Systemerne taler direkte med hinanden. Ordre placeres i webshoppen kl. 14:32. WMS modtager den kl. 14:32. Beholdning opdateres kl. 14:33. Det er REST API.</p>
-    <p><strong>Hvornår det giver mening:</strong> Over 100 daglige ordrer, multi-channel salg (webshop + marketplace + B2B), behov for realtids lagerstatus på hjemmesiden.</p>
+    <p><strong>Hvornår det giver mening:</strong> Over 100 daglige ordrer, <a href="multi-channel-lager">multi-channel</a> salg (webshop + marketplace + B2B), behov for realtids lagerstatus på hjemmesiden.</p>
     <p><strong>Hvad det koster:</strong> 5.000-25.000 kr. opsætning per integration, 0-500 kr./måned løbende. Teknisk kompetence krævet eller ekstern konsulent.</p>
 
     <h3>Webhooks (hændelsebaseret)</h3>
@@ -70,7 +70,7 @@
       <li><strong>WMS → ERP:</strong> Lagerværdi, lagerbevægelser, indkøbsordrer</li>
       <li><strong>Leverandør → WMS:</strong> Avanceret forsendelsesadvisering (ASN) ved varemodtagelse</li>
     </ul>
-    <p>De fleste begynder med webshop-integration og tilføjer fragtportal-integration. ERP-integration kommer typisk når virksomheden vokser til 500+ daglige ordrer.</p>
+    <p>De fleste begynder med webshop-integration og tilføjer fragtportal-integration. <a href="wms-erp-integration">ERP-integration</a> kommer typisk når virksomheden vokser til 500+ daglige ordrer.</p>
 
     <h2>Hvad der går galt uden ordentlig integration</h2>
     <p>Manuel dataoverførsel er ikke bare ineffektivt. Det er en fejlkilde.</p>
@@ -92,7 +92,7 @@
     <p>Investér i API-integration når manuel overførsel tager mere end 30 minutter om dagen, eller når fejl fra manuel dataentry koster mere end 3.000 kr. om måneden i tid og fejlrettelse.</p>
 
     <h2>Hvad SmartPack gør</h2>
-    <p>SmartPack har native REST API-integrationer til Shopify, WooCommerce, Magento, PrestaShop og de store danske fragtportaler (PostNord, GLS, DAO, Bring). Ordrer importeres automatisk, tracking-numre eksporteres automatisk, beholdning synkroniseres realtid.</p>
+    <p>SmartPack har native REST API-integrationer til Shopify, <a href="woocommerce-integration">WooCommerce</a>, Magento, PrestaShop og de store danske fragtportaler (PostNord, GLS, DAO, Bring). Ordrer importeres automatisk, tracking-numre eksporteres automatisk, beholdning synkroniseres realtid.</p>
     <p>For B2B og ERP-integration tilbyder SmartPack webhook-understøttelse og CSV/XML import/eksport til de systemer der ikke har native integration. Implementeringstid for en standard Shopify-integration: 1-3 dage.</p>
   </div>
 

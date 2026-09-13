@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -72,7 +72,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Mandag morgen kl. 08:34. Din Shopify-integration holder op med at hente ordrer. Access token er udløbet. 47 ordrer sidder i Shopify. WMS ved intet. Kl. 11:00 opdager lagerchefen det, fordi ingen pluklister er kommet. 3 timer tabt. 47 ordrer forsinket. Det er konsekvensen af manglende token-refresh.</p>
+    <p>Mandag morgen kl. 08:34. Din Shopify-integration holder op med at hente ordrer. Access token er udløbet. 47 ordrer sidder i <a href="shopify-integration">Shopify</a>. WMS ved intet. Kl. 11:00 opdager lagerchefen det, fordi ingen pluklister er kommet. 3 timer tabt. 47 ordrer forsinket. Det er konsekvensen af manglende token-refresh.</p>
 
     <h2>Hvad er et API?</h2>
     <p>API (Application Programming Interface) er en defineret måde for to systemer at kommunikere på. I lagerstyringssammenhæng er det primært REST API'er over HTTPS, der bruges.</p>
@@ -123,7 +123,7 @@ Authorization: Bearer {access_token}</code></pre>
     <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt">Se SmartPacks integrationer</a></p>
 
     <h2>Hvad API bruges til i lagerdrift</h2>
-    <p><strong>Ordrehentning:</strong> WMS henter åbne ordrer fra webshop med filter på dato/status. Typisk pull hvert 2-5. minut som supplement til webhooks.</p>
+    <p><strong>Ordrehentning:</strong> WMS henter åbne ordrer fra webshop med filter på dato/status. Typisk pull hvert 2-5. minut som supplement til <a href="webhooks-forklaret">webhooks</a>.</p>
     <p><strong>Lageropslag:</strong> WMS slår varestamdata op i ERP/webshop, pris, beskrivelse, stregkode.</p>
     <p><strong>Beholdningsopdatering:</strong> WMS sender aktuelle lagertal til webshop. Shopify opdaterer visning for kunder.</p>
     <p><strong>Fulfillment-bekræftelse:</strong> WMS sender "ordre afsendt" med tracking til webshop via API-kald (POST til /fulfillments.json).</p>
@@ -147,7 +147,7 @@ Authorization: Bearer {access_token}</code></pre>
 
     <h2>Det opdager de fleste for sent</h2>
     <ul>
-      <li><strong>At Shopify returnerer max 250 resultater pr. kald:</strong> du implementerer ordrehentning. Tester med 50 ordrer. Virker perfekt. Black Friday: 1.200 ordrer. Du henter kun de første 250. 950 ordrer behandles aldrig. Opdages først når kunder ringer.</li>
+      <li><strong>At Shopify returnerer max 250 resultater pr. kald:</strong> du implementerer ordrehentning. Tester med 50 ordrer. Virker perfekt. <a href="../vaekst/black-friday-lager">Black Friday</a>: 1.200 ordrer. Du henter kun de første 250. 950 ordrer behandles aldrig. Opdages først når kunder ringer.</li>
       <li><strong>At access token udløber midt i arbejdsdagen:</strong> token har 90 dages levetid. Du glemmer at implementere auto-refresh. Dag 91, kl. 08:34: alle API-kald fejler med 401. Ordrer hentes ikke. Opdages efter 3 timer.</li>
       <li><strong>At rate limiting rammer dig uden varsel:</strong> du poller Shopify hvert 30. sekund. Virker fint ved 50 ordrer/dag. Ved 500 ordrer/dag: 429 Too Many Requests. Ingen retry-logik. 25% af ordrer tabes.</li>
     </ul>

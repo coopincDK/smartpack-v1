@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 <!-- ================================================================
      SMARTPACK TRACKING
@@ -82,7 +82,7 @@
         <tr><td>Batch uden WMS (manuel sortering)</td><td>0 kr. (men ineffektivt)</td><td>1 dag tr&aelig;ning</td><td>Tvivlsomt</td></tr>
       </tbody>
     </table>
-    <p><strong>ROI-beregning for et mellemst&oslash;rt lager (5 plukmedarbejdere, 300 ordrer/dag):</strong></p>
+    <p><strong><a href="../okonomi/roi-paa-wms">ROI-beregning</a> for et mellemst&oslash;rt lager (5 plukmedarbejdere, 300 ordrer/dag):</strong></p>
     <p>Uden batch: 300 ordrer &divide; 5 medarbejdere = 60 ordrer per medarbejder. 60 ordrer &times; 312 sek./ordre (inkl. g&aring;-tid) &asymp; 18.750 sek. = 5,2 timer/dag per medarbejder.</p>
     <p>Med batch: 40% reduktion i g&aring;-tid. G&aring;-tid er ca. 60% af total plukstid = 24 sek./ordre. 40% af 24 = 9,6 sek. sparet per ordre. 300 ordrer &times; 9,6 sek. = 48 min./dag per medarbejder. 5 medarbejdere = 4 timer/dag = 100 kr./time &times; 4 = 400 kr./dag = 100.000 kr./&aring;r.</p>
     <p><strong>Men:</strong> Hvis fejlraten stiger fra 0,5% til 2,5% (typisk uden scanner-bekr&aelig;ftelse): 300 ordrer &times; 2% ekstra fejl = 6 fejlordrer/dag &times; 45 kr./fejl = 270 kr./dag = 67.500 kr./&aring;r. Reel besparelse: 32.500 kr./&aring;r i stedet for 100.000 kr.</p>
@@ -125,13 +125,13 @@
     <p><strong>Samlet cost of failure:</strong> Alle 4 fejl samtidig (typisk i uge 2-6 efter implementering uden korrekt ops&aelig;tning): 136.250 kr./&aring;r tabt. Forventet besparelse var 100.000 kr./&aring;r. Reel cost: -36.250 kr./&aring;r. Du taber penge p&aring; batch picking.</p>
 
     <h2>SmartPack og batch picking</h2>
-    <p>SmartPack har batch picking som standard funktion, ikke tilk&oslash;b. Systemet beregner optimale batches baseret p&aring; lagerlayout og ordremix: du s&aelig;tter max antal ordrer per batch og max antal linjer, s&aring; klarer algoritmen resten.</p>
+    <p>SmartPack har batch picking som standard funktion, ikke tilk&oslash;b. Systemet beregner optimale batches baseret p&aring; <a href="../fundamentals/hvad-er-warehouse-layout">lagerlayout</a> og ordremix: du s&aelig;tter max antal ordrer per batch og max antal linjer, s&aring; klarer algoritmen resten.</p>
     <p>SmartPack batch picking inkluderer scanner-bekr&aelig;ftelse per sortering: medarbejder scanner vare og bekr&aelig;fter hvilken ordrekurv den g&aring;r i. Det holder fejlraten under 0,3% selv ved 8 ordrer per batch.</p>
     <h3>Hvorn&aring;r SmartPack batch picking G&Oslash;R mening</h3>
     <ul>
       <li><strong>Over 50 ordrer/dag med under 5 linjer/ordre:</strong> ROI er typisk under 3 m&aring;neder. Konkret: ved 100 ordrer/dag sparer du 65.000 kr./&aring;r i l&oslash;nomkostninger.</li>
       <li><strong>B2C e-handel:</strong> Mange sm&aring; ordrer med h&oslash;j SKU-overlapning (over 30%). Batch giver 40-60% reduktion i pluk-tid. Typisk break-even: 6-8 uger.</li>
-      <li><strong>Svingende volumen:</strong> SmartPack justerer batch-st&oslash;rrelse dynamisk. I spidslast (Black Friday): batches p&aring; 8 ordrer. I lavs&aelig;son: batches p&aring; 3 ordrer. Det holder fejlraten stabil under 0,5%.</li>
+      <li><strong>Svingende volumen:</strong> SmartPack justerer batch-st&oslash;rrelse dynamisk. I spidslast (<a href="../vaekst/black-friday-lager">Black Friday</a>): batches p&aring; 8 ordrer. I lavs&aelig;son: batches p&aring; 3 ordrer. Det holder fejlraten stabil under 0,5%.</li>
     </ul>
     <h3>Hvorn&aring;r SmartPack batch picking IKKE g&oslash;r mening</h3>
     <ul>

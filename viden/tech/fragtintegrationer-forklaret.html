@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -97,7 +97,7 @@
 
     <h3>PostNord</h3>
     <p>PostNord kræver et ekstra registrerings-element sammenlignet med GLS: <strong>MISKOS-nummer.</strong></p>
-    <p>MISKOS-nummer er et 9-cifret kundenummer hos PostNord. Det er din virksomheds PostNord-kundeidentifikator og skal inkluderes i hvert API-kald. Uden det afviser PostNord API-kaldet. MISKOS-nummeret udleveres af PostNord ved kundeaftaleindgåelse.</p>
+    <p>MISKOS-nummer er et 9-cifret kundenummer hos PostNord. Det er din virksomheds PostNord-kundeidentifikator og skal inkluderes i hvert <a href="api-i-lagerstyring">API-kald</a>. Uden det afviser PostNord API-kaldet. MISKOS-nummeret udleveres af PostNord ved kundeaftaleindgåelse.</p>
     <pre><code>POST /rest/logistics/order/v1/{MISKOS}
 Authorization: Bearer {access_token}
 {
@@ -130,7 +130,7 @@ Authorization: Bearer {access_token}
     <p>Flowet fra kundeklik til fragtlabel:</p>
     <ol>
       <li>Kunden vælger "GLS Pakkeshop" i Shopify-checkout</li>
-      <li>Shopify gemmer valget som shipping_line med metodenøgle</li>
+      <li><a href="shopify-integration">Shopify</a> gemmer valget som shipping_line med metodenøgle</li>
       <li>WMS modtager ordren og mapper metodenøgle til intern fragtprofil</li>
       <li>Intern fragtprofil mapper til GLS API-produktkode: <code>gls_private_droppoint</code></li>
       <li>WMS sender bookingforespørgsel til GLS API</li>

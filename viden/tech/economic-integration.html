@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -96,7 +96,7 @@
       <li>En e-conomic-bruger med rettigheder autoriserer din applikation i e-conomic (via e-conomics Developer Portal)</li>
       <li>Autorisationsprocessen genererer et <strong>Grant Token,</strong> en lang tekststreng</li>
       <li>Grant Token gemmes i WMS-konfigurationen</li>
-      <li>WMS bruger Grant Token + App Secret Key til alle API-kald</li>
+      <li>WMS bruger Grant Token + App Secret Key til alle <a href="api-i-lagerstyring">API-kald</a></li>
     </ol>
     <p>Grant Token udløber ikke automatisk. Men det invalideres, hvis brugeren der autoriserede slettes i e-conomic, eller administratoren trækker applikationens adgang tilbage.</p>
     <p><strong>Det kritiske scenarie:</strong> En medarbejder fratræder. IT-afdelingen sletter brugerens e-conomic-konto. Grant Token invalideres øjeblikkeligt. e-conomic-integration holder op med at virke, næste morgen, midt i en arbejdsdag, uden varsel. <strong>Løsning:</strong> Brug altid en dedikeret systembruger til Grant Token-autorisering. Aldrig en personlig bruger.</p>
@@ -114,7 +114,7 @@
     <p class="inline-cta">👉 Har du tekniske integrationsproblemer? <a href="../../kontakt">Se SmartPacks integrationer</a></p>
 
     <h2>Ordrehentning , hvert 5. minut</h2>
-    <p>e-conomic-ordrer hentes via polling (ikke webhook). SmartPack og de fleste WMS-systemer poller e-conomic API hvert 5. minut for nye ordrer.</p>
+    <p>e-conomic-ordrer hentes via polling (ikke <a href="webhooks-forklaret">webhook</a>). SmartPack og de fleste WMS-systemer poller e-conomic API hvert 5. minut for nye ordrer.</p>
     <pre><code>GET /invoices/drafts?skippages=0&amp;pagesize=25
 X-AppSecretToken: {app_secret}
 X-AgreementGrantToken: {grant_token}</code></pre>

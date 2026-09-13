@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280108">
+  <link rel="stylesheet" href="../../css/style.css?v=1789280530">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -72,7 +72,7 @@
     <div class="article-meta"><time datetime="2025-04-30">30. april 2025</time><span>~5 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>Torsdag kl. 14:23. En kunde klikker "Køb". Ordren oprettes i Shopify. Webhook sendes til WMS. WMS modtager ingenting. Webhook-endpoint var nede i 12 sekunder under deployment. Ordren forsvinder. Stille fejl. Opdages først fredag morgen når kunden ringer: "Hvorfor er min ordre ikke afsendt?"</p>
+    <p>Torsdag kl. 14:23. En kunde klikker "Køb". Ordren oprettes i <a href="shopify-integration">Shopify</a>. Webhook sendes til WMS. WMS modtager ingenting. Webhook-endpoint var nede i 12 sekunder under deployment. Ordren forsvinder. Stille fejl. Opdages først fredag morgen når kunden ringer: "Hvorfor er min ordre ikke afsendt?"</p>
 
     <h2>Hvad er dataflow i e-handel?</h2>
     <p>Dataflow beskriver, hvordan information bevæger sig mellem systemer i håndteringen af en ordre. Fra kundens klik i webshoppen til pakken er afleveret hos fragtmanden involverer en moderne e-handelsoperation typisk 4-7 systemer, der udveksler data med hinanden.</p>
@@ -87,11 +87,11 @@
 
     <h2>Det fulde dataflow , trin for trin</h2>
     <h3>Trin 1: Ordre modtages i webshop</h3>
-    <p>Kunden gennemfører checkout. Webshop opretter ordre og bekræfter betaling via betalingsgateway, sender ordrebekræftelse til kunden og trigger webhook <code>orders/create</code> til WMS.</p>
+    <p>Kunden gennemfører checkout. Webshop opretter ordre og bekræfter betaling via betalingsgateway, sender ordrebekræftelse til kunden og trigger <a href="webhooks-forklaret">webhook</a> <code>orders/create</code> til WMS.</p>
     <h3>Trin 2: WMS modtager og validerer ordre</h3>
     <p>WMS modtager webhook, validerer HMAC-signatur og opretter intern ordre. Validering: kendes alle varenumre? Er der tilstrækkelig beholdning? Er leveringsadresse komplet? Matcher fragtmetode en konfigureret fragtprofil? Fejler validering: ordre placeres i review-kø med fejlårsag.</p>
     <h3>Trin 3: Plukopgave genereres</h3>
-    <p>WMS opretter plukopgave, beregner TSP-optimeret rute for plukkeren, samler eventuelt med andre ordrer i batch pick og tildeler til ledig medarbejder via håndterminal.</p>
+    <p>WMS opretter plukopgave, beregner TSP-optimeret rute for plukkeren, samler eventuelt med andre ordrer i batch pick og tildeler til ledig medarbejder via <a href="mobile-scanning-lager">håndterminal</a>.</p>
     <h3>Trin 4: Pluk udføres</h3>
     <p>Plukker modtager opgave på håndterminal. Rute vises trin for trin. Hvert pluk bekræftes med scanning (stregkode/QR). WMS opdaterer reserveret lager i realtid.</p>
     <h3>Trin 5: Pakning</h3>
