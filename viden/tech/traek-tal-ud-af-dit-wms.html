@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Træk tal ud af dit WMS: find eksporten | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Træk tal ud af dit WMS: find eksporten">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/traek-tal-ud-af-dit-wms">
+  <meta property="og:description" content="SmartPack har ikke én rapportside. Eksporten sidder på den side der viser dine data. Her er alle CSV-eksporterne, og hvor de gemmer sig.">
+  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="SmartPack har ikke én rapportside. Eksporten sidder på den side der viser dine data. Her er alle CSV-eksporterne, og hvor de gemmer sig.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/traek-tal-ud-af-dit-wms">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1789278075">
+  <script src="../../js/theme-toggle.js"></script>
+<!-- ================================================================
+     SMARTPACK TRACKING
+================================================================ -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+<nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Træk tal ud af dit WMS</span></nav>
+<header class="article-header"><span class="article-cat-badge">Tech &amp; Integration</span>
+  <h1 class="article-title">Træk tal ud af dit WMS: sådan finder du eksporten</h1>
+  <div class="article-meta"><time datetime="2026-09-13">13. september 2026</time><span>SmartPack</span></div>
+</header>
+<!-- ARTIKELTYPE: ADVANCED | VINKEL: Der er ingen rapportmenu, fordi eksporten sidder paa selve visningen -->
+<div class="article-body" data-pagefind-body="true">
+
+<p>Revisoren vil have lagerværdien pr. 31. december. Chefen vil have pakker pr. fragtmand. Kunden vil vide hvilke varer der ikke har rørt sig i et halvt år.</p>
+<p>Du går ind i systemet og leder efter menupunktet Rapporter.</p>
+<p>Det findes ikke. Og det er derfor de fleste tror tallene ikke er der.</p>
+
+<h2>Der er ingen rapportmenu, og det er med vilje</h2>
+<p>SmartPack har ikke én samlet rapportsektion. <strong>Eksporten sidder på den side der viser de data du vil trække ud.</strong> Vil du have pakker, går du til Pakker-fanen. Vil du have lager, går du til Lager.</p>
+<p>Fordelen er at du ser præcis det du får. Du sætter dine filtre, kigger på resultatet på skærmen, og eksporterer så det du står og ser på. Ingen rapportopsætning, ingen parametre du skal gætte.</p>
+<p>Ulempen er at man skal vide hvor man skal kigge. Derfor står listen her.</p>
+
+<p class="inline-cta">👉 Skal vi vise jer hvor tallene ligger? <a href="../../kontakt">Kontakt SmartPack</a></p>
+
+<h2>Faldgruben: knappen er ikke særlig synlig</h2>
+<p>Den eksport folk oftest leder forgæves efter er den på <strong>Pakker-fanen</strong>. Knappen sidder ved siden af statistikvisningen, og den springer ikke i øjnene.</p>
+<p>Den er der. Har I en medarbejder der siger at pakkeeksporten ikke findes, er det som regel den knap de ikke har set.</p>
+<p>På Pakker-fanen kan du først filtrere på fragtmand, status som afsendt eller retur, forsendelsestype og datointerval. Så eksporterer du det filtrerede resultat. Filen indeholder blandt andet trackingnummer, ordrenummer, referencenummer, modtagerens navn, adresse, land, telefon og mail, samt vægt, mål, fragtmand og leveringsmetode.</p>
+<p>Samme sted viser statistikken pakkeantal over tid, og den kan grupperes på time, dag, uge, måned eller år.</p>
+
+<h2>Alle eksporterne, og hvor de ligger</h2>
+<table>
+<thead><tr><th>Hvad du vil have</th><th>Hvor du finder det</th></tr></thead>
+<tbody>
+<tr><td><strong>Pakker</strong>, hele forsendelseshistorikken</td><td>Pakker-fanen. Filtrer på fragtmand, status, type og dato</td></tr>
+<tr><td><strong>Ordrer</strong></td><td>Ordrer-siden. Du vælger selv kolonner, og kan få én linje pr. ordrelinje i stedet for pr. ordre</td></tr>
+<tr><td><strong>Lagerbeholdning</strong> lige nu</td><td>Lager-siden. Valgfrie kolonner med plads, lokation, antal, kostpris og egne talfelter. Kan give subtotal pr. lokation og en samlet total</td></tr>
+<tr><td><strong>Varebevægelser</strong>, altså flytninger</td><td>Under lager, historikvisningen. Tidspunkt, fra og til, varenummer, produktnavn, antal og kostpris</td></tr>
+<tr><td><strong>Varer uden bevægelse</strong></td><td>Under lager, visningen Ingen bevægelse</td></tr>
+<tr><td><strong>Emballageforbrug</strong></td><td>Under lager, brugshistorik, fanen Emballage. Grupperet på land og emballagetype med antal og totalvægt</td></tr>
+<tr><td><strong>Serienumre</strong></td><td>Under lager, serienummersporing. Afsendte serienumre med ordrenummer, dato, varenummer og modtager</td></tr>
+<tr><td><strong>Indkøbsordrer</strong></td><td>Indkøbsordrer i menuen. Der er også en separat eksport af indkøbsforslag</td></tr>
+<tr><td><strong>Varelisten</strong></td><td>Varer-siden. Stamdata på alle varer</td></tr>
+<tr><td><strong>Kostprisjusteringer og optællinger</strong></td><td>Under lager, hver sin visning, hver med egen eksportknap</td></tr>
+</tbody>
+</table>
+
+<h2>To rapporter der er mere værd end de ser ud</h2>
+<p><strong>Varer uden bevægelse.</strong> Den viser varer der ligger på lager, men ikke har rørt sig i en periode du selv vælger, og du kan sætte hvad der tæller som bevægelse: pluk, modtagelse, flytning eller optælling. Filen har varenummer, produktnavn, beholdning, lagerværdi og hvornår der sidst skete noget.</p>
+<p>Det er den korteste vej til at se hvor mange penge der står stille. Kør den én gang i kvartalet, sorter efter lagerværdi, og kig på toppen. Det er der <a href="../okonomi/dead-stock-omkostninger">dead stock</a> gemmer sig.</p>
+<p><strong>Emballageforbrug.</strong> Grupperet på land og emballagetype. Den fortæller om I bruger for store kasser til for små ordrer, og den er grundlaget hvis I skal <a href="../okonomi/emballageomkostninger">skære i emballageomkostningerne</a> eller indberette emballage.</p>
+
+<h2>Format, tegnsæt og det med Excel</h2>
+<p>Alle eksporter er <strong>CSV</strong> med UTF-8. Der er ikke Excel-filer eller PDF på de her rapporter.</p>
+<p>Skilletegnet mellem kolonnerne følger sprogindstillingen, og på dansk opsætning er det semikolon. Derfor åbner filen som regel rigtigt når du dobbeltklikker, hvis Windows står på dansk. Står maskinen på engelsk, ender alt i kolonne A, og så skal du bruge Data og Tekst til kolonner i stedet.</p>
+<p><strong>Én grænse at kende:</strong> eksporten af serienumre har et loft på antal linjer. Er dit udvalg større, skriver filen selv en advarsel. Del det op på datointervaller i stedet for at stole på at du fik det hele.</p>
+
+<h2>Automatiske rapporter på mail</h2>
+<p>Her er et ærligt svar i stedet for et salgssvar: <strong>alle eksporter er manuelle.</strong> Du sætter filtre og klikker eksporter.</p>
+<p>Vi har ikke en funktion der sender en rapport automatisk på mail hver mandag morgen. Har I brug for det, skal vi kigge på om det kan løses over API'et i stedet, og det er en snak værd frem for et gæt. Skal tallene bare være synlige hele tiden, er det <a href="./realtid-dashboard">dashboardet</a> og ikke en rapport der er svaret.</p>
+</div>
+<div class="article-disclaimer"><p>Mangler I et tal I ikke kan finde? <a href="../../kontakt">Tag en snak med os</a>.</p></div>
+  <div class="bottom-cta"><p>Vil du have hjælp til at finde de tal I mangler?</p><a href="../../kontakt" class="btn">F&aring; en uforpligtende gennemgang</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="../problemer/vores-data-er-rod" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Vores data er rod</span></a>
+    <a href="./realtid-dashboard" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Realtidstal på lageret: to slags dashboard</span></a>
+    <a href="../okonomi/lageromkostninger-beregning" class="article-related__item"><span class="article-related__item-cat">Økonomi</span><span class="article-related__item-title">Lageromkostninger: sådan regner du dem ud</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+    <details class="faq-item"><summary>Hvor finder jeg rapporterne i SmartPack?</summary><div class="faq-item__body"><p>Der er ingen samlet rapportmenu. Eksportknappen sidder på den side der viser data. Pakker eksporteres fra Pakker-fanen, lager fra Lager-siden, og så videre.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor kan jeg ikke finde eksportknappen på Pakker?</summary><div class="faq-item__body"><p>Den sidder ved siden af statistikvisningen og er ikke særlig synlig. Det er den hyppigste årsag til at folk tror pakkeeksporten ikke findes.</p></div></details>
+    <details class="faq-item"><summary>Hvilke formater kan jeg eksportere til?</summary><div class="faq-item__body"><p>Kun CSV med UTF-8. Der er ikke Excel- eller PDF-eksport på de her rapporter. Skilletegnet følger sprogindstillingen og er semikolon på dansk opsætning.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg få rapporter sendt automatisk på mail?</summary><div class="faq-item__body"><p>Nej. Alle eksporter er manuelle: du sætter filtre og klikker eksporter. Har I brug for faste udtræk, skal det løses over API'et, og det kræver en konkret snak.</p></div></details>
+    <details class="faq-item"><summary>Hvordan finder jeg varer der ikke sælger?</summary><div class="faq-item__body"><p>Brug visningen Ingen bevægelse under lager. Vælg periode og hvad der tæller som bevægelse. Eksporten har varenummer, beholdning, lagerværdi og seneste bevægelse.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvor finder jeg rapporterne i SmartPack?", "acceptedAnswer": {"@type": "Answer", "text": "Der er ingen samlet rapportmenu. Eksportknappen sidder paa den side der viser data. Pakker eksporteres fra Pakker-fanen, lager fra Lager-siden, og saa videre."}}, {"@type": "Question", "name": "Hvorfor kan jeg ikke finde eksportknappen paa Pakker?", "acceptedAnswer": {"@type": "Answer", "text": "Den sidder ved siden af statistikvisningen og er ikke saerlig synlig. Det er den hyppigste aarsag til at folk tror pakkeeksporten ikke findes."}}, {"@type": "Question", "name": "Hvilke formater kan jeg eksportere til?", "acceptedAnswer": {"@type": "Answer", "text": "Kun CSV med UTF-8. Der er ikke Excel- eller PDF-eksport paa de her rapporter. Skilletegnet foelger sprogindstillingen og er semikolon paa dansk opsaetning."}}, {"@type": "Question", "name": "Kan jeg faa rapporter sendt automatisk paa mail?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Alle eksporter er manuelle: du saetter filtre og klikker eksporter. Har I brug for faste udtraek, skal det loeses over API'et, og det kraever en konkret snak."}}, {"@type": "Question", "name": "Hvordan finder jeg varer der ikke saelger?", "acceptedAnswer": {"@type": "Answer", "text": "Brug visningen Ingen bevaegelse under lager. Vaelg periode og hvad der taeller som bevaegelse. Eksporten har varenummer, beholdning, lagervaerdi og seneste bevaegelse."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Træk tal ud af dit WMS: sådan finder du eksporten", "datePublished": "2026-09-13", "dateModified": "2026-09-13", "author": {"@type": "Organization", "name": "SmartPack"}, "publisher": {"@type": "Organization", "name": "SmartPack"}, "url": "https://smartpack.dk/viden/tech/traek-tal-ud-af-dit-wms", "description": "SmartPack har ikke én rapportside. Eksporten sidder på den side der viser dine data. Her er alle CSV-eksporterne, og hvor de gemmer sig."}</script>
+</body></html>

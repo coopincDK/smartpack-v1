@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flyt varer på lageret uden at miste sporet | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Flyt varer på lageret uden at miste sporet">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/flytning-af-varer">
+  <meta property="og:description" content="Flyt lager-appen på terminalen: scan fra-plads, vælg antal, scan til. Se hvad der sker i systemet, og hvilke regler der kan blokere en flytning.">
+  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="Flyt lager-appen på terminalen: scan fra-plads, vælg antal, scan til. Se hvad der sker i systemet, og hvilke regler der kan blokere en flytning.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/flytning-af-varer">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1789278075">
+  <script src="../../js/theme-toggle.js"></script>
+<!-- ================================================================
+     SMARTPACK TRACKING
+================================================================ -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+<nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Flytning af varer</span></nav>
+<header class="article-header"><span class="article-cat-badge">Tech &amp; Integration</span>
+  <h1 class="article-title">Flyt varer på lageret uden at miste sporet</h1>
+  <div class="article-meta"><time datetime="2026-09-13">13. september 2026</time><span>SmartPack</span></div>
+</header>
+<!-- ARTIKELTYPE: ADVANCED | VINKEL: En flytning er ikke en flytning, det er et nyt parti plus en log -->
+<div class="article-body" data-pagefind-body="true">
+
+<p>Hylden er fuld. Der står to paller i gangen. Nogen flytter dem hen bagved, fordi de er i vejen.</p>
+<p>Tre dage senere står varen som "på lager" i systemet, og ingen kan finde den.</p>
+<p>Det er ikke medarbejderens fejl. Det er en flytning der aldrig blev registreret.</p>
+
+<h2>Hvorfor uregistrerede flytninger er dyre</h2>
+<p>En vare der er flyttet uden at systemet ved det, koster tre gange. Først når plukkeren står ved den tomme plads. Så når nogen bestiller varen hjem igen fordi lagertallet ser forkert ud. Og til sidst når den dukker op ved optælling, og ingen ved hvor længe den har ligget der.</p>
+<p>Det er den samme vare, tre gange betalt. Derfor er flytningen sin egen funktion på terminalen, og ikke noget man gør ved at rette et tal.</p>
+
+<p class="inline-cta">👉 Vil du se appen på jeres egen terminal? <a href="../../kontakt">Kontakt SmartPack</a></p>
+
+<h2>Sådan flytter du på terminalen</h2>
+<p>Appen hedder <strong>Flyt lager</strong> og ligger i terminalmenuen. Flowet er: vælg hvor du tager fra, vælg hvad og hvor meget, vælg hvor det skal hen, bekræft.</p>
+<ol>
+<li><strong>Scan fra-pladsen.</strong> Systemet henter alle partier der ligger der og viser dem med varenavn, SKU, stregkoder og det antal der står på pladsen, vist som Max.</li>
+<li><strong>Vælg varer og antal.</strong> Sæt flueben ved det du vil flytte, og ret antallet i talfeltet. Klikker du på Max-feltet, skifter det mellem 0 og hele antallet. Er der kun én vare på pladsen, er den krydset af på forhånd. Er der mange, kommer der et filterikon frem.</li>
+<li><strong>Scan til-pladsen.</strong> Systemet viser destinationen og gør en bekræft-knap synlig.</li>
+<li><strong>Bekræft.</strong> Enten med knappen, eller ved at scanne til-pladsen <strong>to gange hurtigt efter hinanden</strong>. Så udløses flytningen direkte.</li>
+</ol>
+<p>Er indstillingen "bekræft flytning" slået til i systemet, kommer der en dialogboks først: "Er du sikker på du vil flytte fra [fra] til [til]?". Den kan sættes overordnet, og den kan tilsidesættes pr. bruger. Den rutinerede medarbejder slipper for klikket, den nye får spørgsmålet.</p>
+
+<h2>Hvad der faktisk sker i systemet</h2>
+<p>Her er den detalje der overrasker de fleste. <strong>SmartPack flytter ikke partiet. Systemet opretter et nyt.</strong></p>
+<ul>
+<li>Partiet på fra-pladsen sættes ned med det antal du flytter</li>
+<li>Der oprettes et <strong>nyt parti</strong> på til-pladsen med det flyttede antal</li>
+<li>Alle oplysninger følger med: ankomstdato, batchnummer, udløbsdato og resten</li>
+<li>Der skrives en linje i flytningsloggen med vare, antal, fra-plads, til-plads, bruger og tidspunkt</li>
+</ul>
+<p>Det sker uanset om du flytter hele mængden eller kun en del. Flytter du det hele, går det gamle parti i nul og forsvinder fra listen. Flytter du halvdelen, står der to partier bagefter. Begge har samme batchnummer og samme udløbsdato, så <a href="../fundamentals/hvad-er-fefo">FEFO</a> og <a href="./batch-og-lotnumre">batchsporingen</a> holder.</p>
+<p>Det er et bevidst valg. Et parti hører til på én plads. Ligger den samme portion to steder, er der to partier, og så passer tallene med det man kan se på hylden.</p>
+
+<h2>Når systemet siger nej</h2>
+<p>SmartPack tjekker en række ting inden flytningen går igennem. Den der oftest overrasker er <strong>maks antal varetyper pr. plads</strong>. Er grænsen nået på til-pladsen, afvises flytningen. Totes er undtaget, de har en meget høj grænse, fordi de er tænkt som en blandet kasse.</p>
+<p>Det føles som et system der driller, men det er den regel der holder plukzonen ryddelig. Uden den ender en god plukplads med syv varer der ligner hinanden, og så kommer <a href="../problemer/vi-laver-for-mange-pakkefejl">plukfejlene</a>.</p>
+
+<h2>To indstillinger der ændrer hverdagen</h2>
+<ul>
+<li><strong>Auto double-scan flytning.</strong> Er den slået til, gennemføres flytningen så snart du scanner til-pladsen. Ingen knap, intet ekstra klik. Godt til folk der flytter meget, dårligt til folk der lige er startet.</li>
+<li><strong>Bekræft flytning pr. bruger.</strong> Den enkelte bruger kan tilsidesætte systemets generelle indstilling. Brug den til at give nye medarbejdere sikkerhedsnettet uden at bremse resten.</li>
+</ul>
+<p>Begge dele er noget vi sætter op sammen med jer. Det er ikke store beslutninger, men de er den slags der afgør om folk bruger appen eller lader være.</p>
+
+<h2>Loggen er pointen</h2>
+<p>Selve flytningen tager tolv sekunder. Det værdifulde er linjen der bliver skrevet.</p>
+<p>Flytningsloggen er en komplet historik over hvem der flyttede hvad, hvornår, og mellem hvilke pladser. Den kan trækkes ud som rapport med datointerval, og den ligger også på varekortet som en del af <a href="../drift/sporbarhed-paa-lageret">varens historik</a>. Når en vare er væk, er det den log man starter i.</p>
+</div>
+<div class="article-disclaimer"><p>Skal vi kigge på jeres flytteflow? <a href="../../kontakt">Tag en snak med os</a>.</p></div>
+  <div class="bottom-cta"><p>Vil du se hvordan flytninger logges på jeres lager?</p><a href="../../kontakt" class="btn">F&aring; en uforpligtende gennemgang</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="./genopfyldning-fra-tote" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Genopfyldning fra tote: systemet finder pladsen</span></a>
+    <a href="../problemer/forkert-vareplacering" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Forkert vareplacering</span></a>
+    <a href="../fundamentals/hvad-er-warehouse-layout" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er warehouse layout?</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+    <details class="faq-item"><summary>Hvad hedder funktionen på terminalen?</summary><div class="faq-item__body"><p>Appen hedder Flyt lager og ligger som en selvstændig app i terminalmenuen.</p></div></details>
+    <details class="faq-item"><summary>Skal jeg trykke bekræft hver gang?</summary><div class="faq-item__body"><p>Nej. Du kan scanne til-pladsen to gange hurtigt efter hinanden, så udløses flytningen direkte. Er auto double-scan slået til, sker det allerede ved første scan af til-pladsen.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der med batchnummer og udløbsdato når jeg flytter?</summary><div class="faq-item__body"><p>De følger med. Systemet opretter et nyt parti på til-pladsen med alle oplysninger fra det gamle: ankomstdato, batchnummer, udløbsdato og resten.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor afviser systemet min flytning?</summary><div class="faq-item__body"><p>Den hyppigste årsag er grænsen for hvor mange forskellige varer der må ligge på én plads. Er den nået på til-pladsen, går flytningen ikke igennem. Totes er undtaget.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg se hvem der har flyttet en vare?</summary><div class="faq-item__body"><p>Ja. Hver flytning skriver en linje med vare, antal, fra-plads, til-plads, bruger og tidspunkt. Den kan ses på varekortet og trækkes ud som rapport for et valgt datointerval.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad hedder funktionen paa terminalen?", "acceptedAnswer": {"@type": "Answer", "text": "Appen hedder Flyt lager og ligger som en selvstaendig app i terminalmenuen."}}, {"@type": "Question", "name": "Skal jeg trykke bekraeft hver gang?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Du kan scanne til-pladsen to gange hurtigt efter hinanden, saa udloeses flytningen direkte. Er auto double-scan slaaet til, sker det allerede ved foerste scan af til-pladsen."}}, {"@type": "Question", "name": "Hvad sker der med batchnummer og udloebsdato naar jeg flytter?", "acceptedAnswer": {"@type": "Answer", "text": "De foelger med. Systemet opretter et nyt parti paa til-pladsen med alle oplysninger fra det gamle: ankomstdato, batchnummer, udloebsdato og resten."}}, {"@type": "Question", "name": "Hvorfor afviser systemet min flytning?", "acceptedAnswer": {"@type": "Answer", "text": "Den hyppigste aarsag er graensen for hvor mange forskellige varer der maa ligge paa en plads. Er den naaet paa til-pladsen, gaar flytningen ikke igennem. Totes er undtaget."}}, {"@type": "Question", "name": "Kan jeg se hvem der har flyttet en vare?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Hver flytning skriver en linje med vare, antal, fra-plads, til-plads, bruger og tidspunkt. Den kan ses paa varekortet og traekkes ud som rapport for et valgt datointerval."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Flyt varer på lageret uden at miste sporet", "datePublished": "2026-09-13", "dateModified": "2026-09-13", "author": {"@type": "Organization", "name": "SmartPack"}, "publisher": {"@type": "Organization", "name": "SmartPack"}, "url": "https://smartpack.dk/viden/tech/flytning-af-varer", "description": "Flyt lager-appen på terminalen: scan fra-plads, vælg antal, scan til. Se hvad der sker i systemet, og hvilke regler der kan blokere en flytning."}</script>
+</body></html>

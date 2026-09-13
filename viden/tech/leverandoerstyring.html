@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leverandørstyring i WMS: hvad ligger hvor? | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Leverandørstyring i WMS: hvad ligger hvor?">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/leverandoerstyring">
+  <meta property="og:description" content="Leverandørkartotek, indkøbsordrer, forventet levering og dellevering i SmartPack. Og hvad der stadig hører hjemme i dit ERP.">
+  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="Leverandørkartotek, indkøbsordrer, forventet levering og dellevering i SmartPack. Og hvad der stadig hører hjemme i dit ERP.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/leverandoerstyring">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1789278075">
+  <script src="../../js/theme-toggle.js"></script>
+<!-- ================================================================
+     SMARTPACK TRACKING
+================================================================ -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+<nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Leverandørstyring</span></nav>
+<header class="article-header"><span class="article-cat-badge">Tech &amp; Integration</span>
+  <h1 class="article-title">Leverandørstyring i WMS: hvad ligger hvor?</h1>
+  <div class="article-meta"><time datetime="2026-09-13">13. september 2026</time><span>SmartPack</span></div>
+</header>
+<!-- ARTIKELTYPE: ADVANCED | VINKEL: Graensen mellem WMS og ERP paa indkoeb, sagt lige ud -->
+<div class="article-body" data-pagefind-body="true">
+
+<p>Kunden bestiller. Varen er ikke hjemme. Nogen har bestilt den, men ingen kan sige hvornår den kommer.</p>
+<p>Indkøbsordren ligger i ERP'et. Lageret kigger i lagersystemet. De to taler ikke sammen, så ordren står bare som "mangler varer".</p>
+<p>Det er ikke et indkøbsproblem. Det er et spørgsmål om hvad der ligger hvor.</p>
+
+<h2>Den grænse der forvirrer flest</h2>
+<p>SmartPack har sit eget leverandørkartotek og sit eget indkøbsordresystem. Det betyder ikke at SmartPack skal erstatte jeres ERP på indkøbssiden.</p>
+<p>Den korte version:</p>
+<ul>
+<li><strong>Kører I uden ERP</strong>, kan I oprette leverandører og indkøbsordrer direkte i SmartPack og køre hele vejen derfra.</li>
+<li><strong>Har I et ERP</strong>, oprettes indkøbsordrerne normalt der og sendes automatisk ind i SmartPack. Varemodtagelsen sker på lageret og sendes tilbage.</li>
+</ul>
+<p>Begge dele virker. Problemet opstår når man gør begge dele på samme tid, og to systemer hver har halvdelen af sandheden.</p>
+
+<p class="inline-cta">👉 Skal vi se på jeres opsætning? <a href="../../kontakt">Kontakt SmartPack</a></p>
+
+<h2>Hvad der ligger på en leverandør</h2>
+<p>En leverandør i SmartPack har navn og leverandørnummer, mail og telefon, minimumsordrebeløb og standardvaluta, samt standardsatser for moms, told og finansiering der bruges på indkøbsordrerne.</p>
+<p>Tre felter er værd at fremhæve, fordi de gør arbejde for jer hver dag:</p>
+<ul>
+<li><strong>Forventet leveringstid i dage.</strong> Leverandørens normale leveringstid. Den er udgangspunktet for hvornår varen forventes hjem.</li>
+<li><strong>Auto-godkendelse.</strong> Et flueben der gør at nye indkøbsordrer fra den leverandør godkendes uden at nogen skal ind og trykke. Sæt det på de leverandører I bestiller fra hver uge, og lad de sjældne kræve et blik.</li>
+<li><strong>Importnavne.</strong> Andre navne systemet også genkender leverandøren på. Det er den lille ting der forhindrer at "Nordisk Emballage A/S" og "Nordisk Emballage" bliver til to leverandører.</li>
+</ul>
+<p>Leverandører kan oprettes i SmartPack, og de kan importeres i bunker via fil eller API. Systemet matcher på eksternt id, leverandørnummer eller navn for at undgå dubletter.</p>
+
+<h2>Samme vare, forskellige leverandørnumre</h2>
+<p>Der er en selvstændig kobling mellem en leverandør og en bestemt vare. Den holder leverandørens eget varenummer og SKU, leverandørens beskrivelse, producent, modelnummer, stregkode, colli-størrelse, mindste købsmængde, kostpris og hvornår prisen udløber.</p>
+<p>Det lyder som detaljer, men det er den tabel der gør det muligt at købe samme vare hos to leverandører uden at nogen skal oversætte varenumre i hovedet. Og colli-størrelsen er den der forhindrer at nogen bestiller 7 stk. af noget der kun sælges i kasser med 12.</p>
+
+<h2>Indkøbsordren og dens fire statusser</h2>
+<p>En indkøbsordre i SmartPack har leverandør, referencenummer og ordredato, valuta og fragtomkostning, satser for moms, told, finansiering og rabat, vekselkurs, note og trackingnumre. Linjerne har SKU, antal, leveret antal, leverandørens varenummer, lokation, presell-flag og enhedspris.</p>
+<p>Det vigtigste felt er <strong>forventet leveringsdato</strong>. Den er påkrævet på ordren, og den kan sættes pr. linje hvis en enkelt vare kommer senere end resten. Linjens dato vinder over ordrens.</p>
+<table>
+<thead><tr><th>Status</th><th>Betyder</th></tr></thead>
+<tbody>
+<tr><td><strong>Kladde</strong></td><td>Oprettet, men ikke sat i gang</td></tr>
+<tr><td><strong>Åben</strong></td><td>Aktiv, varer forventes</td></tr>
+<tr><td><strong>Afsluttet</strong></td><td>Fuldt modtaget og lukket</td></tr>
+<tr><td><strong>Annulleret</strong></td><td>Annulleret, kun muligt hvis der ikke er modtaget noget endnu</td></tr>
+</tbody>
+</table>
+<p>På <a href="./realtid-dashboard">dashboardet</a> kan du sætte en kasse op der viser åbne indkøbsordrer sorteret efter forventet levering, og som markerer dem der skulle komme i dag, og dem der er forsinkede.</p>
+
+<h2>Derfor betyder leveringsdatoen så meget</h2>
+<p>Datoen er ikke bare til orientering. Den afgør hvad en salgsordre der venter på varer får af status:</p>
+<ul>
+<li><strong>Bestilt</strong>, varerne er købt og leveringsdatoen ligger fremme i tiden</li>
+<li><strong>Bestilt, forsinket</strong>, varerne er købt, men datoen er overskredet</li>
+<li><strong>Mangler varer</strong>, der er ingen indkøbsordre der dækker det der mangler</li>
+</ul>
+<p>Det er forskellen på at kunne sige "den er på vej, forventet på fredag" og at skulle sige "jeg ved det ikke". Holder I ikke leveringsdatoerne opdaterede, ryger den forskel.</p>
+<p>Datoen driver også <strong>presell</strong>: linjer der er markeret til presell tæller varerne som salgbare allerede fra indkøbsordren er oprettet, og de flyttes til fri beholdning når de fysisk kommer ind.</p>
+
+<h2>Når der kommer færre end bestilt</h2>
+<p>Dellevering er indbygget. Modtager I 60 af 100, registreres de 60, og de sidste 40 bliver stående på indkøbsordren som udestående. Ordrer der ventede på varerne opdaterer sig efter om der stadig er dækning.</p>
+<p>På indkøbsordren kan I sætte om systemet må tage imod <strong>færre</strong> end bestilt og om det må tage imod <strong>flere</strong>. De to flueben afgør om medarbejderen kan afslutte modtagelsen eller bliver stoppet. Sæt dem efter hvad I faktisk oplever fra leverandøren, ikke efter hvad der står i aftalen.</p>
+
+<h2>Hvad der stadig kræver ERP</h2>
+<p>Her er grænsen sagt lige ud, så ingen bliver lovet for meget:</p>
+<ul>
+<li><strong>Automatisk genbestilling</strong> ud fra lagerniveau er ikke i SmartPack. Det kræver enten ERP eller et værktøj som Inventory Planner.</li>
+<li><strong>Leverandørprislister</strong> med gyldigheds- og udløbsdatoer ud over det der ligger på leverandør-vare-koblingen.</li>
+<li><strong>Fakturabehandling og kreditorstyring.</strong> Det er ERP'ets arbejde, ikke lagerets.</li>
+</ul>
+<p>Til gengæld synkroniseres indkøbsordrer ind fra Uniconta, Business Central, Apport, Tecsys og flere, med leverandør, linjer, forventet leveringsdato og leverandørens varenumre. Varemodtagelsen posteres tilbage med følgeseddel, fakturaflag og godkendelse.</p>
+<p><strong>Uniconta i praksis:</strong> leverandører går kun én vej, fra Uniconta ind i SmartPack. Indkøbsordrer går begge veje, og SmartPack kan også oprette indkøbsordrer i Uniconta hvis det sættes op.</p>
+
+<h2>Kort sagt</h2>
+<p>SmartPack har et rigtigt leverandørkartotek og et rigtigt indkøbsordresystem med forventede leveringsdatoer, dellevering og presell. Det der normalt bliver i ERP'et er indkøbsforslag, fakturaer og selve oprettelsen af indkøbsordrer, hvis I allerede har et ERP der gør det.</p>
+<p>Skal I vide hvornår I skal bestille i stedet for bare hvad I har bestilt, er det <a href="../fundamentals/hvad-er-reorder-point">reorder point</a> der er næste emne.</p>
+</div>
+<div class="article-disclaimer"><p>Er I i tvivl om hvad der skal ligge hvor? <a href="../../kontakt">Tag en snak med os</a>.</p></div>
+  <div class="bottom-cta"><p>Vil du se hvordan jeres indkøb ville køre i SmartPack?</p><a href="../../kontakt" class="btn">F&aring; en uforpligtende gennemgang</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="../fundamentals/hvad-er-reorder-point" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er reorder point?</span></a>
+    <a href="../fundamentals/hvad-er-lead-time" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lead time?</span></a>
+    <a href="../problemer/vi-loeber-toer-for-varer" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Vi løber tør for varer</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+    <details class="faq-item"><summary>Kan jeg oprette indkøbsordrer direkte i SmartPack?</summary><div class="faq-item__body"><p>Ja. SmartPack har et fuldt indkøbsordresystem med leverandør, linjer, forventet leveringsdato, valuta og satser. Har I et ERP, oprettes ordrerne dog normalt der og sendes automatisk ind.</p></div></details>
+    <details class="faq-item"><summary>Hvad sker der hvis leverandøren sender færre varer end bestilt?</summary><div class="faq-item__body"><p>Det modtagne antal registreres, og resten bliver stående på indkøbsordren som udestående. På ordren kan I sætte om systemet må tage imod færre eller flere end bestilt.</p></div></details>
+    <details class="faq-item"><summary>Kan SmartPack selv bestille varer hjem når lageret er lavt?</summary><div class="faq-item__body"><p>Nej. Automatisk genbestilling ud fra lagerniveau kræver enten jeres ERP eller et værktøj som Inventory Planner. SmartPack styrer indkøbsordren, ikke forslaget om at bestille.</p></div></details>
+    <details class="faq-item"><summary>Kan samme vare have forskellige varenumre hos forskellige leverandører?</summary><div class="faq-item__body"><p>Ja. Koblingen mellem leverandør og vare holder leverandørens eget varenummer og SKU, plus colli-størrelse, mindste købsmængde, kostpris og prisens udløbsdato.</p></div></details>
+    <details class="faq-item"><summary>Hvordan går data mellem Uniconta og SmartPack?</summary><div class="faq-item__body"><p>Leverandører går kun én vej, fra Uniconta ind i SmartPack. Indkøbsordrer går begge veje, og SmartPack kan også oprette indkøbsordrer i Uniconta hvis det er sat op.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Kan jeg oprette indkoebsordrer direkte i SmartPack?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. SmartPack har et fuldt indkoebsordresystem med leverandoer, linjer, forventet leveringsdato, valuta og satser. Har I et ERP, oprettes ordrerne dog normalt der og sendes automatisk ind."}}, {"@type": "Question", "name": "Hvad sker der hvis leverandoeren sender faerre varer end bestilt?", "acceptedAnswer": {"@type": "Answer", "text": "Det modtagne antal registreres, og resten bliver staaende paa indkoebsordren som udestaaende. Paa ordren kan I saette om systemet maa tage imod faerre eller flere end bestilt."}}, {"@type": "Question", "name": "Kan SmartPack selv bestille varer hjem naar lageret er lavt?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Automatisk genbestilling ud fra lagerniveau kraever enten jeres ERP eller et vaerktoej som Inventory Planner. SmartPack styrer indkoebsordren, ikke forslaget om at bestille."}}, {"@type": "Question", "name": "Kan samme vare have forskellige varenumre hos forskellige leverandoerer?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Koblingen mellem leverandoer og vare holder leverandoerens eget varenummer og SKU, plus colli-stoerrelse, mindste koebsmaengde, kostpris og prisens udloebsdato."}}, {"@type": "Question", "name": "Hvordan gaar data mellem Uniconta og SmartPack?", "acceptedAnswer": {"@type": "Answer", "text": "Leverandoerer gaar kun en vej, fra Uniconta ind i SmartPack. Indkoebsordrer gaar begge veje, og SmartPack kan ogsaa oprette indkoebsordrer i Uniconta hvis det er sat op."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Leverandørstyring i WMS: hvad ligger hvor?", "datePublished": "2026-09-13", "dateModified": "2026-09-13", "author": {"@type": "Organization", "name": "SmartPack"}, "publisher": {"@type": "Organization", "name": "SmartPack"}, "url": "https://smartpack.dk/viden/tech/leverandoerstyring", "description": "Leverandørkartotek, indkøbsordrer, forventet levering og dellevering i SmartPack. Og hvad der stadig hører hjemme i dit ERP."}</script>
+</body></html>

@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realtidstal på lageret: to slags dashboard | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Realtidstal på lageret: to slags dashboard">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/realtid-dashboard">
+  <meta property="og:description" content="SmartPack har to dashboards: kundesiden med live ordretællere, og et du selv bygger. Se hvilke tal der er live, og hvilke der hentes i baggrunden.">
+  <meta property="og:image" content="https://smartpack.dk/assets/SmartPack-WMS-PDA.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="SmartPack har to dashboards: kundesiden med live ordretællere, og et du selv bygger. Se hvilke tal der er live, og hvilke der hentes i baggrunden.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/realtid-dashboard">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1789278075">
+  <script src="../../js/theme-toggle.js"></script>
+<!-- ================================================================
+     SMARTPACK TRACKING
+================================================================ -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-center-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+<nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Realtid KPI-dashboard</span></nav>
+<header class="article-header"><span class="article-cat-badge">Tech &amp; Integration</span>
+  <h1 class="article-title">Realtidstal på lageret: to slags dashboard</h1>
+  <div class="article-meta"><time datetime="2026-09-13">13. september 2026</time><span>SmartPack</span></div>
+</header>
+<!-- ARTIKELTYPE: ADVANCED | VINKEL: Ikke alle tal paa et dashboard er lige friske, og forskellen betyder noget -->
+<div class="article-body" data-pagefind-body="true">
+
+<p>Klokken er 14. Chefen spørger hvor mange ordrer der er tilbage i dag.</p>
+<p>Én kigger i systemet, én tæller sedler ved pakkebordet, og der kommer to forskellige tal.</p>
+<p>Det er ikke fordi nogen tager fejl. Det er fordi de to tal er hentet på hver sin måde.</p>
+
+<h2>Live eller hentet i baggrunden</h2>
+<p>Der er to slags tal på et lagerdashboard, og det er værd at kende forskellen.</p>
+<p><strong>Live-tal</strong> læses direkte fra det systemet har i hukommelsen lige nu. De er så friske som det overhovedet kan lade sig gøre. Typisk er det ordrestatus: hvor mange ligger klar, hvor mange er i gang.</p>
+<p><strong>Tal der hentes i baggrunden</strong> regnes ud med jævne mellemrum og gemmes, fordi de kræver tunge opslag. Det er for eksempel "pakker sendt de sidste 30 dage" eller lagerværdi over tid. De er ikke forkerte, de er bare et stykke tid gamle.</p>
+<p>Blander du de to slags sammen uden at vide det, tror du systemet modsiger sig selv. Gør du det ikke, ved du præcis hvilke tal du kan træffe en beslutning på klokken 14, og hvilke der er til månedsmødet.</p>
+
+<p class="inline-cta">👉 Vil du se hvilke tal I har liggende i forvejen? <a href="../../kontakt">Kontakt SmartPack</a></p>
+
+<h2>Dashboard nummer et: kundesiden</h2>
+<p>Det første dashboard er den side du lander på, når du åbner en kunde i SmartPack. Den har to lag.</p>
+<p><strong>Ordretællerne øverst er live.</strong> De læses direkte fra systemets ordreliste uden et eneste databaseopslag:</p>
+<ul>
+<li>Ordrer klar til pakning, med forfald i dag eller tidligere</li>
+<li>Ordrer der er i gang med at blive pakket</li>
+<li>Ordrer der mangler varer</li>
+<li>Ordrer der venter på indkøb, og dem hvor indkøbet er forsinket</li>
+<li>Pausede ordrer</li>
+<li>Ordrer sat on hold</li>
+</ul>
+<p>Det er de tal man kan styre en eftermiddag efter. Rykker en ordre status, rykker tallet.</p>
+<p><strong>KPI-tabellerne nedenunder hentes i baggrunden.</strong> Tre tabeller med nye ordrer, pakker sendt og returpakker, hver opdelt på i dag, 7 dage, 30 dage, måned til dato og år til dato, og med procentvis ændring mod samme periode sidste gang.</p>
+<p>Det er derfor kortene nogle gange står tomme et øjeblik når siden lige er åbnet. Browseren spørger løbende om tallene er klar, og fylder dem ind når de er. Der er ikke noget galt, siden venter bare.</p>
+<p>Samme sted ligger lager- og faktureringstallene, også hentet i baggrunden: lagerværdi måned for måned, forbrug af kvadratmeter, antal SKU'er og antal enheder på lager, og faktureringslinjer for denne og sidste måned afhængigt af hvad der er sat op på kunden.</p>
+
+<h2>Dashboard nummer to: det du selv bygger</h2>
+<p>Det andet dashboard er et selvstændigt modul, hvor du sætter dit eget layout sammen af kasser. Kasserne hedder widgets, og du vælger selv hvilke der skal med og hvor de skal ligge.</p>
+<p>Der er fem slags:</p>
+<table>
+<thead><tr><th>Type</th><th>Hvad den viser</th></tr></thead>
+<tbody>
+<tr><td><strong>Tællere</strong></td><td>Antal ordrer, varer på lager, returordrer, pakker, ordrelinjer, modtagne varer, totes og flere</td></tr>
+<tr><td><strong>Datoliste</strong></td><td>Liste over datoer og begivenheder</td></tr>
+<tr><td><strong>Seneste aktivitet</strong></td><td>Seneste ordrer, returordrer og pakker</td></tr>
+<tr><td><strong>Indkøbsordreliste</strong></td><td>Åbne indkøbsordrer sorteret efter forventet levering</td></tr>
+<tr><td><strong>Søjlediagrammer</strong></td><td>Ordrer og pakker over tid med periodevælger, og returårsager pr. kvartal</td></tr>
+</tbody>
+</table>
+<p><strong>Tællerne opdaterer sig selv.</strong> Serveren skubber nye tal ud, og du kan sætte hvor tit. Det betyder at en skærm på væggen i pakkeriet bliver ved med at vise det rigtige uden at nogen genindlæser siden.</p>
+<p>Det er den funktion der gør dashboardet til andet end en rapport. En skærm der står stille i to timer er ikke et dashboard, det er et skærmbillede.</p>
+
+<h2>Hvad du kan filtrere på</h2>
+<p>I indstillingerne på dashboardet, under tandhjulet, vælger du hvilke <strong>kunder</strong> der skal indgå i tallene. Det gælder på tværs af alle kasser på dashboardet, ikke pr. kasse.</p>
+<p>For et 3PL-lager er det den vigtigste indstilling der findes. Ét dashboard pr. kunde til driftsmøderne, og ét samlet til jer selv.</p>
+<p>Skal du derimod se pakker fordelt på fragtmand, periode eller type, er dashboardet ikke stedet. Det er <strong>Pakker-fanen</strong> på kundens side. Den har filtrene og en eksportknap, og den knap er ikke særlig synlig. Den sidder ved siden af statistikvisningen, og det er ofte der folk går forgæves.</p>
+
+<h2>Start med tre tal, ikke tolv</h2>
+<p>Den hyppigste fejl er at bygge et dashboard med alt på. Så kigger ingen på det efter fjorten dage.</p>
+<p>Vælg de tal nogen faktisk gør noget ved. På de fleste lagre er det: hvor mange ordrer mangler vi i dag, hvor mange ordrer mangler varer, og hvor mange pakker sendte vi i går mod samme dag sidste uge.</p>
+<p>Tre tal på en skærm i pakkeriet flytter mere end tolv tal ingen ser. Resten kan du <a href="./traek-tal-ud-af-dit-wms">trække ud som rapport</a> når du har brug for dem.</p>
+</div>
+<div class="article-disclaimer"><p>Vil du vide hvilke tal I bør kigge på hver morgen? <a href="../../kontakt">Tag en snak med os</a>.</p></div>
+  <div class="bottom-cta"><p>Vil du se et dashboard bygget på jeres egne tal?</p><a href="../../kontakt" class="btn">F&aring; en uforpligtende gennemgang</a></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid">
+    <a href="../vaekst/ordrer-pr-medarbejder" class="article-related__item"><span class="article-related__item-cat">Vækst</span><span class="article-related__item-title">Ordrer pr. medarbejder</span></a>
+    <a href="../problemer/vi-mangler-overblik-over-lageret" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Vi mangler overblik over lageret</span></a>
+    <a href="./real-time-beholdning" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Real-time beholdning</span></a>
+  </div></div>
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+    <details class="faq-item"><summary>Er tallene på dashboardet live?</summary><div class="faq-item__body"><p>Nogle er. Ordretællerne på kundesiden læses direkte fra systemets ordreliste og er helt friske. KPI-tabellerne og lagertallene hentes i baggrunden med jævne mellemrum, så de kan være et stykke tid gamle.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor står kortene tomme når jeg åbner siden?</summary><div class="faq-item__body"><p>Fordi de tal hentes i baggrunden. Siden loader først, og browseren spørger derefter løbende om tallene er klar. De fylder sig selv ind når de er hentet.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg selv bestemme hvad der står på dashboardet?</summary><div class="faq-item__body"><p>Ja, på widget-dashboardet. Der sætter du selv layoutet sammen af kasser: tællere, datoliste, seneste aktivitet, indkøbsordreliste og søjlediagrammer.</p></div></details>
+    <details class="faq-item"><summary>Opdaterer dashboardet sig selv?</summary><div class="faq-item__body"><p>Tællerne gør. Serveren skubber nye tal ud med et interval du selv sætter, så en skærm på væggen bliver ved med at vise det rigtige uden at nogen genindlæser siden.</p></div></details>
+    <details class="faq-item"><summary>Kan jeg filtrere dashboardet pr. kunde?</summary><div class="faq-item__body"><p>Ja. I dashboardets indstillinger vælger du hvilke kunder der skal indgå. Valget gælder alle kasser på dashboardet, ikke den enkelte kasse.</p></div></details>
+  </div>
+</div></div>
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Er tallene paa dashboardet live?", "acceptedAnswer": {"@type": "Answer", "text": "Nogle er. Ordretaellerne paa kundesiden laeses direkte fra systemets ordreliste og er helt friske. KPI-tabellerne og lagertallene hentes i baggrunden med jaevne mellemrum, saa de kan vaere et stykke tid gamle."}}, {"@type": "Question", "name": "Hvorfor staar kortene tomme naar jeg aabner siden?", "acceptedAnswer": {"@type": "Answer", "text": "Fordi de tal hentes i baggrunden. Siden loader foerst, og browseren spoerger derefter loebende om tallene er klar. De fylder sig selv ind naar de er hentet."}}, {"@type": "Question", "name": "Kan jeg selv bestemme hvad der staar paa dashboardet?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, paa widget-dashboardet. Der saetter du selv layoutet sammen af kasser: taellere, datoliste, seneste aktivitet, indkoebsordreliste og soejlediagrammer."}}, {"@type": "Question", "name": "Opdaterer dashboardet sig selv?", "acceptedAnswer": {"@type": "Answer", "text": "Taellerne goer. Serveren skubber nye tal ud med et interval du selv saetter, saa en skaerm paa vaeggen bliver ved med at vise det rigtige uden at nogen genindlaeser siden."}}, {"@type": "Question", "name": "Kan jeg filtrere dashboardet pr. kunde?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. I dashboardets indstillinger vaelger du hvilke kunder der skal indgaa. Valget gaelder alle kasser paa dashboardet, ikke den enkelte kasse."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Realtidstal på lageret: to slags dashboard", "datePublished": "2026-09-13", "dateModified": "2026-09-13", "author": {"@type": "Organization", "name": "SmartPack"}, "publisher": {"@type": "Organization", "name": "SmartPack"}, "url": "https://smartpack.dk/viden/tech/realtid-dashboard", "description": "SmartPack har to dashboards: kundesiden med live ordretællere, og et du selv bygger. Se hvilke tal der er live, og hvilke der hentes i baggrunden."}</script>
+</body></html>
