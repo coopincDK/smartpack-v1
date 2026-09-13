@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280890">
+  <link rel="stylesheet" href="../../css/style.css?v=1789281294">
   <script src="../../js/theme-toggle.js"></script>
 
 <!-- ================================================================
@@ -87,7 +87,7 @@
     <p>Uden et af disse tre elementer er FIFO et ønske, ikke en realitet.</p>
 
     <h2>Hvornår er FIFO ikke bare god praksis, men et krav?</h2>
-    <p>I mange brancher er FIFO lovpligtigt eller i praksis obligatorisk, fordi varerne har en udløbsdato eller er sundhedsrisiko.</p>
+    <p>I mange brancher er FIFO lovpligtigt eller i praksis obligatorisk, fordi varerne har en <a href="hvad-er-fefo">udløbsdato</a> eller er sundhedsrisiko.</p>
     <table>
       <thead><tr><th>Branche</th><th>årsag til FIFO-krav</th><th>Konsekvens uden FIFO</th></tr></thead>
       <tbody>
@@ -131,7 +131,7 @@
     <h3>100+ ordrer/dag: WMS er obligatorisk</h3>
     <ol>
       <li><strong>WMS med FIFO-logik:</strong> Systemet dirigerer automatisk til ældste lokation. Nul manuel koordinering.</li>
-      <li><strong>Batch-registrering ved modtagelse:</strong> Scan produktionsdato eller batchnummer, ikke kun modtagelsesdato.</li>
+      <li><strong>Batch-registrering ved modtagelse:</strong> Scan produktionsdato eller <a href="../tech/batch-og-lotnumre">batchnummer</a>, ikke kun modtagelsesdato.</li>
       <li><strong>Automatisk alert:</strong> Notifikation når vare har under 90 dage til udløb og stadig er på lager.</li>
     </ol>
     <p><strong>Gør IKKE:</strong> Implementer WMS uden at rydde op i eksisterende lager først. Gammel beholdning skal ud eller kasseres før go-live.</p>
@@ -164,7 +164,7 @@
       
       <li><strong>Vækst gør det værre:</strong> Ved 30 ordrer/dag virker manuel FIFO fint. Ved 80 ordrer/dag kollapser det. Overgangen sker over 4-6 måneder, og du opdager først tabet når Q4-regnskabet lukkes.</li>
       
-      <li><strong>Sæsonvarer afslører det:</strong> Black Friday, jul, valentinsdag - når volumen stiger 3x i 2 uger, kan plukkere ikke følge med. De tager hvad der er nemmest. Gammel beholdning bliver liggende. Opdages i januar når der laves oprydning.</li>
+      <li><strong>Sæsonvarer afslører det:</strong> <a href="../vaekst/black-friday-lager">Black Friday</a>, jul, valentinsdag - når volumen stiger 3x i 2 uger, kan plukkere ikke følge med. De tager hvad der er nemmest. Gammel beholdning bliver liggende. Opdages i januar når der laves oprydning.</li>
     </ul>
 
     <h3>Case: Kosmetikgrossist, uge 48, 2024</h3>

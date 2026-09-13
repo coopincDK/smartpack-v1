@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789280890">
+  <link rel="stylesheet" href="../../css/style.css?v=1789281294">
   <script src="../../js/theme-toggle.js"></script>
 
 <!-- ================================================================
@@ -154,7 +154,7 @@
 
     <h3>4. Justeringer uden dokumentation</h3>
     <p>En medarbejder opdager en difference og retter den manuelt i systemet uden at notere årsagen. Tallet er nu korrekt, men du ved ikke hvorfor det var forkert. Problemet gentager sig næste måned.</p>
-    <p><strong>Fix:</strong> Alle justeringer skal have årsagskode: beskadiget vare, tyveri, modtagelsesfejl, plukfejl. Analyser årsagskoderne månedligt.</p>
+    <p><strong>Fix:</strong> Alle justeringer skal have årsagskode: beskadiget vare, tyveri, modtagelsesfejl, <a href="../okonomi/plukkefejl-koster-penge">plukfejl</a>. Analyser årsagskoderne månedligt.</p>
 
     <h3>5. Produktomdøbning og variantstyring</h3>
     <p>Du sælger rød t-shirt i S, M og L. Nogen opfatter dem som én vare og registrerer alle tre størrelser under samme varenummer. Systemet viser 90 enheder. I virkeligheden er der 30 af hver størrelse. Første gang en kunde bestiller M i en bestemt farve, viser systemet 90 tilgængelige. Du har måske 0.</p>
@@ -234,7 +234,7 @@
 
     <h3>1. Du bruger over 2 timer/dag på manuelle korrektioner</h3>
     <p>Hvis en medarbejder bruger mere end 25% af sin tid på at rette systemfejl, er problemet ikke medarbejderen. Det er processen. Beregn timeprisen: 2 timer × 350 kr. × 220 arbejdsdage = 154.000 kr./år. Det er prisen for at ignorere problemet.</p>
-    <p><strong>Handling:</strong> Start cycle counting i dag. Identificer de 10 varenumre med flest korrektioner og find årsagen inden for 1 uge.</p>
+    <p><strong>Handling:</strong> Start <a href="hvad-er-cycle-counting">cycle counting</a> i dag. Identificer de 10 varenumre med flest korrektioner og find årsagen inden for 1 uge.</p>
 
     <h3>2. Din accuracy er under 92% i to måneder i træk</h3>
     <p>Under 92% betyder at mere end 1 ud af 12 varenumre er forkert. Det er ikke en midlertidig afvigelse. Det er et strukturelt problem der forværres hver måned du venter.</p>
@@ -266,7 +266,7 @@
     <h3>SmartPack giver mening når:</h3>
     <ul>
       <li>Du håndterer <strong>100+ ordrer/dag</strong> og manuelle processer ikke kan følge med</li>
-      <li>Du har <strong>500+ unikke varenumre</strong> og cycle counting i Excel tager over 2 timer/dag</li>
+      <li>Du har <strong>500+ unikke varenumre</strong> og cycle counting i <a href="../problemer/excel-bryder-sammen">Excel</a> tager over 2 timer/dag</li>
       <li>Din accuracy er <strong>under 95%</strong> og du har implementeret scan-bekræftelse uden forbedring</li>
       <li>Du bruger <strong>mere end 2 timer/dag</strong> på manuelle korrektioner</li>
     </ul>
