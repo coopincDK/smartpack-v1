@@ -14,7 +14,7 @@
   <meta property="og:image:height" content="630">
   <meta name="description" content="Mellem kundens klik og levering er der 12 trin, og hvert trin kan fejle. Her er det fulde flow med de faktiske risici på hvert trin.">
   <link rel="canonical" href="https://smartpack.dk/viden/realworld/fra-ordre-til-levering">
-  <link rel="stylesheet" href="../../css/style.css?v=1789303101">
+  <link rel="stylesheet" href="../../css/style.css?v=1789308097">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <script src="../../js/theme-toggle.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -91,37 +91,37 @@
       </ul>
       <p><strong>Risici:</strong> Betaling falder igennem. Adresse er ugyldig. Svindel-alert trigges.</p>
 
-      <h2>Trin 2: Ordreoverførsel til WMS (1,5 min)</h2>
+      <h2>Trin 2: Ordreoverførsel til WMS (1-5 min)</h2>
       <p>Ordren sendes fra webshop til lagersystemet via API.</p>
 <img src="../../assets/viden/warehouse packing station label printer.jpg" alt="warehouse packing station label printer" loading="lazy" style="width:100%;border-radius:8px;margin:1.5rem 0;display:block;;max-height:520px;object-fit:cover;" width="1000" height="667">
 
       <p><strong>Risici:</strong> API-integration fejler. Ordren sidder i webshop men når ikke WMS.</p>
 
-      <h2>Trin 3: Ordrevalidering i WMS (5,10 min)</h2>
+      <h2>Trin 3: Ordrevalidering i WMS (5-10 min)</h2>
       <p>WMS verificerer at varen er på lager, at ordren er komplet og korrekt mappet.</p>
       <p><strong>Risici:</strong> Varen er udsolgt (phantom inventory). Mapping-fejl, forkert SKU.</p>
 
-      <h2>Trin 4: Plukjob-generering og -prioritering (10,20 min)</h2>
+      <h2>Trin 4: Plukjob-generering og -prioritering (10-20 min)</h2>
       <p>WMS opretter plukjob og tildeler det til en plukkere. Prioritet: backordre først, så <a href="../fundamentals/hvad-er-fifo">FIFO</a>.</p>
       <p><strong>Risici:</strong> Plukjob frigivet til optaget plukkere. Suboptimal rute = langsom pluk.</p>
 
-      <h2>Trin 5: Pluk (20,60 min)</h2>
+      <h2>Trin 5: Pluk (20-60 min)</h2>
       <p>Plukkeren går til hylde og henter varen. Scanner vare og bekræfter.</p>
       <p><strong>Risici:</strong> Vare ikke på registreret placering. Forkert vare plukket. Saldofejl opdages.</p>
 
-      <h2>Trin 6: Kvalitetskontrol (60,80 min)</h2>
+      <h2>Trin 6: Kvalitetskontrol (60-80 min)</h2>
       <p>Varen tjekkes: korrekt? Intakt? Komplet antal?</p>
       <p><strong>Risici:</strong> Beskadiget vare plukket og pakket. Forkert antal.</p>
 
-      <h2>Trin 7: Pakning (80,100 min)</h2>
+      <h2>Trin 7: Pakning (80-100 min)</h2>
       <p>Varen pakkes i korrekt kasse med beskyttelse. Faktura/packing slip inkluderes.</p>
       <p><strong>Risici:</strong> For stor/lille kasse = volumevægt-konsekvens eller skaderisiko. Manglende dokumenter.</p>
 
-      <h2>Trin 8: Etikettering (100,110 min)</h2>
+      <h2>Trin 8: Etikettering (100-110 min)</h2>
       <p>Label printes og klistres på. Scan-verify bekræfter match.</p>
       <p><strong>Risici:</strong> Forkert label. Printer fejler. Scan-verify ikke gennemført.</p>
 
-      <h2>Trin 9: Fragtoverlevering (110,120 min)</h2>
+      <h2>Trin 9: Fragtoverlevering (110-120 min)</h2>
       <p>Pakken flyttes til fragtzone. Afstemning: antal labels = antal pakker.</p>
       <p><strong>Risici:</strong> Pakke glemmes på lageret. Forkert fragtzone.</p>
 

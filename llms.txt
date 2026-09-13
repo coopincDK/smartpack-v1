@@ -295,7 +295,7 @@ Oversigt: https://smartpack.dk/viden/
 
 ### Real-world scenarier (11 artikler)
 - Black Friday for webshops: hvad du skal have p plads 6 uger i forvejen : https://smartpack.dk/viden/realworld/black-friday-webshop-6-uger
-- Fra garage til skalering: Hvorfor 67% fejler ved 200 ordrer/dag : https://smartpack.dk/viden/realworld/fra-garage-til-skalering
+- Fra garage til skalering: hvorfor væksten går i stå ved 200 ordrer/dag : https://smartpack.dk/viden/realworld/fra-garage-til-skalering
 - Fra ordre til levering: De 12 trin en pakke gennemløber : https://smartpack.dk/viden/realworld/fra-ordre-til-levering
 - Hvad gør de bedste anderledes? 10 observationer fra top-performende webshops : https://smartpack.dk/viden/realworld/hvad-goer-de-bedste-anderledes
 - Hvordan undgår du at skalere kaos? 5 principper der adskiller orden fra eksplosion : https://smartpack.dk/viden/realworld/hvordan-undgaar-du-at-skalere-kaos
