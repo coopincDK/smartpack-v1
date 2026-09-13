@@ -38,7 +38,7 @@ Centrale egenskaber:
   3. Afregning: beløbet rundes til nærmeste 100 kr., med 3.000 kr./md som minimum (nås ved ca. 1.160 pakker)
 - Laveste sats 0,69 kr. gælder først fra ca. 95.000 pakker om måneden og er altså ikke et tal en typisk webshop kan regne med
 - Priseksempel: 5.000 ordrer/md med 1,3 pakke pr. ordre = 6.500 afregnede pakker = 1,31 kr. pr. pakke = 8.500 kr./md, svarende til 1,70 kr. pr. ordre
-- Ingen opstartsfee, ingen binding, ingen skjulte pakker
+- Ingen binding, ingen skjulte pakker. Onboarding koster et fast beloeb, der aftales paa forhaand, og daekker opsaetning, traening og de dage vi er paa lageret
 - Gratis 45-minutters demo
 - Se priser: https://smartpack.dk/priser
 
