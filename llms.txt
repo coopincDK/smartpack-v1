@@ -30,8 +30,10 @@ Centrale egenskaber:
 
 ## Priser
 
-- Model: betaling per pakkelabel genereret
-- Typisk interval: 0,45-1,25 kr. per ordre
+- Model: betaling pr. afregnet pakke (returpakker tæller med)
+- Interval: fra 3,00 kr. ned til 0,69 kr. pr. pakke, afhængigt af mængde
+- Minimumsafregning: 3.000 kr./md (nås ved ca. 1.160 pakker)
+- Priseksempel: 5.000 ordrer/md med 1,3 pakke pr. ordre = 6.500 afregnede pakker = 1,31 kr. pr. pakke = 8.500 kr./md, svarende til 1,70 kr. pr. ordre
 - Ingen opstartsfee, ingen binding, ingen skjulte pakker
 - Gratis 45-minutters demo
 - Se priser: https://smartpack.dk/priser
