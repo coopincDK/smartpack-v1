@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "ideal.shop",
-          "item": "https://smartpack.dk/integrationer/ideal-shop"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der integrerer med webshopplatformen ideal.shop. Ordrer hentes ind, varer og varianter synkroniseres, og lagerantal skubbes til shoppen med SmartPack som master.",
-      "url": "https://smartpack.dk/integrationer/ideal-shop",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvem bestemmer lagertallet?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPack. Beholdningen skubbes til ideal.shop, s\u00e5 manuelle rettelser i shoppen bliver overskrevet ved n\u00e6ste synkronisering."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Underst\u00f8ttes varianter?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Produkter med varianter opdateres gennem et separat endpoint, s\u00e5 beholdningen lander p\u00e5 den rigtige variant."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi styre, hvor ofte der synkroniseres?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. B\u00e5de ordre- og varesynkronisering har konfigurerbare intervaller, for b\u00e5de l\u00f8bende og fuld k\u00f8rsel."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvordan mappes ordrestatusser?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "De konfigureres i indstillingerne, s\u00e5 I selv bestemmer hvilke der importeres, og hvad der s\u00e6ttes ved pakket og annulleret."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi k\u00f8re ideal.shop sammen med andre kanaler?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Ordrer fra flere kanaler plukkes side om side i samme flow."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "ideal.shop", "item": "https://smartpack.dk/integrationer/ideal-shop"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der integrerer med webshopplatformen ideal.shop. Ordrer hentes ind, varer og varianter synkroniseres, og lagerantal skubbes til shoppen med SmartPack som master.", "url": "https://smartpack.dk/integrationer/ideal-shop", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvem bestemmer lagertallet?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPack. Beholdningen skubbes til ideal.shop, så manuelle rettelser i shoppen bliver overskrevet ved næste synkronisering."}}, {"@type": "Question", "name": "Understøttes varianter?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Produkter med varianter opdateres gennem et separat endpoint, så beholdningen lander på den rigtige variant."}}, {"@type": "Question", "name": "Kan vi styre, hvor ofte der synkroniseres?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Både ordre- og varesynkronisering har konfigurerbare intervaller, for både løbende og fuld kørsel."}}, {"@type": "Question", "name": "Hvordan mappes ordrestatusser?", "acceptedAnswer": {"@type": "Answer", "text": "De konfigureres i indstillingerne, så I selv bestemmer hvilke der importeres, og hvad der sættes ved pakket og annulleret."}}, {"@type": "Question", "name": "Kan vi køre ideal.shop sammen med andre kanaler?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Ordrer fra flere kanaler plukkes side om side i samme flow."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulkøb."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

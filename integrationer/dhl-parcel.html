@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "DHL Parcel",
-          "item": "https://smartpack.dk/integrationer/dhl-parcel"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med direkte DHL Parcel-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
-      "url": "https://smartpack.dk/integrationer/dhl-parcel",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Har DHL Parcel pakkeshops?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. DHL Parcel eksponerer ikke et pakkeshopopslag i de API'er, integrationen bruger, s\u00e5 der er ingen droppoint-metoder."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvordan fungerer retur?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Retoure Online er den eneste returmetode og k\u00f8rer via DHL's Returns API. Returmodtageren udledes automatisk af det land, pakken returneres fra."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad er Warenpost?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "DHL's produkt til sm\u00e5 og lette forsendelser. Der findes b\u00e5de en tysk og en international variant, og begge er selvst\u00e6ndige leveringsmetoder i SmartPack."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvorfor fejler vores faktureringsnummer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nummeret er 14 tegn, og ciffer 11 og 12 skal matche produktets procedurenummer. Passer de ikke sammen, afviser DHL bookingen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi tage imod betaling ved levering?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. COD underst\u00f8ttes b\u00e5de via konto og via bank med IBAN, BIC og kontoindehaver."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Koster labels ekstra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. SmartPack er forbundet direkte til DHL, s\u00e5 der er ingen labelfee. Labels er inkluderet i abonnementet."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "DHL Parcel", "item": "https://smartpack.dk/integrationer/dhl-parcel"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med direkte DHL Parcel-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.", "url": "https://smartpack.dk/integrationer/dhl-parcel", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Har DHL Parcel pakkeshops?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. DHL Parcel eksponerer ikke et pakkeshopopslag i de API'er, integrationen bruger, så der er ingen droppoint-metoder."}}, {"@type": "Question", "name": "Hvordan fungerer retur?", "acceptedAnswer": {"@type": "Answer", "text": "Retoure Online er den eneste returmetode og kører via DHL's Returns API. Returmodtageren udledes automatisk af det land, pakken returneres fra."}}, {"@type": "Question", "name": "Hvad er Warenpost?", "acceptedAnswer": {"@type": "Answer", "text": "DHL's produkt til små og lette forsendelser. Der findes både en tysk og en international variant, og begge er selvstændige leveringsmetoder i SmartPack."}}, {"@type": "Question", "name": "Hvorfor fejler vores faktureringsnummer?", "acceptedAnswer": {"@type": "Answer", "text": "Nummeret er 14 tegn, og ciffer 11 og 12 skal matche produktets procedurenummer. Passer de ikke sammen, afviser DHL bookingen."}}, {"@type": "Question", "name": "Kan vi tage imod betaling ved levering?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. COD understøttes både via konto og via bank med IBAN, BIC og kontoindehaver."}}, {"@type": "Question", "name": "Koster labels ekstra?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack er forbundet direkte til DHL, så der er ingen labelfee. Labels er inkluderet i abonnementet."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Customers 1st",
-          "item": "https://smartpack.dk/integrationer/customers-1st"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der integrerer med Customers 1st. Varer, priser, lager, ordrer, serviceopgaver, indk\u00f8bsordrer, leverand\u00f8rer og lagerbev\u00e6gelser synkroniseres.",
-      "url": "https://smartpack.dk/integrationer/customers-1st",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvordan h\u00e5ndteres serviceopgaver?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tickets med materialer bliver selvst\u00e6ndige ordrer i SmartPack med en s\u00e6rlig leveringsmetode, s\u00e5 de kan plukkes og skelnes fra almindelige salgsordrer."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan priser synkroniseres begge veje?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Salgspris, normalpris og kostpris kan g\u00e5 i to retninger, hvilket er us\u00e6dvanligt. Til geng\u00e6ld skal I v\u00e6re enige om, hvilket system der er master."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "F\u00f8lger indk\u00f8b og leverand\u00f8rer med?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Indk\u00f8bsordrer og leverand\u00f8rer er en del af integrationen, s\u00e5 varemodtagelsen kan ske i SmartPack."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvor ofte synkroniseres der?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Et baggrundsjob k\u00f8rer hvert tiende minut. Integrationen bruger desuden rate limiting, s\u00e5 Customers 1st ikke overbelastes."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi spore \u00e6ndringer bagud?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Lagerbev\u00e6gelser og audit-log er en del af integrationen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Customers 1st", "item": "https://smartpack.dk/integrationer/customers-1st"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der integrerer med Customers 1st. Varer, priser, lager, ordrer, serviceopgaver, indkøbsordrer, leverandører og lagerbevægelser synkroniseres.", "url": "https://smartpack.dk/integrationer/customers-1st", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvordan håndteres serviceopgaver?", "acceptedAnswer": {"@type": "Answer", "text": "Tickets med materialer bliver selvstændige ordrer i SmartPack med en særlig leveringsmetode, så de kan plukkes og skelnes fra almindelige salgsordrer."}}, {"@type": "Question", "name": "Kan priser synkroniseres begge veje?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Salgspris, normalpris og kostpris kan gå i to retninger, hvilket er usædvanligt. Til gengæld skal I være enige om, hvilket system der er master."}}, {"@type": "Question", "name": "Følger indkøb og leverandører med?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Indkøbsordrer og leverandører er en del af integrationen, så varemodtagelsen kan ske i SmartPack."}}, {"@type": "Question", "name": "Hvor ofte synkroniseres der?", "acceptedAnswer": {"@type": "Answer", "text": "Et baggrundsjob kører hvert tiende minut. Integrationen bruger desuden rate limiting, så Customers 1st ikke overbelastes."}}, {"@type": "Question", "name": "Kan vi spore ændringer bagud?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Lagerbevægelser og audit-log er en del af integrationen."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulkøb."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

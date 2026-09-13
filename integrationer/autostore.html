@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "AutoStore",
-          "item": "https://smartpack.dk/integrationer/autostore"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med et dedikeret robot-API, som automatiserede lagersystemer som AutoStore kan kalde for at flytte varer mellem pladser og f\u00e5 opdateret lagerbeholdningen.",
-      "url": "https://smartpack.dk/integrationer/autostore",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Er integrationen til AutoStore klar?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Robot-API'et er bygget og klargjort til netop den type system. Vi har bekr\u00e6ftet, at et AutoStore-setup kan k\u00f8re p\u00e5 det, s\u00e5 det, der st\u00e5r tilbage, er den konkrete kobling i det enkelte projekt. Den laver vi sammen med jer og leverand\u00f8ren."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad styrer SmartPack, og hvad styrer robotten?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPack beslutter, hvad der b\u00f8r flyttes og hvorn\u00e5r, og holder styr p\u00e5 beholdningen. Robotten udf\u00f8rer den fysiske flytning og melder tilbage, n\u00e5r den er gennemf\u00f8rt."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvordan undg\u00e5r vi, at der plukkes fra en plads midt i en flytning?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Via transferl\u00e5sen. Robotten anmoder om l\u00e5s p\u00e5 b\u00e5de fra- og til-plads, og SmartPack tjekker, at ingen af pladserne har en aktiv plukliste, og at destinationen er tom."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad sker der, hvis en flytning g\u00e5r galt?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Robotten kalder annuller transfer, og l\u00e5sen frigives uden at beholdningen \u00e6ndres. Alle transfers, b\u00e5de gennemf\u00f8rte og annullerede, ligger i historikken."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi f\u00f8lge med i, hvad robotten laver?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Aktive transferl\u00e5se kan hentes via API'et, og \u00e6ndringer sendes live til admin-panelet, s\u00e5 en overv\u00e5gningssk\u00e6rm opdaterer sig selv."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan mennesker og robot arbejde p\u00e5 samme lager?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Robot-API'et arbejder p\u00e5 pladser i en lagersektion, s\u00e5 I kan lade robotten h\u00e5ndtere en del af lageret og plukke manuelt i resten. Transferl\u00e5sen er netop det, der holder de to ting adskilt, mens en flytning er i gang."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "AutoStore", "item": "https://smartpack.dk/integrationer/autostore"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med et dedikeret robot-API, som automatiserede lagersystemer som AutoStore kan kalde for at flytte varer mellem pladser og få opdateret lagerbeholdningen.", "url": "https://smartpack.dk/integrationer/autostore", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Er integrationen til AutoStore klar?", "acceptedAnswer": {"@type": "Answer", "text": "Robot-API'et er bygget og klargjort til netop den type system. Vi har bekræftet, at et AutoStore-setup kan køre på det, så det, der står tilbage, er den konkrete kobling i det enkelte projekt. Den laver vi sammen med jer og leverandøren."}}, {"@type": "Question", "name": "Hvad styrer SmartPack, og hvad styrer robotten?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPack beslutter, hvad der bør flyttes og hvornår, og holder styr på beholdningen. Robotten udfører den fysiske flytning og melder tilbage, når den er gennemført."}}, {"@type": "Question", "name": "Hvordan undgår vi, at der plukkes fra en plads midt i en flytning?", "acceptedAnswer": {"@type": "Answer", "text": "Via transferlåsen. Robotten anmoder om lås på både fra- og til-plads, og SmartPack tjekker, at ingen af pladserne har en aktiv plukliste, og at destinationen er tom."}}, {"@type": "Question", "name": "Hvad sker der, hvis en flytning går galt?", "acceptedAnswer": {"@type": "Answer", "text": "Robotten kalder annuller transfer, og låsen frigives uden at beholdningen ændres. Alle transfers, både gennemførte og annullerede, ligger i historikken."}}, {"@type": "Question", "name": "Kan vi følge med i, hvad robotten laver?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Aktive transferlåse kan hentes via API'et, og ændringer sendes live til admin-panelet, så en overvågningsskærm opdaterer sig selv."}}, {"@type": "Question", "name": "Kan mennesker og robot arbejde på samme lager?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Robot-API'et arbejder på pladser i en lagersektion, så I kan lade robotten håndtere en del af lageret og plukke manuelt i resten. Transferlåsen er netop det, der holder de to ting adskilt, mens en flytning er i gang."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

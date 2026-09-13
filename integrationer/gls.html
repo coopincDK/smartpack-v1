@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "GLS",
-          "item": "https://smartpack.dk/integrationer/gls"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med direkte GLS-integration. Leveringsmetoder synkroniseres automatisk, labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
-      "url": "https://smartpack.dk/integrationer/gls",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvorn\u00e5r bookes labelen hos GLS?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "I det \u00f8jeblik pakkeren trykker print p\u00e5 terminalen. SmartPack kalder GLS live med adresse, v\u00e6gt, m\u00e5l og valgt service, og labelen plus trackingnummer kommer retur med det samme."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad sker der, hvis GLS afviser forsendelsen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Fejlbeskeden fra GLS vises direkte til pakkeren. Der oprettes ingen pakke, og der printes ingen label, s\u00e5 ordren st\u00e5r stadig uafsendt, indtil \u00e5rsagen er rettet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvorfor fejler vores hjemmeleveringer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "GLS kr\u00e6ver modtagerens e-mail og mobilnummer p\u00e5 Hjemmelevering, FlexDelivery og Pakkeshop. Mangler de p\u00e5 ordren, kan bookingen fejle. Oplysningerne skal komme med fra webshoppen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi have flere GLS-aftaler?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Har I flere lagerlokationer, kan hver lokation have sit eget GLS-kundenummer og kontakt-ID, hvilket er nyttigt, hvis lagrene er registreret som separate kunder hos GLS."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi teste uden at sende rigtige pakker?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Test Mode booker mod GLS' testmilj\u00f8, s\u00e5 der ikke oprettes rigtige forsendelser. Det kr\u00e6ver, at I k\u00f8rer V2 API."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Koster labels ekstra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. SmartPack er forbundet direkte til GLS, s\u00e5 der er ingen labelfee. Labels er inkluderet i abonnementet."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "GLS", "item": "https://smartpack.dk/integrationer/gls"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med direkte GLS-integration. Leveringsmetoder synkroniseres automatisk, labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.", "url": "https://smartpack.dk/integrationer/gls", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvornår bookes labelen hos GLS?", "acceptedAnswer": {"@type": "Answer", "text": "I det øjeblik pakkeren trykker print på terminalen. SmartPack kalder GLS live med adresse, vægt, mål og valgt service, og labelen plus trackingnummer kommer retur med det samme."}}, {"@type": "Question", "name": "Hvad sker der, hvis GLS afviser forsendelsen?", "acceptedAnswer": {"@type": "Answer", "text": "Fejlbeskeden fra GLS vises direkte til pakkeren. Der oprettes ingen pakke, og der printes ingen label, så ordren står stadig uafsendt, indtil årsagen er rettet."}}, {"@type": "Question", "name": "Hvorfor fejler vores hjemmeleveringer?", "acceptedAnswer": {"@type": "Answer", "text": "GLS kræver modtagerens e-mail og mobilnummer på Hjemmelevering, FlexDelivery og Pakkeshop. Mangler de på ordren, kan bookingen fejle. Oplysningerne skal komme med fra webshoppen."}}, {"@type": "Question", "name": "Kan vi have flere GLS-aftaler?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Har I flere lagerlokationer, kan hver lokation have sit eget GLS-kundenummer og kontakt-ID, hvilket er nyttigt, hvis lagrene er registreret som separate kunder hos GLS."}}, {"@type": "Question", "name": "Kan vi teste uden at sende rigtige pakker?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Test Mode booker mod GLS' testmiljø, så der ikke oprettes rigtige forsendelser. Det kræver, at I kører V2 API."}}, {"@type": "Question", "name": "Koster labels ekstra?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack er forbundet direkte til GLS, så der er ingen labelfee. Labels er inkluderet i abonnementet."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

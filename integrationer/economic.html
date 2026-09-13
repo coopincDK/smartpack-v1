@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "e-conomic",
-          "item": "https://smartpack.dk/integrationer/economic"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der integrerer med regnskabsprogrammet e-conomic. Salgsordrer og varer hentes ind, ordren markeres som afsendt ved pakning, og lagerv\u00e6rdien kan bogf\u00f8res periodisk via en kassekladde.",
-      "url": "https://smartpack.dk/integrationer/economic",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Bogf\u00f8rer SmartPack vores fakturaer automatisk?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. SmartPack kan oprette en fakturakladde i e-conomic, n\u00e5r ordren afsendes. Godkendelse og bogf\u00f8ring sker hos jer, s\u00e5 I bevarer kontrollen over regnskabet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi styre indk\u00f8b via e-conomic-integrationen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. Indk\u00f8bsordrer indg\u00e5r ikke i e-conomic-integrationen. Skal indk\u00f8b med i flowet, l\u00f8ses det via SmartPacks egen indk\u00f8bs- og prognosefunktionalitet eller via et ERP, der underst\u00f8tter det, for eksempel Business Central eller Uniconta."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvordan fungerer lagerv\u00e6rdi-bogf\u00f8ringen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPack sammenligner den samlede lagerv\u00e6rdi med sidste k\u00f8rsel og bogf\u00f8rer differencen i en kassekladde med de konti, I har valgt. Frekvensen s\u00e6tter I selv, og den kan k\u00f8re p\u00e5 m\u00e5nedens sidste dag."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Vores ordrer holdt op med at komme ind.",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tjek ordrestatus-matrixen. \u00c6ldre ops\u00e6tninger brugte et simpelt til- og fravalg pr. spand, og matrixen opdateres f\u00f8rste gang indstillingssiden \u00e5bnes."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Vi har mismatch p\u00e5 varenumre.",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SKU'er fra e-conomic trimmes for mellemrum ved import. Et efterstillet mellemrum i varenummeret i e-conomic er den hyppigste \u00e5rsag til, at to varer ikke matcher."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er e-conomic-integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "e-conomic", "item": "https://smartpack.dk/integrationer/economic"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der integrerer med regnskabsprogrammet e-conomic. Salgsordrer og varer hentes ind, ordren markeres som afsendt ved pakning, og lagerværdien kan bogføres periodisk via en kassekladde.", "url": "https://smartpack.dk/integrationer/economic", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Bogfører SmartPack vores fakturaer automatisk?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack kan oprette en fakturakladde i e-conomic, når ordren afsendes. Godkendelse og bogføring sker hos jer, så I bevarer kontrollen over regnskabet."}}, {"@type": "Question", "name": "Kan vi styre indkøb via e-conomic-integrationen?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Indkøbsordrer indgår ikke i e-conomic-integrationen. Skal indkøb med i flowet, løses det via SmartPacks egen indkøbs- og prognosefunktionalitet eller via et ERP, der understøtter det, for eksempel Business Central eller Uniconta."}}, {"@type": "Question", "name": "Hvordan fungerer lagerværdi-bogføringen?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPack sammenligner den samlede lagerværdi med sidste kørsel og bogfører differencen i en kassekladde med de konti, I har valgt. Frekvensen sætter I selv, og den kan køre på månedens sidste dag."}}, {"@type": "Question", "name": "Vores ordrer holdt op med at komme ind.", "acceptedAnswer": {"@type": "Answer", "text": "Tjek ordrestatus-matrixen. Ældre opsætninger brugte et simpelt til- og fravalg pr. spand, og matrixen opdateres første gang indstillingssiden åbnes."}}, {"@type": "Question", "name": "Vi har mismatch på varenumre.", "acceptedAnswer": {"@type": "Answer", "text": "SKU'er fra e-conomic trimmes for mellemrum ved import. Et efterstillet mellemrum i varenummeret i e-conomic er den hyppigste årsag til, at to varer ikke matcher."}}, {"@type": "Question", "name": "Er e-conomic-integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulkøb."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

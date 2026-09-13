@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Global-e",
-          "item": "https://smartpack.dk/integrationer/global-e"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS, der arbejder sammen med cross-border-platformen Global-e. SmartPack deklarerer pakker og varelinjer, og Global-e returnerer fragtlabel, handelsfaktura og momsfaktura.",
-      "url": "https://smartpack.dk/integrationer/global-e",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Skal vi selv h\u00e5ndtere told og moms?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. Global-e er merchant of record og p\u00e5tager sig det juridiske og \u00f8konomiske ansvar for told, moms og toldoverholdelse. SmartPack deklarerer, hvad der er i pakken, og Global-e danner dokumenterne."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "V\u00e6lger SmartPack transport\u00f8ren?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. Global-e bestemmer leveringsmetoden ved checkout, og SmartPack matcher ordren til den rigtige metode ud fra den service-kode der f\u00f8lger med. Det er ogs\u00e5 koden der afg\u00f8r, om ordren er DDP eller DDU."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvilke dokumenter f\u00e5r pakkeren?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Transport\u00f8rlabel, Global-e-label og arkivlabel printes i 6x4. Handelsfaktura, momsfaktura, dokumentation for farligt gods og leveringsadvis printes i A4. Hvad der kommer, afh\u00e6nger af ordren og destinationen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad hvis der ikke kommer et sporingsnummer?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Det sker ved nye bookinger, hvor Global-e ikke har nummeret klart endnu. Da bruger SmartPack sin egen pakkekode som sporingsnummer, s\u00e5 feltet ikke st\u00e5r blankt, og nummeret opdateres n\u00e5r Global-e har det."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad kr\u00e6ver ops\u00e6tningen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "To ting: merchant GUID fra Global-e og en milj\u00f8-URL. Det er \u00e9n samlet konfiguration, alts\u00e5 ingen ops\u00e6tning pr. lokation som ved en almindelig fragtaftale."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den er en del af SmartPack-abonnementet. Aftalen om told, moms og fragt har I med Global-e."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Global-e", "item": "https://smartpack.dk/integrationer/global-e"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS, der arbejder sammen med cross-border-platformen Global-e. SmartPack deklarerer pakker og varelinjer, og Global-e returnerer fragtlabel, handelsfaktura og momsfaktura.", "url": "https://smartpack.dk/integrationer/global-e", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Skal vi selv håndtere told og moms?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Global-e er merchant of record og påtager sig det juridiske og økonomiske ansvar for told, moms og toldoverholdelse. SmartPack deklarerer, hvad der er i pakken, og Global-e danner dokumenterne."}}, {"@type": "Question", "name": "Vælger SmartPack transportøren?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Global-e bestemmer leveringsmetoden ved checkout, og SmartPack matcher ordren til den rigtige metode ud fra den service-kode der følger med. Det er også koden der afgør, om ordren er DDP eller DDU."}}, {"@type": "Question", "name": "Hvilke dokumenter får pakkeren?", "acceptedAnswer": {"@type": "Answer", "text": "Transportørlabel, Global-e-label og arkivlabel printes i 6x4. Handelsfaktura, momsfaktura, dokumentation for farligt gods og leveringsadvis printes i A4. Hvad der kommer, afhænger af ordren og destinationen."}}, {"@type": "Question", "name": "Hvad hvis der ikke kommer et sporingsnummer?", "acceptedAnswer": {"@type": "Answer", "text": "Det sker ved nye bookinger, hvor Global-e ikke har nummeret klart endnu. Da bruger SmartPack sin egen pakkekode som sporingsnummer, så feltet ikke står blankt, og nummeret opdateres når Global-e har det."}}, {"@type": "Question", "name": "Hvad kræver opsætningen?", "acceptedAnswer": {"@type": "Answer", "text": "To ting: merchant GUID fra Global-e og en miljø-URL. Det er én samlet konfiguration, altså ingen opsætning pr. lokation som ved en almindelig fragtaftale."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den er en del af SmartPack-abonnementet. Aftalen om told, moms og fragt har I med Global-e."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

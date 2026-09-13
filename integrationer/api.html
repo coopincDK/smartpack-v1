@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "SmartPacks API",
-          "item": "https://smartpack.dk/integrationer/api"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med et REST-API til ordrer, varer, lager, forsendelser, retur og indk\u00f8b. Kunder kan selv oprette en privat app i deres konto og f\u00e5 App-ID og adgangstoken, og bygge egne dataudtr\u00e6k, rapporter og integrationer.",
-      "url": "https://smartpack.dk/integrationer/api",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvad koster det at bruge API'et?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ingenting l\u00f8bende. Vi opkr\u00e6ver ikke gebyr for en privat app, for hvor mange apps I har, eller for de maskiner og systemer I kobler p\u00e5. I opretter selv appen uden at sp\u00f8rge os. Skal vi bygge noget for jer, aftaler vi det separat."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Skal vi have jeres hj\u00e6lp for at komme i gang?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. N\u00f8glerne opretter I selv, og dokumentationen ligger \u00e5bent. Vi tager gerne en teknisk snak om mulighederne f\u00f8rst, men I beh\u00f8ver ikke vente p\u00e5 os."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi tr\u00e6kke historiske lagertal ud?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Der er et endpoint til historisk lagerliste p\u00e5 en valgt dato, og et til lagerv\u00e6rdireguleringer over et datointerval. Begge kan filtreres p\u00e5 lokation."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi skrive lagertal til vores webshop selv?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Det b\u00f8r I ikke. SmartPack s\u00e6tter det absolutte lagertal i shoppen uden at l\u00e6se det nuv\u00e6rende f\u00f8rst. Skriver jeres app ogs\u00e5 lager, overskriver de to hinanden ved hver k\u00f8rsel, og det giver ingen fejlbesked. L\u00e6s lagertallet fra os i stedet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad sker der hvis vores endpoint er nede?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPack pr\u00f8ver op til fem gange, og hvert fors\u00f8g logges som en linje i Call Log med status og svar. Fejlede kald gemmes i 30 dage, succesfulde i 7."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er en privat app synlig for andre kunder?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. En privat app er bundet til jeres konto alene. Skal noget kunne installeres hos flere kunder, er det en public app, og den skal registreres hos os f\u00f8rst."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "SmartPacks API", "item": "https://smartpack.dk/integrationer/api"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med et REST-API til ordrer, varer, lager, forsendelser, retur og indkøb. Kunder kan selv oprette en privat app i deres konto og få App-ID og adgangstoken, og bygge egne dataudtræk, rapporter og integrationer.", "url": "https://smartpack.dk/integrationer/api", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad koster det at bruge API'et?", "acceptedAnswer": {"@type": "Answer", "text": "Ingenting løbende. Vi opkræver ikke gebyr for en privat app, for hvor mange apps I har, eller for de maskiner og systemer I kobler på. I opretter selv appen uden at spørge os. Skal vi bygge noget for jer, aftaler vi det separat."}}, {"@type": "Question", "name": "Skal vi have jeres hjælp for at komme i gang?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Nøglerne opretter I selv, og dokumentationen ligger åbent. Vi tager gerne en teknisk snak om mulighederne først, men I behøver ikke vente på os."}}, {"@type": "Question", "name": "Kan vi trække historiske lagertal ud?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Der er et endpoint til historisk lagerliste på en valgt dato, og et til lagerværdireguleringer over et datointerval. Begge kan filtreres på lokation."}}, {"@type": "Question", "name": "Kan vi skrive lagertal til vores webshop selv?", "acceptedAnswer": {"@type": "Answer", "text": "Det bør I ikke. SmartPack sætter det absolutte lagertal i shoppen uden at læse det nuværende først. Skriver jeres app også lager, overskriver de to hinanden ved hver kørsel, og det giver ingen fejlbesked. Læs lagertallet fra os i stedet."}}, {"@type": "Question", "name": "Hvad sker der hvis vores endpoint er nede?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPack prøver op til fem gange, og hvert forsøg logges som en linje i Call Log med status og svar. Fejlede kald gemmes i 30 dage, succesfulde i 7."}}, {"@type": "Question", "name": "Er en privat app synlig for andre kunder?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. En privat app er bundet til jeres konto alene. Skal noget kunne installeres hos flere kunder, er det en public app, og den skal registreres hos os først."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

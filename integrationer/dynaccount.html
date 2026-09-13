@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Dynaccount",
-          "item": "https://smartpack.dk/integrationer/dynaccount"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der integrerer med cloud-ERP-systemet Dynaccount. Ordrer og varer hentes ind via webhooks, og lagerantal skrives tilbage.",
-      "url": "https://smartpack.dk/integrationer/dynaccount",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvad kr\u00e6ves der for at komme i gang?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "API-n\u00f8gle, API-hemmelighed og API-ID fra Dynaccount. Det er hele forbindelsen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kommer ordrer ind med det samme?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Dynaccount sender webhook ved \u00e6ndringer p\u00e5 b\u00e5de ordrer og produkter, s\u00e5 der ventes ikke p\u00e5 n\u00e6ste k\u00f8rsel."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Skrives lageret tilbage?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Lagerantal sendes tilbage til Dynaccount, s\u00e5 tallene stemmer begge steder."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "F\u00f8lger indk\u00f8bsordrer med?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. Integrationen d\u00e6kker ordrer, varer og lager. Skal indk\u00f8b med i flowet, l\u00f8ses det via SmartPacks egen indk\u00f8bsfunktionalitet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi k\u00f8re Dynaccount sammen med en webshop?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Ordrer fra begge kilder plukkes side om side i samme flow."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Dynaccount", "item": "https://smartpack.dk/integrationer/dynaccount"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der integrerer med cloud-ERP-systemet Dynaccount. Ordrer og varer hentes ind via webhooks, og lagerantal skrives tilbage.", "url": "https://smartpack.dk/integrationer/dynaccount", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad kræves der for at komme i gang?", "acceptedAnswer": {"@type": "Answer", "text": "API-nøgle, API-hemmelighed og API-ID fra Dynaccount. Det er hele forbindelsen."}}, {"@type": "Question", "name": "Kommer ordrer ind med det samme?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Dynaccount sender webhook ved ændringer på både ordrer og produkter, så der ventes ikke på næste kørsel."}}, {"@type": "Question", "name": "Skrives lageret tilbage?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Lagerantal sendes tilbage til Dynaccount, så tallene stemmer begge steder."}}, {"@type": "Question", "name": "Følger indkøbsordrer med?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Integrationen dækker ordrer, varer og lager. Skal indkøb med i flowet, løses det via SmartPacks egen indkøbsfunktionalitet."}}, {"@type": "Question", "name": "Kan vi køre Dynaccount sammen med en webshop?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Ordrer fra begge kilder plukkes side om side i samme flow."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulkøb."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

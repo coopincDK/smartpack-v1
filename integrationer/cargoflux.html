@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Cargoflux",
-          "item": "https://smartpack.dk/integrationer/cargoflux"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der booker fragtlabels gennem fragtportalen Cargoflux. Labels dannes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
-      "url": "https://smartpack.dk/integrationer/cargoflux",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvordan mappes leveringsmetoden?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Fra webshoppens checkout via Cargoflux-formatet. B\u00e5de leveringsmetode og pakkepunkt-ID f\u00f8lger med og bruges ved booking."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvor kommer metoderne fra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Fra Cargoflux' egen produktliste, ikke fra en fast liste i SmartPack. Det betyder, at udvalget matcher jeres aftale."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi tilf\u00f8je en ny transport\u00f8r senere?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den s\u00e6ttes op hos Cargoflux, og integrationen i SmartPack skal ikke \u00e6ndres."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad er forskellen p\u00e5 Cargoflux og en direkte fragtaftale?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Med Cargoflux har I \u00e9n aftale med portalen, og de h\u00e5ndterer transport\u00f8rerne. Med en direkte aftale har I aftalen med transport\u00f8ren, og SmartPack taler med deres eget API."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi k\u00f8re Cargoflux sammen med direkte aftaler?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Begge dele k\u00f8res fra samme pakkeflow i SmartPack."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad skal vi selv have p\u00e5 plads?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "En aftale med Cargoflux og API-adgang. Selve ops\u00e6tningen i SmartPack klarer vi som del af onboardingen."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Cargoflux", "item": "https://smartpack.dk/integrationer/cargoflux"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der booker fragtlabels gennem fragtportalen Cargoflux. Labels dannes ved pakning, og trackingnummer sendes tilbage til webshoppen.", "url": "https://smartpack.dk/integrationer/cargoflux", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvordan mappes leveringsmetoden?", "acceptedAnswer": {"@type": "Answer", "text": "Fra webshoppens checkout via Cargoflux-formatet. Både leveringsmetode og pakkepunkt-ID følger med og bruges ved booking."}}, {"@type": "Question", "name": "Hvor kommer metoderne fra?", "acceptedAnswer": {"@type": "Answer", "text": "Fra Cargoflux' egen produktliste, ikke fra en fast liste i SmartPack. Det betyder, at udvalget matcher jeres aftale."}}, {"@type": "Question", "name": "Kan vi tilføje en ny transportør senere?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den sættes op hos Cargoflux, og integrationen i SmartPack skal ikke ændres."}}, {"@type": "Question", "name": "Hvad er forskellen på Cargoflux og en direkte fragtaftale?", "acceptedAnswer": {"@type": "Answer", "text": "Med Cargoflux har I én aftale med portalen, og de håndterer transportørerne. Med en direkte aftale har I aftalen med transportøren, og SmartPack taler med deres eget API."}}, {"@type": "Question", "name": "Kan vi køre Cargoflux sammen med direkte aftaler?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Begge dele køres fra samme pakkeflow i SmartPack."}}, {"@type": "Question", "name": "Hvad skal vi selv have på plads?", "acceptedAnswer": {"@type": "Answer", "text": "En aftale med Cargoflux og API-adgang. Selve opsætningen i SmartPack klarer vi som del af onboardingen."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

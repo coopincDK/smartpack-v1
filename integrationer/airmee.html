@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Airmee",
-          "item": "https://smartpack.dk/integrationer/airmee"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med direkte Airmee-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
-      "url": "https://smartpack.dk/integrationer/airmee",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvordan virker tidsvinduerne?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Airmee arbejder med leveringstidsvinduer i stedet for pakkeshops. Opslaget sker p\u00e5 postnummer og land, og kunden v\u00e6lger et konkret vindue i checkout, som f\u00f8lger med til bookingen og trykkes p\u00e5 labelen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad sker der, hvis tidsvinduet er udl\u00f8bet?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPack henter automatisk det f\u00f8rste ledige vindue for postnummeret og bruger det i stedet. Findes der slet ingen vinduer for postnummeret, fejler bookingen med besked om det."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvor kommer labelen fra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Airmee returnerer ordre-ID og tracking-URL, mens selve labelen genereres i SmartPack. Den indeholder afsender, modtager, leveringsdato, tidsvindue og stregkoder for b\u00e5de forsendelse og kolli."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi kr\u00e6ve BankID eller ID?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. BankID-verifikation, ID-verifikation, underskrift og efterlad uden for d\u00f8r er tilvalg, der sl\u00e5s til eksplicit p\u00e5 leveringsmetoden."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi teste, f\u00f8r vi g\u00e5r i luften?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Testmode sender bookinger til Airmees testmilj\u00f8 i stedet for produktion."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Koster labels ekstra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. SmartPack er forbundet direkte til Airmee, s\u00e5 der er ingen labelfee. Labels er inkluderet i abonnementet."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Airmee", "item": "https://smartpack.dk/integrationer/airmee"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med direkte Airmee-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.", "url": "https://smartpack.dk/integrationer/airmee", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvordan virker tidsvinduerne?", "acceptedAnswer": {"@type": "Answer", "text": "Airmee arbejder med leveringstidsvinduer i stedet for pakkeshops. Opslaget sker på postnummer og land, og kunden vælger et konkret vindue i checkout, som følger med til bookingen og trykkes på labelen."}}, {"@type": "Question", "name": "Hvad sker der, hvis tidsvinduet er udløbet?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPack henter automatisk det første ledige vindue for postnummeret og bruger det i stedet. Findes der slet ingen vinduer for postnummeret, fejler bookingen med besked om det."}}, {"@type": "Question", "name": "Hvor kommer labelen fra?", "acceptedAnswer": {"@type": "Answer", "text": "Airmee returnerer ordre-ID og tracking-URL, mens selve labelen genereres i SmartPack. Den indeholder afsender, modtager, leveringsdato, tidsvindue og stregkoder for både forsendelse og kolli."}}, {"@type": "Question", "name": "Kan vi kræve BankID eller ID?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. BankID-verifikation, ID-verifikation, underskrift og efterlad uden for dør er tilvalg, der slås til eksplicit på leveringsmetoden."}}, {"@type": "Question", "name": "Kan vi teste, før vi går i luften?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Testmode sender bookinger til Airmees testmiljø i stedet for produktion."}}, {"@type": "Question", "name": "Koster labels ekstra?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack er forbundet direkte til Airmee, så der er ingen labelfee. Labels er inkluderet i abonnementet."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

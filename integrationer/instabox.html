@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Instabox",
-          "item": "https://smartpack.dk/integrationer/instabox"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med direkte Instabox-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
-      "url": "https://smartpack.dk/integrationer/instabox",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvorn\u00e5r bookes labelen hos Instabox?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "I det \u00f8jeblik pakkeren trykker print. SmartPack kalder Instabox live og f\u00e5r label og trackingnummer retur med det samme."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan kunden returnere uden at printe?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Instabox Return Labelless genererer ingen label. Kunden viser en kode ved lockeren i stedet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "H\u00e6nger returen sammen med den oprindelige pakke?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. SmartPack sl\u00e5r den oprindelige forsendelse op og finder pakke-ID'et, s\u00e5 Instabox kan koble returen til den udg\u00e5ende pakke."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi kr\u00e6ve alderskontrol?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Minimumsalder er en parameter p\u00e5 leveringsmetoden, og national identifikation samt personverifikation kan sl\u00e5s til."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Vores Shopify-ordrer f\u00e5r forkert leveringsmetode.",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Instabox bruger lodret streg som separator i forsendelseskoden i stedet for underscore. Integrationen h\u00e5ndterer det, men det er v\u00e6rd at kende, hvis method keys skal justeres."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Koster labels ekstra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. SmartPack er forbundet direkte til Instabox, s\u00e5 der er ingen labelfee. Labels er inkluderet i abonnementet."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Instabox", "item": "https://smartpack.dk/integrationer/instabox"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med direkte Instabox-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.", "url": "https://smartpack.dk/integrationer/instabox", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvornår bookes labelen hos Instabox?", "acceptedAnswer": {"@type": "Answer", "text": "I det øjeblik pakkeren trykker print. SmartPack kalder Instabox live og får label og trackingnummer retur med det samme."}}, {"@type": "Question", "name": "Kan kunden returnere uden at printe?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Instabox Return Labelless genererer ingen label. Kunden viser en kode ved lockeren i stedet."}}, {"@type": "Question", "name": "Hænger returen sammen med den oprindelige pakke?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. SmartPack slår den oprindelige forsendelse op og finder pakke-ID'et, så Instabox kan koble returen til den udgående pakke."}}, {"@type": "Question", "name": "Kan vi kræve alderskontrol?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Minimumsalder er en parameter på leveringsmetoden, og national identifikation samt personverifikation kan slås til."}}, {"@type": "Question", "name": "Vores Shopify-ordrer får forkert leveringsmetode.", "acceptedAnswer": {"@type": "Answer", "text": "Instabox bruger lodret streg som separator i forsendelseskoden i stedet for underscore. Integrationen håndterer det, men det er værd at kende, hvis method keys skal justeres."}}, {"@type": "Question", "name": "Koster labels ekstra?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack er forbundet direkte til Instabox, så der er ingen labelfee. Labels er inkluderet i abonnementet."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

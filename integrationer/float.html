@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Float",
-          "item": "https://smartpack.dk/integrationer/float"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med et retur-API og webhooks. Float er en returplatform til modebrands, der forh\u00e5ndsregistrerer returneringer i SmartPack med pakkenummer og f\u00e5r besked, n\u00e5r lageret er f\u00e6rdigt med varen.",
-      "url": "https://smartpack.dk/integrationer/float",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvem har bygget integrationen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Float. De lister selv SmartPack under Warehouse Management Systems i deres dokumentation, med en dedikeret ops\u00e6tningsside til SmartPack."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvem laver returlabelen, Float eller SmartPack?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Float. De har deres egne fragtaftaler i portalen, blandt andet GLS, PostNord, DAO, Bring, UPS og Webshipper. Derfor sender de pakkenummeret videre til SmartPack, s\u00e5 lageret kan scanne det ind."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan lageret n\u00f8jes med at scanne?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Returen er oprettet i SmartPack, f\u00f8r pakken ankommer, og den kan findes ud fra pakkenummeret p\u00e5 labelen. Der er ikke noget at sl\u00e5 op."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Risikerer vi at refundere to gange?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej, n\u00e5r handlingen er sat op korrekt. Returhandlinger af typen Other udelukkes fra SmartPacks refusionsberegning, s\u00e5 det kun er Float der frigiver penge."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad sker der, n\u00e5r lageret melder returen f\u00e6rdig?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPack sender en webhook, og Float kan derefter frigive refusion, bytte eller gavekort automatisk, uden at nogen skal ind og godkende manuelt."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPacks retur-API og webhooks er en del af abonnementet. Selve Float k\u00f8ber I hos dem."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Float", "item": "https://smartpack.dk/integrationer/float"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med et retur-API og webhooks. Float er en returplatform til modebrands, der forhåndsregistrerer returneringer i SmartPack med pakkenummer og får besked, når lageret er færdigt med varen.", "url": "https://smartpack.dk/integrationer/float", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvem har bygget integrationen?", "acceptedAnswer": {"@type": "Answer", "text": "Float. De lister selv SmartPack under Warehouse Management Systems i deres dokumentation, med en dedikeret opsætningsside til SmartPack."}}, {"@type": "Question", "name": "Hvem laver returlabelen, Float eller SmartPack?", "acceptedAnswer": {"@type": "Answer", "text": "Float. De har deres egne fragtaftaler i portalen, blandt andet GLS, PostNord, DAO, Bring, UPS og Webshipper. Derfor sender de pakkenummeret videre til SmartPack, så lageret kan scanne det ind."}}, {"@type": "Question", "name": "Kan lageret nøjes med at scanne?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Returen er oprettet i SmartPack, før pakken ankommer, og den kan findes ud fra pakkenummeret på labelen. Der er ikke noget at slå op."}}, {"@type": "Question", "name": "Risikerer vi at refundere to gange?", "acceptedAnswer": {"@type": "Answer", "text": "Nej, når handlingen er sat op korrekt. Returhandlinger af typen Other udelukkes fra SmartPacks refusionsberegning, så det kun er Float der frigiver penge."}}, {"@type": "Question", "name": "Hvad sker der, når lageret melder returen færdig?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPack sender en webhook, og Float kan derefter frigive refusion, bytte eller gavekort automatisk, uden at nogen skal ind og godkende manuelt."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPacks retur-API og webhooks er en del af abonnementet. Selve Float køber I hos dem."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

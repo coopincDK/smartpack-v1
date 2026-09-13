@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Create2Stay",
-          "item": "https://smartpack.dk/integrationer/create2stay"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS. Create2Stay er en recommerce-platform til livsstilsbrands, der opretter en unik SKU pr. indleveret brugt vare og en indk\u00f8bsordre i kundens SmartPack, s\u00e5 varen er registreret f\u00f8r den fysisk ankommer.",
-      "url": "https://smartpack.dk/integrationer/create2stay",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvem har bygget integrationen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Create2Stay. Den bygger mod SmartPacks API til varer og indk\u00f8bsordrer, og de st\u00e5r selv for ops\u00e6tning og vedligehold."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvordan h\u00e5ndterer SmartPack en unik brugt vare?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Som en helt almindelig vare med antal 1. Der er ingen s\u00e6rlig mekanisme til unikke eksemplarer, og der er ikke brug for en. Create2Stay opretter SKU'en, og resten er normal drift."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi s\u00e6lge varen, f\u00f8r den er kommet hjem til os?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja, med presell p\u00e5 indk\u00f8bsordrelinjen. Tilg\u00e6ngelig beholdning bliver fri beholdning plus presell-antallet, og ordren st\u00e5r som Purchased, indtil varen ankommer. Uden presell vises den kun som indkommende."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan Create2Stay sende direkte til vores slutkunde?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Det g\u00f8r de fra deres eget lager. Om den forsendelse kan registreres i SmartPack via API, eller om det kr\u00e6ver en h\u00e5nd i systemet, har vi ikke bekr\u00e6ftet. Indk\u00f8bsordren og en dropship-forsendelse er to separate mekanismer i SmartPack, ikke \u00e9t samlet flow. Vi tager den konkret med jer, s\u00e5 I ikke bygger p\u00e5 en antagelse."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi registrere varens stand i SmartPack?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Der er ikke et dedikeret felt til stand eller kvalitet. Batchnummeret p\u00e5 lagerpartiet er det n\u00e6rmeste fritekstfelt, og det f\u00f8lger det enkelte eksemplar. Standen h\u00f8rer normalt hjemme hos Create2Stay, som ejer beskrivelsen og prisen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SmartPacks API er en del af abonnementet. Selve Create2Stay k\u00f8ber I hos dem."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Create2Stay", "item": "https://smartpack.dk/integrationer/create2stay"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS. Create2Stay er en recommerce-platform til livsstilsbrands, der opretter en unik SKU pr. indleveret brugt vare og en indkøbsordre i kundens SmartPack, så varen er registreret før den fysisk ankommer.", "url": "https://smartpack.dk/integrationer/create2stay", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvem har bygget integrationen?", "acceptedAnswer": {"@type": "Answer", "text": "Create2Stay. Den bygger mod SmartPacks API til varer og indkøbsordrer, og de står selv for opsætning og vedligehold."}}, {"@type": "Question", "name": "Hvordan håndterer SmartPack en unik brugt vare?", "acceptedAnswer": {"@type": "Answer", "text": "Som en helt almindelig vare med antal 1. Der er ingen særlig mekanisme til unikke eksemplarer, og der er ikke brug for en. Create2Stay opretter SKU'en, og resten er normal drift."}}, {"@type": "Question", "name": "Kan vi sælge varen, før den er kommet hjem til os?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, med presell på indkøbsordrelinjen. Tilgængelig beholdning bliver fri beholdning plus presell-antallet, og ordren står som Purchased, indtil varen ankommer. Uden presell vises den kun som indkommende."}}, {"@type": "Question", "name": "Kan Create2Stay sende direkte til vores slutkunde?", "acceptedAnswer": {"@type": "Answer", "text": "Det gør de fra deres eget lager. Om den forsendelse kan registreres i SmartPack via API, eller om det kræver en hånd i systemet, har vi ikke bekræftet. Indkøbsordren og en dropship-forsendelse er to separate mekanismer i SmartPack, ikke ét samlet flow. Vi tager den konkret med jer, så I ikke bygger på en antagelse."}}, {"@type": "Question", "name": "Kan vi registrere varens stand i SmartPack?", "acceptedAnswer": {"@type": "Answer", "text": "Der er ikke et dedikeret felt til stand eller kvalitet. Batchnummeret på lagerpartiet er det nærmeste fritekstfelt, og det følger det enkelte eksemplar. Standen hører normalt hjemme hos Create2Stay, som ejer beskrivelsen og prisen."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "SmartPacks API er en del af abonnementet. Selve Create2Stay køber I hos dem."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

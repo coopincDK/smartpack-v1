@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Business Central",
-          "item": "https://smartpack.dk/integrationer/dynamics-365"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der integrerer med Microsoft Dynamics 365 Business Central. Salgsordrer, returordrer, indk\u00f8bsordrer og varer hentes ind, og forsendelser, modtagelser og lagerjusteringer posteres tilbage i BC.",
-      "url": "https://smartpack.dk/integrationer/dynamics-365",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvad sker der, hvis en postering fejler i BC?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "S\u00e5 s\u00e6ttes et fejlflag, og den efterf\u00f8lgende lagersynkronisering holdes tilbage, indtil fejlen er l\u00f8st. Det er bevidst, s\u00e5 der ikke bogf\u00f8res oven p\u00e5 en kendt fejl, men det betyder ogs\u00e5, at en fejlet ordre skal ryddes af vejen hurtigt."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad hvis ordren allerede er posteret i BC?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "S\u00e5 logges det, og pakkelinjerne markeres alligevel som h\u00e5ndterede i SmartPack, s\u00e5 ordren ikke bliver h\u00e6ngende i systemet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Skal vi selv gen\u00e5bne frigivne ordrer i BC?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. Har en salgsordre eller indk\u00f8bsordre status Frigivet, gen\u00e5bner SmartPack den automatisk inden postering."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad sker der, n\u00e5r vi tilbageruller en op- eller nedskrivning?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Tilbagerulningen behandles som en almindelig auditpost og sendes derfor ogs\u00e5 til BC som en justering. Det er v\u00e6rd at vide, s\u00e5 posteringen ikke kommer bag p\u00e5 bogholderiet."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Vores trackingnumre ser afkortede ud i BC.",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Trackingnummeret afkortes til 30 tegn ved postering til BC. Har jeres fragtleverand\u00f8r l\u00e6ngere numre, ser I det her."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er der forskel p\u00e5 versionerne af integrationen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Der findes en \u00e6ldre og en nyere version. Den nyere underst\u00f8tter multi-lokation med valg af lagermaster pr. lokation, mens den \u00e6ldre er enklere. Vi afklarer altid ved opstart, hvilken der passer til jeres ops\u00e6tning."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Business Central", "item": "https://smartpack.dk/integrationer/dynamics-365"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der integrerer med Microsoft Dynamics 365 Business Central. Salgsordrer, returordrer, indkøbsordrer og varer hentes ind, og forsendelser, modtagelser og lagerjusteringer posteres tilbage i BC.", "url": "https://smartpack.dk/integrationer/dynamics-365", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad sker der, hvis en postering fejler i BC?", "acceptedAnswer": {"@type": "Answer", "text": "Så sættes et fejlflag, og den efterfølgende lagersynkronisering holdes tilbage, indtil fejlen er løst. Det er bevidst, så der ikke bogføres oven på en kendt fejl, men det betyder også, at en fejlet ordre skal ryddes af vejen hurtigt."}}, {"@type": "Question", "name": "Hvad hvis ordren allerede er posteret i BC?", "acceptedAnswer": {"@type": "Answer", "text": "Så logges det, og pakkelinjerne markeres alligevel som håndterede i SmartPack, så ordren ikke bliver hængende i systemet."}}, {"@type": "Question", "name": "Skal vi selv genåbne frigivne ordrer i BC?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Har en salgsordre eller indkøbsordre status Frigivet, genåbner SmartPack den automatisk inden postering."}}, {"@type": "Question", "name": "Hvad sker der, når vi tilbageruller en op- eller nedskrivning?", "acceptedAnswer": {"@type": "Answer", "text": "Tilbagerulningen behandles som en almindelig auditpost og sendes derfor også til BC som en justering. Det er værd at vide, så posteringen ikke kommer bag på bogholderiet."}}, {"@type": "Question", "name": "Vores trackingnumre ser afkortede ud i BC.", "acceptedAnswer": {"@type": "Answer", "text": "Trackingnummeret afkortes til 30 tegn ved postering til BC. Har jeres fragtleverandør længere numre, ser I det her."}}, {"@type": "Question", "name": "Er der forskel på versionerne af integrationen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Der findes en ældre og en nyere version. Den nyere understøtter multi-lokation med valg af lagermaster pr. lokation, mens den ældre er enklere. Vi afklarer altid ved opstart, hvilken der passer til jeres opsætning."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

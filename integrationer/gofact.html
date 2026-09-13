@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "GoFact",
-          "item": "https://smartpack.dk/integrationer/gofact"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der integrerer med GoFact. Varedata, ordrer, indk\u00f8bsordrer og leverand\u00f8rer hentes ind, og lager samt varemodtagelse rapporteres tilbage pr. forhandler.",
-      "url": "https://smartpack.dk/integrationer/gofact",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvem er master for varedata?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "GoFact. Beskrivelse, stregkoder, kategorier, billede, kostpris og normalpris kommer fra GoFact, og SmartPack opdaterer ikke GoFact med vare\u00e6ndringer."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvad synkroniseres ikke?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "V\u00e6gt, dimensioner, salgspris og tags. Skal de bruges p\u00e5 lageret, vedligeholdes de i SmartPack."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Hvordan h\u00e6nger lokationer og forhandlere sammen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Via retailer-mappingen. Hver SmartPack-lokation kobles til et GoFact-forhandler-ID og et POS-flow, s\u00e5 lager og bev\u00e6gelser rapporteres pr. forhandler."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Rapporteres varemodtagelse tilbage?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. N\u00e5r varer modtages p\u00e5 lageret, rapporteres det tilbage til GoFact for den relevante forhandler."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "F\u00f8lger indk\u00f8b med?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Indk\u00f8bsordrer og leverand\u00f8rer er en del af integrationen."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "GoFact", "item": "https://smartpack.dk/integrationer/gofact"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der integrerer med GoFact. Varedata, ordrer, indkøbsordrer og leverandører hentes ind, og lager samt varemodtagelse rapporteres tilbage pr. forhandler.", "url": "https://smartpack.dk/integrationer/gofact", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvem er master for varedata?", "acceptedAnswer": {"@type": "Answer", "text": "GoFact. Beskrivelse, stregkoder, kategorier, billede, kostpris og normalpris kommer fra GoFact, og SmartPack opdaterer ikke GoFact med vareændringer."}}, {"@type": "Question", "name": "Hvad synkroniseres ikke?", "acceptedAnswer": {"@type": "Answer", "text": "Vægt, dimensioner, salgspris og tags. Skal de bruges på lageret, vedligeholdes de i SmartPack."}}, {"@type": "Question", "name": "Hvordan hænger lokationer og forhandlere sammen?", "acceptedAnswer": {"@type": "Answer", "text": "Via retailer-mappingen. Hver SmartPack-lokation kobles til et GoFact-forhandler-ID og et POS-flow, så lager og bevægelser rapporteres pr. forhandler."}}, {"@type": "Question", "name": "Rapporteres varemodtagelse tilbage?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Når varer modtages på lageret, rapporteres det tilbage til GoFact for den relevante forhandler."}}, {"@type": "Question", "name": "Følger indkøb med?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Indkøbsordrer og leverandører er en del af integrationen."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulkøb."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

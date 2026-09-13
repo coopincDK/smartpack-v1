@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Budbee",
-          "item": "https://smartpack.dk/integrationer/budbee"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS med direkte Budbee-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.",
-      "url": "https://smartpack.dk/integrationer/budbee",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvorn\u00e5r bookes labelen hos Budbee?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "I det \u00f8jeblik pakkeren trykker print. SmartPack kalder Budbee live og f\u00e5r label og trackingnummer retur med det samme."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan kunden v\u00e6lge en Budbee-boks?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja, p\u00e5 Box-metoden. Boks-ID'et fra checkout f\u00f8lger med til Budbee. SameDay og NextDay er leveringer til d\u00f8ren uden boksv\u00e6lger."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Skal vi have flere s\u00e6t n\u00f8gler?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja, hvis I bruger flere services. Box, SameDay og NextDay har hvert sit s\u00e6t API-n\u00f8gler, og servicefeltet p\u00e5 leveringsmetoden afg\u00f8r, hvilket s\u00e6t der bruges."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi kr\u00e6ve underskrift eller ID?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Underskrift, identifikationskontrol, aldersgr\u00e6nse, efterlad ved d\u00f8r og krav om at modtager matcher slutkunden kan sl\u00e5s til pr. leveringsmetode."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi teste, f\u00f8r vi g\u00e5r i luften?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Der er et testmode-flag i indstillingerne, s\u00e5 ops\u00e6tningen kan verificeres uden rigtige forsendelser."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Koster labels ekstra?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nej. SmartPack er forbundet direkte til Budbee, s\u00e5 der er ingen labelfee. Labels er inkluderet i abonnementet."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "Budbee", "item": "https://smartpack.dk/integrationer/budbee"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS med direkte Budbee-integration. Labels bookes ved pakning, og trackingnummer sendes tilbage til webshoppen.", "url": "https://smartpack.dk/integrationer/budbee", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvornår bookes labelen hos Budbee?", "acceptedAnswer": {"@type": "Answer", "text": "I det øjeblik pakkeren trykker print. SmartPack kalder Budbee live og får label og trackingnummer retur med det samme."}}, {"@type": "Question", "name": "Kan kunden vælge en Budbee-boks?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, på Box-metoden. Boks-ID'et fra checkout følger med til Budbee. SameDay og NextDay er leveringer til døren uden boksvælger."}}, {"@type": "Question", "name": "Skal vi have flere sæt nøgler?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, hvis I bruger flere services. Box, SameDay og NextDay har hvert sit sæt API-nøgler, og servicefeltet på leveringsmetoden afgør, hvilket sæt der bruges."}}, {"@type": "Question", "name": "Kan vi kræve underskrift eller ID?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Underskrift, identifikationskontrol, aldersgrænse, efterlad ved dør og krav om at modtager matcher slutkunden kan slås til pr. leveringsmetode."}}, {"@type": "Question", "name": "Kan vi teste, før vi går i luften?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Der er et testmode-flag i indstillingerne, så opsætningen kan verificeres uden rigtige forsendelser."}}, {"@type": "Question", "name": "Koster labels ekstra?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. SmartPack er forbundet direkte til Budbee, så der er ingen labelfee. Labels er inkluderet i abonnementet."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>

@@ -46,106 +46,13 @@
   <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "SmartPack",
-          "item": "https://smartpack.dk/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Integrationer",
-          "item": "https://smartpack.dk/integrationer"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "DanDomain Classic",
-          "item": "https://smartpack.dk/integrationer/dandomain-classic"
-        }
-      ]
-    },
-    {
-      "@type": "SoftwareApplication",
-      "name": "SmartPack WMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "SmartPack er et dansk WMS der integrerer med DanDomain Classic via REST-API og webhooks. Ordrer og varer hentes ind, lager og ordrestatus skrives tilbage, og betaling kan opsamles via OnPay.",
-      "url": "https://smartpack.dk/integrationer/dandomain-classic",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "DKK",
-        "description": "SmartPack opkraever intet loebende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Hvordan ved vi, om vi k\u00f8rer Classic?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Classic bruger et REST-API, mens den nye platform bruger SOAP. Er I i tvivl, finder vi ud af det sammen ved opstart."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan betalingen opsamles pr. forsendelse?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Classic underst\u00f8tter delvis opsamling via OnPay, s\u00e5 I kan opsamle pr. fulfillment i stedet for hele ordren p\u00e5 \u00e9n gang."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kan vi bruge vores egne ordrefelter?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. De fem reserverede ordrefelter i DanDomain Classic kan mappes til SmartPack-ordrefelter."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Fanger integrationen vores pakkeshopvalg?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Pakkeshop-ID genkendes ud fra pr\u00e6fikset Pakkeshop: i adresselinje 2. Bruger butikken et andet format, afklarer vi det ved opstart."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Kommer ordrer ind med det samme?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Classic underst\u00f8tter webhooks p\u00e5 b\u00e5de ordrer og produkter, s\u00e5 \u00e6ndringer behandles uden at vente p\u00e5 n\u00e6ste k\u00f8rsel."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Er integrationen inkluderet i prisen?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulk\u00f8b."
-          }
-        }
-      ]
-    }
-  ]
-}
+{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "SmartPack", "item": "https://smartpack.dk/"}, {"@type": "ListItem", "position": 2, "name": "Integrationer", "item": "https://smartpack.dk/integrationer"}, {"@type": "ListItem", "position": 3, "name": "DanDomain Classic", "item": "https://smartpack.dk/integrationer/dandomain-classic"}]}, {"@type": "SoftwareApplication", "name": "SmartPack WMS", "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "description": "SmartPack er et dansk WMS der integrerer med DanDomain Classic via REST-API og webhooks. Ordrer og varer hentes ind, lager og ordrestatus skrives tilbage, og betaling kan opsamles via OnPay.", "url": "https://smartpack.dk/integrationer/dandomain-classic", "offers": {"@type": "Offer", "priceCurrency": "DKK", "description": "SmartPack opkræver intet løbende gebyr for integrationer, apps, private apps eller tilsluttede maskiner og systemer."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvordan ved vi, om vi kører Classic?", "acceptedAnswer": {"@type": "Answer", "text": "Classic bruger et REST-API, mens den nye platform bruger SOAP. Er I i tvivl, finder vi ud af det sammen ved opstart."}}, {"@type": "Question", "name": "Kan betalingen opsamles pr. forsendelse?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Classic understøtter delvis opsamling via OnPay, så I kan opsamle pr. fulfillment i stedet for hele ordren på én gang."}}, {"@type": "Question", "name": "Kan vi bruge vores egne ordrefelter?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. De fem reserverede ordrefelter i DanDomain Classic kan mappes til SmartPack-ordrefelter."}}, {"@type": "Question", "name": "Fanger integrationen vores pakkeshopvalg?", "acceptedAnswer": {"@type": "Answer", "text": "Pakkeshop-ID genkendes ud fra præfikset Pakkeshop: i adresselinje 2. Bruger butikken et andet format, afklarer vi det ved opstart."}}, {"@type": "Question", "name": "Kommer ordrer ind med det samme?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Classic understøtter webhooks på både ordrer og produkter, så ændringer behandles uden at vente på næste kørsel."}}, {"@type": "Question", "name": "Er integrationen inkluderet i prisen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja. Den er en del af SmartPack-abonnementet uden ekstra licens eller modulkøb."}}]}]}
   </script>
 
   <link rel="icon" href="../assets/favicon-smartpack0.png" type="image/png">
-  <link rel="stylesheet" href="../css/style.css?v=1789310477">
+  <link rel="stylesheet" href="../css/style.css?v=1789311758">
   <script src="../js/theme-toggle.js"></script>
-  <link rel="stylesheet" href="int-page.css?v=1789310477">
+  <link rel="stylesheet" href="int-page.css?v=1789311758">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
 </head>
 <body>
