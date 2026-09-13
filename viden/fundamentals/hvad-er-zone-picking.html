@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789296515">
+  <link rel="stylesheet" href="../../css/style.css?v=1789296690">
   <script src="../../js/theme-toggle.js"></script>
 
 <!-- ================================================================
@@ -173,7 +173,7 @@
       <li><strong>Zoner baseret på areal, ikke ordredata:</strong> Lager opdelt i lige store kvadrater ignorerer, at 80% af plukvolumen kommer fra 20% af sortimentet.</li>
       <li><strong>Intet konsolideringspunkt:</strong> Hvis det er uklart, hvor ordrer fra flere zoner samles, opstår der fejl og forsinkelser ved pakkestation.</li>
       <li><strong>Statisk zoneopdeling:</strong> Sortimentet ændrer sig. En zoneopdeling der var optimal for 18 måneder siden er næppe optimal i dag. Genanalyser hver 6. måned, ellers mister du 8-12% effektivitet.</li>
-      <li><strong>Manglende belastningsbalancering:</strong> Hvis zone A altid er overbelastet mens zone B er ledig, er zoneopdelingen forkert. Et WMS loser dette dynamisk.</li>
+      <li><strong>Manglende belastningsbalancering:</strong> Hvis zone A altid er overbelastet mens zone B er ledig, er zoneopdelingen forkert. Et WMS løser dette dynamisk.</li>
       <li><strong>Ingen plan for sygdom og ferie:</strong> Hvis zone A's plukker er syg og ingen andre kender zonen, stopper produktionen. Krav: cross-training eller dynamisk zoneomdeling i WMS.</li>
     </ul>
 
@@ -182,7 +182,7 @@
     <ol>
       <li><strong>Volumen over 150 ordrer per dag:</strong> Under det er koordinationsomkostningen ofte større end gangtidsbesparelsen.</li>
       <li><strong>Lager over 500 kvm med mere end 500 aktive SKUer:</strong> På et kompakt lager giver specialisering ikke nok gevinst.</li>
-      <li><strong>WMS eller plukkesystem der understotter zonerouting:</strong> Manuel zonehåndtering er teknisk muligt, men du mister 40-60% af gevinsten og fordobler fejlraten.</li>
+      <li><strong>WMS eller plukkesystem der understøtter zonerouting:</strong> Manuel zonehåndtering er teknisk muligt, men du mister 40-60% af gevinsten og fordobler fejlraten.</li>
     </ol>
     <p>Er alle tre til stede, og din nuværende fejlrate er over 1%, eller din gangtid er over 55% af arbejdstiden, er zone picking det næste logiske skridt.</p>
 
@@ -202,7 +202,7 @@
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er forskellen på zone picking og batch picking?</summary><div class="faq-item__body"><p>Zone picking opdeler lageret i geografiske zoner med en fast plukker per zone. Batch picking samler flere ordrer på én tur uanset zone. De to metoder kombineres ofte: plukkere arbejder i zoner og håndterer flere ordrer per tur inden for deres zone.</p></div></details>
     <details class="faq-item"><summary>Hvornår giver zone picking mening?</summary><div class="faq-item__body"><p>Zone picking giver klart udbytte ved mere end 150-200 ordrer per dag, et lager over 500 kvm og et sortiment på mindst 500 SKUer. Under de niveauer er gangtiden ikke stor nok til at retfærdiggøre koordinationsomkostningen.</p></div></details>
-    <details class="faq-item"><summary>Hvad er ulempen ved zone picking?</summary><div class="faq-item__body"><p>Koordinering mellem zoner er den største udfordring. Ordrer med varer fra flere zoner kræver et konsolideringspunkt, og hvis en zone er overbelastet mens en anden er ledig, kan det skabe flaskehalse. Et WMS loser dette ved dynamisk belastningsfordeling.</p></div></details>
+    <details class="faq-item"><summary>Hvad er ulempen ved zone picking?</summary><div class="faq-item__body"><p>Koordinering mellem zoner er den største udfordring. Ordrer med varer fra flere zoner kræver et konsolideringspunkt, og hvis en zone er overbelastet mens en anden er ledig, kan det skabe flaskehalse. Et WMS løser dette ved dynamisk belastningsfordeling.</p></div></details>
     <details class="faq-item"><summary>Kan zone picking bruges uden et WMS?</summary><div class="faq-item__body"><p>Teknisk ja, men effektivt nej. Uden et WMS mangler du realtidsoverblik over, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og øger fejlrisikoen ved konsolidering.</p></div></details>
     <details class="faq-item"><summary>Hvor mange zoner skal et lager have?</summary><div class="faq-item__body"><p>De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner øger koordinationsomkostningen og giver ikke proportionel gevinst.</p></div></details>
   </div>
