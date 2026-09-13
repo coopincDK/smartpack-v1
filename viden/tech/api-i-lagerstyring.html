@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789281802">
+  <link rel="stylesheet" href="../../css/style.css?v=1789285293">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -199,5 +199,5 @@ Authorization: Bearer {access_token}</code></pre>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på API og webhook i lagerstyring?","acceptedAnswer":{"@type":"Answer","text":"API er pull: dit system spørger aktivt. Webhook er push: det eksterne system fortæller dig, når noget sker. Begge bruges typisk i kombination."}},{"@type":"Question","name":"Hvad sker der, hvis access token udløber midt i arbejdsdagen?","acceptedAnswer":{"@type":"Answer","text":"Alle API-kald fejler med HTTP 401. Ordrer hentes ikke, lager opdateres ikke. Systemet bør automatisk forsøge token-refresh og sende alert, hvis det fejler."}},{"@type":"Question","name":"Hvad er pagination, og hvorfor er det vigtigt?","acceptedAnswer":{"@type":"Answer","text":"API'er returnerer data i sider (f.eks. 250 resultater ad gangen). Uden pagination-håndtering henter du kun den første side og mister resten. Kritisk ved ordreimport."}},{"@type":"Question","name":"Hvad er et REST API?","acceptedAnswer":{"@type":"Answer","text":"Et API baseret på HTTP-protokollen og standardmetoder (GET, POST, PUT, DELETE). Det mest udbredte API-design i e-handel og lagerstyring. Data udveksles typisk som JSON."}}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"API i lagerstyring , sådan henter og sender dit WMS data","dateModified":"2025-04-30","publisher":{"@type":"Organization","name":"SmartPack"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "API i lagerstyring , sådan henter og sender dit WMS data", "description": "Forstå API-integrationer i lagerstyring: REST API, polling-intervaller, access tokens og fejlhåndtering. Undgå pagination-fejl og token-udløb.", "datePublished": "2025-04-30", "dateModified": "2025-04-30", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/api-i-lagerstyring", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/api-i-lagerstyring"}, "inLanguage": "da-DK"}</script>
 </body></html>
