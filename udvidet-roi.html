@@ -17,7 +17,7 @@
 <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
 <link rel="preconnect" href="https://www.youtube-nocookie.com">
 <link rel="dns-prefetch" href="//i.ytimg.com">
-<link rel="stylesheet" href="css/style.css?v=1789333553">
+<link rel="stylesheet" href="css/style.css?v=1789345827">
 <script src="js/theme-toggle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
@@ -414,7 +414,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789333553"></script>
+<script src="js/header.js?v=1789345827"></script>
 
 <!-- BEREGNER INTRO -->
 <style>
@@ -527,7 +527,7 @@
             <span class="inp-val" data-sid="fejl" title="Klik for at indtaste" id="v-fejl">1,1%</span>
           </div>
           <input type="range" class="roi-range" id="fejl" min="0.1" max="5" step="0.1" value="1.1">
-          <div class="inp-note">Branchen ligger typisk på 1,2%. Hvad er jeres erfaringstal?</div>
+          <div class="inp-note">Uden scanning ser vi typisk 2,4-4,2%. Hvad er jeres erfaringstal?</div>
         </div>
 
         <div class="inp-field">
@@ -569,13 +569,13 @@
             <span class="inp-val" data-sid="avance" title="Klik for at indtaste" id="v-avance">35%</span>
           </div>
           <input type="range" class="roi-range" id="avance" min="5" max="80" step="1" value="35">
-          <div class="inp-note">Typisk 25-50% i e-handel</div>
+          <div class="inp-note">S&aelig;t jeres egen. Vi m&oslash;der oftest 25-50%</div>
         </div>
 
         <div class="inp-field">
           <div class="inp-row"><span class="inp-label">Returrate</span><span class="inp-val" data-sid="returrate" title="Klik for at indtaste" id="v-returrate">8%</span></div>
           <input type="range" class="roi-range" id="returrate" min="0" max="40" step="0.5" value="8">
-          <div class="inp-note">Branchegennemsnit 8-15%. Fejlpakninger driver den op, SP bringer fejlbetingede returner t&aelig;t p&aring; 0</div>
+          <div class="inp-note">Afh&aelig;nger meget af varen: t&oslash;j og mode ligger ofte p&aring; 30-40%, andre varegrupper under 10%. Fejlpakninger driver den op, SmartPack bringer fejlbetingede returner t&aelig;t p&aring; 0</div>
         </div>
 
         <div class="inp-field">
@@ -906,8 +906,8 @@
 </section>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789333553"></script>
-<script src="js/main.js?v=1789333553" defer></script>
+<script src="js/footer.js?v=1789345827"></script>
+<script src="js/main.js?v=1789345827" defer></script>
 <script>
 /* ============================================================
    Quick Calc
@@ -1859,7 +1859,7 @@ document.addEventListener('DOMContentLoaded', function() {
     { target:'#medarb',   wizTab:0,    title:'Ansatte p\u00e5 lageret',          text:'Antal medarbejdere der arbejder p\u00e5 lageret. Plukkere, pakkere og lagerfolk \u2014 ikke kontorfolk.' },
     { target:'#pakker',   wizTab:0,    title:'Pakker sendt pr. m\u00e5ned',      text:'Jeres gennemsnitlige forsendelser pr. m\u00e5ned. Klik p\u00e5 tallet for at skrive direkte. Over 100.000? Klik p\u00e5 tallet.' },
     { target:'#lon',      wizTab:0,    title:'Timelpn inkl. feriepenge',         text:'Den reelle timepris inkl. feriepenge, pension og arbejdsgiverafgifter. For de fleste 140\u2013200 kr/t.' },
-    { target:'#fejl',     wizTab:0,    title:'Pakkefejl',                        text:'Procent af pakker med fejl: forkert vare, antal eller adresse. Branchen ligger typisk p\u00e5 1,2%.' },
+    { target:'#fejl',     wizTab:0,    title:'Pakkefejl',                        text:'Procent af pakker med fejl: forkert vare, antal eller adresse. Uden scanning ser vi typisk 2,4-4,2%.' },
     { target:'#fejlomk',  wizTab:0,    title:'Omkostning pr. fejl',              text:'Returfragt + kundeservice-tid + kreditnota. Typisk 300\u2013600 kr. per fejl.' },
     { target:'#vaekst',   wizTab:0,    title:'Forventet m\u00e5nedlig v\u00e6kst', text:'Bruges til at beregne hvorn\u00e5r I rammer kapacitetsloftet. Vigtigt for 24-m\u00e5nedsgrafen.' },
     { target:'#ordrevaerdi', wizTab:1, title:'Gns. ordrev\u00e6rdi',             text:'Gennemsnitlig omsætning pr. ordre inkl. moms. Bruges til at beregne ekstra omsætning med frigivne timer.' },
