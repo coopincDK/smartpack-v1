@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varemodtagelse i praksis: fra palle til hylde | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Varemodtagelse i praksis: fra palle til hylde">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/varemodtagelse-i-praksis">
+  <meta property="og:description" content="Varemodtagelsen er det billigste sted at fange en fejl. Her er kæden fra købsordre til hylde, og hvor noterne skal ligge for at holde.">
+  <meta property="og:image" content="https://smartpack.dk/assets/viden/kap8_lager_audit_tjekliste.webp">
+  <meta property="og:image:width" content="1040">
+  <meta property="og:image:height" content="580">
+  <meta name="description" content="Varemodtagelsen er det billigste sted at fange en fejl. Her er kæden fra købsordre til hylde, og hvor noterne skal ligge for at holde.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/varemodtagelse-i-praksis">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1789403438">
+  <script src="../../js/theme-toggle.js"></script>
+
+<!-- ================================================================
+     SMARTPACK TRACKING. Skal med paa alle nye sider.
+     Se _TRACKING_TEMPLATE.html i roden.
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+
+
+
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT på TRACKING BLOK
+================================================================ -->
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&#x203A;</span><a href="../">Viden</a><span>&#x203A;</span><a href="./">Tech &amp; Integration</a><span>&#x203A;</span><span>Varemodtagelse i praksis: fra palle til hylde</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Teknologi</span>
+    <h1 class="article-title">Varemodtagelse i praksis: fra palle til hylde</h1>
+  <div class="article-meta"><time datetime="2026-09-14">September 2026</time><span>SmartPack</span><span>~8 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+<img class="article-hero-img" src="../../assets/viden/kap8_lager_audit_tjekliste.webp" alt="Tjekliste ved varemodtagelse p&aring; lageret" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;" width="1040" height="580">
+    <p>Pallen st&aring;r p&aring; rampen. Ingen ved helt pr&aelig;cis hvad der er p&aring; den, f&oslash;r nogen har &aring;bnet den og talt efter. Og alt hvad der g&aring;r galt her, betaler I for et andet sted, senere, til en h&oslash;jere pris.</p>
+    <p>Varemodtagelsen er det billigste sted p&aring; hele lageret at fange en fejl. Det er ogs&aring; det sted, der oftest k&oslash;rer p&aring; rutine og hukommelse.</p>
+
+    <h2>Hvorfor bagd&oslash;ren er billigst</h2>
+    <p>En forkert optalt leverance koster to minutter at rette, mens pallen st&aring;r der. Den samme fejl opdaget af en kunde koster returfragt, en ny forsendelse, kundeservicetid og ofte selve varen.</p>
+    <p>Regn selv: en pakkefejl ligger typisk mellem 300 og 590 kr. i h&aring;rde omkostninger, og det er f&oslash;r man t&aelig;ller den kunde der ikke kommer igen. To minutter ved rampen er billige.</p>
+    <p>Problemet er, at fejlen ikke ligner en fejl endnu. Den ligner et tal i systemet der passer. Den bliver f&oslash;rst synlig, n&aring;r plukkeren st&aring;r ved en tom hylde.</p>
+
+    <p class="inline-cta">&#x1F449; Vil du se hvordan modtagelsen ser ud p&aring; en h&aring;ndterminal? <a href="../../kontakt">Tal med SmartPack &rarr;</a></p>
+
+    <h2>K&aelig;den, trin for trin</h2>
+    <p>Varemodtagelse er ikke &eacute;n handling. Det er fem, og de fleste lagre har kun styr p&aring; to af dem.</p>
+    <ol>
+      <li><strong>K&oslash;bsordren.</strong> Hvad har I bestilt, hvor mange, og hvorn&aring;r skulle det komme. Uden den findes der ikke noget at holde leverancen op imod, og s&aring; bliver modtagelse til gaetteri.</li>
+      <li><strong>Ankomsten.</strong> Pallen kommer og bliver koblet til k&oslash;bsordren. Nu ved systemet at der er noget p&aring; vej ind, ogs&aring; inden nogen har &aring;bnet den.</li>
+      <li><strong>Modtagelsen.</strong> Varen scannes og t&aelig;lles op mod det forventede antal. Det er her fejlen skal findes.</li>
+      <li><strong>Afvigelsen.</strong> Passer det ikke, skal der tages stilling med det samme, ikke i morgen.</li>
+      <li><strong>Placeringen.</strong> Varen f&aring;r en lokation. F&oslash;rst her er den reelt p&aring; lager.</li>
+    </ol>
+    <p>Springer man trin 2 over, ved ingen hvad der er p&aring; vej. Springer man trin 5 over, st&aring;r varen p&aring; rampen mens webshoppen s&aelig;lger den.</p>
+
+    <h2>Noterne er det de fleste mangler</h2>
+    <p>Den viden der skal bruges ved modtagelsen, sidder som regel i hovedet p&aring; &eacute;n person. Den skal ligge i systemet, og der er to steder at l&aelig;gge den.</p>
+    <p><strong>Noter p&aring; k&oslash;bsordren</strong> popper op hos medarbejderen, n&aring;r netop den leverance modtages. De g&aelig;lder &eacute;n gang:</p>
+    <ul>
+      <li>&ldquo;Denne leverand&oslash;r pakker 12 stk. pr. karton, ikke 10. T&aelig;l kartoner, ikke stk.&rdquo;</li>
+      <li>&ldquo;Der mangler 40 stk. fra sidste levering. Tjek om de er med her.&rdquo;</li>
+      <li>&ldquo;Denne ordre skal have batchnummer p&aring;, ellers kan vi ikke spore den.&rdquo;</li>
+    </ul>
+    <p><strong>Noter p&aring; produktet</strong> f&oslash;lger varen og dukker op hver gang, uanset hvilken ordre den kommer med:</p>
+    <ul>
+      <li>&ldquo;Ligner varenummer 4471 til forveksling. Scan stregkoden, kig ikke.&rdquo;</li>
+      <li>&ldquo;Kommer altid med bulet yderkarton. Tjek inderemballagen f&oslash;r den g&aring;r p&aring; hylden.&rdquo;</li>
+      <li>&ldquo;Skal st&aring; k&oslash;ligt. M&aring; ikke p&aring; reol 12.&rdquo;</li>
+    </ul>
+    <p>Forskellen er vigtig. Ordrenoten er en besked om denne leverance. Produktnoten er viden om varen, og den skal blive ved med at dukke op, ogs&aring; n&aring;r den kollega der skrev den er holdt op.</p>
+
+    <h2>De fire afvigelser, og hvad der skal ske</h2>
+    <ul>
+      <li><strong>For f&aring;.</strong> Modtag det der faktisk kom, ikke det der stod p&aring; ordren. Resten bliver st&aring;ende som restordre, s&aring; indk&oslash;b kan f&oslash;lge op. Modtager man det fulde antal &ldquo;for nemheds skyld&rdquo;, s&aelig;lger webshoppen varer I ikke har.</li>
+      <li><strong>For mange.</strong> L&aelig;g dem ind. Et skjult overskud bliver til svind i n&aelig;ste opt&aelig;lling, og s&aring; leder nogen efter en fejl der aldrig var der.</li>
+      <li><strong>Forkert vare.</strong> Den m&aring; ikke p&aring; hylden, heller ikke midlertidigt. Har den f&oslash;rst en lokation, bliver den plukket.</li>
+      <li><strong>Beskadiget.</strong> Fotografer f&oslash;r der r&oslash;res ved noget, og reklam&eacute;r med det samme. Fristerne er korte, og efter dem vender bevisbyrden. Se <a href="../drift/fragtskader-hvem-betaler">hvem der betaler for fragtskader</a>.</li>
+    </ul>
+
+    <h2>Modtaget er ikke det samme som p&aring; lager</h2>
+    <p>Det er den skelnen der koster flest penge, og den er nem at overse.</p>
+    <p>N&aring;r varen er <em>modtaget</em>, ved systemet at den er i huset. N&aring;r den er <em>placeret</em>, ved systemet hvor. Er beholdningen sat op til at t&aelig;lle fra modtagelsen, begynder webshoppen at s&aelig;lge varer der stadig st&aring;r p&aring; en palle ved rampen. Plukkeren g&aring;r hen til en tom hylde, finder ingenting, og ordren strander.</p>
+    <p>Varen er f&oslash;rst reelt p&aring; lager, n&aring;r den st&aring;r et sted nogen kan finde den.</p>
+
+    <h2>S&aring;dan finder I jeres eget hul</h2>
+    <p>Brug en time ved rampen n&aelig;ste gang der kommer en leverance, og skriv ned:</p>
+    <ul>
+      <li>Hvor lang tid gik der fra pallen kom, til varerne stod p&aring; hylden?</li>
+      <li>Blev der talt op mod et forventet antal, eller blev der bare talt?</li>
+      <li>Hvem vidste noget om denne leverance, som ikke stod nogen steder?</li>
+      <li>Hvor mange gange blev nogen n&oslash;dt til at sp&oslash;rge en anden?</li>
+      <li>Hvad skete der med det der ikke passede?</li>
+    </ul>
+    <p>De fleste opdager, at den viden der skulle bruges fandtes, men l&aring; i hovedet p&aring; den der ikke var p&aring; arbejde.</p>
+
+    <h2>Hvad SmartPack g&oslash;r ved det</h2>
+    <p>Afh&aelig;nger jeres varemodtagelse af hvem der har vagten, er &aring;rsagen n&aelig;sten altid den samme: viden om leverancen ligger ikke noget sted, systemet kan vise den. I SmartPack kan I:</p>
+    <ul>
+      <li>Oprette k&oslash;bsordrer med forventet antal og dato, s&aring; modtagelsen har noget at m&aring;le op imod</li>
+      <li>L&aelig;gge noter p&aring; k&oslash;bsordren, der popper op hos medarbejderen ved modtagelsen</li>
+      <li>L&aelig;gge noter p&aring; enkelte produkter, der dukker op hver gang varen h&aring;ndteres</li>
+      <li>Modtage med scanner, s&aring; afvigelsen ses mens pallen stadig st&aring;r der</li>
+      <li>Styre placeringen, s&aring; varen f&oslash;rst t&aelig;ller som salgbar, n&aring;r den st&aring;r p&aring; en lokation</li>
+    </ul>
+    <p>Det fjerner ikke arbejdet ved rampen. Det g&oslash;r bare, at leverancen bliver h&aring;ndteret ens, uanset hvem der tager imod den.</p>
+
+    <div class="case-bevis">
+      <div class="case-bevis__title">Set i praksis</div>
+      <ul>
+        <li><a href="../../cases/danfilter">Danfilter</a>: lageret stemmer, og kollegaerne leder ikke l&aelig;ngere efter varer</li>
+        <li><a href="../../cases/totteland">Totteland</a>: scan-verificering gav n&aelig;sten ingen pakkefejl</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Regneeksemplerne er vejledende og bygger p&aring; SmartPacks egne observationer. Skift tallene ud med jeres egne.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../problemer/vi-tjekker-ikke-hvad-der-kommer-ind" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Vi tjekker ikke hvad der kommer ind</span></a><a href="leverandoerstyring" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Leverand&oslash;rstyring i WMS</span></a><a href="batch-og-lotnumre" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Batch- og lotnumre</span></a></div></div>
+
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+    <details class="faq-item"><summary>Hvorfor skal vi oprette k&oslash;bsordrer, n&aring;r vi alligevel kan se hvad der kommer?</summary><div class="faq-item__body"><p>Fordi modtagelsen skal kunne m&aring;le op mod noget. Uden et forventet antal er opt&aelig;lling bare et tal, og s&aring; opdager man f&oslash;rst en afvigelse, n&aring;r varen mangler p&aring; hylden. K&oslash;bsordren er ogs&aring; det eneste sted, indk&oslash;b kan se hvad leverand&oslash;ren skylder.</p></div></details>
+    <details class="faq-item"><summary>Hvad er forskellen p&aring; en note p&aring; k&oslash;bsordren og en note p&aring; produktet?</summary><div class="faq-item__body"><p>Noten p&aring; k&oslash;bsordren g&aelig;lder den ene leverance og popper op, n&aring;r netop den modtages. Noten p&aring; produktet f&oslash;lger varen og dukker op hver gang, uanset hvilken ordre den kommer med. Brug ordrenoten til beskeder, produktnoten til viden der altid g&aelig;lder.</p></div></details>
+    <details class="faq-item"><summary>Skal vi t&aelig;lle alt, hver gang?</summary><div class="faq-item__body"><p>Ikke n&oslash;dvendigvis. Men I skal beslutte hvad I t&aelig;ller, og det skal v&aelig;re det samme hver gang. T&aelig;lles der stikpr&oslash;vevis, skal det v&aelig;re systemet der v&aelig;lger stikpr&oslash;ven, ikke den der har travlt.</p></div></details>
+    <details class="faq-item"><summary>Hvad g&oslash;r vi, n&aring;r der kommer flere varer end bestilt?</summary><div class="faq-item__body"><p>L&aelig;g dem ind. Et overskud der ikke registreres, bliver til en uforklarlig difference ved n&aelig;ste opt&aelig;lling, og s&aring; bruger nogen tid p&aring; at lede efter en fejl der ikke findes. Tag derefter fat i leverand&oslash;ren om faktureringen.</p></div></details>
+    <details class="faq-item"><summary>Hvorn&aring;r er varen reelt p&aring; lager?</summary><div class="faq-item__body"><p>N&aring;r den st&aring;r p&aring; en lokation nogen kan finde. Er beholdningen sat til at t&aelig;lle allerede ved modtagelsen, kan webshoppen s&aelig;lge varer der stadig st&aring;r p&aring; en palle ved rampen, og s&aring; strander ordren hos plukkeren.</p></div></details>
+    <details class="faq-item"><summary>Hvad g&oslash;r vi med en leverance der er kommet beskadiget?</summary><div class="faq-item__body"><p>Fotografer alt f&oslash;r der r&oslash;res ved noget, gem emballagen, og reklam&eacute;r med det samme. Ved synlig skade skal det ske straks ved modtagelsen, ved skjult skade typisk inden syv dage. Efter fristen vender bevisbyrden over p&aring; jer.</p></div></details>
+  </div>
+</div></div>
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvorfor skal vi oprette købsordrer, når vi alligevel kan se hvad der kommer?","acceptedAnswer":{"@type":"Answer","text":"Fordi modtagelsen skal kunne måle op mod noget. Uden et forventet antal er optælling bare et tal, og så opdager man først en afvigelse, når varen mangler på hylden. Købsordren er også det eneste sted, indkøb kan se hvad leverandøren skylder."}},{"@type":"Question","name":"Hvad er forskellen på en note på købsordren og en note på produktet?","acceptedAnswer":{"@type":"Answer","text":"Noten på købsordren gælder den ene leverance og popper op, når netop den modtages. Noten på produktet følger varen og dukker op hver gang, uanset hvilken ordre den kommer med. Brug ordrenoten til beskeder, produktnoten til viden der altid gælder."}},{"@type":"Question","name":"Skal vi tælle alt, hver gang?","acceptedAnswer":{"@type":"Answer","text":"Ikke nødvendigvis. Men I skal beslutte hvad I tæller, og det skal være det samme hver gang. Tælles der stikprøvevis, skal det være systemet der vælger stikprøven, ikke den der har travlt."}},{"@type":"Question","name":"Hvad gør vi, når der kommer flere varer end bestilt?","acceptedAnswer":{"@type":"Answer","text":"Læg dem ind. Et overskud der ikke registreres, bliver til en uforklarlig difference ved næste optælling, og så bruger nogen tid på at lede efter en fejl der ikke findes. Tag derefter fat i leverandøren om faktureringen."}},{"@type":"Question","name":"Hvornår er varen reelt på lager?","acceptedAnswer":{"@type":"Answer","text":"Når den står på en lokation nogen kan finde. Er beholdningen sat til at tælle allerede ved modtagelsen, kan webshoppen sælge varer der stadig står på en palle ved rampen, og så strander ordren hos plukkeren."}},{"@type":"Question","name":"Hvad gør vi med en leverance der er kommet beskadiget?","acceptedAnswer":{"@type":"Answer","text":"Fotografer alt før der røres ved noget, gem emballagen, og reklamér med det samme. Ved synlig skade skal det ske straks ved modtagelsen, ved skjult skade typisk inden syv dage. Efter fristen vender bevisbyrden over på jer."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Varemodtagelse i praksis: fra palle til hylde","description":"Varemodtagelsen er det billigste sted at fange en fejl. Her er kæden fra købsordre til hylde, og hvor noterne skal ligge for at holde.","image":"https://smartpack.dk/assets/viden/kap8_lager_audit_tjekliste.webp","datePublished":"2026-09-14","dateModified":"2026-09-14","author":{"@type":"Organization","name":"SmartPack","@id":"https://smartpack.dk/#organization"},"publisher":{"@type":"Organization","name":"SmartPack","logo":{"@type":"ImageObject","url":"https://smartpack.dk/assets/favicon-smartpack0.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://smartpack.dk/viden/tech/varemodtagelse-i-praksis"},"inLanguage":"da-DK"}</script>
+</body>
+</html>
