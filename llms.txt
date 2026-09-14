@@ -4,12 +4,12 @@
 
 ## Om SmartPack
 
-SmartPack er et cloudbaseret lagerstyringssystem der giver webshops og fulfillment-centre fuld kontrol over lager, pluk, pakning og forsendelse. Systemet er bygget på operationel erfaring siden 2005 og bruger A* pathfinding og TSM-algoritmer til ruteoptimering.
+SmartPack er et cloudbaseret lagerstyringssystem der giver webshops og fulfillment-centre fuld kontrol over lager, pluk, pakning og forsendelse. Systemet er bygget på operationel erfaring siden 2005 og bruger A* pathfinding og TSP-algoritmer til ruteoptimering.
 
 Centrale egenskaber:
 - Scan-verificeret pluk og pakning, så varen bekræftes mod ordren i stedet for at blive genkendt på øjemål
 - Batch picking: pluk op til 30 ordrer ad gangen med en tur
-- A* pathfinding og TSM: optimal plukkeroute beregnes automatisk
+- A* pathfinding og TSP: optimal plukkerute beregnes automatisk
 - Realtids lagerstatus: antal på hylden, reserveret og tilgængeligt
 - 3PL multi-tenant: ét system, mange kunder, adskilt data og fakturering
 - Syv arbejdsdage til live. De fleste fordeler dem over 1-3 uger, fordi forretningen skal passes imens
