@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789418923">
+  <link rel="stylesheet" href="../../css/style.css?v=1789419584">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -102,7 +102,14 @@
     <p>SmartPack har native integrationer med Business Central, E-conomic og Uniconta via API. Synkronisering sker i realtid for ordrer og indc. 5-15 minutters interval for lagerbevægelser. Integrationen vedligeholdes af SmartPack og følger med når ERP-systemerne opdaterer deres API.</p>
   </div>
 
-  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <div class="case-bevis">
+      <div class="case-bevis__title">Set i praksis</div>
+      <ul>
+        <li><a href="../../cases/danfilter">Danfilter</a>: Business Central og Shopify k&oslash;rer fuldt integreret med lageret</li>
+      </ul>
+    </div>
+
+    <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Har jeg brug for både WMS og ERP?</summary><div class="faq-item__body"><p>Når du er små: nej. ERP's lagermodul er tilstrækkeligt under 100-200 ordrer om måneden. Når du er mellemstor: ja, du behøver WMS for operationel effektivitet og ERP for økonomisk styring. De to systemer er komplementerende, ikke konkurrerende.</p></div></details>
     <details class="faq-item"><summary>Hvad koster en WMS-ERP integration?</summary><div class="faq-item__body"><p>Med native integration (som SmartPack har til Business Central og E-conomic): typisk inkluderet i WMS-prisen eller 500-2.000 kr./måned ekstra. Custom API-integration: 30.000-150.000 kr. i development plus løbende vedligeholdelse. Vælg altid native integration når muligt.</p></div></details>
     <details class="faq-item"><summary>Hvad er "master of record" og hvorfor er det vigtigt?</summary><div class="faq-item__body"><p>Master of record er det system der er kilden til sandhed for en given datamængde. For lagerbeholdning bør WMS være master of record da det er tættest på den fysiske virkelighed. ERP læser fra WMS, ikke omvendt. Uden klar master of record får du konflikter når systemerne er uenige.</p></div></details>
