@@ -172,7 +172,7 @@ Oversigt: https://smartpack.dk/viden/
 - WMS vs. Excel: hvornår er regneark ikke nok? : https://smartpack.dk/viden/tech/wms-vs-excel
 - WooCommerce integration med WMS : https://smartpack.dk/viden/tech/woocommerce-integration
 
-### Lagerokonomi (23 artikler)
+### Lagerokonomi (24 artikler)
 
 - Bemanding på lageret : https://smartpack.dk/viden/okonomi/bemanding-lager
 - Break-even på lageret : https://smartpack.dk/viden/okonomi/break-even-lager
@@ -185,6 +185,7 @@ Oversigt: https://smartpack.dk/viden/
 - Forsendelsesomkostninger : https://smartpack.dk/viden/okonomi/forsendelsesomkostninger
 - Fragtforhandling : https://smartpack.dk/viden/okonomi/fragtforhandling
 - Hvad er beholdningsomkostninger? : https://smartpack.dk/viden/okonomi/beholdningsomkostninger
+- Hvad er lageret værd? Tallet revisor spørger om : https://smartpack.dk/viden/okonomi/lagervaerdi-til-regnskabet
 - Hvad koster en lagermedarbejder reelt? : https://smartpack.dk/viden/okonomi/personaleomkostninger-lager
 - Hvad koster plukkefejl reelt? : https://smartpack.dk/viden/okonomi/plukkefejl-koster-penge
 - Hvor mange medarbejdere sparer et WMS? : https://smartpack.dk/viden/okonomi/spare-medarbejdere-wms
@@ -236,7 +237,7 @@ Oversigt: https://smartpack.dk/viden/
 - Klimavenlig logistik i praksis : https://smartpack.dk/viden/baeredygtighed/klimavenlig-logistik
 - Papir vs. plastik emballage : https://smartpack.dk/viden/baeredygtighed/papiremballage-vs-plastik
 
-### Lagerdrift og processer (23 artikler)
+### Lagerdrift og processer (24 artikler)
 
 - ADR regler forklaret : https://smartpack.dk/viden/drift/adr-regler-forklaret
 - Aerosoler og fragt: Må du sende spraydåser : https://smartpack.dk/viden/drift/aerosoler-og-fragt
@@ -255,6 +256,7 @@ Oversigt: https://smartpack.dk/viden/
 - Lithium-batterier og fragt : https://smartpack.dk/viden/drift/lithium-batterier-fragt
 - LUCID-registrering i Tyskland : https://smartpack.dk/viden/drift/lucid-registrering
 - Må du sende parfume? Regler for fragt : https://smartpack.dk/viden/drift/maa-du-sende-parfume
+- Produktion og webshop på samme lager : https://smartpack.dk/viden/drift/produktion-og-webshop-paa-samme-lager
 - Reverse supply chain og recommerce : https://smartpack.dk/viden/drift/reverse-supply-chain-recommerce-reparation
 - Sporbarhed på lageret: hvem rørte varen? : https://smartpack.dk/viden/drift/sporbarhed-paa-lageret
 - Tarifkoder forklaret : https://smartpack.dk/viden/drift/tarifkoder-forklaret
@@ -273,9 +275,10 @@ Oversigt: https://smartpack.dk/viden/
 - Udskiftning af lagerfolk: hvad koster det? : https://smartpack.dk/viden/personale/medarbejder-turnover-lager
 - Ungarbejdere på lager: regler og grænser : https://smartpack.dk/viden/personale/ungarbejdere-paa-lager
 
-### Vaekst og skalering (21 artikler)
+### Vaekst og skalering (22 artikler)
 
 - Black Friday: lagerforberedelse der virker : https://smartpack.dk/viden/vaekst/black-friday-lager
+- Flyt lager uden at miste overblikket : https://smartpack.dk/viden/vaekst/flytning-af-lager
 - Hvornår giver automatisering mening? : https://smartpack.dk/viden/vaekst/hvornaar-automatisering-giver-mening
 - Hvornår holder batch picking op med at virke? : https://smartpack.dk/viden/vaekst/hvornaar-batch-picking-stopper
 - Hvornår knækker dit lager-setup? : https://smartpack.dk/viden/vaekst/hvornaar-setup-knaekker
