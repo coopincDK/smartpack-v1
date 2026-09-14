@@ -57,10 +57,11 @@
       f.setAttribute('allow', ALLOW);
       f.setAttribute('allowfullscreen', '');
       f.className = 'yt-facade__frame';
-      f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"></head>'
-               + '<body style="margin:0;background:#000">'
+      f.srcdoc = '<!doctype html><html style="height:100%"><head><meta charset="utf-8">'
+               + '<style>html,body{margin:0;padding:0;height:100%;background:#000;overflow:hidden}'
+               + 'iframe{display:block;width:100%;height:100%;border:0}</style></head>'
+               + '<body>'
                + '<iframe src="' + url + '" title="' + titel.replace(/"/g, '&quot;') + '"'
-               + ' style="width:100%;height:100%;border:0"'
                + ' allow="' + ALLOW + '" allowfullscreen></iframe>'
                + '</body></html>';
       d.replaceWith(f);
