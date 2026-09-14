@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+
+<html lang="da">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vi tjekker ikke hvad der kommer ind | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Vi tjekker ikke hvad der kommer ind">
+  <meta property="og:url" content="https://smartpack.dk/viden/problemer/vi-tjekker-ikke-hvad-der-kommer-ind">
+  <meta property="og:description" content="Lagertallene passer ikke, og alle kigger på plukket. Men to tredjedele af fejlene opstår ved varemodtagelsen. Her er hvad der går galt.">
+  <meta property="og:image" content="https://smartpack.dk/assets/viden/kap2_lagerflow_3_zoner.webp">
+  <meta property="og:image:width" content="1040">
+  <meta property="og:image:height" content="580">
+  <meta name="description" content="Lagertallene passer ikke, og alle kigger på plukket. Men to tredjedele af fejlene opstår ved varemodtagelsen. Her er hvad der går galt.">
+  <link rel="canonical" href="https://smartpack.dk/viden/problemer/vi-tjekker-ikke-hvad-der-kommer-ind">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1789368034">
+  <script src="../../js/theme-toggle.js"></script>
+
+<!-- ================================================================
+     SMARTPACK TRACKING. Skal med paa alle nye sider.
+     Se _TRACKING_TEMPLATE.html i roden.
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+<!-- 3. Meta Pixel (styret af iubenda) -->
+<script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="3">!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','409061954009237');fbq('track','PageView');</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=409061954009237&ev=PageView&noscript=1"></noscript>
+
+<!-- 4. LinkedIn Insight Tag -->
+<script>_linkedin_partner_id='4602537';window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(){var s=document.getElementsByTagName('script')[0];var b=document.createElement('script');b.type='text/javascript';b.async=true;b.src='https://snap.licdn.com/li.lms-analytics/insight.min.js';s.parentNode.insertBefore(b,s);})();</script>
+<noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=4602537&fmt=gif"></noscript>
+
+<!-- 5. Microsoft Clarity -->
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","myxsr8zlw1");</script>
+
+<!-- 6. Leadfeeder -->
+<script>(function(ss,ex){window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));};(function(d,s){fs=d.getElementsByTagName(s)[0];function ce(src){var cs=d.createElement(s);cs.src=src;cs.async=1;fs.parentNode.insertBefore(cs,fs);}ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js');})(document,'script');}('lAxoEaKGxMbaOYGd'));</script>
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT på TRACKING BLOK
+================================================================ -->
+  <script src="https://analytics.ahrefs.com/analytics.js" data-key="XmzHyn63Bl331q2tSycaeA" async></script>
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page"><div class="article-wrap">
+  <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&#x203A;</span><a href="../">Viden</a><span>&#x203A;</span><a href="./">Problemer</a><span>&#x203A;</span><span>Vi tjekker ikke hvad der kommer ind</span></nav>
+  <header class="article-header">
+    <span class="article-cat-badge">Problemer</span>
+    <h1 class="article-title">Vi tjekker ikke hvad der kommer ind</h1>
+  <div class="article-meta"><time datetime="2026-09-14">September 2026</time><span>SmartPack</span><span>~7 min</span></div>
+  </header>
+  <div class="article-body" data-pagefind-body="true">
+<img class="article-hero-img" src="../../assets/viden/kap2_lagerflow_3_zoner.webp" alt="Lager delt op i tre zoner, hvor modtagelsen er den første" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;" width="1040" height="580">
+
+<p>Pallen står på gulvet. Følgesedlen ligger ovenpå. Der er travlt, og de fire kasser ligner dem fra sidst.</p>
+
+<p>Nogen skriver "modtaget", kører varerne ind på hylden og går videre til noget mere presserende.</p>
+
+<p>Tre uger senere står der 40 stk. i systemet. På hylden ligger der 31.</p>
+
+<h2>Fejlen var der, før nogen plukkede</h2>
+
+<p>Når lagertallene ikke passer, kigger de fleste på plukket. Det er der, varerne forsvinder ud af døren, så det må være der, det går galt.</p>
+
+<p>Men plukkeren kan kun tage det, der ligger på hylden. Står der 40 i systemet og 31 på hylden, så opstod forskellen, længe før nogen fik en plukliste i hånden. Den opstod ved bagdøren.</p>
+
+<p>Det er den ene ende af lageret, ingen har skrevet en procedure for. Der er styr på, hvordan man plukker. Der er styr på, hvordan man pakker. Men modtagelsen klarer man, som man nu lige kan, fordi chaufføren venter.</p>
+
+<p class="inline-cta">👉 Vil du se, hvordan det ser ud i praksis? <a href="../../kontakt">Kontakt SmartPack</a></p>
+
+<h2>De seks ting der går galt ved bagdøren</h2>
+
+<p><strong>1. Antallet bliver læst, ikke talt.</strong> Der står 40 på følgesedlen, så det er 40. Ingen åbner kassen. Leverandøren har sendt 31, fordi resten var i restordre, og det står med småt på side to.</p>
+
+<p><strong>2. Det er ikke den vare, der blev bestilt.</strong> Samme produkt, anden variant. Samme farve, anden størrelse. Den ligner, så den ryger ind under det varenummer, man forventede.</p>
+
+<p><strong>3. Delleverancen bliver ikke lukket.</strong> Første halvdel kom i tirsdags. Anden halvdel kom aldrig, men indkøbsordren blev afsluttet alligevel, fordi nogen troede, det var det hele.</p>
+
+<p><strong>4. Varen får en plads, fordi der var plads.</strong> Ikke fordi den hører til der. Næste gang skal den findes, og den, der leder, ved ikke, hvad den, der satte den, tænkte.</p>
+
+<p><strong>5. Registreringen sker senere.</strong> Eller i går. Eller når der er tid. I mellemtiden sælger webshoppen varer, der står på en palle, ingen har rørt endnu.</p>
+
+<p><strong>6. Ingen ved, hvad der er på vej hjem.</strong> Kundeservice lover en leveringsdato ud fra en mavefornemmelse, fordi der ikke er noget sted at slå det op.</p>
+
+<h2>Hvorfor det bliver opdaget alt for sent</h2>
+
+<p>Modtagelsesfejl ligner ikke modtagelsesfejl. De ligner noget andet.</p>
+
+<p>De ligner svind, fordi der mangler varer. De ligner plukkefejl, fordi kunden fik det forkerte. De ligner et dårligt system, fordi tallene ikke passer. Så man leder de forkerte steder, og man finder ikke noget, fordi der ikke er noget at finde. Varerne blev aldrig væk. De kom aldrig ind.</p>
+
+<p>I <a href="../fundamentals/hvad-er-inventory-accuracy">artiklen om lagernøjagtighed</a> står der, at modtagelsesfejl og returvarer tilsammen står for 60 til 70 procent af alle fejl i beholdningen. To tredjedele af problemet sidder altså i de to ender, de færreste har sat i system.</p>
+
+<h2>Hvad det koster, når det ikke passer</h2>
+
+<p>En forkert beholdning koster ikke ét sted. Den koster fem.</p>
+
+<ul>
+<li><strong>Oversalg.</strong> Du sælger noget, du ikke har. Kunden får en mail om, at varen alligevel ikke kommer.</li>
+<li><strong>Forgæves gang.</strong> Plukkeren går hen til pladsen, og der er ikke noget. Det tager tid at finde ud af hvorfor.</li>
+<li><strong>Hasteindkøb.</strong> Du bestiller hjem igen, fordi du tror, du er løbet tør. Nogle gange står varen på lageret hele tiden.</li>
+<li><strong>Optælling.</strong> Du bruger en dag på at tælle for at finde en forskel, der opstod på to minutter ved en palle.</li>
+<li><strong>Forkert kostpris.</strong> Fragt og told bliver ikke fordelt rigtigt, og så er avancen forkert i regnskabet.</li>
+</ul>
+
+<p>Og så er der den, der ikke kan gøres op: tilliden til tallene. Når lageret har taget fejl et par gange, holder folk op med at stole på skærmen og går selv ud og kigger. Så har du et system, ingen bruger.</p>
+
+<h2>Det er ikke kun jer</h2>
+
+<p>Det her er ikke en skavank ved dit lager. Det er den næststørste udfordring, danske netbutikker selv peger på.</p>
+
+<div class="kilde-boks">
+  <p>At sikre at vareleverandørerne overholder deadlines og aftaler er den <strong>næststørste</strong> logistikudfordring danske netbutikker peger på. 26 procent nævner den blandt deres tre største, kun overgået af fragtpriser. Det er altså ikke et særsyn, at der kommer noget andet hjem end det, der blev bestilt.</p>
+  <p class="kilde-boks__kilde"><strong>Kilde:</strong> Dansk Erhverv, <em>Logistikanalyse 2025</em>. Webanalyse blandt danske netbutikker og omnichannel-virksomheder, gennemført 20. november til 10. december 2025. 87 svar på dette spørgsmål.</p>
+</div>
+
+<h2>Sådan kommer du i gang</h2>
+
+<p>Du behøver ikke et projekt. Du skal bruge tre ting, og de kan være på plads i denne uge.</p>
+
+<p><strong>Tæl det, du modtager.</strong> Ikke alt, hver gang. Men de varer, der fylder mest i omsætningen, hver gang. Resten stikprøve.</p>
+
+<p><strong>Registrer det samme dag.</strong> En vare, der ikke er registreret, findes ikke. Og en vare, der ikke findes, kan du ikke sælge uden at love noget, du ikke kan holde.</p>
+
+<p><strong>Giv varen en fast plads.</strong> Ikke den nærmeste ledige. Den samme som sidst. Så ved den næste, hvor den skal lede, uden at spørge.</p>
+
+<p>Når de tre kører, kan du begynde at <a href="../fundamentals/hvad-er-cycle-counting">tælle løbende</a> i stedet for at lukke lageret ned en gang om året.</p>
+
+<h2>Sådan løser du det i praksis</h2>
+
+<p>Hvis dine lagertal ikke passer, og pluk og pak ellers kører, skyldes det typisk:</p>
+
+<p>→ At der ikke er nogen fast måde at modtage varer på</p>
+
+<p>Med SmartPack kan du:</p>
+
+<ul>
+<li>Oprette en indkøbsordre, så du kan se, hvad der er på vej hjem, før det kommer</li>
+<li>Modtage mod ordren og få bekræftet, at det er den rigtige vare og det rigtige antal</li>
+<li>Få indkøbspris, fragt og told stemplet på varen ved modtagelsen, så gennemsnitsprisen bliver rigtig</li>
+</ul>
+
+<p>Det betyder:</p>
+
+<p>→ At beholdningen er rigtig fra det øjeblik, varen kommer ind, i stedet for at blive rettet tre uger senere</p>
+
+<p>Læs mere om, hvordan <a href="../tech/leverandoerstyring">leverandører og indkøbsordrer ligger i systemet</a>.</p>
+
+<h2>Kort sagt</h2>
+
+<p>Lageret har to ender. De fleste har styr på den, varerne går ud af, og ingen procedure for den, de kommer ind ad. Det er den ende, to tredjedele af fejlene kommer fra.</p>
+
+<p>Start med at tælle det, der betyder mest, og registrer det samme dag. Resten kan vente.</p>
+  </div>
+  <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt" class="btn">Book gratis gennemgang</a></div>
+  <div class="article-disclaimer"><p>Tal fra Dansk Erhvervs Logistikanalyse 2025 og SmartPacks egne observationer.</p></div>
+  <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="../fundamentals/hvad-er-inventory-accuracy" class="article-related__item"><span class="article-related__item-cat">Fundamentals</span><span class="article-related__item-title">Hvad er lagern&#248;jagtighed?</span></a><a href="../tech/leverandoerstyring" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Leverand&#248;rstyring i WMS</span></a><a href="vores-data-er-rod" class="article-related__item"><span class="article-related__item-cat">Problemer</span><span class="article-related__item-title">Vores data er rod</span></a></div></div>
+
+  <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
+    <details class="faq-item"><summary>Hvor stor en del af lagerfejlene stammer fra varemodtagelsen?</summary><div class="faq-item__body"><p>Modtagelsesfejl og returvarer står tilsammen for 60 til 70 procent af alle fejl i beholdningen. Det er den største enkeltkilde til forkerte lagertal, og samtidig den ende af lageret, de færreste har en fast procedure for.</p></div></details>
+    <details class="faq-item"><summary>Skal vi tælle alt, hvad der kommer ind?</summary><div class="faq-item__body"><p>Nej. Start med de varer, der fylder mest i omsætningen, og tæl dem hver gang. Resten kan klares med stikprøver. Det er bedre at tælle en tredjedel af varerne konsekvent end at tælle alt, når der er tid.</p></div></details>
+    <details class="faq-item"><summary>Hvad gør vi, når leverandøren sender færre end bestilt?</summary><div class="faq-item__body"><p>Registrer det, der faktisk kom, og lad indkøbsordren stå åben på resten. Problemet opstår, når ordren bliver lukket, som om alt var modtaget, for så tror systemet, varerne står på hylden.</p></div></details>
+    <details class="faq-item"><summary>Hvorfor ser modtagelsesfejl ud som svind?</summary><div class="faq-item__body"><p>Fordi symptomet er det samme: der mangler varer i forhold til systemet. Forskellen er, at ved svind er varen forsvundet, og ved en modtagelsesfejl kom den aldrig ind. Man leder efter noget, der aldrig har været der.</p></div></details>
+    <details class="faq-item"><summary>Kan vi nøjes med at rette tallene, når vi opdager forskellen?</summary><div class="faq-item__body"><p>Man kan, men så retter man det samme hver måned. Rettelsen fjerner symptomet, ikke årsagen. Så længe der ikke bliver talt ved modtagelsen, opstår forskellen igen.</p></div></details>
+    <details class="faq-item"><summary>Hvad betyder det for kostprisen, hvis modtagelsen er sjusket?</summary><div class="faq-item__body"><p>Indkøbspris, fragt og told bliver stemplet på varen ved modtagelsen og indgår i gennemsnitsprisen. Er antallet forkert, bliver kostprisen det også, og så er avancen forkert hele vejen op i regnskabet.</p></div></details>
+  </div>
+</div></div>
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvor stor en del af lagerfejlene stammer fra varemodtagelsen?", "acceptedAnswer": {"@type": "Answer", "text": "Modtagelsesfejl og returvarer står tilsammen for 60 til 70 procent af alle fejl i beholdningen. Det er den største enkeltkilde til forkerte lagertal, og samtidig den ende af lageret, de færreste har en fast procedure for."}}, {"@type": "Question", "name": "Skal vi tælle alt, hvad der kommer ind?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Start med de varer, der fylder mest i omsætningen, og tæl dem hver gang. Resten kan klares med stikprøver. Det er bedre at tælle en tredjedel af varerne konsekvent end at tælle alt, når der er tid."}}, {"@type": "Question", "name": "Hvad gør vi, når leverandøren sender færre end bestilt?", "acceptedAnswer": {"@type": "Answer", "text": "Registrer det, der faktisk kom, og lad indkøbsordren stå åben på resten. Problemet opstår, når ordren bliver lukket, som om alt var modtaget, for så tror systemet, varerne står på hylden."}}, {"@type": "Question", "name": "Hvorfor ser modtagelsesfejl ud som svind?", "acceptedAnswer": {"@type": "Answer", "text": "Fordi symptomet er det samme: der mangler varer i forhold til systemet. Forskellen er, at ved svind er varen forsvundet, og ved en modtagelsesfejl kom den aldrig ind. Man leder efter noget, der aldrig har været der."}}, {"@type": "Question", "name": "Kan vi nøjes med at rette tallene, når vi opdager forskellen?", "acceptedAnswer": {"@type": "Answer", "text": "Man kan, men så retter man det samme hver måned. Rettelsen fjerner symptomet, ikke årsagen. Så længe der ikke bliver talt ved modtagelsen, opstår forskellen igen."}}, {"@type": "Question", "name": "Hvad betyder det for kostprisen, hvis modtagelsen er sjusket?", "acceptedAnswer": {"@type": "Answer", "text": "Indkøbspris, fragt og told bliver stemplet på varen ved modtagelsen og indgår i gennemsnitsprisen. Er antallet forkert, bliver kostprisen det også, og så er avancen forkert hele vejen op i regnskabet."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Vi tjekker ikke hvad der kommer ind", "description": "Lagertallene passer ikke, og alle kigger på plukket. Men to tredjedele af fejlene opstår ved varemodtagelsen. Her er hvad der går galt.", "image": "https://smartpack.dk/assets/viden/kap2_lagerflow_3_zoner.webp", "datePublished": "2026-09-14", "dateModified": "2026-09-14", "author": {"@type": "Organization", "name": "SmartPack", "@id": "https://smartpack.dk/#organization"}, "publisher": {"@type": "Organization", "name": "SmartPack", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/favicon-smartpack0.png"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/problemer/vi-tjekker-ikke-hvad-der-kommer-ind"}, "inLanguage": "da-DK"}</script>
+</body>
+</html>
