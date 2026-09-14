@@ -297,7 +297,7 @@ Oversigt: https://smartpack.dk/viden/
 - Skalering uden kaos: væksten planlagt : https://smartpack.dk/viden/vaekst/skalering-uden-kaos
 - Sådan optimerer du plukkehastighed : https://smartpack.dk/viden/vaekst/optimer-plukkehastighed
 
-### Beslutningsguides (16 artikler)
+### Beslutningsguides (17 artikler)
 
 - 3PL vs. eget lager: Hvad passer til din webshop? : https://smartpack.dk/viden/beslutning/3pl-vs-eget-lager
 - 9 typiske fejl ved valg af WMS : https://smartpack.dk/viden/beslutning/fejl-ved-valg-af-system
@@ -306,6 +306,7 @@ Oversigt: https://smartpack.dk/viden/
 - Hvad er god nok plukkehastighed? : https://smartpack.dk/viden/beslutning/godt-nok-plukkehastighed
 - Hvad koster et WMS? Priser og pakker : https://smartpack.dk/viden/beslutning/wms-pris
 - Hvilket lager-setup passer til din webshop? : https://smartpack.dk/viden/beslutning/hvilket-setup-passer-til-dig
+- Hvor mange fragtleverandører skal du have? : https://smartpack.dk/viden/beslutning/hvor-mange-fragtleverandoerer
 - Hvornår er dit ERP's lagermodul ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-erp-ikke-er-nok
 - Hvornår er Shopify's lagerfunktion ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-shopify-ikke-er-nok
 - Hvornår fejler Excel som lagerstyring? : https://smartpack.dk/viden/beslutning/hvornaar-excel-fejler
