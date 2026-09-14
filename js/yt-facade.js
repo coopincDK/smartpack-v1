@@ -71,7 +71,21 @@
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); start(); }
     });
 
-    iframe.replaceWith(d);
+    /* Pladsholderen ligger absolut, saa dens ramme skal vaere positioneret.
+       Er rammen ikke en dedikeret videokasse, laver vi selv en i 16:9. */
+    var ramme = iframe.parentNode;
+    var dedikeret = ramme && ramme.nodeType === 1 && ramme.childElementCount === 1;
+    if (dedikeret) {
+      if (window.getComputedStyle(ramme).position === 'static') {
+        ramme.style.position = 'relative';
+      }
+      iframe.replaceWith(d);
+    } else {
+      var boks = document.createElement('div');
+      boks.className = 'yt-facade-boks';
+      boks.appendChild(d);
+      iframe.replaceWith(boks);
+    }
   }
 
   function koer() {
