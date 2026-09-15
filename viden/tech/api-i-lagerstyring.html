@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789499555">
+  <link rel="stylesheet" href="../../css/style.css?v=1789500498">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -84,12 +84,12 @@ Authorization: Bearer {access_token}</code></pre>
 
     <h2>Hvad koster API-fejl reelt?</h2>
     <table>
-      <thead><tr><th>Scenarie</th><th>Direkte omkostning</th><th>LTV-tab</th><th>Total omkostning</th></tr></thead>
+      <thead><tr><th>Scenarie</th><th>Konsekvens</th><th>Koster</th></tr></thead>
       <tbody>
-        <tr><td>Access token udløber (3 timer downtime)</td><td>0 kr. (ordrer venter)</td><td>Forsinkelse: ~8.000 kr. (kundeservice)</td><td><strong>8.000 kr. per episode</strong></td></tr>
-        <tr><td>Rate limiting ramt (429) uden retry</td><td>25% af ordrer tabes i 1 time</td><td>12 ordrer × 350 kr. = 4.200 kr.</td><td><strong>4.200 kr. per time</strong></td></tr>
-        <tr><td>Pagination ikke implementeret</td><td>750+ ordrer hentes ikke (kun første 250)</td><td>500 ordrer × 0,43 × 2.400 = 516.000 kr.</td><td><strong>516.000 kr. per episode</strong></td></tr>
-        <tr><td>Hårdkodet token i kode (udløber efter 90 dage)</td><td>0 kr. (ordrer venter)</td><td>Downtime 1 dag: ~40.000 kr.</td><td><strong>40.000 kr. per episode</strong></td></tr>
+        <tr><td>Access token udl&oslash;ber (3 timers nedetid)</td><td>Ordrer venter</td><td>Forsinkelse og kundeservice, ca. 8.000 kr. per episode</td></tr>
+        <tr><td>Rate limiting ramt (429) uden retry</td><td>25% af ordrer tabes i en time</td><td>12 ordrer &times; 350 kr. = 4.200 kr. per time</td></tr>
+        <tr><td>Pagination ikke implementeret</td><td>750+ ordrer hentes ikke, kun de f&oslash;rste 250</td><td>500 ordrer &times; 350 kr. = 175.000 kr. per episode</td></tr>
+        <tr><td>H&aring;rdkodet token i koden (udl&oslash;ber efter 90 dage)</td><td>Ordrer venter</td><td>Et d&oslash;gns nedetid, ca. 40.000 kr. per episode</td></tr>
       </tbody>
     </table>
     <p><strong>Konklusion:</strong> Pagination-fejl er den dyreste. Rate limiting uden retry er den hyppigste.</p>
