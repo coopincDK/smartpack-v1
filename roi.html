@@ -19,7 +19,7 @@
 <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
 <link rel="preconnect" href="https://www.youtube-nocookie.com">
 <link rel="dns-prefetch" href="//i.ytimg.com">
-<link rel="stylesheet" href="css/style.css?v=1789477892">
+<link rel="stylesheet" href="css/style.css?v=1789479140">
 <script src="js/theme-toggle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
@@ -405,7 +405,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789477892"></script>
+<script src="js/header.js?v=1789479140"></script>
 
 <!-- HERO -->
 <section class="roi-hero">
@@ -456,7 +456,7 @@
           <div>
             <div class="qc-field__label">M&aring;nedsl&oslash;n pr. medarbejder (kr.)</div>
             <input class="qc-field__input" id="qc-lon" type="number" min="10000" max="80000" step="1000" value="32000" inputmode="numeric">
-            <div class="qc-field__hint">Inkl. feriepenge og arbejdsgiverudgifter</div>
+            <div class="qc-field__hint">Den l&oslash;n I udbetaler. Vi l&aelig;gger selv 30 pct. oveni til feriepenge, pension og forsikring</div>
           </div>
 
           <div style="border-top:1px dashed var(--border);padding-top:.85rem">
@@ -517,11 +517,11 @@
         <div class="qc-grid" id="qc-stat-grid">
           <div class="qc-card">
             <div class="qc-card__val qc-card__val--accent" id="qc-r-medarb">0</div>
-            <div class="qc-card__lbl">Frigivne medarbejdere</div>
+            <div class="qc-card__lbl">Frigivet til andre opgaver</div>
           </div>
           <div class="qc-card">
-            <div class="qc-card__val qc-card__val--accent" id="qc-r-kapacitet">0%</div>
-            <div class="qc-card__lbl">Mere kapacitet</div>
+            <div class="qc-card__val qc-card__val--accent" id="qc-r-kapacitet">0</div>
+            <div class="qc-card__lbl">F&aelig;rre fejl om &aring;ret</div>
           </div>
           <div class="qc-card">
             <div class="qc-card__val" id="qc-r-fejl">0%</div>
@@ -534,6 +534,17 @@
         </div>
 
         <div class="qc-payback" id="qc-r-note">SmartPack koster ca. <span id="qc-r-sppris">0 kr.</span>/md, resten er gevinst</div>
+
+        <details class="qc-payback" style="text-align:left;font-weight:400;margin-top:.5rem">
+          <summary style="font-weight:700;cursor:pointer">S&aring;dan er der regnet</summary>
+          <ul style="margin:.6rem 0 0;padding-left:1.1rem;line-height:1.7">
+            <li>Vi regner med at <strong>30 pct. af tiden p&aring; lageret bliver fri</strong>. Folk forsvinder ikke, de laver noget andet.</li>
+            <li>Vi regner med at fejlraten falder til <strong>0,3 pct.</strong> Ikke til nul. Det t&oslash;r vi ikke love.</li>
+            <li>L&oslash;nnen I taster ind ganges med 12 m&aring;neder og <strong>1,3</strong> for feriepenge, pension og forsikring.</li>
+            <li>Tilbagebetalingen regner med en opstart fra <strong>40.000 kr.</strong>, som er standardops&aelig;tning. Den aftales p&aring; forh&aring;nd og kan v&aelig;re h&oslash;jere ved et st&oslash;rre setup.</li>
+            <li>Prisen pr. pakkefejl er jeres eget tal. Vi ser typisk 300 til 590 kr. i h&aring;rde omkostninger (E-logistik Guide 2026).</li>
+          </ul>
+        </details>
 
         <!-- Sanity advarsler -->
         <div id="qc-sanity-wrap">
@@ -764,8 +775,8 @@
 </section>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789477892"></script>
-<script src="js/main.js?v=1789477892" defer></script>
+<script src="js/footer.js?v=1789479140"></script>
+<script src="js/main.js?v=1789479140" defer></script>
 <script>
 /* ============================================================
    Quick Calc
@@ -814,7 +825,7 @@
     var pluk   = Math.max(1,   (isNaN(+document.getElementById('qc-pluk').value) ? 42 : +document.getElementById('qc-pluk').value));
 
     var pakker_md = ordrer;
-    var lonAar    = lon * 13;   // inkl. feriepenge + overhead
+    var lonAar    = lon * 12 * 1.3;   // udbetalt loen plus 30 pct. til feriepenge, pension og forsikring
     var effekt    = 0.30;
 
     // --- CLAMPING ---
@@ -898,7 +909,7 @@
       if (ctaPri)  { ctaPri.href = 'kontakt'; ctaPri.textContent = 'Få beregnet din case'; }
       if (ctaSec)  { ctaSec.href = '#beregner'; ctaSec.textContent = 'Nørd tallene ↓'; }
       document.getElementById('qc-r-medarb').textContent    = frigivne.toFixed(1).replace('.',',');
-      document.getElementById('qc-r-kapacitet').textContent = '+' + kapForbedring + '%';
+      document.getElementById('qc-r-kapacitet').textContent = Math.round((fejlRed / 100) * pakker_md * 12).toLocaleString('da-DK');
       document.getElementById('qc-r-fejl').textContent      = fejl <= fejlAfter ? 'Allerede optimal'
                                                             : '-' + fejlRedPct + '%';
       document.getElementById('qc-r-payback').textContent   = paybackTxt;
@@ -910,7 +921,7 @@
         if (equivEl) {
           var lines = [];
           if (frigivne >= 0.3) lines.push('<div class="qc-meaning__eq-item">= <strong>' + frigivne.toFixed(1).replace('.',',') + ' medarbejder' + (frigivne >= 1.8 ? 'e' : '') + '</strong> frigivet til vækst</div>');
-          lines.push('<div class="qc-meaning__eq-item">= <strong>+' + kapForbedring + '%</strong> kapacitet med samme team</div>');
+          lines.push('<div class="qc-meaning__eq-item">= <strong>' + Math.round((fejlRed / 100) * pakker_md * 12).toLocaleString('da-DK') + '</strong> ordrer om året der ikke går forkert ud</div>');
           if (fejl > fejlAfter) lines.push('<div class="qc-meaning__eq-item">= <strong>næsten 0</strong> fejl (fra ' + fejl.toFixed(1).replace('.',',') + '%)</div>');
           equivEl.innerHTML = lines.join('');
         }
@@ -1592,6 +1603,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-<script src="js/yt-facade.js?v=1789477892" defer></script>
+<script src="js/yt-facade.js?v=1789479140" defer></script>
 </body>
 </html>
