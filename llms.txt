@@ -93,7 +93,7 @@ Oversigt: https://smartpack.dk/viden/
 - Slotting: hvad koster forkert placering? : https://smartpack.dk/viden/fundamentals/slotting-hvad-koster-det-ikke
 - Warehouse layout: sådan indretter du lageret : https://smartpack.dk/viden/fundamentals/hvad-er-warehouse-layout
 
-### Problemer paa lageret (29 artikler)
+### Problemer paa lageret (28 artikler)
 
 - Afhængighed af nøglemedarbejdere : https://smartpack.dk/viden/problemer/afhngighed-af-noeglemedarbejdere
 - De 7 skjulte lagerfejl der koster penge : https://smartpack.dk/viden/problemer/de-7-skjulte-lagerfejl
@@ -124,7 +124,7 @@ Oversigt: https://smartpack.dk/viden/
 - Vi tjekker ikke hvad der kommer ind : https://smartpack.dk/viden/problemer/vi-tjekker-ikke-hvad-der-kommer-ind
 - Vores data er rod: system mod virkelighed : https://smartpack.dk/viden/problemer/vores-data-er-rod
 
-### Teknologi og systemer (43 artikler)
+### Teknologi og systemer (42 artikler)
 
 - 10 ting du kan bygge med SmartPacks API : https://smartpack.dk/viden/tech/smartpack-api-muligheder
 - AI på lageret 2026: hvad virker og hvad er hype : https://smartpack.dk/viden/tech/ai-paa-lageret-2026
