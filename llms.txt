@@ -112,7 +112,6 @@ Oversigt: https://smartpack.dk/viden/
 - Når Excel ikke er nok til lagerstyring : https://smartpack.dk/viden/problemer/excel-bryder-sammen
 - Når flere folk ikke løser problemet : https://smartpack.dk/viden/problemer/vi-ansaetter-for-hurtigt
 - Når for mange systemer skaber kaos : https://smartpack.dk/viden/problemer/for-mange-systemer
-- Når hver medarbejder gør det på sin måde : https://smartpack.dk/viden/problemer/for-mange-manuelle-processer
 - Når integrationer fejler og systemer tier : https://smartpack.dk/viden/problemer/integrationer-fejler
 - Når returprocessen er kaos: stop det : https://smartpack.dk/viden/problemer/returproces-er-kaos
 - Overfyldt lager, når der ikke er plads : https://smartpack.dk/viden/problemer/overfyldt-lager
@@ -133,7 +132,6 @@ Oversigt: https://smartpack.dk/viden/
 - Batch picking: 3x flere ordrer, samme mandskab : https://smartpack.dk/viden/tech/batch-picking-teknologi
 - Batch- og lotnumre: find partiet igen : https://smartpack.dk/viden/tech/batch-og-lotnumre
 - Business Central integration med WMS : https://smartpack.dk/viden/tech/business-central-integration
-- Cloud WMS, fordele, ulemper og hvornår : https://smartpack.dk/viden/tech/cloud-wms-fordele
 - Dataflow i e-handel : https://smartpack.dk/viden/tech/dataflow-i-ecommerce
 - e-conomic integration med WMS : https://smartpack.dk/viden/tech/economic-integration
 - EDI på lageret: hvad er det og hvornår? : https://smartpack.dk/viden/tech/edi-integrationer
@@ -302,7 +300,7 @@ Oversigt: https://smartpack.dk/viden/
 - 3PL eller eget lager? Sådan regner du på det : https://smartpack.dk/viden/beslutning/3pl-vs-eget-lager
 - 9 typiske fejl ved valg af WMS : https://smartpack.dk/viden/beslutning/fejl-ved-valg-af-system
 - Bedste WMS til webshop: det du skal kigge efter : https://smartpack.dk/viden/beslutning/bedste-wms-til-webshop
-- Cloud vs. on-premise WMS : https://smartpack.dk/viden/beslutning/cloud-vs-on-premise-wms
+- Cloud eller on-premise WMS? Sådan vælger du : https://smartpack.dk/viden/beslutning/cloud-vs-on-premise-wms
 - Hvad er god nok plukkehastighed? : https://smartpack.dk/viden/beslutning/godt-nok-plukkehastighed
 - Hvad koster et WMS? Priser og pakker : https://smartpack.dk/viden/beslutning/wms-pris
 - Hvor mange fragtleverandører skal du have? : https://smartpack.dk/viden/beslutning/hvor-mange-fragtleverandoerer
