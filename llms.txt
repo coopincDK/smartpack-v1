@@ -115,7 +115,6 @@ Oversigt: https://smartpack.dk/viden/
 - Når hver medarbejder gør det på sin måde : https://smartpack.dk/viden/problemer/for-mange-manuelle-processer
 - Når integrationer fejler og systemer tier : https://smartpack.dk/viden/problemer/integrationer-fejler
 - Når returprocessen er kaos: stop det : https://smartpack.dk/viden/problemer/returproces-er-kaos
-- Når Shopify ikke kan håndtere lageret : https://smartpack.dk/viden/problemer/shopify-er-ikke-nok
 - Overfyldt lager, når der ikke er plads : https://smartpack.dk/viden/problemer/overfyldt-lager
 - Plukruter er ineffektive : https://smartpack.dk/viden/problemer/plukruter-er-ineffektive
 - Systemet virker, men folk bruger det ikke : https://smartpack.dk/viden/problemer/systemet-virker-men-folk-bruger-det-ikke
@@ -311,7 +310,7 @@ Oversigt: https://smartpack.dk/viden/
 - Hvilket lager-setup passer til din webshop? : https://smartpack.dk/viden/beslutning/hvilket-setup-passer-til-dig
 - Hvor mange fragtleverandører skal du have? : https://smartpack.dk/viden/beslutning/hvor-mange-fragtleverandoerer
 - Hvornår er dit ERP's lagermodul ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-erp-ikke-er-nok
-- Hvornår er Shopify's lagerfunktion ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-shopify-ikke-er-nok
+- Hvornår er Shopifys lagerfunktion ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-shopify-ikke-er-nok
 - Hvornår fejler Excel som lagerstyring? : https://smartpack.dk/viden/beslutning/hvornaar-excel-fejler
 - Hvornår skal du skifte system? 7 klare tegn : https://smartpack.dk/viden/beslutning/hvornaar-skifte-system
 - Lager: omkostning eller investering? : https://smartpack.dk/viden/beslutning/hvornaar-er-lager-en-omkostning
