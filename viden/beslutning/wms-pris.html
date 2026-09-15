@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
+  <link rel="stylesheet" href="../../css/style.css?v=1789493171">
   <script src="../../js/theme-toggle.js"></script>
 <!-- 1. Iubenda Cookie Consent (GDPR) -->
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
@@ -67,7 +67,7 @@
       <li><strong>Mellemstor operation (100-500 ordrer/dag):</strong> 5.000-15.000 kr./md.</li>
       <li><strong>Stor operation (over 500 ordrer/dag):</strong> 15.000-50.000+ kr./md.</li>
     </ul>
-    <p>Fordelen er lav initial investering og automatiske opdateringer. Ulempen: ved 7.500 kr./md. betaler du 270.000 kr. over 3 &aring;r kun i abonnement, f&oslash;r &eacute;n eneste ekstrapost er medregnet.</p>
+    <p>Fordelen er lav opstart og automatiske opdateringer. Men l&aelig;g m&aelig;rke til hvad m&aring;nedsprisen d&aelig;kker: ved 7.500 kr./md. betaler du 270.000 kr. over tre &aring;r, og det tal siger intet om, hvorvidt fragtlabels, support og ekstra brugere er med. To tilbud med samme m&aring;nedspris kan ende hundredtusinder fra hinanden.</p>
 
     <div class="sp-calc">
       <div class="sp-calc__head">Regn jeres egen 3-årspris</div>
@@ -82,10 +82,10 @@
           <input id="wp-support" type="number" min="0" step="1000" value="12000" inputmode="decimal"></label>
       </div>
       <div class="sp-calc__out">
-        <div class="sp-calc__res"><strong id="wp-svar">&nbsp;</strong><span>Samlet pris over 3 år</span></div>
+        <div class="sp-calc__res"><strong id="wp-svar">&nbsp;</strong><span>Oveni abonnementet over 3 år</span></div>
         <p class="sp-calc__vis" id="wp-vis">&nbsp;</p>
       </div>
-      <p class="sp-calc__note">Datamigration, ekstra brugere og opgradering af support er de poster der oftest mangler i tilbuddet. Sp&oslash;rg til dem f&oslash;r du skriver under.</p>
+      <p class="sp-calc__note">Det er ikke m&aring;nedsprisen der v&aelig;lter budgettet. Det er posterne der ikke stod i tilbuddet. Sp&oslash;rg til dem, f&oslash;r du skriver under.</p>
     </div>
     <script>
     (function(){
@@ -98,9 +98,9 @@
       function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
       function regn(){
         var m=v('wp-md'), i=v('wp-impl'), g=v('wp-integ'), s=v('wp-support');
-        var abo=m*36, tco=abo+i+g+s*3;
-        svar.textContent=kr(tco)+' kr.';
-        vis.textContent='Abonnement '+kr(abo)+' kr. + engangsposter '+kr(i+g)+' kr. + support '+kr(s*3)+' kr. Reelt '+kr(tco/36)+' kr. om m\u00e5neden, '+(m>0?tal(tco/abo,1):'0')+' gange abonnementsprisen.';
+        var abo=m*36, ekstra=i+g+s*3, tco=abo+ekstra;
+        svar.textContent=kr(ekstra)+' kr.';
+        vis.textContent='Abonnementet er '+kr(abo)+' kr. over tre \u00e5r. Oveni kommer implementering '+kr(i)+' kr., integrationer '+kr(g)+' kr. og support '+kr(s*3)+' kr. Samlet '+kr(tco)+' kr., alts\u00e5 '+kr(tco/36)+' kr. om m\u00e5neden i stedet for '+kr(m)+'.';
       }
       ids.forEach(function(i){ el[i].addEventListener('input',regn); });
       regn();
@@ -111,8 +111,11 @@
     <p>&AElig;ldre model, stadig brugt af nogle leverand&oslash;rer. Licenspris: 150.000-800.000 kr. for selve softwaren. Dertil kommer &aring;rlig vedligeholdelse p&aring; 15-20% af licensprisen. Implementering faktureres separat.</p>
     <p>Modellen kan v&aelig;re billigere over 5+ &aring;r, men kr&aelig;ver h&oslash;jere kapitaludl&aelig;g fra start og b&aring;nder likviditeten.</p>
 
-    <h3>3. Transaktionsbaseret priss&aelig;tning</h3>
-    <p>Nogle leverand&oslash;rer opkr&aelig;ver per ordre eller per pluklinje. Attraktivt n&aring;r volumen er uforudsigelig, men kan blive dyrt ved h&oslash;j v&aelig;kst. Konkret pris: 0,50-3,00 kr. per ordre. Ved 300 ordrer/dag og 2,00 kr./ordre er det 219.000 kr./&aring;r i transaktionsgebyrer alene.</p>
+    <h3>3. Pris per pakke</h3>
+    <p>Her betaler du per pakke, du sender. Typisk 0,50-3,00 kr., og hos de fleste falder stykprisen, n&aring;r m&aelig;ngden stiger. Regningen f&oslash;lger s&aelig;sonen: en stille januar koster mindre end en travl november, og det er den eneste af de tre modeller hvor det g&aelig;lder.</p>
+    <p>Om modellen er billig eller dyr afh&aelig;nger af, hvad stykprisen d&aelig;kker. Betaler du per pakke og per fragtlabel og per ekstra bruger og per supporttime, kan et lavt tal per pakke ende h&oslash;jere end et fast abonnement. Er labelprint, support og opdateringer med i prisen, er der til geng&aelig;ld ikke ret meget tilbage at blive overrasket over.</p>
+    <p>Sp&oslash;rg om tre ting: falder stykprisen n&aring;r I vokser, er fragtlabels med i prisen, og hvad koster support ud over det inkluderede.</p>
+    <p>Det er i &oslash;vrigt den model vi selv k&oslash;rer p&aring;. SmartPack afregner per pakke, fra 3,00 kr. ned til 0,69 kr. efter m&aelig;ngde, med en minimumsafregning p&aring; 3.000 kr./md. Labelprint er med i prisen, det samme er support til jeres superbrugere, og opstarten aftales p&aring; forh&aring;nd i stedet for at dukke op som en faktura bagefter. Ingen binding. Se <a href="../../priser">priserne</a>.</p>
 
     <h2>Hvad der IKKE st&aring;r i WMS-tilbuddet</h2>
     <p>Grundprisen d&aelig;kker sj&aelig;ldent alt. Mange oplever uventede omkostninger inden for det f&oslash;rste &aring;r. Tjek altid disse punkter:</p>
