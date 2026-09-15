@@ -234,7 +234,7 @@ Oversigt: https://smartpack.dk/viden/
 - Klimavenlig logistik i praksis : https://smartpack.dk/viden/baeredygtighed/klimavenlig-logistik
 - Papir vs. plastik emballage : https://smartpack.dk/viden/baeredygtighed/papiremballage-vs-plastik
 
-### Lagerdrift og processer (24 artikler)
+### Lagerdrift og processer (25 artikler)
 
 - ADR regler forklaret : https://smartpack.dk/viden/drift/adr-regler-forklaret
 - Aerosoler og fragt: Må du sende spraydåser : https://smartpack.dk/viden/drift/aerosoler-og-fragt
@@ -253,6 +253,7 @@ Oversigt: https://smartpack.dk/viden/
 - Lithium-batterier og fragt : https://smartpack.dk/viden/drift/lithium-batterier-fragt
 - LUCID-registrering i Tyskland : https://smartpack.dk/viden/drift/lucid-registrering
 - Må du sende parfume? Regler for fragt : https://smartpack.dk/viden/drift/maa-du-sende-parfume
+- Når kunden snyder med en reklamation : https://smartpack.dk/viden/drift/snyd-med-reklamationer
 - Produktion og webshop på samme lager : https://smartpack.dk/viden/drift/produktion-og-webshop-paa-samme-lager
 - Reverse supply chain og recommerce : https://smartpack.dk/viden/drift/reverse-supply-chain-recommerce-reparation
 - Sporbarhed på lageret: hvem rørte varen? : https://smartpack.dk/viden/drift/sporbarhed-paa-lageret
