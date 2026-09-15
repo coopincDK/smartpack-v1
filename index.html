@@ -38,16 +38,14 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://www.youtube-nocookie.com">
-  <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Preload kritiske ressourcer -->
-  <link rel="preload" href="css/style.css?v=1789472067" as="style">
+  <link rel="preload" href="css/style.css?v=1789475233" as="style">
   <link rel="preload" href="assets/SmartPack-WMS-PDA.webp" as="image">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=1789472067">
+  <link rel="stylesheet" href="css/style.css?v=1789475233">
   <script src="js/theme-toggle.js"></script>
 
   <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
@@ -221,7 +219,7 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789472067"></script>
+<script src="js/header.js?v=1789475233"></script>
 
 <main id="main-content">
 
@@ -709,7 +707,12 @@ Du vokser.<br>
       <div class="solution__visual reveal reveal--delay">
         <div style="max-width:520px;margin-left:auto">
           <div style="position:relative;width:100%;padding-bottom:100%;border-radius:var(--r-lg);overflow:hidden">
-            <iframe src="https://www.youtube.com/embed/QSPoUEONWYQ?autoplay=1&mute=1&loop=1&playlist=QSPoUEONWYQ&controls=0&rel=0&modestbranding=1&playsinline=1" title="SmartPack på lageret" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%"></iframe>
+            <video class="loop-video js-loopvideo" width="640" height="640"
+                   muted loop playsinline preload="none"
+                   poster="assets/lager-smartpack-i-brug.webp"
+                   data-src="assets/lager-smartpack-i-brug.mp4"
+                   aria-label="H&aring;ndterminal med SmartPack p&aring; et lager"
+                   style="position:absolute;top:0;left:0;width:100%;height:100%"></video>
           </div>
         </div>
       </div>
@@ -865,14 +868,11 @@ Du vokser.<br>
       <div class="video-section__embed">
         <div class="video-section__video-glow"></div>
         <div class="video-section__video-wrap">
-          <iframe
-            src="https://www.youtube.com/embed/QSPoUEONWYQ?autoplay=1&mute=1&loop=1&playlist=QSPoUEONWYQ&controls=0&rel=0&modestbranding=1&playsinline=1"
-            title="SmartPack WMS i brug"
-            frameborder="0"
-            allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
-            allowfullscreen
-            class="video-section__iframe"
-          ></iframe>
+          <video class="video-section__iframe loop-video js-loopvideo" width="640" height="640"
+                 muted loop playsinline preload="none"
+                 poster="assets/lager-hverdag.webp"
+                 data-src="assets/lager-hverdag.mp4"
+                 aria-label="Hverdag p&aring; et rigtigt lager"></video>
         </div>
       </div>
     </div>
@@ -1090,10 +1090,10 @@ Du vokser.<br>
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789472067"></script>
+<script src="js/footer.js?v=1789475233"></script>
 
 
-  <script src="js/main.js?v=1789472067" defer></script>
+  <script src="js/main.js?v=1789475233" defer></script>
   <script src="js/hero-editor.js" defer></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -1149,7 +1149,30 @@ Du vokser.<br>
   });
   </script>
 
-<script src="js/yt-facade.js?v=1789472067" defer></script>
+<script>
+(function () {
+  var klip = document.querySelectorAll('video.js-loopvideo[data-src]');
+  if (!klip.length) return;
+  var villeHelstUdenBevaegelse = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var storSkaerm = window.matchMedia('(min-width: 900px)').matches;
+  if (villeHelstUdenBevaegelse || !storSkaerm) return;
+  if (!('IntersectionObserver' in window)) return;
+  var vaegter = new IntersectionObserver(function (poster) {
+    poster.forEach(function (p) {
+      var v = p.target;
+      if (p.isIntersecting) {
+        if (!v.getAttribute('src')) v.setAttribute('src', v.getAttribute('data-src'));
+        var start = v.play();
+        if (start && start.catch) start.catch(function () {});
+      } else if (v.getAttribute('src')) {
+        v.pause();
+      }
+    });
+  }, { rootMargin: '200px 0px' });
+  Array.prototype.forEach.call(klip, function (v) { vaegter.observe(v); });
+})();
+</script>
+
 </body>
 </html>
 
