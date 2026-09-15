@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789488490">
+  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
   <script src="../../js/theme-toggle.js"></script>
 
 <!-- ================================================================
@@ -97,6 +97,58 @@
     <h3>Trin 4: Sæt det hele sammen</h3>
     <p>ROP = (30 × 8) + 180 = 240 + 180 = <strong>420 enheder</strong>.</p>
     <p>Når dit lager falder til 420 enheder, afgiver du en ny ordre. Med gennemsnitligt forbrug på 30 enheder/dag er der 14 dages salg tilbage, heraf 8 dages faktisk leveringstid og 6 dages buffer i sikkerhedslageret.</p>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn dit eget ud</div>
+      <div class="sp-calc__grid">
+        <label class="sp-calc__f"><span>Dagligt forbrug (stk.)</span>
+          <input id="rop-forbrug" type="number" min="1" max="100000" step="1" value="30" inputmode="numeric"></label>
+        <label class="sp-calc__f"><span>Leveringstid (dage)</span>
+          <input id="rop-lead" type="number" min="1" max="365" step="1" value="8" inputmode="numeric"></label>
+        <label class="sp-calc__f"><span>Buffer (dage)</span>
+          <input id="rop-buffer" type="number" min="0" max="180" step="1" value="6" inputmode="numeric"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="rop-svar">420</strong><span>Bestil, n&aring;r lageret rammer dette tal</span></div>
+        <p class="sp-calc__vis" id="rop-vis">(30 &times; 8) + 180 = 420 stk. Sikkerhedslageret er 6 dages forbrug, alts&aring; 180 stk.</p>
+      </div>
+      <p class="sp-calc__note">Brug den leveringstid din leverand&oslash;r faktisk har haft de sidste 6-12 m&aring;neder, ikke den han lover.</p>
+    </div>
+    <style>
+    .sp-calc{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface-1);padding:1.25rem 1.25rem 1rem;margin:1.75rem 0}
+    .sp-calc__head{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:.9rem}
+    .sp-calc__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+    @media(max-width:560px){.sp-calc__grid{grid-template-columns:1fr}}
+    .sp-calc__f{display:block}
+    .sp-calc__f span{display:block;font-size:.7rem;font-weight:600;color:var(--text-2);margin-bottom:.3rem}
+    .sp-calc__f input{width:100%;padding:.55rem .75rem;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--bg-2);color:var(--text-1);font-size:1.05rem;font-weight:700;font-variant-numeric:tabular-nums}
+    .sp-calc__f input:focus{outline:none;border-color:var(--accent)}
+    .sp-calc__out{margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border)}
+    .sp-calc__res{display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap}
+    .sp-calc__res strong{font-size:2rem;font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1}
+    .sp-calc__res span{font-size:.8rem;color:var(--text-2)}
+    .sp-calc__vis{font-size:.82rem;color:var(--text-2);margin:.6rem 0 0;font-variant-numeric:tabular-nums}
+    .sp-calc__note{font-size:.72rem;color:var(--text-3);margin:.85rem 0 0}
+    </style>
+    <script>
+    (function(){
+      var f=document.getElementById('rop-forbrug'),l=document.getElementById('rop-lead'),
+          b=document.getElementById('rop-buffer'),svar=document.getElementById('rop-svar'),
+          vis=document.getElementById('rop-vis');
+      if(!f) return;
+      function n(el,d){var v=parseFloat(el.value);return isFinite(v)&&v>=0?v:d;}
+      function regn(){
+        var forbrug=n(f,30), lead=n(l,8), buf=n(b,6);
+        var sikker=Math.round(forbrug*buf), rop=Math.round(forbrug*lead)+sikker;
+        var fmt=function(x){return x.toLocaleString('da-DK');};
+        svar.textContent=fmt(rop);
+        vis.textContent='('+fmt(forbrug)+' \u00d7 '+fmt(lead)+') + '+fmt(sikker)+' = '+fmt(rop)
+          +' stk. Sikkerhedslageret er '+fmt(buf)+' dages forbrug, alts\u00e5 '+fmt(sikker)+' stk.';
+      }
+      [f,l,b].forEach(function(el){el.addEventListener('input',regn);});
+      regn();
+    })();
+    </script>
 
     <h2>Konkrete eksempler på reorder point</h2>
     <p>Teorien er enkel. Her er tre virkelige scenarier med forskellige udfordringer:</p>
