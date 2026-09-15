@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789498612">
+  <link rel="stylesheet" href="../../css/style.css?v=1789498811">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -86,14 +86,15 @@
     <h2>Hvad koster integrationsfejl reelt?</h2>
     <p class="inline-cta">&#x1F449; SmartPack monitorerer alle integrationsforbindelser aktivt. <a href="../../kontakt">Se SmartPacks integrationer</a></p>
     <table>
-      <thead><tr><th>Scenarie</th><th>Total årlig</th></tr></thead>
+      <thead><tr><th>Scenarie</th><th>Koster</th><th>Efter 14 dage</th></tr></thead>
       <tbody>
-        <tr><td>BC client secret udløber (2 dage downtime)</td><td>40.000 kr. per episode</td></tr>
-        <tr><td>Stille fejl (47 ordrer, opdages efter 24 timer)</td><td>64.002 kr. per episode</td></tr>
-        <tr><td>Webhook-tab uden retry (5% af ordrer)</td><td>3.182.200 kr./år</td></tr>
-        <tr><td>Leveringsmetode-mapping fejl (10% af ordrer)</td><td>2.281.250 kr./år</td></tr>
+        <tr><td>BC client secret udl&oslash;ber (2 dages nedetid)</td><td>40.000 kr. per episode</td><td>Opdages samme dag</td></tr>
+        <tr><td>Stille fejl, 47 ordrer strandet i et d&oslash;gn</td><td>47 &times; 350 kr. = 16.450 kr. per episode</td><td>Opdages n&aring;r kunderne ringer</td></tr>
+        <tr><td>Webhook-tab uden retry (5% af ordrer)</td><td>8.750 kr./dag</td><td><strong>122.500 kr.</strong></td></tr>
+        <tr><td>Leveringsmetode-mapping fejl (10% af ordrer)</td><td>6.250 kr./dag</td><td><strong>87.500 kr.</strong></td></tr>
       </tbody>
     </table>
+    <p style="font-size:.85rem;color:var(--text-3);margin:-.5rem 0 1.5rem;">Regnet p&aring; 350 kr. per fejlbeh&aelig;ftet ordre og 300 kr. per arbejdstime. De 14 dage er et bud p&aring;, hvor l&aelig;nge en stille fejl typisk n&aring;r at k&oslash;re, f&oslash;r nogen opdager den. Opdager I den p&aring; to dage, koster den en syvendedel.</p>
 
     <h2>Gennemgang af de mest typiske fejl</h2>
 
