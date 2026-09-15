@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789498068">
+  <link rel="stylesheet" href="../../css/style.css?v=1789498612">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -95,14 +95,15 @@
 
     <h2>Hvad koster webhook-fejl?</h2>
     <table>
-      <thead><tr><th>Fejltype</th><th>Total årlig</th></tr></thead>
+      <thead><tr><th>Fejltype</th><th>Koster</th><th>Efter 14 dage</th></tr></thead>
       <tbody>
-        <tr><td>Timeout (&gt;30 sek svartid), webhook deaktiveres</td><td>40.000 kr. per episode</td></tr>
-        <tr><td>Ingen HMAC-validering, svindel-ordre</td><td>96.000 kr./å</td></tr>
-        <tr><td>Webhook-tab uden retry-logik</td><td>12.605.625 kr./å</td></tr>
-        <tr><td>Ikke-idempotent handler, duplikat-ordrer</td><td>1.825.000 kr./å</td></tr>
+        <tr><td>Timeout (&gt;30 sek svartid), webhook deaktiveres</td><td>40.000 kr. per episode</td><td>Opdages samme dag</td></tr>
+        <tr><td>Ingen HMAC-validering, svindel-ordre</td><td>8.000 kr. per episode</td><td>Typisk én om m&aring;neden</td></tr>
+        <tr><td>Webhook-tab uden retry-logik</td><td>8.750 kr./dag</td><td><strong>122.500 kr.</strong></td></tr>
+        <tr><td>Ikke-idempotent handler, duplikat-ordrer</td><td>5.000 kr./dag</td><td><strong>70.000 kr.</strong></td></tr>
       </tbody>
     </table>
+    <p class="sp-note" style="font-size:.85rem;color:var(--text-3);margin:-.5rem 0 1.5rem;">Regnet p&aring; 500 ordrer/dag og 350 kr. per fejlbeh&aelig;ftet ordre. De 14 dage er et bud p&aring;, hvor l&aelig;nge en stille fejl typisk n&aring;r at k&oslash;re, f&oslash;r nogen opdager den. Opdager I den p&aring; to dage, koster den en syvendedel. Det er derfor overv&aring;gning betaler sig, ikke fejlen i sig selv.</p>
     <p><strong>Konklusion:</strong> Webhook-tab uden retry er den dyreste fejl. HMAC-skip er den farligste. Begge er 100% forebyggelige.</p>
 
     <h2>Webhook retry-mekanisme</h2>

@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789498068">
+  <link rel="stylesheet" href="../../css/style.css?v=1789498612">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -103,14 +103,15 @@
 
     <h2>Hvad koster dataflow-brud reelt?</h2>
     <table>
-      <thead><tr><th>Brudpunkt</th><th>Hyppighed (ved 500 ordrer/dag)</th><th>Direkte omkostning</th><th>LTV-tab</th><th>Total årlig omkostning</th></tr></thead>
+      <thead><tr><th>Brudpunkt</th><th>Hyppighed (ved 500 ordrer/dag)</th><th>Omkostning per dag</th><th>Efter 14 dage</th></tr></thead>
       <tbody>
-        <tr><td>Webhook leveres ikke (Trin 1 til 2)</td><td>5% af ordrer = 25/dag</td><td>25 × 350 kr. = 8.750 kr./dag</td><td>25 × 0,43 × 2.400 = 25.800 kr./dag</td><td><strong>12.605.625 kr./år</strong></td></tr>
-        <tr><td>Varenummer matcher ikke (Trin 2)</td><td>2% af ordrer = 10/dag</td><td>10 × 350 kr. = 3.500 kr./dag</td><td>Manuel review: 1.500 kr./dag</td><td><strong>1.825.000 kr./år</strong></td></tr>
-        <tr><td>Fragtmand-API fejler (Trin 5)</td><td>1% af ordrer = 5/dag</td><td>Manuel bestilling: 500 kr./dag</td><td>Forsinkelse: 2.000 kr./dag</td><td><strong>912.500 kr./år</strong></td></tr>
-        <tr><td>Fulfillment sendes ikke (Trin 6)</td><td>3% af ordrer = 15/dag</td><td>Kundeservice: 1.500 kr./dag</td><td>15 × 0,22 × 2.400 = 7.920 kr./dag</td><td><strong>3.438.000 kr./år</strong></td></tr>
+        <tr><td>Webhook leveres ikke (Trin 1 til 2)</td><td>5% af ordrer = 25/dag</td><td>25 &times; 350 kr. = 8.750 kr.</td><td><strong>122.500 kr.</strong></td></tr>
+        <tr><td>Varenummer matcher ikke (Trin 2)</td><td>2% af ordrer = 10/dag</td><td>3.500 kr. + 1.500 kr. manuel review = 5.000 kr.</td><td><strong>70.000 kr.</strong></td></tr>
+        <tr><td>Fragtmand-API fejler (Trin 5)</td><td>1% af ordrer = 5/dag</td><td>500 kr. manuel bestilling + 2.000 kr. forsinkelse = 2.500 kr.</td><td><strong>35.000 kr.</strong></td></tr>
+        <tr><td>Fulfillment sendes ikke (Trin 6)</td><td>3% af ordrer = 15/dag</td><td>1.500 kr. kundeservice</td><td><strong>21.000 kr.</strong></td></tr>
       </tbody>
     </table>
+    <p class="sp-note" style="font-size:.85rem;color:var(--text-3);margin:-.5rem 0 1.5rem;">Regnet p&aring; 500 ordrer/dag og 350 kr. per fejlbeh&aelig;ftet ordre. De 14 dage er et bud p&aring;, hvor l&aelig;nge en stille fejl typisk n&aring;r at k&oslash;re, f&oslash;r nogen opdager den. Opdager I den p&aring; to dage, koster den en syvendedel. Det er derfor overv&aring;gning betaler sig, ikke fejlen i sig selv.</p>
 
     <h2>Det opdager de fleste for sent</h2>
     <ul>
