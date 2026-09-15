@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
+  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -61,6 +61,42 @@
       <li>Gennemsnitlig lead time: 14 dage</li>
       <li>Maks lead time (seneste forsinkelse): 19 dage</li>
       <li>Sikkerhedslager = (24 - 15) × 19 = 171 enheder</li>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn dit eget ud</div>
+      <div class="sp-calc__grid">
+        <label class="sp-calc__f"><span>Normalt dagssalg (stk.)</span>
+          <input id="ss-gns" type="number" min="0" step="1" value="15" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Maks dagssalg (stk.)</span>
+          <input id="ss-maks" type="number" min="0" step="1" value="24" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Længste leveringstid (dage)</span>
+          <input id="ss-lead" type="number" min="0" step="1" value="19" inputmode="decimal"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="ss-svar">&nbsp;</strong><span>Sikkerhedslager per varenummer</span></div>
+        <p class="sp-calc__vis" id="ss-vis">&nbsp;</p>
+      </div>
+      <p class="sp-calc__note">Brug den l&aelig;ngste leveringstid du reelt har haft, ikke den leverand&oslash;ren lover. Regn per varenummer, ikke for hele lageret.</p>
+    </div>
+    <script>
+    (function(){
+      var ids=["ss-gns", "ss-maks", "ss-lead"], el={}, ok=true;
+      ids.forEach(function(i){ el[i]=document.getElementById(i); if(!el[i]) ok=false; });
+      var svar=document.getElementById('ss-svar'), vis=document.getElementById('ss-vis');
+      if(!ok||!svar||!vis) return;
+      function v(i){ var x=parseFloat(el[i].value); return isFinite(x)?x:0; }
+      function kr(x){ return Math.round(x).toLocaleString('da-DK'); }
+      function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+      function regn(){
+        var g=v('ss-gns'), m=v('ss-maks'), l=v('ss-lead');
+        var d=Math.max(0,m-g), s=Math.round(d*l);
+        svar.textContent=tal(s)+' stk.';
+        vis.textContent='('+tal(m)+' \u2212 '+tal(g)+') \u00d7 '+tal(l)+' = '+tal(s)+' stk. Det er '+(g>0?tal(s/g,1):'0')+' dages normalt salg i buffer.';
+      }
+      ids.forEach(function(i){ el[i].addEventListener('input',regn); });
+      regn();
+    })();
+    </script>
     </ul>
 
     <p class="inline-cta">&#x1F449; SmartPack beregner sikkerhedslager og reorder point automatisk per SKU. <a href="../../kontakt">Se hvordan &rarr;</a></p>

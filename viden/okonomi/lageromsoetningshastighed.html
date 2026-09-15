@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
+  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
   <script src="../../js/theme-toggle.js"></script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Lageromsætningshastighed: hvad det er og hvad det koster dig ikke at kende den", "description": "Lageromsætningshastighed fortæller dig, hvor hurtigt du sælger dine varer. Lær at beregne den, tolke den og reducere kapitalbinding.", "datePublished": "2025-05-01", "dateModified": "2025-05-01", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/okonomi/lageromsoetningshastighed", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/okonomi/lageromsoetningshastighed"}, "inLanguage": "da-DK"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er lageromsætningshastighed?","acceptedAnswer":{"@type":"Answer","text":"Lageromsætningshastighed måler, hvor mange gange du sælger og genopfylder dit lager i en given periode. Beregnes som: Vareforbrug / Gennemsnitlig lagerværdi. Et tal på 6 betyder at du omsætter lageret 6 gange om året."}},{"@type":"Question","name":"Hvad er en god lageromsætningshastighed?","acceptedAnswer":{"@type":"Answer","text":"For de fleste lagervirksomheder er 4-8 gange om året et sundt niveau. Under 3 tyder på for meget kapital bundet i lageret. Over 12 kan betyde risiko for tomme hylder og tabte salg."}},{"@type":"Question","name":"Hvad koster det at have for lav lageromstætning?","acceptedAnswer":{"@type":"Answer","text":"En for lav omsætningshastighed binder kapital og øger lagerholdingsomkostninger (typisk 20-30% af varenes værdi årligt). På et lager med 1,5 mio. kr. i varer kan halvering af omsætningshastigheden koste 145.000-205.000 kr. ekstra om året."}}]}</script>
@@ -51,7 +51,42 @@
     <h2>Hvad er lageroms&aelig;tningshastighed?</h2>
     <p>Lageroms&aelig;tningshastighed (inventory turnover rate) m&aring;ler, hvor mange gange du s&aelig;lger og genopfylder dit samlede lager i l&oslash;bet af et &aring;r. Formlen er enkel:</p>
     <p><strong>Lageroms&aelig;tningshastighed = Vareforbrug / Gennemsnitlig lagerv&aelig;rdi</strong></p>
-    <p>Eksempel: Hvis du bruger varer for 4.800.000 kr. om &aring;ret, og dit gennemsnitlige lager er v&aelig;rd 800.000 kr., er din omsætningshastighed 6. det betyder, at du omsætter dit lager 6 gange om &aring;ret, dvs. ca. hver 2. m&aring;ned.</p>
+    <p>Eksempel: Hvis du bruger varer for 4.800.000 kr. om &aring;ret, og dit gennemsnitlige lager er v&aelig;rd 800.000 kr., er din omsætningshastighed 6. Det betyder, at du omsætter dit lager 6 gange om &aring;ret, dvs. ca. hver 2. m&aring;ned.</p>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn jeres egen hastighed</div>
+      <div class="sp-calc__grid sp-calc__grid--2">
+        <label class="sp-calc__f"><span>Vareforbrug pr. år (kr.)</span>
+          <input id="lo-forbrug" type="number" min="0" step="10000" value="4800000" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Gennemsnitlig lagerværdi (kr.)</span>
+          <input id="lo-lager" type="number" min="0" step="10000" value="800000" inputmode="decimal"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="lo-svar">&nbsp;</strong><span>Gange om året</span></div>
+        <p class="sp-calc__vis" id="lo-vis">&nbsp;</p>
+      </div>
+      <p class="sp-calc__note">Brug vareforbrug, ikke oms&aelig;tning. Oms&aelig;tning indeholder din avance og giver et for h&oslash;jt tal.</p>
+    </div>
+    <script>
+    (function(){
+      var ids=["lo-forbrug", "lo-lager"], el={}, ok=true;
+      ids.forEach(function(i){ el[i]=document.getElementById(i); if(!el[i]) ok=false; });
+      var svar=document.getElementById('lo-svar'), vis=document.getElementById('lo-vis');
+      if(!ok||!svar||!vis) return;
+      function v(i){ var x=parseFloat(el[i].value); return isFinite(x)?x:0; }
+      function kr(x){ return Math.round(x).toLocaleString('da-DK'); }
+      function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+      function regn(){
+        var f=v('lo-forbrug'), l=v('lo-lager');
+        if(l<=0){ svar.textContent='\u2013'; vis.textContent='Indtast en lagerv\u00e6rdi.'; return; }
+        var h=f/l, dage=365/h;
+        svar.textContent=tal(h,1);
+        vis.textContent=kr(f)+' \u00f7 '+kr(l)+' = '+tal(h,1)+'. Varerne st\u00e5r i gennemsnit '+tal(dage)+' dage p\u00e5 hylden. Et point hurtigere ville frig\u00f8re '+kr(Math.max(0,l-f/(h+1)))+' kr. i bundet kapital.';
+      }
+      ids.forEach(function(i){ el[i].addEventListener('input',regn); });
+      regn();
+    })();
+    </script>
     <p>En alternativ formel bruger omsætning i stedet for vareforbrug, men vareforbrug giver det mest pr&aelig;cise billede, fordi det ikke inkluderer avance.</p>
 
     <h2>Hvad er en god lageroms&aelig;tningshastighed, og hvad er d&aring;rlig?</h2>

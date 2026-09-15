@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
+  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
   <script src="../../js/theme-toggle.js"></script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Hvad koster en retur? De rigtige tal", "description": "En retur koster typisk 60-120 kr. per styk, når du regner alt med. Her er posterne opdelt på transport, tid og ukurans, og hvad du kan gøre ved det.", "datePublished": "2026-05-01", "dateModified": "2026-05-01", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/retur/returomkostninger", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/retur/returomkostninger"}, "inLanguage": "da-DK"}</script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad koster en retur i gennemsnit?", "acceptedAnswer": {"@type": "Answer", "text": "For en dansk webshop i mellemstørrelse ligger totalomkostningen typisk på 60-120 kr. per retur, når du lægger transport, modtagekontrol, genemballering og ukuranstab sammen. Rammer hver post den dyre ende samtidig, kan den nå 214 kr. Det sker for modetøj og elektronik, hvor ukuranstabet er størst."}}, {"@type": "Question", "name": "Hvad er den største skjulte returomkostning?", "acceptedAnswer": {"@type": "Answer", "text": "Tidsomkostningen i lageret. Mange beregner kun fragtudgiften og glemmer de 8-15 minutter per retur i løsning, kontrol, beslutning og genlægning. På 500 returner om måneden er det 70-125 timer."}}, {"@type": "Question", "name": "Hvordan reducerer man returomkostningerne?", "acceptedAnswer": {"@type": "Answer", "text": "Tre hojeffekt-tilgange: standardiser modtageprocessen så det tager under 5 min per retur, brug data til at identificere de produkter der returneres hyppigst, og optimer emballagen så den taler genbrug uden ekstra arbejde."}}]}</script>
@@ -70,6 +70,45 @@
     </table>
 
     <p>De to tal skal læses hver for sig. 60-214 kr. er spændet, hvis hver eneste post rammer sit laveste eller sit højeste på samme tid. Det gør de sjældent. De fleste danske webshops i mellemstørrelse lander på 60-120 kr., og det er kun mode og elektronik med stort ukuranstab der kommer op omkring de 200.</p>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn jeres egen retur</div>
+      <div class="sp-calc__grid sp-calc__grid--4">
+        <label class="sp-calc__f"><span>Returner pr. måned</span>
+          <input id="ro-antal" type="number" min="0" step="1" value="500" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Fragt begge veje (kr.)</span>
+          <input id="ro-fragt" type="number" min="0" step="1" value="45" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Minutter per retur</span>
+          <input id="ro-min" type="number" min="0" step="1" value="12" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Ukurans og emballage (kr.)</span>
+          <input id="ro-ukurans" type="number" min="0" step="1" value="20" inputmode="decimal"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="ro-svar">&nbsp;</strong><span>Per retur, alt regnet med</span></div>
+        <p class="sp-calc__vis" id="ro-vis">&nbsp;</p>
+      </div>
+      <p class="sp-calc__note">Timeprisen er 300 kr., som er DA StrukturStatistik 2025 for manuelt lagerarbejde inkl. alle omkostninger.</p>
+    </div>
+    <script>
+    (function(){
+      var ids=["ro-antal", "ro-fragt", "ro-min", "ro-ukurans"], el={}, ok=true;
+      ids.forEach(function(i){ el[i]=document.getElementById(i); if(!el[i]) ok=false; });
+      var svar=document.getElementById('ro-svar'), vis=document.getElementById('ro-vis');
+      if(!ok||!svar||!vis) return;
+      function v(i){ var x=parseFloat(el[i].value); return isFinite(x)?x:0; }
+      function kr(x){ return Math.round(x).toLocaleString('da-DK'); }
+      function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+      function regn(){
+        var a=v('ro-antal'), f=v('ro-fragt'), m=v('ro-min'), u=v('ro-ukurans');
+        var tid=m/60*300, stk=f+tid+u;
+        svar.textContent=kr(stk)+' kr.';
+        vis.textContent='Per retur: '+kr(f)+' kr. fragt + '+kr(tid)+' kr. tid ('+tal(m)+' min. til 300 kr./time) + '+kr(u)+' kr. ukurans og emballage. '
+          +kr(stk*a)+' kr. om m\u00e5neden, '+kr(stk*a*12)+' kr. om \u00e5ret.';
+      }
+      ids.forEach(function(i){ el[i].addEventListener('input',regn); });
+      regn();
+    })();
+    </script>
 
     <p>Bemærk at ukuranstabet varierer enormt. En modeartikel der returneres efter 14 dage og ikke længere kan sælges til fuld pris, kan have et ukuranstab på 40-80% af varens værdi. Det er ikke en fragtomkostning, men det er en returomkostning.</p>
 

@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
+  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -61,7 +61,7 @@
   <div class="article-meta"><time datetime="2025-04-30">April 2025</time><span>SmartPack</span><span>~5 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
-    <p>De fleste opdager deres kapacitetsgrænse ved at ramme den. Typisk en tirsdag i uge 46. Black Friday-ordrerne tikker ind. Systemet knækker. Dag 1: 680 ordrer sendt, 760 i backlog. Dag 3: Fejlrate 4,8%. 1.413.600 kr. tabt på 5 dage. Det er ikke <a href="black-friday-lager">Black Friday</a> der kostede dig pengene. Det er det tal du aldrig beregnede.</p>
+    <p>De fleste opdager deres kapacitetsgrænse ved at ramme den. Typisk en tirsdag i uge 46. Black Friday-ordrerne tikker ind. Systemet knækker. Dag 1: 680 ordrer sendt, 760 i backlog. Dag 3: fejlraten er firdoblet, fordi alle har travlt. Ugen ender i annullerede ordrer, refusioner og en kundeservice der ikke laver andet. Det er ikke <a href="black-friday-lager">Black Friday</a> der kostede dig pengene. Det er det tal du aldrig beregnede.</p>
     <h2>Hvad er kapacitetsgrænser?</h2>
     <p>Kapacitetsgrænsen er det punkt, hvor lageret ikke kan behandle flere ordrer uden at kvaliteten eller hastigheden falder. Det er et system af tre flaskehalse:</p>
     <ol>
@@ -80,12 +80,51 @@
       </tbody>
     </table>
     <h2>Beregn din personalekapacitet</h2>
-    <pre><code>Max ordrer/dag = Antal plukmedarbejdere × 102 picks/time × 7 arbejdstimer ÷ Gennemsnitlig linjer per ordre</code></pre>
-    <p><strong>Eksempel:</strong> 3 plukmedarbejdere × 102 <a href="ordrer-pr-medarbejder">picks/time</a> × 7 timer = 2.142 picks/dag. Gennemsnit 2 linjer per ordre = 2.142 ÷ 2 = <strong>1.071 ordrer/dag kapacitet</strong>. Realistisk (med 20% buffer): <strong>857 ordrer/dag</strong>.</p>
+    <pre><code>Max ordrer/dag = Antal plukmedarbejdere × jeres picks/time × plukketimer per dag ÷ Linjer per ordre</code></pre>
+    <p><strong>Eksempel:</strong> 3 plukmedarbejdere, der hver tager 102 <a href="ordrer-pr-medarbejder">picks i timen</a> i 7 timer, giver 2.142 picks om dagen. Med 2 linjer per ordre er loftet 1.071 ordrer/dag. Ved 75 % udnyttelse, som er det I skal planlægge efter, er det <strong>803 ordrer/dag</strong>. De 102 er et eksempel. Mål jeres eget tal over en normal uge, for der findes ikke ét tal der passer på alle lagre.</p>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn jeres egen kapacitet</div>
+      <div class="sp-calc__grid sp-calc__grid--4">
+        <label class="sp-calc__f"><span>Antal plukkere</span>
+          <input id="kg-folk" type="number" min="0" step="1" value="3" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Picks pr. time hos jer</span>
+          <input id="kg-picks" type="number" min="0" step="1" value="102" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Plukketimer pr. dag</span>
+          <input id="kg-timer" type="number" min="0" step="0.5" value="7" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Linjer pr. ordre</span>
+          <input id="kg-linjer" type="number" min="0" step="0.1" value="2" inputmode="decimal"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="kg-svar">&nbsp;</strong><span>Realistisk kapacitet</span></div>
+        <p class="sp-calc__vis" id="kg-vis">&nbsp;</p>
+      </div>
+      <p class="sp-calc__note">M&aring;l jeres egne picks/time over en normal uge. Der findes ikke &eacute;t branchetal, og et l&aring;nt tal giver en kapacitet der ikke holder.</p>
+    </div>
+    <script>
+    (function(){
+      var ids=["kg-folk", "kg-picks", "kg-timer", "kg-linjer"], el={}, ok=true;
+      ids.forEach(function(i){ el[i]=document.getElementById(i); if(!el[i]) ok=false; });
+      var svar=document.getElementById('kg-svar'), vis=document.getElementById('kg-vis');
+      if(!ok||!svar||!vis) return;
+      function v(i){ var x=parseFloat(el[i].value); return isFinite(x)?x:0; }
+      function kr(x){ return Math.round(x).toLocaleString('da-DK'); }
+      function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+      function regn(){
+        var f=v('kg-folk'), p=v('kg-picks'), t=v('kg-timer'), l=v('kg-linjer');
+        if(l<=0){ svar.textContent='\u2013'; vis.textContent='Indtast linjer per ordre.'; return; }
+        var picks=f*p*t, maks=picks/l, real=maks*0.75;
+        svar.textContent=tal(real)+' ordrer/dag';
+        vis.textContent=tal(f)+' \u00d7 '+tal(p)+' picks/time \u00d7 '+tal(t,1)+' timer = '+tal(picks)+' picks om dagen. Delt med '+tal(l,1)+' linjer per ordre er loftet '+tal(maks)+' ordrer/dag. Ved 75 % udnyttelse: '+tal(real)+'.';
+      }
+      ids.forEach(function(i){ el[i].addEventListener('input',regn); });
+      regn();
+    })();
+    </script>
     <h2>Det opdager de fleste for sent</h2>
-    <p><strong>Scenarie 1: Kører på 100% kapacitet som normal, uden buffer</strong><br>Webshop ved 380 ordrer/dag. Kapacitet: 385 ordrer/dag. Marketingkampagne. Ordrer stiger til 480/dag. Totalt sammenbrud. Backlog 95 ordrer dag 1. Fejlrate 3,8%. <strong>367.000 kr. tabt på 4 dage</strong>. Normal kapacitetsudnyttelse skal være 75%, ikke 100%.</p>
-    <p><strong>Scenarie 2: Kender ikke kapaciteten</strong><br>Webshop ved 220 ordrer/dag. Black Friday: 1.320 ordrer (6×). Reel kapacitet: 280 ordrer/dag max. 5 dages backlog. Fejlrate 4,2%. Cost: 420.000 kr. Hvis de havde kendt kapaciteten: 3PL-overløb for 800 ordrer. Cost: 22 kr./ordre × 800 = 17.600 kr. <strong>Forskel: 402.400 kr.</strong></p>
-    <p><strong>Scenarie 3: Systemet er flaskehalsen, ikke personalet</strong><br>WMS kan kun håndtere 350 ordrer/dag. Plukkere venter 2-3 minutter mellem hver batch. 500 minutter spildt/dag = 8,3 timer/dag = <strong>415.000 kr./år</strong>. Server-upgrade: 45.000 kr. ROI: 39 dage.</p>
+    <p><strong>Scenarie 1: Kører på 100% kapacitet som normal, uden buffer</strong><br>Webshop ved 380 ordrer/dag. Kapacitet: 385 ordrer/dag. Marketingkampagne. Ordrer stiger til 480/dag. Backlog på 95 ordrer allerede dag 1, og den vokser hver dag kampagnen kører, fordi der ikke er nogen luft til at hente ind. Fejlraten stiger til 3,8 %, mens de forsøger. Normal kapacitetsudnyttelse skal være 75 %, ikke 100 %.</p>
+    <p><strong>Scenarie 2: Kender ikke kapaciteten</strong><br>Webshop ved 220 ordrer/dag. Black Friday: 1.320 ordrer (6×). Reel kapacitet: 280 ordrer/dag. Det giver fem dages backlog og en fejlrate på 4,2 %, mens de arbejder sig ud af den. Havde de kendt kapaciteten, kunne de have lagt 800 ordrer ud som 3PL-overløb: 22 kr./ordre × 800 = <strong>17.600 kr.</strong> Det er den regning man kender på forhånd. Den anden kender man først bagefter.</p>
+    <p><strong>Scenarie 3: Systemet er flaskehalsen, ikke personalet</strong><br>WMS kan kun håndtere 350 ordrer/dag. Plukkere venter 2-3 minutter mellem hver batch. 500 minutter spildt om dagen er 8,3 timer. Til 300 kr./time er det 2.490 kr. om dagen, eller godt <strong>570.000 kr. på et år</strong>. En opgradering til 45.000 kr. er tjent hjem på under tre uger.</p>
     <h2>Typiske fejl</h2>
     <ol>
       <li><strong>Aldrig beregnet kapacitetsgrænsen</strong>, brug formlen ovenfor. Det tager 10 minutter.</li>
@@ -107,7 +146,7 @@
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er normal kapacitetsudnyttelse?</summary><div class="faq-item__body"><p>60-75% i normalperiode, op til 90% under peak (med forberedelse). Over 90% er et krisetegn.</p></div></details>
     <details class="faq-item"><summary>Kan jeg øge kapaciteten uden at ansætte?</summary><div class="faq-item__body"><p>Ja. Batch picking alene kan øge picks/time med 20-30%. Layout-optimering og WMS-forbedringer giver yderligere 10-15%.</p></div></details>
-    <details class="faq-item"><summary>Hvad er industri-benchmark for picks/time?</summary><div class="faq-item__body"><p>102 picks/time (2025). SmartPack-optimerede lagre rammer 110+.</p></div></details>
+    <details class="faq-item"><summary>Hvad er industri-benchmark for picks/time?</summary><div class="faq-item__body"><p>Der findes ikke ét tal. Det svinger med varetype, layout og hvor langt der er mellem pladserne. Mål jeres eget over en normal uge og regn med det. Et lånt tal giver en kapacitet der ikke holder, den dag I får brug for den.</p></div></details>
     <details class="faq-item"><summary>Hvornår er det tid til at flytte til større lager?</summary><div class="faq-item__body"><p>Når du konsistent er over 85% af det fysiske areals kapacitet, og alle andre optimeringsmuligheder er udtømt.</p></div></details>
     <details class="faq-item"><summary>Hvad koster det at overskride kapaciteten i en uge?</summary><div class="faq-item__body"><p>Anslået 15-30% stigning i cost per order, plus LTV-tab fra kunder der oplever forringet service.</p></div></details>
   </div>
@@ -118,6 +157,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er normal kapacitetsudnyttelse?","acceptedAnswer":{"@type":"Answer","text":"60-75% i normalperiode, op til 90% under peak (med forberedelse). Over 90% er et krisetegn."}},{"@type":"Question","name":"Kan jeg øge kapaciteten uden at ansætte?","acceptedAnswer":{"@type":"Answer","text":"Ja. Batch picking alene kan øge picks/time med 20-30%. Layout-optimering og WMS-forbedringer giver yderligere 10-15%."}},{"@type":"Question","name":"Hvad er industri-benchmark for picks/time?","acceptedAnswer":{"@type":"Answer","text":"102 picks/time (2025). SmartPack-optimerede lagre rammer 110+."}},{"@type":"Question","name":"Hvornår er det tid til at flytte til større lager?","acceptedAnswer":{"@type":"Answer","text":"Når du konsistent er over 85% af det fysiske areals kapacitet, og alle andre optimeringsmuligheder er udtømt."}},{"@type":"Question","name":"Hvad koster det at overskride kapaciteten i en uge?","acceptedAnswer":{"@type":"Answer","text":"Anslået 15-30% stigning i cost per order, plus LTV-tab fra kunder der oplever forringet service."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er normal kapacitetsudnyttelse?","acceptedAnswer":{"@type":"Answer","text":"60-75% i normalperiode, op til 90% under peak (med forberedelse). Over 90% er et krisetegn."}},{"@type":"Question","name":"Kan jeg øge kapaciteten uden at ansætte?","acceptedAnswer":{"@type":"Answer","text":"Ja. Batch picking alene kan øge picks/time med 20-30%. Layout-optimering og WMS-forbedringer giver yderligere 10-15%."}},{"@type":"Question","name":"Hvad er industri-benchmark for picks/time?","acceptedAnswer":{"@type":"Answer","text":"Der findes ikke ét tal. Det svinger med varetype, layout og hvor langt der er mellem pladserne. Mål jeres eget over en normal uge og regn med det. Et lånt tal giver en kapacitet der ikke holder, den dag I får brug for den."}},{"@type":"Question","name":"Hvornår er det tid til at flytte til større lager?","acceptedAnswer":{"@type":"Answer","text":"Når du konsistent er over 85% af det fysiske areals kapacitet, og alle andre optimeringsmuligheder er udtømt."}},{"@type":"Question","name":"Hvad koster det at overskride kapaciteten i en uge?","acceptedAnswer":{"@type":"Answer","text":"Anslået 15-30% stigning i cost per order, plus LTV-tab fra kunder der oplever forringet service."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Kapacitetsgrænser på lageret, kend dem før du rammer dem", "description": "De fleste opdager kapacitetsgrænsen ved at ramme den. Her er formlen til at beregne dit max, og hvad det koster ikke at kende det tal.", "datePublished": "2025-04-30", "dateModified": "2025-04-30", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/vaekst/kapacitetsgraenser-lager", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/vaekst/kapacitetsgraenser-lager"}, "inLanguage": "da-DK"}</script>
 </body></html>

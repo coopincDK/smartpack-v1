@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
+  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -51,8 +51,44 @@
       <li><strong>Emballage til genforsendelse:</strong> 10-30 kr.</li>
       <li><strong>Eventuel kompensation:</strong> Rabatkupon eller refusion = 50-200 kr.</li>
     </ul>
-    <p><strong>Total direkte omkostning per plukkefejl: 210-640 kr.</strong> Plus vareværdien hvis varen ikke kan genbrændes.</p>
+    <p><strong>Total direkte omkostning per plukkefejl: 210-640 kr.</strong> Plus vareværdien, hvis varen ikke kan sælges igen.</p>
     <p>For et lager med 1.000 ordrer om måneden og 2% fejlrate er det 20 fejl = 4.200-12.800 kr. om måneden. 50.000-154.000 kr. om året.</p>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn jeres egen fejlregning</div>
+      <div class="sp-calc__grid">
+        <label class="sp-calc__f"><span>Ordrer pr. måned</span>
+          <input id="pf-ordrer" type="number" min="0" step="1" value="1000" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Fejlrate (%)</span>
+          <input id="pf-rate" type="number" min="0" step="0.1" value="2" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Pris per fejl (kr.)</span>
+          <input id="pf-pris" type="number" min="0" step="10" value="350" inputmode="decimal"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="pf-svar">&nbsp;</strong><span>Plukkefejl om året</span></div>
+        <p class="sp-calc__vis" id="pf-vis">&nbsp;</p>
+      </div>
+      <p class="sp-calc__note">Prisen per fejl d&aelig;kker genforsendelse, returfragt, tid til modtagelse og kundeservice. Sp&aelig;ndet i tabellen ovenfor er 210-640 kr.</p>
+    </div>
+    <script>
+    (function(){
+      var ids=["pf-ordrer", "pf-rate", "pf-pris"], el={}, ok=true;
+      ids.forEach(function(i){ el[i]=document.getElementById(i); if(!el[i]) ok=false; });
+      var svar=document.getElementById('pf-svar'), vis=document.getElementById('pf-vis');
+      if(!ok||!svar||!vis) return;
+      function v(i){ var x=parseFloat(el[i].value); return isFinite(x)?x:0; }
+      function kr(x){ return Math.round(x).toLocaleString('da-DK'); }
+      function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+      function regn(){
+        var o=v('pf-ordrer'), r=v('pf-rate'), p=v('pf-pris');
+        var fejl=o*r/100, aar=fejl*p*12;
+        svar.textContent=kr(aar)+' kr.';
+        vis.textContent=tal(fejl,1)+' fejl om m\u00e5neden \u00d7 '+kr(p)+' kr. = '+kr(fejl*p)+' kr. om m\u00e5neden. Falder fejlraten til 0,5 %, sparer I '+kr(Math.max(0,aar-o*0.005*p*12))+' kr. om \u00e5ret.';
+      }
+      ids.forEach(function(i){ el[i].addEventListener('input',regn); });
+      regn();
+    })();
+    </script>
 
     <p class="inline-cta">&#x1F449; SmartPack reducerer plukkefejl til under 0,5% med scan-bekræftelse på hvert pluk. <a href="../../kontakt">Se hvordan &rarr;</a></p>
 
@@ -60,7 +96,7 @@
     <p>Over de direkte tal ligger de indirekte, som er sværere at måle men mindst lige så vigtige:</p>
     <ul>
       <li><strong>Tabt genkøb:</strong> En kunde der modtager forkert vare køber sjældent igen. Livstidsværdien af en dansk e-commerce kunde er typisk 2.000-8.000 kr. At miste én kunde til en plukkefejl koster mere end alle de direkte omkostninger tilsammen.</li>
-      <li><strong>Negativ anmeldelse:</strong> Utilfredse kunder skriver anmeldelser. én 1-stjærne anmeldelse på Trustpilot kræver i snit 10 positive for at neutralisere scoren.</li>
+      <li><strong>Negativ anmeldelse:</strong> Utilfredse kunder skriver anmeldelser. Én 1-stjernet anmeldelse på Trustpilot kræver i snit 10 positive for at neutralisere scoren.</li>
       <li><strong>Medarbejdermorale:</strong> Gentagne fejlhåndteringer er frustrerende for alle. Høj fejlrate = høj stress = højere <a href="../personale/medarbejder-turnover-lager">udskiftning af medarbejdere</a>.</li>
     </ul>
 
@@ -73,7 +109,7 @@
       <li><strong>Under 0,5%:</strong> Fremragende. Kræver systematisk scan-bekræftelse på alle pluk.</li>
     </ul>
 
-    <h2>årsagerne til plukkefejl</h2>
+    <h2>Årsagerne til plukkefejl</h2>
     <p>Plukkefejl opstår typisk fra ét af disse steder:</p>
     <h3>Visuelle forvekslinger</h3>
     <p>Varer der ligner hinanden placeret tæt. Rød og grøn variant af samme produkt side om side. Lille og stor pakke med samme design. Plukkerens øje glider, hånden tager den forkerte.</p>

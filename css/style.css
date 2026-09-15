@@ -3861,3 +3861,23 @@ html.theme-transition *::after {
 .yt-facade__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .yt-facade-boks { position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 2rem 0; border-radius: var(--r-md); overflow: hidden; background: #000; }
 .case-video, .about-video-wrap, .ob-video-wrap, .priser-video-wrap, .hero-video-wrap, .video-section__video-wrap { position: relative; }
+
+
+/* --- BEREGNER I ARTIKEL --- */
+.sp-calc { border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-1); padding: 1.25rem 1.25rem 1rem; margin: 1.75rem 0; }
+.sp-calc__head { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text-3); margin-bottom: .9rem; }
+.sp-calc__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+.sp-calc__grid--2 { grid-template-columns: repeat(2, 1fr); }
+.sp-calc__grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 620px) { .sp-calc__grid, .sp-calc__grid--2, .sp-calc__grid--4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 420px) { .sp-calc__grid, .sp-calc__grid--2, .sp-calc__grid--4 { grid-template-columns: 1fr; } }
+.sp-calc__f { display: block; }
+.sp-calc__f span { display: block; font-size: .7rem; font-weight: 600; color: var(--text-2); margin-bottom: .3rem; }
+.sp-calc__f input { width: 100%; padding: .55rem .75rem; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--bg-2); color: var(--text-1); font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sp-calc__f input:focus { outline: none; border-color: var(--accent); }
+.sp-calc__out { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.sp-calc__res { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
+.sp-calc__res strong { font-size: 2rem; font-weight: 900; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1; }
+.sp-calc__res span { font-size: .8rem; color: var(--text-2); }
+.sp-calc__vis { font-size: .82rem; color: var(--text-2); margin: .6rem 0 0; font-variant-numeric: tabular-nums; }
+.sp-calc__note { font-size: .72rem; color: var(--text-3); margin: .85rem 0 0; }

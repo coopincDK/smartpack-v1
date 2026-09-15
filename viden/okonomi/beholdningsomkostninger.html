@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
+  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -48,10 +48,10 @@
     <p>Pengene bundet i lager kunne have været investeret eller brugt til at betale gæld. Alternativomkostningen er reelt. Beregn: din kapitalomkostning (rente på lån eller alternativt afkast) ganget med gennemsnitlig <a href="lageromsoetningshastighed">lagerværdi</a>.</p>
 
     <h3>2. Lagerpladsomkostninger (typisk 3-6% af lagerværdi)</h3>
-    <p>Husleje, varme, lys og forsikring på den plads varer optager. Beregn: husleje per m2 ganget med de m2 varer optager. Husk at medregne gångarealer der er nødvendige for adgang til varerne.</p>
+    <p>Husleje, varme, lys og forsikring på den plads varer optager. Beregn: husleje per m2 ganget med de m2 varer optager. Husk at medregne gangarealer der er nødvendige for adgang til varerne.</p>
 
     <h3>3. Håndteringsomkostninger (typisk 3-5% af lagerværdi)</h3>
-    <p>Arbejdstid til at flytte, tælle, genopfylde og styre lager. Inkluderer WMS-omkøstninger, udstyr og den tid medarbejdere bruger på lagerstyring fremfor ordrebehandling.</p>
+    <p>Arbejdstid til at flytte, tælle, genopfylde og styre lager. Inkluderer WMS-omkostninger, udstyr og den tid medarbejdere bruger på lagerstyring fremfor ordrebehandling.</p>
 
     <h3>4. Risikobaserede omkostninger (typisk 4-8% af lagerværdi)</h3>
     <p>Svind, ukurans, beskadigelse og forældelse. Varer der udgår, går i stykker eller må sælges med tab fordi markedet er skiftet. Sæsonvarer der ikke er solgt til sæson er det klassiske eksempel.</p>
@@ -66,6 +66,40 @@
       <li>Beholdningsomkostninger = gennemsnitlig lagerværdi &times; carrying cost rate</li>
     </ol>
     <p>Eksempel: 500.000 kr. gennemsnitlig lagerværdi &times; 25% = <strong>125.000 kr. om året</strong> i beholdningsomkostninger. Det er penge der ikke vises som en enkelt post i regnskabet, men fordeler sig over husleje, renter og afskrivninger.</p>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn jeres egne omkostninger</div>
+      <div class="sp-calc__grid sp-calc__grid--2">
+        <label class="sp-calc__f"><span>Gennemsnitlig lagerværdi (kr.)</span>
+          <input id="bo-lager" type="number" min="0" step="10000" value="500000" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Carrying cost rate (%)</span>
+          <input id="bo-rate" type="number" min="0" step="1" value="25" inputmode="decimal"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="bo-svar">&nbsp;</strong><span>Om året i beholdningsomkostninger</span></div>
+        <p class="sp-calc__vis" id="bo-vis">&nbsp;</p>
+      </div>
+      <p class="sp-calc__note">De fire dele er kapital 10-15 %, plads 3-6 %, h&aring;ndtering 3-5 % og risiko 4-8 %. Kender du dem ikke, er 25 % et rimeligt udgangspunkt.</p>
+    </div>
+    <script>
+    (function(){
+      var ids=["bo-lager", "bo-rate"], el={}, ok=true;
+      ids.forEach(function(i){ el[i]=document.getElementById(i); if(!el[i]) ok=false; });
+      var svar=document.getElementById('bo-svar'), vis=document.getElementById('bo-vis');
+      if(!ok||!svar||!vis) return;
+      function v(i){ var x=parseFloat(el[i].value); return isFinite(x)?x:0; }
+      function kr(x){ return Math.round(x).toLocaleString('da-DK'); }
+      function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+      function regn(){
+        var l=v('bo-lager'), r=v('bo-rate');
+        var aar=l*r/100;
+        svar.textContent=kr(aar)+' kr.';
+        vis.textContent=kr(l)+' \u00d7 '+tal(r)+' % = '+kr(aar)+' kr. om \u00e5ret, '+kr(aar/12)+' kr. om m\u00e5neden. Skar I lageret 20 % ned, ville I spare '+kr(aar*0.2)+' kr. om \u00e5ret.';
+      }
+      ids.forEach(function(i){ el[i].addEventListener('input',regn); });
+      regn();
+    })();
+    </script>
 
     <h2>Når beholdningsomkostningerne er for høje</h2>
     <p>Tegn på at dine beholdningsomkostninger er for høje:</p>

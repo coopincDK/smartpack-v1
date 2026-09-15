@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789489308">
+  <link rel="stylesheet" href="../../css/style.css?v=1789491643">
   <script src="../../js/theme-toggle.js"></script>
 <script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
 <script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
@@ -42,6 +42,44 @@
 
     <h2>Hvad er fill rate, og hvorfor betyder det noget?</h2>
     <p>Fill rate defineres som forholdet mellem varens volumen og kassens indre volumen, typisk udtrykt i procent. Fylder varen 3 liter i en kasse der rummer 9 liter, er fill rate 33 %. De resterende 67 % er luft du betaler fragt på, pakker med <a href="../hardware/fyldmateriale-valg">fyldmateriale</a> og som til sidst smides ud hos kunden.</p>
+
+    <div class="sp-calc">
+      <div class="sp-calc__head">Regn jeres egen fill rate</div>
+      <div class="sp-calc__grid">
+        <label class="sp-calc__f"><span>Varens volumen (liter)</span>
+          <input id="fr-vare" type="number" min="0" step="0.1" value="3" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Kassens indre volumen (liter)</span>
+          <input id="fr-kasse" type="number" min="0" step="0.1" value="9" inputmode="decimal"></label>
+        <label class="sp-calc__f"><span>Pakker pr. måned</span>
+          <input id="fr-pakker" type="number" min="0" step="50" value="2000" inputmode="decimal"></label>
+      </div>
+      <div class="sp-calc__out">
+        <div class="sp-calc__res"><strong id="fr-svar">&nbsp;</strong><span>Fill rate</span></div>
+        <p class="sp-calc__vis" id="fr-vis">&nbsp;</p>
+      </div>
+      <p class="sp-calc__note">M&aring;l kassens indre m&aring;l, ikke de ydre. Regn p&aring; jeres mest solgte vare f&oslash;rst.</p>
+    </div>
+    <script>
+    (function(){
+      var ids=["fr-vare", "fr-kasse", "fr-pakker"], el={}, ok=true;
+      ids.forEach(function(i){ el[i]=document.getElementById(i); if(!el[i]) ok=false; });
+      var svar=document.getElementById('fr-svar'), vis=document.getElementById('fr-vis');
+      if(!ok||!svar||!vis) return;
+      function v(i){ var x=parseFloat(el[i].value); return isFinite(x)?x:0; }
+      function kr(x){ return Math.round(x).toLocaleString('da-DK'); }
+      function tal(x,d){ return x.toLocaleString('da-DK',{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+      function regn(){
+        var a=v('fr-vare'), k=v('fr-kasse'), p=v('fr-pakker');
+        if(k<=0){ svar.textContent='\u2013'; vis.textContent='Indtast kassens volumen.'; return; }
+        var pct=Math.min(100,a/k*100), luft=Math.max(0,k-a);
+        svar.textContent=tal(pct)+' %';
+        vis.textContent=tal(a,1)+' l i en kasse p\u00e5 '+tal(k,1)+' l. I sender '+tal(luft,1)+' liter luft per pakke, '+tal(luft*p)+' liter om m\u00e5neden. '
+          +(pct<50?'Under 50 % betyder som regel at kassesortimentet ikke passer til ordrerne.':(pct<70?'Over 70 % er et godt m\u00e5l.':'Det er et godt niveau.'));
+      }
+      ids.forEach(function(i){ el[i].addEventListener('input',regn); });
+      regn();
+    })();
+    </script>
     <p>Fragtselskabers volumetriske vægt beregning betyder at du betaler for den plads pakken optager i bilen eller flyet, ikke kun for varens reelle vægt. En let vare i en stor kasse kan koste langt mere at sende end nødvendigt, fordi den volumetriske vægt overstiger den faktiske vægt. Det er direkte tab på bundlinjen per ordre.</p>
     <p>På bæredygtighedssiden er billedet tilsvarende tydeligt. Større kasse kræver mere karton. Mere luft kræver mere fyldmateriale for at sikre varen under transport. Mere volumen per pakke betyder færre pakker per palle og dermed flere kørsler. Samlet set kan en systematisk lav fill rate fordoble <a href="../okonomi/emballageomkostninger">emballageforbruget</a> sammenlignet med en optimeret løsning.</p>
     <p>En tommelfingerregel i branchen er at en fill rate under 50 % er et tegn på at kassesortimentet ikke matcher ordreprofilerne. Over 70 % er et godt udgangspunkt. Over 85 % er svært at opnå uden automatiseret kassevælgning, men det er der hvor de største besparelser ligger.</p>
