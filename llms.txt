@@ -274,7 +274,7 @@ Oversigt: https://smartpack.dk/viden/
 - Udskiftning af lagerfolk: hvad koster det? : https://smartpack.dk/viden/personale/medarbejder-turnover-lager
 - Ungarbejdere på lager: regler og grænser : https://smartpack.dk/viden/personale/ungarbejdere-paa-lager
 
-### Vaekst og skalering (22 artikler)
+### Vaekst og skalering (20 artikler)
 
 - Black Friday: lagerforberedelse der virker : https://smartpack.dk/viden/vaekst/black-friday-lager
 - Flyt lager uden at miste overblikket : https://smartpack.dk/viden/vaekst/flytning-af-lager
@@ -297,7 +297,7 @@ Oversigt: https://smartpack.dk/viden/
 - Skalering uden kaos: væksten planlagt : https://smartpack.dk/viden/vaekst/skalering-uden-kaos
 - Sådan optimerer du plukkehastighed : https://smartpack.dk/viden/vaekst/optimer-plukkehastighed
 
-### Beslutningsguides (17 artikler)
+### Beslutningsguides (16 artikler)
 
 - 3PL eller eget lager? Sådan regner du på det : https://smartpack.dk/viden/beslutning/3pl-vs-eget-lager
 - 9 typiske fejl ved valg af WMS : https://smartpack.dk/viden/beslutning/fejl-ved-valg-af-system
