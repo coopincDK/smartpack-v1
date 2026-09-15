@@ -286,7 +286,6 @@ Oversigt: https://smartpack.dk/viden/
 - Hvornår skal du ansætte på lageret? : https://smartpack.dk/viden/vaekst/hvornaar-skal-du-ansaette
 - Hvornår skal du have et WMS? : https://smartpack.dk/viden/vaekst/hvornaar-skal-du-have-wms
 - Hvornår skal du have flere lagerlokationer : https://smartpack.dk/viden/vaekst/hvornaar-flere-lokationer
-- Hvornår skal du outsource lageret til 3PL? : https://smartpack.dk/viden/vaekst/hvornaar-skal-du-outsource-lager
 - Hvornår vokser du fra dit lager? : https://smartpack.dk/viden/vaekst/hvornaar-vokser-du-fra-dit-lager
 - Håndtering af kampagner på lageret : https://smartpack.dk/viden/vaekst/haandtering-af-kampagner
 - Kapacitetsgrænser på lageret : https://smartpack.dk/viden/vaekst/kapacitetsgraenser-lager
@@ -295,19 +294,17 @@ Oversigt: https://smartpack.dk/viden/
 - Peak season strategi for dit lager : https://smartpack.dk/viden/vaekst/peak-season-strategi
 - Skalering fra 10 til 100 ordrer om dagen : https://smartpack.dk/viden/vaekst/skalering-fra-10-til-100-ordrer
 - Skalering fra 100 til 1000 ordrer om dagen : https://smartpack.dk/viden/vaekst/skalering-fra-100-til-1000
-- Skalering til 3PL, hvornår og hvordan? : https://smartpack.dk/viden/vaekst/skalering-til-3pl
 - Skalering uden kaos: væksten planlagt : https://smartpack.dk/viden/vaekst/skalering-uden-kaos
 - Sådan optimerer du plukkehastighed : https://smartpack.dk/viden/vaekst/optimer-plukkehastighed
 
 ### Beslutningsguides (17 artikler)
 
-- 3PL vs. eget lager: Hvad passer til din webshop? : https://smartpack.dk/viden/beslutning/3pl-vs-eget-lager
+- 3PL eller eget lager? Sådan regner du på det : https://smartpack.dk/viden/beslutning/3pl-vs-eget-lager
 - 9 typiske fejl ved valg af WMS : https://smartpack.dk/viden/beslutning/fejl-ved-valg-af-system
 - Bedste WMS til webshop: det du skal kigge efter : https://smartpack.dk/viden/beslutning/bedste-wms-til-webshop
 - Cloud vs. on-premise WMS : https://smartpack.dk/viden/beslutning/cloud-vs-on-premise-wms
 - Hvad er god nok plukkehastighed? : https://smartpack.dk/viden/beslutning/godt-nok-plukkehastighed
 - Hvad koster et WMS? Priser og pakker : https://smartpack.dk/viden/beslutning/wms-pris
-- Hvilket lager-setup passer til din webshop? : https://smartpack.dk/viden/beslutning/hvilket-setup-passer-til-dig
 - Hvor mange fragtleverandører skal du have? : https://smartpack.dk/viden/beslutning/hvor-mange-fragtleverandoerer
 - Hvornår er dit ERP's lagermodul ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-erp-ikke-er-nok
 - Hvornår er Shopifys lagerfunktion ikke nok? : https://smartpack.dk/viden/beslutning/hvornaar-shopify-ikke-er-nok
