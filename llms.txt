@@ -93,7 +93,7 @@ Oversigt: https://smartpack.dk/viden/
 - Slotting: hvad koster forkert placering? : https://smartpack.dk/viden/fundamentals/slotting-hvad-koster-det-ikke
 - Warehouse layout: sådan indretter du lageret : https://smartpack.dk/viden/fundamentals/hvad-er-warehouse-layout
 
-### Problemer paa lageret (30 artikler)
+### Problemer paa lageret (29 artikler)
 
 - Afhængighed af nøglemedarbejdere : https://smartpack.dk/viden/problemer/afhngighed-af-noeglemedarbejdere
 - De 7 skjulte lagerfejl der koster penge : https://smartpack.dk/viden/problemer/de-7-skjulte-lagerfejl
