@@ -19,7 +19,7 @@
 <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
 <link rel="preconnect" href="https://www.youtube-nocookie.com">
 <link rel="dns-prefetch" href="//i.ytimg.com">
-<link rel="stylesheet" href="css/style.css?v=1789480119">
+<link rel="stylesheet" href="css/style.css?v=1789480502">
 <script src="js/theme-toggle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 <style>
@@ -405,7 +405,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789480119"></script>
+<script src="js/header.js?v=1789480502"></script>
 
 <!-- HERO -->
 <section class="roi-hero">
@@ -540,7 +540,7 @@
           <ul style="margin:.6rem 0 0;padding-left:1.1rem;line-height:1.7">
             <li>Vi regner med at <strong>30 pct. af tiden p&aring; lageret bliver fri</strong>. Folk forsvinder ikke, de laver noget andet.</li>
             <li>Vi regner med at fejlraten falder til <strong>0,3 pct.</strong> Ikke til nul. Det t&oslash;r vi ikke love.</li>
-            <li>L&oslash;nnen I taster ind ganges med 12 m&aring;neder og <strong>1,54</strong>. Den udbetalte l&oslash;n er kun cirka 65 pct. af hvad en medarbejder koster. Resten er feriepenge og SH, arbejdsgiverpension, fritvalg, l&oslash;n under sygdom og genetill&aelig;g. <em>Kilde: DA StrukturStatistik 2025, hvor direkte l&oslash;n udg&oslash;r 248,72 kr. af 383,20 kr. pr. pr&aelig;steret time.</em></li>
+            <li>L&oslash;nnen I taster ind ganges med 12 m&aring;neder og <strong>1,6</strong>. Den udbetalte l&oslash;n er kun omkring 62 pct. af hvad en lagermedarbejder koster. Resten er feriepenge og SH, arbejdsgiverpension, fritvalg, l&oslash;n under sygdom og genetill&aelig;g. <em>Kilde: DA StrukturStatistik 2025, tabel 2.1, gruppen "andet manuelt arbejde": 300,69 kr. i samlede medarbejderomkostninger pr. pr&aelig;steret time mod 187,72 kr. i direkte l&oslash;n.</em></li>
             <li>Tilbagebetalingen regner med en opstart fra <strong>40.000 kr.</strong>, som er standardops&aelig;tning. Den aftales p&aring; forh&aring;nd og kan v&aelig;re h&oslash;jere ved et st&oslash;rre setup.</li>
             <li>Prisen pr. pakkefejl er jeres eget tal. Vi ser typisk 300 til 590 kr. i h&aring;rde omkostninger (E-logistik Guide 2026).</li>
           </ul>
@@ -649,7 +649,7 @@
         <div class="gevinst-card__icon">&#128170;</div>
         <div class="gevinst-card__title">L&oslash;n</div>
         <div class="gevinst-card__body">F&aelig;rre medarbejdere til samme volumen. Eller samme team, der klarer mere. Hos vores kunder frigiver det typisk 25-40% af l&oslash;nbudgettet.</div>
-        <div class="gevinst-card__stat">1 medarbejder ~ 430.000 kr./&aring;r, alt medregnet</div>
+        <div class="gevinst-card__stat">1 medarbejder ~ 480.000 kr./&aring;r, alt medregnet</div>
       </div>
       <div class="gevinst-card">
         <div class="gevinst-card__icon">&#128230;</div>
@@ -775,8 +775,8 @@
 </section>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789480119"></script>
-<script src="js/main.js?v=1789480119" defer></script>
+<script src="js/footer.js?v=1789480502"></script>
+<script src="js/main.js?v=1789480502" defer></script>
 <script>
 /* ============================================================
    Quick Calc
@@ -825,7 +825,7 @@
     var pluk   = Math.max(1,   (isNaN(+document.getElementById('qc-pluk').value) ? 42 : +document.getElementById('qc-pluk').value));
 
     var pakker_md = ordrer;
-    var lonAar    = lon * 12 * 1.54;  // DA StrukturStatistik 2025: direkte loen er 64,9 pct. af de samlede medarbejderomkostninger
+    var lonAar    = lon * 12 * 1.60;  // DA StrukturStatistik 2025, andet manuelt arbejde: 300,69 kr. i samlede omkostninger mod 187,72 kr. i direkte loen
     var effekt    = 0.30;
 
     // --- CLAMPING ---
@@ -1603,6 +1603,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-<script src="js/yt-facade.js?v=1789480119" defer></script>
+<script src="js/yt-facade.js?v=1789480502" defer></script>
 </body>
 </html>
