@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=1789498811">
+<link rel="stylesheet" href="/css/style.css?v=1789499555">
 <script src="/js/theme-toggle.js"></script>
 <style>
 .error-page{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;z-index:1}
@@ -183,8 +183,27 @@
 ================================================================ -->
 </head>
 <body>
+<script>
+/* Gaettede adresser: /viden/<slug> uden kategorimappe sendes videre til den rigtige side.
+   Rammer typisk links konstrueret af AI-svar eller af nogen der har skrevet adressen af. */
+(function(){
+  try{
+    var sti = location.pathname.replace(/\/+$/,'').replace(/\.html$/,'');
+    var m = sti.match(/^\/viden\/([a-z0-9][a-z0-9-]*)$/);
+    if(!m) return;
+    var slug = m[1];
+    var KAT = {"baeredygtighed":"baeredygtigt-fyldmateriale co2-aftryk-lager co2-rapportering-fragt esg-rapportering-lager fill-rate-optimering groen-fragt-greenwashing klimavenlig-logistik papiremballage-vs-plastik","beslutning":"3pl-vs-eget-lager bedste-wms-til-webshop cloud-vs-on-premise-wms fejl-ved-valg-af-system godt-nok-plukkehastighed hvor-mange-fragtleverandoerer hvornaar-er-lager-en-omkostning hvornaar-erp-ikke-er-nok hvornaar-excel-fejler hvornaar-shopify-ikke-er-nok hvornaar-skifte-system lagerstyring-system-danmark skal-du-bygge-selv tjekliste-foer-wms wms-pris wms-vs-manuel-drift","drift":"adr-regler-forklaret aerosoler-og-fragt ce-maerkning-forklaret dokumentation-ved-fragt emballage-lovgivning eu-batteriforordning farliggods-for-webshops fragtskader-hvem-betaler gdpr-paa-lager intrastat-forklaret intrastat-indberetning ioss-forklaret kolekaede-forklaret leveringsmuligheder-i-checkout lithium-batterier-fragt lucid-registrering maa-du-sende-parfume produktion-og-webshop-paa-samme-lager reverse-supply-chain-recommerce-reparation snyd-med-reklamationer sporbarhed-paa-lageret tarifkoder-forklaret temperaturkrav-lager uk-compliance-post-brexit weee-regler","fundamentals":"abc-analyse-sortiment hvad-er-3pl hvad-er-cross-docking hvad-er-cycle-counting hvad-er-demand-planning hvad-er-dropshipping hvad-er-fefo hvad-er-fifo hvad-er-fulfillment hvad-er-inventory-accuracy hvad-er-lagerflow hvad-er-lagerstyring hvad-er-lead-time hvad-er-pluk-og-pak hvad-er-reorder-point hvad-er-safety-stock hvad-er-sikkerhedslager hvad-er-sku hvad-er-warehouse-layout hvad-er-wms hvad-er-zone-picking slotting-hvad-koster-det-ikke","hardware":"anti-fatigue-maatter arbejdshoejde-pakkebord ergonomi-fejlrate ergonomi-paa-lager fragtlabel-setup fyldmateriale-valg hardware-vs-system-effekt investering-udstyr-vs-software manuel-vs-elektrisk-pallelofter overemballering-omkostning oversete-ting-paa-lager pakkebord-flaskehalsen pakkestation-setup plukkevogn-bestemmer-dit-tempo printer-placering-flow rullebaner-paa-lager single-vs-multi-order-plukkevogn skridt-per-plukker smaa-forbedringer-store-besparelser standard-vs-specialkasser tape-pistoler-effekt tape-placering-paa-bord tape-valg-lager valg-af-kasser","okonomi":"beholdningsomkostninger bemanding-lager break-even-lager budget-til-lager cost-per-ordre dead-stock-omkostninger emballageomkostninger fejlomkostninger fem-noegletal-paa-lageret forsendelsesomkostninger fragtforhandling lagerhusleje-optimering lageromkostninger-beregning lageromkostninger-pr-sku lageromsoetningshastighed lagervaerdi-til-regnskabet maaltal-paa-lageret oekonomi-i-automatisering personaleomkostninger-lager plukkefejl-koster-penge roi-paa-wms skjulte-lageromkostninger spare-medarbejdere-wms tidsforbrug-lager","personale":"ansaettelse-lagerchef hse-sikkerhed-lager lagermedarbejder-uddannelse medarbejder-turnover-lager motivation-lagermedarbejdere onboarding-lagermedarbejder saesonansatte-paa-lager ungarbejdere-paa-lager","problemer":"afhngighed-af-noeglemedarbejdere daarlig-onboarding-af-medarbejdere de-7-skjulte-lagerfejl excel-bryder-sammen flere-folk-goer-det-ikke-hurtigere for-mange-hasteordrer for-mange-systemer forkert-vareplacering ingen-standarder integrationer-fejler lageret-er-indrettet-forkert lageret-kan-ikke-foelge-med-vaekst lageret-vokser-ukontrolleret medarbejderne-er-ikke-problemet overfyldt-lager plukruter-er-ineffektive returproces-er-kaos systemet-virker-men-folk-bruger-det-ikke vi-ansaetter-for-hurtigt vi-bruger-for-meget-tid-paa-pluk vi-kan-ikke-haandtere-peaks vi-kender-ikke-vores-lageromkostninger vi-laver-for-mange-pakkefejl vi-loeber-toer-for-varer vi-mangler-overblik-over-lageret vi-mister-varer vi-tjekker-ikke-hvad-der-kommer-ind vores-data-er-rod","realworld":"black-friday-webshop-6-uger fra-garage-til-skalering fra-ordre-til-levering hvad-goer-de-bedste-anderledes hvordan-undgaar-du-at-skalere-kaos kampagner-vs-drift lager-vs-marketing saadan-arbejder-top-webshops smartpack-3pl-guide typisk-lager-evolution","retur":"beskadigede-returvarer forebyg-returner-med-bedre-data gratis-retur-strategi hvornaar-kassere-returvare kontrol-af-returvarer reducer-returrate retur-emballage retur-fra-udlandet retur-i-peak-season retur-og-bundlinje retur-og-kundetilfredshed retur-portal-selvbetjening retur-vs-ombytning returhaandtering-webshop returlogistik-fra-tab-til-neutral returomkostninger returrate-benchmarks wms-og-retur","tech":"ai-paa-lageret-2026 api-i-lagerstyring batch-og-lotnumre batch-picking-teknologi business-central-integration dataflow-i-ecommerce economic-integration edi-integrationer flytning-af-varer fragtintegrationer-forklaret fulfillment-sync genopfyldning-fra-tote herodesk-helpdesk-smartpack integrationer-forklaret lager-api-integration lager-automatisering-teknologi lager-software-valg leverandoerstyring mobile-scanning-lager multi-channel-lager naar-varen-ikke-staar-paa-hylden ordreaendringer-annulleringer pick-by-light pim-vs-wms plukprofiler real-time-beholdning realtid-dashboard rfid-paa-lager shopify-integration smartpack-api-muligheder stregkode-scanning-lager traek-tal-ud-af-dit-wms typiske-integrationsfejl varemodtagelse-i-praksis voice-picking webhooks-forklaret wms-erp-integration wms-integration-webshop wms-vs-erp wms-vs-excel wms-vs-shopify woocommerce-integration","vaekst":"black-friday-lager flytning-af-lager haandtering-af-kampagner hvornaar-automatisering-giver-mening hvornaar-batch-picking-stopper hvornaar-flere-lokationer hvornaar-layout-skal-aendres hvornaar-setup-knaekker hvornaar-skal-du-ansaette hvornaar-skal-du-have-wms hvornaar-skal-lager-opdeles hvornaar-vokser-du-fra-dit-lager kapacitetsgraenser-lager lagerets-rolle-i-vaekst optimer-plukkehastighed ordrer-pr-medarbejder peak-season-strategi skalering-fra-10-til-100-ordrer skalering-fra-100-til-1000 skalering-uden-kaos"};
+    var SAER = {"cases/muramura":"muramura-smartpack-case","viden/beslutning/3pl-vs-eget-lager":"hvilket-setup-passer-til-dig hvornaar-skal-du-outsource-lager skalering-til-3pl","viden/beslutning/cloud-vs-on-premise-wms":"cloud-wms-fordele","viden/beslutning/hvornaar-shopify-ikke-er-nok":"shopify-er-ikke-nok","viden/okonomi/emballageomkostninger":"emballagekostnader","viden/problemer/ingen-standarder":"for-mange-manuelle-processer","viden/tech/batch-picking-teknologi":"hvad-er-batch-picking"};
+    var maal = null;
+    for(var t in SAER){ if((' '+SAER[t]+' ').indexOf(' '+slug+' ')>-1){ maal='/'+t; break; } }
+    if(!maal){ for(var k in KAT){ if((' '+KAT[k]+' ').indexOf(' '+slug+' ')>-1){ maal='/viden/'+k+'/'+slug; break; } } }
+    if(maal && maal!==sti){ location.replace(maal + location.search + location.hash); }
+  }catch(e){}
+})();
+</script>
+
 <div id="sp-header"></div>
-<script src="/js/header.js?v=1789498811"></script>
+<script src="/js/header.js?v=1789499555"></script>
 
 <div class="video-bg">
   <video id="bg-video" autoplay muted loop playsinline aria-hidden="true">
@@ -218,7 +237,7 @@
 </div>
 
 <div id="sp-footer"></div>
-<script src="/js/footer.js?v=1789498811" defer></script>
-<script src="/js/main.js?v=1789498811" defer></script>
+<script src="/js/footer.js?v=1789499555" defer></script>
+<script src="/js/main.js?v=1789499555" defer></script>
 </body>
 </html>
