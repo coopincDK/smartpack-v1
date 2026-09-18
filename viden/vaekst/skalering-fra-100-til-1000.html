@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789560339">
+  <link rel="stylesheet" href="../../css/style.css?v=1789728930">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -100,16 +100,16 @@
     </ul>
     <h2>Breakpoint-regnestykker</h2>
     <table>
-      <thead><tr><th>Breakpoint</th><th>Cost per order (uoptimeret)</th><th>Cost per order (optimeret)</th><th>årlig forskel</th></tr></thead>
+      <thead><tr><th>Ordrer/dag</th><th>Hvad et minut per ordre koster</th><th>Hvad ét procentpoint fejl koster</th></tr></thead>
       <tbody>
-        <tr><td>200 ordrer/dag</td><td>58 kr.</td><td>28 kr.</td><td>1.875.000 kr.</td></tr>
-        <tr><td>500 ordrer/dag</td><td>67 kr.</td><td>22 kr.</td><td>4.500.000 kr. (til 28 kr.)</td></tr>
-        <tr><td>1000 ordrer/dag</td><td>75 kr.</td><td>18 kr.</td><td>14.175.000 kr.</td></tr>
+        <tr><td>200</td><td>767 timer/år = 230.000 kr.</td><td>460 ordrer/år = 161.000 kr.</td></tr>
+        <tr><td>500</td><td>1.917 timer/år = 575.000 kr.</td><td>1.150 ordrer/år = 402.500 kr.</td></tr>
+        <tr><td>1.000</td><td>3.833 timer/år = 1.150.000 kr.</td><td>2.300 ordrer/år = 805.000 kr.</td></tr>
       </tbody>
     </table>
     <h2>Typiske fejl</h2>
     <ol>
-      <li><strong>Implementerer WMS for sent</strong>, det rigtige tidspunkt er 120-150 ordrer/dag. Ikke 300.</li>
+      <li><strong>Venter til det gør ondt</strong>, der findes ikke et ordretal hvor et system pludselig giver mening. Det rigtige tidspunkt er, når prisen per ordre begynder at stige uden at volumen gør det.</li>
       <li><strong>Skalerer mennesker fremfor processer</strong>, 10 plukkere der plukker ineffektivt er dyrere end 6 plukkere med WMS-optimeret flow.</li>
       <li><strong>Evaluerer ikke 3PL</strong>, ved 500+ ordrer/dag bør <a href="../fundamentals/hvad-er-3pl">3PL</a> altid være sammenlignet. Ikke nødvendigvis foretrukket, men sammenlignet.</li>
     </ol>

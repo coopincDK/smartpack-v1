@@ -336,7 +336,7 @@
     '    <div><span class="sp-ql-title">Få svar med det samme</span><span class="sp-ql-desc">support.smartpack.dk - artikler, guides og chat</span></div>',
     '    <span class="sp-ql-arrow">&#x2197;</span>',
     '  </a>',
-    '  <div class="sp-callout"><span>&#x1F4DE;</span>&nbsp;<span>Akut problem? <strong>Ring til os direkte</strong> - superbrugere har fri telefon 24/7.</span></div>',
+    '  <div class="sp-callout"><span>&#x1F4DE;</span>&nbsp;<span>Står driften stille uden for åbningstid? <strong>Ring og tryk 9</strong> - så ringer det hos os, ikke til en telefonsvarer. Gratis for superbrugere.</span></div>',
     '  <div class="sp-field"><label for="spcov-sup-subject">Emne <span class="req">*</span></label><input type="text" id="spcov-sup-subject" placeholder="Fx Scanner virker ikke..."></div>',
     '  <div class="sp-field"><label for="spcov-sup-msg">Beskriv problemet <span class="req">*</span></label><textarea id="spcov-sup-msg" placeholder="Hvad sker der? Hvornår startede det?"></textarea></div>',
     '  <label class="sp-nl-check"><input type="checkbox" id="spcov-newsletter"> <span>Ja tak til praktiske tips om lager og logistik</span></label>',
