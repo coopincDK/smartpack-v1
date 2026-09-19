@@ -72,9 +72,23 @@
     });
 
     /* Pladsholderen ligger absolut, saa dens ramme skal vaere positioneret.
-       Er rammen ikke en dedikeret videokasse, laver vi selv en i 16:9. */
+       Er rammen ikke en dedikeret videokasse, laver vi selv en i 16:9.
+       En ramme der allerede holder 16:9 selv, taeller som dedikeret ogsaa naar
+       der ligger et citat eller anden overlay ved siden af videoen. Ellers
+       fik vi to kasser i hoejden og et tomt hul under billedet. */
     var ramme = iframe.parentNode;
-    var dedikeret = ramme && ramme.nodeType === 1 && ramme.childElementCount === 1;
+    var dedikeret = false;
+    if (ramme && ramme.nodeType === 1) {
+      var rammeStil = window.getComputedStyle(ramme);
+      var holderFormat = window.getComputedStyle(iframe).position === 'absolute'
+        || (rammeStil.aspectRatio && rammeStil.aspectRatio !== 'auto');
+      dedikeret = ramme.childElementCount === 1 || holderFormat;
+      /* Ligger der et citat nederst i rammen, flytter vi vores egen
+         note op i toppen, saa de to tekster ikke lander oven i hinanden. */
+      if (dedikeret && ramme.childElementCount > 1) {
+        d.classList.add('yt-facade--har-overlay');
+      }
+    }
     if (dedikeret) {
       if (window.getComputedStyle(ramme).position === 'static') {
         ramme.style.position = 'relative';
