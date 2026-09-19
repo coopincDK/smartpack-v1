@@ -41,11 +41,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Preload kritiske ressourcer -->
-  <link rel="preload" href="css/style.css?v=1789781559" as="style">
+  <link rel="preload" href="css/style.css?v=1789781941" as="style">
   <link rel="preload" href="assets/SmartPack-WMS-PDA.webp" as="image">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=1789781559">
+  <link rel="stylesheet" href="css/style.css?v=1789781941">
   <script src="js/theme-toggle.js"></script>
 
   <!-- JSON-LD: Organization + SoftwareApplication + WebSite -->
@@ -219,7 +219,7 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1789781559"></script>
+<script src="js/header.js?v=1789781941"></script>
 
 <main id="main-content">
 
@@ -1090,10 +1090,10 @@ Du vokser.<br>
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1789781559"></script>
+<script src="js/footer.js?v=1789781941"></script>
 
 
-  <script src="js/main.js?v=1789781559" defer></script>
+  <script src="js/main.js?v=1789781941" defer></script>
   <script src="js/hero-editor.js" defer></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -1154,8 +1154,12 @@ Du vokser.<br>
   var klip = document.querySelectorAll('video.js-loopvideo[data-src]');
   if (!klip.length) return;
   var villeHelstUdenBevaegelse = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var storSkaerm = window.matchMedia('(min-width: 900px)').matches;
-  if (villeHelstUdenBevaegelse || !storSkaerm) return;
+  if (villeHelstUdenBevaegelse) return;
+  /* Klippene koerer ogsaa paa telefon. De vejer omkring en halv megabyte hver
+     og hentes foerst naar de er paa vej ind i billedet. Har telefonen slaaet
+     dataspare til, eller er forbindelsen daarlig, springer vi dem over. */
+  var net = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (net && (net.saveData === true || /(^|-)2g$/.test(net.effectiveType || ''))) return;
   if (!('IntersectionObserver' in window)) return;
   var vaegter = new IntersectionObserver(function (poster) {
     poster.forEach(function (p) {
