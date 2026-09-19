@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789783270">
+  <link rel="stylesheet" href="../../css/style.css?v=1789783832">
   <script src="../../js/theme-toggle.js"></script>
 <!-- ================================================================
      SMARTPACK TRACKING
@@ -78,8 +78,8 @@
     </table>
     <p><strong><a href="../okonomi/roi-paa-wms">ROI-beregning</a> for et mellemst&oslash;rt lager (5 plukmedarbejdere, 300 ordrer/dag):</strong></p>
     <p>Uden batch: 300 ordrer &divide; 5 medarbejdere = 60 ordrer per medarbejder. 60 ordrer &times; 312 sek./ordre (inkl. g&aring;-tid) &asymp; 18.750 sek. = 5,2 timer/dag per medarbejder.</p>
-    <p>Med batch: 40% reduktion i g&aring;-tid. G&aring;-tid er ca. 60% af total plukstid = 24 sek./ordre. 40% af 24 = 9,6 sek. sparet per ordre. 300 ordrer &times; 9,6 sek. = 48 min./dag per medarbejder. 5 medarbejdere = 4 timer/dag = 300 kr./time &times; 4 = 1.200 kr./dag = 300.000 kr./&aring;r.</p>
-    <p><strong>Men:</strong> Hvis fejlraten stiger fra 0,5% til 2,5% (typisk uden scanner-bekr&aelig;ftelse): 300 ordrer &times; 2% ekstra fejl = 6 fejlordrer/dag &times; 45 kr./fejl = 270 kr./dag = 67.500 kr./&aring;r. Reel besparelse: 32.500 kr./&aring;r i stedet for 100.000 kr.</p>
+    <p>Med batch: gevinsten er g&aring;-tid, og den er nem at regne p&aring; som en enhed. Ved 300 ordrer om dagen og 250 arbejdsdage er hvert sekund I sparer per ordre 75.000 sekunder om &aring;ret, alts&aring; knap 21 timer. Til 300 kr. i timen er det 6.250 kr. om &aring;ret pr. sparet sekund. Sparer I ti sekunder per ordre, er det 62.500 kr. om &aring;ret.</p>
+    <p><strong>Men:</strong> stiger fejlraten to procentpoint, fordi ingen bekr&aelig;fter hvilken kurv varen kom i, er det 6 ekstra fejlordrer om dagen. Til 350 kr. stykket er det 2.100 kr. om dagen, alts&aring; 525.000 kr. om &aring;ret. Det &aelig;der gevinsten p&aring; g&aring;-tid mange gange om. Regnestykket i batch picking afg&oslash;res ikke af de sparede sekunder. Det afg&oslash;res af om varen bliver bekr&aelig;ftet ned i den rigtige kurv.</p>
     <p><strong>Med SmartPack:</strong> abonnement inkluderer batch + scanner-bekr&aelig;ftelse. Break-even: f&oslash;rste m&aring;ned. Fejlrate holdes under 0,3%. <strong>Med nyt WMS:</strong> 250.000 kr. investering, break-even 2,5 &aring;r hvis fejlh&aring;ndtering er korrekt implementeret. Uden fejlh&aring;ndtering: break-even 5+ &aring;r.</p>
 
     <h2>Hvorn&aring;r virker batch picking, og hvorn&aring;r g&oslash;r det ikke?</h2>
@@ -97,7 +97,7 @@
       <li><strong>H&oslash;j fejlrisiko:</strong> Temperaturf&oslash;lsomme varer (medicin, f&oslash;devarer) m&aring; ikke blandes. Batch &oslash;ger fejlrisiko. &Eacute;n fejl med medicin = produktansvar + myndighedsrapport.</li>
       <li><strong>Ingen WMS:</strong> Manuel batch-dannelse koster tid og &oslash;ger fejlraten markant. Typisk stiger fejlraten til 5%+ uden WMS-algoritme.</li>
     </ul>
-    <p><strong>Det her g&aring;r galt i virkeligheden:</strong> Et lager med 0,5% fejlrate implementerer batch uden scanner-bekr&aelig;ftelse. Fejlraten rammer 2,8% inden for 3 uger. Ved 300 ordrer/dag: 8,4 fejl/dag &times; 45 kr./fejl = 378 kr./dag = 94.500 kr./&aring;r. Besparelsen p&aring; g&aring;-tid var 100.000 kr./&aring;r. Reel gevinst: 5.500 kr./&aring;r. ROI-beregningen var forkert med 95%.</p>
+    <p><strong>Det her g&aring;r galt i virkeligheden:</strong> Et lager med 0,5% fejlrate implementerer batch uden scanner-bekr&aelig;ftelse. Fejlraten rammer 2,8% inden for 3 uger. Ved 300 ordrer/dag: 8,4 fejl/dag &times; 350 kr./fejl = 2.940 kr./dag, alts&aring; 735.000 kr. om &aring;ret. Ingen gevinst p&aring; g&aring;-tid d&aelig;kker det. Batch uden bekr&aelig;ftelse er ikke en d&aring;rlig forretning, det er en dyr.</p>
     <p><strong>Trigger point:</strong> N&aring;r fejlraten overstiger 1,5%, koster batch picking mere end det giver. M&aring;l fejlraten ugentligt de f&oslash;rste 6 uger efter implementering. Hvis den stiger over 1%, stop batch og fix sorteringssystemet f&oslash;rst.</p>
 
     <h2>Batch picking teknologi: hvad kr&aelig;ver det teknisk?</h2>
