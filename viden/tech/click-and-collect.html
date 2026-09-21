@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1789990917">
+  <link rel="stylesheet" href="../../css/style.css?v=1789992048">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -77,10 +77,11 @@
 
       <p class="inline-cta">&#128073; Er jeres afhentningsordrer sat rigtigt op? <a href="../../kontakt">Lad os kigge p&aring; flowet</a></p>
 
-      <h2>Beskeden til kunden kommer fra webshoppen</h2>
-      <p>Her er det vigtigste at forst&aring;, og det er ogs&aring; der de fleste fejl opst&aring;r. SmartPack sender ikke selv mailen om at pakken er klar.</p>
-      <p>K&oslash;rer I Shopify, kalder SmartPack Shopifys egen &quot;klar til afhentning&quot; i stedet for at melde ordren afsendt, og s&aring; er det Shopify der sender beskeden til kunden. K&oslash;rer I DanDomain eller PrestaShop, s&aelig;tter SmartPack en anden ordrestatus end ved en almindelig forsendelse, og s&aring; er det butikkens eget mailflow der skal reagere p&aring; den status.</p>
-      <p>Kommer beskeden ikke frem, er det alts&aring; ikke i SmartPack fejlen ligger. Det er i webshoppen.</p>
+      <h2>Hvem sender beskeden til kunden</h2>
+      <p>Det er her de fleste fejl opst&aring;r, og det er fordi beskeden kan komme to steder fra.</p>
+      <p>Som udgangspunkt kommer den fra webshoppen. K&oslash;rer I Shopify, kalder SmartPack Shopifys egen &quot;klar til afhentning&quot; i stedet for at melde ordren afsendt, og s&aring; er det Shopify der skriver til kunden. K&oslash;rer I DanDomain eller PrestaShop, s&aelig;tter SmartPack en anden ordrestatus end ved en almindelig forsendelse, og butikkens eget mailflow reagerer p&aring; den.</p>
+      <p>Men beskeden kan ogs&aring; komme fra SmartPack. Der kan s&aelig;ttes mailtriggere op, og der kan sendes SMS. Det er v&aelig;rd at overveje hvis I vil have den samme besked uanset hvilken kanal ordren kom ind ad, eller hvis webshoppens egen mail ikke kan skrues som I gerne vil have den.</p>
+      <p>Det vigtige er at vide hvilken af de to der er t&aelig;ndt hos jer. Kommer beskeden ikke frem, er det f&oslash;rste sp&oslash;rgsm&aring;l hvem der egentlig skulle have sendt den.</p>
 
       <h2>De to indstillinger der driller</h2>
       <p>P&aring; Shopify-ops&aelig;tningen er der to kontakter, og de er adskilte med vilje:</p>
@@ -109,21 +110,21 @@
         <ul>
           <li>Leveringsmetoden b&aelig;rer oplysningen, s&aring; ingen skal huske at en ordre er en afhentningsordre</li>
           <li>Pakken f&aring;r sit eget m&aelig;rke n&aring;r den er klar, s&aring; man kan se hvad der st&aring;r og venter</li>
-          <li>Webshoppen f&aring;r besked i samme &oslash;jeblik, s&aring; kunden h&oslash;rer det fra den butik han handlede i</li>
+          <li>Webshoppen f&aring;r besked i samme &oslash;jeblik, og vil I hellere sende beskeden selv, kan der s&aelig;ttes mailtrigger eller SMS op i SmartPack</li>
           <li>Skal varerne ud i en fysisk butik, k&oslash;rer det som en flytteseddel med modtagelse p&aring; terminalen</li>
         </ul>
         <p>Det fjerner ikke behovet for at s&aelig;tte det op rigtigt. Det fjerner behovet for at nogen husker det hver gang.</p>
       </div>
 
-      <h2>Det vi ikke kan svare p&aring; herfra</h2>
-      <p>K&oslash;rer I ren butik med kasseapparat og ingen webshop, kan vi ikke sige generelt hvordan kunden f&aring;r besked. SmartPack har ikke sin egen afhentningsmail, s&aring; det afh&aelig;nger af hvad jeres kassesystem kan. Ring til os med jeres ops&aelig;tning, s&aring; finder vi ud af det sammen.</p>
+      <h2>Hvis I ikke har en webshop</h2>
+      <p>K&oslash;rer I ren butik med kasseapparat, afh&aelig;nger det af hvad kassesystemet kan sende. Der er det som regel den anden vej der giver mening: en mailtrigger eller en SMS fra SmartPack, s&aring; beskeden ikke h&aelig;nger p&aring; et system der ikke var t&aelig;nkt til det. Ring til os med jeres ops&aelig;tning, s&aring; finder vi ud af det sammen.</p>
 
       <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
         <details class="faq-item"><summary>Hvad g&oslash;r en ordre til en afhentningsordre?</summary><div class="faq-item__body"><p>Leveringsmetoden. Hver leveringsmetode kan markeres som afhentning, og g&oslash;r den det, behandles ordren som afhentningsordre hele vejen. Oplysningen sidder alts&aring; p&aring; leveringsmetoden, ikke p&aring; den enkelte ordre.</p></div></details>
-        <details class="faq-item"><summary>Sender SmartPack en mail n&aring;r pakken er klar?</summary><div class="faq-item__body"><p>Nej. SmartPack fort&aelig;ller webshoppen at pakken er klar, og s&aring; er det webshoppen der sender beskeden. Ved Shopify sker det gennem Shopifys egen klar til afhentning. Ved DanDomain og PrestaShop s&aelig;ttes en anden ordrestatus, som butikkens eget mailflow reagerer p&aring;.</p></div></details>
+        <details class="faq-item"><summary>Sender SmartPack en mail n&aring;r pakken er klar?</summary><div class="faq-item__body"><p>Det kan g&oslash;res begge veje. Som udgangspunkt fort&aelig;ller SmartPack webshoppen at pakken er klar, og s&aring; er det webshoppen der skriver til kunden. Ved Shopify sker det gennem Shopifys egen klar til afhentning, ved DanDomain og PrestaShop gennem en ordrestatus. Men der kan ogs&aring; s&aelig;ttes mailtriggere op i SmartPack, og der kan sendes SMS. Sig til hvis I vil have beskeden derfra i stedet.</p></div></details>
         <details class="faq-item"><summary>Hvorfor f&aring;r kunden ingen besked, n&aring;r alt ser rigtigt ud?</summary><div class="faq-item__body"><p>Fordi beskeden ved afhentning har sin egen kontakt i integrationen, adskilt fra den almindelige forsendelsesbesked. Den kan v&aelig;re slukket selvom alt andet virker. Tjek den, og tjek ogs&aring; at klar til afhentning i det hele taget er sl&aring;et til.</p></div></details>
         <details class="faq-item"><summary>Er click and collect det samme som at flytte varer ud i butikken?</summary><div class="faq-item__body"><p>Nej. En afhentningsordre er en kundeordre der ikke skal sendes. Skal varerne fysisk ud i en butik, er det en flytteseddel med en afsenderplads og en modtagerplads, som modtages p&aring; terminalen n&aring;r kassen n&aring;r frem.</p></div></details>
-        <details class="faq-item"><summary>Kan vi k&oslash;re click and collect uden webshop?</summary><div class="faq-item__body"><p>Det kan vi ikke svare generelt p&aring;. SmartPack har ikke sin egen afhentningsmail, s&aring; uden en webshop afh&aelig;nger det af hvad jeres kassesystem kan. Ring til os med jeres ops&aelig;tning.</p></div></details>
+        <details class="faq-item"><summary>Kan vi k&oslash;re click and collect uden webshop?</summary><div class="faq-item__body"><p>Ja. Uden en webshop afh&aelig;nger det af hvad kassesystemet kan sende, og der er en mailtrigger eller en SMS fra SmartPack som regel den rigtige vej. Ring til os med jeres ops&aelig;tning, s&aring; s&aelig;tter vi det op.</p></div></details>
       </div>
     </div>
 
@@ -138,7 +139,7 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad gør en ordre til en afhentningsordre?","acceptedAnswer":{"@type":"Answer","text":"Leveringsmetoden. Hver leveringsmetode kan markeres som afhentning, og gør den det, behandles ordren som afhentningsordre hele vejen. Oplysningen sidder altså på leveringsmetoden, ikke på den enkelte ordre."}},{"@type":"Question","name":"Sender SmartPack en mail når pakken er klar?","acceptedAnswer":{"@type":"Answer","text":"Nej. SmartPack fortæller webshoppen at pakken er klar, og så er det webshoppen der sender beskeden. Ved Shopify sker det gennem Shopifys egen klar til afhentning. Ved DanDomain og PrestaShop sættes en anden ordrestatus, som butikkens eget mailflow reagerer på."}},{"@type":"Question","name":"Hvorfor får kunden ingen besked, når alt ser rigtigt ud?","acceptedAnswer":{"@type":"Answer","text":"Fordi beskeden ved afhentning har sin egen kontakt i integrationen, adskilt fra den almindelige forsendelsesbesked. Den kan være slukket selvom alt andet virker. Tjek den, og tjek også at klar til afhentning i det hele taget er slået til."}},{"@type":"Question","name":"Er click and collect det samme som at flytte varer ud i butikken?","acceptedAnswer":{"@type":"Answer","text":"Nej. En afhentningsordre er en kundeordre der ikke skal sendes. Skal varerne fysisk ud i en butik, er det en flytteseddel med en afsenderplads og en modtagerplads, som modtages på terminalen når kassen når frem."}},{"@type":"Question","name":"Kan vi køre click and collect uden webshop?","acceptedAnswer":{"@type":"Answer","text":"Det kan vi ikke svare generelt på. SmartPack har ikke sin egen afhentningsmail, så uden en webshop afhænger det af hvad jeres kassesystem kan. Ring til os med jeres opsætning."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad gør en ordre til en afhentningsordre?","acceptedAnswer":{"@type":"Answer","text":"Leveringsmetoden. Hver leveringsmetode kan markeres som afhentning, og gør den det, behandles ordren som afhentningsordre hele vejen. Oplysningen sidder altså på leveringsmetoden, ikke på den enkelte ordre."}},{"@type":"Question","name":"Sender SmartPack en mail når pakken er klar?","acceptedAnswer":{"@type":"Answer","text":"Det kan gøres begge veje. Som udgangspunkt fortæller SmartPack webshoppen at pakken er klar, og så er det webshoppen der skriver til kunden. Ved Shopify sker det gennem Shopifys egen klar til afhentning, ved DanDomain og PrestaShop gennem en ordrestatus. Men der kan også sættes mailtriggere op i SmartPack, og der kan sendes SMS."}},{"@type":"Question","name":"Hvorfor får kunden ingen besked, når alt ser rigtigt ud?","acceptedAnswer":{"@type":"Answer","text":"Fordi beskeden ved afhentning har sin egen kontakt i integrationen, adskilt fra den almindelige forsendelsesbesked. Den kan være slukket selvom alt andet virker. Tjek den, og tjek også at klar til afhentning i det hele taget er slået til."}},{"@type":"Question","name":"Er click and collect det samme som at flytte varer ud i butikken?","acceptedAnswer":{"@type":"Answer","text":"Nej. En afhentningsordre er en kundeordre der ikke skal sendes. Skal varerne fysisk ud i en butik, er det en flytteseddel med en afsenderplads og en modtagerplads, som modtages på terminalen når kassen når frem."}},{"@type":"Question","name":"Kan vi køre click and collect uden webshop?","acceptedAnswer":{"@type":"Answer","text":"Ja. Uden en webshop afhænger det af hvad kassesystemet kan sende, og der er en mailtrigger eller en SMS fra SmartPack som regel den rigtige vej. Ring til os med jeres opsætning."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Click and collect, fra ordre til afhentning","description":"Hvad gør en ordre til en afhentningsordre, hvem sender beskeden til kunden, og hvilke indstillinger skal være sat. Hele flowet.","datePublished":"2026-09-21","dateModified":"2026-09-21","author":{"@type":"Organization","@id":"https://smartpack.dk/#organization","name":"SmartPack ApS","url":"https://smartpack.dk"},"publisher":{"@type":"Organization","@id":"https://smartpack.dk/#organization","name":"SmartPack ApS","url":"https://smartpack.dk","logo":{"@type":"ImageObject","url":"https://smartpack.dk/assets/cropped-favicon-smartpack.png"}},"url":"https://smartpack.dk/viden/tech/click-and-collect","mainEntityOfPage":"https://smartpack.dk/viden/tech/click-and-collect","inLanguage":"da-DK"}</script>
 </body>
 </html>
