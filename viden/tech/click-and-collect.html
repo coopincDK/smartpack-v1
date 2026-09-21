@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click and collect, fra ordre til afhentning | SmartPack</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Click and collect, fra ordre til afhentning">
+  <meta property="og:url" content="https://smartpack.dk/viden/tech/click-and-collect">
+  <meta property="og:description" content="Hvad g&oslash;r en ordre til en afhentningsordre, hvem sender beskeden til kunden, og hvilke indstillinger skal v&aelig;re sat. Hele flowet.">
+  <meta property="og:image" content="https://smartpack.dk/assets/viden/ecom_artikel_billeder/03-pakkeshop-pakke.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="Hvad g&oslash;r en ordre til en afhentningsordre, hvem sender beskeden til kunden, og hvilke indstillinger skal v&aelig;re sat. Hele flowet.">
+  <link rel="canonical" href="https://smartpack.dk/viden/tech/click-and-collect">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=1789990917">
+  <script src="../../js/theme-toggle.js"></script>
+
+
+
+<!-- ================================================================
+     SMARTPACK TRACKING. Skal med paa alle nye sider.
+     Se _TRACKING_TEMPLATE.html i roden.
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+
+
+
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT på TRACKING BLOK
+================================================================ -->
+</head>
+<body>
+<div id="sp-header"></div>
+<script src="../../js/header.js"></script>
+<main id="main-content">
+<div class="article-page">
+  <div class="article-wrap">
+    <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&#8250;</span><a href="../">Viden</a><span>&#8250;</span><a href="./">Tech &amp; Integration</a><span>&#8250;</span><span>Click and collect, fra ordre til afhentning</span></nav>
+    <header class="article-header">
+      <span class="article-cat-badge">Tech &amp; Integration</span>
+      <h1 class="article-title">Click and collect, fra ordre til afhentning</h1>
+  <div class="article-meta"><time datetime="2026-09-21">September 2026</time><span>SmartPack</span><span>~6 min</span></div>
+    </header>
+    <div class="article-body" data-pagefind-body="true">
+<img class="article-hero-img" src="../../assets/viden/ecom_artikel_billeder/03-pakkeshop-pakke.jpg" alt="Pakke der st&aring;r klar til afhentning" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;" width="1040" height="580">
+      <p><strong>Kunden v&aelig;lger at hente selv. Ordren lander p&aring; lageret som alle andre. Og s&aring; er sp&oslash;rgsm&aring;let, hvem der fort&aelig;ller kunden at pakken st&aring;r klar.</strong></p>
+
+      <p>Det kan besvares p&aring; to m&aring;der. Enten husker nogen at sende en mail. Eller ogs&aring; ved systemet at ordren skal hentes, og siger det videre af sig selv. Forskellen m&aelig;rkes f&oslash;rste gang der er travlt.</p>
+
+      <h2>Hvad g&oslash;r en ordre til en afhentningsordre</h2>
+      <p>Det er leveringsmetoden der afg&oslash;r det. Hver leveringsmetode kan markeres som afhentning, og g&oslash;r den det, behandles ordren som en afhentningsordre hele vejen igennem. Det er alts&aring; ikke ordren selv der b&aelig;rer oplysningen, det er den leveringsmetode kunden valgte i kassen.</p>
+      <p>Det betyder to ting i praksis. S&aelig;tter I en ny leveringsmetode op til afhentning og glemmer markeringen, k&oslash;rer ordrerne gennem det almindelige fragtflow med label og det hele. Og omvendt: er markeringen sat rigtigt, beh&oslash;ver ingen huske noget.</p>
+      <p>N&aring;r pakken er pakket f&aelig;rdig, f&aring;r den sit eget m&aelig;rke om at den er klar til afhentning. Det m&aelig;rke sidder p&aring; pakken, ikke p&aring; ordren, og det er det der siger at varen fysisk st&aring;r og venter.</p>
+
+      <p class="inline-cta">&#128073; Er jeres afhentningsordrer sat rigtigt op? <a href="../../kontakt">Lad os kigge p&aring; flowet</a></p>
+
+      <h2>Beskeden til kunden kommer fra webshoppen</h2>
+      <p>Her er det vigtigste at forst&aring;, og det er ogs&aring; der de fleste fejl opst&aring;r. SmartPack sender ikke selv mailen om at pakken er klar.</p>
+      <p>K&oslash;rer I Shopify, kalder SmartPack Shopifys egen &quot;klar til afhentning&quot; i stedet for at melde ordren afsendt, og s&aring; er det Shopify der sender beskeden til kunden. K&oslash;rer I DanDomain eller PrestaShop, s&aelig;tter SmartPack en anden ordrestatus end ved en almindelig forsendelse, og s&aring; er det butikkens eget mailflow der skal reagere p&aring; den status.</p>
+      <p>Kommer beskeden ikke frem, er det alts&aring; ikke i SmartPack fejlen ligger. Det er i webshoppen.</p>
+
+      <h2>De to indstillinger der driller</h2>
+      <p>P&aring; Shopify-ops&aelig;tningen er der to kontakter, og de er adskilte med vilje:</p>
+      <ul>
+        <li>Om integrationen overhovedet skal bruge &quot;klar til afhentning&quot;. Er den slukket, behandles ordren som en almindelig forsendelse med tracking, selvom leveringsmetoden er sat til afhentning</li>
+        <li>Om kunden skal have besked n&aring;r afhentningen markeres. Den er uafh&aelig;ngig af den almindelige forsendelsesbesked, s&aring; I kan sagtens have styr p&aring; mails ved forsendelse og alligevel ikke sende noget ved afhentning</li>
+      </ul>
+      <p>Det er kombinationen der giver de m&aelig;rkelige sager: alt ser rigtigt ud i SmartPack, pakken st&aring;r klar, og kunden har ikke h&oslash;rt fra nogen.</p>
+
+      <h2>Fire ting at tjekke n&aring;r det ikke virker</h2>
+      <ol>
+        <li>Er leveringsmetoden markeret som afhentning? Det er her det starter</li>
+        <li>Er &quot;klar til afhentning&quot; sl&aring;et til i integrationen?</li>
+        <li>Er beskeden til kunden sl&aring;et til? Husk at den er sin egen kontakt</li>
+        <li>K&oslash;r &eacute;n rigtig ordre hele vejen og se om mailen kommer. Det er den eneste test der t&aelig;ller</li>
+      </ol>
+
+      <h2>Varerne skal ogs&aring; ud i butikken</h2>
+      <p>Er afhentningsstedet jeres egen butik, er der en ting mere: varerne skal fysisk derud. Det er ikke det samme som en afhentningsordre, og det er heller ikke en almindelig kundeordre. Til det findes en flytteseddel, alts&aring; en ordre der har en afsenderplads og en modtagerplads i stedet for en kundeadresse.</p>
+      <p>Den plukkes som en almindelig ordre, men springer pakketrinnet over og lukker sig selv, fordi den ikke skal ud til en kunde. N&aring;r kassen n&aring;r frem til butikken, modtages den p&aring; terminalen: scan pakken, v&aelig;lg linjerne, scan den plads i butikken hvor varerne skal st&aring;. S&aring; st&aring;r de p&aring; butikkens lager.</p>
+      <p>Skal det k&oslash;re af sig selv, kan systemet foresl&aring; flytninger n&aring;r der mangler varer i butikken. Det kr&aelig;ver at butikkens plads har f&aring;et at vide hvilke lagre den m&aring; hente fra.</p>
+
+      <div class="smartpack-box">
+        <h2>S&aring;dan underst&oslash;tter SmartPack det</h2>
+        <p>Afhentning fejler sj&aelig;ldent p&aring; lageret. Den fejler i overleveringen mellem lager og webshop.</p>
+        <ul>
+          <li>Leveringsmetoden b&aelig;rer oplysningen, s&aring; ingen skal huske at en ordre er en afhentningsordre</li>
+          <li>Pakken f&aring;r sit eget m&aelig;rke n&aring;r den er klar, s&aring; man kan se hvad der st&aring;r og venter</li>
+          <li>Webshoppen f&aring;r besked i samme &oslash;jeblik, s&aring; kunden h&oslash;rer det fra den butik han handlede i</li>
+          <li>Skal varerne ud i en fysisk butik, k&oslash;rer det som en flytteseddel med modtagelse p&aring; terminalen</li>
+        </ul>
+        <p>Det fjerner ikke behovet for at s&aelig;tte det op rigtigt. Det fjerner behovet for at nogen husker det hver gang.</p>
+      </div>
+
+      <h2>Det vi ikke kan svare p&aring; herfra</h2>
+      <p>K&oslash;rer I ren butik med kasseapparat og ingen webshop, kan vi ikke sige generelt hvordan kunden f&aring;r besked. SmartPack har ikke sin egen afhentningsmail, s&aring; det afh&aelig;nger af hvad jeres kassesystem kan. Ring til os med jeres ops&aelig;tning, s&aring; finder vi ud af det sammen.</p>
+
+      <div class="article-faq"><h2 class="article-faq__title">Ofte stillede sp&oslash;rgsm&aring;l</h2>
+        <details class="faq-item"><summary>Hvad g&oslash;r en ordre til en afhentningsordre?</summary><div class="faq-item__body"><p>Leveringsmetoden. Hver leveringsmetode kan markeres som afhentning, og g&oslash;r den det, behandles ordren som afhentningsordre hele vejen. Oplysningen sidder alts&aring; p&aring; leveringsmetoden, ikke p&aring; den enkelte ordre.</p></div></details>
+        <details class="faq-item"><summary>Sender SmartPack en mail n&aring;r pakken er klar?</summary><div class="faq-item__body"><p>Nej. SmartPack fort&aelig;ller webshoppen at pakken er klar, og s&aring; er det webshoppen der sender beskeden. Ved Shopify sker det gennem Shopifys egen klar til afhentning. Ved DanDomain og PrestaShop s&aelig;ttes en anden ordrestatus, som butikkens eget mailflow reagerer p&aring;.</p></div></details>
+        <details class="faq-item"><summary>Hvorfor f&aring;r kunden ingen besked, n&aring;r alt ser rigtigt ud?</summary><div class="faq-item__body"><p>Fordi beskeden ved afhentning har sin egen kontakt i integrationen, adskilt fra den almindelige forsendelsesbesked. Den kan v&aelig;re slukket selvom alt andet virker. Tjek den, og tjek ogs&aring; at klar til afhentning i det hele taget er sl&aring;et til.</p></div></details>
+        <details class="faq-item"><summary>Er click and collect det samme som at flytte varer ud i butikken?</summary><div class="faq-item__body"><p>Nej. En afhentningsordre er en kundeordre der ikke skal sendes. Skal varerne fysisk ud i en butik, er det en flytteseddel med en afsenderplads og en modtagerplads, som modtages p&aring; terminalen n&aring;r kassen n&aring;r frem.</p></div></details>
+        <details class="faq-item"><summary>Kan vi k&oslash;re click and collect uden webshop?</summary><div class="faq-item__body"><p>Det kan vi ikke svare generelt p&aring;. SmartPack har ikke sin egen afhentningsmail, s&aring; uden en webshop afh&aelig;nger det af hvad jeres kassesystem kan. Ring til os med jeres ops&aelig;tning.</p></div></details>
+      </div>
+    </div>
+
+    <div class="bottom-cta"><p>Vil I have afhentning til at k&oslash;re uden at nogen skal huske det?</p><a href="../../kontakt" class="btn">Tal med SmartPack</a></div>
+    <div class="article-disclaimer">Denne artikel beskriver hvordan SmartPack virker i dag. Ops&aelig;tningen kan v&aelig;re forskellig hos jer, s&aring; tjek jeres egen f&oslash;r I &aelig;ndrer noget.</div>
+    <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="shopify-integration" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Shopify-integration</span></a><a href="fulfillment-sync" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Fulfillment sync</span></a><a href="multi-channel-lager" class="article-related__item"><span class="article-related__item-cat">Tech</span><span class="article-related__item-title">Multi-channel lager</span></a></div></div>
+  </div>
+</div>
+
+
+</main>
+<div id="sp-footer"></div>
+<script src="../../js/footer.js"></script>
+<script src="../../js/main.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad gør en ordre til en afhentningsordre?","acceptedAnswer":{"@type":"Answer","text":"Leveringsmetoden. Hver leveringsmetode kan markeres som afhentning, og gør den det, behandles ordren som afhentningsordre hele vejen. Oplysningen sidder altså på leveringsmetoden, ikke på den enkelte ordre."}},{"@type":"Question","name":"Sender SmartPack en mail når pakken er klar?","acceptedAnswer":{"@type":"Answer","text":"Nej. SmartPack fortæller webshoppen at pakken er klar, og så er det webshoppen der sender beskeden. Ved Shopify sker det gennem Shopifys egen klar til afhentning. Ved DanDomain og PrestaShop sættes en anden ordrestatus, som butikkens eget mailflow reagerer på."}},{"@type":"Question","name":"Hvorfor får kunden ingen besked, når alt ser rigtigt ud?","acceptedAnswer":{"@type":"Answer","text":"Fordi beskeden ved afhentning har sin egen kontakt i integrationen, adskilt fra den almindelige forsendelsesbesked. Den kan være slukket selvom alt andet virker. Tjek den, og tjek også at klar til afhentning i det hele taget er slået til."}},{"@type":"Question","name":"Er click and collect det samme som at flytte varer ud i butikken?","acceptedAnswer":{"@type":"Answer","text":"Nej. En afhentningsordre er en kundeordre der ikke skal sendes. Skal varerne fysisk ud i en butik, er det en flytteseddel med en afsenderplads og en modtagerplads, som modtages på terminalen når kassen når frem."}},{"@type":"Question","name":"Kan vi køre click and collect uden webshop?","acceptedAnswer":{"@type":"Answer","text":"Det kan vi ikke svare generelt på. SmartPack har ikke sin egen afhentningsmail, så uden en webshop afhænger det af hvad jeres kassesystem kan. Ring til os med jeres opsætning."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Click and collect, fra ordre til afhentning","description":"Hvad gør en ordre til en afhentningsordre, hvem sender beskeden til kunden, og hvilke indstillinger skal være sat. Hele flowet.","datePublished":"2026-09-21","dateModified":"2026-09-21","author":{"@type":"Organization","@id":"https://smartpack.dk/#organization","name":"SmartPack ApS","url":"https://smartpack.dk"},"publisher":{"@type":"Organization","@id":"https://smartpack.dk/#organization","name":"SmartPack ApS","url":"https://smartpack.dk","logo":{"@type":"ImageObject","url":"https://smartpack.dk/assets/cropped-favicon-smartpack.png"}},"url":"https://smartpack.dk/viden/tech/click-and-collect","mainEntityOfPage":"https://smartpack.dk/viden/tech/click-and-collect","inLanguage":"da-DK"}</script>
+</body>
+</html>
