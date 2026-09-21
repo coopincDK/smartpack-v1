@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1790013639">
+  <link rel="stylesheet" href="../../css/style.css?v=1790014081">
   <script src="../../js/theme-toggle.js"></script>
 
 <!-- ================================================================
@@ -41,7 +41,7 @@
 
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Hvad er zone picking? Sådan opdeler du lageret for færre fejl", "description": "Zone picking opdeler lageret i zoner og tildeler hver plukker en fast zone. Lær hvordan det reducerer gangtid, fejlrate og onboarding-tid.", "datePublished": "2025-05-09", "dateModified": "2025-05-09", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/fundamentals/hvad-er-zone-picking", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/fundamentals/hvad-er-zone-picking"}, "inLanguage": "da-DK"}</script>
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad er forskellen på zone picking og batch picking?", "acceptedAnswer": {"@type": "Answer", "text": "Zone picking opdeler lageret i geografiske zoner med en fast plukker per zone. Batch picking samler flere ordrer på én tur uanset zone. De to metoder kombineres ofte: plukkere arbejder i zoner og håndterer flere ordrer per tur inden for deres zone."}}, {"@type": "Question", "name": "Hvornår giver zone picking mening?", "acceptedAnswer": {"@type": "Answer", "text": "Zone picking giver klart udbytte ved mere end 150-200 ordrer per dag, et lager over 500 kvm og et sortiment på mindst 500 SKUer. Under de niveauer er gangtiden ikke stor nok til at retfærdiggøre koordinationsomkostningen."}}, {"@type": "Question", "name": "Hvad er ulempen ved zone picking?", "acceptedAnswer": {"@type": "Answer", "text": "Koordinering mellem zoner er den største udfordring. Ordrer med varer fra flere zoner kræver et konsolideringspunkt, og hvis en zone er overbelastet mens en anden er ledig, kan det skabe flaskehalse. Et WMS løser dette ved dynamisk belastningsfordeling."}}, {"@type": "Question", "name": "Kan zone picking bruges uden et WMS?", "acceptedAnswer": {"@type": "Answer", "text": "Teknisk ja, men effektivt nej. Uden et WMS kan du ikke se live, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og øger fejlrisikoen ved konsolidering."}}, {"@type": "Question", "name": "Hvor mange zoner skal et lager have?", "acceptedAnswer": {"@type": "Answer", "text": "De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner øger koordinationsomkostningen og giver ikke proportionel gevinst."}}]}
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad er forskellen på zone picking og batch picking?", "acceptedAnswer": {"@type": "Answer", "text": "Zone picking opdeler lageret i geografiske zoner med en fast plukker per zone. Batch picking samler flere ordrer på én tur uanset zone. De to metoder kombineres ofte: plukkere arbejder i zoner og håndterer flere ordrer per tur inden for deres zone."}}, {"@type": "Question", "name": "Hvornår giver zone picking mening?", "acceptedAnswer": {"@type": "Answer", "text": "Zone picking løser at plukkere går i vejen for hinanden. Men lige så ofte vælges det fordi noget ikke hører sammen med resten: tunge varer der skal plukkes og afsendes for sig, pluk fra flere lokationer, eller et robotanlæg der plukker en del frem som samles op i pakkeriet. Det er individuelt fra butik til butik."}}, {"@type": "Question", "name": "Hvad er ulempen ved zone picking?", "acceptedAnswer": {"@type": "Answer", "text": "Koordinering mellem zoner er den største udfordring. Ordrer med varer fra flere zoner kræver et konsolideringspunkt, og hvis en zone er overbelastet mens en anden er ledig, kan det skabe flaskehalse. Et WMS løser dette ved dynamisk belastningsfordeling."}}, {"@type": "Question", "name": "Kan zone picking bruges uden et WMS?", "acceptedAnswer": {"@type": "Answer", "text": "Teknisk ja, men effektivt nej. Uden et WMS kan du ikke se live, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og øger fejlrisikoen ved konsolidering."}}, {"@type": "Question", "name": "Hvor mange zoner skal et lager have?", "acceptedAnswer": {"@type": "Answer", "text": "De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner øger koordinationsomkostningen og giver ikke proportionel gevinst."}}]}
   </script>
 </head>
 <body>
@@ -119,8 +119,8 @@
     <table>
       <thead><tr><th>Metode</th><th>Styrke</th><th>Svaghed</th><th>Bedst til</th></tr></thead>
       <tbody>
-        <tr><td>Ordreplukning (én ordre ad gangen)</td><td>Simpel, ingen koordination</td><td>Høj gangtid, lav kapacitet</td><td>Under 50 ordrer/dag</td></tr>
-        <tr><td>Batch picking</td><td>Reducerer gangtid per ordre</td><td>Sortering kræver tid</td><td>50-200 ordrer/dag, kompakt lager</td></tr>
+        <tr><td>Ordreplukning (én ordre ad gangen)</td><td>Simpel, ingen koordination</td><td>Høj gangtid, lav kapacitet</td><td>Ordrer der ikke ligner hinanden</td></tr>
+        <tr><td>Batch picking</td><td>Reducerer gangtid per ordre</td><td>Sortering kræver tid</td><td>Ordrer med f&aring; linjer der deler varenumre</td></tr>
         <tr><td>Zone picking</td><td>Specialisering, lav fejlrate</td><td>Kræver koordination</td><td>150+ ordrer/dag, 500+ kvm</td></tr>
         <tr><td>Zone-batch picking</td><td>Kombination af begge gevinster</td><td>Kræver WMS</td><td>200+ ordrer/dag, stort sortiment</td></tr>
       </tbody>
@@ -138,13 +138,13 @@
     </ul>
 
     <h2>Hvornår er du klar til zone picking?</h2>
-    <p>Tre kriterier skal alle være opfyldt:</p>
+    <p>Det er sjældent volumen der udløser valget. Det er som regel noget af det her:</p>
     <ol>
-      <li><strong>Volumen over 150 ordrer per dag:</strong> Under det er koordinationsomkostningen ofte større end gangtidsbesparelsen.</li>
-      <li><strong>Lager over 500 kvm med mere end 500 aktive SKUer:</strong> På et kompakt lager giver specialisering ikke nok gevinst.</li>
+      <li><strong>Noget der ikke hører sammen med resten:</strong> tunge eller store varer der skal plukkes og afsendes for sig, pluk fra flere lokationer, eller et robotanlæg der plukker en del frem som samles op i pakkeriet.</li>
+      <li><strong>Plukkere der går i vejen for hinanden:</strong> når flere arbejder samtidig i det samme område, æder trængslen gevinsten ved kortere ruter.</li>
       <li><strong>WMS eller plukkesystem der understøtter zonerouting:</strong> Manuel zonehåndtering er teknisk muligt, men du mister 40-60% af gevinsten og fordobler fejlraten.</li>
     </ol>
-    <p>Er alle tre til stede, og din nuværende fejlrate er over 1%, eller din gangtid er over 55% af arbejdstiden, er zone picking det næste logiske skridt.</p>
+    <p>Rammer du en af dem, og er din fejlrate over 1% eller din gangtid over 55% af arbejdstiden, er zone picking det næste logiske skridt. Det er individuelt fra butik til butik, og der findes ikke et ordretal der afgør det.</p>
 
     <h2>Sådan hjælper SmartPack med zone picking</h2>
     <p>SmartPack WMS understøtter zone picking med automatisk belastningsfordeling: systemet sender ordrer til den mindst belastede zone, og samler automatisk ved pakkestation. Det giver mening fra 150+ ordrer/dag og 500+ kvm lager.</p>
@@ -169,7 +169,7 @@
     <a href="../tech/plukprofiler" class="article-related__item"><span class="article-related__item-cat">Tech &amp; Integration</span><span class="article-related__item-title">Plukprofiler: styr hvem der plukker hvad</span></a></div></div>
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er forskellen på zone picking og batch picking?</summary><div class="faq-item__body"><p>Zone picking opdeler lageret i geografiske zoner med en fast plukker per zone. Batch picking samler flere ordrer på én tur uanset zone. De to metoder kombineres ofte: plukkere arbejder i zoner og håndterer flere ordrer per tur inden for deres zone.</p></div></details>
-    <details class="faq-item"><summary>Hvornår giver zone picking mening?</summary><div class="faq-item__body"><p>Zone picking giver klart udbytte ved mere end 150-200 ordrer per dag, et lager over 500 kvm og et sortiment på mindst 500 SKUer. Under de niveauer er gangtiden ikke stor nok til at retfærdiggøre koordinationsomkostningen.</p></div></details>
+    <details class="faq-item"><summary>Hvornår giver zone picking mening?</summary><div class="faq-item__body"><p>Zone picking løser at plukkere går i vejen for hinanden. Men lige så ofte vælges det fordi noget ikke hører sammen med resten: tunge varer der skal plukkes og afsendes for sig, pluk fra flere lokationer, eller et robotanlæg der plukker en del frem som samles op i pakkeriet. Det er individuelt fra butik til butik.</p></div></details>
     <details class="faq-item"><summary>Hvad er ulempen ved zone picking?</summary><div class="faq-item__body"><p>Koordinering mellem zoner er den største udfordring. Ordrer med varer fra flere zoner kræver et konsolideringspunkt, og hvis en zone er overbelastet mens en anden er ledig, kan det skabe flaskehalse. Et WMS løser dette ved dynamisk belastningsfordeling.</p></div></details>
     <details class="faq-item"><summary>Kan zone picking bruges uden et WMS?</summary><div class="faq-item__body"><p>Teknisk ja, men effektivt nej. Uden et WMS kan du ikke se live, hvilke ordrer der venter i hvilke zoner, og koordination sker manuelt. Det annullerer en stor del af gevinsten og øger fejlrisikoen ved konsolidering.</p></div></details>
     <details class="faq-item"><summary>Hvor mange zoner skal et lager have?</summary><div class="faq-item__body"><p>De fleste mellemstore lagre starter med 2-4 zoner. Tommelfingerreglen: én zone per 200-300 kvm aktiv plukareal. For mange zoner øger koordinationsomkostningen og giver ikke proportionel gevinst.</p></div></details>
