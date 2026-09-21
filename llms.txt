@@ -124,7 +124,7 @@ Oversigt: https://smartpack.dk/viden/
 - Vi tjekker ikke hvad der kommer ind : https://smartpack.dk/viden/problemer/vi-tjekker-ikke-hvad-der-kommer-ind
 - Vores data er rod: system mod virkelighed : https://smartpack.dk/viden/problemer/vores-data-er-rod
 
-### Teknologi og systemer (42 artikler)
+### Teknologi og systemer (43 artikler)
 
 - 10 ting du kan bygge med SmartPacks API : https://smartpack.dk/viden/tech/smartpack-api-muligheder
 - AI på lageret 2026: hvad virker og hvad er hype : https://smartpack.dk/viden/tech/ai-paa-lageret-2026
@@ -132,6 +132,7 @@ Oversigt: https://smartpack.dk/viden/
 - Batch picking: 3x flere ordrer, samme mandskab : https://smartpack.dk/viden/tech/batch-picking-teknologi
 - Batch- og lotnumre: find partiet igen : https://smartpack.dk/viden/tech/batch-og-lotnumre
 - Business Central integration med WMS : https://smartpack.dk/viden/tech/business-central-integration
+- Click and collect, fra ordre til afhentning : https://smartpack.dk/viden/tech/click-and-collect
 - Dataflow i e-handel : https://smartpack.dk/viden/tech/dataflow-i-ecommerce
 - e-conomic integration med WMS : https://smartpack.dk/viden/tech/economic-integration
 - EDI på lageret: hvad er det og hvornår? : https://smartpack.dk/viden/tech/edi-integrationer
@@ -234,7 +235,7 @@ Oversigt: https://smartpack.dk/viden/
 - Klimavenlig logistik i praksis : https://smartpack.dk/viden/baeredygtighed/klimavenlig-logistik
 - Papir vs. plastik emballage : https://smartpack.dk/viden/baeredygtighed/papiremballage-vs-plastik
 
-### Lagerdrift og processer (25 artikler)
+### Lagerdrift og processer (26 artikler)
 
 - ADR regler forklaret : https://smartpack.dk/viden/drift/adr-regler-forklaret
 - Aerosoler og fragt: Må du sende spraydåser : https://smartpack.dk/viden/drift/aerosoler-og-fragt
@@ -260,6 +261,7 @@ Oversigt: https://smartpack.dk/viden/
 - Tarifkoder forklaret : https://smartpack.dk/viden/drift/tarifkoder-forklaret
 - Temperaturkrav på lageret : https://smartpack.dk/viden/drift/temperaturkrav-lager
 - UK-handel post-Brexit : https://smartpack.dk/viden/drift/uk-compliance-post-brexit
+- Varesæt og bundles på lageret : https://smartpack.dk/viden/drift/varesaet-og-bundles
 - WEEE-regler for webshops : https://smartpack.dk/viden/drift/weee-regler
 
 ### Personale og HR (8 artikler)
