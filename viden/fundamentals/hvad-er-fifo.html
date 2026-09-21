@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1790000713">
+  <link rel="stylesheet" href="../../css/style.css?v=1790001932">
   <script src="../../js/theme-toggle.js"></script>
 
 <!-- ================================================================
@@ -221,7 +221,7 @@
 
     <h3>SmartPack giver IKKE mening når:</h3>
     <ul>
-      <li>Du har <strong>under 20 ordrer/dag</strong> - manuel FIFO med dobbelt-zone metoden er billigere og hurtigere at implementere</li>
+      <li>Du har <strong>få varer med udløbsdato</strong>, og den samme person tager imod hver levering, så rækkefølgen aldrig er i tvivl</li>
       <li>Dine varer <strong>ikke har udløbsdato</strong> og ikke mister værdi over tid - FIFO er nice-to-have, ikke must-have</li>
       <li>Du har <strong>én pluklokation per varenummer</strong> - der er ingen rotation at styre</li>
     </ul>
@@ -230,7 +230,7 @@
     <table>
       <thead><tr><th>Løsning</th><th>Opsætning</th><th>Løbende cost</th><th>Fejlrate</th></tr></thead>
       <tbody>
-        <tr><td>Manuel FIFO (under 20 ordrer/dag)</td><td>0 kr.</td><td>2-3 timer/uge</td><td>10-15%</td></tr>
+        <tr><td>Manuel FIFO (få datovarer, én modtager)</td><td>0 kr.</td><td>2-3 timer/uge</td><td>10-15%</td></tr>
         <tr><td>Excel + farvekoder (20-100 ordrer/dag)</td><td>5.000-10.000 kr.</td><td>5-7 timer/uge</td><td>5-10%</td></tr>
         <tr><td>WMS som SmartPack (100+ ordrer/dag)</td><td>25.000-50.000 kr.</td><td>0 timer/uge (automatisk)</td><td>0-2%</td></tr>
       </tbody>
@@ -247,7 +247,7 @@
   <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
     <details class="faq-item"><summary>Hvad er forskellen på FIFO og FEFO?</summary><div class="faq-item__body"><p>FIFO sender den ældste vare ud først baseret på modtagelsesdato. FEFO sender den vare ud først, som udløber snarest. Når alle varer i et batch har samme holdbarhedsdato giver de samme resultat. FEFO er mere præcis, når der er variation i holdbarhed inden for samme varenummer.</p></div></details>
     <details class="faq-item"><summary>Er FIFO lovpligtigt?</summary><div class="faq-item__body"><p>Det afhænger af branchen. I fødevarer, farmaceutisk og kosmetik er rotationsstyring et regulatorisk krav. I andre brancher er det ikke lovkrav, men god praksis der reducerer spild og kapitalomkostninger.</p></div></details>
-    <details class="faq-item"><summary>Kan man køre FIFO uden et WMS?</summary><div class="faq-item__body"><p>Ja, men det kræver disciplin og fysiske systemer som dobbelt-zone metoden og datostempling. Over 50 ordrer om dagen bliver manuel FIFO-kontrol fejlbehæftet og tidskostende. Et WMS automatiserer det.</p></div></details>
+    <details class="faq-item"><summary>Kan man køre FIFO uden et WMS?</summary><div class="faq-item__body"><p>Ja, men det kræver disciplin og fysiske systemer som dobbelt-zone metoden og datostempling. Så snart to personer tager imod varer, eller samme vare ligger på flere pladser, holder den manuelle kontrol op med at være pålidelig. Et WMS automatiserer det.</p></div></details>
     <details class="faq-item"><summary>Hvad er LIFO, og bruges det nogensinde?</summary><div class="faq-item__body"><p>LIFO er Last In, First Out. I fysisk lagerdrift bruges det næsten aldrig, da det typisk fører til ophobning af gammel beholdning. I USA bruges LIFO som regnskabsprincip til lagerværdiansættelse, men det er ikke tilladt under IFRS som bruges i Europa.</p></div></details>
   </div>
 </div></div>
@@ -256,6 +256,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på FIFO og FEFO?","acceptedAnswer":{"@type":"Answer","text":"FIFO sender den ældste vare ud først baseret på modtagelsesdato. FEFO sender den vare ud først, som udløber snarest. Når alle varer i et batch har samme holdbarhedsdato giver de samme resultat. FEFO er mere præcis, når der er variation i holdbarhed inden for samme varenummer."}},{"@type":"Question","name":"Er FIFO lovpligtigt?","acceptedAnswer":{"@type":"Answer","text":"Det afhænger af branchen. I fødevarer, farmaceutisk og kosmetik er rotationsstyring et regulatorisk krav. I andre brancher er det ikke lovkrav, men god praksis der reducerer spild og kapitalomkostninger."}},{"@type":"Question","name":"Kan man køre FIFO uden et WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja, men det kræver disciplin og fysiske systemer som dobbelt-zone metoden og datostempling. Over 50 ordrer om dagen bliver manuel FIFO-kontrol fejlbehæftet og tidskostende. Et WMS automatiserer det."}},{"@type":"Question","name":"Hvad er LIFO, og bruges det nogensinde?","acceptedAnswer":{"@type":"Answer","text":"LIFO er Last In, First Out. I fysisk lagerdrift bruges det næsten aldrig, da det typisk fører til ophobning af gammel beholdning. I USA bruges LIFO som regnskabsprincip til lagerværdiansættelse, men det er ikke tilladt under IFRS som bruges i Europa."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er forskellen på FIFO og FEFO?","acceptedAnswer":{"@type":"Answer","text":"FIFO sender den ældste vare ud først baseret på modtagelsesdato. FEFO sender den vare ud først, som udløber snarest. Når alle varer i et batch har samme holdbarhedsdato giver de samme resultat. FEFO er mere præcis, når der er variation i holdbarhed inden for samme varenummer."}},{"@type":"Question","name":"Er FIFO lovpligtigt?","acceptedAnswer":{"@type":"Answer","text":"Det afhænger af branchen. I fødevarer, farmaceutisk og kosmetik er rotationsstyring et regulatorisk krav. I andre brancher er det ikke lovkrav, men god praksis der reducerer spild og kapitalomkostninger."}},{"@type":"Question","name":"Kan man køre FIFO uden et WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja, men det kræver disciplin og fysiske systemer som dobbelt-zone metoden og datostempling. Så snart to personer tager imod varer, eller samme vare ligger på flere pladser, holder den manuelle kontrol op med at være pålidelig. Et WMS automatiserer det."}},{"@type":"Question","name":"Hvad er LIFO, og bruges det nogensinde?","acceptedAnswer":{"@type":"Answer","text":"LIFO er Last In, First Out. I fysisk lagerdrift bruges det næsten aldrig, da det typisk fører til ophobning af gammel beholdning. I USA bruges LIFO som regnskabsprincip til lagerværdiansættelse, men det er ikke tilladt under IFRS som bruges i Europa."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Hvad er FIFO? Forklaring og eksempler fra lageret", "description": "FIFO betyder First In, First Out. Lær hvad princippet gør i praksis, hvornår det er obligatorisk, og hvad det koster dig at ignorere det.", "datePublished": "2025-05-09", "dateModified": "2025-05-09", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/fundamentals/hvad-er-fifo", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/fundamentals/hvad-er-fifo"}, "inLanguage": "da-DK"}</script>
 </body></html>
