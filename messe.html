@@ -1,0 +1,362 @@
+﻿<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Alt fra væggen | SmartPack</title>
+<meta name="description" content="Alt fra SmartPacks væg på E-handelskonferencen 2026: kundernes egne tal, oplæringstider, hvad en pakkefejl koster, og konkurrencen.">
+<meta name="theme-color" content="#010E22">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Alt fra væggen, E-handelskonferencen 2026">
+<meta property="og:description" content="Alt fra SmartPacks væg på E-handelskonferencen 2026: kundernes egne tal, oplæringstider, hvad en pakkefejl koster, og konkurrencen.">
+<meta property="og:url" content="https://smartpack.dk/messe">
+<link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+</head>
+<body>
+
+<style>
+  :root{
+    --navy:#010E22; --navy-2:#0D1520; --surface:#161C24;
+    --ink:#F1F5F9; --ink-2:#94A3B8; --ink-3:#8296AC;
+    --green:#3ECF8E; --green-2:#2EB87A; --orange:#F97316; --line:rgba(255,255,255,.10);
+    --display:'Inter Tight','Inter',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  body{margin:0;background:var(--navy);color:var(--ink);font-family:var(--body);line-height:1.55;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px;padding-block:44px 90px}
+  .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--green)}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,9vw,52px);line-height:1.04;
+     letter-spacing:-.03em;margin:14px 0 16px;text-wrap:balance}
+  .manchet{font-size:19px;color:var(--ink-2);margin:0 0 8px}
+  h2{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.02em;margin:0 0 4px}
+  .undertekst{color:var(--ink-3);font-size:15px;margin:0 0 22px}
+  section{margin-top:56px;scroll-margin-top:20px}
+  hr{border:0;border-top:1px solid var(--line);margin:0}
+
+  .knapper{display:flex;flex-direction:column;gap:12px;margin:30px 0 8px}
+  a.knap{display:flex;align-items:center;gap:14px;text-decoration:none;border-radius:14px;
+    padding:18px 20px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+  a.knap.frem{background:var(--orange);border-color:var(--orange);color:#0B0A06}
+  a.knap .t{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.2}
+  a.knap .u{font-size:14px;color:var(--ink-3);margin-top:3px}
+  a.knap.frem .u{color:rgba(11,10,6,.72)}
+  a.knap .pil{margin-left:auto;font-size:22px;opacity:.55}
+
+  .tal{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+  .kort{background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .kort .n{font-family:var(--display);font-weight:700;font-size:34px;line-height:1;color:var(--green);
+    letter-spacing:-.03em}
+  .kort .n.rod{color:var(--orange)}
+  .kort .b{font-size:15px;margin-top:10px;line-height:1.35}
+  .kort .k{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:12px}
+
+  table{width:100%;border-collapse:collapse;font-size:16px}
+  td{padding:11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  td:last-child{text-align:right;font-family:var(--display);font-weight:700;color:var(--green);
+    white-space:nowrap;padding-left:14px;font-variant-numeric:tabular-nums}
+  .kilde{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:block;margin-top:2px}
+
+  .liste{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .chip{border:1px solid var(--line);background:var(--navy-2);border-radius:999px;
+    padding:8px 14px;font-size:14px;color:var(--ink)}
+  .note{background:var(--navy-2);border:1px solid var(--line);border-left:3px solid var(--green);
+    border-radius:12px;padding:18px 20px;color:var(--ink-2);font-size:15px;margin-top:20px}
+  .note strong{color:var(--ink)}
+  ol{padding-left:20px;margin:14px 0 0}
+  ol li{margin-bottom:12px}
+  ol li b{font-family:var(--display);font-size:17px}
+  .galleri{display:flex;flex-direction:column;gap:22px}
+  .gk{margin:0;background:var(--navy-2);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .gk img{display:block;width:100%;height:auto}
+  .gk figcaption{padding:16px 18px 18px}
+  .gt{font-family:var(--display);font-weight:700;font-size:18px;line-height:1.25}
+  .gu{font-size:14px;color:var(--ink-3);margin-top:6px}
+  .videre{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .videre a{display:block;text-decoration:none;background:var(--navy-2);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;color:var(--ink)}
+  .videre .vt{font-family:var(--display);font-weight:700;font-size:17px;display:block}
+  .videre .vu{font-size:13px;color:var(--ink-3);display:block;margin-top:4px}
+  .praemie{background:var(--navy-2);border:1px solid rgba(249,115,22,.35);border-radius:16px;
+    padding:26px 22px;margin-bottom:26px}
+  .praemie .eyebrow{color:var(--orange)}
+  h2.stor{font-size:clamp(30px,8vw,42px);line-height:1.05;margin:12px 0 10px}
+  .praemietekst{font-size:16px;color:var(--ink-2);margin:12px 0 0}
+  .udlink{color:var(--orange);text-decoration:none;white-space:nowrap;font-weight:600}
+  .todelt{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:430px){.todelt{grid-template-columns:1fr}}
+  .lead label.tjek{flex-direction:row;align-items:flex-start;gap:12px;font-size:15px;color:var(--ink);
+    background:var(--navy-2);border:1px solid var(--line);border-radius:10px;padding:15px}
+  .lead label.tjek input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--green)}
+  .lead label.tjek b{color:var(--ink);font-weight:600}
+  .lead{display:flex;flex-direction:column;gap:14px;margin-top:6px}
+  .lead label{font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:7px}
+  .lead input,.lead select{font-family:var(--body);font-size:17px;color:var(--ink);background:var(--navy-2);
+    border:1px solid var(--line);border-radius:10px;padding:14px 14px;width:100%;box-sizing:border-box}
+  .lead input:focus,.lead select:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+  .lead button{font-family:var(--display);font-weight:700;font-size:18px;color:#0B0A06;background:var(--orange);
+    border:0;border-radius:12px;padding:17px;cursor:pointer;margin-top:4px}
+  .minitekst{font-size:13px;color:var(--ink-3);margin:0}
+  footer{margin-top:64px;padding-top:26px;border-top:1px solid var(--line);color:var(--ink-3);font-size:14px}
+  footer a{color:var(--green)}
+  .wm{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.02em;color:var(--ink)}
+  .wm b{color:var(--green)}
+</style>
+
+<div class="wrap">
+<main id="main-content">
+  <div class="eyebrow">E-handelskonferencen 2026</div>
+  <h1>Alt fra væggen.<br>Samlet ét sted.</h1>
+  <p class="manchet">Du nåede ikke at læse det hele. Det behøver du heller ikke. Det står her.</p>
+
+  <div class="knapper">
+    <a class="knap frem" href="#konkurrence">
+      <div><div class="t">Vind en tur til Kattegat Cup</div><div class="u">fodboldstævnet i Grenaa. Til hele din lokale klub.</div></div>
+      <span class="pil">›</span>
+    </a>
+    <a class="knap" href="https://smartpack.dk/beregner">
+      <div><div class="t">Regn jeres eget tal ud</div><div class="u">hvad koster jeres lager i dag?</div></div>
+      <span class="pil">›</span>
+    </a>
+    <a class="knap" href="https://app.smartpack.dk/warehousewarrior/">
+      <div><div class="t">Warehouse Warrior</div><div class="u">15 spørgsmål om lager. Kom på highscore-listen.</div></div>
+      <span class="pil">›</span>
+    </a>
+    <a class="knap" href="https://www.danskerhverv.dk/siteassets/mediafolder/digital-handel/guides/e-logistik-guide-2026.pdf">
+      <div><div class="t">E-logistik Guide 2026</div><div class="u">lagerhåndbog for den voksende webshop. Skrevet sammen med Dansk Erhverv, som har udgivet den.</div></div>
+      <span class="pil">›</span>
+    </a>
+  </div>
+
+  <section>
+    <h2>Kundernes egne tal</h2>
+    <p class="undertekst">Deres ord, fra deres egne videoer.</p>
+    <div class="tal">
+      <div class="kort"><div class="n">12 &rarr; 2</div>
+        <div class="b">mand på Black Friday. Og de solgte mere.</div><div class="k">Danfilter</div></div>
+      <div class="kort"><div class="n">3&ndash;4x</div>
+        <div class="b">hurtigere pakning, færre skridt på plukruten</div><div class="k">Maya Freya</div></div>
+      <div class="kort"><div class="n">0 fejl</div>
+        <div class="b">fra op til 10&nbsp;% før. Systemet sat op på fem timer.</div><div class="k">Sygeplejebutikken</div></div>
+      <div class="kort"><div class="n">2&ndash;3x</div>
+        <div class="b">omsætning med det samme antal ansatte</div><div class="k">Uniq Perler</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Hvor lang tid tager det at lære?</h2>
+    <p class="undertekst">Det spørgsmål vi får oftest. Her er hvad kunderne selv siger.</p>
+    <table>
+      <tr><td>Oplæring<span class="kilde">Vinhuset</span></td><td>15 min</td></tr>
+      <tr><td>I pakkefunktionen<span class="kilde">create2STAY</span></td><td>1 min</td></tr>
+      <tr><td>Før praktikanten var i gang<span class="kilde">Uniq Perler</span></td><td>10 min</td></tr>
+      <tr><td>Ordrer på 20 min, første gang han så systemet<span class="kilde">FirstGrade</span></td><td>30 ordrer</td></tr>
+      <tr><td>Oplæring. Før tog det et halvt år.<span class="kilde">Danfilter</span></td><td>½ time</td></tr>
+      <tr><td>Hele systemet sat op<span class="kilde">Sygeplejebutikken</span></td><td>5 timer</td></tr>
+      <tr><td>Sprog på terminalen<span class="kilde">Vinhuset</span></td><td>6 sprog</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Hvor mange pakker pr. lagertime?</h2>
+    <p class="undertekst">Medianer hos vores egne kunder, fordelt på branche.</p>
+    <table>
+      <tr><td>Tøj og mode</td><td>36</td></tr>
+      <tr><td>Elektronik</td><td>28</td></tr>
+      <tr><td>Bolig og isenkram</td><td>23</td></tr>
+      <tr><td>Møbler</td><td>13</td></tr>
+      <tr><td>Lette ordrer</td><td>80</td></tr>
+    </table>
+    <div class="note"><strong>Sådan tælles der.</strong> Alle lønnede lagertimer er med i nævneren: modtagelse, opfyldning, returhåndtering og oprydning. Det er ikke pluk i timen, mens der plukkes. Derfor kan tallet sammenlignes med jeres eget uden at snyde.</div>
+  </section>
+
+  <section>
+    <h2>Hvad en pakkefejl koster</h2>
+    <div class="tal">
+      <div class="kort"><div class="n rod">300&ndash;590 kr.</div>
+        <div class="b">i hårde omkostninger: kundeservice, ny forsendelse, håndtering og enten returfragt eller den vare I afskriver</div></div>
+      <div class="kort"><div class="n rod">2,4&ndash;4,2&nbsp;%</div>
+        <div class="b">fejl på lagre uden scanning</div><div class="k">SmartPacks egne observationer</div></div>
+    </div>
+    <div class="note">Den tabte kunde kommer oveni, og den er sværere at sætte tal på. Hvordan fejlen håndteres afgør, om kunden bliver: siger I det selv først og lader kunden beholde varen, bliver de som regel.</div>
+  </section>
+
+  <section>
+    <h2>Vi byggede det til vores eget lager først</h2>
+    <p class="undertekst">Egen webshop, papirdrift indtil 2019, omkring 100.000 ordrer om året.</p>
+    <table>
+      <tr><td>Årsværk på lager og kontor</td><td>9 &rarr; 2,5</td></tr>
+      <tr><td>Kroner pr. ordre</td><td>31 &rarr; 9</td></tr>
+      <tr><td>Fejlrate før</td><td>3,5&nbsp;%</td></tr>
+      <tr><td>Fejl i alt på de to år efter</td><td>under 50</td></tr>
+    </table>
+    <div class="note">Det er vores egen erfaring fra ét lager, ikke et løfte om jeres. Kontorets timer er med i regnestykket: indtastning af følgesedler, afstemning af leverandørfakturaer og opfølgning på fejlordrer er også lagerarbejde.</div>
+  </section>
+
+  <section>
+    <h2>Det kan systemet</h2>
+    <div class="liste">
+      <span class="chip">Plukprofiler</span><span class="chip">Batchpluk</span><span class="chip">Ruteoptimering</span>
+      <span class="chip">Scan-verificering</span><span class="chip">Kan kobles til stemmestyret pluk</span>
+      <span class="chip">Asynkront labelprint</span><span class="chip">FIFO og FEFO</span>
+      <span class="chip">Batch- og serienumre</span><span class="chip">Lokationsstyring</span>
+      <span class="chip">Lager Designer</span><span class="chip">Sorteringszoner</span>
+      <span class="chip">Refill Max</span><span class="chip">Indkøbsforslag</span>
+      <span class="chip">ABC-analyse</span><span class="chip">Lagerværdi på vilkårlig dato</span>
+      <span class="chip">Multi-channel</span><span class="chip">Flere lagre</span>
+      <span class="chip">Bundles</span><span class="chip">Dropshipping</span>
+      <span class="chip">Farligt gods</span><span class="chip">Noter på købsordren</span>
+      <span class="chip">Returportal</span><span class="chip">Klar til robotter</span>
+      <span class="chip">Åbent API</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Det taler sammen med det, I har</h2>
+    <p class="undertekst">Over 70 integrationer er koblet på i forvejen.</p>
+    <div class="liste">
+      <span class="chip">Shopify</span><span class="chip">WooCommerce</span><span class="chip">DanDomain</span>
+      <span class="chip">Magento</span><span class="chip">PrestaShop</span><span class="chip">Shoporama</span>
+      <span class="chip">e-conomic</span><span class="chip">Business Central</span><span class="chip">Uniconta</span>
+      <span class="chip">Visma Business</span><span class="chip">GLS</span><span class="chip">PostNord</span>
+      <span class="chip">DAO</span><span class="chip">DHL</span><span class="chip">Bring</span>
+      <span class="chip">UPS</span><span class="chip">Shipmondo</span><span class="chip">FlexPOS</span>
+      <span class="chip">Shopbox</span><span class="chip">Revershero</span>
+    </div>
+  </section>
+
+
+  <section>
+    <h2>Set på en anden måde</h2>
+    <p class="undertekst">De samme mekanismer, tegnet op.</p>
+    <div class="galleri">
+      <figure class="gk">
+        <img src="assets/messe/gps.jpg" alt="Ligesom din GPS, bare på lageret" width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">Ligesom din GPS, bare på lageret</div><div class="gu">Ruteoptimering lægger stoppene i den rækkefølge der giver færrest skridt.</div></figcaption>
+      </figure>
+      <figure class="gk">
+        <img src="assets/messe/forecast.jpg" alt="Overstok binder kapital. Understok koster salg." width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">Overstok binder kapital. Understok koster salg.</div><div class="gu">Indkøbsforslag bygget på jeres egne salgsdata.</div></figcaption>
+      </figure>
+      <figure class="gk">
+        <img src="assets/messe/deadstock.jpg" alt="Døde varer koster husleje. Hver dag." width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">Døde varer koster husleje. Hver dag.</div><div class="gu">Find dem, frigør kapitalen, og brug den på det der sælger.</div></figcaption>
+      </figure>
+      <figure class="gk">
+        <img src="assets/messe/kanaler.jpg" alt="Ét lager. Mange kanaler." width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">Ét lager. Mange kanaler.</div><div class="gu">Realtids lagersync på tværs af alle salgskanaler.</div></figcaption>
+      </figure>
+      <figure class="gk">
+        <img src="assets/messe/scan.jpg" alt="Scanner du forkert, stopper systemet dig" width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">Scanner du forkert, stopper systemet dig</div><div class="gu">Fejlen fanges før pakken bliver lukket.</div></figcaption>
+      </figure>
+      <figure class="gk">
+        <img src="assets/messe/refill.jpg" alt="Genopfyldning pr. lokation" width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">Genopfyldning pr. lokation</div><div class="gu">Systemet ved hvornår der skal fyldes op. I behøver ikke holde øje.</div></figcaption>
+      </figure>
+      <figure class="gk">
+        <img src="assets/messe/fifo.jpg" alt="FIFO, FEFO og LIFO" width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">FIFO, FEFO og LIFO</div><div class="gu">Systemet ved hvornår varen skal ud. I behøver ikke tænke over det.</div></figcaption>
+      </figure>
+      <figure class="gk">
+        <img src="assets/messe/robot.jpg" alt="Klar til robotter" width="760" height="760" loading="lazy" decoding="async">
+        <figcaption><div class="gt">Klar til robotter</div><div class="gu">API et er bygget. Ingen ekstra fees for at koble en robot på.</div></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sådan bliver I sat i gang</h2>
+    <ol>
+      <li><b>Vi ser på forretningen.</b> Hvilke systemer der skal tale sammen, hvordan lageret ligger, hvordan I sender.</li>
+      <li><b>Opsætning og test.</b> Lageret som det faktisk ligger, og en test før der bliver tændt.</li>
+      <li><b>Cirka syv arbejdsdage.</b> Typisk fordelt over en til tre uger, fordi forretningen skal passes imens.</li>
+      <li><b>Tre dage på jeres lager.</b> Vi står der, når der bliver tændt.</li>
+      <li><b>Superbruger inkluderet.</b> Og akut hjælp uden for åbningstid, hvis driften står stille.</li>
+    </ol>
+    <div class="note"><strong>Prisen:</strong> alt inklusiv. Opstarten aftales på forhånd, og derefter er det aktiviteten, der afgør prisen.</div>
+  </section>
+
+
+  <section>
+    <h2>Læs videre</h2>
+    <p class="undertekst">Det hele ligger på sitet. Her er de sider, der plejer at være mest brugbare.</p>
+    <div class="videre">
+      <a href="https://smartpack.dk/funktioner"><span class="vt">Funktioner</span><span class="vu">hele listen, ikke kun de 24 fra væggen</span></a>
+      <a href="https://smartpack.dk/integrationer"><span class="vt">Integrationer</span><span class="vu">over 70, med en side for hver</span></a>
+      <a href="https://smartpack.dk/cases"><span class="vt">Cases</span><span class="vu">kunderne fortæller det selv på video</span></a>
+      <a href="https://smartpack.dk/priser"><span class="vt">Priser</span><span class="vu">modellen forklaret, uden binding</span></a>
+      <a href="https://smartpack.dk/viden"><span class="vt">Viden</span><span class="vu">240+ artikler om lager og e-handel</span></a>
+      <a href="https://smartpack.dk/om-os"><span class="vt">Om os</span><span class="vu">hvor det kom fra, og hvem der står bag</span></a>
+    </div>
+  </section>
+
+  <section id="konkurrence">
+    <div class="praemie">
+      <div class="eyebrow">Konkurrence</div>
+      <h2 class="stor">Vind en tur til<br>Kattegat Cup</h2>
+      <p class="manchet">Udfyld formularen, så er du med i lodtrækningen. Maillisten er frivillig.</p>
+      <p class="praemietekst">Kattegat Cup er et fodboldstævne i Grenaa, der har kørt siden 1986. De kalder det selv Danmarks hyggeligste fodboldstævne. Vi holder til i samme by og er sponsor af både Kattegat Cup og U12, så vi ved godt, hvad en tur derned betyder for en klub.</p>
+      <p class="praemietekst">Vil du ikke have mails, kan du afmelde dig igen med det samme. Der er et afmeld-link i hver eneste mail, og du er med i lodtrækningen uanset hvad. <a class="udlink" href="https://kgcup.dk/" rel="nofollow">Se hvad Kattegat Cup er &rsaquo;</a></p>
+    </div>
+
+    <!-- LEADFORMULAR: saet action til jeres eget endpoint, fx /api/lead.
+         Indtil da falder knappen tilbage til en mail til bundlinjeboost@smartpack.dk. -->
+    <form class="lead" method="post" action="" id="leadform">
+      <label>Navn<input name="navn" type="text" autocomplete="name" required></label>
+      <label>Klubben det gælder<input name="klub" type="text" placeholder="klubbens navn" required></label>
+      <label>Firma<input name="firma" type="text" autocomplete="organization" required></label>
+      <label>E-mail<input name="email" type="email" autocomplete="email" required></label>
+      <label>Telefon<input name="telefon" type="tel" autocomplete="tel"></label>
+      <div class="todelt">
+        <label>Ordrer om måneden (frivilligt)<input name="ordrer" type="text" inputmode="numeric" placeholder="cirka"></label>
+        <label>Hvor knækker det først? (frivilligt)
+          <select name="hvor">
+            <option value="">Vælg</option>
+            <option>Pluk</option><option>Pakning</option><option>Lagerstyring</option>
+            <option>Returer</option><option>Overblik mens dagen kører</option><option>Ved ikke endnu</option>
+          </select>
+        </label>
+      </div>
+      <label class="tjek"><input name="nyhedsbrev" type="checkbox" value="ja">
+        <span><b>Ja tak til SmartPacks mailliste.</b> Du kan afmelde dig igen med det samme, og der er et afmeld-link i hver mail.</span></label>
+      <button type="submit">Deltag i lodtrækningen</button>
+      <p class="minitekst">Alle der er med, får en hilsen fra os bagefter. Navn, klub, firma og kontaktoplysninger bruges til lodtrækningen, og til maillisten hvis du siger ja. De to sidste felter er frivillige og bruges kun, hvis du selv beder om at blive ringet op. [Indsæt dato for lodtrækning og konkurrencevilkår.]</p>
+    </form>
+  </section>
+
+</main>
+
+  <footer>
+    <div class="wm">Smart<b>Pack</b></div>
+    <p>500+ danske webshops og 3PL'er bruger det i dag. Bygget af e-købmænd, der selv har stået på lageret siden 2005.<br>
+    SmartPack ApS, Østerbrogade 67A, 8500 Grenaa · <a href="https://smartpack.dk">smartpack.dk</a></p>
+  </footer>
+</div>
+
+<script>
+  // Falder tilbage til en mail, saa lang tid formularen ikke har et endpoint
+  (function(){
+    var f = document.getElementById('leadform');
+    if(!f) return;
+    f.addEventListener('submit', function(e){
+      if (f.getAttribute('action')) return;
+      e.preventDefault();
+      var d = new FormData(f), l = [];
+      d.forEach(function(v,k){ if(v) l.push(k + ': ' + v); });
+      var krop = encodeURIComponent(l.join('\n') + '\n\nSendt fra messesiden.');
+      window.location.href = 'mailto:bundlinjeboost@smartpack.dk'
+        + '?subject=' + encodeURIComponent('Kattegat Cup - deltagelse og vores lager')
+        + '&body=' + krop;
+    });
+  })();
+</script>
+
+
+</body>
+</html>
