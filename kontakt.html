@@ -132,7 +132,7 @@
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1790054872">
+  <link rel="stylesheet" href="css/style.css?v=1790055681">
   <script src="js/theme-toggle.js"></script>
   <style>
     /* â”€â”€ Page hero â”€â”€ */
@@ -183,7 +183,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: .12em;
-      color: var(--accent);
+      color: var(--accent-text);
     }
     .contact-card__items {
       display: flex;
@@ -205,7 +205,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      color: var(--accent);
+      color: var(--accent-text);
     }
     .contact-item__text {
       display: flex;
@@ -230,7 +230,7 @@
       transition: color var(--t-fast);
     }
     .contact-item__value a:hover {
-      color: var(--accent);
+      color: var(--accent-text);
     }
     .contact-item__sub {
       font-size: .8rem;
@@ -251,7 +251,7 @@
       flex-shrink: 0;
     }
     .phone-status--open .phone-status__dot { background: var(--accent); }
-    .phone-status--open { color: var(--accent); }
+    .phone-status--open { color: var(--accent-text); }
     .phone-status--closed .phone-status__dot { background: var(--text-3); }
     .phone-status--closed { color: var(--text-3); }
 
@@ -306,7 +306,8 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1790054872"></script>
+<script src="js/header.js?v=1790055681"></script>
+<main id="main-content">
 
 <!-- PAGE HERO -->
 <section class="page-hero" id="hero">
@@ -383,7 +384,7 @@
               <span class="contact-item__value"><a href="tel:+4588202019">+45 88 20 20 19</a></span>
               <span class="phone-status phone-status--open js-phone-status-open" style="display:none"><span class="phone-status__dot"></span> Vi er her nu (9-16)</span>
               <span class="phone-status phone-status--closed js-phone-status-closed" style="display:none"><span class="phone-status__dot"></span> Lukket - &aring;bner kl. 9</span>
-              <span class="contact-item__sub" style="margin-top:.35rem">Superbrugere kan altid ringe GRATIS, ogs&aring; uden for &aring;bningstid, hvis det br&aelig;nder p&aring; tryk 9, g&oslash;r vi hvad vi kan. <a href="support" style="color:var(--accent);font-weight:700;text-decoration:none">Hvad er en superbruger? &rarr;</a></span>
+              <span class="contact-item__sub" style="margin-top:.35rem">Superbrugere kan altid ringe GRATIS, ogs&aring; uden for &aring;bningstid, hvis det br&aelig;nder p&aring; tryk 9, g&oslash;r vi hvad vi kan. <a href="support" style="color:var(--accent-text);font-weight:700;text-decoration:none">Hvad er en superbruger? &rarr;</a></span>
             </div>
           </div>
         </div>
@@ -402,7 +403,7 @@
       <p style="color:var(--text-2);max-width:520px;margin:.75rem auto 0">Folkene bag systemet, klar n&aring;r du har brug for os.</p>
     </div>
     <!-- Onboarding (3) -->
-    <div style="text-align:center;margin-bottom:.5rem;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)" class="reveal">Onboarding &amp; salg</div>
+    <div style="text-align:center;margin-bottom:.5rem;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-text)" class="reveal">Onboarding &amp; salg</div>
     <div class="reveal" style="display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:2.5rem">
       <div style="text-align:center;max-width:180px">
         <img src="assets/Martin Mortesen.jpeg" alt="Martin Mortensen" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid var(--border);margin-bottom:1rem" loading="lazy" width="2560" height="2560">
@@ -421,7 +422,7 @@
       </div>
     </div>
     <!-- Support (4) -->
-    <div style="text-align:center;margin-bottom:.5rem;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)" class="reveal">Support</div>
+    <div style="text-align:center;margin-bottom:.5rem;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-text)" class="reveal">Support</div>
     <div class="reveal" style="display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap">
       <div style="text-align:center;max-width:180px">
         <img src="assets/Lasse bonde.jpeg" alt="Lasse Bonde" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid var(--border);margin-bottom:1rem" loading="lazy" width="2560" height="2560">
@@ -469,10 +470,12 @@
   </div>
 </section>
 
-<div id="sp-footer"></div>
-<script src="js/footer.js?v=1790054872"></script>
+</main>
 
-  <script src="js/main.js?v=1790054872" defer></script>
+<div id="sp-footer"></div>
+<script src="js/footer.js?v=1790055681"></script>
+
+  <script src="js/main.js?v=1790055681" defer></script>
 
 </body>
 </html>

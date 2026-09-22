@@ -78,7 +78,7 @@
   <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=1790054872">
+  <link rel="stylesheet" href="css/style.css?v=1790055681">
   <script src="js/theme-toggle.js"></script>
 
   <style>
@@ -89,7 +89,7 @@
     .page-hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.1; margin: .75rem 0 1.25rem; }
     .page-hero__sub { font-size: 1.05rem; color: var(--text-2); max-width: 560px; line-height: 1.7; margin-bottom: 2rem; }
     .page-hero__badges { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
-    .page-hero__badges .hero__badge { position: static; display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem; font-weight: 600; padding: .45em 1em; border-radius: 999px; border: 1px solid rgba(62,207,142,.35); background: rgba(62,207,142,.1); color: var(--accent); animation: none; opacity: 1; transform: none; }
+    .page-hero__badges .hero__badge { position: static; display: inline-flex; align-items: center; gap: .4rem; font-size: .78rem; font-weight: 600; padding: .45em 1em; border-radius: 999px; border: 1px solid rgba(62,207,142,.35); background: rgba(62,207,142,.1); color: var(--accent-text); animation: none; opacity: 1; transform: none; }
 
     .int-hub { padding: 5rem 0 6rem; }
 
@@ -158,7 +158,7 @@
     .int-hub__how-text p { color: var(--text-2); line-height: 1.7; margin-bottom: 1.25rem; }
     .int-hub__how-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .75rem; }
     .int-hub__how-steps li { display: flex; align-items: center; gap: .75rem; font-size: .95rem; color: var(--text-2); }
-    .int-hub__how-steps li span { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: rgba(62,207,142,.15); color: var(--accent); font-size: .78rem; font-weight: 800; flex-shrink: 0; }
+    .int-hub__how-steps li span { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: rgba(62,207,142,.15); color: var(--accent-text); font-size: .78rem; font-weight: 800; flex-shrink: 0; }
     .int-hub__how-gif { position: relative; max-height: 380px; overflow: hidden; border-radius: 12px; }
     .int-hub__how-gif img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; border-radius: 12px; }
     @media (max-width: 760px) { .int-hub__how-inner { grid-template-columns: 1fr; } }
@@ -173,7 +173,7 @@
       display: block;
       font-size: 2rem;
       font-weight: 900;
-      color: var(--accent);
+      color: var(--accent-text);
       line-height: 1;
     }
     .int-hub__stat span {
@@ -196,7 +196,7 @@
       font-weight: 700;
       letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent-text);
     }
     .int-category__line {
       flex: 1;
@@ -302,7 +302,7 @@
     /* Guide text above grid */
     .int-hub__guide {
       font-size: .88rem;
-      color: var(--accent);
+      color: var(--accent-text);
       font-weight: 600;
       margin-bottom: 1.5rem;
       display: flex;
@@ -350,7 +350,7 @@
       border-radius: 50%;
       background: rgba(62,207,142,.15);
       border: 1px solid rgba(62,207,142,.3);
-      color: var(--accent);
+      color: var(--accent-text);
       font-size: .78rem;
       font-weight: 800;
       display: flex;
@@ -404,7 +404,7 @@
     .int-hub__api svg {
       width: 28px;
       height: 28px;
-      color: var(--accent);
+      color: var(--accent-text);
       flex-shrink: 0;
     }
     .int-hub__api p { margin: 0; font-size: .95rem; color: var(--text-2); }
@@ -434,7 +434,7 @@
       top: 0; left: 0; right: 0;
       background: rgba(62,207,142,.1);
       border-bottom: 1px solid rgba(62,207,142,.22);
-      color: var(--accent);
+      color: var(--accent-text);
       font-size: .58rem;
       font-weight: 700;
       padding: 3px 6px;
@@ -485,7 +485,7 @@
 <body>
 
 <div id="sp-header"></div>
-<script src="js/header.js?v=1790054872"></script>
+<script src="js/header.js?v=1790055681"></script>
 
 <main id="main-content">
 
@@ -997,8 +997,8 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
       <div>
         <p><strong>Bruger du noget vi ikke n&aelig;vner?</strong><br>Vi d&aelig;kker de mest g&aelig;ngse systemer, og resten kan kobles p&aring; via vores API. Har I en udvikler, kan I bygge det selv.</p>
-        <a href="integrationer/api" style="color:var(--accent);font-size:.9rem;font-weight:600">Se hvad API&apos;et kan &rarr;</a>
-        <a href="kontakt" style="color:var(--text-3);font-size:.9rem;font-weight:600;margin-left:1rem">Fort&aelig;l os hvad I bruger &rarr;</a>
+        <a href="integrationer/api" style="color:var(--accent-text);font-size:.9rem;font-weight:600">Se hvad API&apos;et kan &rarr;</a>
+        <a href="kontakt" style="color:var(--text-2);font-size:.9rem;font-weight:600;margin-left:1rem">Fort&aelig;l os hvad I bruger &rarr;</a>
       </div>
     </div>
 
@@ -1023,9 +1023,9 @@
 </main>
 
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1790054872"></script>
+<script src="js/footer.js?v=1790055681"></script>
 
-<script src="js/main.js?v=1790054872" defer></script>
+<script src="js/main.js?v=1790055681" defer></script>
 <script>
 // Search & filter
 const searchEl = document.getElementById('int-search');

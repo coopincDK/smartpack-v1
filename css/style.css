@@ -3189,7 +3189,7 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 }
 :root:not([data-theme="dark"]) .hero__bg { opacity: 0.04; }
 :root:not([data-theme="dark"]) .hero__badge {
-  background: rgba(20,60,40,0.85);
+  background: rgba(20,60,40,0.95);
   color: #3ecf8e;
   border-color: rgba(62,207,142,0.3);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);

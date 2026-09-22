@@ -35,7 +35,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1790054872">
+<link rel="stylesheet" href="css/style.css?v=1790055681">
 <script src="js/theme-toggle.js"></script>
 
 <script type="application/ld+json">
@@ -53,9 +53,9 @@
 <style>
 .ob-hero { padding: clamp(7rem,12vw,10rem) 0 5rem; background: var(--bg-1); }
 .ob-hero__grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
-.ob-hero__eyebrow { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:1rem; }
+.ob-hero__eyebrow { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent-text); margin-bottom:1rem; }
 .ob-hero__title { font-size:clamp(2.2rem,5vw,3.8rem); font-weight:900; line-height:1.08; letter-spacing:-.03em; margin-bottom:1.5rem; }
-.ob-hero__title em { font-style:normal; color:var(--accent); }
+.ob-hero__title em { font-style:normal; color:var(--accent-text); }
 .ob-hero__sub { font-size:1.05rem; color:var(--text-2); line-height:1.75; margin-bottom:2rem; }
 .ob-hero__ctas { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:0; }
 .ob-video-wrap { position:relative; aspect-ratio:16/9; border-radius:12px; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,.5); border:1px solid var(--border); display:block; background:#111; }
@@ -63,39 +63,40 @@
 .ob-quote-overlay { position:absolute; bottom:0; left:0; right:0; margin:0; padding:1rem 1.25rem 1rem 1.1rem; background:linear-gradient(to top, rgba(0,0,0,.92) 60%, transparent); border-left:3px solid var(--accent); pointer-events:none; }
 .ob-quote-overlay p { font-size:.82rem; color:#fff; line-height:1.55; font-style:italic; margin:0 0 .4rem; text-shadow:0 1px 3px rgba(0,0,0,.5); }
 .ob-quote-overlay footer { font-size:.72rem; }
-.ob-quote-overlay strong { color:var(--accent); font-weight:800; }
+.ob-quote-overlay strong { color:var(--accent-text); font-weight:800; }
 .ob-quote-overlay span { color:rgba(255,255,255,.6); }
 @media(max-width:900px) { .ob-hero__grid { grid-template-columns:1fr; gap:2.5rem; } }
 
 .stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin:3.5rem 0 0; }
 .stat-item { text-align:center; padding:1.5rem 1rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-md); }
-.stat-item strong { display:block; font-size:2rem; font-weight:900; color:var(--accent); line-height:1; margin-bottom:.35rem; }
+.stat-item strong { display:block; font-size:2rem; font-weight:900; color:var(--accent-text); line-height:1; margin-bottom:.35rem; }
 .stat-item span { font-size:.78rem; color:var(--text-3); text-transform:uppercase; letter-spacing:.06em; }
 
 .ob-section { padding:6rem 0; }
 .ob-section--alt { background:var(--bg-2); }
-.ob-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent); margin-bottom:.75rem; }
+.ob-label { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--accent-text); margin-bottom:.75rem; }
 .ob-h2 { font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:900; letter-spacing:-.025em; line-height:1.15; margin-bottom:1rem; }
 .ob-lead { font-size:1rem; color:var(--text-2); line-height:1.8; max-width:680px; }
 
 .phase-list { display:flex; flex-direction:column; gap:0; margin-top:3rem; }
 .phase { display:grid; grid-template-columns:4rem 1fr; gap:2rem; padding:2rem 0; border-bottom:1px solid var(--border); }
 .phase:last-child { border-bottom:none; }
-.phase__num { width:3.5rem; height:3.5rem; border-radius:50%; background:var(--accent); color:#fff; font-weight:900; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.ob-h4 { font-size:1rem; font-weight:800; margin-bottom:.35rem; }
+.phase__num { width:3.5rem; height:3.5rem; border-radius:50%; background:var(--accent-strong); color:#fff; font-weight:900; font-size:1rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .phase__num--muted { background:var(--bg-3); color:var(--text-2); border:2px solid var(--border); }
 .phase__body { padding-top:.35rem; }
 .phase__label { font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.5rem; display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
 .phase__badge { font-size:.65rem; font-weight:700; padding:.2em .65em; border-radius:999px; }
-.phase__badge--sp { background:rgba(62,207,142,.15); color:var(--accent); border:1px solid rgba(62,207,142,.3); }
-.phase__badge--kunde { background:rgba(59,130,246,.12); color:#3b82f6; border:1px solid rgba(59,130,246,.3); }
-.phase__badge--both { background:rgba(255,200,50,.1); color:#c8890a; border:1px solid rgba(255,200,50,.3); }
+.phase__badge--sp { background:rgba(62,207,142,.15); color:var(--accent-text); border:1px solid rgba(62,207,142,.3); }
+.phase__badge--kunde { background:rgba(59,130,246,.12); color:#1f5fd0; border:1px solid rgba(59,130,246,.3); }
+.phase__badge--both { background:rgba(255,200,50,.1); color:#8f5a00; border:1px solid rgba(255,200,50,.3); }
 .phase__tag { font-size:.7rem; color:var(--text-3); font-weight:600; }
 .phase__title { font-size:1.05rem; font-weight:800; margin-bottom:.5rem; }
 .phase__desc { font-size:.875rem; color:var(--text-2); line-height:1.7; margin:0 0 .5rem; }
 .phase__tasks { list-style:none; margin:.5rem 0 0; display:flex; flex-direction:column; gap:.3rem; }
 .phase__tasks li { font-size:.82rem; color:var(--text-2); padding-left:1.25rem; position:relative; line-height:1.5; }
-.phase__tasks li::before { content:'\2192'; position:absolute; left:0; color:var(--accent); }
-.phase__gate { margin-top:.85rem; background:rgba(239,68,68,.07); border:1px solid rgba(239,68,68,.22); border-radius:var(--r-sm); padding:.55rem .9rem; font-size:.78rem; color:#dc2626; display:flex; gap:.5rem; align-items:flex-start; line-height:1.5; }
+.phase__tasks li::before { content:'\2192'; position:absolute; left:0; color:var(--accent-text); }
+.phase__gate { margin-top:.85rem; background:rgba(239,68,68,.07); border:1px solid rgba(239,68,68,.22); border-radius:var(--r-sm); padding:.55rem .9rem; font-size:.78rem; color:#c81e1e; display:flex; gap:.5rem; align-items:flex-start; line-height:1.5; }
 
 .ob-infographic { width:100%; border-radius:var(--r-lg); display:block; margin:2.5rem 0 0; box-shadow:var(--shadow-md); }
 .ob-infographic--narrow { max-width:860px; margin-left:auto; margin-right:auto; }
@@ -108,25 +109,25 @@
 .ansvar-card ul { list-style:none; display:flex; flex-direction:column; gap:.8rem; }
 .ansvar-card li { font-size:.88rem; color:var(--text-2); padding-left:1.5rem; position:relative; line-height:1.55; }
 .ansvar-card li::before { content:'\2713'; position:absolute; left:0; font-weight:800; }
-.ansvar-card--sp li::before { color:var(--accent); }
+.ansvar-card--sp li::before { color:var(--accent-text); }
 .ansvar-card--kunde li::before { color:#3b82f6; }
 .ansvar-badge { display:inline-block; font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; padding:.3rem .75rem; border-radius:999px; margin-bottom:.6rem; }
-.ansvar-badge--sp { background:rgba(62,207,142,.15); color:var(--accent); }
-.ansvar-badge--kunde { background:rgba(59,130,246,.12); color:#3b82f6; }
+.ansvar-badge--sp { background:rgba(62,207,142,.15); color:var(--accent-text); }
+.ansvar-badge--kunde { background:rgba(59,130,246,.12); color:#1f5fd0; }
 
 .support-box { background:var(--bg); border:1px solid var(--border); border-radius:var(--r-xl); padding:3.5rem; display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; margin-top:3rem; }
 .support-box__headline { font-size:clamp(1.4rem,2.5vw,2rem); font-weight:900; margin-bottom:.75rem; }
-.support-box__headline em { font-style:normal; color:var(--accent); }
+.support-box__headline em { font-style:normal; color:var(--accent-text); }
 .support-box__body { font-size:.95rem; color:var(--text-2); line-height:1.75; margin:0; }
 .support-items { display:flex; flex-direction:column; gap:1.25rem; }
 .support-item { display:flex; gap:1rem; align-items:flex-start; }
 .support-item__icon { width:2.5rem; height:2.5rem; border-radius:var(--r-md); background:rgba(62,207,142,.1); border:1px solid rgba(62,207,142,.2); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; margin-top:.15rem; }
-.support-item__text h4 { font-size:.9rem; font-weight:700; margin:0 0 .2rem; }
+.support-item__text h3 { font-size:.9rem; font-weight:700; margin:0 0 .2rem; }
 .support-item__text p { font-size:.82rem; color:var(--text-2); margin:0; line-height:1.5; }
 
-.ob-cta { background:var(--accent); border-radius:var(--r-xl); padding:4.5rem; text-align:center; margin-top:4rem; }
+.ob-cta { background:var(--accent-strong); border-radius:var(--r-xl); padding:4.5rem; text-align:center; margin-top:4rem; }
 .ob-cta h2 { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:900; color:#fff; margin-bottom:.75rem; }
-.ob-cta p { color:rgba(255,255,255,.75); max-width:520px; margin:0 auto 2rem; font-size:1rem; }
+.ob-cta p { color:rgba(255,255,255,.92); max-width:520px; margin:0 auto 2rem; font-size:1rem; }
 .ob-cta-btn { display:inline-block; padding:.9rem 2.25rem; font-weight:800; font-size:1rem; border-radius:999px; text-decoration:none; background:#fff; color:#060f09; }
 .ob-cta-btn:hover { background:rgba(255,255,255,.9); }
 
@@ -154,12 +155,12 @@
   .ob-ifg-box--faelles{ border-color:#8b5cf6; }
   .ob-ifg-box--sp     { border-color:#3ecf8e; }
   .ob-ifg-icon { font-size:1.35rem; line-height:1; margin-bottom:.45rem; display:block; }
-  .ob-ifg-num  { font-size:.65rem; font-weight:800; opacity:.4; margin-bottom:.25rem; }
+  .ob-ifg-num  { font-size:.65rem; font-weight:800; opacity:.72; margin-bottom:.25rem; }
   .ob-ifg-title{ font-size:.88rem; font-weight:700; color:var(--text-1); line-height:1.4; }
   .ob-ifg-badge{ font-size:.62rem; font-weight:800; text-transform:uppercase; letter-spacing:.09em; margin-top:.45rem; }
-  .ob-ifg-badge--kunde  { color:#3b82f6; }
-  .ob-ifg-badge--faelles{ color:#8b5cf6; }
-  .ob-ifg-badge--sp     { color:#3ecf8e; }
+  .ob-ifg-badge--kunde  { color:#1f5fd0; }
+  .ob-ifg-badge--faelles{ color:#7c3aed; }
+  .ob-ifg-badge--sp     { color:var(--accent-text); }
   .ob-ifg-hint { font-size:.7rem; color:var(--text-3); margin-top:1rem; text-align:center; }
   /* Modal */
   .ob-modal-bg { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:9000; display:flex; align-items:center; justify-content:center; padding:1.25rem; backdrop-filter:blur(3px); }
@@ -176,7 +177,7 @@
   .ob-modal__desc  { font-size:.92rem; color:var(--text-2); line-height:1.7; margin-bottom:1rem; }
   .ob-modal__tasks { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:.4rem; }
   .ob-modal__tasks li { display:flex; gap:.6rem; font-size:.88rem; color:var(--text-2); line-height:1.5; }
-  .ob-modal__tasks li::before { content:'\2713'; color:var(--accent); font-weight:800; flex-shrink:0; }
+  .ob-modal__tasks li::before { content:'\2713'; color:var(--accent-text); font-weight:800; flex-shrink:0; }
   @media(max-width:700px){
     .ob-flow-row { flex-direction:column; }
     .ob-flow-sep { width:auto; height:1.1rem; }
@@ -187,7 +188,8 @@
 <body>
 
 <div id="sp-header"></div>
-<script src="js/header.js?v=1790054872"></script>
+<script src="js/header.js?v=1790055681"></script>
+<main id="main-content">
 
 <!-- HERO -->
 <section class="ob-hero">
@@ -243,28 +245,28 @@
 
       <!-- Raekke 1: trin 1-4 -->
       <div class="ob-flow-row">
-        <button class="ob-ifg-box ob-ifg-box--faelles" data-step="1" aria-label="Trin 1">
+        <button class="ob-ifg-box ob-ifg-box--faelles" data-step="1">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F91D;</div>
           <div class="ob-ifg-num">Trin 1</div>
           <div class="ob-ifg-title">Onboarding og introm&oslash;det</div>
           <div class="ob-ifg-badge ob-ifg-badge--faelles">SmartPack + Jer</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--faelles" data-step="2" aria-label="Trin 2">
+        <button class="ob-ifg-box ob-ifg-box--faelles" data-step="2">
           <div class="ob-ifg-icon" aria-hidden="true">&#x2699;&#xFE0F;</div>
           <div class="ob-ifg-num">Trin 2</div>
           <div class="ob-ifg-title">Oprettelse i systemet</div>
           <div class="ob-ifg-badge ob-ifg-badge--faelles">SmartPack + Jer</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--sp" data-step="3" aria-label="Trin 3">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="3">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F517;</div>
           <div class="ob-ifg-num">Trin 3</div>
           <div class="ob-ifg-title">Systemforbindelsen</div>
           <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="4" aria-label="Trin 4">
+        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="4">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F4E6;</div>
           <div class="ob-ifg-num">Trin 4</div>
           <div class="ob-ifg-title">Forberedelse af lageret</div>
@@ -274,28 +276,28 @@
 
       <!-- Raekke 2: trin 5-8 -->
       <div class="ob-flow-row">
-        <button class="ob-ifg-box ob-ifg-box--sp" data-step="5" aria-label="Trin 5">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="5">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F3ED;</div>
           <div class="ob-ifg-num">Trin 5</div>
           <div class="ob-ifg-title">Installation p&aring; lageret</div>
           <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 1</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="6" aria-label="Trin 6">
+        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="6">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F5A8;&#xFE0F;</div>
           <div class="ob-ifg-num">Trin 6</div>
           <div class="ob-ifg-title">Udskrift og ops&aelig;tning af lokationer</div>
           <div class="ob-ifg-badge ob-ifg-badge--kunde">Det g&oslash;r I - Onsite dag 1</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--sp" data-step="7" aria-label="Trin 7">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="7">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F4F2;</div>
           <div class="ob-ifg-num">Trin 7</div>
           <div class="ob-ifg-title">Indscanning, opl&aelig;ring og test</div>
           <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 1</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--sp" data-step="8" aria-label="Trin 8">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="8">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F4BB;</div>
           <div class="ob-ifg-num">Trin 8</div>
           <div class="ob-ifg-title">Go-live gennemgang</div>
@@ -305,28 +307,28 @@
 
       <!-- Raekke 3: trin 9-12 -->
       <div class="ob-flow-row">
-        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="9" aria-label="Trin 9">
+        <button class="ob-ifg-box ob-ifg-box--kunde" data-step="9">
           <div class="ob-ifg-icon" aria-hidden="true">&#x2705;</div>
           <div class="ob-ifg-num">Trin 9</div>
           <div class="ob-ifg-title">Lagerstatus og validering</div>
           <div class="ob-ifg-badge ob-ifg-badge--kunde">Det g&oslash;r I</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--sp" data-step="10" aria-label="Trin 10">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="10">
           <div class="ob-ifg-icon" aria-hidden="true">&#x26A1;</div>
           <div class="ob-ifg-num">Trin 10</div>
           <div class="ob-ifg-title">Overf&oslash;rsel og test i produktion</div>
           <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 2+3</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--sp" data-step="11" aria-label="Trin 11">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="11">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F680;</div>
           <div class="ob-ifg-num">Trin 11</div>
           <div class="ob-ifg-title">Endelig overdragelse og live</div>
           <div class="ob-ifg-badge ob-ifg-badge--sp">SmartPack - Onsite dag 2+3</div>
         </button>
         <div class="ob-flow-sep" aria-hidden="true">&#8594;</div>
-        <button class="ob-ifg-box ob-ifg-box--sp" data-step="12" aria-label="Trin 12">
+        <button class="ob-ifg-box ob-ifg-box--sp" data-step="12">
           <div class="ob-ifg-icon" aria-hidden="true">&#x1F4CA;</div>
           <div class="ob-ifg-num">Trin 12</div>
           <div class="ob-ifg-title">Vi f&oslash;lger op og glemmer jer ikke</div>
@@ -359,7 +361,7 @@
     <div style="background:var(--bg);border:2px solid var(--accent);border-radius:16px;padding:2rem 2.5rem;display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:start">
       <span style="font-size:2rem;line-height:1">&#x1F4CB;</span>
       <div>
-        <p style="font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin:0 0 .5rem">F&oslash;r vi skriver kontrakt</p>
+        <p style="font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-text);margin:0 0 .5rem">F&oslash;r vi skriver kontrakt</p>
         <p style="font-size:1.05rem;font-weight:800;color:var(--text-1);margin:0 0 .75rem;line-height:1.4">F&oslash;r vi skriver kontrakt, s&aelig;tter vi os grundigt ind i jeres forretning og behov. I f&aring;r en fast opstartspris, inden I skriver under p&aring; noget.</p>
         <p style="font-size:.9rem;color:var(--text-2);line-height:1.75;margin:0 0 .6rem">Vi gennemg&aring;r jeres setup og laver et konkret tilbud, der d&aelig;kker hele opstarten, inkl. l&oslash;bende sparring og opl&aelig;ring af jeres superbrugere. Vi aftaler de store linjer p&aring; forh&aring;nd, og holder vi os inden for dem, er prisen fast. Det betyder ingen ubehagelige overraskelser undervejs eller i driften efterf&oslash;lgende.</p>
         <p style="font-size:.9rem;color:var(--text-2);line-height:1.75;margin:0">Kommer der &oslash;nsker eller behov for justeringer med tiden, kan I ofte selv klare dem. Som en del af vores supportaftale guider vi altid gerne jeres superbrugere til, hvordan I selv l&oslash;ser det. Skal vi i stedet s&aelig;tte nye tiltag op for jer, aftaler vi altid en fast pris, inden vi g&aring;r i gang. S&aring; ved I pr&aelig;cis, hvad I f&aring;r, og hvad det koster.</p>
@@ -506,26 +508,26 @@
 <section style="background:var(--bg-2);padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
   <div class="container">
     <div style="max-width:760px;margin:0 auto">
-      <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:1.25rem">Det her oplever kunder typisk efter onboarding</div>
+      <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-text);margin-bottom:1.25rem">Det her oplever kunder typisk efter onboarding</div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem 2.5rem;margin-bottom:1.75rem">
         <div style="display:flex;gap:.6rem;align-items:baseline">
-          <span style="color:var(--accent);font-weight:800;flex-shrink:0">&#10003;</span>
+          <span style="color:var(--accent-text);font-weight:800;flex-shrink:0">&#10003;</span>
           <span style="font-size:.95rem;font-weight:600;color:var(--text-1)">Straks efter live</span>
         </div>
         <div style="display:flex;gap:.6rem;align-items:baseline">
-          <span style="color:var(--accent);font-weight:800;flex-shrink:0">&#10003;</span>
+          <span style="color:var(--accent-text);font-weight:800;flex-shrink:0">&#10003;</span>
           <span style="font-size:.95rem;font-weight:600;color:var(--text-1)">Drift uden stop under skiftet</span>
         </div>
         <div style="display:flex;gap:.6rem;align-items:baseline">
-          <span style="color:var(--accent);font-weight:800;flex-shrink:0">&#10003;</span>
+          <span style="color:var(--accent-text);font-weight:800;flex-shrink:0">&#10003;</span>
           <span style="font-size:.95rem;font-weight:600;color:var(--text-1)">Medarbejdere selvk&oslash;rende hurtigt</span>
         </div>
         <div style="display:flex;gap:.6rem;align-items:baseline">
-          <span style="color:var(--accent);font-weight:800;flex-shrink:0">&#10003;</span>
+          <span style="color:var(--accent-text);font-weight:800;flex-shrink:0">&#10003;</span>
           <span style="font-size:.95rem;font-weight:600;color:var(--text-1)">F&aelig;rre fejl fra dag &eacute;t</span>
         </div>
       </div>
-      <a href="cases" style="font-size:.85rem;font-weight:700;color:var(--accent)">Se andre ecoms erfaringer med SmartPack &rarr;</a>
+      <a href="cases" style="font-size:.85rem;font-weight:700;color:var(--accent-text)">Se andre ecoms erfaringer med SmartPack &rarr;</a>
     </div>
   </div>
 </section>
@@ -578,7 +580,7 @@
 
       <!-- EFTER GO-LIVE -->
       <div style="margin-top:2.5rem;padding:2rem;background:var(--bg-2);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:var(--r-lg)">
-        <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:.75rem">Efter go-live</div>
+        <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-text);margin-bottom:.75rem">Efter go-live</div>
         <div style="font-size:1.1rem;font-weight:800;color:var(--text-1);margin-bottom:1rem">I er ikke alene. Ikke engang lidt.</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem">
           <div style="display:flex;flex-direction:column;gap:.25rem">
@@ -648,7 +650,7 @@
   <div class="container">
     <div class="ob-label">Systemintegration</div>
     <h2 class="ob-h2">S&aring;dan kobler systemerne sig sammen</h2>
-    <p class="ob-lead">SmartPack forbinder sig til jeres eksisterende systemer via API. Ingen manuel dataoverf&oslash;rsel. Ordrer, varer og lagerstatus synkroniserer automatisk. <a href="integrationer" style="color:var(--accent);font-weight:600;white-space:nowrap">Se alle integrationer &rarr;</a></p>
+    <p class="ob-lead">SmartPack forbinder sig til jeres eksisterende systemer via API. Ingen manuel dataoverf&oslash;rsel. Ordrer, varer og lagerstatus synkroniserer automatisk. <a href="integrationer" style="color:var(--accent-text);font-weight:600;white-space:nowrap">Se alle integrationer &rarr;</a></p>
     <img src="assets/setup-flow-systemer.png" alt="Diagram over systemforbindelser i SmartPack setup" class="ob-infographic ob-infographic--narrow" loading="lazy">
     <p style="font-size:.8rem;color:var(--text-3);margin-top:.85rem;text-align:center">Eksempel med Shopify (B2C/B2B/POS) og ERP. SmartPack sidder i midten: varedata og ordrer ind, trackingnumre og lageropdateringer ud, fragtlabels printes automatisk.</p>
   </div>
@@ -662,27 +664,27 @@
         <div class="ob-label">Efter overdragelse</div>
         <div class="support-box__headline">Fri support til jeres <em>2 superbrugere</em></div>
         <p class="support-box__body">Jeres 2 udvalgte superbrugere har fri og ubegr&aelig;nset support s&aring; l&aelig;nge I er kunder, inkl. adgang til udvidet SOS-support hvis der er et driftskritisk problem i SmartPack som ikke kan omg&aring;s eller kan afvente til vores normale support &aring;bner.</p>
-        <a href="support" style="font-size:.82rem;color:var(--accent);font-weight:700;text-decoration:none;display:inline-block;margin-top:.5rem">Se hvad en superbruger er &rarr;</a>
+        <a href="support" style="font-size:.82rem;color:var(--accent-text);font-weight:700;text-decoration:none;display:inline-block;margin-top:.5rem">Se hvad en superbruger er &rarr;</a>
       </div>
       <div class="support-items">
         <div class="support-item">
           <div class="support-item__icon">&#128222;</div>
           <div class="support-item__text">
-            <h4>Telefonsupport  -  88 20 20 19, tast 2</h4>
+            <h3 class="ob-h4">Telefonsupport  -  88 20 20 19, tast 2</h3>
             <p>Ring direkte til SmartPack. Vi kender jeres setup og kan hj&aelig;lpe med det samme.</p>
           </div>
         </div>
         <div class="support-item">
           <div class="support-item__icon">&#128196;</div>
           <div class="support-item__text">
-            <h4>Supportunivers og FAQ</h4>
+            <h3 class="ob-h4">Supportunivers og FAQ</h3>
             <p>Komplet dokumentation, videoer og guides tilg&aelig;ngelige 24/7 p&aring; <a href="https://support.smartpack.dk" target="_blank" rel="noopener">support.smartpack.dk</a>.</p>
           </div>
         </div>
         <div class="support-item">
           <div class="support-item__icon">&#128200;</div>
           <div class="support-item__text">
-            <h4>Opf&oslash;lgningsm&oslash;de efter 1 m&aring;ned</h4>
+            <h3 class="ob-h4">Opf&oslash;lgningsm&oslash;de efter 1 m&aring;ned</h3>
             <p>Vi tjekker ind efter 1 m&aring;ned som standard. Derudover opf&oslash;lgning efter 3 m&aring;neder og 1 &aring;r efter behov. I perioden lige efter go-live har vi ekstra fokus p&aring; jer.</p>
           </div>
         </div>
@@ -702,8 +704,10 @@
   </div>
 </section>
 
+</main>
+
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1790054872"></script>
+<script src="js/footer.js?v=1790055681"></script>
 <script src="js/main.js" defer></script>
 
 <script>
@@ -745,7 +749,7 @@ var steps = [
     { title:'Vi f&oslash;lger op og glemmer jer ikke', badge:'SmartPack', cls:'sp',
       desc:'I perioden efter go-live har vi ekstra fokus p&aring; jer. Statusm&oslash;de efter 1 m&aring;ned er standard. Vi laver ogs&aring; opf&oslash;lgning efter 3 m&aring;neder og 1 &aring;r efter behov.',
       tasks:['Gennemgang af brug og performance efter 1 m&aring;ned','Opf&oslash;lgning efter 3 m&aring;neder (efter behov)','&Aring;rlig opf&oslash;lgning (efter behov)','Justeringer og optimeringer aftales l&oslash;bende'],
-      cta:'Har I brug for hj&aelig;lp? Jeres superbrugere kan altid r&aelig;kke ud til os. <a href="support" style="color:var(--accent);font-weight:700;text-decoration:none">L&aelig;s mere om superbrugere &rarr;</a>' }
+      cta:'Har I brug for hj&aelig;lp? Jeres superbrugere kan altid r&aelig;kke ud til os. <a href="support" style="color:var(--accent-text);font-weight:700;text-decoration:none">L&aelig;s mere om superbrugere &rarr;</a>' }
   ];
 
 
@@ -785,6 +789,6 @@ var steps = [
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 })();
 </script>
-<script src="js/yt-facade.js?v=1790054872" defer></script>
+<script src="js/yt-facade.js?v=1790055681" defer></script>
 </body>
 </html>

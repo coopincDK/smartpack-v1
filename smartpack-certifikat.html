@@ -14,7 +14,7 @@
   <meta property="og:image:height" content="630">
   <meta name="description" content="SmartPack Certifikat dokumenterer brug af certificeret WMS hos din virksomhed. Download og del dit certifikat her.">
   <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png" />
-  <link rel="stylesheet" href="css/style.css?v=1790054872" />
+  <link rel="stylesheet" href="css/style.css?v=1790055681" />
   <script src="js/theme-toggle.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
@@ -38,7 +38,7 @@
     .cert-toolbar a:hover { color: var(--text-1); }
 
     .cert-print-btn {
-      background: var(--accent);
+      background: var(--accent-strong);
       color: #fff;
       border: none;
       padding: .6rem 1.4rem;
@@ -134,7 +134,7 @@
       font-weight: 600;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.3);
+      color: rgba(255,255,255,.72);
     }
 
     /* Body */
@@ -171,7 +171,7 @@
       font-weight: 700;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--accent-text);
       margin-bottom: .5rem;
     }
 
@@ -250,9 +250,8 @@
 
     .cert-edit-hint {
       font-size: .7rem;
-      color: var(--accent);
+      color: var(--accent-text);
       margin-bottom: 2rem;
-      opacity: .7;
     }
 
     /* Brødtekst */
@@ -305,7 +304,7 @@
       font-family: 'Inter', sans-serif;
       font-size: 1.15rem;
       font-weight: 800;
-      color: var(--accent);
+      color: var(--accent-text);
       display: block;
       letter-spacing: -.02em;
     }
@@ -620,8 +619,8 @@
 <body>
 
 <div id="site-header"></div>
-<script src="js/header.js?v=1790054872" defer></script>
-<script src="js/footer.js?v=1790054872" defer></script>
+<script src="js/header.js?v=1790055681" defer></script>
+<script src="js/footer.js?v=1790055681" defer></script>
 
 <!-- Toolbar -->
 <div class="cert-toolbar no-print">
@@ -629,7 +628,7 @@
   <button class="cert-print-btn" onclick="window.print()">&#8595;&nbsp; Gem som PDF</button>
 </div>
 
-<div class="cert-wrap">
+<main class="cert-wrap" id="main-content">
   <div class="cert-card">
 
     <!-- Hjørne-ornament-hjelpere -->
@@ -730,7 +729,7 @@
     </div>
 
   </div>
-</div>
+</main>
 
 <div id="site-footer"></div>
 
