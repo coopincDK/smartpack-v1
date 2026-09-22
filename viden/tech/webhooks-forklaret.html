@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1790041365">
+  <link rel="stylesheet" href="../../css/style.css?v=1790042121">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -61,7 +61,7 @@
   <header class="article-header">
     <span class="article-cat-badge">Tech &amp; Integration</span>
     <h1 class="article-title">Webhooks forklaret: realtidsnotifikationer til dit lagersystem</h1>
-  <div class="article-meta"><time datetime="2025-04-30">April 2025</time><span>SmartPack</span><span>~7 min</span></div>
+  <div class="article-meta"><time datetime="2025-04-30">April 2025</time><span>opdateret september 2026</span><span>SmartPack</span><span>~7 min</span></div>
   </header>
   <div class="article-body" data-pagefind-body="true">
 <img class="article-hero-img" src="../../assets/viden/artikel_billeder/55-besked-sendt-mellem-systemer.svg" alt="API polling med fire forespørgsler sammenlignet med én webhook-besked" loading="lazy" style="width:100%;height:auto;border-radius:10px;margin:0 0 2rem;display:block;background:#fff;" width="960" height="420">
@@ -176,5 +176,5 @@
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er en webhook?","acceptedAnswer":{"@type":"Answer","text":"En push-notifikation fra et eksternt system (fx Shopify) til dit system. Shopify sender automatisk en HTTP POST til din URL, når en ordre oprettes, ændres eller annulleres."}},{"@type":"Question","name":"Hvorfor kræver webhooks HTTPS?","acceptedAnswer":{"@type":"Answer","text":"Uden HTTPS kan data aflyttes, og HMAC-signaturen kan ikke betros. Alle seriøse platforme kræver HTTPS-endpoints."}},{"@type":"Question","name":"Hvad sker der, hvis min webhook-handler er for langsom?","acceptedAnswer":{"@type":"Answer","text":"Shopify anser leveringen som fejlet og forsøger retry. Hvis din handler er langsom, risikerer du at modtage og behandle samme event to gange."}},{"@type":"Question","name":"Hvad er HMAC-SHA256, og hvorfor er det vigtigt?","acceptedAnswer":{"@type":"Answer","text":"En kryptografisk signatur der verificerer at en webhook er sendt af Shopify og ikke er manipuleret undervejs. Uden validering kan hvem som helst sende falske events."}},{"@type":"Question","name":"Kan jeg teste webhooks lokalt?","acceptedAnswer":{"@type":"Answer","text":"Ja, med tunneling-værktøjer som ngrok eller Tailscale Funnel. De giver et offentligt HTTPS-endpoint der tunneler til din lokale server. Brug til udvikling, aldrig i produktion."}}]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Webhooks forklaret: realtidsnotifikationer til dit lagersystem", "description": "Hvad er webhooks? Lær forskellen på API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.", "datePublished": "2025-04-30", "dateModified": "2025-04-30", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/webhooks-forklaret", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/webhooks-forklaret"}, "inLanguage": "da-DK"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Webhooks forklaret: realtidsnotifikationer til dit lagersystem", "description": "Hvad er webhooks? Lær forskellen på API og webhook, hvad HMAC-SHA256 er, hvad webhook-tab koster, og hvordan du bygger en robust webhook-modtager.", "datePublished": "2025-04-30", "dateModified": "2026-09-15", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/webhooks-forklaret", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/webhooks-forklaret"}, "inLanguage": "da-DK"}</script>
 </body></html>
