@@ -8,18 +8,18 @@
   <meta property="og:type" content="article">
   <meta property="og:title" content="WMS vs Shopify: kan Shopify klare lageret">
   <meta property="og:url" content="https://smartpack.dk/viden/tech/wms-vs-shopify">
-  <meta property="og:description" content="Shopify har et lager-modul. Men kan det erstatte et WMS? Laer hvad Shopify kan, hvad det ikke kan, og hvornår du har brug for begge.">
+  <meta property="og:description" content="Shopify har et lager-modul. Men kan det erstatte et WMS? Her står hvad Shopify kan, hvad det ikke kan, og hvordan de to hænger sammen.">
   <meta property="og:image" content="https://smartpack.dk/assets/viden/artikel_billeder/60-webshop-modul-paa-skaerm.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta name="description" content="Shopify har et lager-modul. Men kan det erstatte et WMS? Laer hvad Shopify kan, hvad det ikke kan, og hvornår du har brug for begge.">
+  <meta name="description" content="Shopify har et lager-modul. Men kan det erstatte et WMS? Her står hvad Shopify kan, hvad det ikke kan, og hvordan de to hænger sammen.">
   <link rel="canonical" href="https://smartpack.dk/viden/tech/wms-vs-shopify">
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/png" href="../../assets/favicon-smartpack0.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1790054170">
+  <link rel="stylesheet" href="../../css/style.css?v=1790054872">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -65,17 +65,17 @@
   </header>
   <div class="article-body" data-pagefind-body="true">
 <img class="article-hero-img" src="../../assets/viden/artikel_billeder/60-webshop-modul-paa-skaerm.jpg" alt="Bærbar med lageroversigt på et højt bord i lagerhallen" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;" width="1040" height="580">
-    <p>Shopify har et lager-modul. Det tæller enheder og sender ordrer. Det er ikke et WMS. Mange vokser fra 30 til 150 ordrer/dag og stoler p&aring; Shopify til lagerstyring. Det er præcis det tidspunkt, fejlene eskalerer.</p>
-    <p>Her er hvad Shopify kan, hvad det ikke kan, og hvornår du har brug for begge.</p>
+    <p>Shopify har et lager-modul. Det tæller enheder og sender ordrer. Det er ikke et WMS.</p>
+    <p>Her står funktion for funktion hvad Shopify kan, hvad det ikke kan, og hvordan de to hænger sammen. Skal I finde ud af om I er nået dertil hvor det begynder at koste, står <a href="../beslutning/hvornaar-shopify-ikke-er-nok">de syv tegn på at Shopifys lagerdel ikke er nok</a> i en artikel for sig.</p>
 
     <h2>Hvad Shopify gør godt</h2>
     <ul>
-      <li>Beholdnings-tracking per produkt og variant</li>
-      <li>Automatisk beholdningsreduktion ved salg</li>
-      <li>Produktkatalog-administration</li>
-      <li>Simpel ordrehåndtering og fulfillment-markering</li>
+      <li>Holder styr på antallet pr. produkt og variant</li>
+      <li>Trækker automatisk ned i antallet ved salg</li>
+      <li>Styring af produktkataloget</li>
+      <li>Simpel ordrehåndtering, og en ordre kan markeres som sendt</li>
       <li>Inventory locations (<a href="../vaekst/hvornaar-flere-lokationer">flere lagerlokationer</a> p&aring; overordnet niveau)</li>
-      <li>Basal rapportering p&aring; beholdning og salg</li>
+      <li>Simpel rapportering p&aring; beholdning og salg</li>
     </ul>
 
     <h2>Hvad Shopify ikke kan (og et WMS kan)</h2>
@@ -84,35 +84,24 @@
       <thead><tr><th>Funktion</th><th>Shopify</th><th>WMS</th></tr></thead>
       <tbody>
         <tr><td>Lokationsstyring (hylde, gang, zone)</td><td>Nej</td><td>Ja</td></tr>
-        <tr><td>Plukrute-optimering (TSP)</td><td>Nej</td><td>Ja</td></tr>
+        <tr><td>Plukrute der samler turen</td><td>Nej</td><td>Ja</td></tr>
         <tr><td>Batch picking</td><td>Nej</td><td>Ja</td></tr>
-        <tr><td>Scanning-verifikation</td><td>Nej</td><td>Ja</td></tr>
+        <tr><td>Scanning der bekræfter varen</td><td>Nej</td><td>Ja</td></tr>
         <tr><td>Modtagelsesbekræftelse</td><td>Nej</td><td>Ja</td></tr>
         <tr><td>Cyklisk optælling</td><td>Nej</td><td>Ja</td></tr>
-        <tr><td>Medarbejder-performance tracking</td><td>Nej</td><td>Ja</td></tr>
+        <tr><td>Måling af hvad der bliver plukket pr. time</td><td>Nej</td><td>Ja</td></tr>
       </tbody>
     </table>
     <p>Shopify kan f&oslash;lge med, s&aring; l&aelig;nge det er den samme person der pakker, og vedkommende kender lageret. Nummer to mand, eller en ferie, er der hvor manglerne begynder at koste: fejlpluk, spildt gangtid og manglende <a href="../drift/sporbarhed-paa-lageret">sporbarhed</a>.</p>
+    <p>Hvad de fejl koster i kroner, står i <a href="../okonomi/fejlomkostninger">hvad en forkert ordre koster</a>.</p>
 
-    <h2>Hvad koster det at blive i Shopify for l&aelig;nge?</h2>
-    <p>Regn det p&aring; jeres egne tal. Den post der fylder mest, er de ordrer der g&aring;r forkert ud, fordi ingen bekr&aelig;fter hvad der endte i kassen.</p>
-    <p>P&aring; lagre uden scanning ser vi typisk en fejlrate p&aring; 2,4 til 4,2 procent. Ved 200 ordrer om dagen er det fem til otte forkerte ordrer, hver dag. En pakkefejl koster 300 til 590 kr. i h&aring;rde omkostninger: kundeservice, en ny forsendelse, h&aring;ndtering, og enten returfragt eller den vare der m&aring; afskrives.</p>
-    <p>Det bliver rundt regnet 375.000 til 1,2 mio. kr. om &aring;ret ved 250 arbejdsdage. Oveni kommer den kunde der ikke kommer igen, og den post afh&aelig;nger af hvordan fejlen bliver h&aring;ndteret.</p>
-    <p><strong>Kilde:</strong> Fejlraten er SmartPacks egne observationer fra kundelagre uden scanning. Omkostningen pr. pakkefejl er fra E-logistik Guide 2026, udgivet af Dansk Erhverv i samarbejde med SmartPack.</p>
+    <h2>Hvornår er Shopify tilstrækkeligt?</h2>
+    <p>Der er ikke en ordregrænse hvor det skifter. Det afhænger af hvor meget der ligger i hovedet på folk i stedet for i systemet. Er det den samme person der pakker hver dag, og kender vedkommende lageret, kan Shopify følge med.</p>
+    <p>Skal en ny kollega kunne plukke rigtigt uden at spørge, kan det ikke. <a href="../beslutning/hvornaar-shopify-ikke-er-nok">De syv tegn står her</a>, sammen med regnestykket på hvad det koster at vente.</p>
 
-    <h2>Hvorn&aring;r er Shopify tilstr&aelig;kkeligt?</h2>
-    <p>Der er ikke en ordregr&aelig;nse hvor det skifter. Det afh&aelig;nger af hvor meget der ligger i hovedet p&aring; folk i stedet for i systemet.</p>
-    <ul>
-      <li>Der er &eacute;n person der pakker, og vedkommende kender lageret</li>
-      <li>Sortimentet er ensartet, og der er f&aring; varianter at forveksle</li>
-      <li>I kender jeres fejlrate, og I kan leve med den</li>
-      <li>Ingen bliver stoppet af at skulle vente p&aring; at finde en vare</li>
-    </ul>
-    <p>Passer det hele, er der ingen grund til at skifte noget. Er der bare &eacute;t punkt I ikke kan svare ja til, er det v&aelig;rd at regne p&aring;. <a href="../beslutning/hvornaar-shopify-ikke-er-nok">Se de syv tegn p&aring; at Shopifys lagerdel ikke er nok</a>.</p>
-
-    <h2>Shopify WMS: de to modeller</h2>
-    <p><strong>Model 1: Shopify Fulfillment Network (SFN)</strong><br>Shopifys eget 3PL-netværk i USA. Du sender varer til SFN, og de h&aring;ndterer pluk og pakning. Det findes prim&aelig;rt i USA og har begr&aelig;nset d&aelig;kning i Danmark og resten af Europa.</p>
-    <p><strong>Model 2: WMS + Shopify integration</strong><br>Du beholder kontrol over dit lager. WMS-system h&aring;ndterer operationerne. Shopify er salgskanal. Integration forbinder de to. Det er den model der giver mest kontrol over hvad der sker p&aring; lageret.</p>
+    <h2>To måder at løse det</h2>
+    <p><strong>1. Andre pakker for jer.</strong> Varerne står hos en <a href="../../3pl">3PL</a>, og de plukker og pakker. I slipper lageret, men I giver også kontrollen med det fra jer, og I betaler pr. ordre.</p>
+    <p><strong>2. I beholder lageret og lægger et WMS ind under Shopify.</strong> Shopify er der hvor kunderne køber. Lagersystemet styrer hylder, pluk, scanning og modtagelse: ordrer ind, beholdning tilbage, fragtlabel og tracking retur. Det er den model der giver mest kontrol over hvad der sker på lageret.</p>
 
     <h2>Typiske fejl</h2>
     <ul>
@@ -125,7 +114,7 @@
     <ol>
       <li><strong>Forbliv i Shopify, tilføj WMS:</strong> Du behøver ikke flytte din webshop. WMS integreres med Shopify og tilføjer lager-laget.</li>
       <li><strong>Brug Shopify til hvad det er godt til:</strong> Salg, kunderelationer, betalinger og produktkatalog. WMS til lager-operationer.</li>
-      <li><strong>Integrer via færdigbygget connector:</strong> Undgå custom-integration. Shopify-WMS connectorer er standardvare for moderne WMS.</li>
+      <li><strong>Brug en færdig integration:</strong> Undgå at få bygget en fra bunden. Forbindelsen mellem Shopify og et lagersystem er standardvare i dag.</li>
     </ol>
 
     <h2>SmartPack</h2>
@@ -142,7 +131,7 @@
     <details class="faq-item"><summary>Kan Shopify erstatte et WMS?</summary><div class="faq-item__body"><p>Nej. Shopify t&aelig;ller enheder og sender ordrer, men det har ikke hyldeplaceringer, plukruter eller scanning i plukket. Om det er et problem afh&aelig;nger af hvor meget der ligger i hovedet p&aring; folk i stedet for i systemet.</p></div></details>
     <details class="faq-item"><summary>Hvad er Shopify Inventory Locations?</summary><div class="faq-item__body"><p>Shopify Inventory Locations er overordnede lager-enheder (fx &quot;Lager København&quot; og &quot;Butik Aarhus&quot;). De er p&aring; bygningsniveau og kan ikke erstatte hylde-niveau lokationsstyring i et WMS.</p></div></details>
     <details class="faq-item"><summary>Kan jeg beholde Shopify og tilføje WMS?</summary><div class="faq-item__body"><p>Ja. Det er den anbefalede model. Shopify h&aring;ndterer salg, WMS h&aring;ndterer lager-operationer. De integreres via API.</p></div></details>
-    <details class="faq-item"><summary>Hvad er Shopify Fulfillment Network?</summary><div class="faq-item__body"><p>Shopifys eget 3PL-netværk. Primært tilgængeligt i USA. Hvis din virksomhed er i Danmark/Europa, er WMS plus Shopify-integration den praktiske løsning.</p></div></details>
+    <details class="faq-item"><summary>Skal vi lægge lageret ud til en 3PL i stedet?</summary><div class="faq-item__body"><p>Det er den ene af de to veje. En 3PL pakker for jer, og I slipper lageret, men I betaler pr. ordre og kan ikke selv skrue på hvordan der pakkes. Beholder I lageret selv, er et lagersystem under Shopify vejen.</p></div></details>
     <details class="faq-item"><summary>Hvad koster WMS integration med Shopify?</summary><div class="faq-item__body"><p>Shopify-integrationen er en f&aelig;rdig del af SmartPack, ikke et udviklingsprojekt. Prisen afh&aelig;nger af opsætningen, se <a href="../../priser">priser</a>.</p></div></details>
   </div>
 </div></div>
@@ -152,6 +141,6 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kan Shopify erstatte et WMS?","acceptedAnswer":{"@type":"Answer","text":"Nej. Shopify tæller enheder og sender ordrer, men det har ikke hyldeplaceringer, plukruter eller scanning i plukket. Om det er et problem afhænger af hvor meget der ligger i hovedet på folk i stedet for i systemet."}},{"@type":"Question","name":"Hvad er Shopify Inventory Locations?","acceptedAnswer":{"@type":"Answer","text":"Shopify Inventory Locations er overordnede lager-enheder (fx \"Lager København\" og \"Butik Aarhus\"). De er på bygningsniveau og kan ikke erstatte hylde-niveau lokationsstyring i et WMS."}},{"@type":"Question","name":"Kan jeg beholde Shopify og tilføje WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja. Det er den anbefalede model. Shopify håndterer salg, WMS håndterer lager-operationer. De integreres via API."}},{"@type":"Question","name":"Hvad er Shopify Fulfillment Network?","acceptedAnswer":{"@type":"Answer","text":"Shopifys eget 3PL-netværk. Primært tilgængeligt i USA. Hvis din virksomhed er i Danmark/Europa, er WMS plus Shopify-integration den praktiske løsning."}},{"@type":"Question","name":"Hvad koster WMS integration med Shopify?","acceptedAnswer":{"@type":"Answer","text":"Shopify-integrationen er en færdig del af SmartPack, ikke et udviklingsprojekt. Prisen afhænger af opsætningen, se smartpack.dk/priser."}}]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "WMS vs. Shopify: kan Shopify styre dit lager?", "description": "Shopify har et lager-modul. Men kan det erstatte et WMS? Laer hvad Shopify kan, hvad det ikke kan, og hvornår du har brug for begge.", "datePublished": "2025-04-30", "dateModified": "2026-09-21", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/wms-vs-shopify", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/wms-vs-shopify"}, "inLanguage": "da-DK"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kan Shopify erstatte et WMS?","acceptedAnswer":{"@type":"Answer","text":"Nej. Shopify tæller enheder og sender ordrer, men det har ikke hyldeplaceringer, plukruter eller scanning i plukket. Om det er et problem afhænger af hvor meget der ligger i hovedet på folk i stedet for i systemet."}},{"@type":"Question","name":"Hvad er Shopify Inventory Locations?","acceptedAnswer":{"@type":"Answer","text":"Shopify Inventory Locations er overordnede lager-enheder (fx \"Lager København\" og \"Butik Aarhus\"). De er på bygningsniveau og kan ikke erstatte hylde-niveau lokationsstyring i et WMS."}},{"@type":"Question","name":"Kan jeg beholde Shopify og tilføje WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja. Det er den anbefalede model. Shopify håndterer salg, WMS håndterer lager-operationer. De integreres via API."}},{"@type":"Question","name":"Skal vi lægge lageret ud til en 3PL i stedet?","acceptedAnswer":{"@type":"Answer","text":"Det er den ene af de to veje. En 3PL pakker for jer, og I slipper lageret, men I betaler pr. ordre og kan ikke selv skrue på hvordan der pakkes. Beholder I lageret selv, er et lagersystem under Shopify vejen."}},{"@type":"Question","name":"Hvad koster WMS integration med Shopify?","acceptedAnswer":{"@type":"Answer","text":"Shopify-integrationen er en færdig del af SmartPack, ikke et udviklingsprojekt. Prisen afhænger af opsætningen, se smartpack.dk/priser."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "WMS vs. Shopify: kan Shopify styre dit lager?", "description": "Shopify har et lager-modul. Men kan det erstatte et WMS? Her står hvad Shopify kan, hvad det ikke kan, og hvordan de to hænger sammen.", "datePublished": "2025-04-30", "dateModified": "2026-09-21", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/wms-vs-shopify", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/wms-vs-shopify"}, "inLanguage": "da-DK"}</script>
 </body></html>
