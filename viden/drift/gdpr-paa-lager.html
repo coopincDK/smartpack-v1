@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../css/style.css?v=1790022490">
+  <link rel="stylesheet" href="../../css/style.css?v=1790039292">
   <script src="../../js/theme-toggle.js"></script>
 
 
@@ -67,14 +67,10 @@
     <div class="article-body" data-pagefind-body="true">
       <img class="article-hero-img" src="../../assets/viden/gdpr-lager-data-sikkerhed-computer.jpg" alt="gdpr lager data sikkerhed computer" loading="lazy" style="width:100%;max-height:420px;object-fit:cover;border-radius:10px;margin:0 0 2rem;display:block;" width="1600" height="1073">
       <p><a href="../retur/retur-portal-selvbetjening">Ordredata</a> er persondata. Navn. Adresse. Telefonnummer. Email. Ordreindhold.</p>
-      <p>GDPR-bøde: op til 4% af global omsætning. For en webshop på 5 mio. kr./år = 200.000 kr. i maksimal bøde. For en webshop på 50 mio. kr./år = 2.000.000 kr.</p>
-      <p>Manglende databehandleraftale med <a href="../tech/hvad-er-wms">dit WMS</a>: 50.000-200.000 kr. i bøde. <a href="sporbarhed-paa-lageret">Databrud</a> uden anmeldelse inden 72 timer: 100.000-500.000 kr.</p>
-      <p><strong>Konsekvensen ved manglende GDPR-compliance:</strong></p>
-      <ul>
-        <li>Databrud uden anmeldelse: 100.000-500.000 kr. i bøde</li>
-        <li>Manglende databehandleraftale: 50.000-200.000 kr.</li>
-        <li>Maksimal bøde: 4% af global omsætning eller 20 mio. EUR</li>
-      </ul>
+      <p>Bødeloftet i GDPR er <strong>det højeste</strong> af to tal, ikke det laveste. Enten en procentdel af den globale årlige omsætning, eller et fast eurobeløb. For en webshop med 5 mio. kr. i omsætning er det altså eurobeløbet der er loftet, ikke procenten.</p>
+      <p>Der er to niveauer. Det lave er 2 procent eller 10 mio. euro og dækker blandt andet pligterne omkring databehandlere og dokumentation, altså der hvor en manglende aftale med <a href="../tech/hvad-er-wms">dit WMS</a> hører hjemme. Det høje er 4 procent eller 20 mio. euro og dækker brud på de grundlæggende principper og på kundernes rettigheder.</p>
+      <p><strong>Men loftet er ikke det samme som det man får.</strong> I Danmark udskriver Datatilsynet ikke selv bøder. Tilsynet kan udtale kritik, give påbud og melde en sag til politiet, og derfra er det anklagemyndigheden og domstolene der afgør en eventuel bøde. Det betyder to ting for dig: sagerne tager lang tid, og der findes ingen prisliste du kan slå op og regne med.</p>
+      <p>Derfor er der ingen kronebeløb i denne artikel. Det der koster, er oprydningen, <a href="sporbarhed-paa-lageret">databruddet</a> der skal håndteres, kunderne der skal informeres, og den tid det tager. Det rammer længe før en eventuel bøde gør.</p>
 
       <h2>Hvad er persondata i lager-kontekst?</h2>
       <p>Enhver information der kan identificere en person er persondata under GDPR:</p>
@@ -89,25 +85,27 @@
 
       <p class="inline-cta">👉 Har du samme udfordring? <a href="../../kontakt">Se hvordan SmartPack løser det i praksis</a></p>
 
-      <h2>Hvad koster manglende GDPR-compliance?</h2>
+      <h2>Hvad sker der, hvis det ikke er på plads?</h2>
       <table>
-        <thead><tr><th>Scenario</th><th>Konsekvens</th><th>Kr./hændelse (estimat)</th></tr></thead>
+        <thead><tr><th>Situation</th><th>Hvad der sker</th><th>Bødeniveau</th></tr></thead>
         <tbody>
-          <tr><td>Databrud (5.000 kundedata eksponeret) uden anmeldelse</td><td>Bøde + erstatningskrav</td><td>100.000-500.000 kr.</td></tr>
-          <tr><td>Manglende databehandleraftale med WMS-leverandør</td><td>Bøde ved Datatilsynets kontrolbesøg</td><td>50.000-200.000 kr.</td></tr>
-          <tr><td>Ordredata gemmes i 15 år uden sletning</td><td>Bøde + krav om sletning</td><td>25.000-100.000 kr.</td></tr>
+          <tr><td>Databrud der ikke bliver anmeldt</td><td>Kritik og påbud fra Datatilsynet, og sagen kan meldes til politiet. Oveni: erstatningskrav fra de berørte, og den tid oprydningen tager</td><td>Det lave</td></tr>
+          <tr><td>Ingen databehandleraftale med WMS-leverandøren</td><td>I praksis oftest et påbud om at få aftalen på plads inden for en frist</td><td>Det lave</td></tr>
+          <tr><td>Ordredata der aldrig bliver slettet</td><td>Opbevaringsbegrænsning er et grundprincip, så det vejer tungere end en manglende aftale</td><td>Det høje</td></tr>
         </tbody>
       </table>
+      <p>Bødeniveauerne er lofter, ikke takster. Hvad en konkret sag ender med, afgøres af domstolene og afhænger af hvor groft det er, hvor længe det har stået på, og hvad I selv gjorde da I opdagede det.</p>
 
       <h2>Databehandleraftale, et krav du ikke kan undgå</h2>
       <p>Bruger du et cloud-baseret WMS, er leverandøren din <strong>databehandler</strong>. Du er den <strong>dataansvarlige</strong>. GDPR kræver, at du indgår en skriftlig <strong>databehandleraftale</strong> (DPA) med alle systemer der behandler persondata på dine vegne.</p>
       <p>Dette inkluderer:</p>
       <ul>
         <li>Dit WMS (fx SmartPack)</li>
-        <li>Fragtleverandørerne (GLS, PostNord, Bring, de modtager adresser)</li>
-        <li>3PL-leverandøren (hvis du bruger 3PL)</li>
-        <li>Lagerstyring- og ERP-systemer</li>
+        <li>3PL-leverandøren, hvis du bruger 3PL</li>
+        <li>Lagerstyrings- og ERP-systemer</li>
+        <li>Andre systemer der behandler kundedata for dig, fx mailplatform og kundeservice</li>
       </ul>
+      <p><strong>Fragtleverandørerne er en sag for sig.</strong> Når GLS eller PostNord får en adresse, bruger de den til deres egen transportydelse og bestemmer selv hvordan. Derfor er de som udgangspunkt selvstændigt dataansvarlige og ikke jeres databehandlere. Slå op i jeres egen aftale med transportøren i stedet for at antage det ene eller det andet.</p>
       <p><strong>Krav til databehandleraftalen:</strong></p>
       <ul>
         <li>Formål og omfang af databehandling</li>
@@ -119,7 +117,7 @@
 
       <h2>Hvad skal slettes, og hvornår?</h2>
       <ul>
-        <li>Ordredata: Opbevar i 5 år af bogføringshensyn (regnskabsloven), men log-data og tracking kan slettes tidligere</li>
+        <li>Ordredata: bogføringsloven kræver at regnskabsmateriale gemmes i 5 år fra udgangen af det regnskabsår det vedrører. Log- og trackingdata er ikke regnskabsmateriale og kan ofte slettes tidligere</li>
         <li>Returdata: Slet personlige noter så snart returprocessen er afsluttet</li>
         <li>Medarbejderdata: Egne regler for HR-data</li>
       </ul>
@@ -135,17 +133,17 @@
       <h2>Databrud: Hvad gør du?</h2>
       <p>Hvis persondata kompromitteres (fx systemindbrud, utilsigtet eksponering):</p>
       <ol>
-        <li>Vurder omfanget inden for 24 timer</li>
-        <li>Anmeld til Datatilsynet inden for 72 timer (hvis risiko for individers rettigheder)</li>
+        <li>Få overblik over omfanget hurtigst muligt. De 72 timer løber fra I bliver opmærksomme på bruddet, ikke fra I er færdige med at undersøge det</li>
+        <li>Anmeld til Datatilsynet inden for 72 timer, hvis der er risiko for de berørtes rettigheder. Er I ikke færdige med at undersøge, anmelder I det I ved og supplerer bagefter</li>
         <li>Informér berørte kunder hvis risikoen er høj</li>
         <li>Dokumentér hændelsen og din respons</li>
       </ol>
 
       <h2>Det opdager de fleste for sent</h2>
       <ol>
-        <li><strong>Datatilsynet checker din webshop i uge 22,</strong> de beder om databehandleraftale med dit WMS. Du har ingen. Bøde: 75.000 kr. + krav om aftale inden 30 dage.</li>
-        <li><strong>Systemindbrud,</strong> 5.000 kundedata eksponeres. Du opdager det efter 5 dage. Du anmelder ikke til Datatilsynet. 3 måneder senere: bøde 250.000 kr. + erstatningskrav fra kunder.</li>
-        <li><strong>En tidligere medarbejder</strong> har stadig adgang til WMS 6 måneder efter opsigelse. Han downloader 10.000 kundedata og sælger dem. Du opdager det for sent. Bøde: 150.000 kr. + erstatningskrav.</li>
+        <li><strong>Datatilsynet spørger til din webshop,</strong> og beder om databehandleraftalen med dit WMS. Du har ingen. Du får et påbud med frist, og skal nu skaffe en aftale mens du er under tilsyn i stedet for i fred.</li>
+        <li><strong>Systemindbrud.</strong> Kundedata eksponeres, og du opdager det efter fem dage. Du anmelder ikke. Kommer det frem senere, er det ikke bruddet der vejer tungest, det er at du lod være med at sige det.</li>
+        <li><strong>En tidligere medarbejder</strong> har stadig adgang til systemet et halvt år efter opsigelsen. Det er ikke en teknisk fejl, det er en manglende procedure, og det er den slags et tilsyn kigger efter først.</li>
       </ol>
 
       <h2>Typiske GDPR-fejl i lager-drift</h2>
@@ -159,21 +157,24 @@
 
       <h2>Gør det rigtigt nu</h2>
       <ol>
-        <li><strong>Kortlæg alle systemer der behandler persondata,</strong> lav data-mapping inden uge 16</li>
-        <li><strong>Kræv og underskriv databehandleraftaler med alle leverandører,</strong> send email i dag</li>
-        <li><strong>Implementér RBAC i dit WMS,</strong> begræns adgang per rolle</li>
-        <li><strong>Lav en sletningspolitik og automatisér sletning,</strong> slet ordredata efter 5 år</li>
-        <li><strong>Lav en databrudsprocedure og test den,</strong> hvem gør hvad inden for 24/72 timer?</li>
+        <li><strong>Skriv ned hvilke systemer der har kundedata,</strong> og hvem der har adgang til hvert af dem</li>
+        <li><strong>Bed om databehandleraftale hos hver leverandør på listen,</strong> og læg de underskrevne ét sted</li>
+        <li><strong>Sæt rollebaseret adgang op i dit WMS,</strong> så den enkelte kun ser det hun skal bruge</li>
+        <li><strong>Lav en sletningspolitik,</strong> og få systemet til at slette automatisk i stedet for at nogen skal huske det</li>
+        <li><strong>Skriv en side om hvad I gør ved et databrud,</strong> og hvem der ringer til hvem. De 72 timer er kort tid, hvis I først skal finde ud af det når det sker</li>
       </ol>
 
       <h2>SmartPack og GDPR</h2>
-      <p><strong>SmartPack-fordel:</strong> Leveres med databehandleraftale inkluderet. Data lagres i EU. Systemet understøtter RBAC og automatisk datahåndtering.</p>
+      <p><strong>SmartPack-fordel:</strong> Leveres med databehandleraftale inkluderet. Data lagres i EU. Systemet understøtter rollebaseret adgang, så den enkelte medarbejder kun ser det hun skal bruge.</p>
+      <div class="kilde-boks">
+        <p class="kilde-boks__kilde"><strong>Kilder:</strong> Bødeniveauerne og fristerne står i databeskyttelsesforordningen. At Datatilsynet i Danmark ikke selv udskriver bøder, men melder sager til politiet, fremgår af tilsynets egen beskrivelse af sin praksis. Opbevaringsfristen på 5 år kommer fra bogføringsloven. Denne artikel er generel information om reglerne, ikke juridisk rådgivning om jeres konkrete situation. <strong>Tjek altid aktuelle krav hos <a href="https://www.datatilsynet.dk" target="_blank" rel="noopener noreferrer">Datatilsynet &rarr;</a></strong></p>
+      </div>
 
       <div class="article-use"><h3>Brug denne artikel</h3><ul>
-        <li>✓ Underskriv databehandleraftale (DPA) med dit WMS og alle fragtleverandører</li>
-        <li>✓ Implementér rollebaseret adgangsstyring (RBAC) i dit lagersystem</li>
-        <li>✓ Lav en databrudsprocedure (72-timers regel til Datatilsynet)</li>
-        <li>✓ Opsut automatisk sletning af ordredata efter 5 år</li>
+        <li>✓ Underskriv databehandleraftale med dit WMS og de øvrige systemer der behandler kundedata for dig</li>
+        <li>✓ Sæt rollebaseret adgangsstyring op i dit lagersystem</li>
+        <li>✓ Skriv en databrudsprocedure, med de 72 timer til Datatilsynet</li>
+        <li>✓ Sæt automatisk sletning op af ordredata efter bogføringsfristen</li>
       </ul></div>
     </div>
     <div class="bottom-cta"><p>Vil du se hvad det betyder i dit setup?</p><a href="../../kontakt" class="btn">Se dit setup</a></div>
@@ -181,7 +182,7 @@
     <div class="article-related"><div class="article-related__title">Relateret viden</div><div class="article-related__grid"><a href="dokumentation-ved-fragt" class="article-related__item"><span class="article-related__item-cat">Compliance</span><span class="article-related__item-title">Dokumentation ved fragt</span></a><a href="intrastat-forklaret" class="article-related__item"><span class="article-related__item-cat">Compliance</span><span class="article-related__item-title">Intrastat forklaret</span></a></div></div>
     <div class="article-faq"><h2 class="article-faq__title">Ofte stillede spørgsmål</h2>
       <details class="faq-item"><summary>Skal mine lagermedarbejdere kende GDPR?</summary><p>Grundlæggende awareness: ja. De behandler persondata ved hver ordre.</p></details>
-      <details class="faq-item"><summary>Hvad er maksimumstraffen?</summary><p>4% af global omsætning eller 20 millioner EUR, det største af de to.</p></details>
+      <details class="faq-item"><summary>Hvad er maksimumstraffen?</summary><p>Det højeste af 4 procent af den globale årlige omsætning eller 20 millioner euro, og det gælder de groveste brud. For blandt andet pligterne omkring databehandlere er loftet det halve: 2 procent eller 10 millioner euro. I Danmark udskriver Datatilsynet ikke selv bøder. Tilsynet melder sager til politiet, og en eventuel bøde afgøres af domstolene.</p></details>
       <details class="faq-item"><summary>Hvad er forskellen på dataansvarlig og databehandler?</summary><p>Du (webshoppen) bestemmer formålet = dataansvarlig. WMS-leverandøren behandler data på dine vegne = databehandler.</p></details>
       <details class="faq-item"><summary>Skal jeg have DPO (Data Protection Officer)?</summary><p>For de fleste SMV-webshops: nej. Undtagelse: hvis du systematisk behandler store mængder følsomme persondata.</p></details>
       <details class="faq-item"><summary>Er anonymisering det samme som sletning?</summary><p>Nej, men korrekt anonymisering betyder at data ikke længere er persondata og dermed falder ud af GDPR's scope.</p></details>
@@ -194,7 +195,7 @@
 <div id="sp-footer"></div>
 <script src="../../js/footer.js"></script>
 <script src="../../js/main.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Skal mine lagermedarbejdere kende GDPR?","acceptedAnswer":{"@type":"Answer","text":"Grundlæggende awareness: ja. De behandler persondata ved hver ordre."}},{"@type":"Question","name":"Hvad er maksimumstraffen?","acceptedAnswer":{"@type":"Answer","text":"4% af global omsætning eller 20 millioner EUR, det største af de to."}},{"@type":"Question","name":"Hvad er forskellen på dataansvarlig og databehandler?","acceptedAnswer":{"@type":"Answer","text":"Du (webshoppen) bestemmer formålet = dataansvarlig. WMS-leverandøren behandler data på dine vegne = databehandler."}},{"@type":"Question","name":"Skal jeg have DPO (Data Protection Officer)?","acceptedAnswer":{"@type":"Answer","text":"For de fleste SMV-webshops: nej. Undtagelse: hvis du systematisk behandler store mængder følsomme persondata."}},{"@type":"Question","name":"Er anonymisering det samme som sletning?","acceptedAnswer":{"@type":"Answer","text":"Nej, men korrekt anonymisering betyder at data ikke længere er persondata og dermed falder ud af GDPR's scope."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Skal mine lagermedarbejdere kende GDPR?","acceptedAnswer":{"@type":"Answer","text":"Grundlæggende awareness: ja. De behandler persondata ved hver ordre."}},{"@type":"Question","name":"Hvad er maksimumstraffen?","acceptedAnswer":{"@type":"Answer","text":"Det højeste af 4 procent af den globale årlige omsætning eller 20 millioner euro, og det gælder de groveste brud. For blandt andet pligterne omkring databehandlere er loftet det halve: 2 procent eller 10 millioner euro. I Danmark udskriver Datatilsynet ikke selv bøder. Tilsynet melder sager til politiet, og en eventuel bøde afgøres af domstolene."}},{"@type":"Question","name":"Hvad er forskellen på dataansvarlig og databehandler?","acceptedAnswer":{"@type":"Answer","text":"Du (webshoppen) bestemmer formålet = dataansvarlig. WMS-leverandøren behandler data på dine vegne = databehandler."}},{"@type":"Question","name":"Skal jeg have DPO (Data Protection Officer)?","acceptedAnswer":{"@type":"Answer","text":"For de fleste SMV-webshops: nej. Undtagelse: hvis du systematisk behandler store mængder følsomme persondata."}},{"@type":"Question","name":"Er anonymisering det samme som sletning?","acceptedAnswer":{"@type":"Answer","text":"Nej, men korrekt anonymisering betyder at data ikke længere er persondata og dermed falder ud af GDPR's scope."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "GDPR på lageret: Hvad e-commerce virksomheder skal vide", "description": "Ordredata er persondata. Manglende databehandleraftale med dit WMS: 50.000-200.000 kr. i bøde. Guide til GDPR-compliance for lager og e-commerce.", "datePublished": "2025-04-30", "dateModified": "2025-04-30", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/drift/gdpr-paa-lager", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/drift/gdpr-paa-lager"}, "inLanguage": "da-DK"}</script>
 </body>
 </html>
