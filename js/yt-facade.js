@@ -40,11 +40,16 @@
     knap.className = 'yt-facade__play';
     knap.setAttribute('aria-hidden', 'true');
 
+    /* Hjaelpelinjen ligger UDEN FOR knappen. Ligger den inde i knappen,
+       staar der en anden tekst paa skaermen end skaermlaeseren siger, og
+       WCAG 2.5.3 fejler. Den indsaettes ved siden af pladsholderen
+       nedenfor, naar vi ved hvilken ramme den ligger i. */
     var note = document.createElement('span');
     note.className = 'yt-facade__note';
     note.textContent = 'Klik for at afspille. Videoen hentes fra YouTube.';
+    note.setAttribute('aria-hidden', 'true');
 
-    d.appendChild(img); d.appendChild(knap); d.appendChild(note);
+    d.appendChild(img); d.appendChild(knap);
 
     function start() {
       /* Videoen laegges i en srcdoc-iframe. Cookie-blokeringen scanner kun
@@ -64,6 +69,7 @@
                + '<iframe src="' + url + '" title="' + titel.replace(/"/g, '&quot;') + '"'
                + ' allow="' + ALLOW + '" allowfullscreen></iframe>'
                + '</body></html>';
+      if (note.parentNode) { note.parentNode.removeChild(note); }
       d.replaceWith(f);
     }
     d.addEventListener('click', start);
@@ -87,6 +93,7 @@
          note op i toppen, saa de to tekster ikke lander oven i hinanden. */
       if (dedikeret && ramme.childElementCount > 1) {
         d.classList.add('yt-facade--har-overlay');
+        note.className += ' yt-facade__note--top';
       }
     }
     if (dedikeret) {
@@ -94,10 +101,12 @@
         ramme.style.position = 'relative';
       }
       iframe.replaceWith(d);
+      d.parentNode.appendChild(note);
     } else {
       var boks = document.createElement('div');
       boks.className = 'yt-facade-boks';
       boks.appendChild(d);
+      boks.appendChild(note);
       iframe.replaceWith(boks);
     }
   }
