@@ -1,4 +1,4 @@
-﻿﻿/* ===========================================
+﻿/* ===========================================
    SMARTPACK.DK , STYLESHEET
    Light/Dark theme · e-commerce WMS
 =========================================== */
@@ -707,9 +707,11 @@ h4 { font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spac
 /* PDA */
 .hero__phone {
   position: absolute;
-  left: -50%;
-  top: 19%;
-  width: 90%;
+  /* Maa ikke raekke ind i tekstsoejlen. Ved -50% laa haandterminalen
+     oven paa den anden knap i heroen paa alt over 1280 px. */
+  left: -38%;
+  top: 18%;
+  width: 80%;
   z-index: 4;
   filter: drop-shadow(0 28px 56px rgba(0,0,0,.7));
 }

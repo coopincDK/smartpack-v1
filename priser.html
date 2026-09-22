@@ -84,7 +84,7 @@
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
   <link rel="dns-prefetch" href="//i.ytimg.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1790064006">
+  <link rel="stylesheet" href="css/style.css?v=1790088007">
   <script src="js/theme-toggle.js"></script>
   <style>
     /* Page-hero */
@@ -115,6 +115,8 @@
     /* Pricing grid */
     .pricing-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-top: 1.5rem; }
     .pricing-col { background: var(--bg-3); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2.25rem 2.5rem; }
+    /* Er der et ulige antal kort, fylder det sidste hele raekken i stedet for at staa alene. */
+    .pricing-col:last-child:nth-child(odd) { grid-column: 1 / -1; }
     @media (max-width: 640px) { .pricing-col { padding: 1.5rem 1.25rem; } }
     .pricing-col h3 { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--accent-text); margin-bottom: 1.5rem; }
     .pricing-col ul { list-style: none; display: flex; flex-direction: column; gap: .85rem; }
@@ -318,7 +320,7 @@
 
 <!-- NAV -->
 <div id="sp-header"></div>
-<script src="js/header.js?v=1790064006"></script>
+<script src="js/header.js?v=1790088007"></script>
 <main id="main-content">
 
 <!-- PAGE HERO -->
@@ -746,7 +748,7 @@
 
 </main>
 <div id="sp-footer"></div>
-<script src="js/footer.js?v=1790064006"></script>
+<script src="js/footer.js?v=1790088007"></script>
 
   <script>
     const priceTiers = [
@@ -786,10 +788,10 @@
       emailjs.init({ publicKey: 'ZDUjL1pFrKzI0VJzz' });
     })();
   </script>
-  <script src="js/main.js?v=1790064006" defer></script>
+  <script src="js/main.js?v=1790088007" defer></script>
 
 
-<script src="js/yt-facade.js?v=1790064006" defer></script>
+<script src="js/yt-facade.js?v=1790088007" defer></script>
 </body>
 </html>
 
