@@ -124,7 +124,7 @@ Oversigt: https://smartpack.dk/viden/
 - Vi tjekker ikke hvad der kommer ind : https://smartpack.dk/viden/problemer/vi-tjekker-ikke-hvad-der-kommer-ind
 - Vores data er rod: system mod virkelighed : https://smartpack.dk/viden/problemer/vores-data-er-rod
 
-### Teknologi og systemer (43 artikler)
+### Teknologi og systemer (45 artikler)
 
 - 10 ting du kan bygge med SmartPacks API : https://smartpack.dk/viden/tech/smartpack-api-muligheder
 - AI på lageret 2026: hvad virker og hvad er hype : https://smartpack.dk/viden/tech/ai-paa-lageret-2026
@@ -136,6 +136,7 @@ Oversigt: https://smartpack.dk/viden/
 - Dataflow i e-handel : https://smartpack.dk/viden/tech/dataflow-i-ecommerce
 - e-conomic integration med WMS : https://smartpack.dk/viden/tech/economic-integration
 - EDI på lageret: hvad er det og hvornår? : https://smartpack.dk/viden/tech/edi-integrationer
+- Flere lagre: sådan holdes de fra hinanden : https://smartpack.dk/viden/tech/flere-lagre-og-lokationer
 - Flyt varer på lageret uden at miste sporet : https://smartpack.dk/viden/tech/flytning-af-varer
 - Fragtintegrationer forklaret : https://smartpack.dk/viden/tech/fragtintegrationer-forklaret
 - Fulfillment sync : https://smartpack.dk/viden/tech/fulfillment-sync
@@ -155,6 +156,7 @@ Oversigt: https://smartpack.dk/viden/
 - Real-time beholdning: forsinket data koster : https://smartpack.dk/viden/tech/real-time-beholdning
 - Realtidstal på lageret: to slags dashboard : https://smartpack.dk/viden/tech/realtid-dashboard
 - RFID på lageret: giver det mening? : https://smartpack.dk/viden/tech/rfid-paa-lager
+- Serienumre: hvilken enhed fik hvilken kunde : https://smartpack.dk/viden/tech/serienumre-paa-lageret
 - Shopify integration med WMS : https://smartpack.dk/viden/tech/shopify-integration
 - Stregkode-scanning på lageret : https://smartpack.dk/viden/tech/stregkode-scanning-lager
 - Træk tal ud af dit WMS: find eksporten : https://smartpack.dk/viden/tech/traek-tal-ud-af-dit-wms
