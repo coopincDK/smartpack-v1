@@ -36,7 +36,7 @@
       '            <input id="footer-nl-email" type="email" placeholder="navn@firma.dk" required style="padding:0.55rem 0.75rem;border-radius:0.4rem;border:1px solid #475569;background:#1e293b;color:#e2e8f0;font-size:0.85rem;outline:none;width:100%;box-sizing:border-box">',
       '            <label style="display:flex;gap:0.5rem;align-items:flex-start;cursor:pointer">',
       '              <input id="footer-nl-consent" type="checkbox" style="margin-top:3px;flex-shrink:0;accent-color:#22c55e">',
-      '              <span style="font-size:0.75rem;color:#94a3b8;line-height:1.4">Jeg accepterer at modtage nyhedsmail fra SmartPack. Du kan <a href="' + url('/SmartPackUpdate/afmeld') + '" style="color:#4ade80">afmelde dig</a> igen n&aring;r som helst.</span>',
+      '              <span style="font-size:0.75rem;color:#94a3b8;line-height:1.4">Jeg accepterer at modtage nyhedsmail fra SmartPack. Du kan <a href="' + url('/SmartPackUpdate/afmeld') + '" style="color:#4ade80;text-decoration:underline">afmelde dig</a> igen n&aring;r som helst.</span>',
       '            </label>',
       '            <button id="footer-nl-btn" type="submit" style="padding:0.55rem 1rem;border-radius:0.4rem;background:#2D5A3D;color:#fff;font-weight:600;font-size:0.85rem;border:none;cursor:pointer;transition:background 0.15s">Tilmeld &rarr;</button>',
       '            <p id="footer-nl-msg" style="font-size:0.78rem;margin:0;min-height:1.2em"></p>',
@@ -255,7 +255,7 @@
       // Dot-farver (3 tilstande)
       var CLR_G = '#22c55e';
       var CLR_Y = '#f59e0b';
-      var CLR_R = '#e53935';
+      var CLR_R = '#f24642';
       function makeDot(clr) {
         return '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + clr + ';margin-right:5px;vertical-align:middle"></span>';
       }
