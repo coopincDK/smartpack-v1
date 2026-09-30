@@ -96,13 +96,17 @@ test('GET /me maskerer gave-notifikationens data.fra (udfordring_liv) uden privi
   const challenge = await api(h.baseUrl, 'POST', '/me/challenge', { token: a.token, body: { code: b.vennekode } });
   assert.equal(challenge.status, 200);
 
-  await fuldfoerGodkendtForsoeg(h, a.token, [10, 10, 10]);
+  await fuldfoerGodkendtForsoeg(h, a.token, [10, 10, 10]); // A (udfordreren) fuldfører med 30 point samlet
 
   const uden = await api(h.baseUrl, 'GET', '/me', { token: b.token });
   const gave = uden.body.notifikationer.find((n) => n.type === 'gift' && n.data.type === 'udfordring_liv');
   assert.ok(gave, 'B skal have en udfordring_liv-gave-notifikation');
   assert.equal(gave.data.fra, 'Cecilie C.', 'uden privilegeret session skal navnet være maskeret');
   assert.ok(!('fra_spiller_id' in gave.data), 'det interne id-felt må aldrig eksponeres i klientsvaret');
+  // N13 (fjerde opfølgende runde, afsluttende review): gaven skal indeholde
+  // udfordrerens (A's) SAMLEDE point fra det gennemførte forsøg — uden det
+  // siger klientens tekst altid "fik 0 point", se API.md.
+  assert.equal(gave.data.score, 30, 'gaven skal indeholde udfordrerens samlede point fra forsøget');
 
   const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
   const adminCookie = cookieFra(login);

@@ -10,7 +10,8 @@
 // eksplicit (fra en crontab-linje på serveren, se README.md).
 
 const { createPool } = require('../src/db');
-const { deleteInactivePlayers } = require('../src/retention');
+const { deleteInactivePlayers, revokeExpiredTokens } = require('../src/retention');
+const config = require('../src/config');
 
 async function main() {
   const pool = createPool();
@@ -20,6 +21,16 @@ async function main() {
     // eslint-disable-next-line no-console
     console.log(
       `[retention] ${new Date().toISOString()} slettede ${antal} spiller(e) (GDPR: ingen aktiv tilmelding, >12 mdr. inaktiv).`
+    );
+
+    // N9: samme natlige job rydder nu også op i udløbne spiller-bearer-
+    // tokens (se src/retention.js#revokeExpiredTokens) — genbruger denne
+    // eksisterende kørsel i stedet for en ny, separat cron-mekanisme.
+    const antalTokens = await revokeExpiredTokens(pool, new Date());
+    const ttlDage = Math.round(config.playerTokenTtlMs / (24 * 3600 * 1000));
+    // eslint-disable-next-line no-console
+    console.log(
+      `[retention] ${new Date().toISOString()} tilbagekaldte ${antalTokens} udløbet(e) spiller-token(s) (TTL: ${ttlDage} dage siden sidste brug).`
     );
   } finally {
     await pool.end();

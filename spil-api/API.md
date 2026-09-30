@@ -29,6 +29,10 @@ produktion — kun nginx's `proxy_pass`-regel adskiller dem.
   `POST /players`-kald (login eller ny registrering) OPRETTER en ny
   token-række og rører ALDRIG spillerens øvrige, evt. stadig gyldige tokens
   (`tilbagekaldt IS NULL`). Se "Flere samtidige tokens pr. spiller" nedenfor.
+  **Siden "Fjerde opfølgende ændringsrunde" (N9) udløber et token nu OGSÅ**
+  hvis det ikke har været BRUGT i `PLAYER_TOKEN_TTL_MS` (default 30 dage,
+  tjekket mod `sidst_brugt`, ikke kun `oprettet`) — se
+  `src/spillerToken.js#loadPlayerByToken` og `POST /me/logout` nedenfor.
 - **Admin:** HttpOnly+Secure+SameSite=Strict cookie `spil_admin_session`,
   sat af `POST /admin/login`. Session-tokens gemmes hashet i `admin_session`.
 
@@ -231,6 +235,13 @@ firmakampen: `GET /state`'s `companyKey` er tom/falsy for dem, og klientens
 (`spil/index.html#firms`) — ingen særskilt server-side filtrering er
 nødvendig ud over at lade `firma_noegle` forblive tom.
 
+### `POST /me/logout` (bearer) — NY (Fjerde opfølgende ændringsrunde, N9)
+Tilbagekalder KUN det ENE bearer-token der blev brugt til at kalde dette
+endpoint (`tilbagekaldt = now()`) — spillerens ØVRIGE tokens (andre
+enheder, se "Flere samtidige tokens pr. spiller") rører den ALDRIG. `200
+{ "ok": true }`. Kald igen med samme (nu tilbagekaldte) token giver `401
+{ "kode": "ugyldigt_token" }`, som al anden brug af et ugyldigt token.
+
 ### `POST /me/seen` (bearer)
 Body `{ "ids": [12, 13] }` (valgfri — udelades for at markere ALT som set).
 `200 { "ok": true }`.
@@ -376,6 +387,11 @@ og selve svaret er cachet i `forsoeg.resultat` — se "Afvigelser" nedenfor).
 TIDLIGERE (københavnske) dag end i dag, markeres det `udloebet` og afvises
 med `409 { "fejl": "Forsøget er udløbet (dagsskifte siden det blev startet).", "kode": "forsoeg_udloebet" }`
 — se "Dage og tidszoner" og "Anden opfølgende ændringsrunde", opgave A.
+**Dette gælder også et forsøg der er startet FØR midnat og først finish'es
+EFTER midnat, SELVOM spilleren har været online hele tiden** (ikke kun ved
+et offline-kø-scenarie) — livet der blev brugt til forsøget, refunderes
+ikke. Dette er et BEVIDST designvalg (se "Anden opfølgende ændringsrunde",
+opgave A), ikke en fejl.
 
 **200 (godkendt):**
 ```json
@@ -417,9 +433,9 @@ forbindelse.
 
 | Besked (klient → server) | Krav | Effekt |
 |---|---|---|
-| `{"type":"hello","token":"..."}` | — | Autentificerer forbindelsen (valgfrit — uden token forbliver den anonym/lytte-kun). Svar: `{"type":"hello.ok","authenticated":true\|false}` |
+| `{"type":"hello","token":"..."}` | — | Autentificerer forbindelsen (valgfrit — uden token forbliver den anonym/lytte-kun). Svar: `{"type":"hello.ok","authenticated":true\|false}`. **Uden et gyldigt token nulstilles forbindelsens spiller/presence EKSPLICIT** (siden "Fjerde opfølgende ændringsrunde", N5 — fx "Næste spiller"/logout på en standtablet), og en opdateret presence-liste broadcastes med det samme, se nedenfor |
 | `{"type":"join","room":"..."}` | — | Lyt-adgang til et rum (fx standvæggen). Svar: `{"type":"joined","room":"...","users":[...]}` |
-| `{"type":"presence","room":"...","name":"..."}` | spiller-token | Sæt synligt navn i rummet. Broadcaster `{"type":"presence","room":"...","users":[{"id":.., "name":".."}]}` til alle i rummet |
+| `{"type":"presence","room":"..."}` | spiller-token | Gør forbindelsen synlig i rummets presence-liste. Broadcaster `{"type":"presence","room":"...","users":[{"id":.., "name":".."}]}` til alle i rummet. Et evt. `name`-felt i selve beskeden IGNORERES HELT (siden "Fjerde opfølgende ændringsrunde", N6) — navnet er altid `spiller.navn` |
 | `{"type":"emit","room":"...","event":"duel.go"\|"duel.s"\|"duel.waiting"\|"duel.idle","data":{...}}` | spiller-token | Relayer `{"type":"event","room":"...","event":"...","data":{...},"from":{...}}` til alle ANDRE i rummet |
 
 `duel.waiting`/`duel.idle` (**NYE**, siden "Anden opfølgende
@@ -436,6 +452,20 @@ vilkårlig tekst som sit eget navn i et duel-event der relayes videre til
 andre (fx standvæggen) — håndhæves for HVER besked, ikke kun ved selve
 forbindelsen.
 
+**Presence-teksten er IKKE længere en kilde til noget navn** (siden "Fjerde
+opfølgende ændringsrunde", N6): `presence`-beskedens `name`-felt (op til 22
+tegn klient-fritekst) blev hidtil gemt og siden relayet — kun maskeret, ALDRIG
+erstattet — som både presence-listens `users[].name` OG som duel-events
+afsendernavn. En spiller kunne dermed sætte en vilkårlig tekst som sin
+presence og lade den vises priviligeret på standvæggen. Navnet slås nu
+UDELUKKENDE op via den autentificerede forbindelses `spiller.navn` — `name`/
+`presenceName` bruges ALDRIG til navnevisning noget sted, hverken i presence-
+broadcastet eller i et duel-event.
+
+**Selv-reference-feltet for `bn`-opslaget accepterer nu OGSÅ `data.tab`**
+(siden samme runde, N4-bonus, se nedenfor) — ved siden af `data.a`, ikke i
+stedet for.
+
 **`duel.go`s `bn` (modstanderens navn) overskrives NU OGSÅ** (siden
 "Tredje opfølgende ændringsrunde") — `bn` sættes af AFSENDEREN SELV når de
 vælger hvem de vil duellere mod fra ventelisten og var derfor lige så
@@ -445,10 +475,13 @@ har den angivne modstander-reference (`data.b`) — IKKE (b) at fjerne
 feltet, for ikke at ændre feltnavne/responsstruktur. Vi understøtter to
 sandsynlige konventioner for `data.b` (se `src/ws.js`s toptekst for
 detaljen): et forbindelses-id fra presence-listen (`users[].id`), eller et
-selv-erklæret, tab-lignende strengfelt (`data.a` fra en tidligere besked fra
-samme afsender, jf. det ældre klientmønster i `spil/index.html`). Matcher
-ingen af delene en kendt forbindelse i samme rum, ryddes `bn` til en tom
-streng — klientens indsendte værdi bruges ALDRIG direkte.
+selv-erklæret, tab-lignende strengfelt (`data.a` **eller `data.tab`**, siden
+"Fjerde opfølgende ændringsrunde", N4-bonus — den FAKTISKE klient viste sig
+kun at sende `tab`, ikke `a`, i `duel.waiting`/`duel.s`, se
+`spil/index.html`; begge felter registreres og virker nu SAMTIDIG) fra en
+tidligere besked fra samme afsender. Matcher ingen af delene en kendt
+forbindelse i samme rum, ryddes `bn` til en tom streng — klientens indsendte
+værdi bruges ALDRIG direkte.
 
 Server → alle forbindelser: `{"type":"state.changed"}` når spillerdata/
 config ændres. Siden "Anden opfølgende ændringsrunde" broadcastes dette ikke
@@ -715,11 +748,17 @@ se `src/rules/life.js#refill`):
 {
   "id": 44,
   "type": "gift",
-  "data": { "type": "udfordring_liv", "fra": "Ejnar Elk", "at": "2026-09-30T11:30:00.000Z" },
+  "data": { "type": "udfordring_liv", "fra": "Ejnar Elk", "score": 410, "at": "2026-09-30T11:30:00.000Z" },
   "oprettet": "2026-09-30T11:30:00.000Z",
   "seen": false
 }
 ```
+`data.score` (siden "Fjerde opfølgende ændringsrunde", N13) er
+udfordrerens (`data.fra`s) SAMLEDE point fra netop det gennemførte
+forsøg — manglede hidtil helt, hvilket fik klientens tekst til altid at
+sige "fik 0 point" og aldrig vise "Slå den tilbage" (se
+`spil/index.html`s giftS-visning, som sammenligner `data.score` mod
+modtagerens egen dagens bedste).
 
 ---
 
@@ -1089,6 +1128,63 @@ dette repo i stedet for kun at eksistere som en utracket fil på serveren —
 en `rsync --delete`-baseret udrulning kunne (og gjorde, én gang) slette den
 ved et uheld. Se README.md, "Udrulning fra Windows", for den opdaterede
 `deploy.sh`-metode uden lokal `rsync`.
+
+---
+
+## Fjerde opfølgende ændringsrunde (afsluttende review)
+
+En afsluttende review fandt fem konkrete rettelser (N5, N6, N9, N13, N17) +
+én bonus i samme sårbarhedsklasse som N6 (N4-bonus, ikke i den oprindelige
+liste, men billig at rette samtidig):
+
+1. **N5 — WS `hello` uden token loggede ikke standens forbindelse ud.**
+   `hello` UDEN et gyldigt token (fx "Næste spiller"/logout på en
+   standtablet) nulstillede hidtil IKKE `ws.player`/`presenceName` på selve
+   forbindelsen — den forblev logget ind som den FORRIGE spiller, og
+   presence-listen viste stadig forrige spillers navn til andre. Nulstiller
+   nu begge felter eksplicit og broadcaster en opdateret presence-liste med
+   det samme, se "WebSocket `/ws`" ovenfor og `src/ws.js`.
+2. **N6 — duel-afsendernavn kunne forfalskes via presence.** Afsendernavnet
+   i duel-events (og presence-listens `users[].name`) blev beregnet som
+   `ws.presenceName || ws.player.navn`, men `presenceName` var ren
+   klient-fritekst (op til 22 tegn) sat via et separat `presence`-kald — en
+   spiller kunne sætte et vilkårligt navn og starte en duel, og teksten blev
+   vist ufiltreret (kun maskeret, aldrig erstattet) på standvæggen. Navnet
+   hentes nu UDELUKKENDE fra den autoritative `ws.player.navn` — `presence`-
+   beskedens `name`-felt ignoreres HELT, både ved selve presence-broadcastet
+   og ved duel-afsendernavn/`bn`-opslaget. Se "WebSocket `/ws`" ovenfor.
+3. **N4-bonus — tomt modstandernavn på standvæggen (samme sårbarhedsklasse,
+   ikke i den oprindelige liste).** `bn`-opslaget (se "Tredje opfølgende
+   ændringsrunde", punkt 3) matchede kun `data.a` som selv-reference — den
+   FAKTISKE klient sender kun `data.tab`, ikke `data.a`, i
+   `duel.waiting`/`duel.s`, så opslaget aldrig matchede, og `bn` endte
+   konsekvent tom. `data.tab` registreres nu SOM ET EKSTRA selv-reference-
+   felt, ved siden af `data.a` — begge virker samtidig.
+4. **N9 — bearer-tokens udløb aldrig.** `spiller_token` havde ingen
+   udløbstid, og der fandtes intet spiller-logout-endpoint. Tilføjet: (a)
+   `POST /me/logout`, der tilbagekalder KUN det ene token det blev kaldt
+   med; (b) en TTL (`PLAYER_TOKEN_TTL_MS`, default 30 dage) — et token der
+   ikke har været BRUGT (`sidst_brugt`) inden for TTL'en, autentificerer
+   ikke længere, tjekket ved HVER brug, ikke kun ved udstedelse; (c)
+   `sidst_brugt` opdateres højst én gang i minuttet pr. token (skrivestøj);
+   (d) det eksisterende natlige job (`scripts/retention-job.js`) rydder nu
+   også udløbne tokens op (`src/retention.js#revokeExpiredTokens`), i
+   stedet for en ny, separat cron-mekanisme. Se "Autentifikation" og
+   `migrations/007_token_ttl.sql`.
+5. **N13 — udfordrings-liv-gaven manglede point.** `udfordring_liv`-gaven
+   (se "Svareksempler: lodtrækning og notifikationstyper") indeholdt ikke
+   udfordrerens samlede point fra det gennemførte forsøg — klientens tekst
+   endte altid med at sige "fik 0 point", og "Slå den tilbage" blev aldrig
+   vist. Gavens `data` indeholder nu `score` (sat på skrivetidspunktet, se
+   `src/routes/runs.js`s finish-flow, punkt 4).
+6. **N17 — dagsskifte midt i et forsøg, dokumenteret (ren dokumentation,
+   ingen kodeændring).** Et forsøg der starter FØR midnat (dansk tid) og
+   først finish'es EFTER midnat, afvises med `409 forsoeg_udloebet`, og
+   livet er tabt — også selvom spilleren var online hele tiden. Dette ER et
+   bevidst designvalg fra "Anden opfølgende ændringsrunde", men var ikke
+   tydeligt dokumenteret som sådan — se "Dage og tidszoner",
+   `POST /runs/:runde_id/finish`, og README.md, "Drift: dagsskifte midt i
+   et forsøg".
 
 ---
 

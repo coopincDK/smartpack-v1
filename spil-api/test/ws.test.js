@@ -31,6 +31,27 @@ function nextMessage(ws) {
   });
 }
 
+// Samler de næste `n` beskeder til `ws`, i den rækkefølge de RENT FAKTISK
+// ankommer. Bruges når to beskeder sendes til SAMME forbindelse i hurtig
+// rækkefølge (fx en presence-broadcast til afsenderen selv, umiddelbart
+// efterfulgt af et separat svar) — 'ws'-biblioteket kan (afhængig af
+// permessage-deflate-komprimering) levere sådan et par i en anden
+// rækkefølge end de blev sendt server-side, så vi matcher på `.type`
+// bagefter i stedet for at antage en bestemt ankomstrækkefølge.
+function collectMessages(ws, n) {
+  return new Promise((resolve) => {
+    const msgs = [];
+    function onMsg(raw) {
+      msgs.push(JSON.parse(raw.toString('utf8')));
+      if (msgs.length >= n) {
+        ws.off('message', onMsg);
+        resolve(msgs);
+      }
+    }
+    ws.on('message', onMsg);
+  });
+}
+
 test('WS: anonym forbindelse kan IKKE sende duel-events (kun lytte)', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
@@ -377,6 +398,170 @@ test('punkt 3: duel.go\'s bn ryddes til tom streng når modstander-referencen er
   );
   const relay = await modtaget;
   assert.equal(relay.data.bn, '', 'ukendt modstander-reference skal give tom bn, aldrig klientens tekst');
+});
+
+// --- Fjerde opfølgende ændringsrunde (afsluttende review) ---
+
+test('N5: hello uden gyldigt token nulstiller ws.player/presenceName og broadcaster opdateret presence med det samme', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { navn: 'Skiftende Spiller' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const standtablet = await connect(h.wsUrl);
+  const lytter = await connect(h.wsUrl);
+  t.after(() => {
+    standtablet.close();
+    lytter.close();
+  });
+
+  standtablet.send(JSON.stringify({ type: 'hello', token }));
+  await nextMessage(standtablet);
+
+  lytter.send(JSON.stringify({ type: 'join', room: 'naeste-spiller' }));
+  await nextMessage(lytter);
+
+  const standFikPresence1 = nextMessage(standtablet);
+  const lytterFikPresence1 = nextMessage(lytter);
+  standtablet.send(JSON.stringify({ type: 'presence', room: 'naeste-spiller' }));
+  const presenceFoer = await lytterFikPresence1;
+  await standFikPresence1;
+  assert.equal(presenceFoer.users.length, 1, 'spilleren skal være synlig i presence-listen');
+
+  // "Næste spiller"/logout på standtabletten: klienten sender hello UDEN
+  // token. Serveren sender BÅDE en presence-broadcast (til afsenderen selv
+  // OGSÅ) og selve hello.ok-svaret til standtabletten — brug collectMessages
+  // i stedet for at antage en bestemt ARRIVAL-rækkefølge mellem dem (se
+  // collectMessages()-kommentaren ovenfor).
+  const standFikToBeskeder = collectMessages(standtablet, 2);
+  const lytterFikPresence2 = nextMessage(lytter);
+  standtablet.send(JSON.stringify({ type: 'hello' }));
+
+  const standBeskeder = await standFikToBeskeder;
+  const presenceEfterLytter = await lytterFikPresence2;
+
+  const helloSvar = standBeskeder.find((m) => m.type === 'hello.ok');
+  const presenceEfterStand = standBeskeder.find((m) => m.type === 'presence');
+  assert.ok(helloSvar, 'standtabletten skal modtage et hello.ok-svar');
+  assert.ok(presenceEfterStand, 'standtabletten skal også modtage presence-broadcasten til sig selv');
+  assert.equal(helloSvar.authenticated, false, 'ingen token -> ikke længere autentificeret');
+  assert.equal(presenceEfterStand.users.length, 0, 'forrige spiller skal STRAKS forsvinde fra presence-listen');
+  assert.equal(presenceEfterLytter.users.length, 0, 'andre forbindelser skal ALDRIG se den forrige spillers navn efter reset');
+
+  // Forbindelsen er reelt logget ud: emit/presence kræver login igen.
+  const fejlSvar = nextMessage(standtablet);
+  standtablet.send(JSON.stringify({ type: 'emit', room: 'naeste-spiller', event: 'duel.s', data: {} }));
+  assert.equal((await fejlSvar).type, 'error');
+});
+
+test('N6: presence-beskedens name-felt kan IKKE forfalske hverken presence-listens navn eller duel-afsendernavnet', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { navn: 'Ægte Navnesen' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const spiller = await connect(h.wsUrl);
+  const lytter = await connect(h.wsUrl);
+  t.after(() => {
+    spiller.close();
+    lytter.close();
+  });
+
+  spiller.send(JSON.stringify({ type: 'hello', token }));
+  await nextMessage(spiller);
+  lytter.send(JSON.stringify({ type: 'join', room: 'presence-spoof' }));
+  await nextMessage(lytter);
+
+  const spillerFikPresence = nextMessage(spiller);
+  const lytterFikPresence = nextMessage(lytter);
+  // Forsøger at sætte en vilkårlig presence-tekst — skal IGNORERES HELT.
+  spiller.send(JSON.stringify({ type: 'presence', room: 'presence-spoof', name: 'Vildledende Navn' }));
+  const lytterPresence = await lytterFikPresence;
+  await spillerFikPresence;
+  assert.equal(
+    lytterPresence.users[0].name,
+    'Ægte N.',
+    'presence-listen skal vise det RIGTIGE (maskerede) navn, aldrig klientens fritekst'
+  );
+  assert.notEqual(lytterPresence.users[0].name, 'Vildledende Navn');
+
+  const modtaget = nextMessage(lytter);
+  // Endnu et forsøg på at udgive sig for en anden, denne gang direkte i
+  // selve duel-eventet.
+  spiller.send(
+    JSON.stringify({
+      type: 'emit',
+      room: 'presence-spoof',
+      event: 'duel.s',
+      data: { score: 1, name: 'Endnu et falsk navn' },
+    })
+  );
+  const relay = await modtaget;
+  assert.equal(
+    relay.from.name,
+    'Ægte N.',
+    'duel-afsendernavnet skal også være det RIGTIGE (maskerede) navn, aldrig presence-teksten eller data.name'
+  );
+});
+
+test('N4-bonus: duel.go\'s bn matcher OGSÅ når selv-referencen blev sendt som data.tab (ikke data.a — jeres faktiske klients felt)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body: bodyB } = registrerSpiller(h.baseUrl, { navn: 'Tab Modstander' });
+  const regB = await api(h.baseUrl, 'POST', '/players', { body: bodyB });
+  const tokenB = regB.body.token;
+
+  const { body: bodyA } = registrerSpiller(h.baseUrl, { navn: 'Angriber Andersen' });
+  const regA = await api(h.baseUrl, 'POST', '/players', { body: bodyA });
+  const tokenA = regA.body.token;
+
+  const connB = await connect(h.wsUrl);
+  const connA = await connect(h.wsUrl);
+  const lytter = await connect(h.wsUrl);
+  t.after(() => {
+    connB.close();
+    connA.close();
+    lytter.close();
+  });
+
+  connB.send(JSON.stringify({ type: 'hello', token: tokenB }));
+  await nextMessage(connB);
+  connA.send(JSON.stringify({ type: 'hello', token: tokenA }));
+  await nextMessage(connA);
+
+  lytter.send(JSON.stringify({ type: 'join', room: 'tab-reference' }));
+  await nextMessage(lytter);
+
+  // B sender FØRST et duel-event der (som jeres faktiske klient) kun bærer
+  // `tab`, ikke `a`, som selv-reference.
+  const lytterFikVenteBesked = nextMessage(lytter);
+  connB.send(
+    JSON.stringify({ type: 'emit', room: 'tab-reference', event: 'duel.waiting', data: { tab: 'b-tab-123' } })
+  );
+  await lytterFikVenteBesked;
+
+  const modtaget = nextMessage(lytter);
+  // A forsøger et vilkårligt modstandernavn, men peger `b` på B's `tab`.
+  connA.send(
+    JSON.stringify({
+      type: 'emit',
+      room: 'tab-reference',
+      event: 'duel.go',
+      data: { a: 'a-tab', an: 'ignoreres', b: 'b-tab-123', bn: 'Falsk Modstander' },
+    })
+  );
+  const relay = await modtaget;
+  assert.equal(
+    relay.data.bn,
+    'Tab M.',
+    'bn skal matche via data.tab-registreringen og vise den REELLE modstanders maskerede navn'
+  );
+  assert.notEqual(relay.data.bn, 'Falsk Modstander');
 });
 
 test('opgave E: state.changed broadcastes ved ny registrering, firma-ændring, admin-config-ændring, sletning af én spiller, og admin/nulstil', async (t) => {

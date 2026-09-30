@@ -202,6 +202,25 @@ function meRouter(pool, ws) {
     }
   });
 
+  // N9 (fjerde opfølgende runde, afsluttende review): der fandtes hidtil
+  // intet spiller-logout-endpoint overhovedet (kun admin/stand-afmeld, se
+  // src/routes/admin.js). Tilbagekalder KUN det ENE token der blev brugt til
+  // at kalde DETTE endpoint (`req.player.token_id`, sat af
+  // src/spillerToken.js#loadPlayerByToken via `requirePlayer`) — spillerens
+  // ØVRIGE tokens (andre enheder, se "Flere samtidige tokens pr. spiller" i
+  // API.md) rører vi ALDRIG. Idempotent: kald igen med et allerede
+  // tilbagekaldt token giver 401 (tokenet er jo netop nu ugyldigt).
+  router.post('/me/logout', auth, async (req, res, next) => {
+    try {
+      await pool.query('UPDATE spiller_token SET tilbagekaldt = now() WHERE id = $1 AND tilbagekaldt IS NULL', [
+        req.player.token_id,
+      ]);
+      res.json({ ok: true });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   router.post('/me/seen', auth, async (req, res, next) => {
     const ids = Array.isArray(req.body && req.body.ids) ? req.body.ids.filter(Number.isInteger) : null;
     try {

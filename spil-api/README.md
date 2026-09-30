@@ -102,7 +102,14 @@ uden at påvirke andre testfiler.
   (`stillQualifiesForDeletion`) afviser sletning af en kandidat der har
   fået nyt aktivt samtykke siden udvælgelsen; anonymisering af
   rest-referencer (raffle_draws-snapshot, notifikation.data.by/fra,
-  forsoeg.duel.vs) i andre spilleres data.
+  forsoeg.duel.vs) i andre spilleres data; N9's `revokeExpiredTokens`
+  markerer kun reelt udløbne, endnu-ikke-tilbagekaldte tokens, og rører
+  aldrig et allerede tilbagekaldt token igen.
+- `spillerToken.test.js` — N9: `POST /me/logout` tilbagekalder KUN det ene
+  token det blev kaldt med (spillerens øvrige tokens/enheder virker
+  uændret); et token der ikke har været brugt inden for TTL'en
+  (`PLAYER_TOKEN_TTL_MS`) afvises ved autentificering, selvom det aldrig er
+  tilbagekaldt; `sidst_brugt` opdateres højst én gang i minuttet pr. token.
 - `tzDate.test.js` — Europe/Copenhagen-dagsberegningen
   (`src/rules/tzDate.js`), både JS-siden (`todayStr`, med et tidspunkt der
   er FORSKELLIG dag i UTC vs. København) og SQL-siden (`cphDateExpr` via
@@ -131,7 +138,12 @@ uden at påvirke andre testfiler.
   anonyme forbindelser kan kun lytte; broadcasts personaliseres pr.
   forbindelse (stand-session ser fulde navne, andre ser forkortede);
   en admin/stand-session der forsvinder MENS forbindelsen er åben mister
-  privilegiet, både via det periodiske sweep og den friske pr.-besked-tjek.
+  privilegiet, både via det periodiske sweep og den friske pr.-besked-tjek;
+  `duel.go`s `bn` matcher både `data.b` som connId og som selv-erklæret
+  tab-reference (`data.a` ELLER `data.tab`, se N4-bonus); N5: `hello` uden
+  gyldigt token nulstiller `ws.player`/presence og broadcaster det STRAKS;
+  N6: en forbindelses selv-indsendte presence-tekst kan IKKE forfalske
+  hverken presence-listens navn eller et duel-events afsendernavn.
 
 **pg-mem-forbehold:** testfallbacket uden Docker (se ovenfor) har en kendt
 begrænsning med `DISTINCT ON` kombineret med et efterfølgende SQL-side
@@ -197,6 +209,27 @@ kvalificerer til sletning). Driftsmæssigt:
   (juster stien til `/var/log/spil-retention.log`, eller lad den gå til
   `docker compose logs` i stedet, alt efter hvad der allerede er sat op for
   backup-cron'en på serveren.)
+- **N9 (fjerde opfølgende runde):** samme kørsel rydder nu OGSÅ op i udløbne
+  spiller-bearer-tokens (markerer `tilbagekaldt`, se
+  `src/retention.js#revokeExpiredTokens` og API.md, "Fjerde opfølgende
+  ændringsrunde") — genbruger BEVIDST denne eksisterende natlige mekanisme i
+  stedet for endnu en separat cron-linje. Selve TTL-afvisningen (et token
+  der ikke har været brugt i `PLAYER_TOKEN_TTL_MS`, default 30 dage,
+  autentificerer ikke længere) håndhæves UAFHÆNGIGT af dette job, ved hver
+  eneste brug (se `src/spillerToken.js#loadPlayerByToken`) — jobbet her
+  rydder blot op i det der allerede er ugyldigt.
+### Drift: dagsskifte midt i et forsøg (bevidst adfærd, ikke en bug)
+
+Et forsøg (`POST /runs` → `POST /runs/:runde_id/finish`) der starter FØR
+midnat (dansk tid) og først afsluttes EFTER midnat, afvises ved `finish`
+med `409 { "kode": "forsoeg_udloebet" }`, og livet der blev brugt til det,
+refunderes IKKE — også selvom spilleren var online hele tiden, ikke kun ved
+et offline-kø-scenarie. Dette er et BEVIDST designvalg fra "Anden
+opfølgende ændringsrunde" (se API.md, "Dage og tidszoner" og
+`POST /runs/:runde_id/finish`), ikke en overset kant — nævnt eksplicit her
+så det ikke fejlagtigt bliver rapporteret som en bug ved en senere
+gennemgang.
+
 ### Drift: `POST /admin/nulstil`s pg_dump-sikkerhedsnet
 
 `POST /admin/nulstil` (se API.md) tager FØRST en `pg_dump` som

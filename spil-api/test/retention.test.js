@@ -9,7 +9,9 @@ const {
   stillQualifiesForDeletion,
   deleteInactivePlayers,
   cutoffDate,
+  revokeExpiredTokens,
 } = require('../src/retention');
+const config = require('../src/config');
 
 let telefonSeq = 20000000;
 async function mkSpiller(pool, oprettet, navn) {
@@ -36,6 +38,20 @@ async function mkSamtykke(pool, spillerId, liste, type, tidspunkt) {
     `INSERT INTO samtykke (spiller_id, liste, tidspunkt, type) VALUES ($1,$2,$3,$4)`,
     [spillerId, liste, tidspunkt, type]
   );
+}
+
+// N9 (fjerde opfølgende runde, afsluttende review): opretter en
+// spiller_token-række direkte, uden om selve udstedelses-endpointet, så vi
+// kan sætte en vilkårlig `sidst_brugt`/`tilbagekaldt`-tilstand til brug for
+// revokeExpiredTokens()-testene nedenfor.
+async function mkToken(pool, spillerId, sidstBrugt, tilbagekaldt) {
+  const tokenHash = crypto.randomBytes(16).toString('hex');
+  const { rows } = await pool.query(
+    `INSERT INTO spiller_token (spiller_id, token_hash, sidst_brugt, tilbagekaldt)
+     VALUES ($1,$2,$3,$4) RETURNING id`,
+    [spillerId, tokenHash, sidstBrugt, tilbagekaldt || null]
+  );
+  return rows[0].id;
 }
 
 test('cutoffDate regner præcis 12 måneder tilbage', () => {
@@ -214,4 +230,39 @@ test('sletning anonymiserer rest-referencer i andre spilleres data (raffle_draws
     overleverId,
   ]);
   assert.equal(forsoegRow.rows[0].duel.vs, 'Slettet spiller');
+});
+
+test('N9: revokeExpiredTokens markerer KUN tokens der er udløbet (sidst_brugt > TTL siden), og ALDRIG allerede-tilbagekaldte tokens igen', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const now = new Date('2026-09-30T12:00:00Z');
+  const ttlMs = config.playerTokenTtlMs;
+  const spillerId = await mkSpiller(h.pool, now);
+
+  const udloebet = await mkToken(h.pool, spillerId, new Date(now.getTime() - ttlMs - 3600 * 1000)); // > TTL siden
+  const friskt = await mkToken(h.pool, spillerId, new Date(now.getTime() - 3600 * 1000)); // 1 time siden, godt inden for TTL
+  const alleredeTilbagekaldtTidspunkt = new Date(now.getTime() - ttlMs - 7200 * 1000);
+  const alleredeTilbagekaldt = await mkToken(
+    h.pool,
+    spillerId,
+    new Date(now.getTime() - ttlMs - 7200 * 1000),
+    alleredeTilbagekaldtTidspunkt // allerede tilbagekaldt FØR jobbet kører
+  );
+
+  const antal = await revokeExpiredTokens(h.pool, now);
+  assert.equal(antal, 1, 'kun det ene reelt udløbne, endnu-ikke-tilbagekaldte token skal tælles/ryddes');
+
+  const raa = await h.pool.query(
+    'SELECT id, tilbagekaldt FROM spiller_token WHERE id = ANY($1::bigint[])',
+    [[udloebet, friskt, alleredeTilbagekaldt]]
+  );
+  const map = new Map(raa.rows.map((r) => [String(r.id), r.tilbagekaldt]));
+  assert.ok(map.get(String(udloebet)), 'det udløbne token skal nu være markeret tilbagekaldt');
+  assert.equal(map.get(String(friskt)), null, 'det friske token skal STADIG være gyldigt (ikke tilbagekaldt)');
+  assert.equal(
+    new Date(map.get(String(alleredeTilbagekaldt))).getTime(),
+    alleredeTilbagekaldtTidspunkt.getTime(),
+    'et allerede tilbagekaldt token må ikke røres/overskrives igen'
+  );
 });

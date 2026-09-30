@@ -313,7 +313,22 @@ function runsRouter(pool, ws) {
             await persistBag(client, modstander.id, { ...mBag, n: Math.min(MAX_LIVES, mBag.n + 1) });
             gaveNotifs.push({
               spillerId: modstander.id,
-              data: { type: 'udfordring_liv', fra: scorer.navn, fra_spiller_id: scorer.id, at: now.toISOString() },
+              data: {
+                type: 'udfordring_liv',
+                fra: scorer.navn,
+                fra_spiller_id: scorer.id,
+                // N13 (fjerde opfølgende runde, afsluttende review): manglede
+                // hidtil helt — klienten viser "<fra> fik <score> point" og
+                // sammenligner `score` mod modtagerens egen dagens bedste for
+                // at afgøre om "Slå den tilbage" skal vises (se
+                // spil/index.html, giftS-visningen), men uden feltet endte
+                // teksten altid med "fik 0 point", og "Slå den tilbage" blev
+                // aldrig vist. `samlet` er udfordrerens (denne scorers)
+                // SAMLEDE point fra netop DETTE godkendte forsøg, sat på
+                // SKRIVETIDSPUNKTET (samme princip som de øvrige felter her).
+                score: samlet,
+                at: now.toISOString(),
+              },
             });
             chlOpdateret = { ...chlOpdateret, [modstanderKey]: now.toISOString() };
           }

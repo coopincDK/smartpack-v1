@@ -37,13 +37,23 @@ const AFSENDER_NAVN_FELTER = ['name', 'an'];
 //   2) `data.b` er et selv-erklæret, tab-lignende strengfelt (jf. det ÆLDRE
 //      klientmønster i spil/index.html: `a`=egen tab, `b`=modstanderens tab)
 //      — registreret nedenfor (`registrerSelvReference`) fra AFSENDERENS
-//      eget `data.a`-felt i et TIDLIGERE duel-event i samme rum.
+//      eget `data.a`-ELLER `data.tab`-felt (se EGEN_REF_FELT_ALT — den
+//      FAKTISKE klient viste sig kun at sende `tab`, se N4-bonus) i et
+//      TIDLIGERE duel-event i samme rum.
 // Matcher INGEN af delene en kendt forbindelse i SAMME rum, stoler vi ALDRIG
 // på klientens `bn` — den ryddes til en tom streng i stedet for at relaye
 // ubekræftet fritekst.
 const MODSTANDER_NAVN_FELT = 'bn';
 const MODSTANDER_REF_FELT = 'b';
 const EGEN_REF_FELT = 'a';
+// Fjerde opfølgende ændringsrunde (afsluttende review), N4-bonus: den
+// FAKTISKE klient sender kun `tab` (ikke `a`) som selv-reference i
+// duel.waiting/duel.s (se spil/index.html#goDuel) — uden dette registreres
+// afsenderens selv-reference ALDRIG, og `bn`-opslaget ovenfor matcher derfor
+// aldrig noget i praksis (ender altid tom). Registreres nu SOM ET EKSTRA
+// felt ved siden af `a` (ikke i stedet for) — begge skal virke, uanset
+// hvilken klient/version der forbinder, se emit-håndteringen nedenfor.
+const EGEN_REF_FELT_ALT = 'tab';
 // Fundet under sikkerhedsgennemgangen: adminRole blev kun læst ÉN GANG, ved
 // selve håndtrykket — en admin/stand-session der udløber eller logges ud
 // mens socket'en forbliver åben, beholdt privilegiet for evigt. Rettet med
@@ -119,11 +129,12 @@ function attachWs(server, pool, opts) {
     return m;
   }
 
-  // Registrerer AFSENDERENS eget selv-erklærede reference-felt (`data.a`, se
-  // EGEN_REF_FELT/MODSTANDER_REF_FELT ovenfor) — en selv-erklæring om "dette
-  // ER mig" er ufarlig at stole på som opslagsnøgle (i modsætning til en
-  // PÅSTAND om nogen ANDEN, som `bn` er), præcis samme tillidsmodel som
-  // `ws.presenceName`/`ws.player.navn` allerede bruges under.
+  // Registrerer AFSENDERENS eget selv-erklærede reference-felt (`data.a`
+  // eller `data.tab`, se EGEN_REF_FELT/EGEN_REF_FELT_ALT/MODSTANDER_REF_FELT
+  // ovenfor) — en selv-erklæring om "dette ER mig" er ufarlig at stole på
+  // som opslagsnøgle (i modsætning til en PÅSTAND om nogen ANDEN, som `bn`
+  // er). Selve NAVNET der til sidst vises slås dog altid op via
+  // `conn.player.navn`, ALDRIG via noget klienten selv har sendt (se N6).
   function registrerSelvReference(room, ref, conn) {
     if (ref == null) return;
     if (typeof ref !== 'string' && typeof ref !== 'number') return;
@@ -179,23 +190,38 @@ function attachWs(server, pool, opts) {
     for (const felt of AFSENDER_NAVN_FELTER) {
       if (felt in ud) ud[felt] = visNavn;
     }
-    // Punkt 3 (denne runde): se MODSTANDER_NAVN_FELT-kommentaren i filens
+    // Punkt 3 (tredje runde): se MODSTANDER_NAVN_FELT-kommentaren i filens
     // toptekst. `bn` overskrives ALTID hvis feltet er til stede — enten med
     // serverens egen maskerede visning af den FAKTISK matchede forbindelses
     // navn, eller (matcher intet) en tom streng. Klientens indsendte `bn`
     // bruges ALDRIG direkte.
+    //
+    // N6 (fjerde runde): navnet hentes UDELUKKENDE fra modstanderens
+    // `player.navn` (den autoritative kilde) — ALDRIG fra
+    // `modstander.presenceName`, som hidtil blev foretrukket her. Se N6-
+    // kommentaren ved selve presence-håndteringen nedenfor for hvorfor
+    // presenceName ikke længere kan bære nogen navneværdi overhovedet.
     if (MODSTANDER_NAVN_FELT in ud) {
       const modstander = findConnByReference(room, ud[MODSTANDER_REF_FELT]);
-      const modstanderNavn = modstander ? modstander.presenceName || (modstander.player && modstander.player.navn) : null;
+      const modstanderNavn = modstander && modstander.player ? modstander.player.navn : null;
       ud[MODSTANDER_NAVN_FELT] = modstanderNavn ? displayName(modstanderNavn, privileged) : '';
     }
     return ud;
   }
 
+  // N6 (fjerde opfølgende runde, afsluttende review): navnet i presence-
+  // listen kommer nu UDELUKKENDE fra `conn.player.navn` (den autoritative
+  // kilde, maskeret efter MODTAGERENS privilegie som hidtil) — aldrig fra
+  // klientens selv-indsendte `presence`-tekst. `conn.presenceName` er
+  // stadig en FLAG-værdi ("er denne forbindelse sat synlig i rummet"), men
+  // bærer ikke længere selve navneteksten, se presence-håndteringen
+  // nedenfor.
   async function presenceListFor(room, privileged) {
     const out = [];
     for (const conn of roomSet(room)) {
-      if (conn.presenceName) out.push({ id: conn.connId, name: displayName(conn.presenceName, privileged) });
+      if (conn.presenceName && conn.player) {
+        out.push({ id: conn.connId, name: displayName(conn.player.navn, privileged) });
+      }
     }
     return out;
   }
@@ -259,11 +285,30 @@ function attachWs(server, pool, opts) {
       if (!msg || typeof msg !== 'object' || typeof msg.type !== 'string') return;
 
       if (msg.type === 'hello') {
+        let nySpiller = null;
         if (msg.token) {
           try {
-            ws.player = await tryLoadPlayer(pool, msg.token);
+            nySpiller = await tryLoadPlayer(pool, msg.token);
           } catch (e) {
-            ws.player = null;
+            nySpiller = null;
+          }
+        }
+        if (nySpiller) {
+          ws.player = nySpiller;
+        } else {
+          // N5 (fjerde opfølgende runde, afsluttende review): `hello` UDEN
+          // et gyldigt token (fx "Næste spiller"/logout på en standtablet)
+          // nulstillede hidtil IKKE ws.player/presenceName på selve
+          // forbindelsen — den forblev logget ind som den FORRIGE spiller,
+          // og presence-listen viste stadig forrige spillers navn til
+          // andre. Nulstil eksplicit her, og broadcast den opdaterede
+          // presence-liste til resten af rummet/rummene med det samme, i
+          // stedet for at vente på at forbindelsen til sidst lukkes.
+          const varSynlig = !!ws.presenceName;
+          ws.player = null;
+          ws.presenceName = null;
+          if (varSynlig) {
+            for (const room of ws.rooms) await broadcastPresence(room);
           }
         }
         return safeSend(ws, JSON.stringify({ type: 'hello.ok', authenticated: !!ws.player }));
@@ -289,7 +334,18 @@ function attachWs(server, pool, opts) {
         if (!room) return;
         roomSet(room).add(ws);
         ws.rooms.add(room);
-        ws.presenceName = String(msg.name || ws.player.navn || '').slice(0, 22);
+        // N6 (fjerde opfølgende runde, afsluttende review): `msg.name` var
+        // hidtil FRIT klient-fritekst (op til 22 tegn) der blev gemt som
+        // `ws.presenceName` og siden vist UFILTRERET og PRIVILIGERET (kun
+        // maskeret, aldrig erstattet) til andre forbindelser — både i selve
+        // presence-broadcastet og som duel-afsendernavn (se emit
+        // nedenfor). En spiller kunne dermed udgive sig for hvem som helst.
+        // `msg.name` IGNORERES nu HELT — vi bruger `ws.presenceName`
+        // udelukkende som en boolsk markør ("denne forbindelse er synlig i
+        // rummet"), aldrig som en navneværdi. Selve navnet slås op FRISKT
+        // fra `ws.player.navn` hver gang det skal vises, se
+        // presenceListFor()/emit-håndteringen.
+        ws.presenceName = true;
         await broadcastPresence(room);
         return;
       }
@@ -303,14 +359,19 @@ function attachWs(server, pool, opts) {
         if (!room || !DUEL_EVENTS.has(event)) {
           return safeSend(ws, JSON.stringify({ type: 'error', message: 'Ukendt eller manglende event/rum.' }));
         }
-        const fuldtNavn = ws.presenceName || ws.player.navn;
-        // Registrér afsenderens selv-erklærede reference (`data.a`) FØR
-        // broadcast — se registrerSelvReference()/MODSTANDER_NAVN_FELT-
-        // kommentaren i filens toptekst. Skader ikke selv om DENNE besked
-        // ikke selv indeholder `bn` (fx duel.s/duel.waiting/duel.idle);
-        // registreringen bruges kun af en SENERE afsenders `bn`-opslag.
+        // N6: se presence-håndteringen ovenfor — afsenderens navn er ALTID
+        // den autoritative `ws.player.navn` (maskeret pr. modtager
+        // nedenfor), aldrig noget klienten selv har indsendt.
+        const fuldtNavn = ws.player.navn;
+        // Registrér afsenderens selv-erklærede reference (`data.a`/`data.tab`,
+        // se EGEN_REF_FELT/EGEN_REF_FELT_ALT ovenfor) FØR broadcast — se
+        // registrerSelvReference()/MODSTANDER_NAVN_FELT-kommentaren i
+        // filens toptekst. Skader ikke selv om DENNE besked ikke selv
+        // indeholder `bn` (fx duel.s/duel.waiting/duel.idle); registreringen
+        // bruges kun af en SENERE afsenders `bn`-opslag.
         if (msg.data && typeof msg.data === 'object') {
           registrerSelvReference(room, msg.data[EGEN_REF_FELT], ws);
+          registrerSelvReference(room, msg.data[EGEN_REF_FELT_ALT], ws);
         }
         for (const conn of roomSet(room)) {
           if (conn === ws) continue;

@@ -28,6 +28,7 @@
 // sletning (i modsætning til admin-enkelt-sletningen) er BETINGET.
 
 const { deletePlayerFully } = require('./playerDeletion');
+const config = require('./config');
 
 const RETENTION_MONTHS = 12;
 
@@ -167,10 +168,37 @@ async function deleteInactivePlayers(pool, now) {
   }
 }
 
+// N9 (fjerde opfølgende runde, afsluttende review): rydder op i
+// spiller_token-tokens der er UDLØBET efter TTL'en (config.playerTokenTtlMs,
+// se src/spillerToken.js#loadPlayerByToken, som allerede AFVISER dem ved
+// selve brugen — dette er blot oprydningen, så tabellen ikke vokser
+// uendeligt). Markerer dem `tilbagekaldt` (samme felt/mekanisme som
+// `POST /me/logout`) i stedet for at slette rækken fysisk — bevarer
+// muligheden for senere at se HVORNÅR/hvor mange tokens der er udløbet uden
+// ekstra tabeller. Genbruger BEVIDST det eksisterende natlige job
+// (scripts/retention-job.js) i stedet for en ny, separat cron-mekanisme —
+// se README.md, "Drift: GDPR-oprydning (natligt job)". Rører aldrig tokens
+// der allerede er tilbagekaldt (fx via /me/logout) — `tilbagekaldt IS NULL`
+// er WHERE-betingelsen, samme som selve autentificeringen. Returnerer KUN
+// antallet (ALDRIG spiller-/token-id'er) — samme logningsprincip som
+// deleteInactivePlayers().
+async function revokeExpiredTokens(pool, now) {
+  const nowResolved = now || new Date();
+  const ttlSeconds = config.playerTokenTtlMs / 1000;
+  const { rowCount } = await pool.query(
+    `UPDATE spiller_token SET tilbagekaldt = $1::timestamptz
+     WHERE tilbagekaldt IS NULL
+       AND sidst_brugt < $1::timestamptz - make_interval(secs => $2::double precision)`,
+    [nowResolved, ttlSeconds]
+  );
+  return rowCount;
+}
+
 module.exports = {
   RETENTION_MONTHS,
   cutoffDate,
   findRetentionCandidates,
   stillQualifiesForDeletion,
   deleteInactivePlayers,
+  revokeExpiredTokens,
 };
