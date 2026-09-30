@@ -784,7 +784,10 @@ function apiFetch(path, opts){
   // resultat, og et hængende finish-kald bruger aldrig offline-køen (fetch fejler jo aldrig af sig
   // selv). Afbryd derfor efter ~15 sek.; en afbrudt fetch fejler UDEN e.status, så den falder
   // naturligt ind i den almindelige "midlertidig fejl → læg i kø"-håndtering (se isFinalRejection).
-  const ac = new AbortController(), timer = setTimeout(() => ac.abort(), 15000);
+  // V4: admin-kald kan tage meget længere (fx /admin/nulstil tager selv en pg_dump, og
+  // /admin/spillere kører mange forespørgsler pr. spiller) — 15 sek. ville afbryde et kald, der
+  // reelt lykkes server-side, og vise en falsk fejl til arrangøren. Giv dem 120 sek. i stedet.
+  const ac = new AbortController(), timer = setTimeout(() => ac.abort(), opts.admin ? 120000 : 15000);
   return fetch(API_BASE + path, { method: opts.method || 'GET', headers, body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined, credentials: opts.admin ? 'include' : 'same-origin', signal: ac.signal })
     .then(async res => {
       let json = null; try{ json = await res.json(); }catch(e){}
@@ -811,8 +814,19 @@ const API = {
     // N9: tilbagekald tokenet server-side (ikke kun glemt lokalt) — ellers er en standtablets
     // "Næste spiller" reelt uden effekt, for det gamle token virker stadig i det uendelige.
     // Fanges stille: er endepunktet ikke sat i drift endnu, skal "Næste spiller" virke som hidtil.
+    // V1: men IKKE, hvis der stadig ligger et uafsluttet kø-element med netop dette token — dets
+    // finish() skal først have et endeligt svar (se flushFinishQueue), ellers rammer den et 401,
+    // som fejlagtigt tolkes som en endelig afvisning, og forsøget/livet tabes.
     const tok = getToken();
-    if(tok) apiFetch('/me/logout', { method: 'POST', tokenOverride: tok }).catch(() => {});
+    if(tok){
+      const staarIKoe = loadFinishQueue().some(item => item.token === tok && !item._done);
+      if(staarIKoe){
+        const pending = loadLogoutPending();
+        if(!pending.includes(tok)) saveLogoutPending(pending.concat([tok]));
+      } else {
+        apiFetch('/me/logout', { method: 'POST', tokenOverride: tok }).catch(() => {});
+      }
+    }
     setToken(null); cacheMe(null);
   },
   startRun(opts){ return apiFetch('/runs', { method: 'POST', body: opts && opts.ny ? { ny: true } : undefined }); },
@@ -968,13 +982,47 @@ setInterval(() => { if(current && screen === 's-lobby') refreshMe(); }, 60000);
    Hvert element gemmer sit EGET token (H3): på en delt standtablet kan en anden spiller være logget
    ind, når køen flushes, og forsøget skal stadig krediteres den, der spillede det. */
 const FQ_STORE = 'packrush.queue.v1', FQ_MAX_TRIES = 12;
-// N9: hvert kø-element bærer sit eget spiller-token (H3) — på en standtablet må det ligesom
-// spillerens egen token/ME_CACHE ALDRIG ligge i localStorage, kun i hukommelsen. Det betyder køen
-// ikke overlever en sideindlæsning på standen, men det gør et hængende finish-forsøg heller ikke i
-// dag, og det opvejer ikke risikoen ved at efterlade andre spilleres tokens liggende på en fælles enhed.
-let memQueue = [];
-function loadFinishQueue(){ if(isStand()) return memQueue; try{ return JSON.parse(localStorage.getItem(FQ_STORE) || '[]'); }catch(e){ return []; } }
-function saveFinishQueue(q){ if(isStand()){ memQueue = q; return; } try{ localStorage.setItem(FQ_STORE, JSON.stringify(q)); }catch(e){} }
+// N9/V2: hvert kø-element bærer sit eget spiller-token (H3) — på en standtablet må det ligesom
+// spillerens egen token/ME_CACHE ALDRIG ligge i localStorage (den overlever lukning af browseren
+// og deles reelt af alle, der bruger enheden). sessionStorage er det rigtige mellemtrin: det
+// overlever en almindelig sideindlæsning (så et ventende forsøg ikke tabes, hvis standen selv
+// genindlæser siden), men forsvinder, når selve fanen/browseren lukkes, ligesom en pengeautomats
+// kvittering ikke bliver i skuffen efter næste kunde.
+function loadFinishQueue(){
+  if(isStand()){ try{ return JSON.parse(sessionStorage.getItem(FQ_STORE) || '[]'); }catch(e){ return []; } }
+  try{ return JSON.parse(localStorage.getItem(FQ_STORE) || '[]'); }catch(e){ return []; }
+}
+function saveFinishQueue(q){
+  if(isStand()){ try{ sessionStorage.setItem(FQ_STORE, JSON.stringify(q)); }catch(e){} return; }
+  try{ localStorage.setItem(FQ_STORE, JSON.stringify(q)); }catch(e){}
+}
+// V2: skiftes en enhed til stand, kan der allerede ligge en gammel kø i localStorage (med tokens)
+// fra FØR skiftet — clearStoredIdentity rydder kun token/ME_CACHE, ikke denne. Forsøg først at
+// sende den (bedste indsats), og flyt den ellers over i den NYE (session-baserede) kø i stedet for
+// bare at slette den, så et gyldigt, ventende forsøg ikke går tabt ved selve skiftet.
+function migrateQueueToStand(){
+  let old = []; try{ old = JSON.parse(localStorage.getItem(FQ_STORE) || '[]'); }catch(e){}
+  try{ localStorage.removeItem(FQ_STORE); }catch(e){}
+  old.filter(item => !item._done).forEach(item => {
+    API.finishRun(item.runId, item.payload, item.token).catch(e => {
+      if(!isFinalRejection(e)) saveFinishQueue(loadFinishQueue().concat([item]));
+    });
+  });
+}
+// V1: et token må ikke tilbagekaldes (POST /me/logout), mens der stadig ligger uafsluttede
+// kø-elementer, der bruger DET token — ellers rammer deres finish() en 401 og bliver fejlagtigt
+// opfattet som en endelig afvisning (forsøget og livet tabes). Udskyder vi det, skal listen over
+// "afventer logout"-tokens gemmes lige så forsigtigt som selve køen (samme sted: session på en
+// stand, ellers localStorage), for at overleve en sideindlæsning imens.
+const LOGOUT_PENDING_STORE = 'packrush.logoutpending.v1';
+function loadLogoutPending(){
+  const store = isStand() ? sessionStorage : localStorage;
+  try{ return JSON.parse(store.getItem(LOGOUT_PENDING_STORE) || '[]'); }catch(e){ return []; }
+}
+function saveLogoutPending(list){
+  const store = isStand() ? sessionStorage : localStorage;
+  try{ store.setItem(LOGOUT_PENDING_STORE, JSON.stringify(list)); }catch(e){}
+}
 function queueFinish(pid, token, name, runId, payload){
   const q = loadFinishQueue();
   // N2: "day" er dagen forsøget blev spillet (København) — bruges som den ENESTE udløbsgrænse for
@@ -1034,9 +1082,21 @@ function flushFinishQueue(){
     const processedIds = new Set(snapshot.map(x => x.runId));
     const stillPending = snapshot.filter(x => !x._done);
     const addedMeanwhile = fresh.filter(x => !processedIds.has(x.runId));
-    saveFinishQueue(stillPending.concat(addedMeanwhile));
+    const merged = stillPending.concat(addedMeanwhile);
+    saveFinishQueue(merged);
     flushingQueue = false;
     if(stillPending.length < snapshot.length) loadState();
+    // V1: nu hvor køen er opdateret, kan et token, der afventede logout, måske frigives —
+    // dvs. det har ikke længere NOGEN uafsluttede kø-elementer tilbage.
+    const ventendeLogout = loadLogoutPending();
+    if(ventendeLogout.length){
+      const stadigIBrug = new Set(merged.map(x => x.token));
+      const klar = ventendeLogout.filter(t => !stadigIBrug.has(t));
+      if(klar.length){
+        klar.forEach(t => apiFetch('/me/logout', { method: 'POST', tokenOverride: t }).catch(() => {}));
+        saveLogoutPending(ventendeLogout.filter(t => !klar.includes(t)));
+      }
+    }
   });
 }
 
@@ -2716,9 +2776,11 @@ function adminPlayerFromServer(p){
     code: p.vennekode || p.code || '', badges: p.badges || [],
     attempts: (p.forsoeg || []).map(f => ({ score: f.score, day: f.dag, end: f.slut_server })),
     beaten: p.beaten_i_dag || p.beaten || [],
-    marketing: aktiv('sp'),
+    // V3: /admin/spillere's tilmeldinger bruger listNameFor()s navne ("smartpack"/"partner:X"),
+    // IKKE /me's kortere nøgler ("sp"/"m:X") — kun sms hedder det samme begge steder.
+    marketing: aktiv('smartpack'),
     notify: aktiv('sms'),
-    mailTo: tilmeldinger.filter(t => t.aktiv && String(t.liste).startsWith('m:')).map(t => t.liste.slice(2)),
+    mailTo: tilmeldinger.filter(t => t.aktiv && String(t.liste).startsWith('partner:')).map(t => t.liste.slice('partner:'.length)),
     liv: p.liv, tickets: typeof p.tickets === 'number' ? p.tickets : undefined,
     created: p.oprettet || p.created || null,
   });
@@ -3092,7 +3154,7 @@ function paintWallDuel(){
   }
 }
 
-$('#a-stand').onchange = e => { try{ localStorage.setItem(STAND_STORE, e.target.checked ? '1' : '0'); }catch(err){} if(e.target.checked){ forgetMe(); clearStoredIdentity(); } paintInstall(); toast(e.target.checked ? 'Enheden er nu en standtablet' : 'Enheden husker nu spilleren'); };
+$('#a-stand').onchange = e => { try{ localStorage.setItem(STAND_STORE, e.target.checked ? '1' : '0'); }catch(err){} if(e.target.checked){ forgetMe(); clearStoredIdentity(); migrateQueueToStand(); } paintInstall(); toast(e.target.checked ? 'Enheden er nu en standtablet' : 'Enheden husker nu spilleren'); };
 $('#b-standcode').onclick = () => {
   API.admin.standLoginCode().then(res => {
     $('#a-standcode').textContent = res && res.kode ? `Koden er: ${res.kode} (gyldig 5 min.)` : 'Kunne ikke generere en kode.';
@@ -3106,7 +3168,7 @@ $('#b-standlogin').onclick = () => {
   API.standLogin(code).then(() => {
     $('#a-standloginmsg').textContent = 'Denne enhed viser nu fulde navne.';
     try{ localStorage.setItem(STAND_STORE, '1'); }catch(err){}
-    forgetMe(); clearStoredIdentity(); $('#a-stand').checked = true; paintInstall();
+    forgetMe(); clearStoredIdentity(); migrateQueueToStand(); $('#a-stand').checked = true; paintInstall();
     RT.reconnect(); // en allerede-åben websocket har ikke den nye sessionscookie med endnu
     // N16: uden dette bliver navnene på tavlen ved med at være maskerede ("Fornavn E."), indtil
     // næste uafhængige ændring udløser en ny hentning. ETag'et nulstilles først, for et 304-svar mod
