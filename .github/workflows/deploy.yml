@@ -51,4 +51,5 @@ jobs:
             --exclude='.github/' \
             --exclude='infra/' \
             --exclude='api/' \
+            --exclude='spil-api/' \
             ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH

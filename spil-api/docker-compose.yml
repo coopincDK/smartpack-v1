@@ -1,0 +1,30 @@
+# Fase 1-leverance. Udrulning (inkl. binding til 127.0.0.1:8004, nginx,
+# certbot) er FASE 2's opgave — se README.md. Bemærk: INGEN publicerede
+# porte her, netop fordi fase 2's reverse proxy skal styre adgangen.
+version: "3.9"
+
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - db
+    # Ingen "ports:" her — fase 2 binder til 127.0.0.1:8004 via en ekstern
+    # docker-compose.override.yml eller tilsvarende, uden for dette repo.
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: spil
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: spil
+    volumes:
+      - spil_db_data:/var/lib/postgresql/data
+    # Ingen "ports:" her heller — kun `api`-servicen taler med databasen,
+    # over det interne docker-netværk.
+
+volumes:
+  spil_db_data:

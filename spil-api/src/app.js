@@ -1,0 +1,52 @@
+'use strict';
+
+const express = require('express');
+const { healthRouter } = require('./routes/health');
+const { stateRouter } = require('./routes/state');
+const { playersRouter } = require('./routes/players');
+const { meRouter } = require('./routes/me');
+const { runsRouter } = require('./routes/runs');
+const { adminRouter } = require('./routes/admin');
+const { createRateLimiter } = require('./middleware/rateLimit');
+
+// Bygger Express-appen. `ws` (fra src/ws.js) er valgfri — bruges til at
+// broadcaste state.changed når spillerdata/config ændres via API'et.
+function createApp(pool, ws) {
+  const app = express();
+  app.disable('x-powered-by');
+  // Ingen CORS-headers (same-origin). Ingen app.set('trust proxy', ...) —
+  // se src/middleware/clientIp.js og API.md for begrundelsen.
+  app.use(express.json({ limit: '64kb' }));
+
+  // Generøs skrive-rate-limit pr. IP (GET/HEAD er undtaget, de har deres
+  // egne specifikke limits hvor det er nødvendigt, fx admin-login).
+  const writeLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 120 });
+  app.use((req, res, next) => {
+    if (req.method === 'GET' || req.method === 'HEAD') return next();
+    return writeLimiter(req, res, next);
+  });
+
+  app.use(healthRouter());
+  app.use(stateRouter(pool));
+  app.use(playersRouter(pool));
+  app.use(meRouter(pool));
+  app.use(runsRouter(pool, ws));
+  app.use(adminRouter(pool));
+
+  app.use((req, res) => {
+    res.status(404).json({ fejl: 'Ukendt endpoint.', kode: 'ikke_fundet' });
+  });
+
+  // Fejl-handler (dansk, ingen stack-traces til klienten).
+  // eslint-disable-next-line no-unused-vars
+  app.use((err, req, res, next) => {
+    // eslint-disable-next-line no-console
+    console.error(err);
+    if (res.headersSent) return;
+    res.status(500).json({ fejl: 'Der skete en uventet serverfejl.', kode: 'serverfejl' });
+  });
+
+  return app;
+}
+
+module.exports = { createApp };
