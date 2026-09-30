@@ -1,4 +1,4 @@
-# API.md — "Pluk. Pak. Send." spil-api
+# API.md — "Packrush" spil-api (tidligere "Pluk. Pak. Send.")
 
 Fuld kontrakt for den autoritative backend til messespillet. Serveren er
 autoritativ: den bestemmer og skriver alt spillerdata. Klienter (inkl. andre
@@ -52,7 +52,12 @@ ske ved fx kl. 00:00 dansk tid i stedet, er det en lille, isoleret ændring i
 Ingen auth. `200 { "ok": true }`.
 
 ### `GET /state`
-Ingen auth. Cachet 2 sekunder i hukommelse (`src/publicState.js`).
+Ingen auth KRÆVET, men svaret afhænger af en evt. session-cookie (se
+"Packrush-ændringer" nedenfor): som udgangspunkt vises kun `"Fornavn E."`
+(fornavn + efternavns-forbogstav) i `name` og `duel.vs` — en gyldig admin-
+eller stand-session-cookie giver de FULDE navne. Cachet 2 sekunder i
+hukommelse (`src/publicState.js`), på den fulde/interne udgave — selve
+navne-maskeringen sker billigt pr. request ovenpå cachen.
 
 ```json
 {
@@ -142,12 +147,24 @@ ind igen.
   "vennekode": "K7M2", "badges": ["fejlfri"],
   "abonnementer": [{ "key": "sp", "label": "SmartPack nyheder", "life": false }, "..."],
   "mine_noegler": ["sp", "sms"],
-  "samtykker": [{ "liste": "sms", "givet": "...", "trukket_tilbage": null, "tekst_version": 1 }],
+  "mine_flueben": ["sms"],
+  "samtykker": [
+    {
+      "liste": "sms",
+      "aktiv": true,
+      "foerste_bekraeftelse": "2026-09-29T08:00:00.000Z",
+      "seneste_haendelse": { "type": "bekraeftet", "tidspunkt": "2026-09-30T09:00:00.000Z" },
+      "tekst_version": 1
+    }
+  ],
   "liv": { "n": 3, "next_regen_ms": 900000 },
   "notifikationer": [{ "id": 12, "type": "beaten", "data": {"...": "..."}, "oprettet": "...", "seen": false }],
   "tickets": 4
 }
 ```
+`mine_noegler` er den VARIGE tilmelding, `mine_flueben` er DAGENS flueben —
+se "Packrush-ændringer" for forskellen. `samtykker` er nu afledt af
+hændelsesloggen (`aktiv` = seneste hændelse for listen er `bekraeftet`).
 
 ### `POST /me/seen` (bearer)
 Body `{ "ids": [12, 13] }` (valgfri — udelades for at markere ALT som set).
@@ -160,12 +177,42 @@ gennemfører et forsøg i dag).
 `200 { "ok": true, "udfordrer": "Bo Hansen" }` eller
 `400 { "fejl": "Ukendt udfordringskode.", "kode": "ukendt_kode" }`.
 
-### `PUT /me/subs` (bearer)
-Body `{ "keys": ["sp", "sms"] }` — det ØNSKEDE fulde sæt.
-`200 { "ok": true, "friske_liv": 1, "liv": {...}, "mine_noegler": [...] }`.
-Kun nøgler spilleren IKKE allerede fik liv for i dag tæller som "friske".
-Afmelding sætter `samtykke.trukket_tilbage`; gentilmelding opretter en NY
-aktiv samtykke-række — historikken slettes aldrig.
+### `PUT /me/subs` (bearer) — VARIG af-/tilmelding
+Body `{ "keys": ["sp", "sms"] }` — det ØNSKEDE fulde, VARIGE sæt.
+`200 { "ok": true, "liv": {...}, "mine_noegler": [...] }`.
+
+**Siden Packrush giver dette endpoint IKKE længere liv** (se
+"Packrush-ændringer" — det gør kun `PUT /me/ticks`). Det sætter/afmelder den
+varige tilmelding: en tilføjet nøgle logges som en `bekraeftet`-hændelse i
+samtykke, en fjernet nøgle logges som `trukket_tilbage`. En liste der
+afmeldes varigt her, fjernes samtidig fra DAGENS flueben (`mine_flueben`),
+hvis den var tikket af.
+
+### `PUT /me/ticks` (bearer) — DAGENS flueben
+Body `{ "keys": ["sms"] }` — det ØNSKEDE fulde sæt af DAGENS
+fluebens-nøgler (nulstilles hver dag).
+`200 { "ok": true, "friske_liv": 1, "liv": {...}, "mine_noegler": [...], "mine_flueben": [...] }`.
+
+Dette er stedet der GIVER liv (kun for lister med `life: true`, og kun
+lister der ikke allerede har givet liv i dag — "friske_liv"). Et NYT
+flueben er samtidig en ny, VARIG bekræftelse: nøglen logges som
+`bekraeftet` i samtykke, og vokser `mine_noegler` (marketing/mailTo/notify)
+— ALDRIG krympende. At fjerne et flueben er KUN for i dag og rører IKKE den
+varige tilmelding (brug `PUT /me/subs` eller `DELETE /me/subs/:liste` for
+det). Bemærk: gentikker man en liste flere gange samme dag (fjern, sæt,
+fjern, sæt...), logges en NY `bekraeftet`-hændelse hver gang (svarer 1:1 til
+klientens reference-implementering), men der gives kun liv FØRSTE gang.
+
+### `DELETE /me/subs/:liste` (bearer) — ægte, varig afmelding af ÉN liste
+`:liste` er en tilmeldings-NØGLE (`sp`, `m:<partner>`, `sms` — samme format
+som `keys` ovenfor), IKKE samtykke-tabellens listenavn
+(`smartpack`/`partner:X`/`sms`). Sætter varig status til `trukket_tilbage`
+(logger hændelsen), fjerner listen fra dagens flueben hvis den er der, og
+opdaterer `marketing`/`mailTo`/`notify` tilsvarende. Idempotent: at slette
+en liste der ikke er tilmeldt, fejler ikke.
+`200 { "ok": true, "mine_noegler": [...] }`.
+Findes endnu ikke i spillets UI (`spil/index.html`) — tilføjes i en kommende
+ombygning, men kontrakten er klar nu.
 
 ### `POST /me/boost` (bearer)
 Indløser dagens sms-boostkode (svarer til klientens `useCode()`). Body
@@ -264,24 +311,42 @@ Uden gyldigt spiller-token afvises `presence`/`emit` med
 `{"type":"error","message":"..."}` — anonyme forbindelser (standvæggen) kan
 KUN `join` og lytte.
 
+**Navnevisning (siden Packrush):** `presence`- og `event`-beskeder
+(`users[].name`, `from.name`) er PERSONALISEREDE pr. modtagende forbindelse
+— ikke én delt besked. En forbindelse med en gyldig admin- eller
+stand-session (læst fra samme sessionscookie som HTTP-adminpanelet, sendt
+automatisk af browseren ved selve WS-håndtrykket) ser det FULDE navn; alle
+andre forbindelser (anonyme standvægs-lyttere, almindelige spilleres egne
+telefoner) ser `"Fornavn E."`. Se "Packrush-ændringer".
+
 ---
 
 ## Admin (`/admin/*`, cookie-session)
 
 | Metode + sti | Beskrivelse |
 |---|---|
-| `POST /admin/login` `{password}` | 5 forsøg/min/IP. Sætter sessionscookie. |
+| `POST /admin/login` `{password}` | 5 forsøg/min/IP. Sætter admin-sessionscookie (`rolle='admin'`). |
 | `POST /admin/logout` | Sletter sessionen (både cookie og DB-række). |
 | `GET /admin/spillere` | Fuld spillerliste (PII + tickets) til adminpanelet. |
 | `GET /admin/eksport/spillere.csv` | Alle spillere (navn, email, telefon, firma, vennekode, oprettet, skjult). |
-| `GET /admin/eksport/samtykke/:liste.csv` | Samtykkehistorik for én liste (`:liste` valideres mod `^[a-z0-9:_.-]+$`). |
-| `GET /admin/eksport/sms.csv` | Aktive sms-tilmeldte. |
-| `GET /admin/eksport/revanche.csv` | Sms-tilmeldte der er blevet overhalet i dag, inkl. sms-tekst-skabelon (se "Afvigelser"). |
+| `GET /admin/eksport/samtykke/:liste.csv` | Samtykke-hændelseslog for én liste, opsummeret pr. spiller: FØRSTE + SENESTE bekræftelse + `aktiv`-status (`:liste` valideres mod `^[a-z0-9:_.-]+$`). |
+| `GET /admin/eksport/sms.csv` | Spillere med aktiv (`bekraeftet`) sms-status lige nu. |
+| `GET /admin/eksport/revanche.csv` | Sms-tilmeldte (aktiv status) der er blevet overhalet i dag, inkl. sms-tekst-skabelon (se "Afvigelser"). |
 | `POST /admin/lodtraekning` `{kort_navn}` | Vægtet tilfældig lodtrækning ud fra `tickets()`, logger i `raffle_draws`. |
 | `GET /admin/config` / `PUT /admin/config` | Hent/gem hele config (inkl. `hemmelig.pin`). |
 | `GET /admin/boostkode` | Dagens sms-boostkode (KUN her — aldrig i noget offentligt svar). |
 | `POST /admin/spillere/:pid/skjul` `{skjult}` | Skjul/vis en spiller i `GET /state`. |
 | `DELETE /admin/spillere/:pid` | RIGTIG GDPR-sletning (spiller + alle forsøg/samtykker/notifikationer). |
+| `POST /admin/stand-login-kode` | **Kræver `rolle='admin'`** (ikke `stand`). Udsteder en ét-gangs-kode til standtablet-login, se "Stand-login-flow". |
+
+Alle ovenstående (undtagen `/admin/login`) kræver `rolle='admin'` —
+en `stand`-session giver **403 `{"kode":"kraever_admin"}`** på ethvert af
+dem. Se "Stand-login-flow" for hvad en `stand`-session KAN.
+
+### `POST /stand-login` (offentligt — intet admin-krav)
+Body `{ "kode": "AB12CD" }`. Se "Stand-login-flow" nedenfor.
+`200 { "ok": true }` (sætter en langtlevende `rolle='stand'`-sessionscookie)
+eller `400 { "fejl": "Ugyldig eller udløbet kode.", "kode": "ugyldig_kode" }`.
 
 ---
 
@@ -354,6 +419,119 @@ i selve estimatet, ikke som et separat tillæg).
 ### Stats-konsistens (billige, løse tjek)
 - `packed ≥ tower`, `perfects ≤ packed`, `streak ≤ packed`.
 - `fast > 0 ⇒ orders ≥ 1`.
+
+---
+
+## Packrush-ændringer
+
+Denne opfølgende ændringsrunde porterer de regelændringer der fulgte med
+klientens omdøbning fra "Pluk. Pak. Send." til "Packrush" (commit `ec81ec6e1`
+i `spil/index.html`). Kort opsummeret hvad der ændrede sig og hvorfor:
+
+### A) Liv: nyt loft + dagens flueben vs. varig tilmelding
+
+- **`perDay`** (dagligt grundtal af liv) sænket fra `5` til `3` — både i
+  `DEFAULT_CFG` (`src/rules/constants.js`) og i den allerede seedede
+  config-række (migration `003_packrush.sql` opdaterer `offentlig.perDay`
+  med `jsonb_set`, uden at røre andre admin-tilpassede felter).
+- **`MAX_LIVES = 7`** — nyt hårdt loft. Al liv-tildeling (dagligt grundtal,
+  dagens-flueben-bonus, sms-boost, udfordrings-/vennekode-gaveliv) klemmes
+  nu til `Math.min(n, MAX_LIVES)`.
+- **Dagens flueben (`p.tick` / DB: `spiller.tick_dag`, `spiller.tick_keys`)
+  er nu det der afgør DAGLIG liv-bonus** — IKKE længere den varige
+  tilmelding. En spiller der er varigt tilmeldt sms/en partnerliste, men
+  ikke har tikket af i dag, får ALTSÅ ingen bonusliv den dag. Se
+  `src/rules/life.js#lifeKeys/dailyStart/subsCount`, som nu tager `now` og
+  læser `todayTickKeys(p, now)` i stedet for `subKeys(p)`.
+- **To adskilte endpoints:**
+  - `PUT /me/subs` = den VARIGE af-/tilmelding (`setSubsPure`). Giver IKKE
+    længere liv. Logger `bekraeftet`/`trukket_tilbage` i samtykke.
+  - `PUT /me/ticks` = DAGENS flueben (`setTicksPure`). Giver friske liv
+    (højst én gang pr. liste pr. dag, husket i `spiller.ekstra_01`/`L.g` —
+    genbrugt uændret fra fase 1, ikke en ny kolonne). Et NYT flueben er
+    SAMTIDIG en ny, varig bekræftelse (vokser `marketing`/`mail_to`/`notify`
+    — ALDRIG krympende). Fjernelse af et flueben er KUN for i dag.
+  - `DELETE /me/subs/:liste` = ægte, varig afmelding af ÉN liste (ny — findes
+    endnu ikke i spillets UI, men kontrakten er klar til den kommende
+    ombygning af `spil/index.html`).
+- **Antagelse/afvigelse:** ved `POST /players` (registrering) tæller de
+  valgte `tilmeldinger` BÅDE som en varig bekræftelse OG som dagens flueben
+  (kalder både `setSubsPure` og `setTicksPure`), så en nyoprettet spiller
+  får sit bonusliv med det samme. Dette står ikke eksplicit i briefen, men
+  uden det ville en ny spiller der vælger sms ved oprettelse ikke få
+  bonuslivet før de selv rammer `PUT /me/ticks`.
+
+### B) Navnevisning: fuldt navn kun for admin/stand
+
+- `GET /state` og alle WS-broadcasts (`presence`, `event`/duel) viser som
+  udgangspunkt kun `"Fornavn E."` (`src/rules/nameDisplay.js#shortName`).
+  Fulde navne kræver en gyldig `admin`- eller `stand`-sessionscookie.
+- **Ny sessionstype `stand`** (`admin_session.rolle`): langtlevende (3 dage,
+  `STAND_SESSION_TTL_MS`), giver KUN ret til fulde navne — ingen andre
+  admin-rettigheder (`requireAdmin` afviser en `stand`-session med
+  `403 kraever_admin` på ALLE `/admin/*`-endpoints undtagen selve
+  login-kode-udstedelsen, som i sig selv kræver `rolle='admin'`).
+- **Stand-login-flow:**
+  1. En admin (fuld session) kalder `POST /admin/stand-login-kode` →
+     genererer en 6-tegns, tilfældig, ét-gangs-kode (`stand_login_kode`-
+     tabellen), gyldig 5 minutter.
+  2. En medarbejder taster koden ind på standtablettens EGEN browser via
+     `POST /stand-login {kode}` (intet admin-krav — koden ER
+     adgangsbeviset). Ved match markeres koden `brugt` og en `stand`-session
+     udstedes KUN til DEN forbindelse (samme cookie-navn/mekanisme som
+     admin).
+  3. WS-forbindelser autentificerer sig som admin/stand AUTOMATISK ved selve
+     håndtrykket (browseren sender sessionscookien med opgraderings-
+     requesten) — ingen eksplicit token-besked nødvendig.
+- **WS-personalisering:** `src/ws.js` beregner presence-/event-payloads PR.
+  MODTAGENDE forbindelse (ikke længere én delt besked) — se
+  `isPrivileged()`/`displayName()` i filen.
+
+### C) Natlig GDPR-oprydning
+
+- `src/retention.js#findRetentionCandidates` (ren, testbar funktion) finder
+  spillere UDEN nogen liste med aktiv (`bekraeftet`) status OG ≥12 måneder
+  siden seneste aktivitet (seneste `forsoeg.oprettet`, ellers spillerens
+  egen `oprettet`). `deleteInactivePlayers` udfører selve cascade-sletningen
+  (samme rækkefølge som `DELETE /admin/spillere/:pid`).
+  `scripts/retention-job.js` er den natlige cron-indgang — se README.md for
+  drift/skemalægning. Kører IKKE automatisk endnu (kun kode/migration/cron-
+  DOKUMENTATION i denne runde).
+- **Bemærk (portabilitets-workaround):** `findRetentionCandidates` og de to
+  admin-CSV'er der filtrerer på "aktiv liste lige nu" (`sms.csv`,
+  `revanche.csv`, samtykke-CSV'en) undgår BEVIDST at filtrere/joine SQL-side
+  på en afledt DISTINCT ON-kolonne (fx `samtykke_status.seneste_type` i en
+  `JOIN ... ON`/`WHERE`) — et par lokale eksperimenter viste at pg-mem
+  (testsuitens fallback uden Docker, se README.md) kan skubbe et sådant
+  filter NED FØR selve DISTINCT ON'en og dermed ophæve dedupliceringen,
+  hvilket giver forkerte svar (kun i testfallbacket — ægte Postgres rammes
+  ikke). Vi henter derfor `samtykke_status`/rå samtykke-hændelser HELT
+  UFILTRERET og afgør status i JS, hvilket er lige så hurtigt på en messes
+  datamængde og virker identisk begge steder.
+
+### D) `cfg.lifeBonus`
+
+Bekræftet uændret og testet (`test/life.test.js`): `cfg.lifeBonus === false`
+gør `lifeKeys(p, cfg, now)` tom (ingen liv fra tilmeldinger/flueben), og
+`PUT /admin/config` kunne allerede sætte feltet (generisk passthrough) —
+ingen kodeændring nødvendig ud over selve testen.
+
+### Skemaændringer (migration `003_packrush.sql`)
+
+- `spiller`: nye kolonner `tick_dag date`, `tick_keys jsonb`. (`ekstra_01`
+  genbruges uændret til `L.g`, se ovenfor.)
+- `samtykke`: omlagt fra "én række pr. abonnement, med et evt.
+  `trukket_tilbage`-tidspunkt" til en ren hændelseslog: `givet` → omdøbt til
+  `tidspunkt`; `trukket_tilbage`-kolonnen fjernet; ny `type`-kolonne
+  (`'bekraeftet' | 'trukket_tilbage'`). Historiske afmeldte rækker
+  (`trukket_tilbage IS NOT NULL`) splittes robust til to hændelsesrækker
+  ved migrering, selvom der reelt ikke er substantiel data at bevare.
+- Nyt view `samtykke_status`: `DISTINCT ON (spiller_id, liste)` — den
+  afledte, VARIGE status pr. (spiller, liste). Se portabilitets-noten under
+  opgave C for hvordan den bruges sikkert.
+- `admin_session`: ny kolonne `rolle` (`'admin' | 'stand'`, default
+  `'admin'`).
+- Ny tabel `stand_login_kode`: ét-gangs-koder til stand-login-flowet.
 
 ---
 

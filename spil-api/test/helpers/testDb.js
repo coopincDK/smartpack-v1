@@ -76,12 +76,37 @@ async function startDockerPg() {
 
 async function setupPgMem() {
   // eslint-disable-next-line global-require
-  const { newDb } = require('pg-mem');
+  const { newDb, DataType } = require('pg-mem');
   const mem = newDb({ autoCreateForeignKeyIndices: true });
   // pg-mem har en indbygget `citext`-DATATYPE, men ingen forudregistreret
   // "extension" af samme navn — registrér den som no-op, så
   // `CREATE EXTENSION IF NOT EXISTS citext` (fra 001_init.sql) ikke fejler.
   mem.registerExtension('citext', () => {});
+  // pg-mem understøtter ikke det indbyggede `jsonb_set` (bruges af
+  // 003_packrush.sql til at opdatere perDay i den eksisterende config-række
+  // uden at røre resten af jsonb'en) — registrér en simpel, kun-til-test
+  // stub der dækker vores brug (single-key path). Ægte Postgres (produktion
+  // og Docker-testene) bruger sin egen native, fulde implementering.
+  mem.public.registerFunction({
+    name: 'jsonb_set',
+    args: [DataType.jsonb, DataType.text, DataType.jsonb],
+    returns: DataType.jsonb,
+    implementation: (target, pathText, newVal) => {
+      const path = String(pathText)
+        .replace(/^\{|\}$/g, '')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const obj = JSON.parse(JSON.stringify(target || {}));
+      let cur = obj;
+      for (let i = 0; i < path.length - 1; i++) {
+        if (typeof cur[path[i]] !== 'object' || cur[path[i]] === null) cur[path[i]] = {};
+        cur = cur[path[i]];
+      }
+      if (path.length) cur[path[path.length - 1]] = newVal;
+      return obj;
+    },
+  });
   const adapter = mem.adapters.createPg();
   const pool = new adapter.Pool();
   await migrate(pool);

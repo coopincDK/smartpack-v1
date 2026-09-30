@@ -7,6 +7,11 @@ function playerToP(row) {
     marketing: row.marketing,
     mailTo: row.mail_to || [],
     notify: row.notify,
+    // Dagens flueben (p.tick) — adskilt fra den varige tilmelding ovenfor,
+    // se src/rules/life.js#todayTickKeys og API.md, "Packrush-ændringer".
+    tick: row.tick_dag
+      ? { day: new Date(row.tick_dag).toISOString().slice(0, 10), keys: row.tick_keys || [] }
+      : null,
   };
 }
 

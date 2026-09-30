@@ -42,14 +42,17 @@ function clearSessionCookie(res, cookieSecure) {
   res.set('Set-Cookie', attrs.join('; '));
 }
 
-async function createSession(pool, ttlMs) {
+// rolle: 'admin' (fuld adgang) eller 'stand' (kun ret til at se fulde navne,
+// se POST /stand-login og API.md, afsnit "Stand-login-flow").
+async function createSession(pool, ttlMs, rolle) {
+  rolle = rolle === 'stand' ? 'stand' : 'admin';
   const token = crypto.randomBytes(32).toString('hex');
   const id = crypto.randomUUID();
   const tokenHash = sha256Hex(token);
   const udloeber = new Date(Date.now() + ttlMs);
   await pool.query(
-    'INSERT INTO admin_session (id, token_hash, udloeber) VALUES ($1, $2, $3)',
-    [id, tokenHash, udloeber]
+    'INSERT INTO admin_session (id, token_hash, udloeber, rolle) VALUES ($1, $2, $3, $4)',
+    [id, tokenHash, udloeber, rolle]
   );
   return token;
 }
@@ -59,7 +62,30 @@ async function destroySession(pool, token) {
   await pool.query('DELETE FROM admin_session WHERE token_hash = $1', [sha256Hex(token)]);
 }
 
-// Kræver en gyldig, ikke-udløbet admin-session-cookie.
+// Slår sessionens ROLLE op ud fra en request's cookie, uden at afvise/kaste
+// hvis der ingen er (i modsætning til requireAdmin nedenfor) — bruges af
+// GET /state og WS-håndtrykket til at afgøre om fulde navne må vises.
+// Virker både på et Express-req og på et rå http.IncomingMessage (WS-
+// upgrade-requesten har ikke Express' request-udvidelser).
+async function resolveSessionRole(pool, req) {
+  const cookies = parseCookies(req);
+  const token = cookies[COOKIE_NAME];
+  if (!token) return null;
+  try {
+    const { rows } = await pool.query(
+      'SELECT rolle FROM admin_session WHERE token_hash = $1 AND udloeber > now()',
+      [sha256Hex(token)]
+    );
+    return rows.length ? rows[0].rolle : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Kræver en gyldig, ikke-udløbet admin-session-cookie MED rolle='admin'.
+// En 'stand'-session (kun navne-visning) afvises her med 403 — den har
+// bevidst INGEN andre admin-rettigheder (ingen CSV, config, sletning,
+// lodtrækning), se API.md.
 function requireAdmin(pool) {
   return async function (req, res, next) {
     const cookies = parseCookies(req);
@@ -76,12 +102,27 @@ function requireAdmin(pool) {
       if (!rows.length) {
         return res.status(401).json({ fejl: 'Admin-session er udløbet eller ugyldig.', kode: 'udloebet_session' });
       }
+      if (rows[0].rolle !== 'admin') {
+        return res
+          .status(403)
+          .json({ fejl: 'Denne handling kræver fuld admin-adgang.', kode: 'kraever_admin' });
+      }
       await pool.query('UPDATE admin_session SET sidst_brugt = now() WHERE id = $1', [rows[0].id]);
       req.adminSession = rows[0];
       next();
     } catch (e) {
       next(e);
     }
+  };
+}
+
+// Afviser ALDRIG (i modsætning til requireAdmin) — sætter blot
+// req.viewerPrivileged, til brug af GET /state (se src/routes/state.js).
+function attachViewerRole(pool) {
+  return async function (req, res, next) {
+    const rolle = await resolveSessionRole(pool, req);
+    req.viewerPrivileged = rolle === 'admin' || rolle === 'stand';
+    next();
   };
 }
 
@@ -92,5 +133,7 @@ module.exports = {
   clearSessionCookie,
   createSession,
   destroySession,
+  resolveSessionRole,
   requireAdmin,
+  attachViewerRole,
 };

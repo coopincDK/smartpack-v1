@@ -6,10 +6,15 @@
 const ROUND_T = 30; // sekunder pr. runde
 const REGEN_MS = 30 * 60000; // 30 min pr. naturligt regenereret liv
 const REGEN_CAP = 3; // maks. liv naturlig regen kan nå op til
+// Packrush (commit ec81ec6e1 i spil/index.html): øvre loft for ALT liv en
+// spiller kan have ad gangen — dagligt grundtal, dagens-flueben-bonus,
+// sms-boost og gaveliv (udfordring/vennekode) klemmes alle til dette loft.
+const MAX_LIVES = 7;
 const CODE_ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // ingen 0/1/I/O
 
 const DEFAULT_CFG = {
-  perDay: 5,
+  // Packrush: sænket fra 5 til 3 (se API.md, "Packrush-ændringer").
+  perDay: 3,
   bf: true,
   crownOn: true,
   crownTime: '16:00',
@@ -37,4 +42,4 @@ const DEFAULT_CFG = {
   shareUrl: '',
 };
 
-module.exports = { ROUND_T, REGEN_MS, REGEN_CAP, CODE_ABC, DEFAULT_CFG };
+module.exports = { ROUND_T, REGEN_MS, REGEN_CAP, MAX_LIVES, CODE_ABC, DEFAULT_CFG };

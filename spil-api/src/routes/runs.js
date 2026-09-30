@@ -7,6 +7,7 @@ const { createRateLimiter } = require('../middleware/rateLimit');
 const { clientIp } = require('../middleware/clientIp');
 const { currentBag, persistBag, livView, playerToP } = require('../lifeBag');
 const { useLife, refill, todayStr } = require('../rules/life');
+const { MAX_LIVES } = require('../rules/constants');
 const {
   validateRoundScores,
   validateSpilletid,
@@ -246,7 +247,7 @@ function runsRouter(pool, ws) {
           if (modstanderRes.rows.length) {
             const modstander = modstanderRes.rows[0];
             const mBag = await currentBag(client, modstander, cfg, now);
-            await persistBag(client, modstander.id, { ...mBag, n: mBag.n + 1 });
+            await persistBag(client, modstander.id, { ...mBag, n: Math.min(MAX_LIVES, mBag.n + 1) });
             gaveNotifs.push({
               spillerId: modstander.id,
               data: { type: 'udfordring_liv', fra: scorer.navn, at: now.toISOString() },

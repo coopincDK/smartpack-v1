@@ -4,6 +4,13 @@
 // klienter (inkl. andre spilleres browsere og standvæggen) må læse
 // spildata på — INGEN email/telefon/samtykker/vennekode/ref-info må
 // nogensinde optræde her.
+//
+// Packrush, opgave B: navnevisning afhænger nu af HVEM der spørger. Den
+// interne 2-sekunders-cache holder altid den FULDE version (fulde navne);
+// selve request-specifikke maskering (kort navn medmindre admin/stand) sker
+// billigt pr. kald ovenpå cachen, se getPublicState() nedenfor.
+
+const { shortName } = require('./rules/nameDisplay');
 
 const CACHE_MS = 2000;
 let cache = null; // { at, payload }
@@ -48,6 +55,8 @@ async function buildPublicState(pool) {
     attemptsBySpiller.set(a.spiller_id, list);
   }
 
+  // Bemærk: `name`/`duel.vs` er her ALTID de fulde navne — maskering til
+  // "Fornavn E." sker først i toPublicView() nedenfor, pr. request.
   const players = spillereRes.rows.map((p) => ({
     pid: p.public_id,
     name: p.navn,
@@ -61,7 +70,7 @@ async function buildPublicState(pool) {
   return { cfg, players };
 }
 
-async function getPublicState(pool) {
+async function getFullPublicState(pool) {
   const now = Date.now();
   if (cache && now - cache.at < CACHE_MS) return cache.payload;
   const payload = await buildPublicState(pool);
@@ -69,4 +78,28 @@ async function getPublicState(pool) {
   return payload;
 }
 
-module.exports = { getPublicState, invalidateStateCache, sanitizeDuel };
+// Maskerer navne til "Fornavn E." (eller det ene ord, hvis kun ét) — se
+// src/rules/nameDisplay.js. Bruges til ALLE forbindelser UDEN en gyldig
+// admin/stand-session.
+function toPublicView(full) {
+  return {
+    cfg: full.cfg,
+    players: full.players.map((p) => ({
+      ...p,
+      name: shortName(p.name),
+      attempts: p.attempts.map((a) => (a.duel ? { ...a, duel: { vs: shortName(a.duel.vs) } } : a)),
+    })),
+  };
+}
+
+// Admin/stand-sessioner ser de fulde navne uændret.
+function toPrivilegedView(full) {
+  return full;
+}
+
+async function getPublicState(pool, privileged) {
+  const full = await getFullPublicState(pool);
+  return privileged ? toPrivilegedView(full) : toPublicView(full);
+}
+
+module.exports = { getPublicState, invalidateStateCache, sanitizeDuel, toPublicView, toPrivilegedView };

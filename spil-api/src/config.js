@@ -16,6 +16,9 @@ module.exports = {
   databaseUrl: process.env.DATABASE_URL || '',
   adminPasswordHash: process.env.ADMIN_PASSWORD_HASH || '',
   adminSessionTtlMs: intEnv('ADMIN_SESSION_TTL_MS', 12 * 3600 * 1000),
+  // Stand-sessioner (kun ret til at se fulde navne, se API.md) er
+  // langtlevende — en messestand er typisk sat op i flere dage ad gangen.
+  standSessionTtlMs: intEnv('STAND_SESSION_TTL_MS', 3 * 24 * 3600 * 1000),
   cookieSecure: process.env.COOKIE_SECURE !== 'false',
   nodeEnv: process.env.NODE_ENV || 'development',
   // Kun til tests: sænk/slå fra rate-limit på POST /runs (default 20 sek./spiller).

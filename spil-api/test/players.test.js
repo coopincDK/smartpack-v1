@@ -52,7 +52,7 @@ test('unikt telefonnummer pr. spiller — dublet afvises', async (t) => {
   assert.equal(res.body.kode, 'telefon_optaget');
 });
 
-test('PUT /me/subs bevarer samtykke-historik ved afmelding (trukket_tilbage sættes, intet slettes)', async (t) => {
+test('PUT /me/subs sætter den VARIGE tilmelding, giver IKKE liv, og logger bekraeftet/trukket_tilbage', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
@@ -60,29 +60,79 @@ test('PUT /me/subs bevarer samtykke-historik ved afmelding (trukket_tilbage sæt
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
 
+  const foer = await api(h.baseUrl, 'GET', '/me', { token });
+
   const s1 = await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: ['sp', 'sms'] } });
   assert.equal(s1.status, 200);
-  assert.equal(s1.body.friske_liv, 1); // kun 'sms' giver liv
+  assert.equal(s1.body.friske_liv, undefined); // /me/subs giver ikke liv siden Packrush
+  assert.equal(s1.body.liv.n, foer.body.liv.n); // uændret antal liv
 
   const me1 = await api(h.baseUrl, 'GET', '/me', { token });
-  const smsAktiv = me1.body.samtykker.filter((s) => s.liste === 'sms' && !s.trukket_tilbage);
-  assert.equal(smsAktiv.length, 1);
+  assert.deepEqual(new Set(me1.body.mine_noegler), new Set(['sp', 'sms']));
+  const smsStatus1 = me1.body.samtykker.find((s) => s.liste === 'sms');
+  assert.equal(smsStatus1.aktiv, true);
 
   const s2 = await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: [] } });
   assert.equal(s2.status, 200);
 
   const me2 = await api(h.baseUrl, 'GET', '/me', { token });
-  const smsRækker = me2.body.samtykker.filter((s) => s.liste === 'sms');
-  assert.equal(smsRækker.length, 1); // ingen ny række, samme række opdateret
-  assert.ok(smsRækker[0].trukket_tilbage, 'skal have trukket_tilbage sat');
+  const smsStatus2 = me2.body.samtykker.find((s) => s.liste === 'sms');
+  assert.equal(smsStatus2.aktiv, false);
+  assert.equal(smsStatus2.seneste_haendelse.type, 'trukket_tilbage');
+  assert.ok(smsStatus2.foerste_bekraeftelse, 'foerste_bekraeftelse bevares selvom listen nu er inaktiv');
+});
 
-  // Gentilmelding opretter en NY aktiv række (historik bevares).
-  const s3 = await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: ['sms'] } });
-  assert.equal(s3.status, 200);
-  const me3 = await api(h.baseUrl, 'GET', '/me', { token });
-  const smsRækkerEfter = me3.body.samtykker.filter((s) => s.liste === 'sms');
-  assert.equal(smsRækkerEfter.length, 2);
-  assert.equal(smsRækkerEfter.filter((s) => !s.trukket_tilbage).length, 1);
+test('PUT /me/ticks (dagens flueben) giver friske liv, PUT /me/subs gør ikke', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl);
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const foer = await api(h.baseUrl, 'GET', '/me', { token });
+
+  const subs = await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: ['sms'] } });
+  assert.equal(subs.status, 200);
+  assert.equal(subs.body.liv.n, foer.body.liv.n); // ingen liv fra /me/subs
+
+  const ticks = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sms'] } });
+  assert.equal(ticks.status, 200);
+  assert.equal(ticks.body.friske_liv, 1); // 'sms' giver liv når den er tikket af i dag
+  assert.equal(ticks.body.liv.n, foer.body.liv.n + 1);
+  assert.deepEqual(ticks.body.mine_flueben, ['sms']);
+
+  // Gentikning samme dag giver IKKE ekstra liv.
+  const ticksIgen = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: [] } });
+  assert.equal(ticksIgen.body.friske_liv, 0);
+  const ticksIgen2 = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sms'] } });
+  assert.equal(ticksIgen2.body.friske_liv, 0);
+});
+
+test('DELETE /me/subs/:liste er en ægte, varig afmelding (trukket_tilbage logges, fjernes fra dagens flueben)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl);
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: ['sms', 'sp'] } });
+  await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sms'] } });
+
+  const slet = await api(h.baseUrl, 'DELETE', '/me/subs/sms', { token });
+  assert.equal(slet.status, 200);
+  assert.deepEqual(new Set(slet.body.mine_noegler), new Set(['sp']));
+
+  const me = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.ok(!me.body.mine_noegler.includes('sms'));
+  assert.deepEqual(me.body.mine_flueben, []); // fjernet fra dagens flueben også
+  const smsStatus = me.body.samtykker.find((s) => s.liste === 'sms');
+  assert.equal(smsStatus.aktiv, false);
+
+  // Idempotent: at slette en liste der ikke er tilmeldt, fejler ikke.
+  const igen = await api(h.baseUrl, 'DELETE', '/me/subs/sms', { token });
+  assert.equal(igen.status, 200);
 });
 
 test('GET /me kræver bearer-token', async (t) => {

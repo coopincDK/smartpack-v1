@@ -2,7 +2,7 @@
 
 const express = require('express');
 const config = require('../config');
-const { verifyPassword } = require('../crypto');
+const { verifyPassword, randomCode } = require('../crypto');
 const {
   requireAdmin,
   createSession,
@@ -19,10 +19,25 @@ const { computeTickets, todayStr } = require('../gameQueries');
 const { invalidateStateCache } = require('../publicState');
 
 const LISTE_RE = /^[a-z0-9:_.-]+$/;
+// Ét-gangs-standtablet-login-koder — se API.md, afsnit "Stand-login-flow".
+const STAND_KODE_TTL_MS = 5 * 60 * 1000;
+const STAND_KODE_LEN = 6;
 
 async function getCfgRow(pool) {
   const { rows } = await pool.query('SELECT offentlig, hemmelig FROM config WHERE id = 1');
   return rows[0] || { offentlig: {}, hemmelig: {} };
+}
+
+// Hvilke spiller-id'er har aktiv ('bekraeftet') status for én bestemt liste
+// LIGE NU. Henter samtykke_status-viewet HELT UFILTRERET og filtrerer i
+// JS — se den udførlige begrundelse i src/retention.js#findRetentionCandidates
+// (kort: en SQL-side JOIN/WHERE-filtrering på viewets seneste_type-kolonne
+// er upålidelig under pg-mem, som testsuiten falder tilbage til uden Docker).
+async function activeSpillerIds(pool, liste) {
+  const { rows } = await pool.query('SELECT spiller_id, liste, seneste_type FROM samtykke_status');
+  return new Set(
+    rows.filter((r) => r.liste === liste && r.seneste_type === 'bekraeftet').map((r) => String(r.spiller_id))
+  );
 }
 
 async function drawWinner(pool, cfg) {
@@ -128,27 +143,63 @@ function adminRouter(pool) {
     }
   });
 
+  // Packrush: samtykke er nu en hændelseslog (se migrations/003_packrush.sql)
+  // — CSV'en viser derfor FØRSTE og SENESTE bekræftelse pr. spiller (ikke
+  // bare ét tidspunkt), plus om listen er aktiv lige nu. Beregnet i JS ud
+  // fra rå hændelser (samme begrundelse som activeSpillerIds() ovenfor —
+  // undgår upålidelig SQL-side filtrering af en DISTINCT ON-baseret status
+  // under pg-mem-testfaldbacket).
   router.get('/admin/eksport/samtykke/:liste.csv', admin, async (req, res, next) => {
     try {
       const liste = req.params.liste;
       if (!LISTE_RE.test(liste)) {
         return res.status(400).json({ fejl: 'Ugyldigt listenavn.', kode: 'ugyldig_liste' });
       }
-      const { rows } = await pool.query(
-        `SELECT s.navn, s.email, s.telefon, s.firma, k.liste, k.givet, k.trukket_tilbage, k.tekst_version
-         FROM samtykke k JOIN spiller s ON s.id = k.spiller_id
-         WHERE k.liste = $1 ORDER BY k.givet ASC`,
+      const { rows: haendelser } = await pool.query(
+        `SELECT spiller_id, type, tidspunkt FROM samtykke WHERE liste = $1 ORDER BY spiller_id, tidspunkt ASC, id ASC`,
         [liste]
       );
+      const perSpiller = new Map();
+      for (const h of haendelser) {
+        const key = String(h.spiller_id);
+        let acc = perSpiller.get(key);
+        if (!acc) {
+          acc = { foerste_bekraeftelse: null, seneste_bekraeftelse: null, seneste_type: null };
+          perSpiller.set(key, acc);
+        }
+        if (h.type === 'bekraeftet') {
+          if (!acc.foerste_bekraeftelse) acc.foerste_bekraeftelse = h.tidspunkt;
+          acc.seneste_bekraeftelse = h.tidspunkt;
+        }
+        acc.seneste_type = h.type; // rækkerne er ORDER BY tidspunkt ASC, så sidste tildeling vinder
+      }
+
+      const { rows: spillere } = await pool.query('SELECT id, navn, email, telefon, firma FROM spiller');
+      const spillerById = new Map(spillere.map((s) => [String(s.id), s]));
+
+      const rows = [...perSpiller.entries()]
+        .map(([id, acc]) => {
+          const s = spillerById.get(id);
+          return s ? { ...s, ...acc } : null;
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.navn.localeCompare(b.navn));
+
       const csv = toCsv(rows, [
         { title: 'navn', value: (r) => r.navn },
         { title: 'email', value: (r) => r.email },
         { title: 'telefon', value: (r) => r.telefon },
         { title: 'firma', value: (r) => r.firma },
-        { title: 'liste', value: (r) => r.liste },
-        { title: 'givet', value: (r) => r.givet.toISOString() },
-        { title: 'trukket_tilbage', value: (r) => (r.trukket_tilbage ? r.trukket_tilbage.toISOString() : '') },
-        { title: 'tekst_version', value: (r) => r.tekst_version },
+        { title: 'liste', value: () => liste },
+        {
+          title: 'foerste_bekraeftelse',
+          value: (r) => (r.foerste_bekraeftelse ? new Date(r.foerste_bekraeftelse).toISOString() : ''),
+        },
+        {
+          title: 'seneste_bekraeftelse',
+          value: (r) => (r.seneste_bekraeftelse ? new Date(r.seneste_bekraeftelse).toISOString() : ''),
+        },
+        { title: 'aktiv', value: (r) => r.seneste_type === 'bekraeftet' },
       ]);
       res.set('Content-Type', 'text/csv; charset=utf-8');
       res.set('Content-Disposition', `attachment; filename="samtykke-${liste.replace(/[^a-z0-9_.-]/gi, '_')}.csv"`);
@@ -160,11 +211,11 @@ function adminRouter(pool) {
 
   router.get('/admin/eksport/sms.csv', admin, async (req, res, next) => {
     try {
-      const { rows } = await pool.query(
-        `SELECT s.navn, s.email, s.telefon, s.firma FROM spiller s
-         JOIN samtykke k ON k.spiller_id = s.id AND k.liste = 'sms' AND k.trukket_tilbage IS NULL
-         WHERE s.skjult = false ORDER BY s.navn ASC`
+      const aktiveIds = await activeSpillerIds(pool, 'sms');
+      const alle = await pool.query(
+        `SELECT id, navn, email, telefon, firma FROM spiller WHERE skjult = false ORDER BY navn ASC`
       );
+      const rows = alle.rows.filter((r) => aktiveIds.has(String(r.id)));
       const csv = toCsv(rows, [
         { title: 'navn', value: (r) => r.navn },
         { title: 'email', value: (r) => r.email },
@@ -184,15 +235,16 @@ function adminRouter(pool) {
   router.get('/admin/eksport/revanche.csv', admin, async (req, res, next) => {
     try {
       const today = todayStr(new Date());
-      const { rows } = await pool.query(
-        `SELECT DISTINCT s.navn, s.email, s.telefon, s.firma, n.data
+      const aktiveIds = await activeSpillerIds(pool, 'sms');
+      const alle = await pool.query(
+        `SELECT DISTINCT s.id, s.navn, s.email, s.telefon, s.firma, n.data
          FROM spiller s
-         JOIN samtykke k ON k.spiller_id = s.id AND k.liste = 'sms' AND k.trukket_tilbage IS NULL
          JOIN notifikation n ON n.spiller_id = s.id AND n.type = 'beaten'
          WHERE s.skjult = false AND (n.data->>'day') = $1
          ORDER BY s.navn ASC`,
         [today]
       );
+      const rows = alle.rows.filter((r) => aktiveIds.has(String(r.id)));
       const csv = toCsv(rows, [
         { title: 'navn', value: (r) => r.navn },
         { title: 'email', value: (r) => r.email },
@@ -201,7 +253,7 @@ function adminRouter(pool) {
         {
           title: 'sms_tekst',
           value: (r) =>
-            `Hej ${r.navn}! Du blev overhalet i "Pluk. Pak. Send." af ${r.data.by} med ${r.data.score} point. Kan du tage tronen tilbage? Spil igen på standen!`,
+            `Hej ${r.navn}! Du blev overhalet i "Packrush" af ${r.data.by} med ${r.data.score} point. Kan du tage tronen tilbage? Spil igen på standen!`,
         },
       ]);
       res.set('Content-Type', 'text/csv; charset=utf-8');
@@ -310,6 +362,53 @@ function adminRouter(pool) {
       next(e);
     } finally {
       client.release();
+    }
+  });
+
+  // --- Stand-login-flow (opgave B) --------------------------------------
+  // 1) En admin (kræver fuld admin-adgang) genererer en kort, tilfældig,
+  //    ét-gangs-kode med kort udløb fra adminpanelet.
+  // 2) En medarbejder taster koden ind på standtablettens EGEN browser
+  //    (POST /stand-login nedenfor — intet admin-krav der, koden ER
+  //    adgangsbeviset). Ved match udstedes en langtlevende 'stand'-session
+  //    KUN til den forbindelse — se API.md, afsnit "Stand-login-flow".
+  router.post('/admin/stand-login-kode', admin, async (req, res, next) => {
+    try {
+      const kode = randomCode(STAND_KODE_LEN);
+      const udloeber = new Date(Date.now() + STAND_KODE_TTL_MS);
+      await pool.query('INSERT INTO stand_login_kode (kode, udloeber) VALUES ($1, $2)', [kode, udloeber]);
+      res.json({ kode, udloeber, gyldig_i_ms: STAND_KODE_TTL_MS });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  const standLoginLimiter = createRateLimiter({
+    windowMs: 60 * 1000,
+    max: 10,
+    besked: 'For mange loginforsøg. Prøv igen om lidt.',
+  });
+
+  // Bevidst UDEN for-krav om admin-cookie — koden selv er adgangsbeviset.
+  // Se filens toptekst for hele flowet.
+  router.post('/stand-login', standLoginLimiter, async (req, res, next) => {
+    try {
+      const kode = String((req.body && req.body.kode) || '').trim().toUpperCase();
+      if (!kode) return res.status(400).json({ fejl: 'Mangler kode.', kode: 'mangler_kode' });
+
+      const { rowCount } = await pool.query(
+        `UPDATE stand_login_kode SET brugt = true WHERE kode = $1 AND brugt = false AND udloeber > now()`,
+        [kode]
+      );
+      if (!rowCount) {
+        return res.status(400).json({ fejl: 'Ugyldig eller udløbet kode.', kode: 'ugyldig_kode' });
+      }
+
+      const token = await createSession(pool, config.standSessionTtlMs, 'stand');
+      setSessionCookie(res, token, config.cookieSecure, config.standSessionTtlMs);
+      res.json({ ok: true });
+    } catch (e) {
+      next(e);
     }
   });
 

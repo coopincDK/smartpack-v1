@@ -1,6 +1,8 @@
 # spil-api
 
-Autoritativ backend til messespillet **"Pluk. Pak. Send."**. Dette er en
+Autoritativ backend til messespillet **"Packrush"** (tidligere
+**"Pluk. Pak. Send."** — omdøbt i klienten, se API.md, "Packrush-ændringer").
+Dette er en
 **FASE 1**-leverance: al kode, migrationer og tests er klar og kører lokalt.
 Server-udrulning (fase 2) er IKKE en del af denne leverance — se dog
 `docker-compose.yml`/`Dockerfile`/`deploy.sh`, som er forberedt til den dag.
@@ -84,23 +86,46 @@ egne miljøvariabler (fx `ADMIN_PASSWORD_HASH`, `RUNS_START_RATE_LIMIT_MS`)
 uden at påvirke andre testfiler.
 
 **Testdækning** (se `test/*.test.js`):
-- `life.test.js` — hele liv-reglen (dailyStart, dags-skift, regen+cap,
-  useLife, refill, setSubsPure og dens friske-liv/samtykke-bogføring) som
-  rene funktionstests, ingen DB.
+- `life.test.js` — hele liv-reglen EFTER Packrush (dagens flueben vs. varig
+  tilmelding, `dailyStart`/`lifeKeys` ud fra `todayTickKeys`, dags-skift,
+  regen+cap, `MAX_LIVES`-klemning, `useLife`, `refill`, `setSubsPure` (varig,
+  giver ikke liv), `setTicksPure` (dagens flueben, giver friske liv højst én
+  gang pr. liste pr. dag)) som rene funktionstests, ingen DB.
+- `nameDisplay.test.js` — `shortName()` ("Fornavn E."): flere ord, ét ord,
+  mellemnavne, ekstra mellemrum, tomt/manglende navn, danske bogstaver.
+- `retention.test.js` — GDPR-oprydningens `findRetentionCandidates`/
+  `deleteInactivePlayers` (`src/retention.js`) mod syntetiske spillere:
+  aktivt samtykke beholdes uanset alder, nyligt spillet uden samtykke
+  beholdes, inaktiv uden samtykke slettes (både med og uden spilhistorik),
+  cascade rammer kun de rette spilleres forsøg/notifikationer/samtykke.
 - `boostCode.test.js` — den porterede hash/boostkode-algoritme.
 - `scoring.test.js` — snydegrænser (rundescore-lofter, spilletid,
   stats-konsistens) og badge-evaluering.
 - `state-privacy.test.js` — `GET /state` lækker ALDRIG PII, selv efter
-  forsøg på at "lække" data via andre endpoints; state-cache.
+  forsøg på at "lække" data via andre endpoints; state-cache;
+  navnevisning forkortet uden session, fuldt med admin/stand-session.
 - `players.test.js` — registrering/login, telefon-match-krav ved login,
-  unikt telefonnummer, samtykke-historik ved af-/gentilmelding,
-  sms-boost-indløsning.
+  unikt telefonnummer, `PUT /me/subs` (varig, ingen liv) vs. `PUT /me/ticks`
+  (dagens flueben, friske liv), `DELETE /me/subs/:liste`, sms-boost-indløsning.
 - `runs.test.js` — liv-forbrug ved `POST /runs`, idempotent `finish`,
   afvisning ved urealistisk score/for kort spilletid/tid-mismatch,
   ejerskabstjek.
-- `admin.test.js` — admin-endpoints kræver session; login/logout.
+- `admin.test.js` — admin-endpoints kræver session; login/logout;
+  stand-login-flow (ét-gangs-kode → stand-session) og at en stand-session
+  får 403 på rigtige admin-only endpoints.
 - `ws.test.js` — WS duel-events (`presence`/`emit`) kræver spiller-token;
-  anonyme forbindelser kan kun lytte.
+  anonyme forbindelser kan kun lytte; broadcasts personaliseres pr.
+  forbindelse (stand-session ser fulde navne, andre ser forkortede).
+
+**pg-mem-forbehold:** testfallbacket uden Docker (se ovenfor) har en kendt
+begrænsning med `DISTINCT ON` kombineret med et efterfølgende SQL-side
+JOIN/WHERE-filter på en afledt kolonne (bruges af `samtykke_status`-viewet,
+se `migrations/003_packrush.sql`) — filtret kan blive skubbet ned FØR selve
+dedupliceringen og give forkerte svar, KUN under pg-mem. `src/retention.js`
+og de berørte admin-CSV-endpoints (`src/routes/admin.js`) omgår dette
+bevidst ved at hente data ufiltreret og filtrere i JS — se API.md,
+"Packrush-ændringer", opgave C, for detaljen. Hold dig til dette mønster
+hvis du udvider disse forespørgsler.
 
 ## Drift/deploy/backup — **udestår fase 2**
 
@@ -109,6 +134,31 @@ Dette afsnit er bevidst tomt. `Dockerfile`, `docker-compose.yml` og
 endnu. Fase 2 dækker: binding til `127.0.0.1:8004`, host-nginx +
 Cloudflare-opsætning, `X-Client-IP`-headeren, TLS/certbot, backup-strategi
 for Postgres-volumet, og selve røgtesten af udrulningen.
+
+### Drift: GDPR-oprydning (natligt job)
+
+Se API.md, "Packrush-ændringer", opgave C, for selve reglen (hvem
+kvalificerer til sletning). Driftsmæssigt:
+
+- **Kørsel:** `scripts/retention-job.js` er den natlige indgang — et lille,
+  selvstændigt Node-script (samme mønster som `scripts/hash-password.js`),
+  IKKE noget der køres automatisk ved `npm start`/container-opstart.
+  Tilføj en linje til serverens crontab (uden for dette repo), fx:
+  ```
+  10 3 * * * cd /var/www/spil-api && docker compose exec -T api node scripts/retention-job.js >> /var/log/spil-retention.log 2>&1
+  ```
+  (juster stien til `/var/log/spil-retention.log`, eller lad den gå til
+  `docker compose logs` i stedet, alt efter hvad der allerede er sat op for
+  backup-cron'en på serveren.)
+- **Hvor man ser antallet af slettede:** stdout, som én linje pr. kørsel:
+  `[retention] <tidspunkt> slettede <antal> spiller(e) (...)`. ALDRIG
+  navne/emails — kun antallet. Send output til samme sted som
+  backup-cron'ens log, hvis I allerede har en fast placering for den slags.
+- **Denne leverance sætter IKKE jobbet til at køre automatisk** — hverken
+  ved deploy eller på et fast klokkeslæt endnu. Selve den første rigtige
+  kørsel sker først når crontab-linjen ovenfor rent faktisk tilføjes på
+  serveren (uden for dette repos scope i denne omgang), og først derefter
+  ved næste skemalagte tidspunkt.
 
 ## Arkitekturnoter
 

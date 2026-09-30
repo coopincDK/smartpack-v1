@@ -1,6 +1,6 @@
 'use strict';
 
-const { REGEN_MS, REGEN_CAP } = require('./constants');
+const { REGEN_MS, REGEN_CAP, MAX_LIVES } = require('./constants');
 
 // Dags-nøgle brugt overalt i liv-reglen. Vi bruger UTC-dato (server-tid),
 // ikke spillerens lokale tidszone — se API.md, afsnit "Dage og tidszoner",
@@ -31,7 +31,10 @@ function subOptions(cfg) {
   return opts;
 }
 
-// subKeys(p): hvilke nøgler er spilleren p.t. tilmeldt (ud fra p.marketing/mailTo/notify).
+// subKeys(p): den VARIGE tilmeldingsstatus (p.marketing/mailTo/notify) —
+// bruges af GET /me (mine_noegler), CSV-eksport og setSubsPure (den rigtige,
+// varige af-/tilmelding). Giver IKKE liv i sig selv siden Packrush — se
+// lifeKeys() nedenfor og API.md, afsnit "Packrush-ændringer".
 function subKeys(p) {
   const keys = [];
   if (p.marketing) keys.push('sp');
@@ -40,23 +43,32 @@ function subKeys(p) {
   return keys;
 }
 
-// lifeKeys(p,cfg): subKeys filtreret til dem der faktisk giver liv (life:true).
-function lifeKeys(p, cfg) {
+// todayTickKeys(p, now): DAGENS FLUEBEN (p.tick = {day, keys}) — adskilt fra
+// den varige tilmelding, nulstilles hver dag. Svarer til klientens
+// todayKeys(p) i Packrush-versionen af spil/index.html.
+function todayTickKeys(p, now) {
+  const today = todayStr(now);
+  return p && p.tick && p.tick.day === today ? p.tick.keys.slice() : [];
+}
+
+// lifeKeys(p, cfg, now): siden Packrush er det DAGENS FLUEBEN (ikke den
+// varige tilmelding) der afgør om en liste giver liv i dag — en spiller kan
+// være varigt tilmeldt uden at have logget ind og tikket af i dag, og får da
+// ingen bonus-liv den dag.
+function lifeKeys(p, cfg, now) {
   if (cfg.lifeBonus === false) return [];
-  const liveOpts = new Set(
-    subOptions(cfg)
-      .filter((o) => o.life)
-      .map((o) => o.key)
-  );
-  return subKeys(p).filter((k) => liveOpts.has(k));
+  const on = new Set(todayTickKeys(p, now));
+  return subOptions(cfg)
+    .filter((o) => o.life && on.has(o.key))
+    .map((o) => o.key);
 }
 
-function subsCount(p, cfg) {
-  return lifeKeys(p, cfg).length;
+function subsCount(p, cfg, now) {
+  return lifeKeys(p, cfg, now).length;
 }
 
-function dailyStart(p, cfg) {
-  return (cfg.perDay == null ? 5 : cfg.perDay) + subsCount(p, cfg);
+function dailyStart(p, cfg, now) {
+  return (cfg.perDay == null ? 3 : cfg.perDay) + subsCount(p, cfg, now);
 }
 
 /**
@@ -73,12 +85,12 @@ function lifeState(bag, p, cfg, now, attemptsToday) {
   t = t ? (t instanceof Date ? t.getTime() : new Date(t).getTime()) : now.getTime();
   g = g || [];
   if (day !== today) {
-    n = Math.max(0, dailyStart(p, cfg) - attemptsToday);
+    n = Math.max(0, dailyStart(p, cfg, now) - attemptsToday);
     t = now.getTime();
-    g = lifeKeys(p, cfg);
+    g = lifeKeys(p, cfg, now);
     day = today;
   }
-  const subsN = subsCount(p, cfg);
+  const subsN = subsCount(p, cfg, now);
   if (subsN > 0 && n < REGEN_CAP) {
     const ticks = Math.floor((now.getTime() - t) / REGEN_MS);
     if (ticks > 0) {
@@ -87,13 +99,15 @@ function lifeState(bag, p, cfg, now, attemptsToday) {
       t += add * REGEN_MS;
     }
   }
+  // Packrush: MAX_LIVES er et hårdt loft over ALT liv, uanset kilde.
+  n = Math.min(n, MAX_LIVES);
   return { day, n, t, g };
 }
 
 // Hvor lang tid (ms) til næste naturlige regen — null hvis der ikke regenereres
-// (ingen liv-abonnementer, eller allerede ved cap).
+// (ingen dagens-flueben-abonnementer, eller allerede ved cap).
 function nextRegenMs(bag, p, cfg, now) {
-  const subsN = subsCount(p, cfg);
+  const subsN = subsCount(p, cfg, now);
   if (subsN <= 0 || bag.n >= REGEN_CAP) return null;
   const t = bag.t instanceof Date ? bag.t.getTime() : bag.t;
   const elapsed = now.getTime() - t;
@@ -108,10 +122,11 @@ function useLife(bag) {
   return { ...bag, n: bag.n - 1, t };
 }
 
-// refill(bag,p,cfg,now): fyld op til mindst dailyStart, nulstil regen-anker.
-// Bruges ved vennekode-første-forsøg-bonus (finish-flow trin 6).
+// refill(bag,p,cfg,now): fyld op til mindst dailyStart (klemt til MAX_LIVES),
+// nulstil regen-anker. Bruges ved vennekode-første-forsøg-bonus (finish-flow
+// trin 6) og udfordrings-gaveliv (samme MAX_LIVES-loft som al anden tildeling).
 function refill(bag, p, cfg, now) {
-  return { ...bag, n: Math.max(bag.n, dailyStart(p, cfg)), t: now.getTime() };
+  return { ...bag, n: Math.min(MAX_LIVES, Math.max(bag.n, dailyStart(p, cfg, now))), t: now.getTime() };
 }
 
 function listNameFor(key) {
@@ -122,13 +137,16 @@ function listNameFor(key) {
 }
 
 /**
- * Ren funktion (ingen DB-kald): udregner ny spiller-tilstand + ny liv-bag +
- * hvor mange friske liv der skal gives + hvilke samtykke-lister der skal
- * hhv. oprettes (added) og trækkes tilbage (removed).
+ * Ren funktion (ingen DB-kald): den VARIGE af-/tilmelding (setSubs fra den
+ * nye klient). Giver IKKE liv i sig selv (det gør kun setTicksPure/dagens
+ * flueben siden Packrush) — men rapporterer added/removed til
+ * samtykke-hændelsesloggen, og klipper dagens flueben ned til fællesmængden
+ * med det nye ønskede sæt (man kan ikke have et dagens-flueben for en liste
+ * man lige har afmeldt varigt).
  *
  * keys: det ØNSKEDE fulde sæt af tilmeldingsnøgler fra klienten (fx ['sp','m:Sprii']).
  */
-function setSubsPure(p, keys, cfg, bag) {
+function setSubsPure(p, keys, cfg, now) {
   const desired = new Set(keys);
   const before = new Set(subKeys(p));
   const opts = new Map(subOptions(cfg).map((o) => [o.key, o]));
@@ -142,19 +160,45 @@ function setSubsPure(p, keys, cfg, bag) {
     mailTo: mailPartnersList(cfg).filter((navn) => desired.has('m:' + navn)),
     notify: desired.has('sms'),
   };
+  const todayTicks = todayTickKeys(p, now);
+  newP.tick = { day: todayStr(now), keys: todayTicks.filter((k) => desired.has(k)) };
 
-  const g = new Set(bag.g || []);
-  let fresh = 0;
-  for (const k of added) {
-    const o = opts.get(k);
-    if (o && o.life && !g.has(k)) {
-      fresh++;
-      g.add(k);
+  return { p: newP, added, removed };
+}
+
+/**
+ * Ren funktion (ingen DB-kald): DAGENS FLUEBEN (setTicks fra den nye
+ * klient). Et NYT flueben er en ny, VARIG bekræftelse (voksende
+ * marketing/mailTo/notify, ALDRIG krympende — det gør kun setSubsPure).
+ * Fjernelse af et flueben er KUN for i dag. Liv gives højst én gang pr.
+ * liste pr. dag: bag.g husker hvilke lister der allerede har givet liv i
+ * dag, uafhængigt af om fluebenet siden er fjernet og sat igen samme dag.
+ *
+ * keys: det ØNSKEDE fulde sæt af DAGENS fluebens-nøgler.
+ */
+function setTicksPure(p, keys, cfg, bag, now) {
+  const opts = new Map(subOptions(cfg).map((o) => [o.key, o]));
+  const validKeys = (Array.isArray(keys) ? keys : []).map(String).filter((k) => opts.has(k));
+  const had = todayTickKeys(p, now);
+  const added = validKeys.filter((k) => !had.includes(k));
+
+  const newP = { ...p, tick: { day: todayStr(now), keys: validKeys } };
+  if (added.includes('sp')) newP.marketing = true;
+  if (added.some((k) => k.startsWith('m:'))) {
+    const mt = new Set(newP.mailTo || []);
+    for (const k of added) {
+      if (k.startsWith('m:')) mt.add(k.slice(2));
     }
+    newP.mailTo = mailPartnersList(cfg).filter((navn) => mt.has(navn));
   }
-  const newBag = { ...bag, g: [...g], n: bag.n + fresh };
+  if (added.includes('sms')) newP.notify = true;
 
-  return { p: newP, bag: newBag, fresh, added, removed };
+  const before = (bag.g || []).slice();
+  const newLifeKeys = lifeKeys(newP, cfg, now);
+  const fresh = newLifeKeys.filter((k) => !before.includes(k));
+  const newBag = { ...bag, g: before.concat(fresh), n: Math.min(MAX_LIVES, bag.n + fresh.length) };
+
+  return { p: newP, bag: newBag, fresh: fresh.length, added };
 }
 
 module.exports = {
@@ -162,6 +206,7 @@ module.exports = {
   mailPartnersList,
   subOptions,
   subKeys,
+  todayTickKeys,
   lifeKeys,
   subsCount,
   dailyStart,
@@ -171,4 +216,5 @@ module.exports = {
   refill,
   listNameFor,
   setSubsPure,
+  setTicksPure,
 };

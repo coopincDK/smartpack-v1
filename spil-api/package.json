@@ -2,7 +2,7 @@
   "name": "spil-api",
   "version": "1.0.0",
   "private": true,
-  "description": "Autoritativ backend for messespillet \"Pluk. Pak. Send.\"",
+  "description": "Autoritativ backend for messespillet \"Packrush\" (tidligere \"Pluk. Pak. Send.\")",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

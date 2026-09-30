@@ -2,8 +2,17 @@
 
 const express = require('express');
 const { requirePlayer } = require('../middleware/playerAuth');
-const { subKeys, subOptions, setSubsPure, listNameFor, todayStr } = require('../rules/life');
+const {
+  subKeys,
+  subOptions,
+  setSubsPure,
+  setTicksPure,
+  listNameFor,
+  todayStr,
+  todayTickKeys,
+} = require('../rules/life');
 const { boostCode } = require('../rules/boostCode');
+const { MAX_LIVES } = require('../rules/constants');
 const { currentBag, persistBag, livView, playerToP } = require('../lifeBag');
 const { computeTickets } = require('../gameQueries');
 const { clientIp } = require('../middleware/clientIp');
@@ -14,6 +23,42 @@ const MAKS_KODE = 5;
 async function getCfg(pool) {
   const { rows } = await pool.query('SELECT offentlig FROM config WHERE id = 1');
   return (rows[0] && rows[0].offentlig) || {};
+}
+
+// Samtykke-hændelsesloggen (se migrations/003_packrush.sql) giver ét svar
+// pr. liste: den seneste hændelse (afgør om listen er AKTIV lige nu) + den
+// FØRSTE nogensinde bekræftede hændelse for den liste.
+async function samtykkerFor(client, spillerId) {
+  const { rows } = await client.query(
+    `WITH seneste AS (
+       SELECT DISTINCT ON (liste) liste, type, tidspunkt, tekst_version
+       FROM samtykke WHERE spiller_id = $1 ORDER BY liste, tidspunkt DESC, id DESC
+     ), foerste AS (
+       SELECT liste, MIN(tidspunkt) AS foerste_bekraeftelse
+       FROM samtykke WHERE spiller_id = $1 AND type = 'bekraeftet' GROUP BY liste
+     )
+     SELECT s.liste, s.type AS seneste_type, s.tidspunkt AS seneste_tidspunkt, s.tekst_version, f.foerste_bekraeftelse
+     FROM seneste s LEFT JOIN foerste f ON f.liste = s.liste
+     ORDER BY s.liste`,
+    [spillerId]
+  );
+  return rows.map((r) => ({
+    liste: r.liste,
+    aktiv: r.seneste_type === 'bekraeftet',
+    foerste_bekraeftelse: r.foerste_bekraeftelse,
+    seneste_haendelse: { type: r.seneste_type, tidspunkt: r.seneste_tidspunkt },
+    tekst_version: r.tekst_version,
+  }));
+}
+
+// Logger én samtykke-hændelse (bekraeftet/trukket_tilbage) — se API.md,
+// afsnit "Packrush-ændringer".
+async function logSamtykke(client, spillerId, liste, type, kilde, req, now) {
+  await client.query(
+    `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
+     VALUES ($1,$2,$3,1,$4,$5,$6,$7)`,
+    [spillerId, liste, now, kilde, clientIp(req), req.headers['user-agent'] || null, type]
+  );
 }
 
 function meRouter(pool) {
@@ -29,11 +74,7 @@ function meRouter(pool) {
       const bag = await currentBag(client, row, cfg, now);
       await persistBag(client, row.id, bag);
 
-      const consents = await client.query(
-        `SELECT liste, givet, trukket_tilbage, tekst_version FROM samtykke
-         WHERE spiller_id = $1 ORDER BY givet DESC`,
-        [row.id]
-      );
+      const samtykker = await samtykkerFor(client, row.id);
       const notifs = await client.query(
         `SELECT id, type, data, oprettet, set FROM notifikation
          WHERE spiller_id = $1 ORDER BY oprettet DESC LIMIT 50`,
@@ -51,12 +92,8 @@ function meRouter(pool) {
         badges: row.badges || [],
         abonnementer: subOptions(cfg),
         mine_noegler: subKeys(playerToP(row)),
-        samtykker: consents.rows.map((c) => ({
-          liste: c.liste,
-          givet: c.givet,
-          trukket_tilbage: c.trukket_tilbage,
-          tekst_version: c.tekst_version,
-        })),
+        mine_flueben: todayTickKeys(playerToP(row), now),
+        samtykker,
         liv: livView(bag, row, cfg, now),
         notifikationer: notifs.rows.map((n) => ({
           id: n.id,
@@ -154,7 +191,8 @@ function meRouter(pool) {
       }
 
       const bag = await currentBag(client, row, cfg, now);
-      const nyBag = { ...bag, n: bag.n + (cfg.boostLives || 2) };
+      // Packrush: MAX_LIVES-loft gælder også sms-boost-tildelingen.
+      const nyBag = { ...bag, n: Math.min(MAX_LIVES, bag.n + (cfg.boostLives || 2)) };
       await persistBag(client, row.id, nyBag);
       await client.query('UPDATE spiller SET ekstra_03 = $1 WHERE id = $2', [today, row.id]);
 
@@ -168,6 +206,9 @@ function meRouter(pool) {
     }
   });
 
+  // Den VARIGE af-/tilmelding (setSubs). Giver IKKE liv siden Packrush —
+  // det gør kun PUT /me/ticks (dagens flueben). Se API.md, afsnit
+  // "Packrush-ændringer", for forskellen mellem de to endpoints.
   router.put('/me/subs', auth, async (req, res, next) => {
     const keys = Array.isArray(req.body && req.body.keys) ? req.body.keys.map(String) : [];
     const client = await pool.connect();
@@ -177,15 +218,106 @@ function meRouter(pool) {
       const now = new Date();
       const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
       const row = rowRes.rows[0];
-      const bagBefore = await currentBag(client, row, cfg, now);
-      const result = setSubsPure(playerToP(row), keys, cfg, bagBefore);
+
+      // Ingen liv-tildeling her, men vi genberegner/persisterer bagen
+      // alligevel (håndterer evt. naturlig regen/dags-skift siden sidst).
+      const bag = await currentBag(client, row, cfg, now);
+      await persistBag(client, row.id, bag);
+
+      const result = setSubsPure(playerToP(row), keys, cfg, now);
+      await client.query(
+        'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5 WHERE id = $6',
+        [result.p.marketing, JSON.stringify(result.p.mailTo), result.p.notify, result.p.tick.day, JSON.stringify(result.p.tick.keys), row.id]
+      );
+
+      for (const key of result.added) {
+        await logSamtykke(client, row.id, listNameFor(key), 'bekraeftet', 'subs', req, now);
+      }
+      for (const key of result.removed) {
+        await logSamtykke(client, row.id, listNameFor(key), 'trukket_tilbage', 'subs', req, now);
+      }
+
+      await client.query('COMMIT');
+      invalidateStateCache();
+
+      res.json({
+        ok: true,
+        liv: livView(bag, row, cfg, now),
+        mine_noegler: subKeys(result.p),
+      });
+    } catch (e) {
+      await client.query('ROLLBACK');
+      next(e);
+    } finally {
+      client.release();
+    }
+  });
+
+  // Ægte, varig afmelding af ÉN liste (DENNE er den nye GDPR-afmeldings-
+  // knap — findes endnu ikke i spillets UI, se API.md). `:liste` er en
+  // tilmeldings-NØGLE (samme format som `keys` ovenfor: 'sp', 'm:<partner>',
+  // 'sms') — IKKE samtykke-tabellens listenavn ('smartpack'/'partner:X'/'sms').
+  router.delete('/me/subs/:liste', auth, async (req, res, next) => {
+    const fjernKey = String(req.params.liste || '');
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      const cfg = await getCfg(pool);
+      const now = new Date();
+      const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
+      const row = rowRes.rows[0];
+
+      const p = playerToP(row);
+      const tilbage = subKeys(p).filter((k) => k !== fjernKey);
+      const result = setSubsPure(p, tilbage, cfg, now);
 
       await client.query(
-        'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, liv_dag = $4, liv_n = $5, liv_t = $6, ekstra_01 = $7 WHERE id = $8',
+        'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5 WHERE id = $6',
+        [result.p.marketing, JSON.stringify(result.p.mailTo), result.p.notify, result.p.tick.day, JSON.stringify(result.p.tick.keys), row.id]
+      );
+
+      for (const key of result.removed) {
+        await logSamtykke(client, row.id, listNameFor(key), 'trukket_tilbage', 'unsub', req, now);
+      }
+
+      await client.query('COMMIT');
+      invalidateStateCache();
+
+      res.json({ ok: true, mine_noegler: subKeys(result.p) });
+    } catch (e) {
+      await client.query('ROLLBACK');
+      next(e);
+    } finally {
+      client.release();
+    }
+  });
+
+  // Dagens flueben (setTicks). Et NYT flueben er en ny, VARIG bekræftelse
+  // (logges i samtykke som 'bekraeftet' og vokser marketing/mail_to/notify —
+  // ALDRIG krympende). Fjernelse af et flueben er KUN for i dag. Giver
+  // friske liv for lister der ikke allerede har givet liv i dag.
+  router.put('/me/ticks', auth, async (req, res, next) => {
+    const keys = Array.isArray(req.body && req.body.keys) ? req.body.keys.map(String) : [];
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      const cfg = await getCfg(pool);
+      const now = new Date();
+      const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
+      const row = rowRes.rows[0];
+
+      const bagBefore = await currentBag(client, row, cfg, now);
+      const result = setTicksPure(playerToP(row), keys, cfg, bagBefore, now);
+
+      await client.query(
+        `UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5,
+           liv_dag = $6, liv_n = $7, liv_t = $8, ekstra_01 = $9 WHERE id = $10`,
         [
           result.p.marketing,
           JSON.stringify(result.p.mailTo),
           result.p.notify,
+          result.bag.day,
+          JSON.stringify(result.p.tick.keys),
           result.bag.day,
           result.bag.n,
           new Date(result.bag.t),
@@ -194,24 +326,8 @@ function meRouter(pool) {
         ]
       );
 
-      // Bemærk: `result.added` er allerede udregnet af setSubsPure ud fra
-      // spillerens AKTUELLE tilmeldinger (låst via FOR UPDATE ovenfor), så en
-      // reel konflikt mod det partielle unikke indeks bør ikke kunne opstå.
       for (const key of result.added) {
-        const liste = listNameFor(key);
-        await client.query(
-          `INSERT INTO samtykke (spiller_id, liste, givet, tekst_version, kilde, ip, user_agent)
-           VALUES ($1,$2,$3,1,'subs',$4,$5)`,
-          [row.id, liste, now, clientIp(req), req.headers['user-agent'] || null]
-        );
-      }
-      for (const key of result.removed) {
-        const liste = listNameFor(key);
-        await client.query(
-          `UPDATE samtykke SET trukket_tilbage = $1
-           WHERE spiller_id = $2 AND liste = $3 AND trukket_tilbage IS NULL`,
-          [now, row.id, liste]
-        );
+        await logSamtykke(client, row.id, listNameFor(key), 'bekraeftet', 'ticks', req, now);
       }
 
       await client.query('COMMIT');
@@ -222,6 +338,7 @@ function meRouter(pool) {
         friske_liv: result.fresh,
         liv: livView(result.bag, row, cfg, now),
         mine_noegler: subKeys(result.p),
+        mine_flueben: result.p.tick.keys,
       });
     } catch (e) {
       await client.query('ROLLBACK');

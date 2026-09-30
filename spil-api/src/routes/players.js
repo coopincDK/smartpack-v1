@@ -2,7 +2,7 @@
 
 const express = require('express');
 const { firmKey } = require('../rules/firmKey');
-const { lifeState, setSubsPure } = require('../rules/life');
+const { lifeState, setSubsPure, setTicksPure } = require('../rules/life');
 const { randomPublicId, randomBearerToken, randomCode, sha256Hex } = require('../crypto');
 const { clientIp } = require('../middleware/clientIp');
 const { invalidateStateCache } = require('../publicState');
@@ -158,25 +158,32 @@ function playersRouter(pool) {
       const publicId = randomPublicId();
       const now = new Date();
 
-      // Initialisér dagens liv (ingen tilmeldinger endnu -> subsCount=0).
-      const tomSpiller = { marketing: false, mailTo: [], notify: false };
-      let bag = lifeState({ day: null, n: 0, t: null, g: [] }, tomSpiller, cfg, now, 0);
+      // Initialisér dagens liv (ingen tilmeldinger/flueben endnu -> 0 bonus).
+      const tomSpiller = { marketing: false, mailTo: [], notify: false, tick: null };
+      const initialBag = lifeState({ day: null, n: 0, t: null, g: [] }, tomSpiller, cfg, now, 0);
 
-      // Anvend evt. tilmeldinger valgt ved oprettelse (giver friske liv).
-      const subResult = setSubsPure(tomSpiller, tilmeldinger, cfg, bag);
-      bag = subResult.bag;
+      // De valgte tilmeldinger ved oprettelse tæller BÅDE som en varig
+      // bekræftelse (setSubsPure — logges i samtykke nedenfor) OG som dagens
+      // flueben (setTicksPure — giver friske liv med det samme). Se API.md,
+      // "Packrush-ændringer", for hvorfor: uden dette ville en nyoprettet
+      // spiller der vælger sms/partner-tilmeldinger ved oprettelse ikke få
+      // deres bonusliv før de selv rammer PUT /me/ticks.
+      const subResult = setSubsPure(tomSpiller, tilmeldinger, cfg, now);
+      const tickResult = setTicksPure(subResult.p, tilmeldinger, cfg, initialBag, now);
+      const nyP = tickResult.p;
+      const bag = tickResult.bag;
 
       const ins = await client.query(
         `INSERT INTO spiller (
            public_id, email, navn, telefon, firma, firma_noegle, vennekode,
            ref_spiller_id, token_hash, marketing, mail_to, notify,
-           liv_dag, liv_n, liv_t, chl, badges, ekstra_02
-         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'{}'::jsonb,'[]'::jsonb,$16)
+           liv_dag, liv_n, liv_t, chl, badges, ekstra_01, ekstra_02, tick_dag, tick_keys
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'{}'::jsonb,'[]'::jsonb,$16,$17,$18,$19)
          RETURNING id, oprettet`,
         [
           publicId, email, navn, telefon, firma, firmKey(firma), nyVennekode,
-          refSpillerId, tokenHash, subResult.p.marketing, JSON.stringify(subResult.p.mailTo), subResult.p.notify,
-          bag.day, bag.n, new Date(bag.t), chFrom,
+          refSpillerId, tokenHash, nyP.marketing, JSON.stringify(nyP.mailTo), nyP.notify,
+          bag.day, bag.n, new Date(bag.t), JSON.stringify(bag.g), chFrom, nyP.tick.day, JSON.stringify(nyP.tick.keys),
         ]
       );
       const spillerId = ins.rows[0].id;
@@ -185,8 +192,8 @@ function playersRouter(pool) {
       for (const key of subResult.added) {
         const liste = key === 'sp' ? 'smartpack' : key === 'sms' ? 'sms' : 'partner:' + key.slice(2);
         await client.query(
-          `INSERT INTO samtykke (spiller_id, liste, givet, tekst_version, kilde, ip, user_agent)
-           VALUES ($1,$2,$3,1,'registrering',$4,$5)`,
+          `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
+           VALUES ($1,$2,$3,1,'registrering',$4,$5,'bekraeftet')`,
           [spillerId, liste, nowIso, clientIp(req), req.headers['user-agent'] || null]
         );
       }

@@ -3,11 +3,23 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const WebSocket = require('ws');
+const { hashPassword } = require('../src/crypto');
+
+const ADMIN_PW = 'test-admin-adgangskode-ws';
+process.env.ADMIN_PASSWORD_HASH = hashPassword(ADMIN_PW);
+process.env.COOKIE_SECURE = 'false';
+
 const { startHarness, api, registrerSpiller } = require('./helpers/appHarness');
 
-function connect(wsUrl) {
+function cookieFra(res) {
+  const raw = res.headers.get('set-cookie');
+  if (!raw) return null;
+  return raw.split(';')[0];
+}
+
+function connect(wsUrl, cookie) {
   return new Promise((resolve, reject) => {
-    const ws = new WebSocket(wsUrl);
+    const ws = cookie ? new WebSocket(wsUrl, { headers: { cookie } }) : new WebSocket(wsUrl);
     ws.on('open', () => resolve(ws));
     ws.on('error', reject);
   });
@@ -83,4 +95,54 @@ test('WS: emit uden token afvises selv med gyldigt rum-medlemskab', async (t) =>
   anon.send(JSON.stringify({ type: 'presence', room: 'r', name: 'Snyder' }));
   const svar = await nextMessage(anon);
   assert.equal(svar.type, 'error');
+});
+
+test('WS: broadcasts personaliseres pr. forbindelse — stand-session ser fulde navne, anonym ser forkortede', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { navn: 'Martin Rasmussen' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+  const kodeRes = await api(h.baseUrl, 'POST', '/admin/stand-login-kode', { adminCookie });
+  const standLogin = await api(h.baseUrl, 'POST', '/stand-login', { body: { kode: kodeRes.body.kode } });
+  const standCookie = cookieFra(standLogin);
+
+  const spiller = await connect(h.wsUrl);
+  const anonymLytter = await connect(h.wsUrl);
+  const standLytter = await connect(h.wsUrl, standCookie);
+  t.after(() => {
+    spiller.close();
+    anonymLytter.close();
+    standLytter.close();
+  });
+
+  spiller.send(JSON.stringify({ type: 'hello', token }));
+  await nextMessage(spiller);
+
+  anonymLytter.send(JSON.stringify({ type: 'join', room: 'duel-navn' }));
+  await nextMessage(anonymLytter);
+  standLytter.send(JSON.stringify({ type: 'join', room: 'duel-navn' }));
+  await nextMessage(standLytter);
+
+  const anonFikPresence = nextMessage(anonymLytter);
+  const standFikPresence = nextMessage(standLytter);
+  const spillerFikPresence = nextMessage(spiller);
+  spiller.send(JSON.stringify({ type: 'presence', room: 'duel-navn' })); // uden eget name -> bruger ws.player.navn
+  const [anonPresence, standPresence] = await Promise.all([anonFikPresence, standFikPresence]);
+  await spillerFikPresence;
+
+  assert.equal(anonPresence.users[0].name, 'Martin R.');
+  assert.equal(standPresence.users[0].name, 'Martin Rasmussen');
+
+  const anonFikEvent = nextMessage(anonymLytter);
+  const standFikEvent = nextMessage(standLytter);
+  spiller.send(JSON.stringify({ type: 'emit', room: 'duel-navn', event: 'duel.s', data: { score: 1 } }));
+  const [anonEvent, standEvent] = await Promise.all([anonFikEvent, standFikEvent]);
+
+  assert.equal(anonEvent.from.name, 'Martin R.');
+  assert.equal(standEvent.from.name, 'Martin Rasmussen');
 });

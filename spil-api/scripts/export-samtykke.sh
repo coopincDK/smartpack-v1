@@ -31,12 +31,17 @@ COMPOSE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 cd "$COMPOSE_DIR"
 
+# Packrush: samtykke er nu en hændelseslog (spiller_id, liste, tidspunkt,
+# type — se migrations/003_packrush.sql). Denne genvej eksporterer derfor
+# den RÅ hændelseslog (én linje pr. bekræftelse/tilbagetrækning), i modsætning
+# til adminpanelets CSV (GET /admin/eksport/samtykke/:liste.csv), som
+# opsummerer til første/seneste bekræftelse + aktiv-status pr. spiller.
 docker compose exec -T db psql -U spil -d spil -v liste="'$LISTE'" <<'SQL'
 \copy (
-  SELECT s.navn, s.email, s.telefon, s.firma, k.liste, k.givet, k.trukket_tilbage, k.tekst_version
+  SELECT s.navn, s.email, s.telefon, s.firma, k.liste, k.type, k.tidspunkt, k.tekst_version
   FROM samtykke k
   JOIN spiller s ON s.id = k.spiller_id
   WHERE k.liste = :liste
-  ORDER BY k.givet ASC
+  ORDER BY k.tidspunkt ASC
 ) TO STDOUT WITH CSV HEADER
 SQL

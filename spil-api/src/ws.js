@@ -2,6 +2,8 @@
 
 const { WebSocketServer } = require('ws');
 const { tryLoadPlayer } = require('./middleware/playerAuth');
+const { resolveSessionRole } = require('./middleware/adminAuth');
+const { shortName } = require('./rules/nameDisplay');
 
 const MAX_MSG_BYTES = 4096;
 const MAX_MSGS_PER_SEC = 10;
@@ -12,12 +14,20 @@ const DUEL_EVENTS = new Set(['duel.go', 'duel.s']);
 // presence (hvem er i rummet, med navn hvis spiller) + emit/on af navngivne
 // events. Anonyme forbindelser (standvæggen) må KUN lytte: de kan joine et
 // rum og modtage broadcasts, men aldrig sætte presence-navn eller emit'e.
+//
+// Packrush, opgave B: hver forbindelse får sin egen admin/stand-ROLLE ved
+// selve WS-håndtrykket (læst fra samme session-cookie som HTTP-adminpanelet
+// bruger — browseren sender den automatisk med opgraderings-requesten, uden
+// at klienten selv skal håndtere den). Presence- og duel-event-payloads er
+// derfor IKKE længere én delt besked til alle i rummet: de beregnes pr.
+// MODTAGER, så kun admin/stand-forbindelser ser fulde navne, se
+// isPrivileged()/displayName() nedenfor.
 function attachWs(server, pool, opts) {
   opts = opts || {};
   const wss = new WebSocketServer({ noServer: true });
   const rooms = new Map(); // room -> Set<conn>
 
-  server.on('upgrade', (req, socket, head) => {
+  server.on('upgrade', async (req, socket, head) => {
     let pathname;
     try {
       pathname = new URL(req.url, 'http://localhost').pathname;
@@ -29,7 +39,14 @@ function attachWs(server, pool, opts) {
       socket.destroy();
       return;
     }
+    let adminRole = null;
+    try {
+      adminRole = await resolveSessionRole(pool, req);
+    } catch (e) {
+      adminRole = null;
+    }
     wss.handleUpgrade(req, socket, head, (ws) => {
+      ws.adminRole = adminRole; // 'admin' | 'stand' | null
       wss.emit('connection', ws, req);
     });
   });
@@ -43,17 +60,30 @@ function attachWs(server, pool, opts) {
     return s;
   }
 
-  function presenceList(room) {
+  function isPrivileged(conn) {
+    return conn.adminRole === 'admin' || conn.adminRole === 'stand';
+  }
+
+  function displayName(navn, privileged) {
+    return privileged ? navn : shortName(navn);
+  }
+
+  function presenceListFor(room, privileged) {
     const out = [];
     for (const conn of roomSet(room)) {
-      if (conn.presenceName) out.push({ id: conn.connId, name: conn.presenceName });
+      if (conn.presenceName) out.push({ id: conn.connId, name: displayName(conn.presenceName, privileged) });
     }
     return out;
   }
 
+  // Beregner payloaden PR. MODTAGER (ikke én delt besked) — se filens
+  // toptekst. Anonyme lyttere og almindelige spillere får forkortede navne,
+  // admin/stand-forbindelser får fulde.
   function broadcastPresence(room) {
-    const payload = JSON.stringify({ type: 'presence', room, users: presenceList(room) });
-    for (const conn of roomSet(room)) safeSend(conn, payload);
+    for (const conn of roomSet(room)) {
+      const payload = JSON.stringify({ type: 'presence', room, users: presenceListFor(room, isPrivileged(conn)) });
+      safeSend(conn, payload);
+    }
   }
 
   function safeSend(conn, payload) {
@@ -65,7 +95,9 @@ function attachWs(server, pool, opts) {
   }
 
   // Broadcastes til ALLE forbindelser (ikke kun ét rum) når spillerdata/config
-  // ændres, så klienter ved de skal genhente GET /state.
+  // ændres, så klienter ved de skal genhente GET /state. Ingen navne i denne
+  // besked — ingen personalisering nødvendig (GET /state maskerer selv, ud
+  // fra samme sessionscookie, se src/routes/state.js).
   function broadcastStateChanged() {
     const payload = JSON.stringify({ type: 'state.changed' });
     for (const client of wss.clients) safeSend(client, payload);
@@ -116,7 +148,10 @@ function attachWs(server, pool, opts) {
         if (!room) return;
         roomSet(room).add(ws);
         ws.rooms.add(room);
-        return safeSend(ws, JSON.stringify({ type: 'joined', room, users: presenceList(room) }));
+        return safeSend(
+          ws,
+          JSON.stringify({ type: 'joined', room, users: presenceListFor(room, isPrivileged(ws)) })
+        );
       }
 
       if (msg.type === 'presence') {
@@ -141,15 +176,17 @@ function attachWs(server, pool, opts) {
         if (!room || !DUEL_EVENTS.has(event)) {
           return safeSend(ws, JSON.stringify({ type: 'error', message: 'Ukendt eller manglende event/rum.' }));
         }
-        const payload = JSON.stringify({
-          type: 'event',
-          room,
-          event,
-          data: msg.data,
-          from: { id: ws.connId, name: ws.presenceName || ws.player.navn },
-        });
+        const fuldtNavn = ws.presenceName || ws.player.navn;
         for (const conn of roomSet(room)) {
-          if (conn !== ws) safeSend(conn, payload);
+          if (conn === ws) continue;
+          const payload = JSON.stringify({
+            type: 'event',
+            room,
+            event,
+            data: msg.data,
+            from: { id: ws.connId, name: displayName(fuldtNavn, isPrivileged(conn)) },
+          });
+          safeSend(conn, payload);
         }
         return;
       }
