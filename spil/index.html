@@ -946,6 +946,16 @@ function queueFinish(pid, token, name, runId, payload){
   toast('Gemmes, når der er net');
 }
 function isFinalRejection(e){ return !!e && typeof e.status === 'number' && e.status >= 400 && e.status < 500 && e.status !== 429; }
+/* Bruges hvor et kald selv kan ramme et kort, kendt rate-vindue (fx to POST /runs-kald i træk ved
+   H1's genoptaget-håndtering) — venter roligt vinduet ud og prøver automatisk igen én gang, i
+   stedet for at vise en teknisk 429-fejl til spilleren. */
+function retryTimed(fn, waitMs){
+  return fn().catch(e => {
+    if(!(e && e.status === 429)) throw e;
+    toast('Vent lidt, prøver igen om et øjeblik...');
+    return new Promise((resolve, reject) => setTimeout(() => fn().then(resolve).catch(reject), waitMs || 21000));
+  });
+}
 let flushingQueue = false;
 function flushFinishQueue(){
   if(flushingQueue) return Promise.resolve();
@@ -2203,13 +2213,18 @@ function startAttempt(useBf, duel, forceNew){
   const others = rank('total', F.today).filter(x => x.p.pid !== p.pid).map(x => ({ name: x.p.name, v: x.v, pid: x.p.pid }));
   const bossRow = rank('total', F.today).filter(x => x.p.pid !== p.pid)[0];
   $('#b-start').disabled = true;
-  (forceNew ? API.startRun({ ny: true }) : API.startRun()).then(res => {
-    // H1: et gammelt, aktivt forsøg (fx efter en reload) bliver genoptaget uden at bruge et liv —
+  // H1: hvis der ryger et forsøg forud for reload (fx spillerens egen genindlæsning midt i en runde),
+  // kan selv DETTE første kald ramme rate-grænsen på 1 kald/20 sek./spiller — ikke kun opgiv-og-
+  // start-forfra-kaldet nedenfor. Så hele kæden er pakket i retryTimed(), der venter ~21 sek. og
+  // prøver automatisk igen én gang, i stedet for bare at vise spilleren "vent lidt" og give op.
+  retryTimed(() => (forceNew ? API.startRun({ ny: true }) : API.startRun())).then(res => {
+    // et gammelt, aktivt forsøg (fx efter en reload) bliver genoptaget uden at bruge et liv —
     // det kan klienten ikke reelt fortsætte ind i (rundetilstanden er væk), så vi opgiver det tydeligt
-    // og beder om et nyt i stedet for at lade spilleren sidde fast.
+    // og beder om et nyt i stedet for at lade spilleren sidde fast. Samme rate-grænse gælder her,
+    // så også dette opgiv-kald er pakket i retryTimed().
     if(res && res.genoptaget && !forceNew){
       toast('Dit forrige spil blev afsluttet uden svar. Starter et nyt.');
-      return API.startRun({ ny: true });
+      return retryTimed(() => API.startRun({ ny: true }));
     }
     return res;
   }).then(res => {
@@ -2881,7 +2896,7 @@ RT.on('duel.waiting', (d, from) => { d = d || {}; if(!d.tab || d.tab === TAB) re
 RT.on('duel.idle', d => { d = d || {}; if(d.tab) WAITERS.delete(d.tab); duelUi(); });
 RT.on('duel.go', (d, from) => { d = d || {}; const an = (from && (from.navn || from.name)) || d.an; wallDuelStart({ ...d, an }); if(d.b === TAB && WAITING) beginDuel(d.id, { name: an, tab: d.a, pid: d.aPid }, d.at); });
 RT.on('duel.s', d => onDuelScore(d || {}));
-RT.on('open', () => { RT.presence(current ? current.name : '').catch(() => {}); duelUi(); });
+RT.on('open', () => { if(current) RT.presence(current.name).catch(() => {}); duelUi(); });
 RT.on('close', () => { WAITERS.clear(); duelUi(); });
 function duelUi(){
   const b = $('#b-duel'), box = $('#l-duel');
