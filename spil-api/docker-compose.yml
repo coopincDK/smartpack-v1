@@ -17,12 +17,13 @@ services:
   db:
     image: postgres:16
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: spil
-      POSTGRES_PASSWORD: changeme
-      POSTGRES_DB: spil
+    env_file:
+      - .env
     volumes:
       - spil_db_data:/var/lib/postgresql/data
+      # Kører KUN ved allerførste opstart (tomt datavolume) — opretter en
+      # dedikeret, ikke-superbruger app-rolle. Se scripts/init-db/001-app-role.sh.
+      - ./scripts/init-db:/docker-entrypoint-initdb.d:ro
     # Ingen "ports:" her heller — kun `api`-servicen taler med databasen,
     # over det interne docker-netværk.
 
