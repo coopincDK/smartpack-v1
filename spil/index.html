@@ -606,9 +606,14 @@ html,body{overflow-x:hidden}
     <h3>Data</h3>
     <button class="btn" id="b-csv">Hent tilmeldinger som CSV</button>
     <textarea id="a-csv" readonly hidden></textarea>
-    <!-- Bulk-afmelding fra partnerlister og "nulstil alle spillere" har ingen tilsvarende
-         endpoint i spil-api/API.md (fase 1) og er derfor fjernet herfra. Se rapporten til
-         orkestratoren: skal enten tilføjes i en senere version af API'et, eller droppes helt. -->
+    <label class="f">Afmeld fra en liste <small>Indsæt e-mails fra partnerens afmeldingsliste, én pr. linje</small><textarea id="a-unsub" style="min-height:80px"></textarea></label>
+    <label class="f">Listen<select id="a-unlist"></select></label>
+    <button class="btn small" id="b-unsub">Afmeld dem fra listen</button>
+    <p class="muted small" id="a-unsub-res"></p>
+    <h4 class="sub">Nulstil alt</h4>
+    <p class="muted small">Sletter ALLE spillere, forsøg og scores permanent. Kan ikke fortrydes. Brug kun før messen starter, aldrig under eller efter.</p>
+    <label class="f">Skriv NULSTIL for at bekræfte<input type="text" id="a-resetconfirm" autocomplete="off"></label>
+    <button class="btn ghost" id="b-reset">Nulstil alle spillere og scores</button>
   </div>
 </section>
 
@@ -645,7 +650,23 @@ const loadImg = src => { const i = new Image(); i.src = src; return i; };
 const CUBE = loadImg(IMG.cubeK), CUBEW = loadImg(IMG.cubeW), LOGO = loadImg(IMG.logo), TILE = loadImg(IMG.tile);
 /* dags-begreb følger serverens: UTC-dato (API.md, "Dage og tidszoner"), ikke browserens lokale tid,
    så klientens F.today/todays() matcher de day-strenge, serveren sætter på attempts */
-const today = () => new Date().toISOString().slice(0, 10);
+/* Brugerens beslutning: dags- og klokkeslætsbegreber følger dansk lokal tid (Europe/Copenhagen),
+   ikke UTC og ikke enhedens egen tidszone — backenden lægges om til det samme. cphParts()/
+   cphTodayAt() bruges også til timens boss og kronetidspunktet, så alt regner i samme tidszone. */
+const CPH_TZ = 'Europe/Copenhagen';
+const today = () => new Date().toLocaleDateString('sv-SE', { timeZone: CPH_TZ });
+function cphParts(d){
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: CPH_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(d);
+  const get = t => +parts.find(p => p.type === t).value;
+  return { year: get('year'), month: get('month'), day: get('day'), hour: get('hour'), minute: get('minute'), second: get('second') };
+}
+/* dagens dato i København kl. h:m som absolut tidspunkt (ms), uafhængigt af enhedens egen tidszone */
+function cphTodayAt(h, m){
+  const now = new Date(), p = cphParts(now);
+  const cphNowMs = Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
+  const offsetMs = cphNowMs - now.getTime();
+  return Date.UTC(p.year, p.month - 1, p.day, h, m, 0) - offsetMs;
+}
 const fmt = n => Math.round(n).toLocaleString('da-DK');
 const sek = v => v.toLocaleString('da-DK', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' sek.';
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -750,13 +771,13 @@ const API = {
   logout(){ setToken(null); cacheMe(null); },
   startRun(){ return apiFetch('/runs', { method: 'POST' }); },
   finishRun(runId, payload){ return apiFetch('/runs/' + encodeURIComponent(runId) + '/finish', { method: 'POST', body: payload }); },
-  /* Martins nye regler (3 liv/dag, MAX_LIVES 7, "dagens flueben") giver to nye, separate
-     endpoints i stedet for det ene PUT /me/subs: ét til dagens flueben (giver friske liv,
-     nulstilles hver dag) og ét til varig afmelding fra en enkelt liste. Stierne herunder er
-     et bud fra teamlederens besked, indtil API.md er opdateret — kun disse to linjer skal
-     rettes, når den rigtige sti/metode er bekræftet. */
+  /* Martins nye regler (3 liv/dag, MAX_LIVES 7, "dagens flueben") giver to separate endpoints
+     i stedet for det ene PUT /me/subs: ét til dagens flueben (giver friske liv, nulstilles hver
+     dag) og ét til varig afmelding fra en enkelt liste. Stierne er bekræftet af teamlederen. */
   setTicks(keys){ return apiFetch('/me/ticks', { method: 'PUT', body: { keys } }); },
   unsubscribe(listKey){ return apiFetch('/me/subs/' + encodeURIComponent(listKey), { method: 'DELETE' }); },
+  /* Firma er valgfrit igen (brugerens beslutning): kan sættes bagefter i lobbyen */
+  setCompany(company){ return apiFetch('/me', { method: 'PATCH', body: { firma: company } }); },
   boost(code){ return apiFetch('/me/boost', { method: 'POST', body: { code } }); },
   challenge(code){ return apiFetch('/me/challenge', { method: 'POST', body: { code } }); },
   seen(ids){ return apiFetch('/me/seen', { method: 'POST', body: ids ? { ids } : {} }); },
@@ -768,6 +789,8 @@ const API = {
     boostCode(){ return apiFetch('/admin/boostkode', { admin: true }); },
     exportUrl(kind){ return API_BASE + '/admin/eksport/' + kind + '.csv'; },
     draw(kortNavn){ return apiFetch('/admin/lodtraekning', { method: 'POST', body: { kort_navn: kortNavn || cfg.periodName || 'Packrush' }, admin: true }); },
+    unsubscribeBulk(liste, emails){ return apiFetch('/admin/afmeld', { method: 'POST', body: { liste, emails }, admin: true }); },
+    resetAll(){ return apiFetch('/admin/nulstil', { method: 'POST', body: { bekraeft: 'NULSTIL' }, admin: true }); },
   },
 };
 
@@ -923,13 +946,14 @@ const trackRng = k => TRACK ? mulberry(hashStr(TRACK + ':' + k)) : Math.random;
 /* dagens sms-kode til ekstra liv beregnes og valideres nu udelukkende på serveren (se API.challenge),
    så koden aldrig kan læses ud af klienten. */
 /* ---------- timens boss ---------- */
-const hourOf = t => new Date(t).getHours();
+const hourOf = t => cphParts(new Date(t)).hour;
 const hh = h => String(h % 24).padStart(2, '0') + '.00';
+const nowHour = () => cphParts(new Date()).hour;
 const inHour = h => a => a.day === today() && hourOf(a.end || a.at) === h;
 function hourWinners(pool){
   // én vinder pr. afsluttet time; har man vundet en time i dag, kan man ikke vinde igen
   const ps = pool || Object.values(data.players);
-  const now = new Date().getHours(), won = new Set(), out = [], hs = new Set();
+  const now = nowHour(), won = new Set(), out = [], hs = new Set();
   ps.forEach(p => done(p).filter(F.today).forEach(a => hs.add(hourOf(a.end || a.at))));
   [...hs].filter(h => h < now).sort((a, b) => a - b).forEach(h => {
     const r = rank('total', inHour(h), ps).filter(x => !won.has(x.p.pid));
@@ -937,10 +961,10 @@ function hourWinners(pool){
   });
   return out;
 }
-function hourBoard(pool){ const ps = pool || Object.values(data.players), won = new Set(hourWinners(ps).map(w => w.p.pid)); return rank('total', inHour(new Date().getHours()), ps).filter(x => !won.has(x.p.pid)); }
-const hourLeftMin = () => { const d = new Date(); return 60 - d.getMinutes(); };
+function hourBoard(pool){ const ps = pool || Object.values(data.players), won = new Set(hourWinners(ps).map(w => w.p.pid)); return rank('total', inHour(nowHour()), ps).filter(x => !won.has(x.p.pid)); }
+const hourLeftMin = () => 60 - cphParts(new Date()).minute;
 const bfToday = p => todays(p).some(a => a.bf);
-function crownMs(){ const [h, m] = (cfg.crownTime || '16:00').split(':').map(Number); const d = new Date(); d.setHours(h || 0, m || 0, 0, 0); return d.getTime(); }
+function crownMs(){ const [h, m] = (cfg.crownTime || '16:00').split(':').map(Number); return cphTodayAt(h || 0, m || 0); }
 const F = {
   today: a => a.day === today(),
   period: a => a.day >= (cfg.periodStart || '2000-01-01'),
@@ -1735,7 +1759,7 @@ function renderBoard(list, note, limit){
   const k = scope === 'mission' ? cfg.mission : 'total', filt = scope === 'today' ? F.today : F.period;
   if(scope === 'mission') note.textContent = `${MET[k].name}. ${MET[k].how}`;
   if(scope === 'period' && cfg.periodStart > '2000-01-01') note.textContent = `Alle forsøg fra ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}.`;
-  if(scope === 'hour'){ const ws = hourWinners(), h = new Date().getHours(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
+  if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
   if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
   r.forEach(({ p, v }, i) => {
@@ -1898,7 +1922,7 @@ function renderLobby(){
   // timens boss
   const hb = $('#l-hour'); hb.hidden = cfg.hourly === false;
   if(cfg.hourly !== false){
-    const mine = hourWinners().find(w => w.p.pid === p.pid), top = hourBoard()[0], h = new Date().getHours(); hb.replaceChildren();
+    const mine = hourWinners().find(w => w.p.pid === p.pid), top = hourBoard()[0], h = nowHour(); hb.replaceChildren();
     if(mine) hb.append('Du vandt ', el('b', null, `timens boss kl. ${hh(mine.h + 1)}`), `${cfg.hourPrize ? '. Hent ' + cfg.hourPrize + ' ved standen' : ''}. Nu får de andre en chance.`);
     else if(top && top.p.pid === p.pid) hb.append('Du er ', el('b', null, 'timens boss'), ` lige nu. Hold pladsen til kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
     else if(top) hb.append('Timens boss: ', el('b', null, `${top.p.name}, ${fmt(top.v)}`), `. Kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
@@ -2001,8 +2025,12 @@ function renderSubsBox(){
   if(!on.length) return;
   d.append(sm, list); box.append(d);
 }
-/* API.md kræver firma (1-40 tegn) ved registrering, så #l-firm bør reelt aldrig vises efter
-   Fase 2; der er intet endpoint til at rette firmaet bagefter, så feltet er kun en visning her. */
+/* Firma er valgfrit igen (brugerens beslutning): en spiller uden firma kan sætte det bagefter i lobbyen */
+$('#l-firm-i').addEventListener('change', e => {
+  const v = e.target.value.trim(); if(!v || !current) return;
+  API.setCompany(v).then(() => { current.company = v; current.companyKey = firmKey(v); toast('Du spiller nu for ' + v); renderLobby(); })
+    .catch(() => toast('Kunne ikke gemme firmaet. Tjek din forbindelse.'));
+});
 $('#b-logout').onclick = () => { forgetMe(); current = null; show('s-start'); };
 
 /* ---------- runderne hænger sammen ---------- */
@@ -2509,12 +2537,12 @@ function renderAdmin(){
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
     const elig = ps.filter(p => tickets(p) > 0), n = elig.reduce((a, p) => a + tickets(p), 0);
     $('#a-raffle').textContent = cfg.raffle ? `${elig.length} spillere har tilsammen ${n} lodder i ${pnl()}. Hver dag man gennemfører et spil giver ét lod${cfg.goal > 0 ? ', og missionens mål giver et ekstra' : ''}.` : 'Lodtrækning er slået fra i opsætningen. Du kan stadig trække blandt periodens spillere.';
-    renderSms();
+    renderSms(); fillUnlist();
     const ah = $('#a-hours'); ah.replaceChildren();
     if(cfg.hourly !== false){ const ws = hourWinners(ps), top = hourBoard(ps)[0]; ah.append(el('h4', 'sub', 'Timens boss i dag'));
       if(!ws.length && !top) ah.append(el('p', 'muted small', 'Ingen vindere endnu.'));
       ws.forEach(w => ah.append(el('p', 'small', `Kl. ${hh(w.h + 1)}: ${w.p.name}${w.p.company ? ', ' + w.p.company : ''}, ${fmt(w.v)} point, tlf. ${w.p.phone}`)));
-      if(top) ah.append(el('p', 'muted small', `Fører lige nu til kl. ${hh(new Date().getHours() + 1)}: ${top.p.name}, ${fmt(top.v)}`)); }
+      if(top) ah.append(el('p', 'muted small', `Fører lige nu til kl. ${hh(nowHour() + 1)}: ${top.p.name}, ${fmt(top.v)}`)); }
     $('#a-stand').checked = isStand();
     if(cfg.smsBoost !== false) ah.append(el('p', 'muted small', `Dagens sms-kode til ekstra liv: ${adminBoostCode || '(indlæser)'}. Den skifter ved midnat.`));
   });
@@ -2544,6 +2572,36 @@ $('#b-draw').onclick = () => {
 };
 $('#b-rev').onclick = () => window.open(API.admin.exportUrl('revanche'), '_blank');
 $('#b-csv').onclick = () => window.open(API.admin.exportUrl('spillere'), '_blank');
+/* Brugerens beslutning: masseafmelding fra en enkelt partnerliste igen, nu via /admin/afmeld.
+   Svarformen er endnu ikke vist med eksempel i API.md — fundet/ikke_fundet er et bud, rettes
+   til, når kontrakten er endelig. */
+function fillUnlist(){
+  const sl = $('#a-unlist'); if(!sl) return; const cur = sl.value;
+  sl.replaceChildren(...subOptions().map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
+  if(cur) sl.value = cur;
+}
+$('#b-unsub').onclick = () => {
+  const liste = $('#a-unlist').value;
+  const emails = $('#a-unsub').value.split(/[\n,;]+/).map(x => x.trim().toLowerCase()).filter(Boolean);
+  if(!liste) return toast('Vælg en liste');
+  if(!emails.length) return toast('Indsæt mindst én e-mail');
+  API.admin.unsubscribeBulk(liste, emails).then(res => {
+    const found = res && (res.fundet != null ? res.fundet : res.found);
+    const notFound = res && (res.ikke_fundet != null ? res.ikke_fundet : res.notFound);
+    $('#a-unsub-res').textContent = found != null ? `${found} afmeldt, ${notFound != null ? notFound : Math.max(0, emails.length - found)} ikke fundet.` : 'Afmeldt.';
+    renderAdmin();
+  }).catch(() => toast('Kunne ikke afmelde. Tjek din forbindelse.'));
+};
+/* "Nulstil alle spillere" kræver, at admin skriver NULSTIL, plus en almindelig browser-bekræftelse,
+   fordi handlingen er permanent og rammer alle spillere på én gang. */
+$('#b-reset').onclick = () => {
+  const v = $('#a-resetconfirm').value.trim();
+  if(v !== 'NULSTIL') return toast('Skriv NULSTIL i feltet for at bekræfte');
+  if(!confirm('Er du helt sikker? Dette sletter ALLE spillere, forsøg og scores permanent og kan ikke fortrydes.')) return;
+  API.admin.resetAll().then(() => { $('#a-resetconfirm').value = ''; current = null; savedMe = null; return loadState(); })
+    .then(() => { renderAdmin(); toast('Alle spillere er slettet'); })
+    .catch(() => toast('Kunne ikke nulstille. Tjek din forbindelse.'));
+};
 
 /* ---------- standvæg ---------- */
 function fitWall(){
@@ -2558,7 +2616,7 @@ function wallPanels(){
   P.push({ dur: 16, title: 'Dagens topscore', rows: t.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i dag endnu. Bliv dagens første boss.',
     foot: [rec ? ['Rekord i ' + pnl() + ': ', `${fmt(rec.v)} af ${rec.p.name}`] : null, n ? ['', `${n} ${n === 1 ? 'spiller' : 'spillere'} i dag`] : null] });
   if(cfg.hourly !== false){
-    const h = new Date().getHours(), r = hourBoard().slice(0, 7);
+    const h = nowHour(), r = hourBoard().slice(0, 7);
     P.push({ dur: 10, title: `Timens boss, kåres kl. ${hh(h + 1)}`, note: `Om ${hourLeftMin()} min${cfg.hourPrize ? '. Præmie: ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen`, rows: r.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i denne time endnu. Bliv timens boss.' });
   }
   if(cfg.mission && cfg.mission !== 'total'){
