@@ -685,6 +685,10 @@ function norm(p){
 function meFromServer(m){
   if(!m) return null;
   const noegler = m.mine_noegler || [];
+  // dagens flueben (Martins nye regler): et separat, dags-scopet felt ud over den varige mine_noegler-liste.
+  // Feltnavnet fra serveren er endnu ikke bekræftet (API.md opdateres), så vi prøver et par sandsynlige
+  // navne og falder ellers tilbage til tomt, hvilket blot betyder "ikke sat i dag endnu" (ufarligt).
+  const todayTicks = m.dagens_flueben || m.today_ticks || m.flueben_i_dag || m.tick_i_dag || [];
   const notifs = m.notifikationer || [];
   const beaten = notifs.filter(n => n.type === 'beaten').map(n => ({ ...(n.data || {}), id: n.id, seen: !!n.seen }));
   const gifts = notifs.filter(n => n.type !== 'beaten').map(n => ({ ...(n.data || {}), id: n.id, seen: !!n.seen, kind: n.data && n.data.kind }));
@@ -693,7 +697,7 @@ function meFromServer(m){
     code: m.vennekode, badges: m.badges || [],
     marketing: noegler.includes('sp'), notify: noegler.includes('sms'),
     mailTo: noegler.filter(k => k.startsWith('m:')).map(k => k.slice(2)),
-    mineNoegler: noegler, samtykker: m.samtykker || [],
+    mineNoegler: noegler, todayTicks, samtykker: m.samtykker || [],
     liv: m.liv || null, livAt: Date.now(),
     beaten, gifts, tickets: m.tickets || 0,
   };
@@ -746,7 +750,13 @@ const API = {
   logout(){ setToken(null); cacheMe(null); },
   startRun(){ return apiFetch('/runs', { method: 'POST' }); },
   finishRun(runId, payload){ return apiFetch('/runs/' + encodeURIComponent(runId) + '/finish', { method: 'POST', body: payload }); },
-  setSubs(keys){ return apiFetch('/me/subs', { method: 'PUT', body: { keys } }); },
+  /* Martins nye regler (3 liv/dag, MAX_LIVES 7, "dagens flueben") giver to nye, separate
+     endpoints i stedet for det ene PUT /me/subs: ét til dagens flueben (giver friske liv,
+     nulstilles hver dag) og ét til varig afmelding fra en enkelt liste. Stierne herunder er
+     et bud fra teamlederens besked, indtil API.md er opdateret — kun disse to linjer skal
+     rettes, når den rigtige sti/metode er bekræftet. */
+  setTicks(keys){ return apiFetch('/me/ticks', { method: 'PUT', body: { keys } }); },
+  unsubscribe(listKey){ return apiFetch('/me/subs/' + encodeURIComponent(listKey), { method: 'DELETE' }); },
   boost(code){ return apiFetch('/me/boost', { method: 'POST', body: { code } }); },
   challenge(code){ return apiFetch('/me/challenge', { method: 'POST', body: { code } }); },
   seen(ids){ return apiFetch('/me/seen', { method: 'POST', body: ids ? { ids } : {} }); },
@@ -881,6 +891,9 @@ function subOptions(){
   return o;
 }
 function subKeys(p){ const k = []; if(p.marketing) k.push('sp'); (p.mailTo || []).forEach(n => k.push('m:' + n)); if(p.notify) k.push('sms'); return k; }
+/* dagens flueben: separat fra den varige tilmelding (subKeys). At fjerne et flueben her afmelder IKKE
+   listen varigt (kun "Mine tilmeldinger" gør det) — det betyder blot, at man ikke får dagens liv-bonus. */
+const todayKeys = p => (p && p.todayTicks) || [];
 function subsBox(box, initial, onChange, fold){
   // "Tilmeld alle" øverst, og hver liste kan fjernes enkeltvis nedenunder
   const opts = subOptions(), chosen = new Set(initial), lifeOpts = opts.filter(o => o.life).length, bonus = cfg.lifeBonus !== false;
@@ -1864,16 +1877,15 @@ function renderLobby(){
   if(gf.length){ const nw = gf.filter(g => g.kind !== 'ch'), chs = gf.filter(g => g.kind === 'ch'), lst = a => a.map(g => g.from).join(', ').replace(/, ([^,]*)$/, ' og $1');
     if(nw.length) gb.append(el('p', 'gift', `${lst(nw)} har spillet med din kode for første gang, så du har fået fuld liv igen.`));
     chs.forEach(g => gb.append(el('p', 'gift', `${g.from} tog din udfordring op og fik ${fmt(g.score || 0)} point. Du har fået et ekstra liv.${g.score > bestToday(p) ? ' Slå den tilbage.' : ''}`))); if(!p._giftMark){ p._giftMark = true; const ids = gf.map(g => g.id || g.at); setTimeout(() => { gf.forEach(g => g.seen = true); delete p._giftMark; API.seen(ids).catch(() => {}); }, 1500); } }
-  // flere liv: sæt flueben for at tilmelde dig (og få friske liv for det, hvis du ikke allerede har i dag).
-  // Serveren afgør "friske_liv" — klienten sender bare det ønskede fulde sæt (PUT /me/subs).
-  // Selve afmeldingen sker i "Mine tilmeldinger" nedenunder, adskilt fra denne boks.
+  // dagens flueben: nulstilles hver dag og giver friske liv (PUT /me/ticks). Adskilt fra den varige
+  // tilmelding — at fjerne et flueben her afmelder ikke listen, kun "Mine tilmeldinger" gør det.
   const mb = $('#l-more'); mb.replaceChildren();
   if(subOptions().length){
-    const d = el('details', 'more'), sm = el('summary'); const on = subKeys(p).length, tot = subOptions().length;
-    sm.textContent = on ? `Dine flueben, ${on} af ${tot}` : `Få flere liv i dag, sæt dine flueben`;
+    const d = el('details', 'more'), sm = el('summary'); const on = todayKeys(p).length, tot = subOptions().length;
+    sm.textContent = on ? `Dagens flueben, ${on} af ${tot}` : `Få flere liv i dag, sæt dine flueben`;
     const box = el('div', 'subs'); d.append(sm, box); mb.append(d);
-    subsBox(box, subKeys(p), keys => {
-      applySubs(keys, d);
+    subsBox(box, todayKeys(p), keys => {
+      applyTicks(keys, d);
     });
   }
   renderSubsBox();
@@ -1938,14 +1950,18 @@ function renderLobby(){
   const bb = $('#l-badges'); bb.replaceChildren(...BADGES.map(b => badgeEl(b, !!p.badges[b.k])));
   $('#l-bsum').textContent = `Dine mærker, ${BADGES.filter(b => p.badges[b.k]).length} af ${BADGES.length}`;
 }
-/* ---------- mine tilmeldinger: varige lister (mods. dagens flueben, som kun gælder liv i dag) ---------- */
-/* Ét kald (PUT /me/subs) dækker både "sæt dagens flueben" (ovenfor) og "afmeld mig" (herunder) —
-   serveren har kun ét samlet sæt aktive lister, ikke et separat dags-flueben-begreb. Klienten
-   sender altid det ønskede FULDE sæt. */
-function applySubs(keys, detailsEl){
+/* ---------- mine tilmeldinger: varige lister (mods. dagens flueben, som kun gælder liv i dag) ----------
+   To adskilte kald (Martins nye regler): PUT /me/ticks (dagens flueben, giver friske liv, nulstilles
+   hver dag) og en enkelt-liste-afmelding (varig). At tikke en ny liste i dag ratchet'er også den varige
+   tilmelding op (som i den oprindelige klient: et nyt flueben ER en ny tilmelding); at fjerne fluebenet
+   igen afmelder kun dagen, ikke listen. */
+function applyTicks(keys, detailsEl){
   const openNow = detailsEl && detailsEl.open;
-  API.setSubs(keys).then(res => {
-    current.mineNoegler = (res && res.mine_noegler) || keys;
+  const before = current.mineNoegler || [];
+  API.setTicks(keys).then(res => {
+    current.todayTicks = (res && (res.today_ticks || res.dagens_flueben)) || keys;
+    const merged = Array.from(new Set(before.concat(keys)));
+    current.mineNoegler = (res && res.mine_noegler) || merged;
     current.marketing = current.mineNoegler.includes('sp');
     current.notify = current.mineNoegler.includes('sms');
     current.mailTo = current.mineNoegler.filter(k => k.startsWith('m:')).map(k => k.slice(2));
@@ -1953,7 +1969,17 @@ function applySubs(keys, detailsEl){
     if(res && res.friske_liv){ toast(`Du har fået ${res.friske_liv} ekstra liv`); sfx('badge'); }
     renderLobby();
     const nd = $('#l-more details'); if(nd && openNow) nd.open = true;
-  }).catch(() => toast('Kunne ikke gemme dine tilmeldinger. Tjek din forbindelse.'));
+  }).catch(() => toast('Kunne ikke gemme dagens flueben. Tjek din forbindelse.'));
+}
+function unsubscribeOne(key){
+  API.unsubscribe(key).then(res => {
+    current.mineNoegler = (res && res.mine_noegler) || (current.mineNoegler || []).filter(k => k !== key);
+    current.marketing = current.mineNoegler.includes('sp');
+    current.notify = current.mineNoegler.includes('sms');
+    current.mailTo = current.mineNoegler.filter(k => k.startsWith('m:')).map(k => k.slice(2));
+    current.todayTicks = (current.todayTicks || []).filter(k => k !== key);
+    toast('Afmeldt'); renderLobby();
+  }).catch(() => toast('Kunne ikke afmelde. Tjek din forbindelse.'));
 }
 function renderSubsBox(){
   const box = $('#l-subs'); if(!box) return;
@@ -1968,7 +1994,7 @@ function renderSubsBox(){
     const btn = el('button', 'link small', 'Afmeld'); btn.type = 'button';
     btn.onclick = () => {
       if(!confirm(`Afmeld dig fra ${o.k === 'sms' ? 'sms' : 'mail'} fra ${o.name}?`)) return;
-      applySubs(subKeys(p).filter(k => k !== o.k));
+      unsubscribeOne(o.k);
     };
     row.append(sp, btn); list.append(row);
   });
