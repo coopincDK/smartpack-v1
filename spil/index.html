@@ -544,6 +544,12 @@ html,body{overflow-x:hidden}
   <div class="hours" id="a-hours"></div>
   <label class="check"><input type="checkbox" id="a-stand">Denne enhed er en standtablet. Den husker ikke spilleren og går tilbage til start efter 2 minutter uden tryk</label>
   <p class="muted small" id="a-mode"></p>
+  <div class="row">
+    <button class="btn ghost small" id="b-standcode">Generér kode til standtablet</button>
+    <span id="a-standcode" class="muted small"></span>
+  </div>
+  <label class="f">Indtast kode PÅ standtabletten <small>Gør denne enheds tavle/standvæg vise fulde navne i stedet for "Fornavn E."</small><span class="row"><input type="text" id="i-standcode" maxlength="6" autocapitalize="characters" autocomplete="off"><button class="btn small" id="b-standlogin" type="button">Aktivér</button></span></label>
+  <p class="muted small" id="a-standloginmsg"></p>
   <button class="btn primary" id="b-wall">Vis topscore på standvæggen</button>
 
   <div class="adm">
@@ -712,7 +718,7 @@ function meFromServer(m){
   // dagens flueben (Martins nye regler): et separat, dags-scopet felt ud over den varige mine_noegler-liste.
   // Feltnavnet fra serveren er endnu ikke bekræftet (API.md opdateres), så vi prøver et par sandsynlige
   // navne og falder ellers tilbage til tomt, hvilket blot betyder "ikke sat i dag endnu" (ufarligt).
-  const todayTicks = m.dagens_flueben || m.today_ticks || m.flueben_i_dag || m.tick_i_dag || [];
+  const todayTicks = m.mine_flueben || [];
   const notifs = m.notifikationer || [];
   const beaten = notifs.filter(n => n.type === 'beaten').map(n => ({ ...(n.data || {}), id: n.id, seen: !!n.seen }));
   // M3: serveren sender data.type ('udfordring_liv'/'vennekode_refill') og data.fra, ikke kind/from
@@ -802,6 +808,11 @@ const API = {
   boost(code){ return apiFetch('/me/boost', { method: 'POST', body: { code } }); },
   challenge(code){ return apiFetch('/me/challenge', { method: 'POST', body: { code } }); },
   seen(ids){ return apiFetch('/me/seen', { method: 'POST', body: ids ? { ids } : {} }); },
+  /* Stand-login (API.md, "Packrush-ændringer B"): en langtlevende, offentlig sessionscookie for
+     DENNE enhed, der får serveren til at vise fulde navne (i stedet for "Fornavn E.") på både
+     /state og websocket-beskeder — adskilt fra den lokale isStand()-indstilling, som kun styrer
+     om enheden husker sin egen spiller. En stand-tablet/standvæg bør have begge slået til. */
+  standLogin(code){ return apiFetch('/stand-login', { method: 'POST', noAuth: true, body: { kode: code } }); },
   admin: {
     login(password){ return apiFetch('/admin/login', { method: 'POST', body: { password }, noAuth: true, admin: true }); },
     players(){ return apiFetch('/admin/spillere', { admin: true }); },
@@ -812,6 +823,7 @@ const API = {
     draw(kortNavn){ return apiFetch('/admin/lodtraekning', { method: 'POST', body: { kort_navn: kortNavn || cfg.periodName || 'Packrush' }, admin: true }); },
     unsubscribeBulk(liste, emails){ return apiFetch('/admin/afmeld', { method: 'POST', body: { liste, emails }, admin: true }); },
     resetAll(){ return apiFetch('/admin/nulstil', { method: 'POST', body: { bekraeft: 'NULSTIL' }, admin: true }); },
+    standLoginCode(){ return apiFetch('/admin/stand-login-kode', { method: 'POST', admin: true }); },
   },
 };
 
@@ -854,6 +866,9 @@ const RT = (() => {
        indtil vi udtrykkeligt siger andet — skal kaldes efter login OG logout, ellers "arver" den
        næste spiller på en standtablet den forrige spillers identitet på selve websocket'en. */
     rehello(){ return raw({ type: 'hello', token: getToken() || undefined }); },
+    /* Bruges efter stand-login: en admin/stand-sessionscookie sættes ved selve WS-håndtrykket, så
+       en allerede-åben forbindelse skal lukkes og genoprettes, før den tæller som privilegeret. */
+    reconnect(){ retry = 1000; if(ws){ try{ ws.close(); }catch(e){} } else connect(); },
     get connected(){ return !!(ws && ws.readyState === 1 && joined); },
   };
 })();
@@ -2072,7 +2087,7 @@ function applyTicks(keys, detailsEl){
   const openNow = detailsEl && detailsEl.open;
   const before = current.mineNoegler || [];
   API.setTicks(keys).then(res => {
-    current.todayTicks = (res && (res.today_ticks || res.dagens_flueben)) || keys;
+    current.todayTicks = (res && res.mine_flueben) || keys;
     const merged = Array.from(new Set(before.concat(keys)));
     current.mineNoegler = (res && res.mine_noegler) || merged;
     current.marketing = current.mineNoegler.includes('sp');
@@ -2373,7 +2388,7 @@ function finish(){
   const runId = g.runId;
   const payload = {
     rounds: g.scores.slice(), s: { ...g.S, left: g.leftover || 0 }, bf: g.bf,
-    duel: g.duel ? { vs: g.duel.opp.name } : null,
+    duel: g.duel ? { vs: g.duel.opp.name, vsId: g.duel.opp.pid || undefined } : null,
     spilletid_klient_ms: Date.now() - (g.clientStart || Date.now()),
   };
   if(g.duel) duelSend(total, true);
@@ -2862,9 +2877,9 @@ setInterval(() => { if(LASTDUEL && !LASTDUEL.oppDone && !LASTDUEL.gone && Date.n
 /* L7: storskærmen skal vise serverens bekræftede afsendernavn (WS-konvolutens "from"), ikke det
    klienten selv påstår i selve begivenhedens data — ellers kan enhver sætte vilkårlig tekst
    (maks 40 tegn, ikke XSS, men stadig ikke noget en fremmed skal kunne skrive på storskærmen). */
-RT.on('duel.waiting', (d, from) => { d = d || {}; if(!d.tab || d.tab === TAB) return; const nm = (from && (from.navn || from.name)) || d.name; WAITERS.set(d.tab, { tab: d.tab, name: String(nm || '').slice(0, 40), seenAt: Date.now() }); duelUi(); });
+RT.on('duel.waiting', (d, from) => { d = d || {}; if(!d.tab || d.tab === TAB) return; const nm = (from && (from.navn || from.name)) || d.name; WAITERS.set(d.tab, { tab: d.tab, name: String(nm || '').slice(0, 40), pid: d.pid, seenAt: Date.now() }); duelUi(); });
 RT.on('duel.idle', d => { d = d || {}; if(d.tab) WAITERS.delete(d.tab); duelUi(); });
-RT.on('duel.go', (d, from) => { d = d || {}; const an = (from && (from.navn || from.name)) || d.an; wallDuelStart({ ...d, an }); if(d.b === TAB && WAITING) beginDuel(d.id, { name: an, tab: d.a }, d.at); });
+RT.on('duel.go', (d, from) => { d = d || {}; const an = (from && (from.navn || from.name)) || d.an; wallDuelStart({ ...d, an }); if(d.b === TAB && WAITING) beginDuel(d.id, { name: an, tab: d.a, pid: d.aPid }, d.at); });
 RT.on('duel.s', d => onDuelScore(d || {}));
 RT.on('open', () => { RT.presence(current ? current.name : '').catch(() => {}); duelUi(); });
 RT.on('close', () => { WAITERS.clear(); duelUi(); });
@@ -2884,13 +2899,14 @@ function stopWaiting(){ WAITING = false; clearInterval(waitBeacon); RT.emit('due
 $('#b-duel').onclick = () => {
   if(!RT.connected || !current || left(current) <= 0) return;
   audio(); WAITING = true; sfx('tick'); duelUi();
-  const beam = () => RT.emit('duel.waiting', { tab: TAB, name: current.name }).catch(() => {});
+  const beam = () => RT.emit('duel.waiting', { tab: TAB, name: current.name, pid: current.pid }).catch(() => {});
   beam(); clearInterval(waitBeacon); waitBeacon = setInterval(beam, 4000);
 };
 function goDuel(w){
   clearInterval(waitBeacon);
-  const d = { id: Math.random().toString(36).slice(2, 9), a: TAB, an: current.name, b: w.tab, bn: w.name, at: Date.now() + 4000 };
-  RT.emit('duel.go', d).catch(() => {}); wallDuelStart(d); beginDuel(d.id, w, d.at);
+  // aPid/bPid: bedste bud på begge spilleres pid, kun brugt til duel.vsId ved finish (API.md) — ikke kritisk hvis ukendt
+  const d = { id: Math.random().toString(36).slice(2, 9), a: TAB, an: current.name, aPid: current.pid, b: w.tab, bn: w.name, bPid: w.pid, at: Date.now() + 4000 };
+  RT.emit('duel.go', d).catch(() => {}); wallDuelStart(d); beginDuel(d.id, { name: w.name, tab: w.tab, pid: w.pid }, d.at);
 }
 function beginDuel(id, opp, at){
   WAITING = false; clearInterval(waitBeacon); if(!current || left(current) <= 0) return;
@@ -2950,6 +2966,19 @@ function paintWallDuel(){
 }
 
 $('#a-stand').onchange = e => { try{ localStorage.setItem(STAND_STORE, e.target.checked ? '1' : '0'); }catch(err){} if(e.target.checked) forgetMe(); paintInstall(); toast(e.target.checked ? 'Enheden er nu en standtablet' : 'Enheden husker nu spilleren'); };
+$('#b-standcode').onclick = () => {
+  API.admin.standLoginCode().then(res => { $('#a-standcode').textContent = res && res.kode ? `Koden er: ${res.kode} (gyldig 5 min.)` : 'Kunne ikke generere en kode.'; })
+    .catch(e => { $('#a-standcode').textContent = e && e.status ? e.message : 'Kunne ikke generere en kode. Tjek din forbindelse.'; });
+};
+$('#b-standlogin').onclick = () => {
+  const code = $('#i-standcode').value.trim(); if(!code) return;
+  API.standLogin(code).then(() => {
+    $('#a-standloginmsg').textContent = 'Denne enhed viser nu fulde navne.';
+    try{ localStorage.setItem(STAND_STORE, '1'); }catch(err){}
+    forgetMe(); $('#a-stand').checked = true; paintInstall();
+    RT.reconnect(); // en allerede-åben websocket har ikke den nye sessionscookie med endnu
+  }).catch(e => { $('#a-standloginmsg').textContent = (e && e.message) || 'Ugyldig eller udløbet kode.'; });
+};
 
 /* ---------- læg spillet på hjemmeskærmen ---------- */
 const SHARE_ICO = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg>';
