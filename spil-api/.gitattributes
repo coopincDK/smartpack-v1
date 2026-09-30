@@ -1,0 +1,4 @@
+# Shell-scripts skal altid have LF-linjeskift, ellers fejler de i containere
+# (Postgres' docker-entrypoint sourcer dem, og en CRLF-korrumperet "set -e"
+# fejler stille som "set: -: invalid option" på Windows-checkouts).
+*.sh text eol=lf

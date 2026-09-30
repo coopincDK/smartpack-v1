@@ -26,7 +26,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
   -- selv kan oprette tabeller ved serveropstart, og for "CREATE EXTENSION
   -- IF NOT EXISTS citext" (citext er en "trusted" extension i Postgres 16,
   -- så det kræver ikke superuser — kun CREATE på skemaet).
-  GRANT CONNECT ON DATABASE "${POSTGRES_DB}" TO "${APP_DB_USER}";
+  GRANT CONNECT, CREATE ON DATABASE "${POSTGRES_DB}" TO "${APP_DB_USER}";
   GRANT USAGE, CREATE ON SCHEMA public TO "${APP_DB_USER}";
   GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "${APP_DB_USER}";
   GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "${APP_DB_USER}";
