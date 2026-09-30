@@ -2910,11 +2910,17 @@ function duelUi(){
     const c = el('button', 'link', 'Annullér'); c.type = 'button'; c.onclick = stopWaiting; box.append(c);
   } else box.append(el('strong', null, `${[...WAITERS.values()].map(w => w.name).join(', ')} venter på en duel`), el('p', null, 'Tryk på Duel for at tage imod. Det bruger et liv, og scoren tæller på tavlen.'));
 }
-function stopWaiting(){ WAITING = false; clearInterval(waitBeacon); RT.emit('duel.idle', { tab: TAB }).catch(() => {}); duelUi(); }
+// API.md (3. opfølgende ændringsrunde): duel.go's "bn" (modstanderens navn) overskrives nu
+// server-side ud fra, hvem der reelt ejer modstander-referencen i data.b — serveren matcher den
+// mod et TIDLIGERE data.a, som samme afsender selv har sendt (samme mønster som duel.go's egen
+// a/b). Vores venteliste-beacons brugte kun feltet "tab" til det, som serveren ikke kender som
+// selv-erklæring — send derfor ALTID også "a: TAB" ved siden af, så modstanderens navn kan
+// resolves korrekt (ellers ryddes bn til en tom streng server-side).
+function stopWaiting(){ WAITING = false; clearInterval(waitBeacon); RT.emit('duel.idle', { tab: TAB, a: TAB }).catch(() => {}); duelUi(); }
 $('#b-duel').onclick = () => {
   if(!RT.connected || !current || left(current) <= 0) return;
   audio(); WAITING = true; sfx('tick'); duelUi();
-  const beam = () => RT.emit('duel.waiting', { tab: TAB, name: current.name, pid: current.pid }).catch(() => {});
+  const beam = () => RT.emit('duel.waiting', { tab: TAB, a: TAB, name: current.name, pid: current.pid }).catch(() => {});
   beam(); clearInterval(waitBeacon); waitBeacon = setInterval(beam, 4000);
 };
 function goDuel(w){
@@ -2925,7 +2931,7 @@ function goDuel(w){
 }
 function beginDuel(id, opp, at){
   WAITING = false; clearInterval(waitBeacon); if(!current || left(current) <= 0) return;
-  RT.emit('duel.idle', { tab: TAB }).catch(() => {});
+  RT.emit('duel.idle', { tab: TAB, a: TAB }).catch(() => {});
   DUEL = { id, opp, at, oppScore: 0, oppRound: 1, oppDone: false, lastOppMsg: Date.now() }; LASTDUEL = null;
   startAttempt(false, DUEL);
 }
