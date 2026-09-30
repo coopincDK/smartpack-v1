@@ -19,12 +19,17 @@ function parseCookies(req) {
   return out;
 }
 
+// Path=/ (ikke "/admin"): browserens cookie-path-matching bruger den
+// FAKTISKE offentlige sti klienten ramte (fx "/api/spil/admin/login" bag
+// fase 2's nginx-præfiksstrip), ikke Express-appens interne route-sti. Med
+// Path=/admin sendte browseren aldrig cookien tilbage i produktion, og
+// hele admin-loginet var reelt dødt. Se API.md/nginx-opsætningen.
 function setSessionCookie(res, token, cookieSecure, maxAgeMs) {
   const attrs = [
     `${COOKIE_NAME}=${encodeURIComponent(token)}`,
     'HttpOnly',
     'SameSite=Strict',
-    'Path=/admin',
+    'Path=/',
     `Max-Age=${Math.floor(maxAgeMs / 1000)}`,
   ];
   if (cookieSecure) attrs.push('Secure');
@@ -32,7 +37,7 @@ function setSessionCookie(res, token, cookieSecure, maxAgeMs) {
 }
 
 function clearSessionCookie(res, cookieSecure) {
-  const attrs = [`${COOKIE_NAME}=`, 'HttpOnly', 'SameSite=Strict', 'Path=/admin', 'Max-Age=0'];
+  const attrs = [`${COOKIE_NAME}=`, 'HttpOnly', 'SameSite=Strict', 'Path=/', 'Max-Age=0'];
   if (cookieSecure) attrs.push('Secure');
   res.set('Set-Cookie', attrs.join('; '));
 }
