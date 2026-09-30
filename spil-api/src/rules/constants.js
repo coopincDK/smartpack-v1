@@ -40,6 +40,11 @@ const DEFAULT_CFG = {
   smsBoost: true,
   boostLives: 2,
   shareUrl: '',
+  // Opfølgning: MIN/MAX for klientens PÅSTÅEDE aktive spilletid ved
+  // POST /runs/:id/finish — config-drevne (kan ændres uden redeploy), se
+  // src/rules/scoring.js#validateSpilletid og API.md, "Snydegrænser".
+  minAktivSpilletidMs: 70000,
+  maxAktivSpilletidMs: 240000,
 };
 
 module.exports = { ROUND_T, REGEN_MS, REGEN_CAP, MAX_LIVES, CODE_ABC, DEFAULT_CFG };

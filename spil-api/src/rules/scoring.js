@@ -12,15 +12,23 @@ const ROUND_MAX = {
   3: 12000, // Send
 };
 
-// Minimum samlet spilletid: 3 runder × 30 sek. minus generøs margin til
-// tidlig rundeafslutning (fx Send der stopper ved 3 strikes) og nedtællinger
-// lægges IKKE til minimum (kun til den øvre tolerance) — se API.md.
+// Opfølgning (offline-kø): MIN/MAX er nu DEFAULT-værdier, config-overridable
+// via cfg.minAktivSpilletidMs/cfg.maxAktivSpilletidMs (se
+// src/rules/constants.js#DEFAULT_CFG og migrations/005_opfoelgning2.sql) —
+// samme tal som før (70 sek.), men kan nu ændres uden redeploy.
 const MIN_SPILLETID_MS = 70 * 1000;
-// Hvor langt server- og klienttid må afvige fra hinanden (begge retninger).
-const SPILLETID_TOLERANCE_MS = 20 * 1000;
-// Absolut øvre grænse (3 runder + rigelig UI/netværks-slack) — fanger kun
-// helt urealistiske/forfalskede tidsangivelser.
-const MAX_SPILLETID_MS = 3 * 30 * 1000 + 60 * 1000;
+// NYT loft (opfølgning): øvre grænse for klientens PÅSTÅEDE AKTIVE spilletid
+// (spilletid_klient_ms) — IKKE en grænse på server_elapsed, som nu kan være
+// vilkårligt lang (klienten kan have en offline-kø: spiller offline, forsøget
+// gemmes lokalt, synkes senere samme (københavnske) dag). Se API.md.
+const MAX_AKTIV_SPILLETID_MS = 240 * 1000;
+// Clock-skew-tolerance: klienten må ikke påstå at have spillet AKTIVT
+// længere, end der reelt er gået siden forsøget blev startet (server_elapsed
+// >= spilletid_klient_ms - denne tolerance). Erstatter den gamle, symmetriske
+// SPILLETID_TOLERANCE_MS (20 sek., begge retninger) — der er ikke længere
+// noget krav om at server_elapsed skal være TÆT PÅ klientens tid, kun at det
+// mindst har varet så længe.
+const CLOCK_SKEW_TOLERANCE_MS = 5 * 1000;
 
 function validateRoundScores(rounds) {
   if (!Array.isArray(rounds) || rounds.length !== 3) {
@@ -42,25 +50,42 @@ function validateRoundScores(rounds) {
   return { ok: true };
 }
 
-function validateSpilletid(serverMs, klientMs) {
+// serverMs: server_elapsed = slut_server - start_server (kan nu være
+// vilkårligt langt — se begrundelsen ovenfor). klientMs: klientens PÅSTÅEDE
+// aktive spilletid (ekskl. evt. offline-ventetid). cfg: bruges til at slå de
+// config-drevne MIN/MAX op (falder tilbage til de hardkodede DEFAULT-tal
+// ovenfor hvis cfg mangler feltet/er ugyldigt).
+function validateSpilletid(serverMs, klientMs, cfg) {
+  cfg = cfg || {};
+  const minTid = Number.isFinite(cfg.minAktivSpilletidMs) ? cfg.minAktivSpilletidMs : MIN_SPILLETID_MS;
+  const maxAktiv = Number.isFinite(cfg.maxAktivSpilletidMs) ? cfg.maxAktivSpilletidMs : MAX_AKTIV_SPILLETID_MS;
+
   if (!Number.isFinite(klientMs) || klientMs < 0) {
     return { ok: false, kode: 'ugyldig_tid', besked: 'Klientens spilletid mangler eller er ugyldig.' };
   }
-  if (serverMs < MIN_SPILLETID_MS || klientMs < MIN_SPILLETID_MS) {
+  if (klientMs < minTid) {
     return {
       ok: false,
       kode: 'for_kort_spilletid',
-      besked: 'Forsøget varede for kort til at være gyldigt (3 runder tager mindst ca. 70 sekunder).',
+      besked: `Forsøget varede for kort til at være gyldigt (aktiv spilletid skal være mindst ${Math.round(minTid / 1000)} sekunder).`,
     };
   }
-  if (serverMs > MAX_SPILLETID_MS) {
-    return { ok: false, kode: 'for_lang_spilletid', besked: 'Forsøget har stået aktivt urealistisk længe.' };
+  if (klientMs > maxAktiv) {
+    return {
+      ok: false,
+      kode: 'for_lang_spilletid',
+      besked: `Den påståede aktive spilletid overstiger det maksimalt mulige (${Math.round(maxAktiv / 1000)} sekunder).`,
+    };
   }
-  if (Math.abs(serverMs - klientMs) > SPILLETID_TOLERANCE_MS) {
+  // tid_mismatch bruges KUN når klienten påstår MERE aktiv tid, end der
+  // reelt er gået i alt siden forsøget blev startet (server_elapsed) — IKKE
+  // længere når server_elapsed blot er meget STØRRE end klientMs (det er
+  // netop den forventede, legitime offline-kø-situation).
+  if (serverMs < klientMs - CLOCK_SKEW_TOLERANCE_MS) {
     return {
       ok: false,
       kode: 'tid_mismatch',
-      besked: 'Klientens og serverens tidsmåling stemmer ikke overens.',
+      besked: 'Klienten hævder at have spillet aktivt længere, end der reelt er gået siden forsøget blev startet.',
     };
   }
   return { ok: true };
@@ -160,8 +185,8 @@ function isBetter(metricKey, a, b) {
 module.exports = {
   ROUND_MAX,
   MIN_SPILLETID_MS,
-  SPILLETID_TOLERANCE_MS,
-  MAX_SPILLETID_MS,
+  MAX_AKTIV_SPILLETID_MS,
+  CLOCK_SKEW_TOLERANCE_MS,
   validateRoundScores,
   validateSpilletid,
   validateStatsKonsistens,

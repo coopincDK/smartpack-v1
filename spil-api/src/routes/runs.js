@@ -18,7 +18,6 @@ const { computeFeats, todayLeaderboard, daysPlayedAll, computeTickets } = requir
 const { invalidateStateCache } = require('../publicState');
 const config = require('../config');
 
-const AKTIV_UDLOEB_MS = 15 * 60 * 1000;
 const MAKS_STATS_FELTER = 40; // simpel størrelses-guard på indsendt s-objekt
 
 async function getCfg(pool) {
@@ -55,6 +54,9 @@ function runsRouter(pool, ws) {
       const row = (await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id])).rows[0];
       const cfg = await getCfg(pool);
       const now = new Date();
+      // Opgave B: {ny:true} opgiver et evt. aktivt forsøg og starter et HELT
+      // NYT (nyt liv, refunderes ikke) — se API.md.
+      const ny = !!(req.body && req.body.ny);
 
       const aktiv = await client.query(
         `SELECT * FROM forsoeg WHERE spiller_id = $1 AND status = 'aktiv' ORDER BY oprettet DESC LIMIT 1`,
@@ -62,12 +64,22 @@ function runsRouter(pool, ws) {
       );
       if (aktiv.rows.length) {
         const a = aktiv.rows[0];
-        const alder = now.getTime() - new Date(a.start_server).getTime();
-        if (alder < AKTIV_UDLOEB_MS) {
+        // Opgave A: et aktivt forsøg kan finish'es resten af den (københavnske)
+        // dag det blev startet på — IKKE kun inden for et kort tidsvindue som
+        // tidligere (AKTIV_UDLOEB_MS, 15 min.). Er det stadig samme dag OG
+        // klienten ikke selv beder om et nyt ({ny:true}), returnér DET
+        // eksisterende forsøg uden at bruge endnu et liv (genoptaget).
+        const sammeDag = todayStr(a.start_server) === todayStr(now);
+        if (sammeDag && !ny) {
           await client.query('COMMIT');
           return res.json({ runde_id: a.runde_id, start_server: a.start_server, genoptaget: true });
         }
-        await client.query(`UPDATE forsoeg SET status = 'udloebet' WHERE id = $1`, [a.id]);
+        // Enten er der eksplicit bedt om et nyt forsøg (ny:true, samme dag —
+        // det gamle OPGIVES, livet refunderes ikke), eller det aktive forsøg
+        // er fra en TIDLIGERE dag og skal uanset `ny` behandles som udløbet
+        // (dagsskifte, se API.md, "Dage og tidszoner").
+        const nyStatus = sammeDag ? 'opgivet' : 'udloebet';
+        await client.query(`UPDATE forsoeg SET status = $1 WHERE id = $2`, [nyStatus, a.id]);
       }
 
       const bag = await currentBag(client, row, cfg, now);
@@ -114,6 +126,7 @@ function runsRouter(pool, ws) {
         return res.status(404).json({ fejl: 'Ukendt forsøg.', kode: 'ukendt_forsoeg' });
       }
       const forsoeg = forsoegRes.rows[0];
+      const now = new Date();
 
       if (forsoeg.status !== 'aktiv') {
         // Idempotent gentagelse: samme svar, ingen bivirkninger køres igen.
@@ -122,14 +135,42 @@ function runsRouter(pool, ws) {
         return res.status(409).json({ fejl: 'Forsøget er allerede afsluttet eller udløbet.', kode: 'ikke_aktivt' });
       }
 
+      // Opgave A: et aktivt forsøg fra en TIDLIGERE (københavnske) dag skal
+      // behandles som udløbet, uanset hvornår vi støder på det — også ved et
+      // finish-forsøg (ikke kun ved næste POST /runs). Se API.md.
+      if (todayStr(forsoeg.start_server) !== todayStr(now)) {
+        await client.query(`UPDATE forsoeg SET status = 'udloebet' WHERE id = $1`, [forsoeg.id]);
+        await client.query('COMMIT');
+        return res
+          .status(409)
+          .json({ fejl: 'Forsøget er udløbet (dagsskifte siden det blev startet).', kode: 'forsoeg_udloebet' });
+      }
+
       const cfg = await getCfg(pool);
-      const now = new Date();
       const body = req.body || {};
       const roundsRaw = Array.isArray(body.rounds) ? body.rounds.map((n) => Math.round(Number(n))) : null;
       const s = sanitizeStats(body.s);
       const bf = !!body.bf;
-      const duel = body.duel && typeof body.duel === 'object' ? body.duel : null;
+      const duelRaw = body.duel && typeof body.duel === 'object' ? body.duel : null;
       const klientMs = Math.round(Number(body.spilletid_klient_ms));
+
+      // Anonymiserings-id-fix: `duel.vsId` (valgfrit, NYT — modstanderens
+      // `pid`) løses her til modstanderens INTERNE spiller-id, gemt som
+      // `duel.vs_spiller_id` ved siden af det fritekst-navn (`duel.vs`)
+      // klienten selv sender. Bruges KUN til at gøre en evt. senere
+      // GDPR-anonymisering af modstanderens navn ID-baseret i stedet for
+      // navnematch (se src/playerDeletion.js) — eksponeres ALDRIG i noget
+      // offentligt svar (GET /state's sanitizeDuel medtager den ikke).
+      let duel = null;
+      if (duelRaw) {
+        duel = { ...duelRaw };
+        if (duel.vsId) {
+          const modRes = await client.query('SELECT id FROM spiller WHERE public_id = $1', [
+            String(duel.vsId).slice(0, 40),
+          ]);
+          if (modRes.rows.length) duel.vs_spiller_id = modRes.rows[0].id;
+        }
+      }
 
       const serverMs = now.getTime() - new Date(forsoeg.start_server).getTime();
       const samlet = roundsRaw ? roundsRaw.reduce((a, b) => a + b, 0) : 0;
@@ -138,7 +179,7 @@ function runsRouter(pool, ws) {
       const rCheck = validateRoundScores(roundsRaw || []);
       if (!rCheck.ok) afvisning = rCheck;
       if (!afvisning) {
-        const tCheck = validateSpilletid(serverMs, klientMs);
+        const tCheck = validateSpilletid(serverMs, klientMs, cfg);
         if (!tCheck.ok) afvisning = tCheck;
       }
       if (!afvisning) {
@@ -189,6 +230,12 @@ function runsRouter(pool, ws) {
             spillerId: row.spillerId,
             data: {
               by: scorer.navn,
+              // Anonymiserings-id-fix: ID ved siden af navnefeltet, sat her
+              // ved SKRIVETIDSPUNKTET (scorer er altid definitivt kendt —
+              // den autentificerede spiller der lige har afsluttet et
+              // forsøg). Bruges af src/playerDeletion.js i stedet for
+              // navnematch ved GDPR-sletning. Se API.md.
+              by_spiller_id: scorer.id,
               firm: scorer.firma,
               score: samlet,
               mine: row.best,
@@ -250,7 +297,7 @@ function runsRouter(pool, ws) {
             await persistBag(client, modstander.id, { ...mBag, n: Math.min(MAX_LIVES, mBag.n + 1) });
             gaveNotifs.push({
               spillerId: modstander.id,
-              data: { type: 'udfordring_liv', fra: scorer.navn, at: now.toISOString() },
+              data: { type: 'udfordring_liv', fra: scorer.navn, fra_spiller_id: scorer.id, at: now.toISOString() },
             });
             chlOpdateret = { ...chlOpdateret, [modstanderKey]: now.toISOString() };
           }
@@ -273,7 +320,7 @@ function runsRouter(pool, ws) {
             await persistBag(client, ven.id, refill(vBag, playerToP(ven), cfg, now));
             gaveNotifs.push({
               spillerId: ven.id,
-              data: { type: 'vennekode_refill', fra: scorer.navn, at: now.toISOString() },
+              data: { type: 'vennekode_refill', fra: scorer.navn, fra_spiller_id: scorer.id, at: now.toISOString() },
             });
           }
           refBetaltNy = true;

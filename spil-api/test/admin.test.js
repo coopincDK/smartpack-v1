@@ -143,6 +143,78 @@ test('DELETE /admin/spillere/:pid sletter spilleren og anonymiserer rest-referen
   assert.equal(igen.status, 404);
 });
 
+test('opgave G: GET /admin/spillere returnerer komplet organisatordata (tilmeldinger, beaten_i_dag, forsoeg, liv)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+
+  const { body: b1 } = registrerSpiller(h.baseUrl, {
+    navn: 'Organisator Testesen',
+    email: 'organisator@example.dk',
+    tilmeldinger: ['sms'],
+  });
+  const reg1 = await api(h.baseUrl, 'POST', '/players', { body: b1 });
+  const token1 = reg1.body.token;
+
+  const { body: b2 } = registrerSpiller(h.baseUrl, { navn: 'Anden Spiller' });
+  await api(h.baseUrl, 'POST', '/players', { body: b2 });
+
+  // Giv spiller 1 et godkendt forsøg, så vi kan tjekke `forsoeg`-feltet.
+  const start = await api(h.baseUrl, 'POST', '/runs', { token: token1 });
+  await h.pool.query(`UPDATE forsoeg SET start_server = start_server - interval '80 seconds' WHERE runde_id = $1`, [
+    start.body.runde_id,
+  ]);
+  const finish = await api(h.baseUrl, 'POST', `/runs/${start.body.runde_id}/finish`, {
+    token: token1,
+    body: {
+      rounds: [50, 60, 40],
+      s: { orders: 5, errors: 0 },
+      bf: false,
+      duel: null,
+      spilletid_klient_ms: 81000,
+    },
+  });
+  assert.equal(finish.status, 200);
+
+  // Manuelt indsat beaten-notifikation for i dag, så vi kan tjekke
+  // `beaten_i_dag`.
+  const { todayStr } = require('../src/rules/life');
+  await h.pool.query(
+    `INSERT INTO notifikation (spiller_id, type, data) VALUES ($1, 'beaten', $2::jsonb)`,
+    [
+      (await h.pool.query('SELECT id FROM spiller WHERE email = $1', ['organisator@example.dk'])).rows[0].id,
+      JSON.stringify({ by: 'Anden Spiller', score: 999, day: todayStr(new Date()) }),
+    ]
+  );
+
+  const res = await api(h.baseUrl, 'GET', '/admin/spillere', { adminCookie });
+  assert.equal(res.status, 200);
+  const spiller = res.body.spillere.find((s) => s.email === 'organisator@example.dk');
+  assert.ok(spiller, 'skal finde spilleren');
+
+  assert.equal(spiller.navn, 'Organisator Testesen'); // FULDT, umaskeret navn
+  assert.ok(spiller.telefon);
+  assert.ok(Array.isArray(spiller.tilmeldinger));
+  const smsTilmelding = spiller.tilmeldinger.find((x) => x.liste === 'sms');
+  assert.ok(smsTilmelding, 'tilmeldinger skal indeholde sms-listens afledte samtykke-status');
+  assert.equal(smsTilmelding.aktiv, true);
+
+  assert.ok(Array.isArray(spiller.beaten_i_dag));
+  assert.equal(spiller.beaten_i_dag.length, 1);
+  assert.equal(spiller.beaten_i_dag[0].by, 'Anden Spiller');
+
+  assert.ok(Array.isArray(spiller.forsoeg));
+  assert.equal(spiller.forsoeg.length, 1);
+  assert.equal(spiller.forsoeg[0].score, 150);
+  assert.ok(spiller.forsoeg[0].dag);
+  assert.ok(spiller.forsoeg[0].slut_server);
+
+  assert.ok(spiller.liv);
+  assert.equal(typeof spiller.liv.n, 'number');
+});
+
 test('POST /admin/afmeld logger trukket_tilbage for fundne emails og rapporterer fundet/ikke_fundet', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
@@ -196,6 +268,73 @@ test('POST /admin/afmeld kræver admin-session (ikke stand), og en ukendt liste 
     body: { liste: 'sms', emails: ['x@example.dk'] },
   });
   assert.equal(somStand.status, 403);
+});
+
+test('opgave H: POST /admin/afmeld understøtter liste:"alle" (afmelder KUN de lister spilleren var aktivt tilmeldt)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+
+  const { body } = registrerSpiller(h.baseUrl, {
+    email: 'alle-lister@example.dk',
+    tilmeldinger: ['sp', 'sms'],
+  });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const foer = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.deepEqual(new Set(foer.body.mine_noegler), new Set(['sp', 'sms']));
+
+  const res = await api(h.baseUrl, 'POST', '/admin/afmeld', {
+    adminCookie,
+    body: { liste: 'alle', emails: ['alle-lister@example.dk'] },
+  });
+  assert.equal(res.status, 200);
+  assert.equal(res.body.fundet, 1);
+
+  const efter = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.deepEqual(efter.body.mine_noegler, []);
+
+  // Der er logget PRÆCIS to trukket_tilbage-hændelser (én pr. liste
+  // spilleren rent faktisk var tilmeldt) — ikke én for enhver mulig liste.
+  const spillerId = (await h.pool.query('SELECT id FROM spiller WHERE email = $1', ['alle-lister@example.dk']))
+    .rows[0].id;
+  const haendelser = await h.pool.query(
+    `SELECT liste FROM samtykke WHERE spiller_id = $1 AND type = 'trukket_tilbage' AND kilde = 'admin'`,
+    [spillerId]
+  );
+  assert.equal(haendelser.rows.length, 2);
+  assert.deepEqual(new Set(haendelser.rows.map((r) => r.liste)), new Set(['smartpack', 'sms']));
+});
+
+test('opgave H: POST /admin/afmeld matcher også på telefonnummer (sidste 8 cifre), ikke kun email', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+
+  const { body } = registrerSpiller(h.baseUrl, {
+    email: 'telefon-match@example.dk',
+    telefon: '20304099',
+    tilmeldinger: ['sms'],
+  });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const res = await api(h.baseUrl, 'POST', '/admin/afmeld', {
+    adminCookie,
+    // Landekode-præfiks foran — kun de sidste 8 cifre skal matche.
+    body: { liste: 'sms', emails: ['+45 20304099'] },
+  });
+  assert.equal(res.status, 200);
+  assert.equal(res.body.fundet, 1);
+  assert.deepEqual(res.body.ikke_fundet, []);
+
+  const efter = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.ok(!efter.body.mine_noegler.includes('sms'));
 });
 
 test('POST /admin/nulstil kræver PRÆCIS bekræftelsesstrengen, tager en backup FØR sletning, sletter alt og logger en audit-række', async (t) => {

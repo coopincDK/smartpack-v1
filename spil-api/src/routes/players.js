@@ -3,7 +3,8 @@
 const express = require('express');
 const { firmKey } = require('../rules/firmKey');
 const { lifeState, setSubsPure, setTicksPure, todayStr } = require('../rules/life');
-const { randomPublicId, randomBearerToken, randomCode, sha256Hex } = require('../crypto');
+const { randomPublicId, randomCode } = require('../crypto');
+const { issueToken } = require('../spillerToken');
 const { clientIp } = require('../middleware/clientIp');
 const { invalidateStateCache } = require('../publicState');
 
@@ -34,7 +35,7 @@ async function generateUniqueVennekode(client) {
   throw new Error('Kunne ikke generere unik vennekode.');
 }
 
-function playersRouter(pool) {
+function playersRouter(pool, ws) {
   const router = express.Router();
 
   router.post('/players', async (req, res, next) => {
@@ -72,8 +73,6 @@ function playersRouter(pool) {
           });
         }
 
-        const token = randomBearerToken();
-        const tokenHash = sha256Hex(token);
         let chFromUpdate = p.ekstra_02;
         if (udfordringskode) {
           const cfg = await getCfg(pool);
@@ -91,10 +90,12 @@ function playersRouter(pool) {
           }
         }
 
-        await client.query(
-          'UPDATE spiller SET token_hash = $1, ekstra_02 = $2 WHERE id = $3',
-          [tokenHash, chFromUpdate, p.id]
-        );
+        // Opgave C: login OPRETTER en ny token-række — det OVERSKRIVER/
+        // tilbagekalder IKKE spillerens øvrige tokens (flere samtidige
+        // enheder er nu tilladt, fx telefon + standtablet). Se
+        // src/spillerToken.js og API.md.
+        const token = await issueToken(client, p.id);
+        await client.query('UPDATE spiller SET ekstra_02 = $1 WHERE id = $2', [chFromUpdate, p.id]);
         await client.query('COMMIT');
 
         return res.json({
@@ -157,8 +158,6 @@ function playersRouter(pool) {
       }
 
       const nyVennekode = await generateUniqueVennekode(client);
-      const token = randomBearerToken();
-      const tokenHash = sha256Hex(token);
       const publicId = randomPublicId();
       const now = new Date();
 
@@ -180,17 +179,21 @@ function playersRouter(pool) {
       const ins = await client.query(
         `INSERT INTO spiller (
            public_id, email, navn, telefon, firma, firma_noegle, vennekode,
-           ref_spiller_id, token_hash, marketing, mail_to, notify,
+           ref_spiller_id, marketing, mail_to, notify,
            liv_dag, liv_n, liv_t, chl, badges, ekstra_01, ekstra_02, tick_dag, tick_keys
-         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'{}'::jsonb,'[]'::jsonb,$16,$17,$18,$19)
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,'{}'::jsonb,'[]'::jsonb,$15,$16,$17,$18)
          RETURNING id, oprettet`,
         [
           publicId, email, navn, telefon, firma, firmKey(firma), nyVennekode,
-          refSpillerId, tokenHash, nyP.marketing, JSON.stringify(nyP.mailTo), nyP.notify,
+          refSpillerId, nyP.marketing, JSON.stringify(nyP.mailTo), nyP.notify,
           bag.day, bag.n, new Date(bag.t), JSON.stringify(bag.g), chFrom, nyP.tick.day, JSON.stringify(nyP.tick.keys),
         ]
       );
       const spillerId = ins.rows[0].id;
+      // Opgave C: ny registrering OPRETTER (ligesom login) blot en ny
+      // token-række — der er intet "gammelt" token at overskrive her, men
+      // samme fælles funktion bruges for konsistens.
+      const token = await issueToken(client, spillerId);
 
       const nowIso = new Date();
       for (const key of subResult.added) {
@@ -204,6 +207,11 @@ function playersRouter(pool) {
 
       await client.query('COMMIT');
       invalidateStateCache();
+      // Opgave E: state.changed broadcastes nu også ved ny registrering (en
+      // ny spiller optræder i GET /state's players-liste) — ikke kun efter
+      // et godkendt finish(). Login ændrer intet i state, så det broadcaster
+      // ikke.
+      if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
 
       return res.status(201).json({
         token,

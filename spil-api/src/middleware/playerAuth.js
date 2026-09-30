@@ -1,6 +1,6 @@
 'use strict';
 
-const { sha256Hex } = require('../crypto');
+const { loadPlayerByToken } = require('../spillerToken');
 
 function bearerToken(req) {
   const h = req.headers['authorization'];
@@ -10,6 +10,8 @@ function bearerToken(req) {
 }
 
 // Kræver et gyldigt spiller-bearer-token. Sætter req.player = spiller-række.
+// Opgave C: slår op i spiller_token (flere samtidige tokens pr. spiller er
+// tilladt), ikke længere et enkelt felt på spiller — se src/spillerToken.js.
 function requirePlayer(pool) {
   return async function (req, res, next) {
     const token = bearerToken(req);
@@ -17,12 +19,11 @@ function requirePlayer(pool) {
       return res.status(401).json({ fejl: 'Mangler adgangstoken.', kode: 'ingen_token' });
     }
     try {
-      const tokenHash = sha256Hex(token);
-      const { rows } = await pool.query('SELECT * FROM spiller WHERE token_hash = $1', [tokenHash]);
-      if (!rows.length || rows[0].skjult) {
+      const row = await loadPlayerByToken(pool, token);
+      if (!row) {
         return res.status(401).json({ fejl: 'Ugyldigt adgangstoken.', kode: 'ugyldigt_token' });
       }
-      req.player = rows[0];
+      req.player = row;
       next();
     } catch (e) {
       next(e);
@@ -32,11 +33,11 @@ function requirePlayer(pool) {
 
 // Valgfri variant: sætter req.player hvis token er gyldigt, ellers null (bruges af WS).
 async function tryLoadPlayer(pool, token) {
-  if (!token) return null;
-  const tokenHash = sha256Hex(token);
-  const { rows } = await pool.query('SELECT * FROM spiller WHERE token_hash = $1', [tokenHash]);
-  if (!rows.length || rows[0].skjult) return null;
-  return rows[0];
+  try {
+    return await loadPlayerByToken(pool, token);
+  } catch (e) {
+    return null;
+  }
 }
 
 module.exports = { requirePlayer, bearerToken, tryLoadPlayer };

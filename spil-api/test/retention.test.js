@@ -16,9 +16,9 @@ async function mkSpiller(pool, oprettet, navn) {
   const unik = crypto.randomBytes(6).toString('hex');
   telefonSeq++;
   const { rows } = await pool.query(
-    `INSERT INTO spiller (public_id, email, navn, telefon, firma, firma_noegle, token_hash, oprettet)
-     VALUES ($1,$2,$3,$4,'Firma','firma',$5,$6) RETURNING id`,
-    [unik, unik + '@example.dk', navn || 'Test Testesen', String(telefonSeq), 'th' + unik, oprettet]
+    `INSERT INTO spiller (public_id, email, navn, telefon, firma, firma_noegle, oprettet)
+     VALUES ($1,$2,$3,$4,'Firma','firma',$5) RETURNING id`,
+    [unik, unik + '@example.dk', navn || 'Test Testesen', String(telefonSeq), oprettet]
   );
   return rows[0].id;
 }

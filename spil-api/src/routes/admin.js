@@ -18,7 +18,8 @@ const { boostCode } = require('../rules/boostCode');
 const { computeTickets, todayStr } = require('../gameQueries');
 const { invalidateStateCache } = require('../publicState');
 const { subKeys, subOptions, setSubsPure, listNameFor } = require('../rules/life');
-const { playerToP } = require('../lifeBag');
+const { playerToP, currentBag, livView } = require('../lifeBag');
+const { samtykkerFor } = require('./me');
 const { clientIp } = require('../middleware/clientIp');
 const { deletePlayerFully } = require('../playerDeletion');
 const { runBackup: defaultRunBackup } = require('../backup');
@@ -63,7 +64,7 @@ async function drawWinner(pool, cfg) {
   return vaegte[vaegte.length - 1];
 }
 
-function adminRouter(pool, opts) {
+function adminRouter(pool, ws, opts) {
   opts = opts || {};
   const runBackup = opts.runBackup || defaultRunBackup;
   const router = express.Router();
@@ -99,15 +100,46 @@ function adminRouter(pool, opts) {
     }
   });
 
+  // Opgave G: komplet organisatordata. Ud over de oprindelige felter (nu
+  // også fuldt, UMASKERET navn — dette ER et admin-endpoint) medtager hver
+  // spiller: `tilmeldinger` (varige, afledte samtykke-status pr. liste,
+  // inkl. om sms/notify er aktiv — samme form som GET /me's `samtykker`, se
+  // src/routes/me.js#samtykkerFor), `beaten_i_dag` (dagens
+  // beaten-notifikationer fra notifikation-tabellen), `forsoeg` (score, dag,
+  // sluttidspunkt for hvert GODKENDT forsøg), og `liv` (liv tilbage i dag).
+  // Se API.md for de præcise feltnavne.
   router.get('/admin/spillere', admin, async (req, res, next) => {
     try {
-      const { rows } = await pool.query(
-        `SELECT id, public_id, navn, email, telefon, firma, firma_noegle, vennekode, oprettet, skjult, badges
-         FROM spiller ORDER BY oprettet DESC`
-      );
+      const { rows } = await pool.query(`SELECT * FROM spiller ORDER BY oprettet DESC`);
       const cfgRow = await getCfgRow(pool);
+      const cfg = cfgRow.offentlig || {};
+      const now = new Date();
+      const today = todayStr(now);
+
       const ud = [];
       for (const r of rows) {
+        const tilmeldinger = await samtykkerFor(pool, r.id);
+        const bag = await currentBag(pool, r, cfg, now);
+
+        const forsoegRes = await pool.query(
+          `SELECT samlet, oprettet, slut_server FROM forsoeg
+           WHERE spiller_id = $1 AND status = 'godkendt' ORDER BY oprettet ASC`,
+          [r.id]
+        );
+        const forsoeg = forsoegRes.rows.map((f) => ({
+          score: f.samlet,
+          dag: todayStr(f.oprettet),
+          slut_server: f.slut_server ? f.slut_server.toISOString() : null,
+        }));
+
+        const beatenRes = await pool.query(
+          `SELECT data, oprettet FROM notifikation
+           WHERE spiller_id = $1 AND type = 'beaten' AND (data->>'day') = $2
+           ORDER BY oprettet ASC`,
+          [r.id, today]
+        );
+        const beatenIDag = beatenRes.rows.map((n) => ({ ...n.data, oprettet: n.oprettet }));
+
         ud.push({
           pid: r.public_id,
           navn: r.navn,
@@ -119,7 +151,11 @@ function adminRouter(pool, opts) {
           oprettet: r.oprettet,
           skjult: r.skjult,
           badges: r.badges,
-          tickets: await computeTickets(pool, r.id, cfgRow.offentlig),
+          tickets: await computeTickets(pool, r.id, cfg),
+          tilmeldinger,
+          beaten_i_dag: beatenIDag,
+          forsoeg,
+          liv: livView(bag, playerToP(r), cfg, now),
         });
       }
       res.json({ spillere: ud });
@@ -311,6 +347,9 @@ function adminRouter(pool, opts) {
         JSON.stringify(hemmelig),
       ]);
       invalidateStateCache();
+      // Opgave E: state.changed broadcastes nu også ved admin-config-ændring
+      // (GET /state's cfg-felt afspejler den nye config).
+      if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
       res.json({ offentlig, hemmelig });
     } catch (e) {
       next(e);
@@ -361,6 +400,9 @@ function adminRouter(pool, opts) {
       await deletePlayerFully(client, rows[0].id, rows[0].navn);
       await client.query('COMMIT');
       invalidateStateCache();
+      // Opgave E: state.changed broadcastes nu også ved sletning af én
+      // spiller (forsvinder fra GET /state's players-liste).
+      if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
       res.json({ ok: true });
     } catch (e) {
       await client.query('ROLLBACK');
@@ -370,46 +412,65 @@ function adminRouter(pool, opts) {
     }
   });
 
-  // Bulk-afmelding af en tilmeldings-liste for en liste af emails (samme
+  // Slår én modtager-identifikator op — enten en email (indeholder '@') eller
+  // et telefonnummer (matchet på de sidste 8 cifre, SAMME matchning som login
+  // bruger, se src/routes/players.js#last8) — se API.md, opgave H.
+  async function findSpillerByIdentifier(client, raw) {
+    const val = String(raw || '').trim();
+    if (!val) return null;
+    if (val.includes('@')) {
+      const r = await client.query('SELECT * FROM spiller WHERE email = $1 FOR UPDATE', [val.toLowerCase()]);
+      return r.rows[0] || null;
+    }
+    const cifre = val.replace(/[^0-9]/g, '');
+    if (cifre.length < 8) return null;
+    const sidste8 = cifre.slice(-8);
+    // LIKE + `||` i stedet for fx `right(telefon, 8)` — bevidst simpelt og
+    // portabelt (samme forbehold som andre steder i kodebasen, se README.md,
+    // "pg-mem-forbehold"). `telefon` er allerede rene cifre (normalizePhone
+    // ved registrering), så dette matcher nøjagtig de sidste 8 cifre.
+    const r = await client.query('SELECT * FROM spiller WHERE telefon LIKE (\'%\' || $1) FOR UPDATE', [sidste8]);
+    return r.rows[0] || null;
+  }
+
+  // Bulk-afmelding af en tilmeldings-liste for en liste af modtagere (samme
   // NØGLE-format som PUT /me/subs's keys / DELETE /me/subs/:liste — 'sp',
-  // 'm:<partner>', 'sms'). Logger ALTID en 'trukket_tilbage'-hændelse for
-  // hver FUNDET email (uanset om listen allerede var afmeldt), med
-  // kilde:'admin' — se API.md.
+  // 'm:<partner>', 'sms' — ELLER 'alle' for samtlige lister, se nedenfor).
+  // `emails`-arrayet kan indeholde BÅDE emails og telefonnumre (opgave H) —
+  // se findSpillerByIdentifier ovenfor.
   router.post('/admin/afmeld', admin, async (req, res, next) => {
     const key = String((req.body && req.body.liste) || '').trim();
-    const emailsRaw = Array.isArray(req.body && req.body.emails) ? req.body.emails : [];
+    const identifiersRaw = Array.isArray(req.body && req.body.emails) ? req.body.emails : [];
     if (!key) return res.status(400).json({ fejl: 'Mangler liste.', kode: 'mangler_liste' });
 
     const client = await pool.connect();
     try {
       const cfgRow = await getCfgRow(pool);
-      if (!subOptions(cfgRow.offentlig).some((o) => o.key === key)) {
+      const erAlle = key === 'alle';
+      if (!erAlle && !subOptions(cfgRow.offentlig).some((o) => o.key === key)) {
         return res.status(400).json({ fejl: 'Ukendt tilmeldings-liste.', kode: 'ukendt_liste' });
       }
 
-      const emails = [
-        ...new Set(
-          emailsRaw
-            .map((e) => String(e || '').trim().toLowerCase())
-            .filter(Boolean)
-        ),
-      ];
-      if (!emails.length) return res.status(400).json({ fejl: 'Mangler emails.', kode: 'mangler_emails' });
+      const identifiers = [...new Set(identifiersRaw.map((e) => String(e || '').trim()).filter(Boolean))];
+      if (!identifiers.length) return res.status(400).json({ fejl: 'Mangler emails.', kode: 'mangler_emails' });
 
       await client.query('BEGIN');
       const now = new Date();
       const ikkeFundet = [];
       let fundetAntal = 0;
 
-      for (const email of emails) {
-        const rowRes = await client.query('SELECT * FROM spiller WHERE email = $1 FOR UPDATE', [email]);
-        if (!rowRes.rows.length) {
-          ikkeFundet.push(email);
+      for (const ident of identifiers) {
+        const row = await findSpillerByIdentifier(client, ident);
+        if (!row) {
+          ikkeFundet.push(ident);
           continue;
         }
-        const row = rowRes.rows[0];
         const p = playerToP(row);
-        const tilbage = subKeys(p).filter((k) => k !== key);
+        // `liste: "alle"`: opgiv ALLE varigt tilmeldte lister (desired=[]) —
+        // `result.removed` indeholder da netop de lister spilleren rent
+        // faktisk var aktivt tilmeldt (kun DEM logges, se nedenfor). En
+        // enkelt navngiven liste opfører sig som hidtil (kun DEN fjernes).
+        const tilbage = erAlle ? [] : subKeys(p).filter((k) => k !== key);
         const result = setSubsPure(p, tilbage, cfgRow.offentlig, now);
 
         await client.query(
@@ -423,14 +484,28 @@ function adminRouter(pool, opts) {
             row.id,
           ]
         );
-        // Logges UBETINGET for hver fundet email (også hvis listen allerede
-        // var afmeldt) — admin/afmeld er en audit-handling, ikke kun en
-        // tilstandsændring, se API.md.
-        await client.query(
-          `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
-           VALUES ($1,$2,$3,1,'admin',$4,$5,'trukket_tilbage')`,
-          [row.id, listNameFor(key), now, clientIp(req), req.headers['user-agent'] || null]
-        );
+
+        if (erAlle) {
+          // Kun for lister spilleren VAR aktivt tilmeldt (result.removed) —
+          // i modsætning til en enkelt navngiven liste logges IKKE
+          // ubetinget for enhver mulig liste, se API.md.
+          for (const fjernetKey of result.removed) {
+            await client.query(
+              `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
+               VALUES ($1,$2,$3,1,'admin',$4,$5,'trukket_tilbage')`,
+              [row.id, listNameFor(fjernetKey), now, clientIp(req), req.headers['user-agent'] || null]
+            );
+          }
+        } else {
+          // Logges UBETINGET for hver fundet modtager (også hvis listen
+          // allerede var afmeldt) — admin/afmeld er en audit-handling, ikke
+          // kun en tilstandsændring, se API.md.
+          await client.query(
+            `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
+             VALUES ($1,$2,$3,1,'admin',$4,$5,'trukket_tilbage')`,
+            [row.id, listNameFor(key), now, clientIp(req), req.headers['user-agent'] || null]
+          );
+        }
         fundetAntal++;
       }
 
@@ -479,6 +554,9 @@ function adminRouter(pool, opts) {
         );
         await client.query('COMMIT');
         invalidateStateCache();
+        // Opgave E: state.changed broadcastes nu også ved admin/nulstil
+        // (ALLE spillere forsvinder fra GET /state's players-liste).
+        if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
 
         // ALDRIG navne/emails i loggen — kun antal + backup-sti + hvilken
         // admin-session (session-id, ikke adgangskoden), se README.md.

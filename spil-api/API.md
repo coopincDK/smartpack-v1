@@ -22,8 +22,13 @@ produktion — kun nginx's `proxy_pass`-regel adskiller dem.
 ## Autentifikation
 
 - **Spillere:** `Authorization: Bearer <token>` — 64 tegn hex, udstedt af
-  `POST /players` (kun ved oprettelse/login). Serveren gemmer kun
-  `sha256(token)` i `spiller.token_hash`.
+  `POST /players` (BÅDE ved oprettelse OG login). Serveren gemmer kun
+  `sha256(token)`, i tabellen `spiller_token` (siden "Anden opfølgende
+  ændringsrunde", opgave C) — IKKE længere et enkelt felt på `spiller`. En
+  spiller kan være logget ind på FLERE enheder samtidig: hvert
+  `POST /players`-kald (login eller ny registrering) OPRETTER en ny
+  token-række og rører ALDRIG spillerens øvrige, evt. stadig gyldige tokens
+  (`tilbagekaldt IS NULL`). Se "Flere samtidige tokens pr. spiller" nedenfor.
 - **Admin:** HttpOnly+Secure+SameSite=Strict cookie `spil_admin_session`,
   sat af `POST /admin/login`. Session-tokens gemmes hashet i `admin_session`.
 
@@ -43,6 +48,15 @@ Messen er dansk, og deltagere forventer at "i dag" skifter ved midnat dansk
 tid — ikke kl. 01/02 dansk tid (UTC-midnat, afhængig af sommer-/vintertid).
 
 Dette er konsolideret ét sted: `src/rules/tzDate.js`.
+
+**Et aktivt forsøg (`status='aktiv'`) kan finish'es resten af den
+(københavnske) dag det blev startet på** (siden "Anden opfølgende
+ændringsrunde", opgave A) — ikke kun inden for et kort tidsvindue som
+tidligere (den gamle `AKTIV_UDLOEB_MS`, 15 min.). Ved dagsskifte (dansk tid)
+behandles et stadig-aktivt forsøg fra en TIDLIGERE dag som udløbet
+(`status='udloebet'`) næste gang det stødes på — enten ved et nyt
+`POST /runs`-kald (se dér) eller ved et `finish`-forsøg mod det (`409
+forsoeg_udloebet`, se `POST /runs/:runde_id/finish`).
 
 - **JS-siden** (`todayStr(d)`): bruger `Intl.DateTimeFormat` med en
   EKSPLICIT `timeZone: 'Europe/Copenhagen'` — uafhængig af processens egen
@@ -153,9 +167,11 @@ Registrering ELLER login, afgjort af om emailen findes.
 { "token": "nyt-64-tegns-hex-bearer-token", "type": "login",
   "spiller": { "pid": "...", "navn": "...", "firma": "...", "vennekode": "..." } }
 ```
-Bemærk: token **roteres** ved hvert login (nyt token udstedes, det gamle
-holder op med at virke) — det er sådan en spiller uden lokal token kan logge
-ind igen.
+Bemærk (ÆNDRET siden "Anden opfølgende ændringsrunde", opgave C): et login
+OPRETTER et NYT token UDEN at rotere/tilbagekalde spillerens øvrige, evt.
+allerede udstedte tokens — en spiller kan altså være logget ind på FLERE
+enheder samtidig (fx sin telefon og en standtablet). Se "Flere samtidige
+tokens pr. spiller" nedenfor.
 
 **Fejl:**
 | Status | kode | Betydning |
@@ -259,22 +275,48 @@ Indløser dagens sms-boostkode (svarer til klientens `useCode()`). Body
 matcher `boostCode(idag, cfg.hemmelig.pin)`, og at spilleren ikke allerede
 har brugt dagens boost. Giver `cfg.boostLives` (default 2) ekstra liv.
 
+**Rækkefølge (ÆNDRET siden "Anden opfølgende ændringsrunde", opgave F):**
+koden sammenlignes FØRST mod dagens facit (`boostCode(idag, pin)`), FØR
+noget som helst tilmeldings-/brugstjek. Matcher koden IKKE, svares der ALTID
+`400 { "fejl": "Ukendt kode.", "kode": "ukendt_kode" }` — uanset spillerens
+tilmeldingsstatus — samme kode som `POST /me/challenge` bruger, for at
+signalere til klienten at den i stedet bør prøve koden som en
+udfordrings-/vennekode. Matcher koden, fortsættes med de eksisterende tjek i
+uændret rækkefølge (er sms-boost aktiveret? er spilleren tilmeldt sms? har
+den allerede brugt dagens boost?).
+
 `200 { "ok": true, "liv": { "n": 6, "next_regen_ms": null } }`.
 
-Fejl: `mangler_kode`, `boost_ikke_aktiv` (`cfg.smsBoost===false`),
-`ikke_tilmeldt_sms`, `allerede_brugt`, `forkert_kode`. PIN'en koden er
-udledt af forlader ALDRIG serveren her — kun spillerens gæt sammenlignes
+Fejl: `mangler_kode`, `ukendt_kode` (koden matcher ikke dagens facit — se
+ovenfor; **erstatter** den tidligere `forkert_kode`), `boost_ikke_aktiv`
+(`cfg.smsBoost===false`), `ikke_tilmeldt_sms`, `allerede_brugt`. PIN'en koden
+er udledt af forlader ALDRIG serveren her — kun spillerens gæt sammenlignes
 mod et server-udregnet facit (`src/rules/boostCode.js`).
 
 ### `POST /runs` (bearer)
-Starter et forsøg. Bruger ét liv. Rate-limit: 1 kald / 20 sek. / spiller.
+Starter et forsøg. Bruger ét liv. Rate-limit: 1 kald / 20 sek. / spiller
+(UÆNDRET — gælder for ALLE kald til dette endpoint, uanset `ny`, se nedenfor).
+
+Body (valgfri): `{ "ny": true }` — se "Anden opfølgende ændringsrunde",
+opgave B, for den fulde begrundelse.
 
 `201`:
 ```json
 { "runde_id": "5b1...uuid", "start_server": "2026-09-30T10:00:00.000Z", "liv": { "n": 4, "next_regen_ms": null } }
 ```
-Har spilleren allerede et aktivt (< 15 min. gammelt) forsøg, returneres DET
-uden at bruge endnu et liv: `200 { "runde_id": "...", "start_server": "...", "genoptaget": true }`.
+
+**Uden `ny` (eller `ny: false`):** har spilleren allerede et aktivt forsøg
+STARTET SAMME (københavnske) dag, returneres DET uden at bruge endnu et liv:
+`200 { "runde_id": "...", "start_server": "...", "genoptaget": true }` — dette
+er tiltænkt at lade klienten fortsætte samme forsøg efter fx en
+app-genstart eller en offline-periode. Et aktivt forsøg fra en TIDLIGERE dag
+behandles i stedet som udløbet (`status='udloebet'`), og et helt nyt forsøg
+startes (bruger et nyt liv) — se "Dage og tidszoner".
+
+**Med `{"ny": true}`:** et evt. eksisterende aktivt forsøg OPGIVES
+(`status='opgivet'` — livet der blev brugt til det, refunderes IKKE), og der
+startes et HELT NYT forsøg med normal `useLife`-logik (afvises med
+`ingen_liv` hvis 0 liv).
 
 `400 { "fejl": "Du har ikke flere liv lige nu.", "kode": "ingen_liv" }`.
 
@@ -299,9 +341,24 @@ Body:
   "spilletid_klient_ms": 92000
 }
 ```
+`duel` (valgfrit) kan nu (siden "Anden opfølgende ændringsrunde") indeholde
+et valgfrit `vsId` (modstanderens `pid`) ved siden af `vs`
+(modstanderens navn) — bruges KUN server-side til at slå modstanderens
+INTERNE spiller-id op og gemme det som `duel.vs_spiller_id`, til brug ved en
+evt. senere GDPR-anonymisering (se "Sletning og anonymisering"). Eksponeres
+ALDRIG i noget offentligt svar (`GET /state`s `sanitizeDuel` medtager kun
+`vs`). Ukendt/manglende `vsId` er ikke en fejl — `duel.vs` gemmes som
+hidtil, blot uden `vs_spiller_id` (anonymisering falder da tilbage til
+navnematch for netop DEN forsøgs-række, samme som hidtil).
+
 **IDEMPOTENT:** samme `runde_id` (og samme ejer) igen ⇒ samme svar,
 INGEN bivirkninger køres igen (tjekket via `forsoeg.status !== 'aktiv'`,
 og selve svaret er cachet i `forsoeg.resultat` — se "Afvigelser" nedenfor).
+
+**Dagsskifte:** er forsøget stadig `status='aktiv'` men blev startet en
+TIDLIGERE (københavnske) dag end i dag, markeres det `udloebet` og afvises
+med `409 { "fejl": "Forsøget er udløbet (dagsskifte siden det blev startet).", "kode": "forsoeg_udloebet" }`
+— se "Dage og tidszoner" og "Anden opfølgende ændringsrunde", opgave A.
 
 **200 (godkendt):**
 ```json
@@ -321,12 +378,17 @@ og selve svaret er cachet i `forsoeg.resultat` — se "Afvigelser" nedenfor).
 ```
 Livet er stadig brugt (det blev brugt ved `POST /runs`) — afvisning giver
 det ikke tilbage. `404` hvis `runde_id` ikke findes eller ikke tilhører den
-autentificerede spiller. `409` hvis forsøget er `udloebet`/allerede afsluttet
-uden et cachet resultat (bør reelt aldrig ske i praksis).
+autentificerede spiller. `409 { "kode": "ikke_aktivt" }` hvis forsøget er
+`udloebet`/`opgivet`/allerede afsluttet uden et cachet resultat (bør reelt
+aldrig ske i praksis). `409 { "kode": "forsoeg_udloebet" }` hvis forsøget
+netop blev fundet at være fra en tidligere dag (se "Dagsskifte" ovenfor).
 
-Afvisningskoder: `ugyldigt_format`, `urealistisk_score`, `ugyldig_tid`,
-`for_kort_spilletid`, `for_lang_spilletid`, `tid_mismatch`,
-`ustats_konsistens` — se "Snydegrænser" nedenfor.
+Afvisningskoder (i selve `{godkendt:false,...}`-svaret): `ugyldigt_format`,
+`urealistisk_score`, `ugyldig_tid`, `for_kort_spilletid` (klientens påståede
+aktive spilletid er under `cfg.minAktivSpilletidMs`), `for_lang_spilletid`
+(over `cfg.maxAktivSpilletidMs` — IKKE længere om servertiden, se
+"Snydegrænser"), `tid_mismatch` (klienten påstår MERE aktiv tid end der er
+gået siden start), `ustats_konsistens` — se "Snydegrænser" nedenfor.
 
 ---
 
@@ -341,10 +403,29 @@ forbindelse.
 | `{"type":"hello","token":"..."}` | — | Autentificerer forbindelsen (valgfrit — uden token forbliver den anonym/lytte-kun). Svar: `{"type":"hello.ok","authenticated":true\|false}` |
 | `{"type":"join","room":"..."}` | — | Lyt-adgang til et rum (fx standvæggen). Svar: `{"type":"joined","room":"...","users":[...]}` |
 | `{"type":"presence","room":"...","name":"..."}` | spiller-token | Sæt synligt navn i rummet. Broadcaster `{"type":"presence","room":"...","users":[{"id":.., "name":".."}]}` til alle i rummet |
-| `{"type":"emit","room":"...","event":"duel.go"\|"duel.s","data":{...}}` | spiller-token | Relayer `{"type":"event","room":"...","event":"...","data":{...},"from":{...}}` til alle ANDRE i rummet |
+| `{"type":"emit","room":"...","event":"duel.go"\|"duel.s"\|"duel.waiting"\|"duel.idle","data":{...}}` | spiller-token | Relayer `{"type":"event","room":"...","event":"...","data":{...},"from":{...}}` til alle ANDRE i rummet |
+
+`duel.waiting`/`duel.idle` (**NYE**, siden "Anden opfølgende
+ændringsrunde") er tilføjet til den tilladte liste af duel-events — bruges
+til ventelisten (hvem venter på en duel).
+
+**Navne i `data` overskrives ALTID af serveren** (siden samme runde): et
+afsendt duel-events `data.name`/`data.an` (kendte fritekstfelter i klientens
+duel-protokol der bærer AFSENDERENS eget navn, se `src/ws.js`) overskrives
+ALTID med serverens egen, korrekt maskerede visning af afsenderens navn —
+nøjagtig samme regel og personalisering som `from.name` (fuldt navn kun til
+en modtager med gyldig admin/stand-session). Klienten kan ALDRIG sætte
+vilkårlig tekst som sit eget navn i et duel-event der relayes videre til
+andre (fx standvæggen) — håndhæves for HVER besked, ikke kun ved selve
+forbindelsen.
 
 Server → alle forbindelser: `{"type":"state.changed"}` når spillerdata/
-config ændres (efter enhver skrivning der rører `GET /state`-udtrækket).
+config ændres. Siden "Anden opfølgende ændringsrunde" broadcastes dette ikke
+kun efter et godkendt `POST /runs/:id/finish`, men også ved: ny registrering
+(`POST /players` for en NY spiller — login broadcaster ikke, det ændrer intet
+i state), firma-ændring (`PATCH /me`), admin-config-ændring
+(`PUT /admin/config`), sletning af én spiller (`DELETE /admin/spillere/:pid`),
+og `POST /admin/nulstil`.
 
 Uden gyldigt spiller-token afvises `presence`/`emit` med
 `{"type":"error","message":"..."}` — anonyme forbindelser (standvæggen) kan
@@ -366,7 +447,7 @@ telefoner) ser `"Fornavn E."`. Se "Packrush-ændringer".
 |---|---|
 | `POST /admin/login` `{password}` | 5 forsøg/min/IP. Sætter admin-sessionscookie (`rolle='admin'`). |
 | `POST /admin/logout` | Sletter sessionen (både cookie og DB-række). |
-| `GET /admin/spillere` | Fuld spillerliste (PII + tickets) til adminpanelet. |
+| `GET /admin/spillere` | Fuld, KOMPLET organisatordata pr. spiller (PII, tickets, tilmeldinger, forsøg, liv, dagens beaten-notifikationer — se nedenfor) til adminpanelet. |
 | `GET /admin/eksport/spillere.csv` | Alle spillere (navn, email, telefon, firma, vennekode, oprettet, skjult). |
 | `GET /admin/eksport/samtykke/:liste.csv` | Samtykke-hændelseslog for én liste, opsummeret pr. spiller: FØRSTE + SENESTE bekræftelse + `aktiv`-status (`:liste` valideres mod `^[a-z0-9:_.-]+$`). |
 | `GET /admin/eksport/sms.csv` | Spillere med aktiv (`bekraeftet`) sms-status lige nu. |
@@ -384,6 +465,56 @@ Alle ovenstående (undtagen `/admin/login`) kræver `rolle='admin'` —
 en `stand`-session giver **403 `{"kode":"kraever_admin"}`** på ethvert af
 dem. Se "Stand-login-flow" for hvad en `stand`-session KAN.
 
+### `GET /admin/spillere` — komplet organisatordata (opgave G)
+`200 { "spillere": [...] }`. Hver spiller har mindst:
+
+```json
+{
+  "pid": "AbCdEfGhI2",
+  "navn": "Anna Andersen",
+  "email": "anna@firma.dk",
+  "telefon": "20304050",
+  "firma": "Smartpack ApS",
+  "firmaNoegle": "smartpack",
+  "vennekode": "K7M2",
+  "oprettet": "2026-09-28T08:00:00.000Z",
+  "skjult": false,
+  "badges": ["fejlfri"],
+  "tickets": 3,
+  "tilmeldinger": [
+    {
+      "liste": "sms",
+      "aktiv": true,
+      "foerste_bekraeftelse": "2026-09-28T08:00:00.000Z",
+      "seneste_haendelse": { "type": "bekraeftet", "tidspunkt": "2026-09-29T09:00:00.000Z" },
+      "tekst_version": 1
+    }
+  ],
+  "beaten_i_dag": [
+    { "by": "Bo Hansen", "by_spiller_id": 7, "firm": "Bo Byg ApS", "score": 620, "mine": 410, "at": "2026-09-30T10:15:00.000Z", "day": "2026-09-30", "lead": true, "colleague": false, "oprettet": "2026-09-30T10:15:00.000Z" }
+  ],
+  "forsoeg": [
+    { "score": 410, "dag": "2026-09-30", "slut_server": "2026-09-30T10:01:35.000Z" }
+  ],
+  "liv": { "n": 4, "next_regen_ms": null }
+}
+```
+- `navn`/`email`/`telefon`/`firma` er FULDE, UMASKEREDE (dette ER et
+  admin-endpoint — ingen navnemaskering som i `GET /state`).
+- `tilmeldinger`: samme form som `GET /me`s `samtykker` (varige, afledte
+  samtykke-status pr. liste — `aktiv: true` for `liste:"sms"` betyder
+  spilleren er varigt tilmeldt/notify, se `src/routes/me.js#samtykkerFor`).
+- `beaten_i_dag`: rå `notifikation.data` for dagens `type='beaten'`-rækker
+  (samme feltnavne som "Svareksempler: lodtrækning og notifikationstyper"
+  nedenfor), plus `oprettet`.
+- `forsoeg`: ét element pr. GODKENDT forsøg (`score`=`samlet`,
+  `dag`=Europe/Copenhagen-dato forsøget blev spillet, `slut_server`=ISO
+  8601-tidspunkt forsøget blev afsluttet, `null` hvis intet
+  `slut_server` er sat).
+- `liv`: samme form som `GET /me`s `liv`-felt (`n`, `next_regen_ms`).
+
+Ingen paginering (se "Afvigelser fra briefen").
+
 ### `POST /stand-login` (offentligt — intet admin-krav)
 Body `{ "kode": "AB12CD" }`. Se "Stand-login-flow" nedenfor.
 `200 { "ok": true }` (sætter en langtlevende `rolle='stand'`-sessionscookie)
@@ -392,16 +523,31 @@ eller `400 { "fejl": "Ugyldig eller udløbet kode.", "kode": "ugyldig_kode" }`.
 ### `POST /admin/afmeld` — bulk-afmelding af en tilmeldings-liste
 Body:
 ```json
-{ "liste": "sms", "emails": ["anna@firma.dk", "ukendt@firma.dk"] }
+{ "liste": "sms", "emails": ["anna@firma.dk", "20304050", "ukendt@firma.dk"] }
 ```
 `liste` er en tilmeldings-**NØGLE** — samme format som `PUT /me/subs`'s
 `keys` / `DELETE /me/subs/:liste` (`sp`, `m:<partner>`, `sms`), IKKE
-samtykke-tabellens listenavn. For hver email der FINDES: sætter varig status
-til `trukket_tilbage` (samme effekt som `DELETE /me/subs/:liste`, inkl.
-opdatering af `marketing`/`mail_to`/`notify` og fjernelse fra dagens
-flueben) og logger UBETINGET en `trukket_tilbage`-hændelse i
-samtykke-hændelsesloggen for listen, med `kilde: 'admin'` (også hvis
-spilleren allerede var afmeldt — admin/afmeld er en audit-handling).
+samtykke-tabellens listenavn — **ELLER** (siden "Anden opfølgende
+ændringsrunde", opgave H) den specielle værdi **`"alle"`**, som afmelder
+spilleren fra ALLE lister vedkommende er varigt tilmeldt: der logges én
+`trukket_tilbage`-hændelse PR. LISTE spilleren rent faktisk var aktivt
+tilmeldt (ikke ubetinget for enhver mulig liste, i modsætning til en enkelt
+navngiven liste, se nedenfor).
+
+`emails`-arrayet (**ÆNDRET** samme runde) kan indeholde BÅDE emails OG
+telefonnumre — matchet på henholdsvis eksakt email og de sidste 8 cifre
+(samme matchning som login bruger, se `POST /players`). Et element afgøres
+som email hvis det indeholder `@`, ellers behandles det som et
+telefonnummer.
+
+For hver modtager der FINDES: sætter varig status til `trukket_tilbage`
+(samme effekt som `DELETE /me/subs/:liste`, inkl. opdatering af
+`marketing`/`mail_to`/`notify` og fjernelse fra dagens flueben) for enten
+DEN navngivne liste, eller (ved `"alle"`) samtlige lister spilleren var
+aktivt tilmeldt. For en ENKELT navngiven liste logges
+`trukket_tilbage`-hændelsen UBETINGET (også hvis spilleren allerede var
+afmeldt — admin/afmeld er en audit-handling); ved `"alle"` logges den KUN
+for de lister der rent faktisk var aktive.
 
 `200`:
 ```json
@@ -409,7 +555,7 @@ spilleren allerede var afmeldt — admin/afmeld er en audit-handling).
 ```
 `400 { "kode": "mangler_liste" }` / `{ "kode": "mangler_emails" }` /
 `{ "kode": "ukendt_liste" }` (ukendt tilmeldings-nøgle for den aktuelle
-config).
+config — `"alle"` er altid gyldig).
 
 ### `POST /admin/nulstil` — fuld nulstilling (RYDDER AL SPILLERDATA)
 Body: `{ "bekraeft": "NULSTIL" }` — kræver PRÆCIS denne streng, case-
@@ -451,13 +597,24 @@ data (disse er friteksts-KOPIER taget på skrivetidspunktet, ikke
 fremmednøgler, og overlever derfor ikke automatisk en cascade-DELETE):
 
 - `raffle_draws.spiller_navn_snapshot` → `"Slettet spiller"`,
-  `email_snapshot` → `NULL` (spillerens EGNE lodtræknings-rækker).
+  `email_snapshot` → `NULL` (spillerens EGNE lodtræknings-rækker) —
+  matchet på `raffle_draws.spiller_id` (en RIGTIG kolonne, ikke navnematch).
 - Andre spilleres `notifikation.data.by` (beaten-notifikation) og
-  `.data.fra` (gift-notifikation) → `"Slettet spiller"`, matchet på navn
-  (kendt, accepteret begrænsning: to spillere med samme navn kunne i teorien
-  krydse hinanden her).
-- Andre spilleres `forsoeg.duel.vs` → `"Slettet spiller"`, samme
-  navne-matching.
+  `.data.fra` (gift-notifikation) → `"Slettet spiller"` (id-felterne
+  `by_spiller_id`/`fra_spiller_id` sættes samtidig til `null`).
+- Andre spilleres `forsoeg.duel.vs` → `"Slettet spiller"` (`vs_spiller_id`
+  sættes samtidig til `null`).
+
+**Matchning (opdateret i "Anden opfølgende ændringsrunde", anonymiserings-
+id-fixet):** de tre punkter ovenfor matcher nu FØRST på et id-felt sat ved
+siden af navnefeltet ved SKRIVETIDSPUNKTET (`by_spiller_id`/
+`fra_spiller_id`/`vs_spiller_id` — se `src/routes/runs.js`s finish-flow, og
+`duel.vsId` under `POST /runs/:runde_id/finish` for hvordan
+`vs_spiller_id` sættes). Navnematch er kun et FALDBACK for rækker skrevet
+FØR denne ændring (kendt, accepteret begrænsning for netop DEM: to spillere
+med samme navn kunne i teorien krydse hinanden — ikke fikset for historiske
+rækker, se README.md). Nye rækker er dermed IKKE længere sårbare over for
+navnesammenfald mellem spillere.
 
 Det natlige GDPR-oprydningsjob (`src/retention.js`) LÅSER desuden hver
 kandidat (`SELECT ... FOR UPDATE`) og GENKONTROLLERER begge betingelser
@@ -590,16 +747,39 @@ Black Friday's ×2-multiplikation og 1,35× hastighed er allerede indregnet i
 udledningen ovenfor (vi har regnet "værste tænkelige tilfælde under BF" ind
 i selve estimatet, ikke som et separat tillæg).
 
-### Spilletid
-- `MIN_SPILLETID_MS = 70000` (3×30 sek. minus generøs margin til tidlig
-  rundeafslutning, fx Send der stopper ved 3 strikes, ELLER Pak's
-  "overtime"-forlængelse — vi tillader begge retninger ved kun at sætte et
-  loft, ikke et gulv, på afvigelsen).
-- `MAX_SPILLETID_MS = 150000` (3×30 sek. + 60 sek. UI/netværks-slack).
-- `SPILLETID_TOLERANCE_MS = 20000`: server- og klienttid skal ligge inden
-  for 20 sek. af hinanden.
-- Både servertid (`slut_server - start_server`) OG klientens
-  `spilletid_klient_ms` skal individuelt være ≥ `MIN_SPILLETID_MS`.
+### Spilletid (opdateret i den ANDEN opfølgende ændringsrunde, se afsnittet
+### med samme navn nederst i dette dokument — offline-kø-understøttelse)
+
+Klientens offline-kø (spiller offline, forsøget gemmes lokalt, synkes senere
+samme (københavnske) dag) betyder at `server_elapsed`
+(`slut_server - start_server`) kan være vilkårligt meget LÆNGERE end den tid
+spilleren faktisk brugte AKTIVT på forsøget. Reglerne er derfor omlagt til
+udelukkende at vurdere klientens PÅSTÅEDE AKTIVE spilletid
+(`spilletid_klient_ms`) for sig selv, plus ét minimumskrav til forholdet
+mellem de to:
+
+- `cfg.minAktivSpilletidMs` (default `70000` — 3×30 sek. minus generøs margin
+  til tidlig rundeafslutning, fx Send der stopper ved 3 strikes) og
+  `cfg.maxAktivSpilletidMs` (default `240000`, **NYT**) er nu **config-drevne**
+  felter i `config.offentlig` (ikke hemmelige, men skal kunne ændres uden
+  redeploy, se `migrations/005_opfoelgning2.sql`) — IKKE længere hardkodede
+  konstanter. `src/rules/scoring.js`s `MIN_SPILLETID_MS`/
+  `MAX_AKTIV_SPILLETID_MS` er kun DEFAULT-værdier brugt hvis config-feltet
+  mangler.
+- `klientMs` (`spilletid_klient_ms`) skal ligge i intervallet
+  `[minAktivSpilletidMs, maxAktivSpilletidMs]` — under giver
+  `for_kort_spilletid`, over giver `for_lang_spilletid` (denne kode betyder nu
+  "klientens PÅSTÅEDE aktive tid er urealistisk høj", IKKE længere "serveren
+  målte forsøget som stående aktivt urealistisk længe" — det sidste er ikke
+  længere en fejl i sig selv, se nedenfor).
+- **Der er IKKE længere noget loft på `server_elapsed`** — et forsøg kan
+  sagtens tage lang (server-)tid at blive færdigmeldt (offline-kø). Det
+  eneste krav til forholdet mellem de to: `server_elapsed >= klientMs - 5000`
+  (`CLOCK_SKEW_TOLERANCE_MS`, 5 sek. — klienten må ikke påstå at have spillet
+  AKTIVT længere, end der reelt er gået siden forsøget blev startet).
+- `tid_mismatch` bruges KUN når denne sidste betingelse fejler (klienten
+  påstår MERE aktiv tid end der er gået) — IKKE længere en symmetrisk
+  ±20-sekunders-tolerance (den gamle `SPILLETID_TOLERANCE_MS` er fjernet).
 
 ### Stats-konsistens (billige, løse tjek)
 - `packed ≥ tower`, `perfects ≤ packed`, `streak ≤ packed`.
@@ -753,6 +933,90 @@ ingen kodeændring nødvendig ud over selve testen.
 - `admin_session`: ny kolonne `rolle` (`'admin' | 'stand'`, default
   `'admin'`).
 - Ny tabel `stand_login_kode`: ét-gangs-koder til stand-login-flowet.
+
+---
+
+## Anden opfølgende ændringsrunde (spil-api-klient-fund)
+
+Bestilt af agenten der bygger spillets NYE frontend (branch
+`spil-api-klient`), som allerede kalder dette API og fandt ni ting der
+krævede backend-ændringer, plus én bundlet anonymiserings-forbedring.
+Migration: `migrations/005_opfoelgning2.sql`. Alle punkter er beskrevet
+inline ovenfor de relevante endpoints — dette afsnit er et samlet overblik +
+de tekniske detaljer der ikke passede naturligt ind noget andet sted.
+
+- **A) Tidsvalidering ved finish** — se "Spilletid" under "Snydegrænser" og
+  "Dage og tidszoner". `MIN_SPILLETID_MS`/`MAX_SPILLETID_MS` var FØR denne
+  runde hardkodede konstanter i `src/rules/scoring.js` (IKKE config-drevne
+  fra en tidligere runde) — nu `cfg.minAktivSpilletidMs`/
+  `cfg.maxAktivSpilletidMs` i `config.offentlig`.
+- **B) `POST /runs {ny:true}`** — se `POST /runs` ovenfor. Ny
+  `forsoeg.status`-værdi: `'opgivet'` (CHECK-constraint udvidet i
+  migrationen).
+- **C) Flere samtidige tokens** — ny tabel `spiller_token` (se
+  "Autentifikation" og `src/spillerToken.js`). `spiller.token_hash` er
+  DROPPET (data migreret ind i den nye tabel FØR kolonnen fjernes). Der
+  findes IKKE noget spiller-logout-endpoint endnu (kun admins
+  `/admin/logout`) — ikke et krav i denne runde, men modellen
+  (`tilbagekaldt`-kolonnen) er klar til det: et fremtidigt spiller-logout
+  skal KUN sætte `tilbagekaldt = now()` på DEN token-række der blev brugt
+  til at kalde det (identificeret ved token_hash), aldrig spillerens øvrige
+  rækker.
+- **D) Skrive-rate-limit** — hævet fra `120` til **`1000`/min/IP**
+  (`src/app.js`). Valgt som et rundt, generøst tal for messe-Wi-Fi bag NAT
+  (potentielt hundredvis af enheder pr. offentlig IP) uden at give reelt
+  ubegrænset skrivning. Spiller-specifikke grænser (1 forsøg-start/20
+  sek./spiller) og admin-login (5/min/IP) er UÆNDREDE, se `src/app.js`.
+- **E) WS** — se "WebSocket `/ws`" ovenfor for begge dele (nye duel-events,
+  navne-overskrivning, state.changed-triggere).
+- **F) `POST /me/boost`-rækkefølge** — se sektionen ovenfor. `forkert_kode`
+  er ERSTATTET af `ukendt_kode` (samme kode som `POST /me/challenge`
+  allerede brugte for "ukendt kode").
+- **G) `GET /admin/spillere`** — se sektionen ovenfor for de præcise
+  feltnavne.
+- **H) `POST /admin/afmeld`** — se sektionen ovenfor (`liste:"alle"` +
+  email/telefon-matchning).
+- **I) Firma valgfrit** — allerede implementeret i en tidligere runde,
+  bekræftet uændret (ingen ny kode).
+- **Anonymiserings-id-fix** — se "Sletning og anonymisering" ovenfor.
+  `notifikation.data.by_spiller_id`/`.fra_spiller_id` og
+  `forsoeg.duel.vs_spiller_id` er NYE, nullable felter i de eksisterende
+  jsonb-kolonner (ingen ny DB-KOLONNE nødvendig, kun applikationskode + en
+  kommentar i migrationen). `raffle_draws` brugte allerede sin rigtige
+  `spiller_id`-kolonne.
+
+### Fortolkninger / antagelser (ikke eksplicit i briefen)
+
+1. **`duel.vsId`** (`POST /runs/:runde_id/finish`) er et HELT NYT,
+   valgfrit felt vi selv har introduceret for at kunne sætte
+   `duel.vs_spiller_id` pålideligt — modstanderens identitet indgik
+   tidligere slet ikke server-side i duel-flowet (`duel` var, og er
+   fortsat, ellers rent klient-leveret fritekst). Findes feltet ikke,
+   gemmes `duel.vs` som hidtil, blot uden id (falder tilbage til
+   navnematch ved en evt. anonymisering, samme risiko som hidtil for netop
+   DEN forsøgs-række). Bør bekræftes/justeres når den nye frontends
+   faktiske duel-payload er kendt.
+2. **WS-navnefelter der overskrives** (opgave E) er begrænset til `name` og
+   `an` (kendt fra det NUVÆRENDE klientkode-mønster i `spil/index.html`,
+   som bruger et andet transportlag end selve `/ws`-protokollen dette
+   dokument beskriver) — vi kender ikke den nye frontends præcise
+   duel-data-skema. Hvis den bruger andre feltnavne til afsenderens navn,
+   skal `AFSENDER_NAVN_FELTER` i `src/ws.js` udvides tilsvarende.
+3. **`presence`-beskedens `name`-felt** er BEVIDST IKKE ændret i denne
+   runde — briefen nævnte specifikt "duel-events", og presence-navnet var
+   allerede client-leveret før denne runde. Samme klasse af
+   tillidsproblem findes potentielt her (en spiller kunne i teorien sætte
+   et vilkårligt presence-navn), men er uden for denne rundes scope — værd
+   at kigge på i en senere sikkerhedsgennemgang hvis det bliver relevant.
+4. **Rate-limit-tallet (1000/min/IP)** er et skøn, ikke et tal fra briefen
+   ("fx 1000/min — vælg et fornuftigt konkret tal") — juster via
+   `src/app.js` hvis messens faktiske NAT-belastning viser sig at kræve
+   noget andet.
+5. **`GET /admin/spillere`s `forsoeg[].slut_server`** navngivningen
+   `slut_server` (fremfor blot `slut`) er valgt for at undgå forveksling
+   med et evt. fremtidigt klient-sidet begreb om "hvornår så JEG
+   resultatet" — det er entydigt server-tidspunktet fra
+   `forsoeg.slut_server`.
 
 ---
 

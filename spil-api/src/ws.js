@@ -7,7 +7,18 @@ const { shortName } = require('./rules/nameDisplay');
 
 const MAX_MSG_BYTES = 4096;
 const MAX_MSGS_PER_SEC = 10;
-const DUEL_EVENTS = new Set(['duel.go', 'duel.s']);
+// Opfølgning: duel.waiting/duel.idle tilføjet til ventelisten (hvem venter
+// på en duel) — se API.md.
+const DUEL_EVENTS = new Set(['duel.go', 'duel.s', 'duel.waiting', 'duel.idle']);
+// Kendte fritekstfelter i et duel-events `data`, der (ifølge klientens
+// duel-protokol) bærer AFSENDERENS eget navn — 'name' (duel.s/duel.waiting/
+// duel.idle) og 'an' ("a"'s navn, duel.go, hvor 'a' altid er afsenderen selv,
+// se spil/index.html#goDuel). Serveren overskriver dem ALTID med sin egen,
+// korrekt maskerede visning af afsenderens navn, uanset hvad klienten
+// indsendte — klienten må ALDRIG kunne sætte vilkårlig tekst som sit eget
+// navn i et duel-event der relayes videre til andre (fx standvæggen). Håndhæves
+// for HVER besked (se emit-håndteringen nedenfor), ikke kun ved forbindelse.
+const AFSENDER_NAVN_FELTER = ['name', 'an'];
 // Fundet under sikkerhedsgennemgangen: adminRole blev kun læst ÉN GANG, ved
 // selve håndtrykket — en admin/stand-session der udløber eller logges ud
 // mens socket'en forbliver åben, beholdt privilegiet for evigt. Rettet med
@@ -94,6 +105,21 @@ function attachWs(server, pool, opts) {
 
   function displayName(navn, privileged) {
     return privileged ? navn : shortName(navn);
+  }
+
+  // Overskriver ALTID AFSENDER_NAVN_FELTER i et duel-events `data` med
+  // serverens egen, korrekt maskerede visning af AFSENDERENS navn (aldrig
+  // hvad klienten selv indsatte) — se filens toptekst. Beregnes pr.
+  // MODTAGER (samme personalisering som `from.name`), da masking afhænger af
+  // modtagerens privilegie, ikke afsenderens.
+  function sanitizedEmitData(data, fuldtAfsenderNavn, privileged) {
+    if (!data || typeof data !== 'object') return data;
+    const ud = { ...data };
+    const visNavn = displayName(fuldtAfsenderNavn, privileged);
+    for (const felt of AFSENDER_NAVN_FELTER) {
+      if (felt in ud) ud[felt] = visNavn;
+    }
+    return ud;
   }
 
   async function presenceListFor(room, privileged) {
@@ -215,7 +241,7 @@ function attachWs(server, pool, opts) {
             type: 'event',
             room,
             event,
-            data: msg.data,
+            data: sanitizedEmitData(msg.data, fuldtNavn, privileged),
             from: { id: ws.connId, name: displayName(fuldtNavn, privileged) },
           });
           safeSend(conn, payload);

@@ -69,7 +69,42 @@ test('login kræver at telefonnummeret matcher — afviser uden at overskrive', 
   assert.equal(korrekt.status, 200);
   assert.equal(korrekt.body.type, 'login');
   assert.ok(korrekt.body.token);
-  assert.notEqual(korrekt.body.token, reg.body.token); // token roteres ved login
+  // Opgave C: login OPRETTER et nyt token — det gamle token roteres/
+  // tilbagekaldes IKKE længere (flere samtidige enheder er nu tilladt).
+  assert.notEqual(korrekt.body.token, reg.body.token);
+  const meGammelt = await api(h.baseUrl, 'GET', '/me', { token: reg.body.token });
+  assert.equal(meGammelt.status, 200, 'det oprindelige registrerings-token skal STADIG virke efter et login');
+});
+
+test('opgave C: en spiller kan være logget ind på FLERE enheder samtidig — login overskriver ikke tidligere udstedte tokens', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'multi-device@example.dk', telefon: '20304090' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const tokenTelefon = reg.body.token;
+
+  const loginStand = await api(h.baseUrl, 'POST', '/players', { body });
+  assert.equal(loginStand.status, 200);
+  const tokenStand = loginStand.body.token;
+  assert.notEqual(tokenTelefon, tokenStand);
+
+  // Begge tokens virker SAMTIDIG.
+  const meTelefon = await api(h.baseUrl, 'GET', '/me', { token: tokenTelefon });
+  const meStand = await api(h.baseUrl, 'GET', '/me', { token: tokenStand });
+  assert.equal(meTelefon.status, 200);
+  assert.equal(meStand.status, 200);
+  assert.equal(meTelefon.body.pid, meStand.body.pid);
+
+  // Endnu et login giver et tredje token, uden at ugyldiggøre de to første.
+  const loginTablet = await api(h.baseUrl, 'POST', '/players', { body });
+  const tokenTablet = loginTablet.body.token;
+  const meTelefonIgen = await api(h.baseUrl, 'GET', '/me', { token: tokenTelefon });
+  const meStandIgen = await api(h.baseUrl, 'GET', '/me', { token: tokenStand });
+  const meTablet = await api(h.baseUrl, 'GET', '/me', { token: tokenTablet });
+  assert.equal(meTelefonIgen.status, 200);
+  assert.equal(meStandIgen.status, 200);
+  assert.equal(meTablet.status, 200);
 });
 
 test('unikt telefonnummer pr. spiller — dublet afvises', async (t) => {
@@ -187,16 +222,25 @@ test('POST /me/boost: kræver sms-tilmelding, korrekt kode, og kun én gang pr. 
   const pin = cfgRes.rows[0].hemmelig.pin;
   const kode = boostCode(todayStr(new Date()), pin);
 
-  // Uden sms-tilmelding: afvist.
+  // Uden sms-tilmelding, men med KORREKT kode: afvist på tilmeldingstjekket.
   const forInden = await api(h.baseUrl, 'POST', '/me/boost', { token, body: { code: kode } });
   assert.equal(forInden.status, 400);
   assert.equal(forInden.body.kode, 'ikke_tilmeldt_sms');
 
+  // Opgave F: uden sms-tilmelding, men med FORKERT kode: koden tjekkes
+  // FØRST — 'ukendt_kode', IKKE 'ikke_tilmeldt_sms' (uanset tilmeldingsstatus).
+  const forkertUdenSms = await api(h.baseUrl, 'POST', '/me/boost', { token, body: { code: 'ZZZZ' } });
+  assert.equal(forkertUdenSms.status, 400);
+  assert.equal(forkertUdenSms.body.kode, 'ukendt_kode');
+
   await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: ['sms'] } });
 
+  // Opgave F: en kode der ikke matcher dagens facit giver ALTID 'ukendt_kode'
+  // (uanset tilmeldingsstatus) — signalerer til klienten at den bør prøve
+  // koden som en udfordrings-/vennekode i stedet.
   const forkert = await api(h.baseUrl, 'POST', '/me/boost', { token, body: { code: 'XXXX' } });
   assert.equal(forkert.status, 400);
-  assert.equal(forkert.body.kode, 'forkert_kode');
+  assert.equal(forkert.body.kode, 'ukendt_kode');
 
   const meFoer = await api(h.baseUrl, 'GET', '/me', { token });
   const korrekt = await api(h.baseUrl, 'POST', '/me/boost', { token, body: { code: kode } });

@@ -24,7 +24,13 @@ function createApp(pool, ws, opts) {
 
   // Generøs skrive-rate-limit pr. IP (GET/HEAD er undtaget, de har deres
   // egne specifikke limits hvor det er nødvendigt, fx admin-login).
-  const writeLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 120 });
+  // Opgave D: hævet markant (120 -> 1000/min/IP) — messe-wifi bag NAT deler
+  // ofte ÉN offentlig IP mellem hundredvis af enheder, og 120/min var reelt
+  // en delt grænse for HELE standen. Spiller-specifikke grænser (fx 1
+  // forsøg-start/20 sek./spiller, se runsStartRateLimitMs) og admin-login
+  // (5/min/IP) er UÆNDREDE — de rammer allerede pr. spiller/handling, ikke
+  // pr. delt IP.
+  const writeLimiter = createRateLimiter({ windowMs: 60 * 1000, max: 1000 });
   app.use((req, res, next) => {
     if (req.method === 'GET' || req.method === 'HEAD') return next();
     return writeLimiter(req, res, next);
@@ -32,10 +38,10 @@ function createApp(pool, ws, opts) {
 
   app.use(healthRouter());
   app.use(stateRouter(pool));
-  app.use(playersRouter(pool));
-  app.use(meRouter(pool));
+  app.use(playersRouter(pool, ws));
+  app.use(meRouter(pool, ws));
   app.use(runsRouter(pool, ws));
-  app.use(adminRouter(pool, opts.adminRouterOpts));
+  app.use(adminRouter(pool, ws, opts.adminRouterOpts));
 
   app.use((req, res) => {
     res.status(404).json({ fejl: 'Ukendt endpoint.', kode: 'ikke_fundet' });

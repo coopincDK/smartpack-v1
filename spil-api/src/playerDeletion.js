@@ -35,25 +35,41 @@ async function anonymizeReferencesToPlayer(client, id, navn) {
 
   // Andre spilleres notifikation.data.by (beaten-notifikation) / .data.fra
   // (gift-notifikation) er en navne-KOPI skrevet ved selve hændelsen (se
-  // src/routes/runs.js) — ingen spiller_id at nulstille, så vi matcher på
-  // navnet. Kendt, accepteret begrænsning: to spillere med samme navn kunne
-  // i teorien krydse hinanden her — ikke fikset, se README.md.
+  // src/routes/runs.js) — matches nu FØRST på et id-felt sat ved siden af
+  // navnet (by_spiller_id/fra_spiller_id, se migrations/005_opfoelgning2.sql)
+  // for rækker der har det. Navnematch er kun et FALDBACK for ældre rækker
+  // skrevet FØR denne migration (kendt, accepteret begrænsning for DEM: to
+  // spillere med samme navn kunne i teorien krydse hinanden — se README.md).
   await client.query(
-    `UPDATE notifikation SET data = jsonb_set(data, '{by}', to_jsonb($3::text))
-     WHERE spiller_id != $1 AND data ? 'by' AND data->>'by' = $2`,
+    `UPDATE notifikation
+     SET data = jsonb_set(jsonb_set(data, '{by}', to_jsonb($3::text)), '{by_spiller_id}', 'null'::jsonb)
+     WHERE spiller_id != $1 AND data ? 'by' AND (
+       (data ? 'by_spiller_id' AND (data->>'by_spiller_id')::bigint = $1)
+       OR (NOT (data ? 'by_spiller_id') AND data->>'by' = $2)
+     )`,
     [id, navn, SLETTET_SPILLER]
   );
   await client.query(
-    `UPDATE notifikation SET data = jsonb_set(data, '{fra}', to_jsonb($3::text))
-     WHERE spiller_id != $1 AND data ? 'fra' AND data->>'fra' = $2`,
+    `UPDATE notifikation
+     SET data = jsonb_set(jsonb_set(data, '{fra}', to_jsonb($3::text)), '{fra_spiller_id}', 'null'::jsonb)
+     WHERE spiller_id != $1 AND data ? 'fra' AND (
+       (data ? 'fra_spiller_id' AND (data->>'fra_spiller_id')::bigint = $1)
+       OR (NOT (data ? 'fra_spiller_id') AND data->>'fra' = $2)
+     )`,
     [id, navn, SLETTET_SPILLER]
   );
 
   // Andre spilleres forsoeg.duel.vs (det sanitiserede duel-navn i GET
-  // /state, se src/publicState.js#sanitizeDuel) — samme slags navne-kopi.
+  // /state, se src/publicState.js#sanitizeDuel) — samme id-først/navne-
+  // faldback-mønster (duel.vs_spiller_id, sat i finish-flowet ud fra
+  // klientens valgfri duel.vsId, se src/routes/runs.js).
   await client.query(
-    `UPDATE forsoeg SET duel = jsonb_set(duel, '{vs}', to_jsonb($3::text))
-     WHERE spiller_id != $1 AND duel ? 'vs' AND duel->>'vs' = $2`,
+    `UPDATE forsoeg
+     SET duel = jsonb_set(jsonb_set(duel, '{vs}', to_jsonb($3::text)), '{vs_spiller_id}', 'null'::jsonb)
+     WHERE spiller_id != $1 AND duel ? 'vs' AND (
+       (duel ? 'vs_spiller_id' AND (duel->>'vs_spiller_id')::bigint = $1)
+       OR (NOT (duel ? 'vs_spiller_id') AND duel->>'vs' = $2)
+     )`,
     [id, navn, SLETTET_SPILLER]
   );
 
@@ -69,6 +85,11 @@ async function cascadeDeletePlayer(client, id) {
   await client.query('DELETE FROM notifikation WHERE spiller_id = $1', [id]);
   await client.query('DELETE FROM samtykke WHERE spiller_id = $1', [id]);
   await client.query('DELETE FROM forsoeg WHERE spiller_id = $1', [id]);
+  // Opgave C: spiller_token (flere samtidige tokens, se migrations/
+  // 005_opfoelgning2.sql) har en FK til spiller — skal ryddes FØR selve
+  // spiller-rækken slettes, ellers fejler DELETE'et nedenfor med en
+  // fremmednøgle-overtrædelse.
+  await client.query('DELETE FROM spiller_token WHERE spiller_id = $1', [id]);
   await client.query('DELETE FROM spiller WHERE id = $1', [id]);
 }
 

@@ -63,7 +63,7 @@ async function logSamtykke(client, spillerId, liste, type, kilde, req, now) {
   );
 }
 
-function meRouter(pool) {
+function meRouter(pool, ws) {
   const router = express.Router();
   const auth = requirePlayer(pool);
 
@@ -133,6 +133,9 @@ function meRouter(pool) {
         req.player.id,
       ]);
       invalidateStateCache();
+      // Opgave E: state.changed broadcastes nu også ved firma-ændring (rører
+      // companyKey/company i GET /state's players-liste).
+      if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
       res.json({ ok: true, firma });
     } catch (e) {
       next(e);
@@ -199,6 +202,18 @@ function meRouter(pool) {
       const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
       const row = rowRes.rows[0];
 
+      // Opgave F: sammenlign FØRST koden mod dagens facit, FØR nogen
+      // tilmeldings-/brugstjek. En kode der ikke matcher dagens boostkode
+      // svarer ALTID med den samme, distinkte kode 'ukendt_kode' — uanset
+      // spillerens tilmeldingsstatus — så klienten ved den i stedet bør
+      // prøve koden som en udfordrings-/vennekode (POST /me/challenge, som
+      // bruger nøjagtig samme fejlkode for "kendte jeg ikke den kode").
+      if (code !== boostCode(today, pin)) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ fejl: 'Ukendt kode.', kode: 'ukendt_kode' });
+      }
+
+      // Koden matchede — fortsæt med de eksisterende tjek, uændret rækkefølge.
       if (cfg.smsBoost === false) {
         await client.query('ROLLBACK');
         return res.status(400).json({ fejl: 'Sms-boost er ikke aktiveret lige nu.', kode: 'boost_ikke_aktiv' });
@@ -212,10 +227,6 @@ function meRouter(pool) {
       if (row.ekstra_03 === today) {
         await client.query('ROLLBACK');
         return res.status(400).json({ fejl: 'Du har allerede brugt dagens boostkode.', kode: 'allerede_brugt' });
-      }
-      if (code !== boostCode(today, pin)) {
-        await client.query('ROLLBACK');
-        return res.status(400).json({ fejl: 'Forkert kode.', kode: 'forkert_kode' });
       }
 
       const bag = await currentBag(client, row, cfg, now);
@@ -387,4 +398,4 @@ function meRouter(pool) {
   return router;
 }
 
-module.exports = { meRouter };
+module.exports = { meRouter, samtykkerFor };

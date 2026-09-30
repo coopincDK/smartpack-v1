@@ -34,6 +34,20 @@ async function nytForsoegMedForudFortid(h, token, sekunderTilbage) {
   return start.body.runde_id;
 }
 
+// Sætter et forsøgs start_server til tidligt om morgenen (00:05) SAMME
+// (københavnske) dag som "nu" — deterministisk simulering af en offline-kø
+// synket senere samme dag, uden risiko for at ramme et dagsskifte (i
+// modsætning til at trække et fast antal timer fra "nu", som kunne krydse
+// midnat afhængigt af hvornår testen rent faktisk kører).
+async function flytStartServerTilTidligtIDag(h, rundeId) {
+  await h.pool.query(
+    `UPDATE forsoeg
+     SET start_server = (date_trunc('day', now() AT TIME ZONE 'Europe/Copenhagen') AT TIME ZONE 'Europe/Copenhagen') + interval '5 minutes'
+     WHERE runde_id = $1`,
+    [rundeId]
+  );
+}
+
 async function opretSpillerOgToken(h, overrides) {
   const { body } = await registrerSpiller(h.baseUrl, overrides);
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
@@ -167,4 +181,159 @@ test('finish kræver at forsøget tilhører den autentificerede spiller', async 
     body: { rounds: GYLDIGE_RUNDER, s: GYLDIG_STATS, bf: false, duel: null, spilletid_klient_ms: 81000 },
   });
   assert.equal(res.status, 404);
+});
+
+// --- Opgave A: løsnet tidsvalidering + finish resten af dagen + dagsskifte ---
+
+test('finish godkendes selvom server_elapsed er MEGET længere end klientens påståede aktive tid (offline-kø)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const token = await opretSpillerOgToken(h);
+  // Forsøget "startede" tidligt i morges (server-side, samme dag som nu) —
+  // simulerer at klienten var offline og først synker resultatet flere timer
+  // senere SAMME dag. Deterministisk (se flytStartServerTilTidligtIDag),
+  // ingen risiko for dagsskifte.
+  const start = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(start.status, 201);
+  await flytStartServerTilTidligtIDag(h, start.body.runde_id);
+  const rundeId = start.body.runde_id;
+
+  const res = await api(h.baseUrl, 'POST', `/runs/${rundeId}/finish`, {
+    token,
+    body: { rounds: GYLDIGE_RUNDER, s: GYLDIG_STATS, bf: false, duel: null, spilletid_klient_ms: 81000 },
+  });
+  assert.equal(res.status, 200);
+  assert.equal(res.body.godkendt, true);
+});
+
+test('finish afviser tid_mismatch KUN når klienten påstår MERE aktiv tid end der er gået, ikke når server_elapsed er større', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const token = await opretSpillerOgToken(h);
+  const rundeId = await nytForsoegMedForudFortid(h, token, 80);
+
+  // Klienten hævder at have spillet aktivt i 200 sek., men der er kun gået
+  // ~80 sek. i alt siden start -> for meget påstået aktiv tid -> tid_mismatch.
+  const res = await api(h.baseUrl, 'POST', `/runs/${rundeId}/finish`, {
+    token,
+    body: { rounds: [10, 10, 10], s: {}, bf: false, duel: null, spilletid_klient_ms: 200000 },
+  });
+  assert.equal(res.status, 400);
+  assert.equal(res.body.aarsag, 'tid_mismatch');
+});
+
+test('finish afviser for_lang_spilletid når klienten påstår en urealistisk høj AKTIV spilletid (uafhængigt af server_elapsed)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const token = await opretSpillerOgToken(h);
+  const { MAX_AKTIV_SPILLETID_MS } = require('../src/rules/scoring');
+  // for_lang_spilletid tjekkes udelukkende mod klientMs (uafhængigt af
+  // server_elapsed, se src/rules/scoring.js) — intet behov for at flytte
+  // start_server her.
+  const start = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(start.status, 201);
+  const rundeId = start.body.runde_id;
+
+  const res = await api(h.baseUrl, 'POST', `/runs/${rundeId}/finish`, {
+    token,
+    body: {
+      rounds: [10, 10, 10],
+      s: {},
+      bf: false,
+      duel: null,
+      spilletid_klient_ms: MAX_AKTIV_SPILLETID_MS + 1000,
+    },
+  });
+  assert.equal(res.status, 400);
+  assert.equal(res.body.aarsag, 'for_lang_spilletid');
+});
+
+test('et aktivt forsøg kan finish\'es resten af dagen, men behandles som udløbet ved dagsskifte', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const token = await opretSpillerOgToken(h);
+
+  const start = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(start.status, 201);
+  // Flyt forsøgets start_server 30 timer tilbage — garanteret en TIDLIGERE
+  // (københavnske) dag end i dag, uanset klokkeslæt/sommer-vintertid (en dag
+  // er højst 25 timer).
+  await h.pool.query(`UPDATE forsoeg SET start_server = start_server - interval '30 hours' WHERE runde_id = $1`, [
+    start.body.runde_id,
+  ]);
+
+  const finish = await api(h.baseUrl, 'POST', `/runs/${start.body.runde_id}/finish`, {
+    token,
+    body: { rounds: GYLDIGE_RUNDER, s: GYLDIG_STATS, bf: false, duel: null, spilletid_klient_ms: 81000 },
+  });
+  assert.equal(finish.status, 409);
+  assert.equal(finish.body.kode, 'forsoeg_udloebet');
+
+  const statusRes = await h.pool.query('SELECT status FROM forsoeg WHERE runde_id = $1', [start.body.runde_id]);
+  assert.equal(statusRes.rows[0].status, 'udloebet');
+});
+
+test('POST /runs uden ny: et forsøg fra en TIDLIGERE dag behandles som udløbet (ikke genoptaget) næste gang det stødes på', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const token = await opretSpillerOgToken(h);
+
+  const start = await api(h.baseUrl, 'POST', '/runs', { token });
+  await h.pool.query(`UPDATE forsoeg SET start_server = start_server - interval '30 hours' WHERE runde_id = $1`, [
+    start.body.runde_id,
+  ]);
+
+  const igen = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(igen.status, 201);
+  assert.notEqual(igen.body.runde_id, start.body.runde_id);
+  assert.equal(igen.body.genoptaget, undefined, 'skal IKKE genoptages — det gamle forsøg er fra en tidligere dag');
+
+  const gammelStatus = await h.pool.query('SELECT status FROM forsoeg WHERE runde_id = $1', [start.body.runde_id]);
+  assert.equal(gammelStatus.rows[0].status, 'udloebet');
+});
+
+// --- Opgave B: {ny:true} ---
+
+test('POST /runs uden ny returnerer det eksisterende aktive forsøg (genoptaget), uden at bruge endnu et liv', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const token = await opretSpillerOgToken(h);
+
+  const start = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(start.status, 201);
+
+  const igen = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(igen.status, 200);
+  assert.equal(igen.body.genoptaget, true);
+  assert.equal(igen.body.runde_id, start.body.runde_id);
+
+  const me = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.equal(me.body.liv.n, start.body.liv.n, 'intet ekstra liv brugt ved genoptagelse');
+});
+
+test('POST /runs {ny:true} opgiver det aktive forsøg (uden refusion) og starter et helt nyt med et nyt liv', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const token = await opretSpillerOgToken(h);
+
+  const start = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(start.status, 201);
+
+  const nyt = await api(h.baseUrl, 'POST', '/runs', { token, body: { ny: true } });
+  assert.equal(nyt.status, 201);
+  assert.notEqual(nyt.body.runde_id, start.body.runde_id);
+  assert.equal(nyt.body.genoptaget, undefined);
+  // Et ekstra liv er brugt (det gamle forsøgs liv refunderes IKKE).
+  assert.equal(nyt.body.liv.n, start.body.liv.n - 1);
+
+  const gammelStatus = await h.pool.query('SELECT status FROM forsoeg WHERE runde_id = $1', [start.body.runde_id]);
+  assert.equal(gammelStatus.rows[0].status, 'opgivet');
+
+  // Det opgivne forsøg kan ikke længere finish'es normalt (ikke 'aktiv').
+  const finishGammel = await api(h.baseUrl, 'POST', `/runs/${start.body.runde_id}/finish`, {
+    token,
+    body: { rounds: GYLDIGE_RUNDER, s: GYLDIG_STATS, bf: false, duel: null, spilletid_klient_ms: 81000 },
+  });
+  assert.equal(finishGammel.status, 409);
+  assert.equal(finishGammel.body.kode, 'ikke_aktivt');
 });

@@ -22,9 +22,9 @@ test('todayStr(): "dag" regnes i Europe/Copenhagen, ikke UTC (sommertid)', () =>
 async function mkSpiller(pool, oprettet) {
   const unik = crypto.randomBytes(6).toString('hex');
   const { rows } = await pool.query(
-    `INSERT INTO spiller (public_id, email, navn, telefon, firma, firma_noegle, token_hash, oprettet)
-     VALUES ($1,$2,'Test Testesen',$3,'Firma','firma',$4,$5) RETURNING id`,
-    [unik, unik + '@example.dk', '2' + unik.slice(0, 7), 'th' + unik, oprettet]
+    `INSERT INTO spiller (public_id, email, navn, telefon, firma, firma_noegle, oprettet)
+     VALUES ($1,$2,'Test Testesen',$3,'Firma','firma',$4) RETURNING id`,
+    [unik, unik + '@example.dk', '2' + unik.slice(0, 7), oprettet]
   );
   return rows[0].id;
 }
