@@ -1,6 +1,6 @@
 {
- "name": "Pluk. Pak. Send.",
- "short_name": "Pluk Pak Send",
+ "name": "Packrush",
+ "short_name": "Packrush",
  "description": "SmartPacks lagerspil: pluk, pak og send på tid.",
  "start_url": "./",
  "scope": "./",
