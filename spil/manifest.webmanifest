@@ -1,0 +1,32 @@
+{
+ "name": "Pluk. Pak. Send.",
+ "short_name": "Pluk Pak Send",
+ "description": "SmartPacks lagerspil: pluk, pak og send på tid.",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#010E22",
+ "theme_color": "#010E22",
+ "lang": "da",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
