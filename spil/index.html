@@ -606,7 +606,7 @@ html,body{overflow-x:hidden}
     <h3>Data</h3>
     <button class="btn" id="b-csv">Hent tilmeldinger som CSV</button>
     <textarea id="a-csv" readonly hidden></textarea>
-    <label class="f">Afmeld fra en liste <small>Indsæt e-mails fra partnerens afmeldingsliste, én pr. linje</small><textarea id="a-unsub" style="min-height:80px"></textarea></label>
+    <label class="f">Afmeld fra en liste <small>Indsæt e-mails eller telefonnumre fra partnerens afmeldingsliste, én pr. linje</small><textarea id="a-unsub" style="min-height:80px"></textarea></label>
     <label class="f">Listen<select id="a-unlist"></select></label>
     <button class="btn small" id="b-unsub">Afmeld dem fra listen</button>
     <p class="muted small" id="a-unsub-res"></p>
@@ -640,7 +640,8 @@ html,body{overflow-x:hidden}
 <script>
 (() => {
 /* testtilstand til røgtest: kun aktiv på localhost/127.0.0.1 med ?pr_test=1, virker aldrig i produktion */
-const TEST_MODE = /(^|[?&])pr_test=1(&|$)/.test(location.search) && /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname);
+const IS_LOCALHOST = /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname);
+const TEST_MODE = /(^|[?&])pr_test=1(&|$)/.test(location.search) && IS_LOCALHOST;
 const ROUND_T = TEST_MODE ? 5 : 30, MUTE_STORE = 'packrush.mute';
 const $ = s => document.querySelector(s);
 const EMOJI = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
@@ -667,6 +668,8 @@ function cphTodayAt(h, m){
   const offsetMs = cphNowMs - now.getTime();
   return Date.UTC(p.year, p.month - 1, p.day, h, m, 0) - offsetMs;
 }
+/* L3: klokkeslæt til visning (fx "overhalet"-tidsstemplet) skal også vise dansk lokal tid, ikke enhedens egen */
+function cphTimeStr(ms){ const p = cphParts(new Date(ms)); return String(p.hour).padStart(2, '0') + ':' + String(p.minute).padStart(2, '0'); }
 const fmt = n => Math.round(n).toLocaleString('da-DK');
 const sek = v => v.toLocaleString('da-DK', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' sek.';
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -712,7 +715,11 @@ function meFromServer(m){
   const todayTicks = m.dagens_flueben || m.today_ticks || m.flueben_i_dag || m.tick_i_dag || [];
   const notifs = m.notifikationer || [];
   const beaten = notifs.filter(n => n.type === 'beaten').map(n => ({ ...(n.data || {}), id: n.id, seen: !!n.seen }));
-  const gifts = notifs.filter(n => n.type !== 'beaten').map(n => ({ ...(n.data || {}), id: n.id, seen: !!n.seen, kind: n.data && n.data.kind }));
+  // M3: serveren sender data.type ('udfordring_liv'/'vennekode_refill') og data.fra, ikke kind/from
+  const gifts = notifs.filter(n => n.type !== 'beaten').map(n => {
+    const d = n.data || {};
+    return { id: n.id, seen: !!n.seen, from: d.fra || d.from || '', score: d.score, kind: d.type === 'udfordring_liv' ? 'ch' : (d.type || undefined) };
+  });
   const me = {
     pid: m.pid, name: m.navn, email: m.email, phone: m.telefon, company: m.firma, companyKey: firmKey(m.firma),
     code: m.vennekode, badges: m.badges || [],
@@ -731,13 +738,24 @@ function syncMyAttempts(p){
   const row = data.players[p.pid];
   p.attempts = (row && row.attempts) || [];
 }
+/* husk spilleren på egen telefon (via bearer-tokenet), ikke på standens tablets. Skal stå FØR
+   getToken/setToken/cacheMe herunder, som alle læser isStand() ved hvert kald. */
+const STAND_STORE = 'packrush.stand';
+const isStand = () => { try{ return localStorage.getItem(STAND_STORE) === '1'; }catch(e){ return false; } };
 const STATE_CACHE = 'packrush.statecache.v1', ME_CACHE = 'packrush.mecache.v1', TOKEN_STORE = 'packrush.token.v1';
-function getToken(){ try{ return localStorage.getItem(TOKEN_STORE); }catch(e){ return null; } }
-function setToken(t){ try{ if(t) localStorage.setItem(TOKEN_STORE, t); else localStorage.removeItem(TOKEN_STORE); }catch(e){} }
+/* K1/L9 fra reviewet: en standtablet må ALDRIG skrive tokenet eller spillerens egne persondata
+   til localStorage (så den ikke husker forrige spiller, og ikke kan læses af nogen, der får fat
+   i enheden bagefter) — men tokenet skal stadig virke resten af den aktuelle session, ellers kan
+   spilleren slet ikke spille. Løsning: på en standtablet holdes tokenet KUN i hukommelsen
+   (memToken), aldrig i localStorage; det ryger væk ved sideindlæsning, "Næste spiller" og idle,
+   men ikke midt i et spil. På en personlig telefon bruges localStorage som hidtil. */
+let memToken = null;
+function getToken(){ if(isStand()) return memToken; try{ return localStorage.getItem(TOKEN_STORE); }catch(e){ return null; } }
+function setToken(t){ if(isStand()){ memToken = t || null; return; } try{ if(t) localStorage.setItem(TOKEN_STORE, t); else localStorage.removeItem(TOKEN_STORE); }catch(e){} }
 function cacheState(s){ try{ localStorage.setItem(STATE_CACHE, JSON.stringify(s)); }catch(e){} }
 function loadCachedState(){ try{ const r = localStorage.getItem(STATE_CACHE); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
-function cacheMe(m){ try{ if(m) localStorage.setItem(ME_CACHE, JSON.stringify(m)); else localStorage.removeItem(ME_CACHE); }catch(e){} }
-function loadCachedMe(){ try{ const r = localStorage.getItem(ME_CACHE); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
+function cacheMe(m){ if(isStand()) return; try{ if(m) localStorage.setItem(ME_CACHE, JSON.stringify(m)); else localStorage.removeItem(ME_CACHE); }catch(e){} }
+function loadCachedMe(){ if(isStand()) return null; try{ const r = localStorage.getItem(ME_CACHE); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
 
 /* Endpoint-stier og body/svar-felter herunder følger nu spil-api/API.md, som landede på
    origin/main efter Fase 1. nginx (fase 2, ejes af backend-agenten) forventes at proxye
@@ -746,7 +764,10 @@ const API_BASE = '/api/spil';
 function apiFetch(path, opts){
   opts = opts || {};
   const headers = Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {});
-  const tok = getToken(); if(tok && !opts.noAuth) headers.Authorization = 'Bearer ' + tok;
+  // H3: en kø-genudsendelse skal bruge DET token, der var aktivt, da forsøget blev lagt i køen —
+  // ikke hvad end der måtte stå i getToken() nu (en standtablet kan have en helt anden spiller logget ind)
+  const tok = opts.tokenOverride !== undefined ? opts.tokenOverride : getToken();
+  if(tok && !opts.noAuth) headers.Authorization = 'Bearer ' + tok;
   return fetch(API_BASE + path, { method: opts.method || 'GET', headers, body: opts.body !== undefined ? JSON.stringify(opts.body) : undefined, credentials: opts.admin ? 'include' : 'same-origin' })
     .then(async res => {
       let json = null; try{ json = await res.json(); }catch(e){}
@@ -769,8 +790,8 @@ const API = {
     } }).then(r => { if(r && r.token) setToken(r.token); return r; });
   },
   logout(){ setToken(null); cacheMe(null); },
-  startRun(){ return apiFetch('/runs', { method: 'POST' }); },
-  finishRun(runId, payload){ return apiFetch('/runs/' + encodeURIComponent(runId) + '/finish', { method: 'POST', body: payload }); },
+  startRun(opts){ return apiFetch('/runs', { method: 'POST', body: opts && opts.ny ? { ny: true } : undefined }); },
+  finishRun(runId, payload, tokenOverride){ return apiFetch('/runs/' + encodeURIComponent(runId) + '/finish', { method: 'POST', body: payload, tokenOverride }); },
   /* Martins nye regler (3 liv/dag, MAX_LIVES 7, "dagens flueben") giver to separate endpoints
      i stedet for det ene PUT /me/subs: ét til dagens flueben (giver friske liv, nulstilles hver
      dag) og ét til varig afmelding fra en enkelt liste. Stierne er bekræftet af teamlederen. */
@@ -785,7 +806,7 @@ const API = {
     login(password){ return apiFetch('/admin/login', { method: 'POST', body: { password }, noAuth: true, admin: true }); },
     players(){ return apiFetch('/admin/spillere', { admin: true }); },
     config(){ return apiFetch('/admin/config', { admin: true }); },
-    saveConfig(c){ return apiFetch('/admin/config', { method: 'PUT', body: c, admin: true }); },
+    saveConfig(c){ return apiFetch('/admin/config', { method: 'PUT', body: { offentlig: c }, admin: true }); },
     boostCode(){ return apiFetch('/admin/boostkode', { admin: true }); },
     exportUrl(kind){ return API_BASE + '/admin/eksport/' + kind + '.csv'; },
     draw(kortNavn){ return apiFetch('/admin/lodtraekning', { method: 'POST', body: { kort_navn: kortNavn || cfg.periodName || 'Packrush' }, admin: true }); },
@@ -800,10 +821,11 @@ const API = {
 const WS_ROOM = 'packrush';
 const RT = (() => {
   let ws = null, retry = 1000, handlers = {}, poll = null, closedByUs = false, joined = false;
-  function dispatch(type, d){ (handlers[type] || []).forEach(fn => { try{ fn(d); }catch(e){} }); }
+  function dispatch(type, d, from){ (handlers[type] || []).forEach(fn => { try{ fn(d, from); }catch(e){} }); }
   function startPoll(){ if(poll) return; poll = setInterval(() => dispatch('state.poll', null), 10000); }
   function stopPoll(){ clearInterval(poll); poll = null; }
   function raw(msg){ try{ if(ws && ws.readyState === 1){ ws.send(JSON.stringify(msg)); return true; } }catch(e){} return false; }
+  function reconnectDelay(){ const d = retry + Math.random() * 1000; retry = Math.min(15000, retry * 1.6); return d; } // M6: jitter på genforbindelse
   function connect(){
     closedByUs = false; joined = false;
     try{
@@ -815,25 +837,29 @@ const RT = (() => {
         if(m.type === 'hello.ok'){ raw({ type: 'join', room: WS_ROOM }); return; }
         if(m.type === 'joined'){ joined = true; dispatch('open', null); dispatch('presence', { users: m.users || [] }); return; }
         if(m.type === 'presence'){ dispatch('presence', { users: m.users || [] }); return; }
-        if(m.type === 'event'){ dispatch(m.event, m.data); return; }
+        if(m.type === 'event'){ dispatch(m.event, m.data, m.from); return; }
         if(m.type === 'state.changed'){ dispatch('state.changed', null); return; }
         if(m.type === 'error'){ console.warn('ws', m.message); return; }
       };
-      ws.onclose = () => { ws = null; joined = false; startPoll(); dispatch('close', null); if(!closedByUs){ setTimeout(connect, retry); retry = Math.min(15000, retry * 1.6); } };
+      ws.onclose = () => { ws = null; joined = false; startPoll(); dispatch('close', null); if(!closedByUs) setTimeout(connect, reconnectDelay()); };
       ws.onerror = () => { try{ ws && ws.close(); }catch(e){} };
-    }catch(e){ startPoll(); setTimeout(connect, retry); retry = Math.min(15000, retry * 1.6); }
+    }catch(e){ startPoll(); setTimeout(connect, reconnectDelay()); }
   }
   connect(); startPoll();
   return {
     on(type, fn){ (handlers[type] = handlers[type] || []).push(fn); },
     emit(event, data){ return raw({ type: 'emit', room: WS_ROOM, event, data }) ? Promise.resolve() : Promise.reject(new Error('ws lukket')); },
     presence(name){ return raw({ type: 'presence', room: WS_ROOM, name }) ? Promise.resolve() : Promise.reject(new Error('ws lukket')); },
+    /* K2b: en fysisk forbindelse forbliver logget ind (eller anonym) som den var ved sidste hello,
+       indtil vi udtrykkeligt siger andet — skal kaldes efter login OG logout, ellers "arver" den
+       næste spiller på en standtablet den forrige spillers identitet på selve websocket'en. */
+    rehello(){ return raw({ type: 'hello', token: getToken() || undefined }); },
     get connected(){ return !!(ws && ws.readyState === 1 && joined); },
   };
 })();
 
 /* ---------- offentlig tilstand: pid er nøglen, ikke e-mail ---------- */
-let stateLoading = null;
+let stateLoading = null, stateETag = null;
 function applyState(s){
   if(!s) return;
   cfg = { ...DEFAULT_CFG, ...(s.cfg || {}) };
@@ -842,18 +868,28 @@ function applyState(s){
   cacheState(s);
   syncMyAttempts();
 }
+/* M6: brug serverens ETag, så et uændret /state kun koster et 304-svar, ikke en fuld payload */
 function loadState(){
   if(stateLoading) return stateLoading;
-  stateLoading = API.state().then(s => { applyState(s); refresh(); return s; }).catch(e => console.warn('state', e)).finally(() => { stateLoading = null; });
+  const headers = stateETag ? { 'If-None-Match': stateETag } : {};
+  stateLoading = fetch(API_BASE + '/state', { headers }).then(async res => {
+    const et = res.headers.get('ETag'); if(et) stateETag = et;
+    if(res.status === 304) return null;
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }).then(s => { if(s) applyState(s); refresh(); return s; })
+    .catch(e => console.warn('state', e)).finally(() => { stateLoading = null; });
   return stateLoading;
 }
-const debounce = (fn, ms) => { let t = 0; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
-const debouncedLoadState = debounce(loadState, 400);
-RT.on('state.changed', debouncedLoadState);
+/* M6: jitter 0-3 s, så ikke alle enheder i rummet henter /state i samme øjeblik efter en
+   state.changed-besked, og kun ÉN poller (RT's egen state.poll, som kun kører, når WS er nede —
+   den tidligere ekstra 10-s-timer her er fjernet, den duplikerede samme arbejde). */
+const jitterDebounce = (fn, base, spread) => { let t = 0; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), base + Math.random() * spread); }; };
+const debouncedLoadState = jitterDebounce(loadState, 400, 3000);
+RT.on('state.changed', () => { debouncedLoadState(); debouncedRefreshMe(); });
 RT.on('state.poll', debouncedLoadState);
 { const cached = loadCachedState(); if(cached) applyState(cached); }
 loadState();
-setInterval(() => { if(!RT.connected) loadState(); }, 10000);
 
 /* ---------- egen fulde record ----------
    savedMe er "kan fortsætte som" (viser #b-me på startskærmen), adskilt fra current,
@@ -867,26 +903,64 @@ function bootMe(){
     if(screen === 's-start') renderStart(); return savedMe;
   }).catch(e => { if(e && e.status === 401){ setToken(null); savedMe = null; cacheMe(null); } console.warn('me', e); });
 }
+/* M4: /me blev ellers kun hentet ved boot/login. Liv-regen, overhalet- og gave-notifikationer
+   kommer nu også med ved: nedtællingens udløb (se renderLobby), state.changed (throttlet,
+   se RT.on ovenfor) og hvert 60. sek. som fallback, mens man er i lobbyen. */
+function refreshMe(){
+  if(!getToken() || !current) return Promise.resolve();
+  return API.me().then(m => {
+    if(m){ current = meFromServer(m); syncMyAttempts(); cacheMe(current); if(screen === 's-lobby') renderLobby(); }
+  }).catch(e => { if(e && e.status === 401){ current = null; savedMe = null; setToken(null); cacheMe(null); if(screen !== 's-start') show('s-start'); } });
+}
+const debouncedRefreshMe = jitterDebounce(refreshMe, 400, 1500);
+setInterval(() => { if(current && screen === 's-lobby') refreshMe(); }, 60000);
 
 /* ---------- offline-kø til finishRun ----------
-   Netværksfejl (ikke serverens afvisning) ryger i køen og forsøges igen, når der er net.
-   runId gør kaldet idempotent på serveren, så et gensendt forsøg ikke tælles to gange. */
-const FQ_STORE = 'packrush.queue.v1';
+   Netværksfejl, 5xx og 429 (rate-limit) ryger i køen og forsøges igen med backoff — de er ikke en
+   endelig afgørelse, kun en midlertidig fejl. Kun 4xx (undtagen 429) er endelige (serveren har set
+   og afvist forsøget). runde_id gør kaldet idempotent, så et gensendt forsøg ikke tælles to gange.
+   Hvert element gemmer sit EGET token (H3): på en delt standtablet kan en anden spiller være logget
+   ind, når køen flushes, og forsøget skal stadig krediteres den, der spillede det. */
+const FQ_STORE = 'packrush.queue.v1', FQ_MAX_TRIES = 12, FQ_MAX_AGE_MS = 6 * 3600000;
 function loadFinishQueue(){ try{ return JSON.parse(localStorage.getItem(FQ_STORE) || '[]'); }catch(e){ return []; } }
 function saveFinishQueue(q){ try{ localStorage.setItem(FQ_STORE, JSON.stringify(q)); }catch(e){} }
-function queueFinish(runId, payload){ const q = loadFinishQueue(); q.push({ runId, payload }); saveFinishQueue(q); toast('Gemmes, når der er net'); }
+function queueFinish(pid, token, name, runId, payload){
+  const q = loadFinishQueue();
+  q.push({ pid, token, name, runId, payload, tries: 0, queuedAt: Date.now() });
+  saveFinishQueue(q);
+  toast('Gemmes, når der er net');
+}
+function isFinalRejection(e){ return !!e && typeof e.status === 'number' && e.status >= 400 && e.status < 500 && e.status !== 429; }
 let flushingQueue = false;
 function flushFinishQueue(){
   if(flushingQueue) return Promise.resolve();
-  const q = loadFinishQueue(); if(!q.length) return Promise.resolve();
+  const snapshot = loadFinishQueue(); if(!snapshot.length) return Promise.resolve();
   flushingQueue = true;
-  const rest = [];
-  return q.reduce((p, item) => p.then(async () => {
-    try{ await API.finishRun(item.runId, item.payload); }
-    catch(e){ if(!e || e.status === undefined || e.status === 0) rest.push(item); /* server svarede (også afvisning): drop den, den er allerede afgjort */ }
+  const now = Date.now();
+  return snapshot.reduce((p, item) => p.then(async () => {
+    if(item.nextTryAt && now < item.nextTryAt) return; // venter stadig på sin egen backoff
+    try{
+      const res = await API.finishRun(item.runId, item.payload, item.token);
+      item._done = true;
+      if(res && res.godkendt === false) toast(`${item.name || 'Et forsøg'}: ${res.besked || 'blev ikke godkendt.'}`);
+      else toast(`${item.name || 'Et forsøg'}s resultat er nu gemt`);
+    }catch(e){
+      if(isFinalRejection(e)){ item._done = true; toast(`${item.name || 'Et forsøg'} blev ikke godkendt: ${(e && e.message) || 'ukendt fejl'}`); }
+      else{
+        item.tries = (item.tries || 0) + 1;
+        if(item.tries >= FQ_MAX_TRIES || now - item.queuedAt > FQ_MAX_AGE_MS) item._done = true; // opgivet, loft nået
+        else item.nextTryAt = now + Math.min(60000, 2000 * Math.pow(1.8, item.tries)) + Math.random() * 1000;
+      }
+    }
   }), Promise.resolve()).then(() => {
-    saveFinishQueue(rest); flushingQueue = false;
-    if(rest.length < q.length) loadState();
+    // Race (H3): flet med køen, som den er NU, i tilfælde af at nye forsøg blev lagt i den, mens denne kørte
+    const fresh = loadFinishQueue();
+    const processedIds = new Set(snapshot.map(x => x.runId));
+    const stillPending = snapshot.filter(x => !x._done);
+    const addedMeanwhile = fresh.filter(x => !processedIds.has(x.runId));
+    saveFinishQueue(stillPending.concat(addedMeanwhile));
+    flushingQueue = false;
+    if(stillPending.length < snapshot.length) loadState();
   });
 }
 
@@ -969,7 +1043,7 @@ const F = {
   today: a => a.day === today(),
   period: a => a.day >= (cfg.periodStart || '2000-01-01'),
   all: () => true,
-  crown: a => a.day === today() && (a.end || a.at) <= crownMs(),
+  crown: a => a.day === today() && Date.parse(a.end || a.at) <= crownMs(),
 };
 
 /* ---------- alt det, man kan blive bedst til ---------- */
@@ -1001,7 +1075,7 @@ function pval(p, k, filt, extra){
 function rank(k, filt, pool){
   const m = MET[k];
   return (pool || Object.values(data.players)).map(p => ({ p, v: pval(p, k, filt) })).filter(x => x.v != null)
-    .sort((a, b) => (m.low ? a.v - b.v : b.v - a.v) || a.p.created - b.p.created);
+    .sort((a, b) => (m.low ? a.v - b.v : b.v - a.v) || Date.parse(a.p.created) - Date.parse(b.p.created));
 }
 function firms(filt, pool){
   const g = {};
@@ -1013,9 +1087,14 @@ function firms(filt, pool){
 }
 function daysPlayed(p, filt){ return new Set(done(p).filter(filt || F.all).map(a => a.day)).size; }
 function dayStreak(p){
-  const days = new Set(done(p).map(a => a.day)); let n = 0; const d = new Date();
-  if(!days.has(today())) d.setDate(d.getDate() - 1);
-  while(days.has(d.toLocaleDateString('sv-SE'))){ n++; d.setDate(d.getDate() - 1); }
+  // L3: dagstrengene skal matche today()/serverens dansk lokale dato, ikke enhedens egen tidszone —
+  // regnet som ren kalenderdato-aritmetik (UTC-midnat pr. dato-streng), så DST-skift ikke forstyrrer
+  const days = new Set(done(p).map(a => a.day)); let n = 0;
+  const t = today();
+  let cursor = Date.UTC(+t.slice(0, 4), +t.slice(5, 7) - 1, +t.slice(8, 10));
+  if(!days.has(t)) cursor -= 86400000;
+  let ds = new Date(cursor).toISOString().slice(0, 10);
+  while(days.has(ds)){ n++; cursor -= 86400000; ds = new Date(cursor).toISOString().slice(0, 10); }
   return n;
 }
 function goalMet(p){ if(!(cfg.goal > 0)) return false; const v = pval(p, cfg.mission, F.period); return v != null && (MET[cfg.mission].low ? v <= cfg.goal : v >= cfg.goal); }
@@ -1763,9 +1842,11 @@ function renderBoard(list, note, limit){
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
   if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
   r.forEach(({ p, v }, i) => {
-    const li = el('li'); if(current && p.pid === current.pid) li.classList.add('me');
+    const mine = !!(current && p.pid === current.pid);
+    const li = el('li'); if(mine) li.classList.add('me');
     li.style.animationDelay = (i * 0.05) + 's';
-    const l = left(p), sub = [subline(p), scope === 'today' ? (l ? `${l} liv tilbage` : 'Ingen liv lige nu') : ''].filter(Boolean).join(', ');
+    // M2: /state har ikke andre spilleres liv (kun sit eget fra /me), så vis kun liv-tal for egen række
+    const l = mine ? left(current) : null, sub = [subline(p), mine ? (l ? `${l} liv tilbage` : 'Ingen liv lige nu') : ''].filter(Boolean).join(', ');
     li.append(el('span', 'rank', i + 1), el('span', 'name', p.name), el('span', 'score', MET[k].f(v)), el('span', 'left', sub));
     list.append(li);
   });
@@ -1782,12 +1863,7 @@ function crownLine(){
   const w = rank('total', F.crown)[0];
   return ['crown', w ? `Dagens vinder er ${w.p.name} med ${fmt(w.v)} point.` : 'Dagens kåring er overstået.'];
 }
-/* husk spilleren på egen telefon (via bearer-tokenet), ikke på standens tablets */
-const STAND_STORE = 'packrush.stand';
-const isStand = () => { try{ return localStorage.getItem(STAND_STORE) === '1'; }catch(e){ return false; } };
-/* efter registrering/login: på en standtablet må sessionen aldrig overleve til næste spiller */
-function forgetOnStand(){ if(isStand()){ API.logout(); savedMe = null; } }
-function forgetMe(){ API.logout(); savedMe = null; }
+function forgetMe(){ API.logout(); savedMe = null; RT.rehello(); }
 $('#b-me').onclick = () => { if(!savedMe) return; audio(); current = savedMe; syncMyAttempts(); show('s-lobby'); };
 let idleT = 0;
 function idleReset(){ clearTimeout(idleT); if(!isStand()) return; idleT = setTimeout(() => { if(['s-lobby', 's-result', 's-reg', 's-board'].includes(screen)){ current = null; forgetMe(); show('s-start'); } }, 120000); }
@@ -1836,13 +1912,20 @@ $('#f-reg').addEventListener('submit', e => {
   if(phone.replace(/\D/g, '').length < 8) return err('Skriv et telefonnummer med mindst 8 cifre.');
   if(!$('#i-terms').checked) return err('Sæt flueben ved betingelserne for at deltage.');
   const btn = $('#f-reg').querySelector('button[type=submit]'); btn.disabled = true;
+  let regType = null;
   API.register({ name, email, phone, company, subs: regSubs(), ref: $('#i-ref').value.trim() })
-    .then(() => API.me())
+    .then(r => { regType = r && r.type; RT.rehello(); return API.me(); }) // K2b: den fysiske ws-forbindelse skal vide, hvem der nu er logget ind
     .then(m => {
       current = meFromServer(m); syncMyAttempts(); cacheMe(current);
-      forgetOnStand(); $('#f-reg').reset(); sfx('badge');
-      show('s-lobby');
+      // M5: serveren sætter i dag ikke flueben/vennekode ved LOGIN (kun ved ny tilmelding), så vi eftersender dem selv
+      if(regType === 'login'){
+        const chain = [];
+        const subs = regSubs(); if(subs.length) chain.push(API.setTicks(subs).catch(() => {}));
+        const ref = $('#i-ref').value.trim(); if(ref) chain.push(API.challenge(ref).catch(() => {}));
+        if(chain.length) return Promise.all(chain).then(() => API.me()).then(m2 => { current = meFromServer(m2); syncMyAttempts(); cacheMe(current); });
+      }
     })
+    .then(() => { $('#f-reg').reset(); sfx('badge'); show('s-lobby'); })
     .catch(e => err((e && e.message) || 'Kunne ikke tilmelde dig. Tjek oplysningerne eller din forbindelse, og prøv igen.'))
     .finally(() => { btn.disabled = false; });
 });
@@ -1859,8 +1942,10 @@ async function challenge(p){
    aldrig kan udregnes eller slås op i klienten, og vi undgår at skulle kende andre spilleres data. */
 /* Koden kan enten være dagens sms-boostkode (POST /me/boost) eller en vens udfordringskode
    (POST /me/challenge) — klienten ved ikke hvilken, før den prøver. Boost først, som i den
-   oprindelige klient; en boost-fejl, der tydeligt betyder "det VAR boostkoden, men den duede
-   ikke" (allerede brugt/ikke tilmeldt sms), vises direkte, ellers prøves udfordringskoden. */
+   oprindelige klient. H6: serveren tjekker notify/allerede-brugt FØR selve kodesammenligningen,
+   så en boost-fejl siger ikke noget om, hvorvidt koden var rigtig — challenge prøves derfor
+   ALTID bagefter, og kun hvis challenge selv svarer ukendt_kode, viser vi boostens besked (den
+   er typisk mere præcis, fx "allerede brugt i dag", end en generisk "koden findes ikke"). */
 function useCode(){
   const p = current, c = $('#l-codei').value.trim().toUpperCase(), msg = m => { $('#l-codemsg').textContent = m; };
   if(!p || !c) return msg("Skriv koden fra sms'en eller fra din ven.");
@@ -1868,11 +1953,14 @@ function useCode(){
     if(res && res.liv){ current.liv = res.liv; current.livAt = Date.now(); }
     $('#l-codei').value = ''; msg(''); sfx('badge'); toast('Du har fået ekstra liv'); renderLobby();
   }).catch(be => {
-    if(be && (be.code === 'allerede_brugt' || be.code === 'ikke_tilmeldt_sms')){ sfx('wrong'); return msg(be.message); }
     API.challenge(c).then(res => {
       current.chFrom = { name: (res && res.udfordrer) || '', day: today() };
       $('#l-codei').value = ''; msg(''); sfx('badge'); renderLobby();
-    }).catch(ce => { sfx('wrong'); msg((ce && ce.message) || 'Koden findes ikke. Tjek den, og prøv igen.'); });
+    }).catch(ce => {
+      sfx('wrong');
+      if(ce && ce.code === 'ukendt_kode') msg((be && be.message) || 'Koden findes ikke. Tjek den, og prøv igen.');
+      else msg((ce && ce.message) || 'Koden findes ikke. Tjek den, og prøv igen.');
+    });
   });
 }
 $('#l-codeb').onclick = useCode;
@@ -1887,11 +1975,12 @@ function renderLobby(){
   const fresh = p.beaten.filter(b => b.day === today() && !b.seen);
   if(fresh.length){
     const b = fresh[fresh.length - 1], d = el('div', 'beaten');
-    d.append(el('span', 'muted small', `Kl. ${new Date(b.at).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}`), el('strong', null, b.colleague ? `Din kollega ${b.by} har overhalet dig` : b.lead ? `${b.by} tog din førsteplads` : `${b.by} har overhalet dig`), el('p', 'muted', `${b.by}${b.firm ? ' fra ' + b.firm : ''} scorede ${fmt(b.score)} point mod dine ${fmt(b.mine)}. ${l ? `Du har ${l} forsøg til at tage revanche.` : 'Kom igen i morgen og tag revanche.'}`));
+    d.append(el('span', 'muted small', `Kl. ${cphTimeStr(b.at)}`), el('strong', null, b.colleague ? `Din kollega ${b.by} har overhalet dig` : b.lead ? `${b.by} tog din førsteplads` : `${b.by} har overhalet dig`), el('p', 'muted', `${b.by}${b.firm ? ' fra ' + b.firm : ''} scorede ${fmt(b.score)} point mod dine ${fmt(b.mine)}. ${l ? `Du har ${l} forsøg til at tage revanche.` : 'Kom igen i morgen og tag revanche.'}`));
     bx.append(d);
-    if(!p._seenMark){ p._seenMark = true; const ids = fresh.map(x => x.id || x.at); setTimeout(() => { fresh.forEach(x => x.seen = true); delete p._seenMark; API.seen(ids).catch(() => {}); }, 1500); }
+    if(!p._seenMark){ p._seenMark = true; const ids = fresh.map(x => Number(x.id || x.at)); setTimeout(() => { fresh.forEach(x => x.seen = true); delete p._seenMark; API.seen(ids).catch(() => {}); }, 1500); }
   }
   const nx = nextLifeMs(p), mins = nx != null ? Math.ceil(nx / 60000) : 0;
+  if(nx != null && nx <= 0) debouncedRefreshMe(); // M4: nedtællingen er udløbet — hent /me igen for at få den friske livtælling
   $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Nye liv ved midnat.' : ' Kom igen i morgen.');
   const pips = $('#l-pips'); pips.replaceChildren(); const shown = Math.min(12, Math.max(l, 1)); pips.classList.toggle('many', shown > 6);
   for(let i = 0; i < shown; i++){ const d = el('div', 'pip ' + (i < l ? 'free' : 'used')); const im = new Image(); im.src = IMG.cubeW; im.alt = ''; d.append(im); pips.append(d); }
@@ -1900,7 +1989,7 @@ function renderLobby(){
   const gf = p.gifts.filter(g => !g.seen);
   if(gf.length){ const nw = gf.filter(g => g.kind !== 'ch'), chs = gf.filter(g => g.kind === 'ch'), lst = a => a.map(g => g.from).join(', ').replace(/, ([^,]*)$/, ' og $1');
     if(nw.length) gb.append(el('p', 'gift', `${lst(nw)} har spillet med din kode for første gang, så du har fået fuld liv igen.`));
-    chs.forEach(g => gb.append(el('p', 'gift', `${g.from} tog din udfordring op og fik ${fmt(g.score || 0)} point. Du har fået et ekstra liv.${g.score > bestToday(p) ? ' Slå den tilbage.' : ''}`))); if(!p._giftMark){ p._giftMark = true; const ids = gf.map(g => g.id || g.at); setTimeout(() => { gf.forEach(g => g.seen = true); delete p._giftMark; API.seen(ids).catch(() => {}); }, 1500); } }
+    chs.forEach(g => gb.append(el('p', 'gift', `${g.from} tog din udfordring op og fik ${fmt(g.score || 0)} point. Du har fået et ekstra liv.${g.score > bestToday(p) ? ' Slå den tilbage.' : ''}`))); if(!p._giftMark){ p._giftMark = true; const ids = gf.map(g => Number(g.id || g.at)); setTimeout(() => { gf.forEach(g => g.seen = true); delete p._giftMark; API.seen(ids).catch(() => {}); }, 1500); } }
   // dagens flueben: nulstilles hver dag og giver friske liv (PUT /me/ticks). Adskilt fra den varige
   // tilmelding — at fjerne et flueben her afmelder ikke listen, kun "Mine tilmeldinger" gør det.
   const mb = $('#l-more'); mb.replaceChildren();
@@ -1993,7 +2082,7 @@ function applyTicks(keys, detailsEl){
     if(res && res.friske_liv){ toast(`Du har fået ${res.friske_liv} ekstra liv`); sfx('badge'); }
     renderLobby();
     const nd = $('#l-more details'); if(nd && openNow) nd.open = true;
-  }).catch(() => toast('Kunne ikke gemme dagens flueben. Tjek din forbindelse.'));
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme dagens flueben. Tjek din forbindelse.'));
 }
 function unsubscribeOne(key){
   API.unsubscribe(key).then(res => {
@@ -2003,7 +2092,7 @@ function unsubscribeOne(key){
     current.mailTo = current.mineNoegler.filter(k => k.startsWith('m:')).map(k => k.slice(2));
     current.todayTicks = (current.todayTicks || []).filter(k => k !== key);
     toast('Afmeldt'); renderLobby();
-  }).catch(() => toast('Kunne ikke afmelde. Tjek din forbindelse.'));
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke afmelde. Tjek din forbindelse.'));
 }
 function renderSubsBox(){
   const box = $('#l-subs'); if(!box) return;
@@ -2029,7 +2118,7 @@ function renderSubsBox(){
 $('#l-firm-i').addEventListener('change', e => {
   const v = e.target.value.trim(); if(!v || !current) return;
   API.setCompany(v).then(() => { current.company = v; current.companyKey = firmKey(v); toast('Du spiller nu for ' + v); renderLobby(); })
-    .catch(() => toast('Kunne ikke gemme firmaet. Tjek din forbindelse.'));
+    .catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme firmaet. Tjek din forbindelse.'));
 });
 $('#b-logout').onclick = () => { forgetMe(); current = null; show('s-start'); };
 
@@ -2090,7 +2179,7 @@ function paceOf(p){
 /* Selve rundeforløbet (score, tempo, animation) er stadig ren klientlogik for at føles responsivt,
    men et forsøg bruger et liv, så det skal serveren først godkende (runs/start), og resultatet
    godkendes og lægges ind på tavlen af serveren til sidst (runs/finish, se finish() nedenfor). */
-function startAttempt(useBf, duel){
+function startAttempt(useBf, duel, forceNew){
   const p = current; if(!p || left(p) <= 0) return;
   audio();
   const bf = !duel && !!(cfg.bf && useBf && !bfToday(p));
@@ -2099,7 +2188,16 @@ function startAttempt(useBf, duel){
   const others = rank('total', F.today).filter(x => x.p.pid !== p.pid).map(x => ({ name: x.p.name, v: x.v, pid: x.p.pid }));
   const bossRow = rank('total', F.today).filter(x => x.p.pid !== p.pid)[0];
   $('#b-start').disabled = true;
-  API.startRun().then(res => {
+  (forceNew ? API.startRun({ ny: true }) : API.startRun()).then(res => {
+    // H1: et gammelt, aktivt forsøg (fx efter en reload) bliver genoptaget uden at bruge et liv —
+    // det kan klienten ikke reelt fortsætte ind i (rundetilstanden er væk), så vi opgiver det tydeligt
+    // og beder om et nyt i stedet for at lade spilleren sidde fast.
+    if(res && res.genoptaget && !forceNew){
+      toast('Dit forrige spil blev afsluttet uden svar. Starter et nyt.');
+      return API.startRun({ ny: true });
+    }
+    return res;
+  }).then(res => {
     $('#b-start').disabled = !left(current);
     if(res.liv){ current.liv = res.liv; current.livAt = Date.now(); }
     G = { bf, sp: bf ? 1.35 : 1, mult: bf ? 2 : 1, idx: 0, scores: [], stats: [], S: {}, time: ROUND_T, running: false, others, passed: false, rec: recordsToday(p.pid), hurry: false,
@@ -2109,11 +2207,11 @@ function startAttempt(useBf, duel){
     requestAnimationFrame(() => { makeRound(); });
   }).catch(e => { sfx('wrong'); toast((e && e.message) || 'Kunne ikke starte. Måske ingen liv lige nu.'); $('#b-start').disabled = !left(current); });
 }
-$('#b-start').onclick = () => { if(current && !current.company){ const i = $('#l-firm-i'); i.focus(); i.scrollIntoView({ block: 'center', behavior: 'smooth' }); sfx('wrong'); return toast('Skriv din webshop eller dit firma først'); } startAttempt($('#bf').checked); };
+$('#b-start').onclick = () => startAttempt($('#bf').checked);
 function restartAttempt(){
   if(!G || !current) return;
   musicStop(); G = null;
-  startAttempt(false);
+  startAttempt(false, null, true); // H1: "start forfra" skal altid opgive det aktive forsøg eksplicit (POST /runs {ny:true}), ikke risikere at genoptage det
 }
 function tickCd(sec){
   const cd = $('#h-cd'); cd.textContent = sec; cd.hidden = false; cd.classList.toggle('last', sec <= 3);
@@ -2279,11 +2377,14 @@ function finish(){
     spilletid_klient_ms: Date.now() - (g.clientStart || Date.now()),
   };
   if(g.duel) duelSend(total, true);
-  API.finishRun(runId, payload).then(res => afterFinish(p, g, { ok: true, ...res }))
-    .catch(e => {
-      if(e && e.status){ afterFinish(p, g, { ok: false, message: e.message || 'Forsøget kunne ikke godkendes.' }); }
-      else { queueFinish(runId, payload); afterFinish(p, g, { ok: null }); }
-    });
+  API.finishRun(runId, payload).then(res => {
+    // L8: en idempotent gentagelse (eller et race) kan stadig svare 200 med godkendt:false — det er en afvisning, ikke en succes
+    if(res && res.godkendt === false) afterFinish(p, g, { ok: false, message: res.besked || 'Forsøget kunne ikke godkendes.' });
+    else afterFinish(p, g, { ok: true, ...res });
+  }).catch(e => {
+    if(isFinalRejection(e)) afterFinish(p, g, { ok: false, message: (e && e.message) || 'Forsøget kunne ikke godkendes.' });
+    else { queueFinish(p.pid, getToken(), p.name, runId, payload); afterFinish(p, g, { ok: null }); }
+  });
 }
 function afterFinish(p, g, res){
   const finishUp = () => {
@@ -2448,7 +2549,7 @@ $('#b-admin').onclick = () => { if(adminOk) return show('s-admin'); $('#pin-err'
 $('#f-pin').addEventListener('submit', e => {
   e.preventDefault();
   API.admin.login($('#i-pin').value.trim()).then(() => { adminOk = true; show('s-admin'); })
-    .catch(() => { $('#pin-err').textContent = 'Forkert adgangskode.'; sfx('wrong'); });
+    .catch(e => { $('#pin-err').textContent = e && e.status === 429 ? 'For mange forsøg. Vent lidt, og prøv igen.' : 'Forkert adgangskode.'; sfx('wrong'); });
 });
 const sel = $('#c-mission'); MISSIONS.forEach(k => { const o = el('option', null, k === 'total' ? 'Ingen mission, kun højeste score' : MET[k].name); o.value = k; sel.append(o); });
 function fillCfg(){
@@ -2466,8 +2567,11 @@ $('#b-save').onclick = () => {
   const patch = { periodName: $('#c-pname').value.trim() || 'Perioden', periodStart: ps || '2000-01-01', eventName: $('#c-event').value.trim(),
     perDay: clamp(parseInt($('#c-per').value, 10) || 3, 1, 20), crownTime: $('#c-ctime').value || '16:00', crownOn: $('#c-crown').checked, bf: $('#c-bf').checked,
     prize: $('#c-prize').value.trim(), smsOn: $('#c-sms').checked, smsSponsor: $('#c-sponsor').value.trim(), mailPartners: $('#c-mailp').value.trim(), lifeBonus: $('#c-life').checked, referral: $('#c-ref').checked, shareUrl: $('#c-share').value.trim(), fixed: $('#c-fixed').checked, hourly: $('#c-hourly').checked, hourPrize: $('#c-hprize').value.trim(), duel: $('#c-duel').checked, smsBoost: $('#c-boost').checked, boostLives: clamp(parseInt($('#c-boostn').value, 10) || 2, 1, 5), teams: $('#c-teams').checked, partners: $('#c-partners').checked, raffle: $('#c-raffle').checked, mission: $('#c-mission').value, goal: Math.max(0, parseFloat($('#c-goal').value) || 0) };
-  API.admin.saveConfig(patch).then(() => loadState()).then(() => { toast('Opsætningen er gemt'); renderAdmin(); })
-    .catch(() => toast('Kunne ikke gemme opsætningen. Tjek din forbindelse.'));
+  API.admin.saveConfig(patch).then(res => {
+    // H5: vis kun "gemt", når svaret bekræfter det — en 200 er ikke i sig selv et bevis
+    if(res && res.ok === false) return toast(res.besked || res.fejl || 'Kunne ikke gemme opsætningen.');
+    return loadState().then(() => { toast('Opsætningen er gemt'); renderAdmin(); });
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme opsætningen. Tjek din forbindelse.'));
 };
 function csvOf(rows){ const q = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`; return '\ufeff' + rows.map(r => r.map(q).join(';')).join('\r\n'); }
 /* Admin-visninger (interaktive sms-lister, timens boss med telefonnummer, lodtrækning) må se
@@ -2477,9 +2581,28 @@ function csvOf(rows){ const q = v => `"${String(v == null ? '' : v).replace(/"/g
    for klient-bygget CSV; kun broadcast-beskeden herunder bygger stadig sin egen CSV, fordi
    beskedteksten kun findes i browseren, ikke på serveren. */
 let adminPlayers = [], adminBoostCode = '';
+/* H4: /admin/spillere svarer { spillere: [...] } med danske feltnavne (navn/telefon/firma), og
+   mangler i dag notify/beaten/attempts (backend efterindsætter dem) — alt læses derfor defensivt
+   med trygge tomme standardværdier, så .replace()/.filter() aldrig kan ramme undefined. */
+function adminPlayerFromServer(p){
+  const noegler = p.mine_noegler || [];
+  return norm({
+    pid: p.pid, name: p.navn || p.name || '', email: p.email || '', phone: p.telefon || p.phone || '',
+    company: p.firma || p.company || '', companyKey: firmKey(p.firma || p.company || ''),
+    code: p.vennekode || p.code || '', badges: p.badges || [],
+    attempts: p.attempts || [], beaten: p.beaten || [],
+    marketing: p.marketing != null ? !!p.marketing : noegler.includes('sp'),
+    notify: p.notify != null ? !!p.notify : noegler.includes('sms'),
+    mailTo: p.mailTo || noegler.filter(k => k.startsWith('m:')).map(k => k.slice(2)),
+    created: p.oprettet || p.created || null,
+  });
+}
 function loadAdminPlayers(){
-  return API.admin.players().then(list => { adminPlayers = (list || []).map(norm); return adminPlayers; })
-    .catch(e => { console.warn('admin spillere', e); return adminPlayers; });
+  return API.admin.players().then(list => {
+    const arr = (list && list.spillere) || (Array.isArray(list) ? list : []);
+    adminPlayers = arr.map(adminPlayerFromServer);
+    return adminPlayers;
+  }).catch(e => { console.warn('admin spillere', e); return adminPlayers; });
 }
 function offer(name, text, ta){
   downloadBlob(new Blob([text], { type: 'text/csv;charset=utf-8' }), name);
@@ -2568,29 +2691,31 @@ $('#b-draw').onclick = () => {
     if(!spins) return done();
     const spin = () => { const p = pool[Math.floor(Math.random() * pool.length)]; nm.textContent = p.name; sfx('tick'); if(++i < spins) return setTimeout(spin, 40 + i * i * 1.2); done(); };
     spin();
-  }).catch(() => box.append(el('p', 'muted', 'Kunne ikke trække en vinder. Tjek din forbindelse.')));
+  }).catch(e => box.append(el('p', 'muted', e && e.status ? e.message : 'Kunne ikke trække en vinder. Tjek din forbindelse.')));
 };
 $('#b-rev').onclick = () => window.open(API.admin.exportUrl('revanche'), '_blank');
 $('#b-csv').onclick = () => window.open(API.admin.exportUrl('spillere'), '_blank');
 /* Brugerens beslutning: masseafmelding fra en enkelt partnerliste igen, nu via /admin/afmeld.
+   L6: "Alle lister" og telefonmatch er genindført (matcher listen ved e-mail ELLER telefon).
    Svarformen er endnu ikke vist med eksempel i API.md — fundet/ikke_fundet er et bud, rettes
    til, når kontrakten er endelig. */
 function fillUnlist(){
   const sl = $('#a-unlist'); if(!sl) return; const cur = sl.value;
-  sl.replaceChildren(...subOptions().map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
+  sl.replaceChildren(el('option', null, 'Alle lister'), ...subOptions().map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
+  sl.firstChild.value = 'alle';
   if(cur) sl.value = cur;
 }
 $('#b-unsub').onclick = () => {
   const liste = $('#a-unlist').value;
   const emails = $('#a-unsub').value.split(/[\n,;]+/).map(x => x.trim().toLowerCase()).filter(Boolean);
   if(!liste) return toast('Vælg en liste');
-  if(!emails.length) return toast('Indsæt mindst én e-mail');
+  if(!emails.length) return toast('Indsæt mindst én e-mail eller ét telefonnummer');
   API.admin.unsubscribeBulk(liste, emails).then(res => {
     const found = res && (res.fundet != null ? res.fundet : res.found);
     const notFound = res && (res.ikke_fundet != null ? res.ikke_fundet : res.notFound);
     $('#a-unsub-res').textContent = found != null ? `${found} afmeldt, ${notFound != null ? notFound : Math.max(0, emails.length - found)} ikke fundet.` : 'Afmeldt.';
     renderAdmin();
-  }).catch(() => toast('Kunne ikke afmelde. Tjek din forbindelse.'));
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke afmelde. Tjek din forbindelse.'));
 };
 /* "Nulstil alle spillere" kræver, at admin skriver NULSTIL, plus en almindelig browser-bekræftelse,
    fordi handlingen er permanent og rammer alle spillere på én gang. */
@@ -2600,7 +2725,7 @@ $('#b-reset').onclick = () => {
   if(!confirm('Er du helt sikker? Dette sletter ALLE spillere, forsøg og scores permanent og kan ikke fortrydes.')) return;
   API.admin.resetAll().then(() => { $('#a-resetconfirm').value = ''; current = null; savedMe = null; return loadState(); })
     .then(() => { renderAdmin(); toast('Alle spillere er slettet'); })
-    .catch(() => toast('Kunne ikke nulstille. Tjek din forbindelse.'));
+    .catch(e => toast(e && e.status ? e.message : 'Kunne ikke nulstille. Tjek din forbindelse.'));
 };
 
 /* ---------- standvæg ---------- */
@@ -2734,9 +2859,12 @@ const WAITERS = new Map(), WAITER_TTL = 9000;
 function pruneWaiters(){ const now = Date.now(); let changed = false; WAITERS.forEach((w, tab) => { if(now - w.seenAt > WAITER_TTL){ WAITERS.delete(tab); changed = true; } }); if(changed) duelUi(); }
 setInterval(pruneWaiters, 3000);
 setInterval(() => { if(LASTDUEL && !LASTDUEL.oppDone && !LASTDUEL.gone && Date.now() - (LASTDUEL.lastOppMsg || 0) > 12000){ LASTDUEL.gone = true; paintDuelResult(); } }, 3000);
-RT.on('duel.waiting', d => { d = d || {}; if(!d.tab || d.tab === TAB) return; WAITERS.set(d.tab, { tab: d.tab, name: String(d.name || '').slice(0, 40), seenAt: Date.now() }); duelUi(); });
+/* L7: storskærmen skal vise serverens bekræftede afsendernavn (WS-konvolutens "from"), ikke det
+   klienten selv påstår i selve begivenhedens data — ellers kan enhver sætte vilkårlig tekst
+   (maks 40 tegn, ikke XSS, men stadig ikke noget en fremmed skal kunne skrive på storskærmen). */
+RT.on('duel.waiting', (d, from) => { d = d || {}; if(!d.tab || d.tab === TAB) return; const nm = (from && (from.navn || from.name)) || d.name; WAITERS.set(d.tab, { tab: d.tab, name: String(nm || '').slice(0, 40), seenAt: Date.now() }); duelUi(); });
 RT.on('duel.idle', d => { d = d || {}; if(d.tab) WAITERS.delete(d.tab); duelUi(); });
-RT.on('duel.go', d => { d = d || {}; wallDuelStart(d); if(d.b === TAB && WAITING) beginDuel(d.id, { name: d.an, tab: d.a }, d.at); });
+RT.on('duel.go', (d, from) => { d = d || {}; const an = (from && (from.navn || from.name)) || d.an; wallDuelStart({ ...d, an }); if(d.b === TAB && WAITING) beginDuel(d.id, { name: an, tab: d.a }, d.at); });
 RT.on('duel.s', d => onDuelScore(d || {}));
 RT.on('open', () => { RT.presence(current ? current.name : '').catch(() => {}); duelUi(); });
 RT.on('close', () => { WAITERS.clear(); duelUi(); });
@@ -2860,7 +2988,8 @@ $('#isheet').addEventListener('click', e => { if(e.target.id === 'isheet') $('#i
 if('serviceWorker' in navigator && canInstallHere() && location.protocol === 'https:'){ navigator.serviceWorker.register('sw.js').catch(() => {}); }
 paintInstall();
 
-if(location.hash === '#test') window.__T = { get G(){ return G; }, get data(){ return data; }, get cfg(){ return cfg; }, show, refresh, Send, finishNow: () => finish(), makeRound: () => makeRound() };
+/* L4: #test-hooken eksponerer bl.a. finishNow() (kan give sig selv liv/point) og må derfor aldrig findes i produktion */
+if(IS_LOCALHOST && location.hash === '#test') window.__T = { get G(){ return G; }, get data(){ return data; }, get cfg(){ return cfg; }, show, refresh, Send, finishNow: () => finish(), makeRound: () => makeRound() };
 refresh();
 bootMe();
 flushFinishQueue();
