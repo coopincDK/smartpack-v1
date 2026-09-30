@@ -143,13 +143,44 @@ bevidst ved at hente data ufiltreret og filtrere i JS — se API.md,
 "Packrush-ændringer", opgave C, for detaljen. Hold dig til dette mønster
 hvis du udvider disse forespørgsler.
 
-## Drift/deploy/backup — **udestår fase 2**
+## Drift/deploy/backup
 
-Dette afsnit er bevidst tomt. `Dockerfile`, `docker-compose.yml` og
-`deploy.sh` er skrevet og klar, men **ikke afprøvet** mod en rigtig server
-endnu. Fase 2 dækker: binding til `127.0.0.1:8004`, host-nginx +
-Cloudflare-opsætning, `X-Client-IP`-headeren, TLS/certbot, backup-strategi
-for Postgres-volumet, og selve røgtesten af udrulningen.
+Fase 2 (binding til `127.0.0.1:8004`, host-nginx + Cloudflare-opsætning,
+`X-Client-IP`-headeren, TLS/certbot) er udrullet og kører i produktion. Se
+`docker-compose.yml` for selve `api`/`db`-opsætningen, og
+`docker-compose.override.yml` for server-portbindingen (se "Udrulning fra
+Windows" nedenfor for hvorfor DEN nu er versionsstyret).
+
+### Udrulning fra Windows (uden lokal `rsync`)
+
+`deploy.sh` vælger automatisk metode ud fra om `rsync` findes LOKALT:
+
+- **Med lokal rsync** (Linux/macOS/WSL): rsync'er direkte til serveren med
+  `--delete`, som hidtil.
+- **Uden lokal rsync** (almindeligt på almindelig Windows/Git Bash uden
+  WSL — `rsync` findes normalt ikke der): scriptet pakker `spil-api/` i én
+  `tar.gz` (uden `.git`/`node_modules`/`.env`), `scp`'er DEN til serveren
+  (kræver kun `scp`/`ssh` lokalt), og lader SERVEREN selv (hvor `rsync` er
+  tilgængeligt) køre selve `rsync --delete` fra en midlertidig
+  staging-mappe ind i den rigtige mappe.
+
+```bash
+SPIL_API_DEPLOY_HOST=root@1.2.3.4 ./deploy.sh
+```
+
+**Baggrund (hvorfor dette blev strammet op):** en tidligere udrulning
+brugte manuelt en lignende tar+scp+server-side-rsync-fremgangsmåde (fordi
+Windows ikke havde lokal `rsync`), og en `--delete` mod serverens
+`spil-api`-mappe fjernede ved et uheld `docker-compose.override.yml` — en
+fil der KUN lå der, uden for git (den indeholder serverens portbinding,
+`127.0.0.1:8004:3000`, ingen secrets). Rettet permanent på to måder: (1)
+filen er nu committet i repoet (se `docker-compose.override.yml`), så den
+overlever enhver `--delete`, og (2) `deploy.sh`s `--delete` kører ALDRIG mod
+hele den eksterne mappe ubetinget — kun mellem selve repo-indholdet (lokalt
+eller den midlertidige staging-kopi) og målmappen, med en eksplicit
+`EXCLUDES`-liste (i dag kun `.env`) for de få filer der SKAL overleve uden
+at være en del af git. Se selve `deploy.sh` for detaljen, og API.md,
+"Tredje opfølgende ændringsrunde", for den fulde historik.
 
 ### Drift: GDPR-oprydning (natligt job)
 

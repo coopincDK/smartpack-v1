@@ -19,6 +19,31 @@ const DUEL_EVENTS = new Set(['duel.go', 'duel.s', 'duel.waiting', 'duel.idle']);
 // navn i et duel-event der relayes videre til andre (fx standvæggen). Håndhæves
 // for HVER besked (se emit-håndteringen nedenfor), ikke kun ved forbindelse.
 const AFSENDER_NAVN_FELTER = ['name', 'an'];
+// Tredje opfølgende ændringsrunde, punkt 3: `duel.go`s `bn` (modstanderens
+// navn, sat af AFSENDEREN SELV når de vælger hvem de vil duellere mod fra
+// ventelisten, se spil/index.html#goDuel: `{ a: TAB, an, b: w.tab, bn: w.name }`)
+// var IKKE dækket af overskrivningen ovenfor og var derfor lige så
+// forfalskeligt som `an`/`name` var FØR forrige runde — en spiller kunne
+// sætte et VILKÅRLIGT modstander-navn. Valgt løsning (a) fra opgavebeskrivelsen:
+// overskriv `bn` server-side ud fra serverens EGEN viden om hvem der reelt
+// har den angivne modstander-reference (`data.b`), i stedet for (b) at
+// fjerne feltet (ville bryde feltnavne/responsstruktur for en klient der
+// allerede forventer `bn`). Vi kender ikke den nye frontends præcise
+// feltkonvention for "modstanderens reference" endnu (se
+// "Fortolkninger/antagelser" i API.md) — vi understøtter derfor BEGGE
+// sandsynlige varianter og forsøger dem i rækkefølge:
+//   1) `data.b` er et forbindelses-id fra presence-listen (tal, matcher
+//      `users[].id` / `conn.connId`, se presenceListFor() nedenfor).
+//   2) `data.b` er et selv-erklæret, tab-lignende strengfelt (jf. det ÆLDRE
+//      klientmønster i spil/index.html: `a`=egen tab, `b`=modstanderens tab)
+//      — registreret nedenfor (`registrerSelvReference`) fra AFSENDERENS
+//      eget `data.a`-felt i et TIDLIGERE duel-event i samme rum.
+// Matcher INGEN af delene en kendt forbindelse i SAMME rum, stoler vi ALDRIG
+// på klientens `bn` — den ryddes til en tom streng i stedet for at relaye
+// ubekræftet fritekst.
+const MODSTANDER_NAVN_FELT = 'bn';
+const MODSTANDER_REF_FELT = 'b';
+const EGEN_REF_FELT = 'a';
 // Fundet under sikkerhedsgennemgangen: adminRole blev kun læst ÉN GANG, ved
 // selve håndtrykket — en admin/stand-session der udløber eller logges ud
 // mens socket'en forbliver åben, beholdt privilegiet for evigt. Rettet med
@@ -44,6 +69,7 @@ function attachWs(server, pool, opts) {
   opts = opts || {};
   const wss = new WebSocketServer({ noServer: true });
   const rooms = new Map(); // room -> Set<conn>
+  const selvReferencer = new Map(); // room -> Map(reference-streng -> conn), se MODSTANDER_REF_FELT ovenfor
 
   server.on('upgrade', async (req, socket, head) => {
     let pathname;
@@ -84,6 +110,40 @@ function attachWs(server, pool, opts) {
     return s;
   }
 
+  function roomReferenceMap(room) {
+    let m = selvReferencer.get(room);
+    if (!m) {
+      m = new Map();
+      selvReferencer.set(room, m);
+    }
+    return m;
+  }
+
+  // Registrerer AFSENDERENS eget selv-erklærede reference-felt (`data.a`, se
+  // EGEN_REF_FELT/MODSTANDER_REF_FELT ovenfor) — en selv-erklæring om "dette
+  // ER mig" er ufarlig at stole på som opslagsnøgle (i modsætning til en
+  // PÅSTAND om nogen ANDEN, som `bn` er), præcis samme tillidsmodel som
+  // `ws.presenceName`/`ws.player.navn` allerede bruges under.
+  function registrerSelvReference(room, ref, conn) {
+    if (ref == null) return;
+    if (typeof ref !== 'string' && typeof ref !== 'number') return;
+    roomReferenceMap(room).set(String(ref), conn);
+  }
+
+  // Finder frem til den forbindelse en modstander-reference (`data.b`)
+  // PÅSTÅS at pege på — se filens toptekst for de to understøttede
+  // konventioner. Returnerer null hvis ingen kendt forbindelse matcher.
+  function findConnByReference(room, ref) {
+    if (ref == null) return null;
+    const somTal = Number(ref);
+    if (Number.isFinite(somTal)) {
+      for (const conn of roomSet(room)) {
+        if (conn.connId === somTal) return conn;
+      }
+    }
+    return roomReferenceMap(room).get(String(ref)) || null;
+  }
+
   // FRISK genvalidering af conn's session, lige før den bruges til at
   // afgøre om et fuldt navn må afsløres — slår ALTID admin_session-tabellen
   // op igen (i stedet for at stole på det cachede ws.adminRole fra
@@ -112,12 +172,22 @@ function attachWs(server, pool, opts) {
   // hvad klienten selv indsatte) — se filens toptekst. Beregnes pr.
   // MODTAGER (samme personalisering som `from.name`), da masking afhænger af
   // modtagerens privilegie, ikke afsenderens.
-  function sanitizedEmitData(data, fuldtAfsenderNavn, privileged) {
+  function sanitizedEmitData(data, fuldtAfsenderNavn, privileged, room) {
     if (!data || typeof data !== 'object') return data;
     const ud = { ...data };
     const visNavn = displayName(fuldtAfsenderNavn, privileged);
     for (const felt of AFSENDER_NAVN_FELTER) {
       if (felt in ud) ud[felt] = visNavn;
+    }
+    // Punkt 3 (denne runde): se MODSTANDER_NAVN_FELT-kommentaren i filens
+    // toptekst. `bn` overskrives ALTID hvis feltet er til stede — enten med
+    // serverens egen maskerede visning af den FAKTISK matchede forbindelses
+    // navn, eller (matcher intet) en tom streng. Klientens indsendte `bn`
+    // bruges ALDRIG direkte.
+    if (MODSTANDER_NAVN_FELT in ud) {
+      const modstander = findConnByReference(room, ud[MODSTANDER_REF_FELT]);
+      const modstanderNavn = modstander ? modstander.presenceName || (modstander.player && modstander.player.navn) : null;
+      ud[MODSTANDER_NAVN_FELT] = modstanderNavn ? displayName(modstanderNavn, privileged) : '';
     }
     return ud;
   }
@@ -234,6 +304,14 @@ function attachWs(server, pool, opts) {
           return safeSend(ws, JSON.stringify({ type: 'error', message: 'Ukendt eller manglende event/rum.' }));
         }
         const fuldtNavn = ws.presenceName || ws.player.navn;
+        // Registrér afsenderens selv-erklærede reference (`data.a`) FØR
+        // broadcast — se registrerSelvReference()/MODSTANDER_NAVN_FELT-
+        // kommentaren i filens toptekst. Skader ikke selv om DENNE besked
+        // ikke selv indeholder `bn` (fx duel.s/duel.waiting/duel.idle);
+        // registreringen bruges kun af en SENERE afsenders `bn`-opslag.
+        if (msg.data && typeof msg.data === 'object') {
+          registrerSelvReference(room, msg.data[EGEN_REF_FELT], ws);
+        }
         for (const conn of roomSet(room)) {
           if (conn === ws) continue;
           const privileged = await isPrivilegedNow(conn);
@@ -241,7 +319,7 @@ function attachWs(server, pool, opts) {
             type: 'event',
             room,
             event,
-            data: sanitizedEmitData(msg.data, fuldtNavn, privileged),
+            data: sanitizedEmitData(msg.data, fuldtNavn, privileged, room),
             from: { id: ws.connId, name: displayName(fuldtNavn, privileged) },
           });
           safeSend(conn, payload);
@@ -257,6 +335,13 @@ function attachWs(server, pool, opts) {
           s.delete(ws);
           if (ws.presenceName) await broadcastPresence(room);
           if (s.size === 0) rooms.delete(room);
+        }
+        const refMap = selvReferencer.get(room);
+        if (refMap) {
+          for (const [ref, conn] of refMap) {
+            if (conn === ws) refMap.delete(ref);
+          }
+          if (refMap.size === 0) selvReferencer.delete(room);
         }
       }
     });

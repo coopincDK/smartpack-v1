@@ -18,6 +18,8 @@ const { currentBag, persistBag, livView, playerToP } = require('../lifeBag');
 const { computeTickets } = require('../gameQueries');
 const { clientIp } = require('../middleware/clientIp');
 const { invalidateStateCache } = require('../publicState');
+const { resolveSessionRole } = require('../middleware/adminAuth');
+const { maskedName } = require('../rules/nameDisplay');
 const { MAKS_FIRMA } = require('./players');
 
 const MAKS_KODE = 5;
@@ -63,6 +65,43 @@ async function logSamtykke(client, spillerId, liste, type, kilde, req, now) {
   );
 }
 
+// Sikkerhedsgennemgang (denne opfølgende runde): notifikation.data.by
+// (beaten) og .data.fra (gift) blev tidligere returneret RÅT af GET /me — en
+// id-reference (by_spiller_id/fra_spiller_id, se src/routes/runs.js) fandtes
+// allerede ved siden af navnet, men blev hidtil KUN brugt ved GDPR-
+// anonymisering, aldrig ved selve læsningen. En helt almindelig spiller
+// kunne dermed se andre spilleres FULDE, ufaskerede navn via sine egne
+// notifikationer — også OM SIG SELV, dvs. uafhængigt af om DEN forbindelse
+// har admin/stand-privilegie — hvilket omgik hele navnemaskerings-designet
+// (se API.md, "Packrush-ændringer", opgave B).
+//
+// Rettet ved LÆSNING: slår navnet op FRISKT via id-referencen (den
+// autoritative kilde — kan i dag ikke afvige fra snapshottet, da spillere
+// ikke kan omdøbe sig selv, men er den korrekte kilde fremadrettet), falder
+// tilbage til det denormaliserede snapshot-navn hvis id'et mangler (ældre
+// rækker fra før anonymiserings-id-fixet), og sender RESULTATET gennem
+// PRÆCIS samme maskeringsfunktion som GET /state (`maskedName` — fuldt navn
+// kun ved en gyldig admin/stand-session for DENNE forbindelse; "Slettet
+// spiller" vises altid uændret, aldrig maskeret videre). De interne
+// id-felter selv eksponeres ALDRIG i klientsvaret — samme princip som
+// forsoeg.duel.vs_spiller_id, der heller aldrig optræder i et offentligt
+// svar (se API.md).
+function maskNotifikation(data, navnMap, privileged) {
+  if (!data || typeof data !== 'object') return data;
+  const ud = { ...data };
+  if (Object.prototype.hasOwnProperty.call(ud, 'by')) {
+    const frisk = ud.by_spiller_id != null ? navnMap.get(ud.by_spiller_id) : undefined;
+    ud.by = maskedName(frisk !== undefined ? frisk : ud.by, privileged);
+  }
+  if (Object.prototype.hasOwnProperty.call(ud, 'fra')) {
+    const frisk = ud.fra_spiller_id != null ? navnMap.get(ud.fra_spiller_id) : undefined;
+    ud.fra = maskedName(frisk !== undefined ? frisk : ud.fra, privileged);
+  }
+  delete ud.by_spiller_id;
+  delete ud.fra_spiller_id;
+  return ud;
+}
+
 function meRouter(pool, ws) {
   const router = express.Router();
   const auth = requirePlayer(pool);
@@ -82,6 +121,27 @@ function meRouter(pool, ws) {
          WHERE spiller_id = $1 ORDER BY oprettet DESC LIMIT 50`,
         [row.id]
       );
+
+      // Denne forbindelses privilegie afgør om notifikationernes navne
+      // maskeres eller vises fuldt — se maskNotifikation() ovenfor. Bemærk:
+      // dette er UAFHÆNGIGT af hvem spilleren selv er (bearer-tokenet),
+      // udelukkende om DENNE forbindelse har en gyldig admin/stand-
+      // sessionscookie, nøjagtig samme regel som GET /state.
+      const rolle = await resolveSessionRole(pool, req);
+      const privilegeret = rolle === 'admin' || rolle === 'stand';
+      const navnIds = new Set();
+      for (const n of notifs.rows) {
+        if (n.data && n.data.by_spiller_id != null) navnIds.add(n.data.by_spiller_id);
+        if (n.data && n.data.fra_spiller_id != null) navnIds.add(n.data.fra_spiller_id);
+      }
+      let navnMap = new Map();
+      if (navnIds.size) {
+        const { rows: navnRows } = await client.query('SELECT id, navn FROM spiller WHERE id = ANY($1::bigint[])', [
+          Array.from(navnIds),
+        ]);
+        navnMap = new Map(navnRows.map((r) => [r.id, r.navn]));
+      }
+
       const tickets = await computeTickets(client, row.id, cfg);
 
       res.json({
@@ -100,7 +160,7 @@ function meRouter(pool, ws) {
         notifikationer: notifs.rows.map((n) => ({
           id: n.id,
           type: n.type,
-          data: n.data,
+          data: maskNotifikation(n.data, navnMap, privilegeret),
           oprettet: n.oprettet,
           seen: n.set,
         })),
@@ -177,7 +237,15 @@ function meRouter(pool, ws) {
         dag: todayStr(new Date()),
       });
       await pool.query('UPDATE spiller SET ekstra_02 = $1 WHERE id = $2', [chFrom, req.player.id]);
-      res.json({ ok: true, udfordrer: rows[0].navn });
+      // Sikkerhedsgennemgang (fundet ved samme adversarielle gennemgang som
+      // notifikations-maskeringen, se maskNotifikation() ovenfor): `udfordrer`
+      // returnerede hidtil kode-ejerens FULDE, ufaskerede navn til en helt
+      // almindelig spiller — samme lækage-klasse som notifikationerne, blot
+      // ikke via en gemt/genlæst kolonne. Maskeres nu efter samme regel
+      // (kun feltets INDHOLD ændres, ikke feltnavn/responsstruktur).
+      const rolle = await resolveSessionRole(pool, req);
+      const privilegeret = rolle === 'admin' || rolle === 'stand';
+      res.json({ ok: true, udfordrer: maskedName(rows[0].navn, privilegeret) });
     } catch (e) {
       next(e);
     }

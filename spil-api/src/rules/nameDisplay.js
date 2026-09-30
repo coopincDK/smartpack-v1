@@ -17,4 +17,20 @@ function shortName(navn) {
   return sidsteInitial ? `${first} ${sidsteInitial}.` : first;
 }
 
-module.exports = { shortName };
+// Sentinel-værdien src/playerDeletion.js skriver ind i stedet for en slettet
+// spillers navn (notifikation.data.by/.fra, forsoeg.duel.vs). Skal ALDRIG
+// selv maskeres videre af shortName() — "Slettet spiller" ville ellers blive
+// forvansket til det vildledende "Slettet s.".
+const SLETTET_SPILLER = 'Slettet spiller';
+
+// Fælles maskeringsregel til ALT navnevisning uden for GET /state (denne
+// runde: GET /me's notifikationer, se src/routes/me.js) — samme regel som
+// GET /state allerede bruger (src/publicState.js#toPublicView): fuldt navn
+// kun ved en gyldig admin/stand-session (`privileged`), ellers `shortName()`.
+// Sentinel-værdien ovenfor undtages altid fra maskering, uanset privilegie.
+function maskedName(navn, privileged) {
+  if (navn === SLETTET_SPILLER) return SLETTET_SPILLER;
+  return privileged ? navn : shortName(navn);
+}
+
+module.exports = { shortName, maskedName, SLETTET_SPILLER };

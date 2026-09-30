@@ -1,0 +1,13 @@
+# Server-lokal override — bind api-servicen til 127.0.0.1:8004 (host-nginx
+# proxy'er /api/spil/ hertil, se /etc/nginx/sites-available/smartpack.dk).
+#
+# Denne fil er NU versionsstyret (siden "Tredje opfølgende ændringsrunde") —
+# den lå tidligere KUN uden for git-repoet direkte på serveren, og blev
+# fjernet ved et uheld af en rsync --delete under en udrulning (se
+# README.md, "Udrulning fra Windows", for den opdaterede deploy-metode der
+# undgår dette). Indholdet her er identisk med det der allerede kører i
+# produktion — ingen secrets, kun selve portbindingen.
+services:
+  api:
+    ports:
+      - "127.0.0.1:8004:3000"

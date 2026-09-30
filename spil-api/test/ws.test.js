@@ -289,6 +289,96 @@ test('opgave E: WS-relay overskriver ALTID data.name/data.an med serverens egen 
   assert.equal(relay.from.name, 'Ægte N.');
 });
 
+// --- Tredje opfølgende ændringsrunde, punkt 3 ---
+
+test('punkt 3: duel.go\'s bn overskrives med den REELLE modstanders maskerede navn (matchet via connId fra presence)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body: bodyB } = registrerSpiller(h.baseUrl, { navn: 'Ægte Modstander' });
+  const regB = await api(h.baseUrl, 'POST', '/players', { body: bodyB });
+  const tokenB = regB.body.token;
+
+  const { body: bodyA } = registrerSpiller(h.baseUrl, { navn: 'Angriber Andersen' });
+  const regA = await api(h.baseUrl, 'POST', '/players', { body: bodyA });
+  const tokenA = regA.body.token;
+
+  const connB = await connect(h.wsUrl);
+  const connA = await connect(h.wsUrl);
+  const lytter = await connect(h.wsUrl);
+  t.after(() => {
+    connB.close();
+    connA.close();
+    lytter.close();
+  });
+
+  connB.send(JSON.stringify({ type: 'hello', token: tokenB }));
+  await nextMessage(connB);
+  connA.send(JSON.stringify({ type: 'hello', token: tokenA }));
+  await nextMessage(connA);
+
+  lytter.send(JSON.stringify({ type: 'join', room: 'bn-forfalskning' }));
+  await nextMessage(lytter);
+
+  // B sætter presence FØRST, så serveren kender B's connId (svarer til
+  // presence-listens users[].id) og rigtige navn.
+  const bFikPresence = nextMessage(connB);
+  const lytterFikPresence = nextMessage(lytter);
+  connB.send(JSON.stringify({ type: 'presence', room: 'bn-forfalskning' }));
+  const bPresence = await bFikPresence;
+  await lytterFikPresence;
+  const bConnId = bPresence.users[0].id;
+
+  const modtaget = nextMessage(lytter);
+  // A (som IKKE er B) forsøger at udgive et VILKÅRLIGT navn som modstander
+  // i selve duel.go-payloaden, men peger `b` på B's rigtige connId.
+  connA.send(
+    JSON.stringify({
+      type: 'emit',
+      room: 'bn-forfalskning',
+      event: 'duel.go',
+      data: { a: 'a-tab', an: 'ignoreres', b: String(bConnId), bn: 'Falsk Modstander' },
+    })
+  );
+  const relay = await modtaget;
+  assert.equal(relay.event, 'duel.go');
+  assert.equal(relay.data.bn, 'Ægte M.', 'bn skal overskrives med den REELLE modstanders maskerede navn');
+  assert.notEqual(relay.data.bn, 'Falsk Modstander');
+});
+
+test('punkt 3: duel.go\'s bn ryddes til tom streng når modstander-referencen er ukendt (aldrig klientens ubekræftede tekst)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = registrerSpiller(h.baseUrl, { navn: 'Angriber Andersen' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const spiller = await connect(h.wsUrl);
+  const lytter = await connect(h.wsUrl);
+  t.after(() => {
+    spiller.close();
+    lytter.close();
+  });
+
+  spiller.send(JSON.stringify({ type: 'hello', token }));
+  await nextMessage(spiller);
+  lytter.send(JSON.stringify({ type: 'join', room: 'bn-ukendt' }));
+  await nextMessage(lytter);
+
+  const modtaget = nextMessage(lytter);
+  spiller.send(
+    JSON.stringify({
+      type: 'emit',
+      room: 'bn-ukendt',
+      event: 'duel.go',
+      data: { a: 'x', an: 'ignoreres', b: 'findes-ikke', bn: 'Snydenavn' },
+    })
+  );
+  const relay = await modtaget;
+  assert.equal(relay.data.bn, '', 'ukendt modstander-reference skal give tom bn, aldrig klientens tekst');
+});
+
 test('opgave E: state.changed broadcastes ved ny registrering, firma-ændring, admin-config-ændring, sletning af én spiller, og admin/nulstil', async (t) => {
   const h = await startHarness({ adminRouterOpts: { runBackup: async () => '/tmp/nulstil-test.sql' } });
   t.after(() => h.teardown());

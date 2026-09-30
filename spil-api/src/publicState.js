@@ -10,7 +10,7 @@
 // selve request-specifikke maskering (kort navn medmindre admin/stand) sker
 // billigt pr. kald ovenpå cachen, se getPublicState() nedenfor.
 
-const { shortName } = require('./rules/nameDisplay');
+const { shortName, maskedName } = require('./rules/nameDisplay');
 const { todayStr } = require('./rules/tzDate');
 
 const CACHE_MS = 2000;
@@ -88,7 +88,10 @@ function toPublicView(full) {
     players: full.players.map((p) => ({
       ...p,
       name: shortName(p.name),
-      attempts: p.attempts.map((a) => (a.duel ? { ...a, duel: { vs: shortName(a.duel.vs) } } : a)),
+      // maskedName (ikke rå shortName): en evt. allerede-anonymiseret
+      // "Slettet spiller"-sentinel (se src/playerDeletion.js) skal vises
+      // uændret, ikke maskeres videre til det vildledende "Slettet s.".
+      attempts: p.attempts.map((a) => (a.duel ? { ...a, duel: { vs: maskedName(a.duel.vs, false) } } : a)),
     })),
   };
 }

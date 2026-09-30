@@ -156,19 +156,35 @@ function runsRouter(pool, ws) {
 
       // Anonymiserings-id-fix: `duel.vsId` (valgfrit, NYT — modstanderens
       // `pid`) løses her til modstanderens INTERNE spiller-id, gemt som
-      // `duel.vs_spiller_id` ved siden af det fritekst-navn (`duel.vs`)
-      // klienten selv sender. Bruges KUN til at gøre en evt. senere
-      // GDPR-anonymisering af modstanderens navn ID-baseret i stedet for
-      // navnematch (se src/playerDeletion.js) — eksponeres ALDRIG i noget
-      // offentligt svar (GET /state's sanitizeDuel medtager den ikke).
+      // `duel.vs_spiller_id` ved siden af et navne-SNAPSHOT (`duel.vs`).
+      // Bruges KUN til at gøre en evt. senere GDPR-anonymisering af
+      // modstanderens navn ID-baseret i stedet for navnematch (se
+      // src/playerDeletion.js) — eksponeres ALDRIG i noget offentligt svar
+      // (GET /state's sanitizeDuel medtager den ikke).
+      //
+      // Sikkerhedsgennemgang (denne opfølgende runde): `duel.vs` var HIDTIL
+      // ren klient-fritekst uden nogen serverside-verifikation mod den
+      // faktiske modstander — en spiller kunne indsende et VILKÅRLIGT navn
+      // her, uafhængigt af hvem `vsId` rent faktisk pegede på. Nu `vsId`
+      // resolves til en RIGTIG spiller, overskriver vi snapshottet med
+      // SERVERENS EGEN kendte navn for netop DEN spiller (samme princip som
+      // WS's duel.go an/bn-overskrivning, se src/ws.js) — klientens
+      // indsendte `duel.vs` bruges ALDRIG når id'et er kendt. Er `vsId`
+      // ukendt/manglende, er der intet at verificere imod — `duel.vs` gemmes
+      // som hidtil (uverificeret fritekst, kun brugt som navnematch-faldback
+      // ved en evt. senere anonymisering af netop DEN forsøgs-række, samme
+      // accepterede begrænsning som hidtil).
       let duel = null;
       if (duelRaw) {
         duel = { ...duelRaw };
         if (duel.vsId) {
-          const modRes = await client.query('SELECT id FROM spiller WHERE public_id = $1', [
+          const modRes = await client.query('SELECT id, navn FROM spiller WHERE public_id = $1', [
             String(duel.vsId).slice(0, 40),
           ]);
-          if (modRes.rows.length) duel.vs_spiller_id = modRes.rows[0].id;
+          if (modRes.rows.length) {
+            duel.vs_spiller_id = modRes.rows[0].id;
+            duel.vs = modRes.rows[0].navn;
+          }
         }
       }
 

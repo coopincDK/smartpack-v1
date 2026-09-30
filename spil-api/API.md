@@ -209,6 +209,16 @@ tokens pr. spiller" nedenfor.
 se "Packrush-ændringer" for forskellen. `samtykker` er nu afledt af
 hændelsesloggen (`aktiv` = seneste hændelse for listen er `bekraeftet`).
 
+**`notifikationer[].data`s navnefelter (`by`/`fra`) er MASKEREDE (siden
+"Tredje opfølgende ændringsrunde", se nedenfor)** — samme regel som
+`GET /state`: fuldt navn kun hvis DENNE forbindelse har en gyldig
+admin/stand-sessionscookie (uafhængigt af hvem spilleren selv er), ellers
+`"Fornavn E."`. Peger notifikationen på en siden slettet spiller, vises
+`"Slettet spiller"` uændret i begge tilfælde. De interne
+`by_spiller_id`/`fra_spiller_id`-felter (kun til brug ved GDPR-
+anonymisering, se `src/playerDeletion.js`) eksponeres ALDRIG her — samme
+princip som `forsoeg.duel.vs_spiller_id`.
+
 ### `PATCH /me` (bearer) — sæt/ret firma
 Body `{ "firma": "Smartpack ApS" }` — `firma`: 0–40 tegn (tomt = ryd
 firmaet). Genberegner `firma_noegle` (samme algoritme som ved
@@ -231,6 +241,13 @@ Body `{ "code": "K7M2" }`. Sætter `p.chFrom` server-side (bruges af
 gennemfører et forsøg i dag).
 `200 { "ok": true, "udfordrer": "Bo Hansen" }` eller
 `400 { "fejl": "Ukendt udfordringskode.", "kode": "ukendt_kode" }`.
+
+**`udfordrer` er MASKERET (siden "Tredje opfølgende ændringsrunde")** —
+samme regel som `GET /me`s notifikationer og `GET /state`: fuldt navn kun
+med en gyldig admin/stand-session for DENNE forbindelse, ellers
+`"Fornavn E."` (`"Bo H."` i eksemplet ovenfor er den faktiske, ikke-
+privilegerede værdi — dokumentationseksemplet ovenfor viser den
+PRIVILEGEREDE variant for læsbarhedens skyld).
 
 ### `PUT /me/subs` (bearer) — VARIG af-/tilmelding
 Body `{ "keys": ["sp", "sms"] }` — det ØNSKEDE fulde, VARIGE sæt.
@@ -418,6 +435,20 @@ en modtager med gyldig admin/stand-session). Klienten kan ALDRIG sætte
 vilkårlig tekst som sit eget navn i et duel-event der relayes videre til
 andre (fx standvæggen) — håndhæves for HVER besked, ikke kun ved selve
 forbindelsen.
+
+**`duel.go`s `bn` (modstanderens navn) overskrives NU OGSÅ** (siden
+"Tredje opfølgende ændringsrunde") — `bn` sættes af AFSENDEREN SELV når de
+vælger hvem de vil duellere mod fra ventelisten og var derfor lige så
+forfalskeligt som `an`/`name` var før forrige runde. Valgt løsning: (a)
+overskriv `bn` server-side ud fra serverens egen viden om hvem der reelt
+har den angivne modstander-reference (`data.b`) — IKKE (b) at fjerne
+feltet, for ikke at ændre feltnavne/responsstruktur. Vi understøtter to
+sandsynlige konventioner for `data.b` (se `src/ws.js`s toptekst for
+detaljen): et forbindelses-id fra presence-listen (`users[].id`), eller et
+selv-erklæret, tab-lignende strengfelt (`data.a` fra en tidligere besked fra
+samme afsender, jf. det ældre klientmønster i `spil/index.html`). Matcher
+ingen af delene en kendt forbindelse i samme rum, ryddes `bn` til en tom
+streng — klientens indsendte værdi bruges ALDRIG direkte.
 
 Server → alle forbindelser: `{"type":"state.changed"}` når spillerdata/
 config ændres. Siden "Anden opfølgende ændringsrunde" broadcastes dette ikke
@@ -1017,6 +1048,47 @@ de tekniske detaljer der ikke passede naturligt ind noget andet sted.
    med et evt. fremtidigt klient-sidet begreb om "hvornår så JEG
    resultatet" — det er entydigt server-tidspunktet fra
    `forsoeg.slut_server`.
+
+---
+
+## Tredje opfølgende ændringsrunde (navnemaskering-omgåelse + deploy-hygiejne)
+
+En opfølgende sikkerhedsgennemgang fandt at id-referencerne fra forrige
+runde (`by_spiller_id`/`fra_spiller_id`/`vs_spiller_id`) KUN blev brugt ved
+GDPR-anonymisering — selve LÆSEVEJEN returnerede stadig det rå, ufaskerede
+navn direkte, hvilket omgik hele navnemaskerings-designet. Rettet:
+
+1. **`GET /me`'s `notifikationer[].data.by`/`.fra`** maskeres nu ved
+   læsning, se "`GET /me`"-afsnittet ovenfor og `src/routes/me.js#maskNotifikation`.
+   De interne id-felter eksponeres ikke længere i svaret.
+2. **`forsoeg.duel.vs`** — write-side: `duel.vs` var hidtil ren
+   klient-fritekst uden nogen serverside-verifikation mod den faktiske
+   modstander. Nu `duel.vsId` resolves til en rigtig spiller, overskrives
+   snapshottet med serverens egen kendte navn for netop DEN spiller (se
+   `src/routes/runs.js`). Read-side: `GET /state`s maskering (uændret regel)
+   bruger nu `maskedName()` i stedet for rå `shortName()`, så en allerede
+   anonymiseret "Slettet spiller"-sentinel vises uændret i stedet for at
+   blive forvansket til "Slettet s." (se `src/publicState.js`).
+3. **WS `duel.go`s `bn`** (modstanderens navn, sat af afsenderen selv) — se
+   "WebSocket `/ws`" ovenfor.
+4. **`POST /me/challenge`s `udfordrer`** — fundet ved den afsluttende
+   adversarielle gennemgang af selve denne rettelse (samme lækage-klasse,
+   men ikke via en gemt/genlæst kolonne — direkte i selve svaret): kode-
+   ejerens fulde navn blev returneret ufasket til en helt almindelig
+   spiller. Maskeres nu efter samme regel, se "`POST /me/challenge`"
+   ovenfor.
+
+**Datamigrering:** `migrations/006_navnemaskering_fix.sql` retter
+eksisterende `forsoeg.duel.vs`-rækker hvor `vs_spiller_id` allerede er kendt,
+så snapshottet matcher den faktiske spillers navn (formentlig meget lidt
+eller ingen reel data i produktion endnu).
+
+**Deploy-hygiejne (uafhængigt punkt, samme runde):** `docker-compose.override.yml`
+(server-lokal port-binding, `127.0.0.1:8004:3000`) er nu versionsstyret i
+dette repo i stedet for kun at eksistere som en utracket fil på serveren —
+en `rsync --delete`-baseret udrulning kunne (og gjorde, én gang) slette den
+ved et uheld. Se README.md, "Udrulning fra Windows", for den opdaterede
+`deploy.sh`-metode uden lokal `rsync`.
 
 ---
 
