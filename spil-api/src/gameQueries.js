@@ -12,6 +12,13 @@ function metricSqlExpr(metric) {
   if (metric === 'r1') return 'runde1';
   if (metric === 'r2') return 'runde2';
   if (metric === 'r3') return 'runde3';
+  // Sikkerhed: `metric` kan stamme fra admin-config (cfg.mission, se goalMet()
+  // nedenfor), som ikke er valideret mod en fast liste ved PUT /admin/config.
+  // Uden dette tjek ville et vilkårligt config-felt kunne splejses direkte ind
+  // i SQL'en herunder (SQL-injektion). Kun alfanumerisk + underscore tillades.
+  if (typeof metric !== 'string' || !/^[a-zA-Z0-9_]+$/.test(metric)) {
+    throw new Error(`Ugyldig metrik-nøgle: ${JSON.stringify(metric)}`);
+  }
   return `(stats->>'${metric}')::numeric`;
 }
 
@@ -102,7 +109,12 @@ async function daysPlayedSince(client, spillerId, periodStart) {
 
 async function goalMet(client, spillerId, cfg) {
   if (!cfg.goal || cfg.goal <= 0) return false;
-  const metric = cfg.mission || 'total';
+  // cfg.mission kommer fra admin-config (PUT /admin/config), som ikke
+  // begrænser feltet til en kendt liste af metrikker — fald sikkert tilbage
+  // til 'total' hvis en administrator (utilsigtet eller ej) har sat noget
+  // andet end en kendt MET/RECORDS-nøgle. Se metricSqlExpr() ovenfor.
+  const ONLY_METRICS = new Set(['total', 'r1', 'r2', 'r3', ...RECORDS]);
+  const metric = ONLY_METRICS.has(cfg.mission) ? cfg.mission : 'total';
   const expr = metricSqlExpr(metric);
   const dir = MET[metric] && MET[metric].low ? 'MIN' : 'MAX';
   const zeroOk = metric === 'total';
