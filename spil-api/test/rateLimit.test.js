@@ -1,6 +1,6 @@
 'use strict';
 
-process.env.RUNS_START_RATE_LIMIT_MS = '250'; // lille, men IKKE 0 — se sidste test i denne fil
+process.env.RUNS_START_RATE_LIMIT_MS = '2000'; // lille, men IKKE 0 — se sidste tests i denne fil
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -59,4 +59,58 @@ test('{ny:true} kan IKKE bruges til at omgå POST /runs-rate-limiten (1 kald/spi
 
   const medNyMedSamme = await api(h.baseUrl, 'POST', '/runs', { token, body: { ny: true } });
   assert.equal(medNyMedSamme.status, 429, 'ny:true skal rammes af rate-limiten ligesom et almindeligt kald');
+});
+
+// N12: et genoptaget-svar (intet nyt forsøg, intet nyt liv) må ALDRIG
+// forbruge rate-limit-"slottet" — og må heller ikke lade et tidligere
+// forbrug (fra den oprindelige oprettelse) blive stående og blokere det
+// efterfølgende {ny:true}-kald, som en klient typisk sender LIGE EFTER at
+// have set genoptaget:true, for bevidst at opgive det gamle forsøg og starte
+// et nyt (se src/routes/runs.js).
+test('N12: genoptaget-svar forbruger IKKE rate-limit-slottet — et efterfølgende {ny:true} kan gennemføre uden 429', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl);
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  // 1) Opretter et forsøg — bruger et liv OG rate-limit-slottet.
+  const foerste = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(foerste.status, 201);
+
+  // 2) Samme kald igen, uden ny — genoptager det eksisterende (ingen ændring,
+  // intet liv brugt) og må IKKE forbruge rate-limit-slottet.
+  const genoptaget = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(genoptaget.status, 200);
+  assert.equal(genoptaget.body.genoptaget, true);
+  assert.equal(genoptaget.body.runde_id, foerste.body.runde_id);
+
+  // 3) {ny:true} rent faktisk opretter et nyt forsøg (nyt liv) — skal
+  // gennemføre uden 429, selvom det kommer godt inden for rate-limit-vinduet
+  // efter kald 1.
+  const nyt = await api(h.baseUrl, 'POST', '/runs', { token, body: { ny: true } });
+  assert.equal(nyt.status, 201, 'skal IKKE rammes af 429 pga. det forudgående, ikke-forbrugende genoptaget-kald');
+  assert.notEqual(nyt.body.runde_id, foerste.body.runde_id);
+});
+
+// N12 (kontrol): sikrer at ovenstående fix ikke ved et uheld har slået hele
+// rate-limiten på POST /runs fra — to RIGTIGE forsøgsoprettelser (begge
+// bruger et liv og indsætter en ny forsoeg-række) inden for samme vindue skal
+// stadig rammes af 429.
+test('N12: to RIGTIGE forsøgsoprettelser inden for rate-limit-vinduet rammer stadig 429', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl);
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const foerste = await api(h.baseUrl, 'POST', '/runs', { token });
+  assert.equal(foerste.status, 201);
+
+  // Ingen genoptaget-kald imellem — {ny:true} her er den ANDEN reelle
+  // oprettelse inden for vinduet og skal rammes af 429.
+  const anden = await api(h.baseUrl, 'POST', '/runs', { token, body: { ny: true } });
+  assert.equal(anden.status, 429, 'to reelle oprettelser inden for vinduet skal stadig rate-limites');
 });

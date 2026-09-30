@@ -47,7 +47,7 @@ function runsRouter(pool, ws) {
     besked: 'Vent lidt før du starter et nyt forsøg.',
   });
 
-  router.post('/runs', auth, startLimiter, async (req, res, next) => {
+  router.post('/runs', auth, async (req, res, next) => {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -62,6 +62,10 @@ function runsRouter(pool, ws) {
         `SELECT * FROM forsoeg WHERE spiller_id = $1 AND status = 'aktiv' ORDER BY oprettet DESC LIMIT 1`,
         [row.id]
       );
+      // Udskudt til LIGE FØR den faktiske oprettelse (se N12 nedenfor) — sat
+      // her, hvis relevant, men kun UDFØRT hvis rate-limit-tjekket tillader det.
+      let opgivDetteId = null;
+      let opgivStatus = null;
       if (aktiv.rows.length) {
         const a = aktiv.rows[0];
         // Opgave A: et aktivt forsøg kan finish'es resten af den (københavnske)
@@ -72,14 +76,46 @@ function runsRouter(pool, ws) {
         const sammeDag = todayStr(a.start_server) === todayStr(now);
         if (sammeDag && !ny) {
           await client.query('COMMIT');
+          // N12: intet NYT forsøg oprettes her — samme forsøg genbruges, intet
+          // liv bruges. Et genoptaget-svar må derfor ALDRIG forbruge
+          // rate-limit-"slottet" på POST /runs (se startLimiter nedenfor). Vi
+          // går skridtet videre end blot ikke at forbruge et nyt slot: et evt.
+          // forudgående forbrug — fra dengang DETTE forsøg rent faktisk blev
+          // oprettet — må heller ikke blive stående og blokere klientens
+          // næste, reelle handling. En klient sender typisk {ny:true} LIGE
+          // EFTER at have set netop dette genoptaget-svar, for bevidst at
+          // opgive det gamle forsøg og starte et nyt — det kald skal kunne
+          // gennemføre uden at ramme 429 pga. dette ikke-forbrugende kald.
+          startLimiter.reset(req);
           return res.json({ runde_id: a.runde_id, start_server: a.start_server, genoptaget: true });
         }
         // Enten er der eksplicit bedt om et nyt forsøg (ny:true, samme dag —
         // det gamle OPGIVES, livet refunderes ikke), eller det aktive forsøg
         // er fra en TIDLIGERE dag og skal uanset `ny` behandles som udløbet
         // (dagsskifte, se API.md, "Dage og tidszoner").
-        const nyStatus = sammeDag ? 'opgivet' : 'udloebet';
-        await client.query(`UPDATE forsoeg SET status = $1 WHERE id = $2`, [nyStatus, a.id]);
+        opgivDetteId = a.id;
+        opgivStatus = sammeDag ? 'opgivet' : 'udloebet';
+      }
+
+      // N12: rate-limit-"slottet" (1 pr. RUNS_START_RATE_LIMIT_MS pr. spiller)
+      // hører logisk til HANDLINGEN "opret et nyt forsøg" — ikke til selve
+      // HTTP-kaldet til POST /runs (den gamle middleware-udgave talte ETHVERT
+      // kald, uanset om der faktisk skete noget). Tjekkes derfor her, netop
+      // FØR vi rører noget (opgiver et ev. gammelt forsøg, bruger et liv,
+      // indsætter en ny forsoeg-række) — og forbruges (se `consume` nedenfor)
+      // KUN hvis hele oprettelsen rent faktisk lykkes.
+      const retryAfterSec = startLimiter.check(req);
+      if (retryAfterSec !== null) {
+        await client.query('ROLLBACK');
+        res.set('Retry-After', String(retryAfterSec));
+        return res.status(429).json({
+          fejl: 'Vent lidt før du starter et nyt forsøg.',
+          kode: 'for_mange_forsoeg',
+        });
+      }
+
+      if (opgivDetteId) {
+        await client.query(`UPDATE forsoeg SET status = $1 WHERE id = $2`, [opgivStatus, opgivDetteId]);
       }
 
       const bag = await currentBag(client, row, cfg, now);
@@ -98,6 +134,7 @@ function runsRouter(pool, ws) {
       );
 
       await client.query('COMMIT');
+      startLimiter.consume(req); // først NU er der rent faktisk oprettet et nyt forsøg
 
       res.status(201).json({
         runde_id: rundeId,
