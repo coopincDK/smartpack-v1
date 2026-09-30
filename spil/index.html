@@ -1004,10 +1004,34 @@ function migrateQueueToStand(){
   let old = []; try{ old = JSON.parse(localStorage.getItem(FQ_STORE) || '[]'); }catch(e){}
   try{ localStorage.removeItem(FQ_STORE); }catch(e){}
   old.filter(item => !item._done).forEach(item => {
-    API.finishRun(item.runId, item.payload, item.token).catch(e => {
-      if(!isFinalRejection(e)) saveFinishQueue(loadFinishQueue().concat([item]));
+    API.finishRun(item.runId, item.payload, item.token).then(res => {
+      if(res && res.godkendt === false) toast(`${item.name || 'Et forsøg'}: ${res.besked || 'blev ikke godkendt.'}`);
+      else toast(`${item.name || 'Et forsøg'}s resultat er nu gemt`);
+    }).catch(e => {
+      // R2: en endelig afvisning blev tidligere droppet helt stille her — flushFinishQueue viser
+      // altid en toast i samme situation, så det skal denne migrering også.
+      if(isFinalRejection(e)) toast(`${item.name || 'Et forsøg'} blev ikke godkendt: ${(e && e.message) || 'ukendt fejl'}`);
+      else saveFinishQueue(loadFinishQueue().concat([item]));
     });
   });
+  // Rettelse: listen over afventende logouts (se V1/R1 nedenfor) hører til SAMME sted som selve
+  // køen — flyt den med over i sessionStorage, flettet med en evt. allerede eksisterende liste der.
+  let oldPending = []; try{ oldPending = JSON.parse(localStorage.getItem(LOGOUT_PENDING_STORE) || '[]'); }catch(e){}
+  try{ localStorage.removeItem(LOGOUT_PENDING_STORE); }catch(e){}
+  if(oldPending.length) saveLogoutPending(Array.from(new Set(loadLogoutPending().concat(oldPending))));
+}
+// R2: den omvendte vej — slås stand FRA igen, skal en evt. kø i sessionStorage IKKE bare blive
+// liggende uden at blive sendt, til fanen lukkes. Flyt den over i den nu gældende (localStorage-
+// baserede) kø, og forsøg at flushe den med det samme.
+function migrateQueueFromStand(){
+  let old = []; try{ old = JSON.parse(sessionStorage.getItem(FQ_STORE) || '[]'); }catch(e){}
+  try{ sessionStorage.removeItem(FQ_STORE); }catch(e){}
+  const pending = old.filter(item => !item._done);
+  if(pending.length){ saveFinishQueue(loadFinishQueue().concat(pending)); flushFinishQueue(); }
+  // Rettelse: samme flytning af listen over afventende logouts, den anden vej (session -> local).
+  let oldPending = []; try{ oldPending = JSON.parse(sessionStorage.getItem(LOGOUT_PENDING_STORE) || '[]'); }catch(e){}
+  try{ sessionStorage.removeItem(LOGOUT_PENDING_STORE); }catch(e){}
+  if(oldPending.length) saveLogoutPending(Array.from(new Set(loadLogoutPending().concat(oldPending))));
 }
 // V1: et token må ikke tilbagekaldes (POST /me/logout), mens der stadig ligger uafsluttede
 // kø-elementer, der bruger DET token — ellers rammer deres finish() en 401 og bliver fejlagtigt
@@ -1044,8 +1068,22 @@ function retryTimed(fn, waitMs){
   });
 }
 let flushingQueue = false;
+// R1: et token lagt i "afventer logout" (se API.logout) skal frigives, så snart INGEN kø-elementer
+// længere bruger det — det kan ske uden om selve denne flush (fx N1's egen håndtering i
+// startAttempt, eller migrateQueueToStand), og uden dette tjek her ville et sådant token først
+// blive ugyldigt via serverens TTL (30 dage), ikke med det samme.
+function releasePendingLogouts(){
+  const pending = loadLogoutPending(); if(!pending.length) return;
+  const stadigIBrug = new Set(loadFinishQueue().map(x => x.token));
+  const klar = pending.filter(t => !stadigIBrug.has(t));
+  if(klar.length){
+    klar.forEach(t => apiFetch('/me/logout', { method: 'POST', tokenOverride: t }).catch(() => {}));
+    saveLogoutPending(pending.filter(t => !klar.includes(t)));
+  }
+}
 function flushFinishQueue(){
   if(flushingQueue) return Promise.resolve();
+  releasePendingLogouts(); // R1: tjek også, selvom køen allerede er tom lige nu (tidlig retur nedenfor ville ellers springe det over)
   const snapshot = loadFinishQueue(); if(!snapshot.length) return Promise.resolve();
   flushingQueue = true;
   const now = Date.now();
@@ -1086,17 +1124,8 @@ function flushFinishQueue(){
     saveFinishQueue(merged);
     flushingQueue = false;
     if(stillPending.length < snapshot.length) loadState();
-    // V1: nu hvor køen er opdateret, kan et token, der afventede logout, måske frigives —
-    // dvs. det har ikke længere NOGEN uafsluttede kø-elementer tilbage.
-    const ventendeLogout = loadLogoutPending();
-    if(ventendeLogout.length){
-      const stadigIBrug = new Set(merged.map(x => x.token));
-      const klar = ventendeLogout.filter(t => !stadigIBrug.has(t));
-      if(klar.length){
-        klar.forEach(t => apiFetch('/me/logout', { method: 'POST', tokenOverride: t }).catch(() => {}));
-        saveLogoutPending(ventendeLogout.filter(t => !klar.includes(t)));
-      }
-    }
+    // V1/R1: nu hvor køen er opdateret, kan et token, der afventede logout, måske frigives.
+    releasePendingLogouts();
   });
 }
 
@@ -3154,7 +3183,11 @@ function paintWallDuel(){
   }
 }
 
-$('#a-stand').onchange = e => { try{ localStorage.setItem(STAND_STORE, e.target.checked ? '1' : '0'); }catch(err){} if(e.target.checked){ forgetMe(); clearStoredIdentity(); migrateQueueToStand(); } paintInstall(); toast(e.target.checked ? 'Enheden er nu en standtablet' : 'Enheden husker nu spilleren'); };
+$('#a-stand').onchange = e => {
+  try{ localStorage.setItem(STAND_STORE, e.target.checked ? '1' : '0'); }catch(err){}
+  if(e.target.checked){ forgetMe(); clearStoredIdentity(); migrateQueueToStand(); } else migrateQueueFromStand();
+  paintInstall(); toast(e.target.checked ? 'Enheden er nu en standtablet' : 'Enheden husker nu spilleren');
+};
 $('#b-standcode').onclick = () => {
   API.admin.standLoginCode().then(res => {
     $('#a-standcode').textContent = res && res.kode ? `Koden er: ${res.kode} (gyldig 5 min.)` : 'Kunne ikke generere en kode.';
