@@ -1014,6 +1014,11 @@ function migrateQueueToStand(){
       else saveFinishQueue(loadFinishQueue().concat([item]));
     });
   });
+  // Rettelse: listen over afventende logouts (se V1/R1 nedenfor) hører til SAMME sted som selve
+  // køen — flyt den med over i sessionStorage, flettet med en evt. allerede eksisterende liste der.
+  let oldPending = []; try{ oldPending = JSON.parse(localStorage.getItem(LOGOUT_PENDING_STORE) || '[]'); }catch(e){}
+  try{ localStorage.removeItem(LOGOUT_PENDING_STORE); }catch(e){}
+  if(oldPending.length) saveLogoutPending(Array.from(new Set(loadLogoutPending().concat(oldPending))));
 }
 // R2: den omvendte vej — slås stand FRA igen, skal en evt. kø i sessionStorage IKKE bare blive
 // liggende uden at blive sendt, til fanen lukkes. Flyt den over i den nu gældende (localStorage-
@@ -1023,6 +1028,10 @@ function migrateQueueFromStand(){
   try{ sessionStorage.removeItem(FQ_STORE); }catch(e){}
   const pending = old.filter(item => !item._done);
   if(pending.length){ saveFinishQueue(loadFinishQueue().concat(pending)); flushFinishQueue(); }
+  // Rettelse: samme flytning af listen over afventende logouts, den anden vej (session -> local).
+  let oldPending = []; try{ oldPending = JSON.parse(sessionStorage.getItem(LOGOUT_PENDING_STORE) || '[]'); }catch(e){}
+  try{ sessionStorage.removeItem(LOGOUT_PENDING_STORE); }catch(e){}
+  if(oldPending.length) saveLogoutPending(Array.from(new Set(loadLogoutPending().concat(oldPending))));
 }
 // V1: et token må ikke tilbagekaldes (POST /me/logout), mens der stadig ligger uafsluttede
 // kø-elementer, der bruger DET token — ellers rammer deres finish() en 401 og bliver fejlagtigt
