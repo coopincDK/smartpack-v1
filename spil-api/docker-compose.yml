@@ -13,6 +13,13 @@ services:
       - db
     # Ingen "ports:" her — fase 2 binder til 127.0.0.1:8004 via en ekstern
     # docker-compose.override.yml eller tilsvarende, uden for dette repo.
+    volumes:
+      # POST /admin/nulstil's pg_dump-sikkerhedsnet (se src/backup.js) skal
+      # skrive et sted der overlever selve containeren og som allerede
+      # findes/overvåges på serveren — SAMME host-sti som det natlige
+      # backup.sh (BACKUP_DIR i backup.sh) skriver til, så alle spil-api-
+      # backups (nattens og en evt. nulstillings) samles ét sted for drift.
+      - /var/backups/spil-api:/var/backups/spil-api
 
   db:
     image: postgres:16

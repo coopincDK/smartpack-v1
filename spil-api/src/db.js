@@ -2,7 +2,19 @@
 
 const fs = require('fs');
 const path = require('path');
-const { Pool } = require('pg');
+const { Pool, types } = require('pg');
+
+// `liv_dag`/`tick_dag` er Postgres `date`-kolonner (ingen tidspunkt/
+// tidszone). node-pg's standard-typeparser (pakken `postgres-date`)
+// konstruerer et JS Date-objekt i PROCESSENS LOKALE tidszone og runder
+// derved dagen forkert, hvis man senere konverterer det med
+// .toISOString().slice(0,10) og processens TZ ikke er UTC (afhænger af
+// server/dev-maskine/CI's miljø — upålideligt). Ved i stedet at levere den
+// rå 'YYYY-MM-DD'-tekststreng direkte (OID 1082 = `date`) undgår vi hele
+// den tvetydighed, uafhængigt af hvor processen kører — se
+// src/rules/tzDate.js for hvor "dag" ELLERS regnes (Europe/Copenhagen for
+// alt der udledes af en timestamptz/Date, fx liv-reset og dagens flueben).
+types.setTypeParser(1082, (val) => val);
 
 function createPool(connectionString) {
   return new Pool({ connectionString: connectionString || process.env.DATABASE_URL });

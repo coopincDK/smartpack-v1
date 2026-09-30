@@ -62,14 +62,14 @@ async function destroySession(pool, token) {
   await pool.query('DELETE FROM admin_session WHERE token_hash = $1', [sha256Hex(token)]);
 }
 
-// Slår sessionens ROLLE op ud fra en request's cookie, uden at afvise/kaste
-// hvis der ingen er (i modsætning til requireAdmin nedenfor) — bruges af
-// GET /state og WS-håndtrykket til at afgøre om fulde navne må vises.
-// Virker både på et Express-req og på et rå http.IncomingMessage (WS-
-// upgrade-requesten har ikke Express' request-udvidelser).
-async function resolveSessionRole(pool, req) {
-  const cookies = parseCookies(req);
-  const token = cookies[COOKIE_NAME];
+// Slår sessionens ROLLE op ud fra et RÅT session-token (ikke en request) —
+// den fælles implementering bag resolveSessionRole() nedenfor. Bruges også
+// direkte af src/ws.js til at GENvalidere en allerede-åben WS-forbindelses
+// rolle (periodisk + lige før enhver besked der ville afsløre fulde navne),
+// da en WS-forbindelse ikke har en frisk request/cookie-header at slå op på
+// efter selve håndtrykket — kun det token den fangede ved forbindelses-
+// tidspunktet.
+async function resolveRoleForToken(pool, token) {
   if (!token) return null;
   try {
     const { rows } = await pool.query(
@@ -80,6 +80,17 @@ async function resolveSessionRole(pool, req) {
   } catch (e) {
     return null;
   }
+}
+
+// Slår sessionens ROLLE op ud fra en request's cookie, uden at afvise/kaste
+// hvis der ingen er (i modsætning til requireAdmin nedenfor) — bruges af
+// GET /state og WS-håndtrykket til at afgøre om fulde navne må vises.
+// Virker både på et Express-req og på et rå http.IncomingMessage (WS-
+// upgrade-requesten har ikke Express' request-udvidelser).
+async function resolveSessionRole(pool, req) {
+  const cookies = parseCookies(req);
+  const token = cookies[COOKIE_NAME];
+  return resolveRoleForToken(pool, token);
 }
 
 // Kræver en gyldig, ikke-udløbet admin-session-cookie MED rolle='admin'.
@@ -134,6 +145,7 @@ module.exports = {
   createSession,
   destroySession,
   resolveSessionRole,
+  resolveRoleForToken,
   requireAdmin,
   attachViewerRole,
 };

@@ -146,3 +146,76 @@ test('WS: broadcasts personaliseres pr. forbindelse — stand-session ser fulde 
   assert.equal(anonEvent.from.name, 'Martin R.');
   assert.equal(standEvent.from.name, 'Martin Rasmussen');
 });
+
+test('WS: periodisk revalidering lukker en stand-forbindelse hvis sessionen forsvinder mens socket\'en er åben', async (t) => {
+  const h = await startHarness({ wsOpts: { revalidateMs: 50 } });
+  t.after(() => h.teardown());
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+  const kodeRes = await api(h.baseUrl, 'POST', '/admin/stand-login-kode', { adminCookie });
+  const standLogin = await api(h.baseUrl, 'POST', '/stand-login', { body: { kode: kodeRes.body.kode } });
+  const standCookie = cookieFra(standLogin);
+
+  const standConn = await connect(h.wsUrl, standCookie);
+  t.after(() => {
+    try {
+      standConn.close();
+    } catch (e) {
+      /* ignore */
+    }
+  });
+
+  const closed = new Promise((resolve) => standConn.once('close', resolve));
+  // Simulerer at sessionen forsvinder (udløber/logges ud af en admin) MENS
+  // forbindelsen er åben.
+  await h.pool.query("DELETE FROM admin_session WHERE rolle = 'stand'");
+  await closed; // det periodiske sweep (50 ms i denne test) skal lukke forbindelsen
+});
+
+test('WS: navnevisning genvalideres FRISKT lige før hver besked — mister fulde navne uden at vente på det periodiske sweep', async (t) => {
+  // Meget langt sweep-interval: kun den friske pr.-besked-revalidering
+  // (isPrivilegedNow) kan redde denne test.
+  const h = await startHarness({ wsOpts: { revalidateMs: 10 * 60 * 1000 } });
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { navn: 'Martin Rasmussen' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+  const kodeRes = await api(h.baseUrl, 'POST', '/admin/stand-login-kode', { adminCookie });
+  const standLogin = await api(h.baseUrl, 'POST', '/stand-login', { body: { kode: kodeRes.body.kode } });
+  const standCookie = cookieFra(standLogin);
+
+  const spiller = await connect(h.wsUrl);
+  const standLytter = await connect(h.wsUrl, standCookie);
+  t.after(() => {
+    spiller.close();
+    standLytter.close();
+  });
+
+  spiller.send(JSON.stringify({ type: 'hello', token }));
+  await nextMessage(spiller);
+  standLytter.send(JSON.stringify({ type: 'join', room: 'reval-fresh' }));
+  await nextMessage(standLytter);
+
+  const foerPresence = nextMessage(standLytter);
+  spiller.send(JSON.stringify({ type: 'presence', room: 'reval-fresh', name: 'Martin Rasmussen' }));
+  const foer = await foerPresence;
+  assert.equal(foer.users[0].name, 'Martin Rasmussen', 'stand-sessionen er gyldig -> fulde navne');
+
+  // Sessionen forsvinder (fx logget ud af en admin, eller naturligt
+  // udløbet) — ingen ventetid på det (her meget lange) periodiske sweep.
+  await h.pool.query("DELETE FROM admin_session WHERE rolle = 'stand'");
+
+  const efterPresence = nextMessage(standLytter);
+  spiller.send(JSON.stringify({ type: 'presence', room: 'reval-fresh', name: 'Martin Rasmussen' }));
+  const efter = await efterPresence;
+  assert.equal(
+    efter.users[0].name,
+    'Martin R.',
+    'skal falde tilbage til forkortet navn STRAKS, uden at vente på det periodiske sweep'
+  );
+});

@@ -97,7 +97,16 @@ uden at påvirke andre testfiler.
   `deleteInactivePlayers` (`src/retention.js`) mod syntetiske spillere:
   aktivt samtykke beholdes uanset alder, nyligt spillet uden samtykke
   beholdes, inaktiv uden samtykke slettes (både med og uden spilhistorik),
-  cascade rammer kun de rette spilleres forsøg/notifikationer/samtykke.
+  cascade rammer kun de rette spilleres forsøg/notifikationer/samtykke;
+  `cutoffDate()`s skudårsklemning; TOCTOU-genkontrollen
+  (`stillQualifiesForDeletion`) afviser sletning af en kandidat der har
+  fået nyt aktivt samtykke siden udvælgelsen; anonymisering af
+  rest-referencer (raffle_draws-snapshot, notifikation.data.by/fra,
+  forsoeg.duel.vs) i andre spilleres data.
+- `tzDate.test.js` — Europe/Copenhagen-dagsberegningen
+  (`src/rules/tzDate.js`), både JS-siden (`todayStr`, med et tidspunkt der
+  er FORSKELLIG dag i UTC vs. København) og SQL-siden (`cphDateExpr` via
+  `todayLeaderboard`).
 - `boostCode.test.js` — den porterede hash/boostkode-algoritme.
 - `scoring.test.js` — snydegrænser (rundescore-lofter, spilletid,
   stats-konsistens) og badge-evaluering.
@@ -106,16 +115,23 @@ uden at påvirke andre testfiler.
   navnevisning forkortet uden session, fuldt med admin/stand-session.
 - `players.test.js` — registrering/login, telefon-match-krav ved login,
   unikt telefonnummer, `PUT /me/subs` (varig, ingen liv) vs. `PUT /me/ticks`
-  (dagens flueben, friske liv), `DELETE /me/subs/:liste`, sms-boost-indløsning.
+  (dagens flueben, friske liv), `DELETE /me/subs/:liste`, sms-boost-indløsning;
+  firma er valgfrit ved registrering + `PATCH /me` sætter/retter det bagefter
+  og gør spilleren tællende i firmakampen (companyKey).
 - `runs.test.js` — liv-forbrug ved `POST /runs`, idempotent `finish`,
   afvisning ved urealistisk score/for kort spilletid/tid-mismatch,
   ejerskabstjek.
 - `admin.test.js` — admin-endpoints kræver session; login/logout;
   stand-login-flow (ét-gangs-kode → stand-session) og at en stand-session
-  får 403 på rigtige admin-only endpoints.
+  får 403 på rigtige admin-only endpoints; `POST /admin/afmeld`
+  (fundet/ikke-fundet, kræver admin ikke stand); `POST /admin/nulstil`
+  (kræver præcis bekræftelsesstrengen, tager backup FØR sletning og
+  afbrydes helt hvis backuppen fejler, sletter alt, logger en audit-række).
 - `ws.test.js` — WS duel-events (`presence`/`emit`) kræver spiller-token;
   anonyme forbindelser kan kun lytte; broadcasts personaliseres pr.
-  forbindelse (stand-session ser fulde navne, andre ser forkortede).
+  forbindelse (stand-session ser fulde navne, andre ser forkortede);
+  en admin/stand-session der forsvinder MENS forbindelsen er åben mister
+  privilegiet, både via det periodiske sweep og den friske pr.-besked-tjek.
 
 **pg-mem-forbehold:** testfallbacket uden Docker (se ovenfor) har en kendt
 begrænsning med `DISTINCT ON` kombineret med et efterfølgende SQL-side
@@ -150,6 +166,26 @@ kvalificerer til sletning). Driftsmæssigt:
   (juster stien til `/var/log/spil-retention.log`, eller lad den gå til
   `docker compose logs` i stedet, alt efter hvad der allerede er sat op for
   backup-cron'en på serveren.)
+### Drift: `POST /admin/nulstil`s pg_dump-sikkerhedsnet
+
+`POST /admin/nulstil` (se API.md) tager FØRST en `pg_dump` som
+sikkerhedsnet, FØR den sletter alle spillere. Dette FORUDSÆTTER:
+
+- `pg_dump`-klienten (Postgres 16, pakken `postgresql16-client` på Alpine)
+  er installeret i api-imaget — se `Dockerfile`. Kørt in-process (via
+  `DATABASE_URL`), IKKE via `docker compose exec db pg_dump` (det natlige
+  `backup.sh`s mekanisme) — api-containeren har hverken docker-socketen
+  eller docker-CLI'en til rådighed.
+- `/var/backups/spil-api` er mountet fra hosten ind i api-containeren — se
+  `docker-compose.yml`s `volumes:` under `api`-servicen. Dette er SAMME
+  host-sti som det natlige backup.sh allerede skriver til (så alt samles ét
+  sted), men filerne navngives `nulstil-<tidsstempel>.sql` (IKKE
+  `spilapi-*.sql.gz`), så backup.sh's 14-dages-rotation aldrig rammer dem.
+
+Fejler `pg_dump` (fx pga. manglende disk, forkert `DATABASE_URL`, eller
+disse forudsætninger ikke er opfyldt på serveren), afbrydes nulstillingen
+HELT — ingen spillere slettes. Se `src/backup.js`.
+
 - **Hvor man ser antallet af slettede:** stdout, som én linje pr. kørsel:
   `[retention] <tidspunkt> slettede <antal> spiller(e) (...)`. ALDRIG
   navne/emails — kun antallet. Send output til samme sted som

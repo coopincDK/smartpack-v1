@@ -11,7 +11,11 @@ const { createRateLimiter } = require('./middleware/rateLimit');
 
 // Bygger Express-appen. `ws` (fra src/ws.js) er valgfri — bruges til at
 // broadcaste state.changed når spillerdata/config ændres via API'et.
-function createApp(pool, ws) {
+// `opts.adminRouterOpts` videresendes til adminRouter() — bruges KUN af
+// tests til at injicere en stub for POST /admin/nulstil's pg_dump-kald (se
+// src/backup.js), så testsuiten ikke kræver en rigtig pg_dump-klient.
+function createApp(pool, ws, opts) {
+  opts = opts || {};
   const app = express();
   app.disable('x-powered-by');
   // Ingen CORS-headers (same-origin). Ingen app.set('trust proxy', ...) —
@@ -31,7 +35,7 @@ function createApp(pool, ws) {
   app.use(playersRouter(pool));
   app.use(meRouter(pool));
   app.use(runsRouter(pool, ws));
-  app.use(adminRouter(pool));
+  app.use(adminRouter(pool, opts.adminRouterOpts));
 
   app.use((req, res) => {
     res.status(404).json({ fejl: 'Ukendt endpoint.', kode: 'ikke_fundet' });

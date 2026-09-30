@@ -4,16 +4,21 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
 const { startHarness } = require('./helpers/appHarness');
-const { findRetentionCandidates, deleteInactivePlayers, cutoffDate } = require('../src/retention');
+const {
+  findRetentionCandidates,
+  stillQualifiesForDeletion,
+  deleteInactivePlayers,
+  cutoffDate,
+} = require('../src/retention');
 
 let telefonSeq = 20000000;
-async function mkSpiller(pool, oprettet) {
+async function mkSpiller(pool, oprettet, navn) {
   const unik = crypto.randomBytes(6).toString('hex');
   telefonSeq++;
   const { rows } = await pool.query(
     `INSERT INTO spiller (public_id, email, navn, telefon, firma, firma_noegle, token_hash, oprettet)
-     VALUES ($1,$2,'Test Testesen',$3,'Firma','firma',$4,$5) RETURNING id`,
-    [unik, unik + '@example.dk', String(telefonSeq), 'th' + unik, oprettet]
+     VALUES ($1,$2,$3,$4,'Firma','firma',$5,$6) RETURNING id`,
+    [unik, unik + '@example.dk', navn || 'Test Testesen', String(telefonSeq), 'th' + unik, oprettet]
   );
   return rows[0].id;
 }
@@ -37,6 +42,16 @@ test('cutoffDate regner præcis 12 måneder tilbage', () => {
   const now = new Date('2026-09-30T12:00:00Z');
   const cutoff = cutoffDate(now);
   assert.equal(cutoff.toISOString().slice(0, 10), '2025-09-30');
+});
+
+test('cutoffDate klemmer konservativt til sidste dag i februar over en skudårskant (aldrig for tidligt)', () => {
+  // 29. februar 2028 (skudår) minus 12 måneder findes ikke i 2027 (ikke
+  // skudår) — klemmes til 28. februar 2027, IKKE rullet videre til 1. marts
+  // (som ville gøre cutoff nyere, dvs. gøre det NEMMERE at kvalificere til
+  // sletning end præcis 12 måneder tilsiger).
+  const now = new Date('2028-02-29T00:00:00Z');
+  const cutoff = cutoffDate(now);
+  assert.equal(cutoff.toISOString().slice(0, 10), '2027-02-28');
 });
 
 test('GDPR-oprydning: kun spillere UDEN aktivt samtykke OG >12 mdr. inaktive kvalificerer', async (t) => {
@@ -96,4 +111,107 @@ test('GDPR-oprydning: kun spillere UDEN aktivt samtykke OG >12 mdr. inaktive kva
   assert.equal(Number(forsoegB.rows[0].n), 1);
   const samtykkeA = await h.pool.query('SELECT COUNT(*) AS n FROM samtykke WHERE spiller_id = $1', [a]);
   assert.equal(Number(samtykkeA.rows[0].n), 1);
+});
+
+test('TOCTOU: genkontrollen afviser sletning hvis kandidaten er blevet kvalificeret ud siden findRetentionCandidates()', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const now = new Date('2026-09-30T00:00:00Z');
+  const forGammel = new Date('2020-01-01T00:00:00Z');
+
+  const c = await mkSpiller(h.pool, forGammel);
+  await h.pool.query(
+    `INSERT INTO forsoeg (spiller_id, runde_id, start_server, status, oprettet) VALUES ($1,$2,$3,'godkendt',$3)`,
+    [c, crypto.randomUUID(), forGammel]
+  );
+
+  // Kvalificerer til sletning LIGE NU (ingen aktivt samtykke, >12 mdr. inaktiv).
+  const kandidater = await findRetentionCandidates(h.pool, now);
+  assert.ok(kandidater.includes(c));
+
+  // ...men en anden proces/kald bekræfter et NYT samtykke for spilleren
+  // MELLEM den (uden lås) udvælgelse og selve sletningen.
+  await h.pool.query(`INSERT INTO samtykke (spiller_id, liste, tidspunkt, type) VALUES ($1,'sms',now(),$2)`, [
+    c,
+    'bekraeftet',
+  ]);
+
+  // Selve genkontrol-funktionen skal nu afvise sletning af netop denne kandidat.
+  const client = await h.pool.connect();
+  try {
+    const stadig = await stillQualifiesForDeletion(client, c, forGammel, now);
+    assert.equal(stadig, false, 'et nyt aktivt samtykke skal afvise sletning ved genkontrollen');
+  } finally {
+    client.release();
+  }
+
+  // ...og selve deleteInactivePlayers() (scan + genkontrol i træk) sletter
+  // derfor IKKE spilleren, selvom den unikke, ikke-låste scanning ovenfor
+  // fandt den som kandidat.
+  const antal = await deleteInactivePlayers(h.pool, now);
+  assert.equal(antal, 0);
+  const tilbage = await h.pool.query('SELECT id FROM spiller WHERE id = $1', [c]);
+  assert.equal(tilbage.rows.length, 1, 'spilleren skal stadig eksistere');
+});
+
+test('sletning anonymiserer rest-referencer i andre spilleres data (raffle_draws-snapshot, notifikation.data.by/fra, forsoeg.duel.vs)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const now = new Date('2026-09-30T00:00:00Z');
+  const forGammel = new Date('2020-01-01T00:00:00Z');
+
+  // Spilleren der skal slettes af retention-jobbet.
+  const sletId = await mkSpiller(h.pool, forGammel, 'Slettes Snart');
+  await h.pool.query(
+    `INSERT INTO forsoeg (spiller_id, runde_id, start_server, status, oprettet) VALUES ($1,$2,$3,'godkendt',$3)`,
+    [sletId, crypto.randomUUID(), forGammel]
+  );
+  await h.pool.query(
+    `INSERT INTO raffle_draws (kort_navn, spiller_id, spiller_navn_snapshot, email_snapshot)
+     VALUES ('test-draw', $1, 'Slettes Snart', 'slettes@example.dk')`,
+    [sletId]
+  );
+
+  // En ANDEN, overlevende spiller (nyligt aktiv) med rest-referencer til
+  // den slettede spillers navn i sine egne rækker.
+  const overleverId = await mkSpiller(h.pool, now, 'Overlever Olsen');
+  await h.pool.query(`INSERT INTO notifikation (spiller_id, type, data) VALUES ($1, 'beaten', $2::jsonb)`, [
+    overleverId,
+    JSON.stringify({ by: 'Slettes Snart', score: 500 }),
+  ]);
+  await h.pool.query(`INSERT INTO notifikation (spiller_id, type, data) VALUES ($1, 'gift', $2::jsonb)`, [
+    overleverId,
+    JSON.stringify({ type: 'vennekode_refill', fra: 'Slettes Snart' }),
+  ]);
+  await h.pool.query(
+    `INSERT INTO forsoeg (spiller_id, runde_id, start_server, status, samlet, oprettet, duel)
+     VALUES ($1,$2,$3,'godkendt',300,$3,$4::jsonb)`,
+    [overleverId, crypto.randomUUID(), now, JSON.stringify({ vs: 'Slettes Snart' })]
+  );
+
+  const antal = await deleteInactivePlayers(h.pool, now);
+  assert.equal(antal, 1);
+
+  const raffle = await h.pool.query(
+    'SELECT spiller_id, spiller_navn_snapshot, email_snapshot FROM raffle_draws WHERE kort_navn = $1',
+    ['test-draw']
+  );
+  assert.equal(raffle.rows[0].spiller_id, null);
+  assert.equal(raffle.rows[0].spiller_navn_snapshot, 'Slettet spiller');
+  assert.equal(raffle.rows[0].email_snapshot, null);
+
+  const notifs = await h.pool.query('SELECT type, data FROM notifikation WHERE spiller_id = $1 ORDER BY type', [
+    overleverId,
+  ]);
+  const beaten = notifs.rows.find((r) => r.type === 'beaten');
+  const gift = notifs.rows.find((r) => r.type === 'gift');
+  assert.equal(beaten.data.by, 'Slettet spiller');
+  assert.equal(gift.data.fra, 'Slettet spiller');
+
+  const forsoegRow = await h.pool.query('SELECT duel FROM forsoeg WHERE spiller_id = $1 AND samlet = 300', [
+    overleverId,
+  ]);
+  assert.equal(forsoegRow.rows[0].duel.vs, 'Slettet spiller');
 });

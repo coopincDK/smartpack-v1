@@ -5,11 +5,15 @@ const { createApp } = require('../../src/app');
 const { attachWs } = require('../../src/ws');
 const { setupTestDb } = require('./testDb');
 
-async function startHarness() {
+// opts.wsOpts videresendes til attachWs() (fx { revalidateMs } for at teste
+// WS-sessionsrevalidering uden at vente 60 sekunder i en test).
+// opts.adminRouterOpts videresendes til adminRouter() (fx { runBackup } for
+// at stubbe POST /admin/nulstil's pg_dump-kald, se src/backup.js).
+async function startHarness(opts = {}) {
   const { pool, teardown, backend } = await setupTestDb();
   const server = http.createServer();
-  const ws = attachWs(server, pool);
-  const app = createApp(pool, ws);
+  const ws = attachWs(server, pool, opts.wsOpts);
+  const app = createApp(pool, ws, { adminRouterOpts: opts.adminRouterOpts });
   server.on('request', app);
 
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
@@ -32,6 +36,7 @@ async function startHarness() {
           /* ignore */
         }
       }
+      if (ws.stopRevalidation) ws.stopRevalidation();
       await new Promise((resolve) => server.close(resolve));
       await teardown();
     },

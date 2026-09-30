@@ -6,6 +6,7 @@
 // Klienten genudregner selv rank/near-miss-tekster ud fra GET /state.
 
 const { RECORDS, MET, isBetter } = require('./rules/scoring');
+const { todayStr, cphDateExpr } = require('./rules/tzDate');
 
 function metricSqlExpr(metric) {
   if (metric === 'total') return 'samlet';
@@ -22,17 +23,14 @@ function metricSqlExpr(metric) {
   return `(stats->>'${metric}')::numeric`;
 }
 
-function todayStr(now) {
-  return now.toISOString().slice(0, 10);
-}
-
 // Bedste værdi for en metrik BLANDT ALLE SPILLERE i dag, ekskl. ét forsøg (id).
+// "I dag" regnes i Europe/Copenhagen (cphDateExpr), se src/rules/tzDate.js.
 async function bestMetricToday(client, metric, excludeForsoegId, day) {
   const expr = metricSqlExpr(metric);
   const dir = MET[metric] && MET[metric].low ? 'MIN' : 'MAX';
   const { rows } = await client.query(
     `SELECT ${dir}(${expr}) AS best FROM forsoeg
-     WHERE status = 'godkendt' AND id != $1 AND oprettet::date = $2 AND ${expr} > 0`,
+     WHERE status = 'godkendt' AND id != $1 AND ${cphDateExpr('oprettet')} = $2 AND ${expr} > 0`,
     [excludeForsoegId, day]
   );
   const v = rows[0] && rows[0].best;
@@ -78,11 +76,12 @@ async function computeFeats(client, forsoeg) {
 
 // Dagens rangliste: bedste `samlet` pr. spiller i dag, sorteret (ties brydes
 // af spiller.oprettet ASC — ældste tilmelding vinder ties, jf. rank()-reglen).
+// "I dag" regnes i Europe/Copenhagen (cphDateExpr), se src/rules/tzDate.js.
 async function todayLeaderboard(client, day) {
   const { rows } = await client.query(
     `SELECT f.spiller_id, MAX(f.samlet) AS best, s.oprettet AS spiller_oprettet
      FROM forsoeg f JOIN spiller s ON s.id = f.spiller_id
-     WHERE f.status = 'godkendt' AND f.oprettet::date = $1
+     WHERE f.status = 'godkendt' AND ${cphDateExpr('f.oprettet')} = $1
      GROUP BY f.spiller_id, s.oprettet
      ORDER BY best DESC, s.oprettet ASC`,
     [day]
@@ -92,7 +91,7 @@ async function todayLeaderboard(client, day) {
 
 async function daysPlayedAll(client, spillerId) {
   const { rows } = await client.query(
-    `SELECT COUNT(DISTINCT oprettet::date) AS n FROM forsoeg WHERE spiller_id = $1 AND status = 'godkendt'`,
+    `SELECT COUNT(DISTINCT ${cphDateExpr('oprettet')}) AS n FROM forsoeg WHERE spiller_id = $1 AND status = 'godkendt'`,
     [spillerId]
   );
   return Number(rows[0].n);
@@ -100,8 +99,8 @@ async function daysPlayedAll(client, spillerId) {
 
 async function daysPlayedSince(client, spillerId, periodStart) {
   const { rows } = await client.query(
-    `SELECT COUNT(DISTINCT oprettet::date) AS n FROM forsoeg
-     WHERE spiller_id = $1 AND status = 'godkendt' AND oprettet::date >= $2`,
+    `SELECT COUNT(DISTINCT ${cphDateExpr('oprettet')}) AS n FROM forsoeg
+     WHERE spiller_id = $1 AND status = 'godkendt' AND ${cphDateExpr('oprettet')} >= $2`,
     [spillerId, periodStart]
   );
   return Number(rows[0].n);

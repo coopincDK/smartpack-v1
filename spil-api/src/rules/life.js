@@ -1,15 +1,11 @@
 'use strict';
 
 const { REGEN_MS, REGEN_CAP, MAX_LIVES } = require('./constants');
+const { todayStr } = require('./tzDate');
 
-// Dags-nøgle brugt overalt i liv-reglen. Vi bruger UTC-dato (server-tid),
-// ikke spillerens lokale tidszone — se API.md, afsnit "Dage og tidszoner",
-// for begrundelsen (messen kører fra én fysisk stand, én server-tidszone
-// er nok, og UTC undgår DST-spring midt i en messedag).
-function todayStr(d) {
-  const date = d instanceof Date ? d : new Date(d);
-  return date.toISOString().slice(0, 10);
-}
+// Dags-nøgle brugt overalt i liv-reglen — 'YYYY-MM-DD' i Europe/Copenhagen
+// (IKKE UTC siden denne opfølgningsrunde), se src/rules/tzDate.js og API.md,
+// afsnit "Dage og tidszoner", for den fulde begrundelse.
 
 function mailPartnersList(cfg) {
   return String((cfg && cfg.mailPartners) || '')

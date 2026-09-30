@@ -13,10 +13,12 @@ const {
 } = require('../rules/life');
 const { boostCode } = require('../rules/boostCode');
 const { MAX_LIVES } = require('../rules/constants');
+const { firmKey } = require('../rules/firmKey');
 const { currentBag, persistBag, livView, playerToP } = require('../lifeBag');
 const { computeTickets } = require('../gameQueries');
 const { clientIp } = require('../middleware/clientIp');
 const { invalidateStateCache } = require('../publicState');
+const { MAKS_FIRMA } = require('./players');
 
 const MAKS_KODE = 5;
 
@@ -94,7 +96,7 @@ function meRouter(pool) {
         mine_noegler: subKeys(playerToP(row)),
         mine_flueben: todayTickKeys(playerToP(row), now),
         samtykker,
-        liv: livView(bag, row, cfg, now),
+        liv: livView(bag, playerToP(row), cfg, now),
         notifikationer: notifs.rows.map((n) => ({
           id: n.id,
           type: n.type,
@@ -108,6 +110,32 @@ function meRouter(pool) {
       next(e);
     } finally {
       client.release();
+    }
+  });
+
+  // Packrush-opfølgning: firma er nu valgfrit ved registrering (0–40 tegn)
+  // — dette endpoint lader en spiller sætte/rette det bagefter. Genberegner
+  // firma_noegle (samme algoritme som ved registrering, se
+  // src/rules/firmKey.js) — spillere UDEN firma får en tom nøgle og tæller
+  // derved IKKE med i firmakampen (GET /state's companyKey er tom/falsy for
+  // dem, og klientens firms() springer allerede falsy companyKey over).
+  router.patch('/me', auth, async (req, res, next) => {
+    const firma = String((req.body && req.body.firma) || '').trim();
+    if (firma.length > MAKS_FIRMA) {
+      return res
+        .status(400)
+        .json({ fejl: `Firmanavn må højst være ${MAKS_FIRMA} tegn.`, kode: 'ugyldigt_firma' });
+    }
+    try {
+      await pool.query('UPDATE spiller SET firma = $1, firma_noegle = $2 WHERE id = $3', [
+        firma,
+        firmKey(firma),
+        req.player.id,
+      ]);
+      invalidateStateCache();
+      res.json({ ok: true, firma });
+    } catch (e) {
+      next(e);
     }
   });
 
@@ -143,7 +171,7 @@ function meRouter(pool) {
         kode: code,
         fra_spiller_id: rows[0].id,
         fra_navn: rows[0].navn,
-        dag: new Date().toISOString().slice(0, 10),
+        dag: todayStr(new Date()),
       });
       await pool.query('UPDATE spiller SET ekstra_02 = $1 WHERE id = $2', [chFrom, req.player.id]);
       res.json({ ok: true, udfordrer: rows[0].navn });
@@ -197,7 +225,7 @@ function meRouter(pool) {
       await client.query('UPDATE spiller SET ekstra_03 = $1 WHERE id = $2', [today, row.id]);
 
       await client.query('COMMIT');
-      res.json({ ok: true, liv: livView(nyBag, row, cfg, now) });
+      res.json({ ok: true, liv: livView(nyBag, playerToP(row), cfg, now) });
     } catch (e) {
       await client.query('ROLLBACK');
       next(e);
@@ -240,9 +268,15 @@ function meRouter(pool) {
       await client.query('COMMIT');
       invalidateStateCache();
 
+      // Bemærk: bruger result.p (EFTER setSubsPure), ikke playerToP(row) —
+      // setSubsPure kan have klippet dagens flueben ned (fjernet nøgler man
+      // lige har afmeldt varigt), hvilket ændrer hvilke lister der tæller
+      // med i regen-beregningen. next_regen_ms skal afspejle DET, ikke det
+      // gamle billede fra før dette kald (fundet under sikkerheds-
+      // gennemgangen).
       res.json({
         ok: true,
-        liv: livView(bag, row, cfg, now),
+        liv: livView(bag, result.p, cfg, now),
         mine_noegler: subKeys(result.p),
       });
     } catch (e) {
@@ -333,10 +367,12 @@ function meRouter(pool) {
       await client.query('COMMIT');
       invalidateStateCache();
 
+      // Samme begrundelse som i PUT /me/subs ovenfor: brug result.p (EFTER
+      // setTicksPure), ikke playerToP(row).
       res.json({
         ok: true,
         friske_liv: result.fresh,
-        liv: livView(result.bag, row, cfg, now),
+        liv: livView(result.bag, result.p, cfg, now),
         mine_noegler: subKeys(result.p),
         mine_flueben: result.p.tick.keys,
       });

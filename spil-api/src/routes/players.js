@@ -2,7 +2,7 @@
 
 const express = require('express');
 const { firmKey } = require('../rules/firmKey');
-const { lifeState, setSubsPure, setTicksPure } = require('../rules/life');
+const { lifeState, setSubsPure, setTicksPure, todayStr } = require('../rules/life');
 const { randomPublicId, randomBearerToken, randomCode, sha256Hex } = require('../crypto');
 const { clientIp } = require('../middleware/clientIp');
 const { invalidateStateCache } = require('../publicState');
@@ -86,7 +86,7 @@ function playersRouter(pool) {
               kode: udfordringskode,
               fra_spiller_id: chal.rows[0].id,
               fra_navn: chal.rows[0].navn,
-              dag: new Date().toISOString().slice(0, 10),
+              dag: todayStr(new Date()),
             });
           }
         }
@@ -109,11 +109,15 @@ function playersRouter(pool) {
         await client.query('ROLLBACK');
         return res.status(400).json({ fejl: `Navn skal være mellem 1 og ${MAKS_NAVN} tegn.`, kode: 'ugyldigt_navn' });
       }
-      if (!firma || firma.length > MAKS_FIRMA) {
+      // Packrush-opfølgning: firma er nu VALGFRIT (0–40 tegn) — se PATCH /me
+      // for hvordan en spiller sætter/retter det bagefter, og API.md/
+      // "Packrush-ændringer" for hvorfor spillere uden firma ikke tæller
+      // med i firmakampen (companyKey er tom for dem, se src/publicState.js).
+      if (firma.length > MAKS_FIRMA) {
         await client.query('ROLLBACK');
         return res
           .status(400)
-          .json({ fejl: `Firmanavn skal være mellem 1 og ${MAKS_FIRMA} tegn.`, kode: 'ugyldigt_firma' });
+          .json({ fejl: `Firmanavn må højst være ${MAKS_FIRMA} tegn.`, kode: 'ugyldigt_firma' });
       }
       if (body.accepterer_betingelser !== true) {
         await client.query('ROLLBACK');
@@ -147,7 +151,7 @@ function playersRouter(pool) {
             kode: udfordringskode,
             fra_spiller_id: chal.rows[0].id,
             fra_navn: chal.rows[0].navn,
-            dag: new Date().toISOString().slice(0, 10),
+            dag: todayStr(new Date()),
           });
         }
       }

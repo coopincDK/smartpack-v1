@@ -2,12 +2,19 @@
 
 const { WebSocketServer } = require('ws');
 const { tryLoadPlayer } = require('./middleware/playerAuth');
-const { resolveSessionRole } = require('./middleware/adminAuth');
+const { resolveSessionRole, resolveRoleForToken, parseCookies, COOKIE_NAME } = require('./middleware/adminAuth');
 const { shortName } = require('./rules/nameDisplay');
 
 const MAX_MSG_BYTES = 4096;
 const MAX_MSGS_PER_SEC = 10;
 const DUEL_EVENTS = new Set(['duel.go', 'duel.s']);
+// Fundet under sikkerhedsgennemgangen: adminRole blev kun læst ÉN GANG, ved
+// selve håndtrykket — en admin/stand-session der udløber eller logges ud
+// mens socket'en forbliver åben, beholdt privilegiet for evigt. Rettet med
+// TO mekanismer (se attachWs nedenfor): en periodisk baggrunds-revalidering
+// pr. forbindelse (DEFAULT_REVALIDATE_MS), OG en frisk revalidering lige før
+// HVER besked der ville afsløre et fuldt navn (isPrivilegedNow).
+const DEFAULT_REVALIDATE_MS = 60 * 1000;
 
 // Rum-baseret realtids-relay ("standvæg + to tablets i duel"). Semantikken
 // er bevidst simpel — svarer til klientens tidligere claude.use('room'):
@@ -21,7 +28,7 @@ const DUEL_EVENTS = new Set(['duel.go', 'duel.s']);
 // at klienten selv skal håndtere den). Presence- og duel-event-payloads er
 // derfor IKKE længere én delt besked til alle i rummet: de beregnes pr.
 // MODTAGER, så kun admin/stand-forbindelser ser fulde navne, se
-// isPrivileged()/displayName() nedenfor.
+// isPrivilegedNow()/displayName() nedenfor.
 function attachWs(server, pool, opts) {
   opts = opts || {};
   const wss = new WebSocketServer({ noServer: true });
@@ -45,8 +52,14 @@ function attachWs(server, pool, opts) {
     } catch (e) {
       adminRole = null;
     }
+    // Gemmer det RÅ session-token (ikke kun rollen udledt af det ved selve
+    // håndtrykket) — det er det eneste vi har til senere at GENvalidere
+    // sessionen mod admin_session-tabellen, se isPrivilegedNow() og
+    // revalideringsintervallet nedenfor.
+    const sessionToken = parseCookies(req)[COOKIE_NAME] || null;
     wss.handleUpgrade(req, socket, head, (ws) => {
-      ws.adminRole = adminRole; // 'admin' | 'stand' | null
+      ws.adminRole = adminRole; // 'admin' | 'stand' | null — kun et CACHET udgangspunkt, se ovenfor
+      ws.sessionToken = sessionToken;
       wss.emit('connection', ws, req);
     });
   });
@@ -60,15 +73,30 @@ function attachWs(server, pool, opts) {
     return s;
   }
 
-  function isPrivileged(conn) {
-    return conn.adminRole === 'admin' || conn.adminRole === 'stand';
+  // FRISK genvalidering af conn's session, lige før den bruges til at
+  // afgøre om et fuldt navn må afsløres — slår ALTID admin_session-tabellen
+  // op igen (i stedet for at stole på det cachede ws.adminRole fra
+  // håndtrykket), og opdaterer cachen undervejs (bruges også af den
+  // periodiske revalidering, se startRevalidation() nedenfor). Ingen
+  // session-cookie ved håndtrykket ⇒ aldrig privilegeret, ingen DB-slag
+  // nødvendigt.
+  async function isPrivilegedNow(conn) {
+    if (!conn.sessionToken) return false;
+    let rolle = null;
+    try {
+      rolle = await resolveRoleForToken(pool, conn.sessionToken);
+    } catch (e) {
+      rolle = null;
+    }
+    conn.adminRole = rolle;
+    return rolle === 'admin' || rolle === 'stand';
   }
 
   function displayName(navn, privileged) {
     return privileged ? navn : shortName(navn);
   }
 
-  function presenceListFor(room, privileged) {
+  async function presenceListFor(room, privileged) {
     const out = [];
     for (const conn of roomSet(room)) {
       if (conn.presenceName) out.push({ id: conn.connId, name: displayName(conn.presenceName, privileged) });
@@ -78,10 +106,12 @@ function attachWs(server, pool, opts) {
 
   // Beregner payloaden PR. MODTAGER (ikke én delt besked) — se filens
   // toptekst. Anonyme lyttere og almindelige spillere får forkortede navne,
-  // admin/stand-forbindelser får fulde.
-  function broadcastPresence(room) {
+  // admin/stand-forbindelser får fulde — men KUN hvis deres session stadig
+  // er gyldig LIGE NU (isPrivilegedNow), ikke bare ved selve håndtrykket.
+  async function broadcastPresence(room) {
     for (const conn of roomSet(room)) {
-      const payload = JSON.stringify({ type: 'presence', room, users: presenceListFor(room, isPrivileged(conn)) });
+      const privileged = await isPrivilegedNow(conn);
+      const payload = JSON.stringify({ type: 'presence', room, users: await presenceListFor(room, privileged) });
       safeSend(conn, payload);
     }
   }
@@ -148,9 +178,10 @@ function attachWs(server, pool, opts) {
         if (!room) return;
         roomSet(room).add(ws);
         ws.rooms.add(room);
+        const privileged = await isPrivilegedNow(ws);
         return safeSend(
           ws,
-          JSON.stringify({ type: 'joined', room, users: presenceListFor(room, isPrivileged(ws)) })
+          JSON.stringify({ type: 'joined', room, users: await presenceListFor(room, privileged) })
         );
       }
 
@@ -163,7 +194,7 @@ function attachWs(server, pool, opts) {
         roomSet(room).add(ws);
         ws.rooms.add(room);
         ws.presenceName = String(msg.name || ws.player.navn || '').slice(0, 22);
-        broadcastPresence(room);
+        await broadcastPresence(room);
         return;
       }
 
@@ -179,12 +210,13 @@ function attachWs(server, pool, opts) {
         const fuldtNavn = ws.presenceName || ws.player.navn;
         for (const conn of roomSet(room)) {
           if (conn === ws) continue;
+          const privileged = await isPrivilegedNow(conn);
           const payload = JSON.stringify({
             type: 'event',
             room,
             event,
             data: msg.data,
-            from: { id: ws.connId, name: displayName(fuldtNavn, isPrivileged(conn)) },
+            from: { id: ws.connId, name: displayName(fuldtNavn, privileged) },
           });
           safeSend(conn, payload);
         }
@@ -192,19 +224,46 @@ function attachWs(server, pool, opts) {
       }
     });
 
-    ws.on('close', () => {
+    ws.on('close', async () => {
       for (const room of ws.rooms) {
         const s = rooms.get(room);
         if (s) {
           s.delete(ws);
-          if (ws.presenceName) broadcastPresence(room);
+          if (ws.presenceName) await broadcastPresence(room);
           if (s.size === 0) rooms.delete(room);
         }
       }
     });
   });
 
-  return { wss, broadcastStateChanged };
+  // Periodisk baggrunds-revalidering (se filens toptekst): fanger en
+  // admin/stand-session der udløber/logges ud MENS forbindelsen er åben,
+  // selv hvis den forbindelse ikke aktivt sender/modtager beskeder lige nu
+  // (isPrivilegedNow() alene dækker kun forbindelser der RENT FAKTISK er
+  // med i en besked-udveksling). Lukker forbindelsen når privilegiet
+  // forsvinder, i stedet for at lade den hænge i en tavs, forældet tilstand.
+  const revalidateMs = (opts.revalidateMs != null ? opts.revalidateMs : DEFAULT_REVALIDATE_MS);
+  const revalidateTimer = setInterval(async () => {
+    for (const conn of wss.clients) {
+      if (!conn.sessionToken) continue;
+      const varPrivilegeret = conn.adminRole === 'admin' || conn.adminRole === 'stand';
+      const erStadigPrivilegeret = await isPrivilegedNow(conn);
+      if (varPrivilegeret && !erStadigPrivilegeret) {
+        try {
+          conn.close(1008, 'Session udløbet eller logget ud.');
+        } catch (e) {
+          /* ignore */
+        }
+      }
+    }
+  }, revalidateMs);
+  if (typeof revalidateTimer.unref === 'function') revalidateTimer.unref();
+
+  function stopRevalidation() {
+    clearInterval(revalidateTimer);
+  }
+
+  return { wss, broadcastStateChanged, stopRevalidation };
 }
 
 module.exports = { attachWs };

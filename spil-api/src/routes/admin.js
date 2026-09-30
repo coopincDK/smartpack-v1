@@ -17,8 +17,14 @@ const { toCsv } = require('../csv');
 const { boostCode } = require('../rules/boostCode');
 const { computeTickets, todayStr } = require('../gameQueries');
 const { invalidateStateCache } = require('../publicState');
+const { subKeys, subOptions, setSubsPure, listNameFor } = require('../rules/life');
+const { playerToP } = require('../lifeBag');
+const { clientIp } = require('../middleware/clientIp');
+const { deletePlayerFully } = require('../playerDeletion');
+const { runBackup: defaultRunBackup } = require('../backup');
 
 const LISTE_RE = /^[a-z0-9:_.-]+$/;
+const NULSTIL_BEKRAEFT = 'NULSTIL';
 // Ét-gangs-standtablet-login-koder — se API.md, afsnit "Stand-login-flow".
 const STAND_KODE_TTL_MS = 5 * 60 * 1000;
 const STAND_KODE_LEN = 6;
@@ -57,7 +63,9 @@ async function drawWinner(pool, cfg) {
   return vaegte[vaegte.length - 1];
 }
 
-function adminRouter(pool) {
+function adminRouter(pool, opts) {
+  opts = opts || {};
+  const runBackup = opts.runBackup || defaultRunBackup;
   const router = express.Router();
   const admin = requireAdmin(pool);
   const loginLimiter = createRateLimiter({
@@ -335,25 +343,22 @@ function adminRouter(pool) {
     }
   });
 
-  // Rigtig sletning (GDPR) — sletter spilleren og alt tilhørende data.
+  // Rigtig sletning (GDPR) — sletter spilleren og alt tilhørende data, samt
+  // anonymiserer rest-referencer i andre spilleres data (se
+  // src/playerDeletion.js — samme fælles funktion som det natlige
+  // GDPR-oprydningsjob og POST /admin/nulstil bruger).
   router.delete('/admin/spillere/:pid', admin, async (req, res, next) => {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      const { rows } = await client.query('SELECT id FROM spiller WHERE public_id = $1 FOR UPDATE', [
+      const { rows } = await client.query('SELECT id, navn FROM spiller WHERE public_id = $1 FOR UPDATE', [
         req.params.pid,
       ]);
       if (!rows.length) {
         await client.query('ROLLBACK');
         return res.status(404).json({ fejl: 'Ukendt spiller.', kode: 'ukendt_spiller' });
       }
-      const id = rows[0].id;
-      await client.query('UPDATE raffle_draws SET spiller_id = NULL WHERE spiller_id = $1', [id]);
-      await client.query('UPDATE spiller SET ref_spiller_id = NULL WHERE ref_spiller_id = $1', [id]);
-      await client.query('DELETE FROM notifikation WHERE spiller_id = $1', [id]);
-      await client.query('DELETE FROM samtykke WHERE spiller_id = $1', [id]);
-      await client.query('DELETE FROM forsoeg WHERE spiller_id = $1', [id]);
-      await client.query('DELETE FROM spiller WHERE id = $1', [id]);
+      await deletePlayerFully(client, rows[0].id, rows[0].navn);
       await client.query('COMMIT');
       invalidateStateCache();
       res.json({ ok: true });
@@ -362,6 +367,135 @@ function adminRouter(pool) {
       next(e);
     } finally {
       client.release();
+    }
+  });
+
+  // Bulk-afmelding af en tilmeldings-liste for en liste af emails (samme
+  // NØGLE-format som PUT /me/subs's keys / DELETE /me/subs/:liste — 'sp',
+  // 'm:<partner>', 'sms'). Logger ALTID en 'trukket_tilbage'-hændelse for
+  // hver FUNDET email (uanset om listen allerede var afmeldt), med
+  // kilde:'admin' — se API.md.
+  router.post('/admin/afmeld', admin, async (req, res, next) => {
+    const key = String((req.body && req.body.liste) || '').trim();
+    const emailsRaw = Array.isArray(req.body && req.body.emails) ? req.body.emails : [];
+    if (!key) return res.status(400).json({ fejl: 'Mangler liste.', kode: 'mangler_liste' });
+
+    const client = await pool.connect();
+    try {
+      const cfgRow = await getCfgRow(pool);
+      if (!subOptions(cfgRow.offentlig).some((o) => o.key === key)) {
+        return res.status(400).json({ fejl: 'Ukendt tilmeldings-liste.', kode: 'ukendt_liste' });
+      }
+
+      const emails = [
+        ...new Set(
+          emailsRaw
+            .map((e) => String(e || '').trim().toLowerCase())
+            .filter(Boolean)
+        ),
+      ];
+      if (!emails.length) return res.status(400).json({ fejl: 'Mangler emails.', kode: 'mangler_emails' });
+
+      await client.query('BEGIN');
+      const now = new Date();
+      const ikkeFundet = [];
+      let fundetAntal = 0;
+
+      for (const email of emails) {
+        const rowRes = await client.query('SELECT * FROM spiller WHERE email = $1 FOR UPDATE', [email]);
+        if (!rowRes.rows.length) {
+          ikkeFundet.push(email);
+          continue;
+        }
+        const row = rowRes.rows[0];
+        const p = playerToP(row);
+        const tilbage = subKeys(p).filter((k) => k !== key);
+        const result = setSubsPure(p, tilbage, cfgRow.offentlig, now);
+
+        await client.query(
+          'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5 WHERE id = $6',
+          [
+            result.p.marketing,
+            JSON.stringify(result.p.mailTo),
+            result.p.notify,
+            result.p.tick.day,
+            JSON.stringify(result.p.tick.keys),
+            row.id,
+          ]
+        );
+        // Logges UBETINGET for hver fundet email (også hvis listen allerede
+        // var afmeldt) — admin/afmeld er en audit-handling, ikke kun en
+        // tilstandsændring, se API.md.
+        await client.query(
+          `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
+           VALUES ($1,$2,$3,1,'admin',$4,$5,'trukket_tilbage')`,
+          [row.id, listNameFor(key), now, clientIp(req), req.headers['user-agent'] || null]
+        );
+        fundetAntal++;
+      }
+
+      await client.query('COMMIT');
+      invalidateStateCache();
+      res.json({ fundet: fundetAntal, ikke_fundet: ikkeFundet });
+    } catch (e) {
+      await client.query('ROLLBACK');
+      next(e);
+    } finally {
+      client.release();
+    }
+  });
+
+  // Fuld nulstilling — RYDDER AL SPILLERDATA. Tiltænkt at rydde testdata
+  // efter en generalprøve, se API.md. Kræver PRÆCIS bekræftelses-strengen
+  // "NULSTIL" (ellers 400 — INGEN sletning sker). Tager FØRST en pg_dump
+  // (se src/backup.js) som sikkerhedsnet; fejler backuppen, afbrydes
+  // nulstillingen HELT (ingen transaktion åbnes engang). Derefter slettes
+  // ALLE spillere (+ deres forsøg/notifikationer/samtykker) via samme
+  // fælles src/playerDeletion.js som retention-jobbet og
+  // DELETE /admin/spillere/:pid. Uigenkaldeligt efter bekræftelsen.
+  router.post('/admin/nulstil', admin, async (req, res, next) => {
+    try {
+      const bekraeft = String((req.body && req.body.bekraeft) || '');
+      if (bekraeft !== NULSTIL_BEKRAEFT) {
+        return res.status(400).json({
+          fejl: `Bekræftelse mangler eller er forkert — send bekraeft: "${NULSTIL_BEKRAEFT}".`,
+          kode: 'mangler_bekraeftelse',
+        });
+      }
+
+      const backupSti = await runBackup();
+
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+        const { rows } = await client.query('SELECT id, navn FROM spiller ORDER BY id FOR UPDATE');
+        for (const r of rows) {
+          await deletePlayerFully(client, r.id, r.navn);
+        }
+        await client.query(
+          `INSERT INTO admin_audit_log (admin_session_id, handling, antal, detaljer)
+           VALUES ($1, 'nulstil', $2, $3)`,
+          [req.adminSession.id, rows.length, JSON.stringify({ backup: backupSti })]
+        );
+        await client.query('COMMIT');
+        invalidateStateCache();
+
+        // ALDRIG navne/emails i loggen — kun antal + backup-sti + hvilken
+        // admin-session (session-id, ikke adgangskoden), se README.md.
+        // eslint-disable-next-line no-console
+        console.log(
+          `[admin/nulstil] ${new Date().toISOString()} slettede ${rows.length} spiller(e), ` +
+            `admin-session ${req.adminSession.id}, backup: ${backupSti}`
+        );
+        res.json({ ok: true, antal_slettet: rows.length, backup: backupSti });
+      } catch (e) {
+        await client.query('ROLLBACK');
+        throw e;
+      } finally {
+        client.release();
+      }
+    } catch (e) {
+      next(e);
     }
   });
 

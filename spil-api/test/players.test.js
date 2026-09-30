@@ -18,6 +18,39 @@ test('registrering opretter spiller og returnerer token', async (t) => {
   assert.ok(res.body.spiller.vennekode);
 });
 
+test('firma er valgfrit ved registrering (0-40 tegn); PATCH /me sætter/retter det bagefter', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { firma: '' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  assert.equal(reg.status, 201);
+  assert.equal(reg.body.spiller.firma, '');
+
+  // Uden firma tæller spilleren IKKE med i firmakampen: companyKey i GET
+  // /state skal være tom/falsy (klientens firms() springer allerede sådan
+  // en over, se spil/index.html#firms).
+  const stateFoer = await api(h.baseUrl, 'GET', '/state');
+  const pFoer = stateFoer.body.players.find((p) => p.pid === reg.body.spiller.pid);
+  assert.ok(!pFoer.companyKey, 'spiller uden firma skal have en tom/falsy companyKey');
+
+  const token = reg.body.token;
+  const patch = await api(h.baseUrl, 'PATCH', '/me', { token, body: { firma: 'Nyt Firma ApS' } });
+  assert.equal(patch.status, 200);
+  assert.equal(patch.body.firma, 'Nyt Firma ApS');
+
+  const me = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.equal(me.body.firma, 'Nyt Firma ApS');
+
+  const stateEfter = await api(h.baseUrl, 'GET', '/state');
+  const pEfter = stateEfter.body.players.find((p) => p.pid === reg.body.spiller.pid);
+  assert.ok(pEfter.companyKey, 'skal have en companyKey efter PATCH /me sætter firma');
+
+  const forLangt = await api(h.baseUrl, 'PATCH', '/me', { token, body: { firma: 'x'.repeat(41) } });
+  assert.equal(forLangt.status, 400);
+  assert.equal(forLangt.body.kode, 'ugyldigt_firma');
+});
+
 test('login kræver at telefonnummeret matcher — afviser uden at overskrive', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());

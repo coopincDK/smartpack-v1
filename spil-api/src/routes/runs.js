@@ -90,7 +90,7 @@ function runsRouter(pool, ws) {
       res.status(201).json({
         runde_id: rundeId,
         start_server: now.toISOString(),
-        liv: livView(brugt, row, cfg, now),
+        liv: livView(brugt, playerToP(row), cfg, now),
       });
     } catch (e) {
       await client.query('ROLLBACK');
@@ -327,7 +327,7 @@ function runsRouter(pool, ws) {
         maerker: nyeBadges,
         feats,
         rang: rangKontekst,
-        liv: livView(bagScorer, scorerFrisk, cfg, now),
+        liv: livView(bagScorer, playerToP(scorerFrisk), cfg, now),
         tickets,
       };
 

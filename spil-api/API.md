@@ -7,7 +7,8 @@ PII-frit udtræk via `GET /state`.
 
 Alle fejlsvar er JSON på formen `{"fejl": "<dansk besked>", "kode": "<maskinlæsbar_kode>"}`.
 Alle tidsangivelser er ISO 8601 / timestamptz. Dage (`day`, `dag`) er
-`YYYY-MM-DD` i **UTC** — se afsnittet "Dage og tidszoner" nedenfor.
+`YYYY-MM-DD` i **Europe/Copenhagen** (siden denne opfølgningsrunde — se
+afsnittet "Dage og tidszoner" nedenfor).
 
 Mounting: alle ruter i dette dokument er relative til Express-appens rod
 (`app.use(...)` uden præfiks). Fase 2's nginx forventes at proxye
@@ -36,13 +37,37 @@ fra Cloudflares `CF-Connecting-IP`). Den stoler ALDRIG på klientens egen
 
 ## Dage og tidszoner
 
-Alle "dags"-begreber (liv-reset, dagens rangliste, dagens rekord, beaten-
-notifikationer) bruger **UTC-dato** (`Date.toISOString().slice(0,10)`), ikke
-spillerens lokale tid. Messen kører fra én fysisk stand med én server — en
-enkelt, konsistent tidszone er tilstrækkeligt, og UTC undgår problemer med
-sommertids-spring midt i en messedag. Hvis fase 2 ønsker at dagsskiftet skal
-ske ved fx kl. 00:00 dansk tid i stedet, er det en lille, isoleret ændring i
-`src/rules/life.js#todayStr` og `src/gameQueries.js#todayStr`.
+Alle "dags"-begreber (liv-reset, dagens flueben, dagens rangliste, dagens
+rekord, beaten-notifikationer) bruger **Europe/Copenhagen**-dato, IKKE UTC.
+Messen er dansk, og deltagere forventer at "i dag" skifter ved midnat dansk
+tid — ikke kl. 01/02 dansk tid (UTC-midnat, afhængig af sommer-/vintertid).
+
+Dette er konsolideret ét sted: `src/rules/tzDate.js`.
+
+- **JS-siden** (`todayStr(d)`): bruger `Intl.DateTimeFormat` med en
+  EKSPLICIT `timeZone: 'Europe/Copenhagen'` — uafhængig af processens egen
+  `TZ`-miljøvariabel/lokale indstilling, så resultatet er identisk på
+  serveren, en udviklers lokale maskine og i CI. `src/rules/life.js#todayStr`
+  og `src/gameQueries.js#todayStr` re-eksporterer begge denne samme funktion.
+- **DB-siden** (`cphDateExpr(col)`): et rå SQL-cast af en `timestamptz`-
+  kolonne til `date` (`kolonne::date`) er IMPLICIT afhængigt af
+  forbindelsens session-tidszone, som vi ikke stoler på er sat konsistent.
+  `cphDateExpr('kolonne')` bygger i stedet et selvstændigt SQL-fragment
+  (`(kolonne AT TIME ZONE 'Europe/Copenhagen')::date`) uden den afhængighed.
+  Bruges af `src/gameQueries.js` (dagens rangliste/rekord, dage spillet) og
+  `src/lifeBag.js` (dagens forsøgstæller ved dags-skift).
+- **`liv_dag`/`tick_dag`** (Postgres `date`-kolonner) undgår helt JS Date-
+  objekt-parsing på vej ud af databasen — `src/db.js` afregistrerer node-pg's
+  standard-typeparser for `date` (OID 1082), så disse felter altid er rå
+  `'YYYY-MM-DD'`-tekststrenge. Det undgår en anden, beslægtet tidszone-
+  faldgrube (node-pg's standardparser konstruerer ellers et Date-objekt i
+  PROCESSENS lokale tidszone).
+
+**Timens boss** (`hourWinners()`/`hourBoard()`) er, som nævnt under
+"Afvigelser" nedenfor, IKKE porteret server-side endnu — der er derfor ingen
+server-side "time"-beregning at rette i denne omgang. Når/hvis den
+implementeres, bør den bruge samme `Europe/Copenhagen`-tidszone, evt. med en
+tilsvarende `cphHourExpr()`-udvidelse af `src/rules/tzDate.js`.
 
 ---
 
@@ -110,9 +135,11 @@ Registrering ELLER login, afgjort af om emailen findes.
   "accepterer_betingelser": true
 }
 ```
-- `navn`: 1–22 tegn. `firma`: 1–40 tegn. `telefon`: normaliseres til kun
-  cifre, skal have mindst 8 cifre. `vennekode`/`udfordringskode`: maks 5 tegn,
-  case-insensitive.
+- `navn`: 1–22 tegn. `firma`: 0–40 tegn (**valgfrit** siden denne
+  opfølgningsrunde — se `PATCH /me` for at sætte/rette det bagefter, og
+  "Packrush-ændringer" for hvorfor en spiller uden firma ikke tæller med i
+  firmakampen). `telefon`: normaliseres til kun cifre, skal have mindst 8
+  cifre. `vennekode`/`udfordringskode`: maks 5 tegn, case-insensitive.
 - `tilmeldinger`: liste af nøgler fra `subOptions()` (`sp`, `m:<partner>`,
   `sms`).
 
@@ -165,6 +192,18 @@ ind igen.
 `mine_noegler` er den VARIGE tilmelding, `mine_flueben` er DAGENS flueben —
 se "Packrush-ændringer" for forskellen. `samtykker` er nu afledt af
 hændelsesloggen (`aktiv` = seneste hændelse for listen er `bekraeftet`).
+
+### `PATCH /me` (bearer) — sæt/ret firma
+Body `{ "firma": "Smartpack ApS" }` — `firma`: 0–40 tegn (tomt = ryd
+firmaet). Genberegner `firma_noegle` (samme algoritme som ved
+registrering). `200 { "ok": true, "firma": "Smartpack ApS" }`.
+`400 { "kode": "ugyldigt_firma" }` hvis over 40 tegn.
+
+En spiller UDEN firma (tomt `firma`/`firma_noegle`) tæller IKKE med i
+firmakampen: `GET /state`'s `companyKey` er tom/falsy for dem, og klientens
+`firms()`-gruppering springer allerede en falsy `companyKey` over
+(`spil/index.html#firms`) — ingen særskilt server-side filtrering er
+nødvendig ud over at lade `firma_noegle` forblive tom.
 
 ### `POST /me/seen` (bearer)
 Body `{ "ids": [12, 13] }` (valgfri — udelades for at markere ALT som set).
@@ -332,11 +371,13 @@ telefoner) ser `"Fornavn E."`. Se "Packrush-ændringer".
 | `GET /admin/eksport/samtykke/:liste.csv` | Samtykke-hændelseslog for én liste, opsummeret pr. spiller: FØRSTE + SENESTE bekræftelse + `aktiv`-status (`:liste` valideres mod `^[a-z0-9:_.-]+$`). |
 | `GET /admin/eksport/sms.csv` | Spillere med aktiv (`bekraeftet`) sms-status lige nu. |
 | `GET /admin/eksport/revanche.csv` | Sms-tilmeldte (aktiv status) der er blevet overhalet i dag, inkl. sms-tekst-skabelon (se "Afvigelser"). |
-| `POST /admin/lodtraekning` `{kort_navn}` | Vægtet tilfældig lodtrækning ud fra `tickets()`, logger i `raffle_draws`. |
+| `POST /admin/lodtraekning` `{kort_navn}` | Vægtet tilfældig lodtrækning ud fra `tickets()`, logger i `raffle_draws`. Svar, se nedenfor. |
 | `GET /admin/config` / `PUT /admin/config` | Hent/gem hele config (inkl. `hemmelig.pin`). |
 | `GET /admin/boostkode` | Dagens sms-boostkode (KUN her — aldrig i noget offentligt svar). |
 | `POST /admin/spillere/:pid/skjul` `{skjult}` | Skjul/vis en spiller i `GET /state`. |
-| `DELETE /admin/spillere/:pid` | RIGTIG GDPR-sletning (spiller + alle forsøg/samtykker/notifikationer). |
+| `DELETE /admin/spillere/:pid` | RIGTIG GDPR-sletning (spiller + alle forsøg/samtykker/notifikationer + anonymisering af rest-referencer i andre spilleres data, se "Sletning og anonymisering"). |
+| `POST /admin/afmeld` `{liste, emails}` | Bulk-afmelding, se nedenfor. |
+| `POST /admin/nulstil` `{bekraeft}` | Fuld nulstilling af al spillerdata, se nedenfor. |
 | `POST /admin/stand-login-kode` | **Kræver `rolle='admin'`** (ikke `stand`). Udsteder en ét-gangs-kode til standtablet-login, se "Stand-login-flow". |
 
 Alle ovenstående (undtagen `/admin/login`) kræver `rolle='admin'` —
@@ -347,6 +388,150 @@ dem. Se "Stand-login-flow" for hvad en `stand`-session KAN.
 Body `{ "kode": "AB12CD" }`. Se "Stand-login-flow" nedenfor.
 `200 { "ok": true }` (sætter en langtlevende `rolle='stand'`-sessionscookie)
 eller `400 { "fejl": "Ugyldig eller udløbet kode.", "kode": "ugyldig_kode" }`.
+
+### `POST /admin/afmeld` — bulk-afmelding af en tilmeldings-liste
+Body:
+```json
+{ "liste": "sms", "emails": ["anna@firma.dk", "ukendt@firma.dk"] }
+```
+`liste` er en tilmeldings-**NØGLE** — samme format som `PUT /me/subs`'s
+`keys` / `DELETE /me/subs/:liste` (`sp`, `m:<partner>`, `sms`), IKKE
+samtykke-tabellens listenavn. For hver email der FINDES: sætter varig status
+til `trukket_tilbage` (samme effekt som `DELETE /me/subs/:liste`, inkl.
+opdatering af `marketing`/`mail_to`/`notify` og fjernelse fra dagens
+flueben) og logger UBETINGET en `trukket_tilbage`-hændelse i
+samtykke-hændelsesloggen for listen, med `kilde: 'admin'` (også hvis
+spilleren allerede var afmeldt — admin/afmeld er en audit-handling).
+
+`200`:
+```json
+{ "fundet": 1, "ikke_fundet": ["ukendt@firma.dk"] }
+```
+`400 { "kode": "mangler_liste" }` / `{ "kode": "mangler_emails" }` /
+`{ "kode": "ukendt_liste" }` (ukendt tilmeldings-nøgle for den aktuelle
+config).
+
+### `POST /admin/nulstil` — fuld nulstilling (RYDDER AL SPILLERDATA)
+Body: `{ "bekraeft": "NULSTIL" }` — kræver PRÆCIS denne streng, case-
+sensitivt, ellers `400 { "kode": "mangler_bekraeftelse" }` (INGEN sletning
+sker). Tiltænkt at rydde testdata efter en generalprøve.
+
+Ved korrekt bekræftelse: tager FØRST en `pg_dump` (samme mekanisme som det
+natlige backup-script, men in-process — se README.md, "Drift", og
+`src/backup.js`) som sikkerhedsnet. **Fejler backuppen, afbrydes
+nulstillingen HELT** (ingen spillere slettes). Lykkes den, slettes DEREFTER
+ALLE spillere (+ deres forsøg/notifikationer/samtykker, via samme fælles
+sletnings-/anonymiseringsfunktion som `DELETE /admin/spillere/:pid` og det
+natlige GDPR-oprydningsjob — se "Sletning og anonymisering"). Uigenkaldeligt
+efter bekræftelsen.
+
+Logger en varig audit-række i `admin_audit_log` (tidspunkt, antal slettede,
+og HVILKEN admin-session der udførte det — session-id, ALDRIG
+adgangskoden), samt én linje på stdout (samme "ALDRIG navne/emails, kun
+antal"-princip som retention-jobbet).
+
+`200`:
+```json
+{ "ok": true, "antal_slettet": 3, "backup": "/var/backups/spil-api/nulstil-2026-09-30T12-00-00-000Z.sql" }
+```
+`400 { "kode": "mangler_bekraeftelse" }`. `500` hvis backuppen fejlede (fx
+`pg_dump` ikke installeret/utilgængelig) — se README.md, "Drift", for
+forudsætningerne.
+
+---
+
+## Sletning og anonymisering
+
+Enhver RIGTIG sletning af en spiller (`DELETE /admin/spillere/:pid`, det
+natlige GDPR-oprydningsjob, og `POST /admin/nulstil`) går gennem samme
+fælles funktion (`src/playerDeletion.js#deletePlayerFully`), som ud over
+selve cascade-sletningen (forsøg/notifikationer/samtykker) også
+**anonymiserer rest-referencer** til den slettede spiller i ANDRE spilleres
+data (disse er friteksts-KOPIER taget på skrivetidspunktet, ikke
+fremmednøgler, og overlever derfor ikke automatisk en cascade-DELETE):
+
+- `raffle_draws.spiller_navn_snapshot` → `"Slettet spiller"`,
+  `email_snapshot` → `NULL` (spillerens EGNE lodtræknings-rækker).
+- Andre spilleres `notifikation.data.by` (beaten-notifikation) og
+  `.data.fra` (gift-notifikation) → `"Slettet spiller"`, matchet på navn
+  (kendt, accepteret begrænsning: to spillere med samme navn kunne i teorien
+  krydse hinanden her).
+- Andre spilleres `forsoeg.duel.vs` → `"Slettet spiller"`, samme
+  navne-matching.
+
+Det natlige GDPR-oprydningsjob (`src/retention.js`) LÅSER desuden hver
+kandidat (`SELECT ... FOR UPDATE`) og GENKONTROLLERER begge betingelser
+(intet aktivt samtykke OG stadig ≥12 mdr. inaktiv) lige før selve
+sletningen — en kandidat der siden en tidligere, ulåst udvælgelse har fået
+et nyt aktivt samtykke eller spillet et nyt forsøg, sletes IKKE.
+
+---
+
+## Svareksempler: lodtrækning og notifikationstyper
+
+Fulde JSON-eksempler til den agent der bygger spillets nye frontend (branch
+`spil-api-klient`) — se `src/routes/admin.js#drawWinner` og
+`src/routes/runs.js` (afsnittet "GODKENDT: kør hele finish()-flowet
+atomisk") for kildekoden bag disse.
+
+### `POST /admin/lodtraekning`
+```json
+{ "vinder": { "navn": "Anna Andersen", "email": "anna@firma.dk", "tickets": 4 } }
+```
+`400 { "fejl": "Ingen spillere er berettiget til lodtrækning.", "kode": "ingen_vinder" }`
+hvis ingen spiller har `tickets() > 0`.
+
+### `GET /me`'s `notifikationer[]` — alle typer
+
+**`type: "beaten"`** — en anden spiller har overhalet dig i dag:
+```json
+{
+  "id": 42,
+  "type": "beaten",
+  "data": {
+    "by": "Bo Hansen",
+    "firm": "Bo Byg ApS",
+    "score": 620,
+    "mine": 410,
+    "at": "2026-09-30T10:15:00.000Z",
+    "day": "2026-09-30",
+    "lead": true,
+    "colleague": false
+  },
+  "oprettet": "2026-09-30T10:15:00.000Z",
+  "seen": false
+}
+```
+- `mine`: DIN score på tidspunktet du blev overhalet.
+- `lead`: `true` hvis overhaleren dermed også blev dagens nr. 1.
+- `colleague`: `true` hvis I deler `firma_noegle` (samme firma) — `false`
+  hvis en af jer (eller begge) ikke har et firma, se `PATCH /me`.
+
+**`type: "gift"`, `data.type: "vennekode_refill"`** — din vennekode blev
+brugt, og din ven gennemførte netop sit FØRSTE forsøg (giver dig et refill,
+se `src/rules/life.js#refill`):
+```json
+{
+  "id": 43,
+  "type": "gift",
+  "data": { "type": "vennekode_refill", "fra": "Ditte Dam", "at": "2026-09-30T11:00:00.000Z" },
+  "oprettet": "2026-09-30T11:00:00.000Z",
+  "seen": false
+}
+```
+
+**`type: "gift"`, `data.type: "udfordring_liv"`** — nogen du udfordrede
+(`POST /me/challenge`) gennemførte et forsøg i dag, og du får +1 liv (højst
+1×/time/modstander):
+```json
+{
+  "id": 44,
+  "type": "gift",
+  "data": { "type": "udfordring_liv", "fra": "Ejnar Elk", "at": "2026-09-30T11:30:00.000Z" },
+  "oprettet": "2026-09-30T11:30:00.000Z",
+  "seen": false
+}
+```
 
 ---
 
@@ -422,6 +607,34 @@ i selve estimatet, ikke som et separat tillæg).
 
 ---
 
+## Opfølgende ændringer (sikkerhedsgennemgang + 6 nye punkter)
+
+En adversariel sikkerhedsgennemgang af Packrush-ændringerne (se afsnittet
+nedenfor) gav tre vigtige fund, som ALLE er rettet og testdækket:
+
+1. **TOCTOU i retention.js** — rettet med lås + genkontrol lige før
+   sletning, se "Sletning og anonymisering" og `stillQualifiesForDeletion`.
+2. **Rest-referencer lækkede slettede spilleres navn/email** — rettet med
+   fælles anonymisering (`src/playerDeletion.js`), se "Sletning og
+   anonymisering".
+3. **WS genvaliderede aldrig admin/stand-rollen efter håndtrykket** —
+   rettet med periodisk revalidering + frisk revalidering lige før hver
+   besked, se "Packrush-ændringer, opgave B" og `src/ws.js`.
+
+Desuden: `PUT /me/subs`/`PUT /me/ticks`'s `liv.next_regen_ms` brugte
+tidligere den GAMLE spiller-række i stedet for resultatet EFTER selve
+handlingen (gav et forældet tal lige efter en handling der selv ændrer
+liv-grundlaget) — rettet, se `src/lifeBag.js#livView`. `cutoffDate()`s
+skudårskant er også rettet (se "Packrush-ændringer", opgave C, nedenfor).
+
+Og seks nye funktionskrav: firma er nu valgfrit (`PATCH /me`, se ovenfor),
+`POST /admin/afmeld` (bulk-afmelding), `POST /admin/nulstil` (fuld
+nulstilling), Europe/Copenhagen-dage (se "Dage og tidszoner"),
+svareksempler for lodtrækning/notifikationer (se ovenfor), og en
+nginx-oprydning på produktionsserveren (ingen ny nginx-regel var
+nødvendig — alle nye endpoints ligger under det eksisterende
+`/api/spil/`-præfiks).
+
 ## Packrush-ændringer
 
 Denne opfølgende ændringsrunde porterer de regelændringer der fulgte med
@@ -492,11 +705,19 @@ i `spil/index.html`). Kort opsummeret hvad der ændrede sig og hvorfor:
 - `src/retention.js#findRetentionCandidates` (ren, testbar funktion) finder
   spillere UDEN nogen liste med aktiv (`bekraeftet`) status OG ≥12 måneder
   siden seneste aktivitet (seneste `forsoeg.oprettet`, ellers spillerens
-  egen `oprettet`). `deleteInactivePlayers` udfører selve cascade-sletningen
-  (samme rækkefølge som `DELETE /admin/spillere/:pid`).
+  egen `oprettet`). `deleteInactivePlayers` LÅSER derefter hver kandidat
+  (`SELECT ... FOR UPDATE`), GENKONTROLLERER begge betingelser lige før
+  selve sletningen (se "Sletning og anonymisering" og
+  `stillQualifiesForDeletion`), og udfører selve sletningen + anonymisering
+  af rest-referencer via den fælles `src/playerDeletion.js` (samme funktion
+  som `DELETE /admin/spillere/:pid` og `POST /admin/nulstil`).
   `scripts/retention-job.js` er den natlige cron-indgang — se README.md for
   drift/skemalægning. Kører IKKE automatisk endnu (kun kode/migration/cron-
   DOKUMENTATION i denne runde).
+- `cutoffDate()` klemmer til den sidste gyldige dag i målmåneden i stedet
+  for at lade en 29. februar rulle videre ind i marts over en skudårskant —
+  BEVIDST konservativt (giver aldrig en yngre cutoff end præcis 12 måneder,
+  i værste fald én dag ældre).
 - **Bemærk (portabilitets-workaround):** `findRetentionCandidates` og de to
   admin-CSV'er der filtrerer på "aktiv liste lige nu" (`sms.csv`,
   `revanche.csv`, samtykke-CSV'en) undgår BEVIDST at filtrere/joine SQL-side

@@ -11,6 +11,7 @@
 // billigt pr. kald ovenpå cachen, se getPublicState() nedenfor.
 
 const { shortName } = require('./rules/nameDisplay');
+const { todayStr } = require('./rules/tzDate');
 
 const CACHE_MS = 2000;
 let cache = null; // { at, payload }
@@ -46,7 +47,7 @@ async function buildPublicState(pool) {
       score: a.samlet,
       rounds: [a.runde1, a.runde2, a.runde3],
       s: a.stats || {},
-      day: a.oprettet.toISOString().slice(0, 10),
+      day: todayStr(a.oprettet), // Europe/Copenhagen, se src/rules/tzDate.js
       at: a.start_server ? a.start_server.toISOString() : null,
       end: a.slut_server ? a.slut_server.toISOString() : null,
       bf: !!a.bf,
