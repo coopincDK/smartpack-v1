@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Præmier og partnere – Packrush</title>
+<meta name="description" content="Se hvad du kan vinde i Packrush, og mød partnerne bag power-ups og præmier.">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../partner/partner.css">
+<style>
+.hero{display:flex;flex-direction:column;gap:10px}
+.total{font-family:var(--display);font-weight:800;font-size:clamp(28px,6vw,44px);color:var(--accent)}
+.partnerkort{scroll-margin-top:16px}
+.partnerkort:target{border-color:var(--accent)}
+.detaljer{display:flex;flex-direction:column;gap:8px;font-size:15px}
+.detaljer h4{margin:6px 0 0;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.pre{white-space:pre-wrap}
+.vinder{color:var(--text);border:1px solid var(--accent);border-radius:12px;padding:14px;margin-bottom:12px;display:flex;flex-direction:column;gap:6px;background:linear-gradient(135deg,rgba(249,115,22,.14),transparent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="../"><img src="../packrush-logo.webp" alt="Packrush, tilbage til spillet"></a>
+    <a class="btn small" href="../">Spil Packrush</a>
+  </div>
+
+  <section class="hero card" id="konk">
+    <h1>Det kan du vinde</h1>
+    <div id="konk-tekst" class="muted">Henter …</div>
+    <div id="total"></div>
+  </section>
+
+  <section id="praemier" style="display:flex;flex-direction:column;gap:14px"></section>
+
+  <section style="display:flex;flex-direction:column;gap:14px">
+    <h2>Partnerne bag power-ups og præmier</h2>
+    <div id="partnere" style="display:flex;flex-direction:column;gap:14px"></div>
+  </section>
+
+  <div class="card">
+    <h3>Vil I være partner?</h3>
+    <p class="muted">Har I et produkt eller en ydelse, der hjælper webshops, og vil I være med som power-up eller give en præmie?</p>
+    <div><a class="btn ghost" href="../partner/#ansoeg">Søg om at blive partner</a></div>
+  </div>
+  <p class="foot">Packrush er lavet af SmartPack. Præmierne gives af partnerne, og den enkelte partner står for at levere sin præmie.</p>
+</div>
+
+<script src="../partner/felles.js"></script>
+<script>
+(function () {
+  'use strict';
+  var el = SP.el, $ = function (id) { return document.getElementById(id); };
+
+  function linkTilSide(url, tekst) {
+    try { var u = new URL(url); if (u.protocol !== 'https:' && u.protocol !== 'http:') return null; } catch (e) { return null; }
+    return el('a', { href: url, target: '_blank', rel: 'noopener', text: tekst || url.replace(/^https?:\/\//, '').replace(/\/$/, '') });
+  }
+
+  function logo(p, h) {
+    return p.logo_url ? el('img', { src: SP.API + p.logo_url, alt: p.navn + ' logo', style: h ? 'max-height:' + h + 'px' : null, loading: 'lazy' }) : null;
+  }
+
+  function sektion(titel, tekst) {
+    if (!tekst) return [];
+    return [el('h4', { text: titel }), el('p', { class: 'pre', text: tekst })];
+  }
+
+  Promise.all([SP.api('/praemier'), SP.api('/partnere')]).then(function (res) {
+    var pr = res[0], pa = res[1];
+    var k = pr.konkurrence;
+    var kt = $('konk-tekst'); kt.replaceChildren();
+    if (k.vinder) {
+      var v = k.vinder;
+      kt.append(el('div', { class: 'vinder' }, [
+        el('p', { class: 'small', style: 'text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700', text: 'Vinder' + (v.dato ? ' · ' + new Date(v.dato + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long' }) : '') }),
+        el('h2', { text: '🏆 ' + v.navn + (v.firma ? ', ' + v.firma : '') }),
+        v.tekst ? el('p', { class: 'pre', text: v.tekst }) : null,
+      ]));
+    }
+    if (k.aktiv) {
+      kt.append(el('p', null, [el('strong', { text: k.navn }), document.createTextNode(' · lodtrækning ' + new Date(k.lodtraekning).toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short' }))]));
+      if (k.tekst) kt.append(el('p', { class: 'pre', text: k.tekst }));
+      kt.append(el('p', { text: 'Vinderen får det hele: alle præmierne herunder.' }));
+    } else {
+      kt.append(el('div', { class: 'msg info', role: 'status' }, [el('strong', { text: 'Lige nu er der ingen aktiv konkurrence.' }),
+        k.tekst && k.tekst !== 'Lige nu er der ingen aktiv konkurrence.' ? el('p', { class: 'pre', text: k.tekst, style: 'margin-top:6px' }) : null]));
+    }
+    if (pr.praemier.length) {
+      $('total').append(el('p', { class: 'muted small', text: 'Samlet værdi' }),
+        el('div', { class: 'total', text: (pr.samlet_indeholder_op_til ? 'Op til ' : '') + SP.kr(pr.samlet_vaerdi) }));
+    }
+
+    var ps = $('praemier');
+    if (!pr.praemier.length) ps.append(el('p', { class: 'muted', text: 'Præmierne bliver offentliggjort her.' }));
+    pr.praemier.forEach(function (p) {
+      var x = p.praemie;
+      ps.append(el('article', { class: 'card praemie' }, [
+        el('div', null, [el('div', { class: 'vaerdi', text: SP.vaerdiTekst(x) }), logo(p, 40)]),
+        el('div', { class: 'detaljer' }, [
+          el('h3', { text: x.titel }),
+          el('p', { class: 'muted small' }, [document.createTextNode('Fra '), el('a', { href: '#' + encodeURIComponent(p.slug), text: p.navn })]),
+          el('p', { class: 'pre', text: x.beskrivelse }),
+        ].concat(sektion('Det får du ud af den', x.udbytte), sektion('Betingelser', x.betingelser), sektion('Sådan indløses den', x.indloesning))),
+      ]));
+    });
+
+    var pl = $('partnere');
+    if (!pa.partnere.length) pl.append(el('p', { class: 'muted', text: 'Partnerne bliver præsenteret her.' }));
+    pa.partnere.forEach(function (p) {
+      pl.append(el('article', { class: 'card partnerkort', id: p.slug }, [
+        el('div', { class: 'top' }, [el('h3', { text: p.navn }), logo(p, 48)]),
+        el('p', { text: p.kort_beskrivelse }),
+        p.powerup_effekt ? el('p', { class: 'small' }, [el('span', { class: 'chip warn', text: 'Power-up' }), document.createTextNode(' ' + p.powerup_effekt)]) : null,
+        p.beskrivelse ? el('p', { class: 'pre muted', text: p.beskrivelse }) : null,
+        p.praemie ? el('p', { class: 'small' }, [el('strong', { text: 'Præmie: ' }), document.createTextNode(p.praemie.titel + ' (' + SP.vaerdiTekst(p.praemie) + ')')]) : null,
+        el('p', null, [linkTilSide(p.hjemmeside)]),
+      ]));
+    });
+    if (location.hash) { var t = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (t) t.scrollIntoView(); }
+  }).catch(function () {
+    $('konk-tekst').replaceChildren(el('div', { class: 'msg err', text: 'Præmierne kunne ikke hentes lige nu. Prøv igen om lidt.' }));
+  });
+})();
+</script>
+</body>
+</html>

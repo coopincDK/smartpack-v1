@@ -1221,3 +1221,40 @@ liste, men billig at rette samtidig):
 8. Rate-limiteren er **in-memory, pr. proces** — fint til fase 1/2 (én
    Node-proces), men skal erstattes af en delt store (Redis e.l.) hvis
    API'et nogensinde skaleres til flere instanser.
+
+## Partnere (008_partnere.sql)
+
+Partnere til power-ups og præmier. Sider: `/spil/partner/admin.html` (admin),
+`/spil/partner/` (partnerlogin og ansøgning) og `/spil/praemier/` (offentlig
+præmieoversigt og partnersider). Fælles regler i `src/partners.js`, endpoints i
+`src/routes/partners.js`, tests i `test/partners.test.js`.
+
+**Synlighed:** en partner vises offentligt (GET /partnere, power-up i spillet,
+præmieoversigten) kun når `status='aktiv'`, `vist_i_spil=true` (sættes kun af
+admin), og firmanavn, hjemmeside og kort beskrivelse er udfyldt. En præmie vises
+kun, når titel, værdi og beskrivelse er udfyldt, og ved `op_til` også betingelser.
+
+**Slet = arkivér:** `DELETE /admin/partnere/:id` sletter kun helt, hvis partneren
+er `ansoegt`/`afvist` og ingen brugere har. Ellers arkiveres den, og dens brugere
+logges ud. `slug` er partnerens faste id og ændres aldrig.
+
+**Spillet:** `spil/index.html` henter `GET /partnere`. Når mindst én partner i
+admin har en power-up, styrer admin listen (navn og hvilke power-ups der findes).
+Ellers bruges den indbyggede standardliste. Nyhedsmail-listerne
+(`config.mailPartners`) er stadig navnebaserede og kobles ikke automatisk.
+
+| Metode + sti | Adgang | Beskrivelse |
+|---|---|---|
+| `GET /partnere` | offentlig | Synlige partnere + power-up-katalog |
+| `GET /partnere/:slug/logo` | offentlig | Logo (PNG/JPG/WEBP/SVG, sandbox-CSP) |
+| `GET /praemier` | offentlig | Præmier sorteret efter værdi, samlet værdi, konkurrence (`aktiv`, `tekst`) |
+| `POST /partnere/ansoeg` | offentlig, 5/10 min/IP | Ansøgning → `status='ansoegt'` |
+| `GET/POST /admin/partnere`, `GET/PUT/DELETE /admin/partnere/:id` | admin | Liste, opret, ret, slet/arkivér |
+| `POST /admin/partnere/:id/godkend` | admin | ansoegt → aktiv |
+| `PUT/DELETE /admin/partnere/:id/logo` | admin | Logo som rå billedbody, højst 600 KB |
+| `POST /admin/partnere/:id/brugere` | admin | Ny partnerbruger med startkode (min. 10 tegn) |
+| `POST /admin/partner-brugere/:bid/nulstil`, `DELETE /admin/partner-brugere/:bid` | admin | Ny startkode / slet bruger |
+| `GET/PUT /admin/konkurrence` | admin | Navn, lodtrækning, tekst før/efter, vinder (navn, firma, dato, tekst; 009_vinder.sql) |
+| `POST /partner/login`, `POST /partner/logout` | 5/min/IP | Cookie `spil_partner_session` (12 t) |
+| `POST /partner/skift-kode` | partner | Påkrævet før alt andet, når `skal_skifte_kode` |
+| `GET/PUT /partner/mig`, `PUT /partner/mig/logo` | partner | Egen profil og præmie (ikke navn, status, vist, power-up) |

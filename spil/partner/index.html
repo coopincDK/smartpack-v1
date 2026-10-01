@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Partner – Packrush</title>
+<link rel="icon" type="image/png" href="../icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="partner.css">
+</head>
+<body>
+<div class="wrap smal" id="wrap">
+  <div class="top">
+    <div class="row"><img src="../packrush-logo.webp" alt="Packrush"><h1>Partner</h1></div>
+    <button class="btn ghost small" id="b-logout" hidden>Log ud</button>
+  </div>
+
+  <!-- Login -->
+  <form class="card" id="v-login" hidden>
+    <h2>Log ind</h2>
+    <p class="muted small">Brug den e-mail og startkode, du har fået fra SmartPack.</p>
+    <label class="f" for="l-email">E-mail<input type="email" id="l-email" autocomplete="username" required></label>
+    <label class="f" for="l-kode">Kode<input type="password" id="l-kode" autocomplete="current-password" required></label>
+    <div id="l-msg"></div>
+    <button class="btn" type="submit">Log ind</button>
+    <p class="small muted">Glemt koden? Kontakt Martin hos SmartPack, så får du en ny startkode.</p>
+    <p class="small"><a href="#" id="til-ansoeg">Er I ikke partner endnu? Søg om at blive partner</a></p>
+  </form>
+
+  <!-- Skift kode -->
+  <form class="card" id="v-skift" hidden>
+    <h2>Vælg din egen kode</h2>
+    <p class="muted small">Første gang du logger ind, skal du skifte startkoden ud med din egen. Mindst 10 tegn.</p>
+    <label class="f" for="s-gammel">Startkode<input type="password" id="s-gammel" autocomplete="current-password" required></label>
+    <label class="f" for="s-ny">Ny kode<input type="password" id="s-ny" autocomplete="new-password" minlength="10" required></label>
+    <label class="f" for="s-ny2">Gentag ny kode<input type="password" id="s-ny2" autocomplete="new-password" minlength="10" required></label>
+    <div id="s-msg"></div>
+    <button class="btn" type="submit">Gem ny kode</button>
+  </form>
+
+  <!-- Redigér -->
+  <div id="v-profil" hidden style="display:flex;flex-direction:column;gap:20px">
+    <div class="card">
+      <h2 id="p-navn"></h2>
+      <div id="p-status"></div>
+      <p class="muted small">Det, I skriver her, bruges på jeres partnerside i Packrush, ved jeres power-up og på præmieoversigten. SmartPack godkender, før det vises.</p>
+    </div>
+    <div class="card">
+      <h3>Logo</h3>
+      <div class="logo-box" id="p-logo"></div>
+    </div>
+    <div class="card">
+      <div id="p-form" style="display:flex;flex-direction:column;gap:14px"></div>
+      <div id="p-msg"></div>
+      <div><button class="btn" id="b-gem">Gem</button></div>
+    </div>
+  </div>
+
+  <!-- Ansøg -->
+  <form class="card" id="v-ansoeg" hidden>
+    <h2>Bliv partner i Packrush</h2>
+    <p class="muted small">Fortæl kort, hvem I er. SmartPack vender tilbage, og når I er godkendt, får I et login, hvor I selv udfylder jeres partnerside og eventuelle gave til konkurrencen.</p>
+    <label class="f" for="a-firma">Firmanavn *<input type="text" id="a-firma" required></label>
+    <div class="grid2">
+      <label class="f" for="a-navn">Dit navn *<input type="text" id="a-navn" autocomplete="name" required></label>
+      <label class="f" for="a-tlf">Telefon<input type="tel" id="a-tlf" autocomplete="tel"></label>
+    </div>
+    <label class="f" for="a-email">E-mail *<input type="email" id="a-email" autocomplete="email" required></label>
+    <label class="f" for="a-web">Hjemmeside<input type="text" id="a-web" placeholder="https://"></label>
+    <label class="f" for="a-kort">Hvad kan I hjælpe webshops med?<textarea id="a-kort" maxlength="400"></textarea></label>
+    <label class="f" for="a-besked">Besked til SmartPack<small>Fx om I vil give en gave til konkurrencen.</small><textarea id="a-besked"></textarea></label>
+    <div id="a-msg"></div>
+    <div class="row"><button class="btn" type="submit">Send ansøgning</button><a href="#" id="til-login" class="small">Tilbage til login</a></div>
+  </form>
+
+  <p class="foot">Packrush · SmartPack</p>
+</div>
+
+<script src="felles.js"></script>
+<script>
+(function () {
+  'use strict';
+  var api = SP.api, el = SP.el, $ = function (id) { return document.getElementById(id); };
+  var VIEWS = ['v-login', 'v-skift', 'v-profil', 'v-ansoeg'];
+  function vis(id) { VIEWS.forEach(function (v) { $(v).hidden = v !== id; }); $('b-logout').hidden = !(id === 'v-skift' || id === 'v-profil'); }
+
+  function start() {
+    if (location.hash === '#ansoeg') return vis('v-ansoeg');
+    api('/partner/mig').then(function (r) {
+      if (r.bruger.skal_skifte_kode) return vis('v-skift');
+      tegnProfil(r.partner); vis('v-profil');
+    }).catch(function () { vis('v-login'); });
+  }
+
+  function tegnProfil(p) {
+    $('p-navn').textContent = p.navn;
+    var st = $('p-status'); st.replaceChildren();
+    if (p.synlig) st.append(el('span', { class: 'chip ok', text: 'Vises i spillet' }));
+    else if (p.mangler_profil.length) st.append(el('p', { class: 'mangler', text: 'Udfyld: ' + SP.manglerTekst(p.mangler_profil) }));
+    else st.append(el('span', { class: 'chip', text: 'Afventer SmartPacks godkendelse' }));
+    if (p.giver_praemie && p.mangler_praemie.length) st.append(el('p', { class: 'mangler', text: 'Gaven mangler: ' + SP.manglerTekst(p.mangler_praemie) }));
+
+    var lb = $('p-logo'); lb.replaceChildren();
+    lb.append(p.logo_url ? el('img', { src: SP.API + p.logo_url, alt: 'Jeres logo' }) : el('span', { class: 'muted small', text: 'Intet logo endnu' }));
+    var fil = el('input', { type: 'file', accept: 'image/png,image/jpeg,image/webp,image/svg+xml', 'aria-label': 'Upload logo' });
+    fil.addEventListener('change', function () {
+      var f = fil.files[0]; if (!f) return;
+      if (f.size > 600 * 1024) { SP.besked($('p-msg'), 'Logoet må højst fylde 600 KB.', 'err'); return; }
+      api('/partner/mig/logo', { method: 'PUT', body: f }).then(function (r) { tegnProfil(r.partner); })
+        .catch(function (e) { SP.besked($('p-msg'), e.message, 'err'); });
+    });
+    lb.append(fil, el('span', { class: 'muted small', text: 'PNG, JPG, WEBP eller SVG, højst 600 KB. Gerne på transparent eller hvid baggrund.' }));
+    SP.bygFormular($('p-form'), p);
+  }
+
+  $('b-gem').addEventListener('click', function () {
+    var b = $('b-gem'); b.disabled = true;
+    api('/partner/mig', { method: 'PUT', body: SP.laesFormular($('p-form')) })
+      .then(function (r) { tegnProfil(r.partner); SP.besked($('p-msg'), 'Gemt.', 'ok'); })
+      .catch(function (e) { SP.besked($('p-msg'), e.message, 'err'); })
+      .then(function () { b.disabled = false; });
+  });
+
+  $('v-login').addEventListener('submit', function (e) {
+    e.preventDefault();
+    api('/partner/login', { method: 'POST', body: { email: $('l-email').value, kode: $('l-kode').value } })
+      .then(function (r) { if (r.skal_skifte_kode) $('s-gammel').value = $('l-kode').value; $('l-kode').value = ''; start(); })
+      .catch(function (err) { SP.besked($('l-msg'), err.message, 'err'); });
+  });
+
+  $('v-skift').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if ($('s-ny').value !== $('s-ny2').value) return SP.besked($('s-msg'), 'De to nye koder er ikke ens.', 'err');
+    api('/partner/skift-kode', { method: 'POST', body: { gammel: $('s-gammel').value, ny: $('s-ny').value } })
+      .then(function () { ['s-gammel', 's-ny', 's-ny2'].forEach(function (i) { $(i).value = ''; }); start(); })
+      .catch(function (err) { SP.besked($('s-msg'), err.message, 'err'); });
+  });
+
+  $('v-ansoeg').addEventListener('submit', function (e) {
+    e.preventDefault();
+    api('/partnere/ansoeg', { method: 'POST', body: {
+      firmanavn: $('a-firma').value, kontakt_navn: $('a-navn').value, kontakt_email: $('a-email').value,
+      kontakt_telefon: $('a-tlf').value, hjemmeside: $('a-web').value, kort_beskrivelse: $('a-kort').value, besked: $('a-besked').value,
+    } }).then(function () {
+      $('v-ansoeg').replaceChildren(el('h2', { text: 'Tak for jeres ansøgning' }), el('p', { text: 'SmartPack vender tilbage hurtigst muligt.' }));
+    }).catch(function (err) { SP.besked($('a-msg'), err.message, 'err'); });
+  });
+
+  $('til-ansoeg').addEventListener('click', function (e) { e.preventDefault(); location.hash = 'ansoeg'; vis('v-ansoeg'); });
+  $('til-login').addEventListener('click', function (e) { e.preventDefault(); history.replaceState(null, '', location.pathname); vis('v-login'); });
+  $('b-logout').addEventListener('click', function () { api('/partner/logout', { method: 'POST' }).catch(function () {}).then(function () { vis('v-login'); }); });
+  start();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Partneradmin – Packrush</title>
+<link rel="icon" type="image/png" href="../icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="partner.css">
+<style>
+.layout{display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start}
+@media (max-width:820px){.layout{grid-template-columns:1fr}}
+.liste{display:flex;flex-direction:column;gap:6px}
+.liste button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel)}
+.liste button:hover{background:var(--panel-2)}
+.liste button[aria-current="true"]{border-color:var(--accent)}
+.liste .navn{font-weight:700}
+.bruger{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="row"><img src="../packrush-logo.webp" alt="Packrush"><h1>Partnere</h1></div>
+    <div class="row" id="topknapper" hidden>
+      <a class="btn ghost small" href="../praemier/" target="_blank" rel="noopener">Se præmieoversigten</a>
+      <button class="btn ghost small" id="b-logout">Log ud</button>
+    </div>
+  </div>
+
+  <!-- Login -->
+  <form class="card" id="login" hidden style="max-width:420px">
+    <h2>Log ind som admin</h2>
+    <p class="muted small">Samme adgangskode som spillets admin.</p>
+    <label class="f" for="a-pw">Adgangskode<input type="password" id="a-pw" autocomplete="current-password" required></label>
+    <div id="login-msg"></div>
+    <button class="btn" type="submit">Log ind</button>
+  </form>
+
+  <div id="app" hidden>
+    <div class="layout">
+      <div class="liste">
+        <div class="row" style="justify-content:space-between">
+          <h3>Alle partnere</h3>
+          <button class="btn small" id="b-ny">+ Ny partner</button>
+        </div>
+        <div id="liste" class="liste"></div>
+        <button class="btn ghost small" id="b-konk" style="margin-top:10px">Konkurrence og tekster</button>
+      </div>
+      <div id="detalje"></div>
+    </div>
+  </div>
+  <p class="foot">Packrush · SmartPack</p>
+</div>
+
+<script src="felles.js"></script>
+<script>
+(function () {
+  'use strict';
+  var api = SP.api, el = SP.el;
+  var state = { partnere: [], powerups: {}, valgt: null };
+  var $ = function (id) { return document.getElementById(id); };
+
+  var STATUS = { ansoegt: ['Ansøgt', 'warn'], aktiv: ['Aktiv', 'ok'], afvist: ['Afvist', 'bad'], arkiveret: ['Arkiveret', 'bad'] };
+
+  function chip(p) {
+    if (p.status !== 'aktiv') return el('span', { class: 'chip ' + STATUS[p.status][1], text: STATUS[p.status][0] });
+    if (p.synlig) return el('span', { class: 'chip ok', text: 'Vises' });
+    return el('span', { class: 'chip', text: p.vist_i_spil ? 'Mangler info' : 'Skjult' });
+  }
+
+  function visLogin() { $('login').hidden = false; $('app').hidden = true; $('topknapper').hidden = true; }
+  function visApp() { $('login').hidden = true; $('app').hidden = false; $('topknapper').hidden = false; }
+
+  function hentListe() {
+    return api('/admin/partnere').then(function (r) {
+      state.partnere = r.partnere; state.powerups = r.powerups;
+      tegnListe(); visApp();
+    }).catch(function (e) { if (e.status === 401 || e.status === 403) visLogin(); else alert(e.message); });
+  }
+
+  function tegnListe() {
+    var l = $('liste'); l.replaceChildren();
+    if (!state.partnere.length) l.append(el('p', { class: 'muted small', text: 'Ingen partnere endnu.' }));
+    state.partnere.forEach(function (p) {
+      l.append(el('button', { 'aria-current': state.valgt === p.id ? 'true' : 'false', onclick: function () { aabn(p.id); } }, [
+        el('span', null, [el('span', { class: 'navn', text: p.navn }), el('br'), el('span', { class: 'muted small', text: p.powerup ? 'Power-up: ' + p.powerup : 'Ingen power-up' })]),
+        chip(p),
+      ]));
+    });
+  }
+
+  function aabn(id) {
+    state.valgt = id; tegnListe();
+    api('/admin/partnere/' + id).then(function (r) { tegnDetalje(r.partner, r.brugere); })
+      .catch(function (e) { alert(e.message); });
+  }
+
+  function tegnDetalje(p, brugere, flash) {
+    var d = $('detalje'); d.replaceChildren();
+    var msg = el('div');
+    if (flash) SP.besked(msg, flash, 'ok');
+    var top = el('div', { class: 'card' });
+    top.append(el('div', { class: 'top' }, [el('h2', { text: p.navn }), chip(p)]));
+    if (p.status === 'ansoegt') {
+      top.append(el('div', { class: 'msg info' }, [
+        el('strong', { text: 'Ansøgning' }), el('br'),
+        document.createTextNode((p.kontakt_navn || '') + ' · ' + (p.kontakt_email || '') + (p.kontakt_telefon ? ' · ' + p.kontakt_telefon : '')),
+        p.ansoegning_besked ? el('p', { text: p.ansoegning_besked, style: 'margin-top:8px;white-space:pre-wrap' }) : null,
+      ]));
+      top.append(el('div', { class: 'row' }, [
+        el('button', { class: 'btn', text: 'Godkend som partner', onclick: function () {
+          api('/admin/partnere/' + p.id + '/godkend', { method: 'POST' }).then(function () { return hentListe(); }).then(function () { aabn(p.id); });
+        } }),
+        el('button', { class: 'btn ghost', text: 'Afvis', onclick: function () {
+          api('/admin/partnere/' + p.id, { method: 'PUT', body: { status: 'afvist' } }).then(function () { return hentListe(); }).then(function () { aabn(p.id); });
+        } }),
+      ]));
+    }
+
+    // Visning i spillet
+    var navn = el('input', { type: 'text', id: 'x-navn' }); navn.value = p.navn;
+    var pu = el('select', { id: 'x-powerup' }, [el('option', { value: '', text: 'Ingen power-up' })].concat(
+      Object.keys(state.powerups).map(function (k) { return el('option', { value: k, text: k + ' (' + state.powerups[k].runde + '): ' + state.powerups[k].effekt }); })
+    ));
+    pu.value = p.powerup || '';
+    var vis = el('input', { type: 'checkbox', id: 'x-vis' }); vis.checked = !!p.vist_i_spil;
+    var statusSel = el('select', { id: 'x-status' }, Object.keys(STATUS).map(function (k) { return el('option', { value: k, text: STATUS[k][0] }); }));
+    statusSel.value = p.status;
+    var spil = el('fieldset', null, [
+      el('legend', { text: 'I spillet (kun admin)' }),
+      el('div', { class: 'grid2' }, [
+        el('label', { class: 'f', for: 'x-navn' }, [document.createTextNode('Navn i spillet *'), el('small', { text: 'Det korte navn, der står på power-uppen.' }), navn]),
+        el('label', { class: 'f', for: 'x-status' }, [document.createTextNode('Status'), statusSel]),
+      ]),
+      el('label', { class: 'f', for: 'x-powerup' }, [document.createTextNode('Power-up'), pu]),
+      el('label', { class: 'check' }, [vis, document.createTextNode('Vis i spillet og på præmieoversigten')]),
+      p.mangler_profil.length ? el('p', { class: 'mangler', text: 'Vises først, når dette er udfyldt: ' + SP.manglerTekst(p.mangler_profil) }) : null,
+      p.giver_praemie && p.mangler_praemie.length ? el('p', { class: 'mangler', text: 'Gaven vises først, når dette er udfyldt: ' + SP.manglerTekst(p.mangler_praemie) }) : null,
+    ]);
+    top.append(spil);
+
+    // Logo
+    var logoImg = p.logo_url ? el('img', { src: SP.API + p.logo_url, alt: 'Logo' }) : el('span', { class: 'muted small', text: 'Intet logo' });
+    var fil = el('input', { type: 'file', accept: 'image/png,image/jpeg,image/webp,image/svg+xml' });
+    fil.addEventListener('change', function () {
+      var f = fil.files[0]; if (!f) return;
+      if (f.size > 600 * 1024) { SP.besked(msg, 'Logoet må højst fylde 600 KB.', 'err'); return; }
+      api('/admin/partnere/' + p.id + '/logo', { method: 'PUT', body: f }).then(function () { aabn(p.id); hentListe(); })
+        .catch(function (e) { SP.besked(msg, e.message, 'err'); });
+    });
+    top.append(el('fieldset', null, [el('legend', { text: 'Logo' }), el('div', { class: 'logo-box' }, [logoImg, fil,
+      p.har_logo ? el('button', { class: 'btn ghost small', text: 'Fjern logo', onclick: function () {
+        api('/admin/partnere/' + p.id + '/logo', { method: 'DELETE' }).then(function () { aabn(p.id); });
+      } }) : null])]));
+
+    var form = el('div', { style: 'display:flex;flex-direction:column;gap:14px' });
+    SP.bygFormular(form, p);
+    top.append(form);
+
+    var gem = el('button', { class: 'btn', text: 'Gem' });
+    gem.addEventListener('click', function () {
+      var data = SP.laesFormular(form);
+      data.navn = navn.value; data.powerup = pu.value; data.vist_i_spil = vis.checked; data.status = statusSel.value;
+      gem.disabled = true;
+      api('/admin/partnere/' + p.id, { method: 'PUT', body: data }).then(function (r) {
+        return hentListe().then(function () { tegnDetalje(r.partner, brugere, 'Gemt.'); });
+      }).catch(function (e) { SP.besked(msg, e.message, 'err'); }).then(function () { gem.disabled = false; });
+    });
+    var slet = el('button', { class: 'btn danger', text: p.status === 'ansoegt' || p.status === 'afvist' ? 'Slet' : 'Arkivér' });
+    slet.addEventListener('click', function () {
+      var hvad = slet.textContent.toLowerCase();
+      if (!confirm('Vil du ' + hvad + ' ' + p.navn + '? En arkiveret partner forsvinder fra spillet, og dens brugere logges ud. Den kan genaktiveres ved at sætte status til Aktiv.')) return;
+      api('/admin/partnere/' + p.id, { method: 'DELETE' }).then(function (r) {
+        if (r.resultat === 'slettet') { state.valgt = null; $('detalje').replaceChildren(); }
+        return hentListe().then(function () { if (r.resultat !== 'slettet') aabn(p.id); });
+      }).catch(function (e) { SP.besked(msg, e.message, 'err'); });
+    });
+    top.append(msg, el('div', { class: 'row' }, [gem, slet,
+      p.synlig ? el('a', { class: 'btn ghost', href: '../praemier/#' + encodeURIComponent(p.slug), target: '_blank', rel: 'noopener', text: 'Se partnersiden' }) : null]));
+    d.append(top);
+
+    // Brugere
+    var bc = el('div', { class: 'card' }, [el('h3', { text: 'Brugere til partnerlogin' }),
+      el('p', { class: 'muted small', text: 'Giv partneren e-mail og startkode. De skal selv vælge en ny kode første gang, de logger ind på /spil/partner/. Har de glemt koden, giver du dem en ny startkode her.' })]);
+    brugere.forEach(function (b) {
+      bc.append(el('div', { class: 'bruger' }, [
+        el('span', null, [el('strong', { text: b.email }), document.createTextNode(b.navn ? ' · ' + b.navn : ''), el('br'),
+          el('span', { class: 'muted small', text: (b.skal_skifte_kode ? 'Har ikke valgt egen kode endnu' : 'Har valgt egen kode') + (b.sidst_login ? ' · sidst logget ind ' + new Date(b.sidst_login).toLocaleString('da-DK') : ' · aldrig logget ind') })]),
+        el('span', { class: 'row' }, [
+          el('button', { class: 'btn ghost small', text: 'Ny startkode', onclick: function () {
+            var k = prompt('Ny startkode til ' + b.email + ' (mindst 10 tegn):'); if (!k) return;
+            api('/admin/partner-brugere/' + b.id + '/nulstil', { method: 'POST', body: { kode: k } }).then(function () { alert('Ny startkode er sat. Brugeren skal vælge sin egen kode ved næste login.'); aabn(p.id); })
+              .catch(function (e) { alert(e.message); });
+          } }),
+          el('button', { class: 'btn danger small', text: 'Slet bruger', onclick: function () {
+            if (!confirm('Slet brugeren ' + b.email + '?')) return;
+            api('/admin/partner-brugere/' + b.id, { method: 'DELETE' }).then(function () { aabn(p.id); });
+          } }),
+        ]),
+      ]));
+    });
+    var bEmail = el('input', { type: 'email', id: 'nb-email', placeholder: 'navn@firma.dk' });
+    var bNavn = el('input', { type: 'text', id: 'nb-navn' });
+    var bKode = el('input', { type: 'text', id: 'nb-kode', autocomplete: 'off' });
+    bKode.value = forslagKode();
+    var bMsg = el('div');
+    bc.append(el('fieldset', null, [el('legend', { text: 'Ny bruger' }),
+      el('div', { class: 'grid2' }, [
+        el('label', { class: 'f', for: 'nb-email' }, [document.createTextNode('E-mail *'), bEmail]),
+        el('label', { class: 'f', for: 'nb-navn' }, [document.createTextNode('Navn'), bNavn]),
+      ]),
+      el('label', { class: 'f', for: 'nb-kode' }, [document.createTextNode('Startkode *'), el('small', { text: 'Mindst 10 tegn. Send den til partneren ad en anden vej end e-mailen, fx sms.' }), bKode]),
+      bMsg,
+      el('div', null, [el('button', { class: 'btn', text: 'Opret bruger', onclick: function () {
+        api('/admin/partnere/' + p.id + '/brugere', { method: 'POST', body: { email: bEmail.value, navn: bNavn.value, kode: bKode.value } })
+          .then(function () { aabn(p.id); hentListe(); })
+          .catch(function (e) { SP.besked(bMsg, e.message, 'err'); });
+      } })]),
+    ]));
+    d.append(bc);
+  }
+
+  function forslagKode() {
+    var abc = 'abcdefghjkmnpqrstuvwxyz23456789', a = new Uint32Array(12), s = '';
+    crypto.getRandomValues(a);
+    for (var i = 0; i < 12; i++) { s += abc[a[i] % abc.length]; if (i === 3 || i === 7) s += '-'; }
+    return s;
+  }
+
+  function nyPartner() {
+    var n = prompt('Navn på den nye partner (det korte navn, der vises i spillet):');
+    if (!n) return;
+    api('/admin/partnere', { method: 'POST', body: { navn: n } }).then(function (r) { return hentListe().then(function () { aabn(r.partner.id); }); })
+      .catch(function (e) { alert(e.message); });
+  }
+
+  function konkurrence() {
+    state.valgt = null; tegnListe();
+    api('/admin/konkurrence').then(function (r) {
+      var k = r.konkurrence, d = $('detalje'); d.replaceChildren();
+      var navn = el('input', { type: 'text', id: 'k-navn' }); navn.value = k.navn || '';
+      var tid = el('input', { type: 'datetime-local', id: 'k-tid' });
+      if (k.lodtraekning) { var dt = new Date(k.lodtraekning); tid.value = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16); }
+      var ta = el('textarea', { id: 'k-aktiv' }); ta.value = k.tekst_aktiv || '';
+      var ts = el('textarea', { id: 'k-slut' }); ts.value = k.tekst_slut || '';
+      var vn = el('input', { type: 'text', id: 'v-navn' }); vn.value = k.vinder_navn || '';
+      var vf = el('input', { type: 'text', id: 'v-firma' }); vf.value = k.vinder_firma || '';
+      var vd = el('input', { type: 'date', id: 'v-dato' }); vd.value = k.vinder_dato || '';
+      var vt = el('textarea', { id: 'v-tekst' }); vt.value = k.vinder_tekst || '';
+      var msg = el('div');
+      d.append(el('div', { class: 'card' }, [
+        el('h2', { text: 'Konkurrence' }),
+        el('p', { class: 'muted small', text: r.visning.aktiv ? 'Konkurrencen er aktiv lige nu.' : 'Der er ingen aktiv konkurrence lige nu. Præmieoversigten viser teksten til efter lodtrækningen.' }),
+        el('label', { class: 'f', for: 'k-navn' }, [document.createTextNode('Navn'), navn]),
+        el('label', { class: 'f', for: 'k-tid' }, [document.createTextNode('Lodtrækning'), el('small', { text: 'Dato og klokkeslæt (dansk tid). Efter dette tidspunkt viser siden, at der ikke er en aktiv konkurrence.' }), tid]),
+        el('label', { class: 'f', for: 'k-aktiv' }, [document.createTextNode('Tekst mens konkurrencen kører'), el('small', { text: 'Fx hvordan og hvornår vinderen trækkes og får besked.' }), ta]),
+        el('label', { class: 'f', for: 'k-slut' }, [document.createTextNode('Tekst efter lodtrækningen'), el('small', { text: 'Fx "Lige nu er der ingen aktiv konkurrence. Næste gang ses vi til …"' }), ts]),
+        el('fieldset', null, [
+          el('legend', { text: 'Vinder' }),
+          el('p', { class: 'muted small', text: 'Vises øverst på præmieoversigten, så snart navnet er udfyldt. Tøm navnet for at skjule vinderen igen. Spørg vinderen, om navnet må vises.' }),
+          el('div', { class: 'grid2' }, [
+            el('label', { class: 'f', for: 'v-navn' }, [document.createTextNode('Vinderens navn'), vn]),
+            el('label', { class: 'f', for: 'v-firma' }, [document.createTextNode('Firma'), vf]),
+          ]),
+          el('label', { class: 'f', for: 'v-dato' }, [document.createTextNode('Dato'), vd]),
+          el('label', { class: 'f', for: 'v-tekst' }, [document.createTextNode('Tekst'), el('small', { text: 'Fx "Tillykke til Mette fra Webshop ApS, der vandt alle præmierne på E-handelskonferencen."' }), vt]),
+        ]),
+        msg,
+        el('div', null, [el('button', { class: 'btn', text: 'Gem', onclick: function () {
+          api('/admin/konkurrence', { method: 'PUT', body: { navn: navn.value, lodtraekning: tid.value ? new Date(tid.value).toISOString() : null, tekst_aktiv: ta.value, tekst_slut: ts.value,
+            vinder_navn: vn.value, vinder_firma: vf.value, vinder_dato: vd.value || null, vinder_tekst: vt.value } })
+            .then(function () { SP.besked(msg, 'Gemt.', 'ok'); }).catch(function (e) { SP.besked(msg, e.message, 'err'); });
+        } })]),
+      ]));
+    }).catch(function (e) { alert(e.message); });
+  }
+
+  $('login').addEventListener('submit', function (e) {
+    e.preventDefault();
+    api('/admin/login', { method: 'POST', body: { password: $('a-pw').value } })
+      .then(function () { $('a-pw').value = ''; return hentListe(); })
+      .catch(function (err) { SP.besked($('login-msg'), err.message, 'err'); });
+  });
+  $('b-logout').addEventListener('click', function () { api('/admin/logout', { method: 'POST' }).catch(function () {}).then(visLogin); });
+  $('b-ny').addEventListener('click', nyPartner);
+  $('b-konk').addEventListener('click', konkurrence);
+  hentListe();
+})();
+</script>
+</body>
+</html>

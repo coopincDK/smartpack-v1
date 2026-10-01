@@ -113,7 +113,34 @@ async function setupPgMem() {
   return { pool, backend: 'pg-mem', async teardown() {} };
 }
 
+// Alternativ til Docker: en allerede kørende Postgres 16 (fx lokalt eller i
+// CI). TEST_PG_ADMIN_URL peger på en superbruger-forbindelse; hver testfil
+// får sin egen engangsdatabase, som droppes igen bagefter.
+async function setupLocalPg(adminUrl) {
+  const dbName = 'spiltest_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+  const admin = new Client({ connectionString: adminUrl });
+  await admin.connect();
+  await admin.query(`CREATE DATABASE ${dbName}`);
+  await admin.end();
+  const url = new URL(adminUrl);
+  url.pathname = '/' + dbName;
+  const pool = new Pool({ connectionString: url.toString() });
+  await migrate(pool);
+  return {
+    pool,
+    backend: 'local-pg',
+    async teardown() {
+      await pool.end();
+      const c = new Client({ connectionString: adminUrl });
+      await c.connect();
+      await c.query(`DROP DATABASE IF EXISTS ${dbName} WITH (FORCE)`);
+      await c.end();
+    },
+  };
+}
+
 async function setupTestDb() {
+  if (process.env.TEST_PG_ADMIN_URL) return setupLocalPg(process.env.TEST_PG_ADMIN_URL);
   if (dockerAvailable()) {
     const { connectionString, stop } = await startDockerPg();
     const pool = new Pool({ connectionString });
