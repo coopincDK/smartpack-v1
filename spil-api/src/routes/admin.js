@@ -23,6 +23,8 @@ const { samtykkerFor } = require('./me');
 const { clientIp } = require('../middleware/clientIp');
 const { deletePlayerFully } = require('../playerDeletion');
 const { runBackup: defaultRunBackup } = require('../backup');
+const { hentKonkurrence, lodVindue } = require('../konkurrence');
+const { shortName } = require('../rules/nameDisplay');
 
 const LISTE_RE = /^[a-z0-9:_.-]+$/;
 const NULSTIL_BEKRAEFT = 'NULSTIL';
@@ -47,21 +49,34 @@ async function activeSpillerIds(pool, liste) {
   );
 }
 
-async function drawWinner(pool, cfg) {
-  const { rows } = await pool.query('SELECT id, navn, email FROM spiller WHERE skjult = false');
+// Trækker en vinder vægtet efter lodder. Når konkurrencen i partneradmin er
+// udfyldt, tæller kun spilledage mellem dens start og lodtrækning, og spillere,
+// der er afvist som vinder i samme konkurrence, er udelukket.
+async function drawWinner(pool, cfg, konk) {
+  const vindue = lodVindue(konk);
+  const afvist = new Set();
+  if (vindue) {
+    const { rows: a } = await pool.query(
+      `SELECT spiller_id FROM raffle_draws WHERE status = 'afvist' AND spiller_id IS NOT NULL AND tidspunkt >= $1`,
+      [vindue.fra || '1970-01-01T00:00:00Z']
+    );
+    a.forEach((r) => afvist.add(String(r.spiller_id)));
+  }
+  const { rows } = await pool.query('SELECT id, navn, email, telefon, firma FROM spiller WHERE skjult = false');
   const vaegte = [];
   for (const r of rows) {
-    const t = await computeTickets(pool, r.id, cfg);
-    if (t > 0) vaegte.push({ id: r.id, navn: r.navn, email: r.email, tickets: t });
+    if (afvist.has(String(r.id))) continue;
+    const t = await computeTickets(pool, r.id, cfg, vindue);
+    if (t > 0) vaegte.push({ id: r.id, navn: r.navn, email: r.email, telefon: r.telefon, firma: r.firma, tickets: t });
   }
   const total = vaegte.reduce((a, w) => a + w.tickets, 0);
   if (total <= 0) return null;
   let x = Math.random() * total;
   for (const w of vaegte) {
     x -= w.tickets;
-    if (x <= 0) return w;
+    if (x <= 0) return { ...w, tickets_total: total };
   }
-  return vaegte[vaegte.length - 1];
+  return { ...vaegte[vaegte.length - 1], tickets_total: total };
 }
 
 function adminRouter(pool, ws, opts) {
@@ -115,6 +130,7 @@ function adminRouter(pool, ws, opts) {
       const cfg = cfgRow.offentlig || {};
       const now = new Date();
       const today = todayStr(now);
+      const vindue = lodVindue(await hentKonkurrence(pool));
 
       const ud = [];
       for (const r of rows) {
@@ -151,7 +167,7 @@ function adminRouter(pool, ws, opts) {
           oprettet: r.oprettet,
           skjult: r.skjult,
           badges: r.badges,
-          tickets: await computeTickets(pool, r.id, cfg),
+          tickets: await computeTickets(pool, r.id, cfg, vindue),
           tilmeldinger,
           beaten_i_dag: beatenIDag,
           forsoeg,
@@ -310,18 +326,60 @@ function adminRouter(pool, ws, opts) {
 
   router.post('/admin/lodtraekning', admin, async (req, res, next) => {
     try {
-      const kortNavn = String((req.body && req.body.kort_navn) || 'default').slice(0, 60);
       const cfgRow = await getCfgRow(pool);
-      const vinder = await drawWinner(pool, cfgRow.offentlig);
+      const konk = await hentKonkurrence(pool);
+      const kortNavn = String((req.body && req.body.kort_navn) || (konk && konk.lodtraekning && konk.navn) || 'default').slice(0, 60);
+      const vinder = await drawWinner(pool, cfgRow.offentlig, konk);
       if (!vinder) {
         return res.status(400).json({ fejl: 'Ingen spillere er berettiget til lodtrækning.', kode: 'ingen_vinder' });
       }
-      await pool.query(
-        `INSERT INTO raffle_draws (kort_navn, spiller_id, spiller_navn_snapshot, email_snapshot)
-         VALUES ($1, $2, $3, $4)`,
-        [kortNavn, vinder.id, vinder.navn, vinder.email]
+      const { rows } = await pool.query(
+        `INSERT INTO raffle_draws (kort_navn, spiller_id, spiller_navn_snapshot, email_snapshot, tickets)
+         VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+        [kortNavn, vinder.id, vinder.navn, vinder.email, vinder.tickets]
       );
-      res.json({ vinder: { navn: vinder.navn, email: vinder.email, tickets: vinder.tickets } });
+      res.json({
+        traekning_id: Number(rows[0].id),
+        status: 'afventer',
+        tickets_total: vinder.tickets_total,
+        vinder: { navn: vinder.navn, firma: vinder.firma, email: vinder.email, telefon: vinder.telefon, tickets: vinder.tickets },
+      });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // En trukket vinder skal godkendes, før den vises på præmiesiden. Afvises
+  // den (fx et navn, der er vrøvl), kan spilleren ikke trækkes igen i samme
+  // konkurrence, og man trækker blot igen.
+  router.post('/admin/lodtraekning/:id/:handling(godkend|afvis)', admin, async (req, res, next) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (!Number.isInteger(id) || id <= 0) return res.status(404).json({ fejl: 'Trækningen findes ikke.', kode: 'ikke_fundet' });
+      const { rows } = await pool.query(
+        `SELECT d.id, d.status, d.spiller_id, s.navn, s.firma FROM raffle_draws d
+         LEFT JOIN spiller s ON s.id = d.spiller_id WHERE d.id = $1`,
+        [id]
+      );
+      const d = rows[0];
+      if (!d) return res.status(404).json({ fejl: 'Trækningen findes ikke.', kode: 'ikke_fundet' });
+      if (d.status !== 'afventer') {
+        return res.status(409).json({ fejl: 'Trækningen er allerede ' + (d.status === 'godkendt' ? 'godkendt.' : 'afvist.'), kode: 'allerede_afgjort' });
+      }
+      if (req.params.handling === 'afvis') {
+        await pool.query(`UPDATE raffle_draws SET status = 'afvist' WHERE id = $1`, [id]);
+        return res.json({ ok: true, status: 'afvist' });
+      }
+      if (!d.spiller_id) return res.status(409).json({ fejl: 'Spilleren er slettet.', kode: 'spiller_slettet' });
+      await pool.query(`UPDATE raffle_draws SET status = 'godkendt' WHERE id = $1`, [id]);
+      // Vinderen vises på præmiesiden med det samme, som "Fornavn E." ligesom i
+      // spillet. Navn og tekst kan rettes i partneradmin.
+      await pool.query(
+        `UPDATE konkurrence SET vinder_navn = $1, vinder_firma = $2, vinder_dato = $3, opdateret = now() WHERE id = 1`,
+        [d.navn ? shortName(d.navn) : '', d.firma || '', todayStr(new Date())]
+      );
+      invalidateStateCache();
+      res.json({ ok: true, status: 'godkendt' });
     } catch (e) {
       next(e);
     }

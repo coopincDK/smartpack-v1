@@ -866,6 +866,27 @@ const MONTHS = ['januar','februar','marts','april','maj','juni','juli','august',
 const DEFAULT_CFG = { perDay: 3, bf: true, crownOn: true, crownTime: '16:00', mission: 'total', goal: 0, periodName: 'Hele messen', periodStart: '2000-01-01', teams: true, raffle: true, eventName: '', partners: true, prize: '', smsSponsor: 'InMobile', smsOn: true, mailPartners: 'Herodesk, Revershero, Active Promotion, Sprii, Element Logic', lifeBonus: true, referral: true, fixed: true, hourly: true, hourPrize: '', duel: true, smsBoost: true, boostLives: 2, shareUrl: '' };
 /* cfg starter som fallback og bliver overskrevet af serverens /state, så snart den svarer (se applyState herunder) */
 let cfg = { ...DEFAULT_CFG };
+/* Konkurrencen fra partneradmin (med i /state). Den styrer selv, hvornår spillet viser
+   vinder-, præmie-, lod- og timens boss-tekster: kun mens den er aktiv, altså fra start til
+   lodtrækning. Før og efter følger spillet ikke arrangør-opsætningens konkurrencefelter.
+   rawCfg er arrangør-opsætningen, som den er gemt; cfg er den, spillet bruger lige nu. */
+let rawCfg = { ...DEFAULT_CFG }, KONK = null;
+function konkFase(k, n){
+  n = n == null ? Date.now() : n;
+  if(!k || !k.lodtraekning) return 'ingen';
+  const st = k.start ? Date.parse(k.start) : null;
+  if(st != null && n < st) return 'kommende';
+  return n < Date.parse(k.lodtraekning) ? 'aktiv' : 'afsluttet';
+}
+function effCfg(){
+  const c = { ...rawCfg };
+  if(konkFase(KONK) === 'aktiv'){
+    if(KONK.navn) c.periodName = KONK.navn;
+    if(KONK.start) c.periodStart = new Date(KONK.start).toLocaleDateString('sv-SE', { timeZone: CPH_TZ });
+  } else { c.crownOn = false; c.hourly = false; c.raffle = false; c.prize = ''; c.hourPrize = ''; }
+  return c;
+}
+const konkDato = iso => new Date(iso).toLocaleString('da-DK', { timeZone: CPH_TZ, day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
 
 /* ---------- data: offentlig liste fra serveren (GET state), egen fulde record via token (GET me) ----------
    Alt netværk går gennem API/RT herunder, så resten af spillet aldrig taler direkte med db/room/localStorage.
@@ -1031,6 +1052,7 @@ const API = {
     boostCode(){ return apiFetch('/admin/boostkode', { admin: true }); },
     exportUrl(kind){ return API_BASE + '/admin/eksport/' + kind + '.csv'; },
     draw(kortNavn){ return apiFetch('/admin/lodtraekning', { method: 'POST', body: { kort_navn: kortNavn || cfg.periodName || 'Packrush' }, admin: true }); },
+    judgeDraw(id, ok){ return apiFetch(`/admin/lodtraekning/${encodeURIComponent(id)}/${ok ? 'godkend' : 'afvis'}`, { method: 'POST', admin: true }); },
     unsubscribeBulk(liste, emails){ return apiFetch('/admin/afmeld', { method: 'POST', body: { liste, emails }, admin: true }); },
     resetAll(){ return apiFetch('/admin/nulstil', { method: 'POST', body: { bekraeft: 'NULSTIL' }, admin: true }); },
     standLoginCode(){ return apiFetch('/admin/stand-login-kode', { method: 'POST', admin: true }); },
@@ -1094,12 +1116,17 @@ const RT = (() => {
 let stateLoading = null, stateETag = null;
 function applyState(s){
   if(!s) return;
-  cfg = { ...DEFAULT_CFG, ...(s.cfg || {}) };
+  rawCfg = { ...DEFAULT_CFG, ...(s.cfg || {}) };
+  KONK = s.konkurrence || null; konkSidst = konkFase(KONK);
+  cfg = effCfg();
   const ps = {}; (s.players || []).forEach(p => { if(p && p.pid) ps[p.pid] = norm(p); });
   data.players = ps;
   cacheState(s);
   syncMyAttempts();
 }
+/* Fasen skifter på klokkeslættet (start og lodtrækning), ikke når /state ændrer sig */
+let konkSidst = 'ingen';
+setInterval(() => { const f = konkFase(KONK); if(f !== konkSidst){ konkSidst = f; cfg = effCfg(); refresh(); } }, 15000);
 /* M6: brug serverens ETag, så et uændret /state kun koster et 304-svar, ikke en fuld payload */
 function loadState(){
   if(stateLoading) return stateLoading;
@@ -1439,7 +1466,16 @@ function dayStreak(p){
   return n;
 }
 function goalMet(p){ if(!(cfg.goal > 0)) return false; const v = pval(p, cfg.mission, F.period); return v != null && (MET[cfg.mission].low ? v <= cfg.goal : v >= cfg.goal); }
-const tickets = p => daysPlayed(p, F.period) + (goalMet(p) ? 1 : 0);
+/* I en konkurrence fra partneradmin er hvert point ét lod, og alle spil fra start til lodtrækning
+   lægges sammen (samme regel som serverens computeTickets). Ellers ét lod pr. spilledag i perioden. */
+function konkWindow(a){
+  if(!KONK || !KONK.lodtraekning) return false;
+  const t = Date.parse(a.at || a.end) || Date.now();
+  return (!KONK.start || t >= Date.parse(KONK.start)) && t < Date.parse(KONK.lodtraekning);
+}
+const pointLod = () => konkFase(KONK) !== 'ingen';
+const tickets = p => pointLod() ? (p.attempts || []).filter(konkWindow).reduce((n, a) => n + Math.max(0, Math.round(a.score || 0)), 0)
+  : daysPlayed(p, F.period) + (goalMet(p) ? 1 : 0);
 const bestToday = p => pval(p, 'total', F.today) || 0;
 
 /* ---------- mærker ---------- */
@@ -2223,6 +2259,18 @@ function crownLine(){
   const w = rank('total', F.crown)[0];
   return ['crown', w ? `Dagens vinder er ${w.p.name} med ${fmt(w.v)} point.` : 'Dagens kåring er overstået.'];
 }
+/* Linje om konkurrencen med link til præmiesiden. Intet, når ingen konkurrence er udfyldt. */
+function konkLine(){
+  const f = konkFase(KONK); if(f === 'ingen') return null;
+  const k = KONK, navn = k.navn || 'Konkurrencen';
+  const txt = f === 'kommende' ? `Næste konkurrence: ${navn}, starter ${konkDato(k.start)}. `
+    : f === 'aktiv' ? `${navn}: vinderen trækkes ${konkDato(k.lodtraekning)}. `
+    : `${navn} er slut. `;
+  const a = el('a', null, f === 'afsluttet' ? (k.vinder ? 'Se vinderen' : 'Se præmierne') : 'Se præmierne');
+  a.href = 'praemier/'; a.style.color = 'inherit';
+  const c = el('p', 'chip' + (f === 'aktiv' ? ' crown' : '')), t = el('span', null, txt); t.append(a);
+  c.append(el('span', 'dot'), t); return c;
+}
 function forgetMe(){ API.logout(); savedMe = null; RT.rehello(); }
 $('#b-me').onclick = () => { if(!savedMe) return; audio(); current = savedMe; syncMyAttempts(); show('s-lobby'); };
 let idleT = 0;
@@ -2240,6 +2288,7 @@ function renderStart(){
   c1.append(t1); live.append(c1);
   if(cfg.prize){ const c3 = el('p', 'chip crown'); c3.append(el('span', 'dot'), el('span', null, `Præmie: ${cfg.prize}`)); live.append(c3); }
   const cl = crownLine(); if(cl){ const c2 = el('p', 'chip crown'); c2.append(el('span', 'dot'), el('span', null, cl[1])); live.append(c2); }
+  const kl = konkLine(); if(kl) live.append(kl);
   const ms = $('#st-mission');
   if(cfg.mission && cfg.mission !== 'total'){
     const m = MET[cfg.mission], lead = rank(cfg.mission, F.period)[0];
@@ -2417,7 +2466,9 @@ function renderLobby(){
   const tk = $('#l-tickets');
   if(cfg.raffle){
     const n = tickets(p), s = dayStreak(p), box = el('span', 'tk'); for(let i = 0; i < Math.min(n, 12); i++) box.append(el('i'));
-    const tt = el('span'); tt.append('Du har ', el('b', null, `${n} ${n === 1 ? 'lod' : 'lodder'}`), ` i lodtrækningen for ${pnl()}. ${daysPlayed(p, a => a.day === today() && F.period(a)) ? 'Spil igen i morgen for et lod mere.' : 'Gennemfør et spil i dag for et lod mere.'}${s > 1 ? ` Du har spillet ${s} dage i træk.` : ''}`);
+    const tt = el('span');
+    if(pointLod()) tt.append('Du har ', el('b', null, `${fmt(n)} ${n === 1 ? 'lod' : 'lodder'}`), ` i lodtrækningen i ${pnl()}. Hvert point er ét lod, og alle dine spil i konkurrencen lægges sammen.`);
+    else tt.append('Du har ', el('b', null, `${n} ${n === 1 ? 'lod' : 'lodder'}`), ` i lodtrækningen for ${pnl()}. ${daysPlayed(p, a => a.day === today() && F.period(a)) ? 'Spil igen i morgen for et lod mere.' : 'Gennemfør et spil i dag for et lod mere.'}${s > 1 ? ` Du har spillet ${s} dage i træk.` : ''}`);
     tk.replaceChildren(box, tt); tk.hidden = false;
   } else tk.hidden = true;
   // firma
@@ -2847,7 +2898,7 @@ function showResult(p, g){
   if(g.leftover){ const d = el('div'); d.style.animationDelay = '1.3s'; d.append(el('span', 'muted small', `Heraf ${g.leftover} pakker tilbage på lager, 3 point pr. stk.`), el('span')); lines.append(d); }
   if(g.bf){ const d = el('div'); d.style.animationDelay = '1.35s'; d.append(el('span', 'muted small', 'Black Friday-vagt, point ×2 er regnet med'), el('span')); lines.append(d); }
   const l = left(p);
-  const tk = cfg.raffle ? ` Du har ${tickets(p)} ${tickets(p) === 1 ? 'lod' : 'lodder'} i lodtrækningen.` : '';
+  const tk = cfg.raffle ? ` Du har ${fmt(tickets(p))} ${tickets(p) === 1 ? 'lod' : 'lodder'} i lodtrækningen.` : '';
   const nx = nextLifeMs(p);
   $('#r-rank').textContent = (l ? `Du har ${l} liv tilbage.` : nx != null ? `Du har ikke flere liv lige nu. Næste liv om ${Math.ceil(nx / 60000)} min.` : 'Du har ikke flere liv i dag. Kom igen i morgen.') + tk;
   $('#b-again').hidden = !l;
@@ -2967,11 +3018,11 @@ $('#f-pin').addEventListener('submit', e => {
 });
 const sel = $('#c-mission'); MISSIONS.forEach(k => { const o = el('option', null, k === 'total' ? 'Ingen mission, kun højeste score' : MET[k].name); o.value = k; sel.append(o); });
 function fillCfg(){
-  $('#c-pname').value = cfg.periodName || ''; $('#c-pstart').value = cfg.periodStart > '2000-01-01' ? cfg.periodStart : '';
-  $('#c-event').value = cfg.eventName || ''; $('#c-per').value = cfg.perDay; $('#c-ctime').value = cfg.crownTime;
-  $('#c-crown').checked = !!cfg.crownOn; $('#c-bf').checked = !!cfg.bf; $('#c-teams').checked = !!cfg.teams; $('#c-raffle').checked = !!cfg.raffle; $('#c-partners').checked = cfg.partners !== false;
-  $('#c-mission').value = cfg.mission; $('#c-prize').value = cfg.prize || ''; $('#c-sms').checked = cfg.smsOn !== false; $('#c-sponsor').value = cfg.smsSponsor || ''; $('#c-mailp').value = cfg.mailPartners || ''; $('#c-life').checked = cfg.lifeBonus !== false; $('#c-ref').checked = cfg.referral !== false; $('#c-goal').value = cfg.goal || 0;
-  $('#c-share').value = cfg.shareUrl || ''; $('#c-fixed').checked = cfg.fixed !== false; $('#c-hourly').checked = cfg.hourly !== false; $('#c-hprize').value = cfg.hourPrize || ''; $('#c-duel').checked = cfg.duel !== false; $('#c-boost').checked = cfg.smsBoost !== false; $('#c-boostn').value = cfg.boostLives || 2;
+  $('#c-pname').value = rawCfg.periodName || ''; $('#c-pstart').value = rawCfg.periodStart > '2000-01-01' ? rawCfg.periodStart : '';
+  $('#c-event').value = rawCfg.eventName || ''; $('#c-per').value = rawCfg.perDay; $('#c-ctime').value = rawCfg.crownTime;
+  $('#c-crown').checked = !!rawCfg.crownOn; $('#c-bf').checked = !!rawCfg.bf; $('#c-teams').checked = !!rawCfg.teams; $('#c-raffle').checked = !!rawCfg.raffle; $('#c-partners').checked = rawCfg.partners !== false;
+  $('#c-mission').value = rawCfg.mission; $('#c-prize').value = rawCfg.prize || ''; $('#c-sms').checked = rawCfg.smsOn !== false; $('#c-sponsor').value = rawCfg.smsSponsor || ''; $('#c-mailp').value = rawCfg.mailPartners || ''; $('#c-life').checked = rawCfg.lifeBonus !== false; $('#c-ref').checked = rawCfg.referral !== false; $('#c-goal').value = rawCfg.goal || 0;
+  $('#c-share').value = rawCfg.shareUrl || ''; $('#c-fixed').checked = rawCfg.fixed !== false; $('#c-hourly').checked = rawCfg.hourly !== false; $('#c-hprize').value = rawCfg.hourPrize || ''; $('#c-duel').checked = rawCfg.duel !== false; $('#c-boost').checked = rawCfg.smsBoost !== false; $('#c-boostn').value = rawCfg.boostLives || 2;
 }
 $('#p-messe').onclick = () => { $('#c-pname').value = 'Hele messen'; $('#c-pstart').value = today(); $('#c-per').value = 5; $('#c-crown').checked = true; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = false; $('#c-mission').value = 'total'; $('#c-goal').value = 0; toast('Messeopsætning udfyldt. Tryk Gem.'); };
 $('#p-month').onclick = () => { const d = new Date(); d.setDate(1); const m = MONTHS[d.getMonth()]; $('#c-pname').value = m[0].toUpperCase() + m.slice(1); $('#c-pstart').value = d.toLocaleDateString('sv-SE'); $('#c-per').value = 3; $('#c-crown').checked = false; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = true; if($('#c-mission').value === 'total') $('#c-mission').value = 'tower'; toast('Månedsopsætning udfyldt. Tryk Gem.'); };
@@ -3081,8 +3132,10 @@ function renderAdmin(){
     $('#a-mode').textContent = 'Tilmeldinger, topscore og opsætning ligger på serveren og deles af alle enheder ved standen.';
     $('#a-csv').hidden = true;
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
-    const elig = ps.filter(p => tickets(p) > 0), n = elig.reduce((a, p) => a + tickets(p), 0);
-    $('#a-raffle').textContent = cfg.raffle ? `${elig.length} spillere har tilsammen ${n} lodder i ${pnl()}. Hver dag man gennemfører et spil giver ét lod${cfg.goal > 0 ? ', og missionens mål giver et ekstra' : ''}.` : 'Lodtrækning er slået fra i opsætningen. Du kan stadig trække blandt periodens spillere.';
+    const tk = p => typeof p.tickets === 'number' ? p.tickets : tickets(p);
+    const elig = ps.filter(p => tk(p) > 0), n = elig.reduce((a, p) => a + tk(p), 0), kf = konkFase(KONK);
+    if(kf !== 'ingen') $('#a-raffle').textContent = `${KONK.navn || 'Konkurrencen'} ${kf === 'kommende' ? 'starter ' + konkDato(KONK.start) : kf === 'aktiv' ? 'kører, lodtrækning ' + konkDato(KONK.lodtraekning) : 'sluttede ' + konkDato(KONK.lodtraekning)}. ${elig.length} spillere har tilsammen ${fmt(n)} lodder. Hvert point i konkurrencen er ét lod. Datoerne rettes i partneradmin. En trukket vinder skal godkendes, før den vises på præmiesiden.`;
+    else $('#a-raffle').textContent = rawCfg.raffle ? `${elig.length} spillere har tilsammen ${n} lodder i ${pnl()}. Hver dag man gennemfører et spil giver ét lod${cfg.goal > 0 ? ', og missionens mål giver et ekstra' : ''}.` : 'Lodtrækning er slået fra i opsætningen. Du kan stadig trække blandt periodens spillere.';
     renderSms(); fillUnlist();
     const ah = $('#a-hours'); ah.replaceChildren();
     if(cfg.hourly !== false){ const ws = hourWinners(ps), top = hourBoard(ps)[0]; ah.append(el('h4', 'sub', 'Timens boss i dag'));
@@ -3095,9 +3148,7 @@ function renderAdmin(){
 }
 /* Vinderen er serverens (vægtet efter tickets()), klienten spiller bare en genkendelig
    "lodtrækning"-animation, der lander på det svar, serveren allerede har givet.
-   Svarformen for POST /admin/lodtraekning er ikke givet med et eksempel i API.md, så
-   feltnavnene herunder er et gæt (vinder/winner, tickets_total/ticketsTotal) — ret til,
-   når det er testet mod den rigtige server. */
+   Svarformen for POST /admin/lodtraekning står i API.md (vinder, tickets_total, traekning_id). */
 $('#b-draw').onclick = () => {
   const box = $('#a-draw'); box.replaceChildren();
   API.admin.draw().then(res => {
@@ -3110,6 +3161,15 @@ $('#b-draw').onclick = () => {
     const done = () => {
       nm.textContent = w.navn || w.name;
       info.textContent = `${(w.firma || w.company) ? (w.firma || w.company) + ', ' : ''}${w.email}, ${w.telefon || w.phone}. ${w.tickets != null ? w.tickets : ''} lodder ud af ${total}.`; sfx('record');
+      if(res.traekning_id == null) return;
+      /* Vinderen vises først på præmiesiden, når den er godkendt. Afvist = kan ikke trækkes igen i denne konkurrence. */
+      const row = el('div', 'row'), ok = el('button', 'btn green small', 'Godkend vinder'), no = el('button', 'btn ghost small', 'Afvis, og træk igen');
+      const judge = yes => { ok.disabled = no.disabled = true; API.admin.judgeDraw(res.traekning_id, yes).then(() => {
+        if(yes){ row.replaceChildren(el('p', 'muted small', 'Godkendt. Vinderen vises nu på præmiesiden som fornavn og forbogstav. Det kan rettes i partneradmin.')); }
+        else { box.replaceChildren(); toast('Vinderen er afvist. Tryk Træk en vinder igen.'); }
+      }).catch(e => { ok.disabled = no.disabled = false; toast(e && e.status ? e.message : 'Det lykkedes ikke. Tjek din forbindelse.'); }); };
+      ok.onclick = () => judge(true); no.onclick = () => { if(confirm(`Afvis ${nm.textContent} som vinder? Personen kan ikke trækkes igen i denne konkurrence.`)) judge(false); };
+      row.append(ok, no); d.append(row);
     };
     if(!spins) return done();
     const spin = () => { const p = pool[Math.floor(Math.random() * pool.length)]; nm.textContent = p.name; sfx('tick'); if(++i < spins) return setTimeout(spin, 40 + i * i * 1.2); done(); };

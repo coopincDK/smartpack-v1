@@ -697,10 +697,26 @@ atomisk") for kildekoden bag disse.
 
 ### `POST /admin/lodtraekning`
 ```json
-{ "vinder": { "navn": "Anna Andersen", "email": "anna@firma.dk", "tickets": 4 } }
+{
+  "traekning_id": 12,
+  "status": "afventer",
+  "tickets_total": 37,
+  "vinder": { "navn": "Anna Andersen", "firma": "Firma ApS", "email": "anna@firma.dk", "telefon": "12345678", "tickets": 4 }
+}
 ```
 `400 { "fejl": "Ingen spillere er berettiget til lodtrækning.", "kode": "ingen_vinder" }`
 hvis ingen spiller har `tickets() > 0`.
+
+Er konkurrencen i partneradmin udfyldt (`lodtraekning`), er hvert point ét lod:
+summen af `samlet` for alle godkendte spil fra dens `start` til `lodtraekning`.
+Spillere, der er afvist som vinder siden `start`, kan ikke trækkes. Ellers gælder
+den gamle regel: ét lod pr. spilledag fra `periodStart` (plus ét for missionens mål).
+
+### `POST /admin/lodtraekning/:id/godkend` og `/afvis` (010_konkurrence_faser.sql)
+En trukket vinder har `status = 'afventer'`. `godkend` sætter `godkendt` og
+udfylder konkurrencens vinder (navn som "Fornavn E.", firma, dags dato), så den
+vises på præmiesiden. `afvis` sætter `afvist`, og spilleren udelukkes fra nye
+trækninger i samme konkurrence. Allerede afgjort: `409 allerede_afgjort`.
 
 ### `GET /me`'s `notifikationer[]` — alle typer
 
@@ -1240,21 +1256,31 @@ logges ud. `slug` er partnerens faste id og ændres aldrig.
 
 **Spillet:** `spil/index.html` henter `GET /partnere`. Når mindst én partner i
 admin har en power-up, styrer admin listen (navn og hvilke power-ups der findes).
-Ellers bruges den indbyggede standardliste. Nyhedsmail-listerne
+Ellers bruges den indbyggede standardliste.
+
+**Konkurrencens faser** (`src/konkurrence.js`, også med i `GET /state` som
+`konkurrence`): `ingen` (ingen lodtrækning udfyldt), `kommende` (før `start`),
+`aktiv` (fra `start` til `lodtraekning`) og `afsluttet`. Spillet regner selv
+fasen ud fra tidspunkterne og viser kun dagens vinder, timens boss, lodder og
+præmie, mens fasen er `aktiv`; da følger periodens navn og start også
+konkurrencen. I de andre faser viser det en linje om næste eller sidste
+konkurrence med link til `/spil/praemier/`. Arrangør-opsætningen gemmes uændret.
+Præmiesiden viser vinderen kun i fasen `afsluttet` (eller `ingen`), så en ny
+konkurrence skjuler den forrige vinder af sig selv. Nyhedsmail-listerne
 (`config.mailPartners`) er stadig navnebaserede og kobles ikke automatisk.
 
 | Metode + sti | Adgang | Beskrivelse |
 |---|---|---|
 | `GET /partnere` | offentlig | Synlige partnere + power-up-katalog |
 | `GET /partnere/:slug/logo` | offentlig | Logo (PNG/JPG/WEBP/SVG, sandbox-CSP) |
-| `GET /praemier` | offentlig | Præmier sorteret efter værdi, samlet værdi, konkurrence (`aktiv`, `tekst`) |
+| `GET /praemier` | offentlig | Præmier sorteret efter værdi, samlet værdi, konkurrence (`fase`, `aktiv`, `start`, `lodtraekning`, `tekst`, `vinder`) |
 | `POST /partnere/ansoeg` | offentlig, 5/10 min/IP | Ansøgning → `status='ansoegt'` |
 | `GET/POST /admin/partnere`, `GET/PUT/DELETE /admin/partnere/:id` | admin | Liste, opret, ret, slet/arkivér |
 | `POST /admin/partnere/:id/godkend` | admin | ansoegt → aktiv |
 | `PUT/DELETE /admin/partnere/:id/logo` | admin | Logo som rå billedbody, højst 600 KB |
 | `POST /admin/partnere/:id/brugere` | admin | Ny partnerbruger med startkode (min. 10 tegn) |
 | `POST /admin/partner-brugere/:bid/nulstil`, `DELETE /admin/partner-brugere/:bid` | admin | Ny startkode / slet bruger |
-| `GET/PUT /admin/konkurrence` | admin | Navn, lodtrækning, tekst før/efter, vinder (navn, firma, dato, tekst; 009_vinder.sql) |
+| `GET/PUT /admin/konkurrence` | admin | Navn, start (010), lodtrækning, tekst før/efter, vinder (navn, firma, dato, tekst; 009_vinder.sql) |
 | `POST /partner/login`, `POST /partner/logout` | 5/min/IP | Cookie `spil_partner_session` (12 t) |
 | `POST /partner/skift-kode` | partner | Påkrævet før alt andet, når `skal_skifte_kode` |
 | `GET/PUT /partner/mig`, `PUT /partner/mig/logo` | partner | Egen profil og præmie (ikke navn, status, vist, power-up) |

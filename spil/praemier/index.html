@@ -73,7 +73,10 @@
     var pr = res[0], pa = res[1];
     var k = pr.konkurrence;
     var kt = $('konk-tekst'); kt.replaceChildren();
-    if (k.vinder) {
+    var dato = function (iso) { return new Date(iso).toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen', dateStyle: 'long', timeStyle: 'short' }); };
+    var fase = k.fase || (k.aktiv ? 'aktiv' : 'ingen');
+    // Vinderen hører til den konkurrence, der er slut. Oprettes en ny, skjules den af sig selv.
+    if (k.vinder && (fase === 'afsluttet' || fase === 'ingen')) {
       var v = k.vinder;
       kt.append(el('div', { class: 'vinder' }, [
         el('p', { class: 'small', style: 'text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700', text: 'Vinder' + (v.dato ? ' · ' + new Date(v.dato + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long' }) : '') }),
@@ -81,14 +84,22 @@
         v.tekst ? el('p', { class: 'pre', text: v.tekst }) : null,
       ]));
     }
-    if (k.aktiv) {
-      kt.append(el('p', null, [el('strong', { text: k.navn }), document.createTextNode(' · lodtrækning ' + new Date(k.lodtraekning).toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short' }))]));
+    if (fase === 'aktiv' || fase === 'kommende') {
+      kt.append(el('p', null, [
+        el('strong', { text: (fase === 'kommende' ? 'Næste konkurrence: ' : '') + k.navn }),
+        document.createTextNode((fase === 'kommende' && k.start ? ' · starter ' + dato(k.start) : '') + ' · lodtrækning ' + dato(k.lodtraekning)),
+      ]));
       if (k.tekst) kt.append(el('p', { class: 'pre', text: k.tekst }));
       kt.append(el('p', { text: 'Vinderen får det hele: alle præmierne herunder.' }));
+    } else if (fase === 'afsluttet') {
+      kt.append(el('p', null, [el('strong', { text: 'Sidste konkurrence: ' + k.navn }), document.createTextNode(' · lodtrækning ' + dato(k.lodtraekning))]));
+      if (!k.vinder) kt.append(el('p', { text: 'Vinderen er ved at blive fundet og vises her, når den har fået besked.' }));
+      if (k.tekst) kt.append(el('p', { class: 'pre', text: k.tekst }));
     } else {
       kt.append(el('div', { class: 'msg info', role: 'status' }, [el('strong', { text: 'Lige nu er der ingen aktiv konkurrence.' }),
         k.tekst && k.tekst !== 'Lige nu er der ingen aktiv konkurrence.' ? el('p', { class: 'pre', text: k.tekst, style: 'margin-top:6px' }) : null]));
     }
+    if (fase === 'afsluttet' && pr.praemier.length) $('praemier').append(el('h2', { text: 'Præmierne i sidste konkurrence' }));
     if (pr.praemier.length) {
       $('total').append(el('p', { class: 'muted small', text: 'Samlet værdi' }),
         el('div', { class: 'total', text: (pr.samlet_indeholder_op_til ? 'Op til ' : '') + SP.kr(pr.samlet_vaerdi) }));

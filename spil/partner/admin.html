@@ -243,8 +243,18 @@
     api('/admin/konkurrence').then(function (r) {
       var k = r.konkurrence, d = $('detalje'); d.replaceChildren();
       var navn = el('input', { type: 'text', id: 'k-navn' }); navn.value = k.navn || '';
+      function lokal(iso) { var dt = new Date(iso); return new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16); }
+      var start = el('input', { type: 'datetime-local', id: 'k-start' });
+      if (k.start) start.value = lokal(k.start);
       var tid = el('input', { type: 'datetime-local', id: 'k-tid' });
-      if (k.lodtraekning) { var dt = new Date(k.lodtraekning); tid.value = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16); }
+      if (k.lodtraekning) tid.value = lokal(k.lodtraekning);
+      var faser = {
+        ingen: 'Ingen konkurrence er udfyldt. Spillet viser ingen vinder-, præmie- eller lodtekster.',
+        kommende: 'Konkurrencen er ikke startet endnu. Spillet viser "Næste konkurrence" med startdatoen, men ingen vinder-, præmie- eller lodtekster.',
+        aktiv: 'Konkurrencen er aktiv lige nu. Spillet viser dagens vinder, timens boss, lodder og præmie efter arrangør-opsætningen.',
+        afsluttet: 'Konkurrencen er slut. Spillet og præmieoversigten viser den som sidste konkurrence, med vinderen når den er godkendt.',
+      };
+      var faseP = el('p', { class: 'muted small', text: faser[r.visning.fase] || '' });
       var ta = el('textarea', { id: 'k-aktiv' }); ta.value = k.tekst_aktiv || '';
       var ts = el('textarea', { id: 'k-slut' }); ts.value = k.tekst_slut || '';
       var vn = el('input', { type: 'text', id: 'v-navn' }); vn.value = k.vinder_navn || '';
@@ -254,14 +264,18 @@
       var msg = el('div');
       d.append(el('div', { class: 'card' }, [
         el('h2', { text: 'Konkurrence' }),
-        el('p', { class: 'muted small', text: r.visning.aktiv ? 'Konkurrencen er aktiv lige nu.' : 'Der er ingen aktiv konkurrence lige nu. Præmieoversigten viser teksten til efter lodtrækningen.' }),
+        faseP,
+        el('p', { class: 'muted small', text: 'Alt skifter af sig selv på datoerne: før start, under konkurrencen og efter lodtrækningen. Vinderen trækkes af arrangøren i spillet og skal godkendes dér, før den vises her.' }),
         el('label', { class: 'f', for: 'k-navn' }, [document.createTextNode('Navn'), navn]),
-        el('label', { class: 'f', for: 'k-tid' }, [document.createTextNode('Lodtrækning'), el('small', { text: 'Dato og klokkeslæt (dansk tid). Efter dette tidspunkt viser siden, at der ikke er en aktiv konkurrence.' }), tid]),
+        el('div', { class: 'grid2' }, [
+          el('label', { class: 'f', for: 'k-start' }, [document.createTextNode('Start'), el('small', { text: 'Dato og klokkeslæt (dansk tid). Fra nu tæller spilledage som lodder.' }), start]),
+          el('label', { class: 'f', for: 'k-tid' }, [document.createTextNode('Lodtrækning'), el('small', { text: 'Dato og klokkeslæt (dansk tid). Her slutter konkurrencen.' }), tid]),
+        ]),
         el('label', { class: 'f', for: 'k-aktiv' }, [document.createTextNode('Tekst mens konkurrencen kører'), el('small', { text: 'Fx hvordan og hvornår vinderen trækkes og får besked.' }), ta]),
         el('label', { class: 'f', for: 'k-slut' }, [document.createTextNode('Tekst efter lodtrækningen'), el('small', { text: 'Fx "Lige nu er der ingen aktiv konkurrence. Næste gang ses vi til …"' }), ts]),
         el('fieldset', null, [
           el('legend', { text: 'Vinder' }),
-          el('p', { class: 'muted small', text: 'Vises øverst på præmieoversigten, så snart navnet er udfyldt. Tøm navnet for at skjule vinderen igen. Spørg vinderen, om navnet må vises.' }),
+          el('p', { class: 'muted small', text: 'Udfyldes af sig selv, når arrangøren godkender en trukket vinder i spillet (fornavn og forbogstav). Vises øverst på præmieoversigten, så snart navnet er udfyldt. Tøm navnet for at skjule vinderen igen. Spørg vinderen, om det fulde navn må vises.' }),
           el('div', { class: 'grid2' }, [
             el('label', { class: 'f', for: 'v-navn' }, [document.createTextNode('Vinderens navn'), vn]),
             el('label', { class: 'f', for: 'v-firma' }, [document.createTextNode('Firma'), vf]),
@@ -271,9 +285,9 @@
         ]),
         msg,
         el('div', null, [el('button', { class: 'btn', text: 'Gem', onclick: function () {
-          api('/admin/konkurrence', { method: 'PUT', body: { navn: navn.value, lodtraekning: tid.value ? new Date(tid.value).toISOString() : null, tekst_aktiv: ta.value, tekst_slut: ts.value,
+          api('/admin/konkurrence', { method: 'PUT', body: { navn: navn.value, start: start.value ? new Date(start.value).toISOString() : null, lodtraekning: tid.value ? new Date(tid.value).toISOString() : null, tekst_aktiv: ta.value, tekst_slut: ts.value,
             vinder_navn: vn.value, vinder_firma: vf.value, vinder_dato: vd.value || null, vinder_tekst: vt.value } })
-            .then(function () { SP.besked(msg, 'Gemt.', 'ok'); }).catch(function (e) { SP.besked(msg, e.message, 'err'); });
+            .then(function (res) { faseP.textContent = faser[res.visning.fase] || ''; SP.besked(msg, 'Gemt.', 'ok'); }).catch(function (e) { SP.besked(msg, e.message, 'err'); });
         } })]),
       ]));
     }).catch(function (e) { alert(e.message); });

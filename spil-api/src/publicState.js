@@ -12,8 +12,10 @@
 
 const { shortName, maskedName } = require('./rules/nameDisplay');
 const { todayStr } = require('./rules/tzDate');
+const { konkurrenceView, hentKonkurrence } = require('./konkurrence');
 
 const CACHE_MS = 2000;
+
 let cache = null; // { at, payload }
 
 function invalidateStateCache() {
@@ -68,7 +70,11 @@ async function buildPublicState(pool) {
     attempts: attemptsBySpiller.get(p.id) || [],
   }));
 
-  return { cfg, players };
+  // Konkurrencen fra partneradmin. Klienten regner selv fasen ud fra
+  // start/lodtraekning, så skiftet sker til tiden uden et nyt /state.
+  const konkurrence = konkurrenceView(await hentKonkurrence(pool));
+
+  return { cfg, konkurrence, players };
 }
 
 async function getFullPublicState(pool) {
@@ -85,6 +91,7 @@ async function getFullPublicState(pool) {
 function toPublicView(full) {
   return {
     cfg: full.cfg,
+    konkurrence: full.konkurrence,
     players: full.players.map((p) => ({
       ...p,
       name: shortName(p.name),

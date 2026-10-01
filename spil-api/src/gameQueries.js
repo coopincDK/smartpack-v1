@@ -7,6 +7,7 @@
 
 const { RECORDS, MET, isBetter } = require('./rules/scoring');
 const { todayStr, cphDateExpr } = require('./rules/tzDate');
+const { lodVindue, hentKonkurrence } = require('./konkurrence');
 
 function metricSqlExpr(metric) {
   if (metric === 'total') return 'samlet';
@@ -129,7 +130,22 @@ async function goalMet(client, spillerId, cfg) {
   return low ? best <= cfg.goal : best >= cfg.goal;
 }
 
-async function computeTickets(client, spillerId, cfg) {
+// Point i et tidsrum [fra, til): i en konkurrence fra partneradmin er hvert
+// point ét lod, og alle godkendte spil lægges sammen (se src/konkurrence.js).
+async function pointsInWindow(client, spillerId, fra, til) {
+  const { rows } = await client.query(
+    `SELECT COALESCE(SUM(GREATEST(samlet, 0)), 0) AS n FROM forsoeg
+     WHERE spiller_id = $1 AND status = 'godkendt' AND oprettet >= $2 AND oprettet < $3`,
+    [spillerId, fra || '1970-01-01T00:00:00Z', til]
+  );
+  return Number(rows[0].n);
+}
+
+// `vindue` (valgfri): { fra, til } fra konkurrencen. Udeladt = slås op her;
+// null = ingen konkurrence, så arrangør-opsætningens periodStart gælder.
+async function computeTickets(client, spillerId, cfg, vindue) {
+  const v = vindue === undefined ? lodVindue(await hentKonkurrence(client)) : vindue;
+  if (v) return pointsInWindow(client, spillerId, v.fra, v.til);
   const dage = await daysPlayedSince(client, spillerId, cfg.periodStart || '2000-01-01');
   const naaetMaal = await goalMet(client, spillerId, cfg);
   return dage + (naaetMaal ? 1 : 0);
@@ -144,6 +160,7 @@ module.exports = {
   todayLeaderboard,
   daysPlayedAll,
   daysPlayedSince,
+  pointsInWindow,
   goalMet,
   computeTickets,
 };

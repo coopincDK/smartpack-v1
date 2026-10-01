@@ -14,6 +14,8 @@ const { sha256Hex, hashPassword, verifyPassword } = require('../crypto');
 const { requireAdmin, parseCookies } = require('../middleware/adminAuth');
 const { createRateLimiter } = require('../middleware/rateLimit');
 const P = require('../partners');
+const { konkurrenceView } = require('../konkurrence');
+const { invalidateStateCache } = require('../publicState');
 
 const PARTNER_COOKIE = 'spil_partner_session';
 const PARTNER_SESSION_TTL_MS = 12 * 3600 * 1000;
@@ -89,22 +91,6 @@ async function audit(pool, req, handling, detaljer) {
   } catch (e) {
     // Audit må aldrig vælte selve handlingen.
   }
-}
-
-function konkurrenceView(k) {
-  const nu = Date.now();
-  const tid = k && k.lodtraekning ? new Date(k.lodtraekning).getTime() : null;
-  const aktiv = tid !== null && tid > nu;
-  return {
-    navn: k ? k.navn : '',
-    lodtraekning: k && k.lodtraekning ? new Date(k.lodtraekning).toISOString() : null,
-    aktiv,
-    tekst: aktiv ? (k.tekst_aktiv || '') : (k ? k.tekst_slut : ''),
-    vinder:
-      k && k.vinder_navn
-        ? { navn: k.vinder_navn, firma: k.vinder_firma || '', dato: k.vinder_dato || null, tekst: k.vinder_tekst || '' }
-        : null,
-  };
 }
 
 // Kræver gyldig partner-session. `tilladFoerSkift` = må bruges, selv om
@@ -433,6 +419,16 @@ function partnersRouter(pool) {
         if (Number.isNaN(d.getTime())) throw new P.Valideringsfejl('Datoen for lodtrækning er ugyldig.', 'lodtraekning');
         tid = d.toISOString();
       }
+      let start = null;
+      if (b.start) {
+        const d = new Date(b.start);
+        if (Number.isNaN(d.getTime())) throw new P.Valideringsfejl('Startdatoen er ugyldig.', 'start');
+        start = d.toISOString();
+      }
+      if (start && !tid) throw new P.Valideringsfejl('Udfyld også lodtrækningen, når der er en startdato.', 'lodtraekning');
+      if (start && tid && new Date(start) >= new Date(tid)) {
+        throw new P.Valideringsfejl('Starten skal ligge før lodtrækningen.', 'start');
+      }
       let vinderDato = null;
       if (b.vinder_dato) {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(String(b.vinder_dato))) {
@@ -442,7 +438,8 @@ function partnersRouter(pool) {
       }
       await pool.query(
         `UPDATE konkurrence SET navn = $1, lodtraekning = $2, tekst_aktiv = $3, tekst_slut = $4,
-                vinder_navn = $5, vinder_firma = $6, vinder_dato = $7, vinder_tekst = $8, opdateret = now() WHERE id = 1`,
+                vinder_navn = $5, vinder_firma = $6, vinder_dato = $7, vinder_tekst = $8, start = $9,
+                opdateret = now() WHERE id = 1`,
         [
           P.renTekst(b.navn, 200),
           tid,
@@ -452,8 +449,11 @@ function partnersRouter(pool) {
           P.renTekst(b.vinder_firma, 200),
           vinderDato,
           P.renTekst(b.vinder_tekst, 2000),
+          start,
         ]
       );
+      // Spillet får konkurrencen med i /state.
+      invalidateStateCache();
       const { rows } = await pool.query('SELECT * FROM konkurrence WHERE id = 1');
       res.json({ konkurrence: rows[0], visning: konkurrenceView(rows[0]) });
     } catch (e) {
