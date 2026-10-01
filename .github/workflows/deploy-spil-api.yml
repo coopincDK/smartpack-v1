@@ -1,0 +1,126 @@
+name: Deploy spil-api
+
+# Udruller Packrush-backenden (spil-api/) til serveren, når der pushes til main
+# med ændringer i spil-api/. Selve hjemmesiden udrulles stadig af deploy.yml,
+# som udelader spil-api/.
+#
+# Udrulningen bruger spil-api/deploy.sh (samme script som ved manuel udrulning):
+# rsync --delete af spil-api/ til /var/www/spil-api/ (uden .env), og derefter
+# `docker compose up -d --build`. Migrationerne køres automatisk ved opstart.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'spil-api/**'
+      - '.github/workflows/deploy-spil-api.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-spil-api
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Test spil-api
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    defaults:
+      run:
+        working-directory: spil-api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: spil-api/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Run tests
+        env:
+          TEST_PG_ADMIN_URL: postgres://postgres:test@127.0.0.1:5432/postgres
+        run: npm test
+
+  deploy:
+    name: Deploy to server
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      DEPLOY_HOST: 168.119.186.156
+      DEPLOY_USER: root
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          # deploy.sh kalder ssh/rsync uden -i, så nøglen sættes via ssh-config.
+          cat > ~/.ssh/config <<EOF
+          Host $DEPLOY_HOST
+            User $DEPLOY_USER
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+          EOF
+          chmod 600 ~/.ssh/config
+
+      - name: Sanity check — server-side .env exists
+        run: |
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'test -f /var/www/spil-api/.env' \
+            || { echo "::error::/var/www/spil-api/.env mangler på serveren — afbryder"; exit 1; }
+
+      # deploy.sh kører rsync --delete. Ligger der filer på serveren, som ikke er
+      # i repoet (ud over .env), stopper vi i stedet for at slette dem.
+      - name: Sanity check — rsync --delete would not remove server-only files
+        run: |
+          DELETIONS=$(rsync -azn --delete --exclude='.env' --exclude='node_modules/' --exclude='.git/' \
+            spil-api/ "$DEPLOY_USER@$DEPLOY_HOST:/var/www/spil-api/" | grep '^deleting ' || true)
+          if [ -n "$DELETIONS" ]; then
+            echo "::error::Udrulningen ville slette filer på serveren, som ikke er i repoet — afbryder:"
+            echo "$DELETIONS"
+            exit 1
+          fi
+
+      - name: Deploy via deploy.sh
+        run: ./spil-api/deploy.sh "$DEPLOY_USER@$DEPLOY_HOST"
+
+      - name: Health check
+        run: |
+          for i in $(seq 1 30); do
+            if ssh "$DEPLOY_USER@$DEPLOY_HOST" 'curl -fsS http://127.0.0.1:8004/health' ; then
+              echo; echo "spil-api svarer."
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::spil-api svarer ikke på 127.0.0.1:8004/health efter udrulning"
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd /var/www/spil-api && docker compose ps && docker compose logs --tail=80 api' || true
+          exit 1
