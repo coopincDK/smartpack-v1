@@ -69,6 +69,7 @@
 
   function chip(p) {
     if (p.status !== 'aktiv') return el('span', { class: 'chip ' + STATUS[p.status][1], text: STATUS[p.status][0] });
+    if (p.advarsel_powerup) return el('span', { class: 'chip warn', text: p.synlig ? 'Vises, men ingen power-up' : 'Klar, mangler power-up' });
     if (p.synlig) return el('span', { class: 'chip ok', text: 'Vises' });
     return el('span', { class: 'chip', text: p.vist_i_spil ? 'Mangler info' : 'Skjult' });
   }
@@ -139,6 +140,7 @@
       ]),
       el('label', { class: 'f', for: 'x-powerup' }, [document.createTextNode('Power-up'), pu]),
       el('label', { class: 'check' }, [vis, document.createTextNode('Vis i spillet og på præmieoversigten')]),
+      p.advarsel_powerup ? el('p', { class: 'mangler', text: 'Alt er udfyldt, men partneren har ingen power-up. Vælg en power-up ovenfor, så partneren kommer med i selve spillet.' }) : null,
       p.mangler_profil.length ? el('p', { class: 'mangler', text: 'Vises først, når dette er udfyldt: ' + SP.manglerTekst(p.mangler_profil) }) : null,
       p.giver_praemie && p.mangler_praemie.length ? el('p', { class: 'mangler', text: 'Gaven vises først, når dette er udfyldt: ' + SP.manglerTekst(p.mangler_praemie) }) : null,
     ]);

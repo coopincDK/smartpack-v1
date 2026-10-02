@@ -281,6 +281,9 @@ function fuldPartner(p) {
     mangler_praemie: manglerPraemie(p),
     synlig: erSynlig(p),
     samtykke_tekst: samtykkeTekst(p),
+    // Alt er udfyldt, men admin har ikke valgt en power-up. Kun admin
+    // vælger power-up (partneren kan ikke), så det vises som en advarsel.
+    advarsel_powerup: p.status === 'aktiv' && manglerProfil(p).length === 0 && !p.powerup,
   };
 }
 
