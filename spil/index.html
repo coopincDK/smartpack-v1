@@ -705,9 +705,15 @@ details.more summary:hover{color:var(--text)}
   <a class="btn primary" href="partner/">Partnerportal</a>
   <p class="muted small">Partnere logger ind her med den e-mail og kode, de har fået fra SmartPack.</p>
   <h3 style="margin-top:12px">Arrangør</h3>
-  <p class="muted">Skriv adgangskoden for at åbne indstillinger og data.</p>
+  <p class="muted">Log ind med din smartpack.dk-mail og din egen kode. Har du kun den fælles kode, så lad e-mail stå tom.</p>
   <form id="f-pin" novalidate>
+    <label class="f">E-mail<input type="email" id="i-amail" autocomplete="username" inputmode="email" placeholder="navn@smartpack.dk"></label>
     <label class="f">Adgangskode<input type="password" id="i-adminpw" autocomplete="current-password"></label>
+    <div id="pin-ny" hidden>
+      <p class="muted small">Første gang skal du vælge din egen kode. Mindst 12 tegn.</p>
+      <label class="f">Ny kode<input type="password" id="i-pinny" autocomplete="new-password"></label>
+      <label class="f">Gentag ny kode<input type="password" id="i-pinny2" autocomplete="new-password"></label>
+    </div>
     <p class="err" id="pin-err" role="alert"></p>
     <button class="btn primary" type="submit">Åbn</button>
     <button class="link" type="button" data-go="s-start">Tilbage</button>
@@ -808,9 +814,18 @@ details.more summary:hover{color:var(--text)}
     <label class="f">Spillerens e-mail <small>Spilleren får en ny pinkode, som kun vises her</small><input type="email" id="a-pinmail" autocomplete="off"></label>
     <button class="btn small" id="b-pin">Giv ny pinkode</button>
     <p class="muted small" id="a-pin-res"></p>
-    <h4 class="sub">Skift admin-kode</h4>
+    <h4 class="sub">Admins fra SmartPack</h4>
+    <p class="muted small">Kun @smartpack.dk. Giv kollegaen startkoden mundtligt eller på Slack; den skal skiftes ved første login.</p>
+    <div id="a-users"></div>
+    <div class="grid2">
+      <label class="f">E-mail<input type="email" id="a-umail" placeholder="navn@smartpack.dk" autocomplete="off"></label>
+      <label class="f">Navn<input type="text" id="a-unavn" autocomplete="off"></label>
+    </div>
+    <label class="f">Startkode <small>Mindst 10 tegn</small><input type="text" id="a-ukode" autocomplete="off"></label>
+    <button class="btn small" id="b-uadd">Opret admin</button>
+    <h4 class="sub">Skift din kode</h4>
     <label class="f">Nuværende kode<input type="password" id="a-kode-gl" autocomplete="current-password"></label>
-    <label class="f">Ny kode <small>Mindst 12 tegn. Alle andre admin-logins bliver logget ud</small><input type="password" id="a-kode-ny" autocomplete="new-password"></label>
+    <label class="f">Ny kode <small>Mindst 12 tegn. Dine andre logins bliver logget ud</small><input type="password" id="a-kode-ny" autocomplete="new-password"></label>
     <label class="f">Gentag ny kode<input type="password" id="a-kode-ny2" autocomplete="new-password"></label>
     <button class="btn small" id="b-kode">Skift koden</button>
     <h4 class="sub">Nulstil alt</h4>
@@ -1042,7 +1057,11 @@ const API = {
      om enheden husker sin egen spiller. En stand-tablet/standvæg bør have begge slået til. */
   standLogin(code){ return apiFetch('/stand-login', { method: 'POST', noAuth: true, body: { kode: code } }); },
   admin: {
-    login(password){ return apiFetch('/admin/login', { method: 'POST', body: { password }, noAuth: true, admin: true }); },
+    login(password, email){ return apiFetch('/admin/login', { method: 'POST', body: { password, email: email || '' }, noAuth: true, admin: true }); },
+    users(){ return apiFetch('/admin/brugere', { admin: true }); },
+    addUser(email, navn, kode){ return apiFetch('/admin/brugere', { method: 'POST', body: { email, navn, kode }, admin: true }); },
+    resetUser(id, kode){ return apiFetch('/admin/brugere/' + encodeURIComponent(id) + '/nulstil', { method: 'POST', body: { kode }, admin: true }); },
+    closeUser(id){ return apiFetch('/admin/brugere/' + encodeURIComponent(id), { method: 'DELETE', admin: true }); },
     logout(){ return apiFetch('/admin/logout', { method: 'POST', admin: true }); },
     players(){ return apiFetch('/admin/spillere', { admin: true }); },
     config(){ return apiFetch('/admin/config', { admin: true }); },
@@ -2986,16 +3005,28 @@ $('#b-copy').onclick = async () => {
    og al arrangørdata (lister, eksporter, lodtrækning, opsætning) hentes fra admin-endpoints,
    aldrig fra den offentlige data.players. */
 let adminOk = false;
-$('#b-admin').onclick = () => { if(adminOk) return show('s-admin'); $('#pin-err').textContent = ''; $('#i-adminpw').value = ''; show('s-pin'); setTimeout(() => $('#i-adminpw').focus(), 50); };
+$('#b-admin').onclick = () => { if(adminOk) return show('s-admin'); $('#pin-err').textContent = ''; $('#i-adminpw').value = ''; $('#pin-ny').hidden = true; show('s-pin'); setTimeout(() => ($('#i-amail').value ? $('#i-adminpw') : $('#i-amail')).focus(), 50); };
+let skalSkifte = false;
 $('#f-pin').addEventListener('submit', e => {
   e.preventDefault();
-  API.admin.login($('#i-adminpw').value.trim()).then(() => {
+  // Personligt login med startkode: vælg egen kode, før arrangør-skærmen åbnes.
+  if(skalSkifte){
+    const ny = $('#i-pinny').value, ny2 = $('#i-pinny2').value;
+    if(ny.length < 12) return ($('#pin-err').textContent = 'Den nye kode skal være mindst 12 tegn.');
+    if(ny !== ny2) return ($('#pin-err').textContent = 'De to nye koder er ikke ens.');
+    return API.admin.changeCode($('#i-adminpw').value, ny).then(() => {
+      skalSkifte = false; $('#pin-ny').hidden = true; ['#i-adminpw', '#i-pinny', '#i-pinny2'].forEach(i => { $(i).value = ''; });
+      adminOk = true; show('s-admin'); stateETag = null; loadState(); toast('Din kode er gemt');
+    }).catch(err => { $('#pin-err').textContent = (err && err.message) || 'Kunne ikke gemme koden.'; });
+  }
+  API.admin.login($('#i-adminpw').value.trim(), $('#i-amail').value.trim()).then(r => {
+    if(r && r.skal_skifte_kode){ skalSkifte = true; $('#pin-ny').hidden = false; $('#pin-err').textContent = ''; $('#i-pinny').focus(); return; }
     adminOk = true; show('s-admin');
     // N16 (samme klasse fejl som stand-login): et 304-svar mod det GAMLE (maskerede) ETag ville
     // forhindre de nu-privilegerede, fulde navne i overhovedet at komme frem — fx på standvæggen.
     stateETag = null; loadState();
   })
-    .catch(e => { $('#pin-err').textContent = e && e.status === 429 ? 'For mange forsøg. Vent lidt, og prøv igen.' : 'Forkert adgangskode.'; sfx('wrong'); });
+    .catch(e => { $('#pin-err').textContent = e && e.status === 429 ? 'For mange forsøg. Vent lidt, og prøv igen.' : ($('#i-amail').value.trim() ? 'Forkert e-mail eller kode.' : 'Forkert adgangskode.'); sfx('wrong'); });
 });
 const sel = $('#c-mission'); MISSIONS.forEach(k => { const o = el('option', null, k === 'total' ? 'Ingen mission, kun højeste score' : MET[k].name); o.value = k; sel.append(o); });
 function fillCfg(){
@@ -3114,7 +3145,7 @@ function renderAdmin(){
     $('#a-csv').hidden = true;
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
     // Teksten under Præmiekonkurrencen er fast (vilkårene); lodderne hentes med "Vis lodder lige nu".
-    renderSms(); fillUnlist();
+    renderSms(); fillUnlist(); renderUsers();
     const ah = $('#a-hours'); ah.replaceChildren();
     if(cfg.hourly !== false){ const ws = hourWinners(ps), top = hourBoard(ps)[0]; ah.append(el('h4', 'sub', 'Timens boss i dag'));
       if(!ws.length && !top) ah.append(el('p', 'muted small', 'Ingen vindere endnu.'));
@@ -3197,6 +3228,28 @@ $('#b-unsub').onclick = () => {
       : 'Afmeldt.';
     renderAdmin();
   }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke afmelde. Tjek din forbindelse.'));
+};
+function renderUsers(){
+  const box = $('#a-users'); if(!box) return;
+  API.admin.users().then(r => {
+    box.replaceChildren();
+    (r.brugere || []).filter(u => u.aktiv).forEach(u => {
+      const row = el('div', 'check'), sp = el('span'); sp.append(`${u.navn ? u.navn + ', ' : ''}${u.email}${u.skal_skifte_kode ? ' (har ikke logget ind endnu)' : ''}`);
+      const ny = el('button', 'link', 'Ny startkode'); ny.type = 'button';
+      ny.onclick = () => { const k = prompt(`Ny startkode til ${u.email} (mindst 10 tegn)`); if(!k) return; API.admin.resetUser(u.id, k).then(() => toast('Startkoden er skiftet')).catch(e => toast(e.message || 'Kunne ikke skifte')); };
+      const luk = el('button', 'link', 'Luk'); luk.type = 'button';
+      luk.onclick = () => { if(!confirm(`Luk ${u.email}s admin-login?`)) return; API.admin.closeUser(u.id).then(renderUsers).catch(e => toast(e.message || 'Kunne ikke lukke')); };
+      row.append(sp, ny, luk); box.append(row);
+    });
+    if(!box.childElementCount) box.append(el('p', 'muted small', 'Ingen personlige admins endnu.'));
+  }).catch(() => {});
+}
+$('#b-uadd').onclick = () => {
+  const email = $('#a-umail').value.trim().toLowerCase(), navn = $('#a-unavn').value.trim(), kode = $('#a-ukode').value;
+  if(!/@smartpack\.dk$/.test(email)) return toast('Kun @smartpack.dk-adresser');
+  if(kode.length < 10) return toast('Startkoden skal være mindst 10 tegn');
+  API.admin.addUser(email, navn, kode).then(() => { ['#a-umail', '#a-unavn', '#a-ukode'].forEach(i => { $(i).value = ''; }); toast(`${email} er oprettet`); renderUsers(); })
+    .catch(e => toast(e.message || 'Kunne ikke oprette'));
 };
 $('#b-kode').onclick = () => {
   const gl = $('#a-kode-gl').value, ny = $('#a-kode-ny').value, ny2 = $('#a-kode-ny2').value;

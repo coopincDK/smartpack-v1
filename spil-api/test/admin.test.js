@@ -469,3 +469,39 @@ test('admin kan selv skifte koden: kræver den nuværende, mindst 12 tegn, gamme
   assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: c1 })).status, 200);
   assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: c2 })).status, 401);
 });
+
+test('personlige admin-logins: kun @smartpack.dk, startkode skal skiftes, kan lukkes', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const fael = cookieFra(await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } }));
+
+  const ude = await api(h.baseUrl, 'POST', '/admin/brugere', { adminCookie: fael, body: { email: 'x@gmail.com', kode: 'startkode-123' } });
+  assert.equal(ude.status, 400);
+  const ny = await api(h.baseUrl, 'POST', '/admin/brugere', { adminCookie: fael, body: { email: 'Mikkel@SmartPack.dk', navn: 'Mikkel', kode: 'startkode-123' } });
+  assert.equal(ny.status, 201);
+
+  const forkert = await api(h.baseUrl, 'POST', '/admin/login', { body: { email: 'mikkel@smartpack.dk', password: 'forkert' } });
+  assert.equal(forkert.status, 401);
+  const l = await api(h.baseUrl, 'POST', '/admin/login', { body: { email: 'mikkel@smartpack.dk', password: 'startkode-123' } });
+  assert.equal(l.status, 200);
+  assert.equal(l.body.skal_skifte_kode, true);
+  const mc = cookieFra(l);
+
+  assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: mc })).status, 403, 'skal skifte kode først');
+  const mig = await api(h.baseUrl, 'GET', '/admin/mig', { adminCookie: mc });
+  assert.equal(mig.body.email, 'mikkel@smartpack.dk');
+  const sk = await api(h.baseUrl, 'POST', '/admin/skift-kode', { adminCookie: mc, body: { gammel: 'startkode-123', ny: 'mikkels-egen-kode-1' } });
+  assert.equal(sk.status, 200);
+  assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: mc })).status, 200);
+
+  // Den fælles kode er uændret.
+  assert.equal((await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } })).status, 200);
+
+  const liste = await api(h.baseUrl, 'GET', '/admin/brugere', { adminCookie: fael });
+  const id = liste.body.brugere[0].id;
+  assert.equal((await api(h.baseUrl, 'DELETE', '/admin/brugere/' + id, { adminCookie: mc })).status, 400, 'ikke sig selv');
+  assert.equal((await api(h.baseUrl, 'DELETE', '/admin/brugere/' + id, { adminCookie: fael })).status, 200);
+  assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: mc })).status, 401, 'lukket login er logget ud');
+  const igen = await api(h.baseUrl, 'POST', '/admin/login', { body: { email: 'mikkel@smartpack.dk', password: 'mikkels-egen-kode-1' } });
+  assert.equal(igen.status, 401);
+});

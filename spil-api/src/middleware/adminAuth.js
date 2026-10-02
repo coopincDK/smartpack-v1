@@ -118,6 +118,22 @@ function requireAdmin(pool) {
           .status(403)
           .json({ fejl: 'Denne handling kræver fuld admin-adgang.', kode: 'kraever_admin' });
       }
+      // Personligt admin-login (014_admin_brugere.sql): brugeren skal være
+      // aktiv, og startkoden skal skiftes, før andet end kodeskift er tilladt.
+      if (rows[0].bruger_id) {
+        const b = await pool.query('SELECT id, email, navn, aktiv, skal_skifte_kode FROM admin_bruger WHERE id = $1', [
+          rows[0].bruger_id,
+        ]);
+        const bruger = b.rows[0];
+        if (!bruger || !bruger.aktiv) {
+          return res.status(401).json({ fejl: 'Dit admin-login er lukket.', kode: 'udloebet_session' });
+        }
+        const tilladt = req.path === '/admin/skift-kode' || req.path === '/admin/mig' || req.path === '/admin/logout';
+        if (bruger.skal_skifte_kode && !tilladt) {
+          return res.status(403).json({ fejl: 'Vælg din egen kode først.', kode: 'skal_skifte_kode' });
+        }
+        req.adminBruger = bruger;
+      }
       await pool.query('UPDATE admin_session SET sidst_brugt = now() WHERE id = $1', [rows[0].id]);
       req.adminSession = rows[0];
       next();
