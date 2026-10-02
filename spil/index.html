@@ -707,7 +707,7 @@ details.more summary:hover{color:var(--text)}
   <h3 style="margin-top:12px">Arrangør</h3>
   <p class="muted">Skriv adgangskoden for at åbne indstillinger og data.</p>
   <form id="f-pin" novalidate>
-    <label class="f">Adgangskode<input type="password" id="i-pin" autocomplete="current-password"></label>
+    <label class="f">Adgangskode<input type="password" id="i-adminpw" autocomplete="current-password"></label>
     <p class="err" id="pin-err" role="alert"></p>
     <button class="btn primary" type="submit">Åbn</button>
     <button class="link" type="button" data-go="s-start">Tilbage</button>
@@ -2980,10 +2980,10 @@ $('#b-copy').onclick = async () => {
    og al arrangørdata (lister, eksporter, lodtrækning, opsætning) hentes fra admin-endpoints,
    aldrig fra den offentlige data.players. */
 let adminOk = false;
-$('#b-admin').onclick = () => { if(adminOk) return show('s-admin'); $('#pin-err').textContent = ''; $('#i-pin').value = ''; show('s-pin'); setTimeout(() => $('#i-pin').focus(), 50); };
+$('#b-admin').onclick = () => { if(adminOk) return show('s-admin'); $('#pin-err').textContent = ''; $('#i-adminpw').value = ''; show('s-pin'); setTimeout(() => $('#i-adminpw').focus(), 50); };
 $('#f-pin').addEventListener('submit', e => {
   e.preventDefault();
-  API.admin.login($('#i-pin').value.trim()).then(() => {
+  API.admin.login($('#i-adminpw').value.trim()).then(() => {
     adminOk = true; show('s-admin');
     // N16 (samme klasse fejl som stand-login): et 304-svar mod det GAMLE (maskerede) ETag ville
     // forhindre de nu-privilegerede, fulde navne i overhovedet at komme frem — fx på standvæggen.
