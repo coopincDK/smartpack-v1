@@ -3,7 +3,8 @@
 const express = require('express');
 const { medPartnere, partnerLister } = require('../cfgLoad');
 const config = require('../config');
-const { verifyPassword, randomCode, hashPassword } = require('../crypto');
+const crypto = require('crypto');
+const { verifyPassword, randomCode, hashPassword, sha256Hex } = require('../crypto');
 const {
   requireAdmin,
   createSession,
@@ -97,13 +98,39 @@ function adminRouter(pool, ws, opts) {
   router.post('/admin/login', loginLimiter, async (req, res, next) => {
     try {
       const password = String((req.body && req.body.password) || '');
+      const email = String((req.body && req.body.email) || '').trim().toLowerCase();
+      if (email) {
+        // Personligt login. Samme svar ved ukendt e-mail og forkert kode.
+        const { rows } = await pool.query('SELECT * FROM admin_bruger WHERE email = $1', [email]);
+        const b = rows[0];
+        const nu = Date.now();
+        if (b && b.spaerret_til && new Date(b.spaerret_til).getTime() > nu) {
+          return res.status(429).json({ fejl: 'For mange forkerte forsøg. Prøv igen om et kvarter.', kode: 'spaerret' });
+        }
+        if (!b || !b.aktiv || !verifyPassword(password, b.password_hash)) {
+          if (b) {
+            const fejl = (b.pw_fejl || 0) + 1;
+            await pool.query('UPDATE admin_bruger SET pw_fejl = $1, spaerret_til = $2 WHERE id = $3', [
+              fejl >= 5 ? 0 : fejl,
+              fejl >= 5 ? new Date(nu + 15 * 60 * 1000) : null,
+              b.id,
+            ]);
+          }
+          return res.status(401).json({ fejl: 'Forkert e-mail eller kode.', kode: 'forkert_adgangskode' });
+        }
+        const token = await createSession(pool, config.adminSessionTtlMs);
+        await pool.query('UPDATE admin_session SET bruger_id = $1 WHERE token_hash = $2', [b.id, sha256Hex(token)]);
+        await pool.query('UPDATE admin_bruger SET sidst_login = now(), pw_fejl = 0, spaerret_til = NULL WHERE id = $1', [b.id]);
+        setSessionCookie(res, token, config.cookieSecure, config.adminSessionTtlMs);
+        return res.json({ ok: true, email: b.email, skal_skifte_kode: b.skal_skifte_kode });
+      }
       const hash = await aktuelAdminHash();
       if (!hash || !verifyPassword(password, hash)) {
         return res.status(401).json({ fejl: 'Forkert adgangskode.', kode: 'forkert_adgangskode' });
       }
       const token = await createSession(pool, config.adminSessionTtlMs);
       setSessionCookie(res, token, config.cookieSecure, config.adminSessionTtlMs);
-      res.json({ ok: true });
+      res.json({ ok: true, email: null, skal_skifte_kode: false });
     } catch (e) {
       next(e);
     }
@@ -115,6 +142,23 @@ function adminRouter(pool, ws, opts) {
     try {
       const gammel = String((req.body && req.body.gammel) || '');
       const ny = String((req.body && req.body.ny) || '');
+      if (req.adminBruger) {
+        // Personligt login: skifter kun brugerens egen kode.
+        const { rows } = await pool.query('SELECT password_hash FROM admin_bruger WHERE id = $1', [req.adminBruger.id]);
+        if (!verifyPassword(gammel, rows[0].password_hash)) {
+          return res.status(401).json({ fejl: 'Den nuværende kode er forkert.', kode: 'forkert_adgangskode' });
+        }
+        if (ny.length < 12) return res.status(400).json({ fejl: 'Den nye kode skal være mindst 12 tegn.', kode: 'for_kort' });
+        if (ny === gammel) {
+          return res.status(400).json({ fejl: 'Den nye kode skal være forskellig fra den gamle.', kode: 'samme_kode' });
+        }
+        await pool.query('UPDATE admin_bruger SET password_hash = $1, skal_skifte_kode = false WHERE id = $2', [
+          hashPassword(ny),
+          req.adminBruger.id,
+        ]);
+        await pool.query('DELETE FROM admin_session WHERE bruger_id = $1 AND id <> $2', [req.adminBruger.id, req.adminSession.id]);
+        return res.json({ ok: true });
+      }
       const hash = await aktuelAdminHash();
       if (!hash || !verifyPassword(gammel, hash)) {
         return res.status(401).json({ fejl: 'Den nuværende kode er forkert.', kode: 'forkert_adgangskode' });
@@ -130,12 +174,97 @@ function adminRouter(pool, ws, opts) {
          ON CONFLICT (id) DO UPDATE SET password_hash = EXCLUDED.password_hash, opdateret = now()`,
         [hashPassword(ny)]
       );
-      await pool.query("DELETE FROM admin_session WHERE id <> $1 AND rolle = 'admin'", [
+      await pool.query("DELETE FROM admin_session WHERE id <> $1 AND rolle = 'admin' AND bruger_id IS NULL", [
         req.adminSession.id,
       ]);
       await pool.query(
         `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer) VALUES ($1, 'admin_kode_skiftet', '{}'::jsonb)`,
         [req.adminSession.id]
+      );
+      res.json({ ok: true });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // --- Personlige admin-logins (014_admin_brugere.sql) ---
+  const SMARTPACK_MAIL = /^[^\s@]+@smartpack\.dk$/;
+
+  router.get('/admin/mig', admin, (req, res) => {
+    const b = req.adminBruger;
+    res.json(b ? { email: b.email, navn: b.navn, skal_skifte_kode: b.skal_skifte_kode } : { email: null, skal_skifte_kode: false });
+  });
+
+  router.get('/admin/brugere', admin, async (req, res, next) => {
+    try {
+      const { rows } = await pool.query(
+        'SELECT id, email, navn, aktiv, skal_skifte_kode, oprettet, sidst_login FROM admin_bruger ORDER BY email'
+      );
+      res.json({ brugere: rows });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  router.post('/admin/brugere', admin, async (req, res, next) => {
+    try {
+      const email = String((req.body && req.body.email) || '').trim().toLowerCase();
+      const navn = String((req.body && req.body.navn) || '').trim().slice(0, 100);
+      const kode = String((req.body && req.body.kode) || '');
+      if (!SMARTPACK_MAIL.test(email)) {
+        return res.status(400).json({ fejl: 'Kun @smartpack.dk-adresser kan være admin.', kode: 'ugyldig_email' });
+      }
+      if (kode.length < 10) return res.status(400).json({ fejl: 'Startkoden skal være mindst 10 tegn.', kode: 'for_kort' });
+      const findes = await pool.query('SELECT id, aktiv FROM admin_bruger WHERE email = $1', [email]);
+      if (findes.rows.length && findes.rows[0].aktiv) {
+        return res.status(400).json({ fejl: 'Der findes allerede en admin med den e-mail.', kode: 'findes' });
+      }
+      const id = findes.rows.length ? findes.rows[0].id : crypto.randomUUID();
+      await pool.query(
+        `INSERT INTO admin_bruger (id, email, navn, password_hash, skal_skifte_kode, aktiv)
+         VALUES ($1, $2, $3, $4, true, true)
+         ON CONFLICT (email) DO UPDATE SET navn = EXCLUDED.navn, password_hash = EXCLUDED.password_hash,
+           skal_skifte_kode = true, aktiv = true, pw_fejl = 0, spaerret_til = NULL`,
+        [id, email, navn, hashPassword(kode)]
+      );
+      await pool.query(
+        `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer) VALUES ($1, 'admin_bruger_oprettet', $2)`,
+        [req.adminSession.id, JSON.stringify({ email })]
+      );
+      res.status(201).json({ ok: true, id, email });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  router.post('/admin/brugere/:id/nulstil', admin, async (req, res, next) => {
+    try {
+      const kode = String((req.body && req.body.kode) || '');
+      if (kode.length < 10) return res.status(400).json({ fejl: 'Startkoden skal være mindst 10 tegn.', kode: 'for_kort' });
+      const r = await pool.query(
+        'UPDATE admin_bruger SET password_hash = $1, skal_skifte_kode = true, pw_fejl = 0, spaerret_til = NULL WHERE id = $2',
+        [hashPassword(kode), req.params.id]
+      );
+      if (!r.rowCount) return res.status(404).json({ fejl: 'Ukendt admin.', kode: 'ikke_fundet' });
+      await pool.query('DELETE FROM admin_session WHERE bruger_id = $1', [req.params.id]);
+      res.json({ ok: true });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // Luk et admin-login (rækken bevares, så historikken kan ses).
+  router.delete('/admin/brugere/:id', admin, async (req, res, next) => {
+    try {
+      if (req.adminBruger && req.adminBruger.id === req.params.id) {
+        return res.status(400).json({ fejl: 'Du kan ikke lukke dit eget login.', kode: 'eget_login' });
+      }
+      const r = await pool.query('UPDATE admin_bruger SET aktiv = false WHERE id = $1', [req.params.id]);
+      if (!r.rowCount) return res.status(404).json({ fejl: 'Ukendt admin.', kode: 'ikke_fundet' });
+      await pool.query('DELETE FROM admin_session WHERE bruger_id = $1', [req.params.id]);
+      await pool.query(
+        `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer) VALUES ($1, 'admin_bruger_lukket', $2)`,
+        [req.adminSession.id, JSON.stringify({ id: req.params.id })]
       );
       res.json({ ok: true });
     } catch (e) {

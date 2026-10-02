@@ -1373,6 +1373,16 @@ Beslutninger: projektdokumentet `packrush-beslutninger-vilkaar.md`. Vilkår:
   `ADMIN_PASSWORD_HASH`. Alle andre admin-sessioner logges ud.
 - Glemt kode: slet rækken i `admin_kode` på serveren, så gælder .env-koden igen.
 
+### Personlige admin-logins (014_admin_brugere.sql)
+- `POST /admin/login {email, password}`: personligt login for en
+  @smartpack.dk-admin. Uden `email` bruges den fælles kode som før.
+  Svaret har `skal_skifte_kode`; er den sand, afviser alle admin-endpoints
+  med 403 `skal_skifte_kode`, undtagen `/admin/skift-kode`, `/admin/mig` og
+  `/admin/logout`. 5 forkerte koder spærrer brugeren i 15 min.
+- `GET /admin/mig`, `GET/POST /admin/brugere` (kun @smartpack.dk, startkode
+  mindst 10 tegn), `POST /admin/brugere/:id/nulstil`, `DELETE /admin/brugere/:id`
+  (lukker login og sessioner; man kan ikke lukke sig selv).
+
 ## Sikkerhedsgennemgang, branch `spil-api-backup` (H2/M3/M4, 2. okt. 2026)
 
 Tre uafhængige fund fra et review af Martins nye pinkode-/partner-/

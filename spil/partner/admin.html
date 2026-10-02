@@ -34,7 +34,8 @@
   <!-- Login -->
   <form class="card" id="login" hidden style="max-width:420px">
     <h2>Log ind som admin</h2>
-    <p class="muted small">Samme adgangskode som spillets admin.</p>
+    <p class="muted small">Din smartpack.dk-mail og din egen kode. Har du kun den fælles kode, så lad e-mail stå tom.</p>
+    <label class="f" for="a-mail">E-mail<input type="email" id="a-mail" autocomplete="username" placeholder="navn@smartpack.dk"></label>
     <label class="f" for="a-pw">Adgangskode<input type="password" id="a-pw" autocomplete="current-password" required></label>
     <div id="login-msg"></div>
     <button class="btn" type="submit">Log ind</button>
@@ -281,8 +282,14 @@
 
   $('login').addEventListener('submit', function (e) {
     e.preventDefault();
-    api('/admin/login', { method: 'POST', body: { password: $('a-pw').value } })
-      .then(function () { $('a-pw').value = ''; return hentListe(); })
+    api('/admin/login', { method: 'POST', body: { password: $('a-pw').value, email: $('a-mail').value } })
+      .then(function (r) {
+        if (r && r.skal_skifte_kode) {
+          SP.besked($('login-msg'), 'Første gang skal du vælge din egen kode. Log ind i spillet (smartpack.dk/spil → Login → Arrangør), og kom så tilbage hertil.', 'info');
+          return;
+        }
+        $('a-pw').value = ''; return hentListe();
+      })
       .catch(function (err) { SP.besked($('login-msg'), err.message, 'err'); });
   });
   $('b-logout').addEventListener('click', function () { api('/admin/logout', { method: 'POST' }).catch(function () {}).then(visLogin); });
