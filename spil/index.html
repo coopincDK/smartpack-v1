@@ -757,6 +757,7 @@ details.more summary:hover{color:var(--text)}
     <div class="row"><button class="btn ghost small" id="p-messe">Messe</button><button class="btn ghost small" id="p-month">Månedskonkurrence</button></div>
     <label class="f">Navn på perioden <small>Står på fanen og på standvæggen, fx "Hele messen" eller "Oktober"</small><input type="text" id="c-pname" maxlength="30"></label>
     <label class="f">Perioden starter <small>Scores fra før denne dag tæller ikke i periodens tavle, mission og lodtrækning</small><input type="text" id="c-pstart" placeholder="ÅÅÅÅ-MM-DD" maxlength="10"></label>
+    <label class="f">Perioden slutter <small>Scores fra efter denne dag tæller ikke. Til messen: samme dag som start, så kun messedagen tæller. Tomt betyder ingen slutdato</small><input type="text" id="c-pend" placeholder="ÅÅÅÅ-MM-DD" maxlength="10"></label>
     <label class="f">Arrangementets navn <small>Bruges i lagerrapporten, fx E-handelskonferencen. Tomt betyder ingen</small><input type="text" id="c-event" maxlength="40"></label>
     <div class="grid2">
       <label class="f">Liv pr. dag<input type="number" id="c-per" min="1" max="20"></label>
@@ -1491,7 +1492,7 @@ const bfToday = p => todays(p).some(a => a.bf);
 function crownMs(){ const [h, m] = (cfg.crownTime || '16:00').split(':').map(Number); return cphTodayAt(h || 0, m || 0); }
 const F = {
   today: a => a.day === today(),
-  period: a => a.day >= (cfg.periodStart || '2000-01-01'),
+  period: a => a.day >= (cfg.periodStart || '2000-01-01') && (!cfg.periodEnd || a.day <= cfg.periodEnd),
   all: () => true,
   crown: a => a.day === today() && Date.parse(a.end || a.at) <= crownMs(),
 };
@@ -2310,7 +2311,7 @@ function renderBoard(list, note, limit){
   }
   const k = scope === 'mission' ? cfg.mission : 'total', filt = scope === 'today' ? F.today : F.period;
   if(scope === 'mission') note.textContent = `${MET[k].name}. ${MET[k].how}`;
-  if(scope === 'period' && cfg.periodStart > '2000-01-01') note.textContent = `Alle forsøg fra ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}.`;
+  if(scope === 'period' && cfg.periodStart > '2000-01-01'){ const dd = d => new Date(d).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }); note.textContent = cfg.periodEnd && cfg.periodEnd === cfg.periodStart ? `Kun forsøg fra ${dd(cfg.periodStart)}.` : cfg.periodEnd ? `Alle forsøg fra ${dd(cfg.periodStart)} til ${dd(cfg.periodEnd)}.` : `Alle forsøg fra ${dd(cfg.periodStart)}.`; }
   if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
   if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
@@ -3133,18 +3134,21 @@ $('#f-pin').addEventListener('submit', e => {
 });
 const sel = $('#c-mission'); MISSIONS.forEach(k => { const o = el('option', null, k === 'total' ? 'Ingen mission, kun højeste score' : MET[k].name); o.value = k; sel.append(o); });
 function fillCfg(){
-  $('#c-pname').value = cfg.periodName || ''; $('#c-pstart').value = cfg.periodStart > '2000-01-01' ? cfg.periodStart : '';
+  $('#c-pname').value = cfg.periodName || ''; $('#c-pstart').value = cfg.periodStart > '2000-01-01' ? cfg.periodStart : ''; $('#c-pend').value = cfg.periodEnd || '';
   $('#c-event').value = cfg.eventName || ''; $('#c-per').value = cfg.perDay; $('#c-ctime').value = cfg.crownTime;
   $('#c-crown').checked = !!cfg.crownOn; $('#c-bf').checked = !!cfg.bf; $('#c-teams').checked = !!cfg.teams; $('#c-raffle').checked = !!cfg.raffle; $('#c-partners').checked = cfg.partners !== false;
   $('#c-mission').value = cfg.mission; $('#c-prize').value = cfg.prize || ''; $('#c-sms').checked = cfg.smsOn !== false; $('#c-sponsor').value = cfg.smsSponsor || ''; $('#c-mailp').value = cfg.mailPartners || ''; $('#c-life').checked = cfg.lifeBonus !== false; $('#c-ref').checked = cfg.referral !== false; $('#c-goal').value = cfg.goal || 0;
   $('#c-share').value = cfg.shareUrl || ''; $('#c-fixed').checked = cfg.fixed !== false; $('#c-hourly').checked = cfg.hourly !== false; $('#c-hprize').value = cfg.hourPrize || ''; $('#c-duel').checked = cfg.duel !== false; $('#c-boost').checked = cfg.smsBoost !== false; $('#c-boostn').value = cfg.boostLives || 2;
 }
-$('#p-messe').onclick = () => { $('#c-pname').value = 'Hele messen'; $('#c-pstart').value = today(); $('#c-per').value = 5; $('#c-crown').checked = true; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = false; $('#c-mission').value = 'total'; $('#c-goal').value = 0; toast('Messeopsætning udfyldt. Tryk Gem.'); };
-$('#p-month').onclick = () => { const d = new Date(); d.setDate(1); const m = MONTHS[d.getMonth()]; $('#c-pname').value = m[0].toUpperCase() + m.slice(1); $('#c-pstart').value = d.toLocaleDateString('sv-SE'); $('#c-per').value = 3; $('#c-crown').checked = false; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = true; if($('#c-mission').value === 'total') $('#c-mission').value = 'tower'; toast('Månedsopsætning udfyldt. Tryk Gem.'); };
+$('#p-messe').onclick = () => { $('#c-pname').value = 'Messedagen'; $('#c-pstart').value = today(); $('#c-pend').value = today(); $('#c-per').value = 5; $('#c-crown').checked = true; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = false; $('#c-mission').value = 'total'; $('#c-goal').value = 0; toast('Messeopsætning udfyldt. Tryk Gem.'); };
+$('#p-month').onclick = () => { const d = new Date(); d.setDate(1); const m = MONTHS[d.getMonth()]; $('#c-pname').value = m[0].toUpperCase() + m.slice(1); $('#c-pstart').value = d.toLocaleDateString('sv-SE'); $('#c-pend').value = ''; $('#c-per').value = 3; $('#c-crown').checked = false; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = true; if($('#c-mission').value === 'total') $('#c-mission').value = 'tower'; toast('Månedsopsætning udfyldt. Tryk Gem.'); };
 $('#b-save').onclick = () => {
   const ps = $('#c-pstart').value.trim();
   if(ps && !/^\d{4}-\d{2}-\d{2}$/.test(ps)) return toast('Skriv startdatoen som ÅÅÅÅ-MM-DD');
-  const patch = { periodName: $('#c-pname').value.trim() || 'Perioden', periodStart: ps || '2000-01-01', eventName: $('#c-event').value.trim(),
+  const pe = $('#c-pend').value.trim();
+  if(pe && !/^\d{4}-\d{2}-\d{2}$/.test(pe)) return toast('Skriv slutdatoen som ÅÅÅÅ-MM-DD');
+  if(pe && pe < (ps || '2000-01-01')) return toast('Slutdatoen ligger før startdatoen');
+  const patch = { periodName: $('#c-pname').value.trim() || 'Perioden', periodStart: ps || '2000-01-01', periodEnd: pe, eventName: $('#c-event').value.trim(),
     perDay: clamp(parseInt($('#c-per').value, 10) || 3, 1, 20), crownTime: $('#c-ctime').value || '16:00', crownOn: $('#c-crown').checked, bf: $('#c-bf').checked,
     prize: $('#c-prize').value.trim(), smsOn: $('#c-sms').checked, smsSponsor: $('#c-sponsor').value.trim(), mailPartners: $('#c-mailp').value.trim(), lifeBonus: $('#c-life').checked, referral: $('#c-ref').checked, shareUrl: $('#c-share').value.trim(), fixed: $('#c-fixed').checked, hourly: $('#c-hourly').checked, hourPrize: $('#c-hprize').value.trim(), duel: $('#c-duel').checked, smsBoost: $('#c-boost').checked, boostLives: clamp(parseInt($('#c-boostn').value, 10) || 2, 1, 5), teams: $('#c-teams').checked, partners: $('#c-partners').checked, raffle: $('#c-raffle').checked, mission: $('#c-mission').value, goal: Math.max(0, parseFloat($('#c-goal').value) || 0) };
   API.admin.saveConfig(patch).then(res => {
