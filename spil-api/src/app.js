@@ -3,7 +3,7 @@
 const express = require('express');
 const { healthRouter } = require('./routes/health');
 const { stateRouter } = require('./routes/state');
-const { playersRouter } = require('./routes/players');
+const { playersRouter, createIpLoginLimiter } = require('./routes/players');
 const { meRouter } = require('./routes/me');
 const { runsRouter } = require('./routes/runs');
 const { adminRouter } = require('./routes/admin');
@@ -38,10 +38,17 @@ function createApp(pool, ws, opts) {
     return writeLimiter(req, res, next);
   });
 
+  // M3/M4: ÉN delt instans — IP-bred pin-/sletningsgrænse, nøjagtig samme
+  // tæller for POST /players' login OG DELETE /me's pinkode-bekræftelse (se
+  // src/routes/players.js#createIpLoginLimiter og API.md's "M4"-afsnit for
+  // begrundelsen: et separat eksemplar pr. router ville omgå den fælles
+  // beskyttelse).
+  const ipLoginLimiter = createIpLoginLimiter();
+
   app.use(healthRouter());
   app.use(stateRouter(pool));
-  app.use(playersRouter(pool, ws));
-  app.use(meRouter(pool, ws));
+  app.use(playersRouter(pool, ws, { ipLoginLimiter }));
+  app.use(meRouter(pool, ws, { ipLoginLimiter }));
   app.use(runsRouter(pool, ws));
   app.use(adminRouter(pool, ws, opts.adminRouterOpts));
   app.use(partnersRouter(pool));

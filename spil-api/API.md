@@ -138,13 +138,18 @@ kun får lov at bære et sanitiseret `{vs: <navn, maks 40 tegn>}` — se
 `src/publicState.js#sanitizeDuel`).
 
 ### `POST /players`
-Registrering ELLER login, afgjort af om emailen findes.
+Registrering ELLER login, afgjort af om emailen findes. Login sker med
+`email` + `pin` (4 cifre, se "Pinkode i stedet for telefon" nedenfor);
+`telefon` spiller INGEN rolle ved login for spillere oprettet EFTER
+010_pinkode.sql (kun legacy-spillere uden `pin_hash` kan logge ind med
+`telefon`, se dér).
 
 **Request:**
 ```json
 {
   "navn": "Anna Andersen",
   "email": "anna@firma.dk",
+  "pin": "4217",
   "telefon": "20304050",
   "firma": "Smartpack ApS",
   "vennekode": "AB3D",
@@ -153,20 +158,32 @@ Registrering ELLER login, afgjort af om emailen findes.
   "accepterer_betingelser": true
 }
 ```
-- `navn`: 1–22 tegn. `firma`: 0–40 tegn (**valgfrit** siden denne
-  opfølgningsrunde — se `PATCH /me` for at sætte/rette det bagefter, og
-  "Packrush-ændringer" for hvorfor en spiller uden firma ikke tæller med i
-  firmakampen). `telefon`: normaliseres til kun cifre, skal have mindst 8
-  cifre. `vennekode`/`udfordringskode`: maks 5 tegn, case-insensitive.
+- `navn`: 1–22 tegn. `firma`: 0–40 tegn (**valgfrit** — se `PATCH /me` for at
+  sætte/rette det bagefter, og "Packrush-ændringer" for hvorfor en spiller
+  uden firma ikke tæller med i firmakampen).
+- `pin`: 4 cifre, PÅKRÆVET ved ny registrering (spilleren vælger den selv).
+- `telefon` (telefon-opfølgning, 2. okt. 2026): **igen VALGFRIT** —
+  tomt/udeladt er OK. Når det ER angivet, normaliseres det til kun cifre og
+  skal have mindst 8 cifre, ellers `400 ugyldigt_telefon`. Unikt PÅ TVÆRS AF
+  SPILLERE når det er sat (`spiller_telefon_unik`, se 001_init.sql — en
+  almindelig UNIQUE INDEX, hvor Postgres allerede behandler hvert NULL som
+  forskelligt fra alle andre, så flere spillere uden telefon er altid OK);
+  kolliderer det med en ANDEN spillers sat nummer: `400 telefon_i_brug`.
+  Kan sættes/rettes bagefter med `PATCH /me { "telefon": "..." }`.
+- `vennekode`/`udfordringskode`: maks 5 tegn, case-insensitive.
 - `tilmeldinger`: liste af nøgler fra `subOptions()` (`sp`, `m:<partner>`,
-  `sms`).
+  `sms`). **`sms` kræver et telefonnummer** (enten i DENNE request, eller
+  allerede sat tidligere) — er `telefon` tomt/udeladt OG `tilmeldinger`
+  indeholder `sms`: `400 telefon_kraeves`, intet oprettes. Samme regel
+  gælder `PUT /me/subs` og `PUT /me/ticks` (se dér) — kravet kan ikke omgås
+  ved at sætte sms-fluebenet et andet sted.
 
 **201 (ny spiller):**
 ```json
 { "token": "64-tegns-hex-bearer-token", "type": "ny",
   "spiller": { "pid": "AbCdEfGhI2", "navn": "Anna Andersen", "firma": "Smartpack ApS", "vennekode": "K7M2" } }
 ```
-**200 (login — email fandtes, telefon matchede):**
+**200 (login — email fandtes, pinkoden matchede):**
 ```json
 { "token": "nyt-64-tegns-hex-bearer-token", "type": "login",
   "spiller": { "pid": "...", "navn": "...", "firma": "...", "vennekode": "..." } }
@@ -181,11 +198,48 @@ tokens pr. spiller" nedenfor.
 | Status | kode | Betydning |
 |---|---|---|
 | 400 | `ugyldig_email` | Emailformat er ugyldigt |
-| 400 | `ugyldigt_telefon` | Telefon har under 8 cifre |
-| 400 | `telefon_matcher_ikke` | Login: de sidste 8 cifre matcher ikke — intet overskrives |
+| 400 | `ugyldig_pin` | Pinkoden er ikke 4 cifre (ny spiller) |
+| 400 | `pin_matcher_ikke` | Login: pinkoden passer ikke til denne e-mail |
+| 400 | `mangler_pin` | Login: spilleren er oprettet før pinkoden og har intet `pin_hash` — skal forbi standen |
+| 400 | `ugyldigt_telefon` | `telefon` er angivet, men normaliserer til under 8 cifre |
+| 400 | `telefon_i_brug` | `telefon` er allerede knyttet til en ANDEN spiller |
+| 400 | `telefon_kraeves` | `tilmeldinger` indeholder `sms`, men intet telefonnummer er angivet/gemt |
 | 400 | `ugyldigt_navn` / `ugyldigt_firma` | Længde uden for 1–22 / 1–40 tegn |
 | 400 | `mangler_accept` | `accepterer_betingelser` ikke `true` ved ny spiller |
-| 400 | `telefon_optaget` | Telefonnummeret er allerede knyttet til en anden spiller |
+| 429 | `pin_spaerret` | DENNE spiller er spærret 15 min. efter 5 forkerte pinkoder i træk — se nedenfor. **Delt tæller** med `DELETE /me`s pinkode-bekræftelse (samme `pin_fejl`/`pin_spaerret_til`-kolonner, se dér) |
+| 429 | `ip_login_spaerret` | M3/S1 (sikkerhedsgennemgang): denne klient-IP har ramt ét af de to IP-lag beskrevet nedenfor. **Delt tæller** med `DELETE /me` (samme `ipLoginLimiter`-instans, se `src/app.js`) |
+
+**M3 (sikkerhedsgennemgang): IP-bred rate-limit på login-/pin-forsøg.** Den
+pr.-spiller-spærring ovenfor (`pin_spaerret`) beskytter ikke mod (a) at en
+angriber bevidst låser EN navngiven kollegas konto ude ved at afprøve
+forkerte koder for netop DEN email, eller (b) at en angriber afprøver mange
+KENDTE emails × 5 koder/kvarter og statistisk rammer nogle (4-cifret pin).
+Derfor tæller serveren nu OGSÅ mislykkede login-/pin-forsøg PR. KLIENT-IP
+(`X-Client-IP`, se "Klient-IP" — ALDRIG klientens egen IP-header). Dette er
+i TILLÆG til, ikke i stedet for, den pr.-spiller-spærring. Tæller KUN
+mislykkede forsøg (hverken en ny registrering eller et vellykket login
+forbruger et slot).
+
+**S1 (opfølgende sikkerhedsgennemgang, merge-review, 2. okt. 2026):** da
+`X-Client-IP` i praksis er Cloudflares `CF-Connecting-IP`, deler HELE en
+messestands Wi-Fi/NAT typisk ÉN IP. Den oprindelige M3-grænse var et ÉT,
+fælles loft PÅ TVÆRS AF ALLE SPILLERES emails — det betød reelt at 10
+forkerte forsøg FRA HVEM SOM HELST på standen, MOD HVILKEN SOM HELST konto,
+blokerede login for HELE standen i op til 10 minutter. Grænsen er derfor nu
+TO LAG, begge nøglet på `X-Client-IP`:
+1. **Pr. (IP, email):** samme loft som hidtil (10 forkerte/10 min.), men nu
+   kun på tværs af forsøg mod SAMME konto fra samme sted — to kolleger der
+   deler standens wifi rammer derfor hverken hinandens forsøg på at logge
+   ind RIGTIGT, eller låser hinanden ude af HVER SIN konto.
+2. **Pr. IP ALENE, på tværs af ALLE emails:** et markant højere loft (300
+   forkerte/10 min.) — fanger stadig storskala-udtømningsforsøg (mange
+   forskellige emails afprøvet fra samme sted), uden at ramme almindelig
+   messetrafik.
+
+`check`/`consume` forbruger/tjekker BEGGE lag for hvert forsøg — rammes
+ENTEN af det snævre pr.-konto-loft eller det høje IP-alene-loft, svares der
+`429 ip_login_spaerret` (samme fejlkode som før, uændret for klienten). Se
+`src/routes/players.js#createIpLoginLimiter`.
 
 ### `GET /me` (bearer)
 ```json
@@ -223,11 +277,25 @@ admin/stand-sessionscookie (uafhængigt af hvem spilleren selv er), ellers
 anonymisering, se `src/playerDeletion.js`) eksponeres ALDRIG her — samme
 princip som `forsoeg.duel.vs_spiller_id`.
 
-### `PATCH /me` (bearer) — sæt/ret firma
-Body `{ "firma": "Smartpack ApS" }` — `firma`: 0–40 tegn (tomt = ryd
-firmaet). Genberegner `firma_noegle` (samme algoritme som ved
-registrering). `200 { "ok": true, "firma": "Smartpack ApS" }`.
-`400 { "kode": "ugyldigt_firma" }` hvis over 40 tegn.
+### `PATCH /me` (bearer) — sæt/ret firma og/eller telefon
+Body kan indeholde ÉT eller BEGGE felter — hvert felt opdateres KUN hvis det
+rent faktisk er med i requesten (ikke bare udeladt/falsy), så et kald der
+kun sætter det ene ALDRIG nulstiller det andet:
+```json
+{ "firma": "Smartpack ApS", "telefon": "20304050" }
+```
+- `firma`: 0–40 tegn (tomt = ryd firmaet). Genberegner `firma_noegle` (samme
+  algoritme som ved registrering). `400 ugyldigt_firma` hvis over 40 tegn.
+- `telefon` (telefon-opfølgning, 2. okt. 2026): sætter ELLER retter
+  telefonnummeret bagefter — samme normalisering/validering som `POST
+  /players` (mindst 8 cifre når angivet, tomt = ryd nummeret igen). Unikt på
+  tværs af spillere når det er sat: `400 telefon_i_brug` hvis et ANDET
+  spiller allerede har nummeret, `400 ugyldigt_telefon` hvis under 8 cifre.
+
+`200 { "ok": true, "firma": "...", "telefon": "..." }` — kun de(t) felt(er),
+der rent faktisk blev opdateret, er med i svaret. `400 { "kode":
+"intet_at_opdatere" }` hvis hverken `firma` eller `telefon` er med i
+requesten.
 
 En spiller UDEN firma (tomt `firma`/`firma_noegle`) tæller IKKE med i
 firmakampen: `GET /state`'s `companyKey` er tom/falsy for dem, og klientens
@@ -264,6 +332,12 @@ PRIVILEGEREDE variant for læsbarhedens skyld).
 Body `{ "keys": ["sp", "sms"] }` — det ØNSKEDE fulde, VARIGE sæt.
 `200 { "ok": true, "liv": {...}, "mine_noegler": [...] }`.
 
+**Telefon-opfølgning:** indeholder `keys` `sms`, og spilleren har INTET
+telefonnummer registreret (hverken fra før eller i dette kald — `PUT
+/me/subs` sætter ikke selv telefon, se `PATCH /me`): `400 telefon_kraeves`,
+intet ændres. Gælder KUN at (for)blive tilmeldt — at AFMELDE `sms` er altid
+tilladt uden telefon.
+
 **Siden Packrush giver dette endpoint IKKE længere liv** (se
 "Packrush-ændringer" — det gør kun `PUT /me/ticks`). Det sætter/afmelder den
 varige tilmelding: en tilføjet nøgle logges som en `bekraeftet`-hændelse i
@@ -275,6 +349,9 @@ hvis den var tikket af.
 Body `{ "keys": ["sms"] }` — det ØNSKEDE fulde sæt af DAGENS
 fluebens-nøgler (nulstilles hver dag).
 `200 { "ok": true, "friske_liv": 1, "liv": {...}, "mine_noegler": [...], "mine_flueben": [...] }`.
+
+**Telefon-opfølgning:** samme `telefon_kraeves`-regel og -begrundelse som
+`PUT /me/subs` ovenfor, for DAGENS `sms`-flueben.
 
 Dette er stedet der GIVER liv (kun for lister med `life: true`, og kun
 lister der ikke allerede har givet liv i dag — "friske_liv"). Et NYT
@@ -296,6 +373,59 @@ en liste der ikke er tilmeldt, fejler ikke.
 `200 { "ok": true, "mine_noegler": [...] }`.
 Findes endnu ikke i spillets UI (`spil/index.html`) — tilføjes i en kommende
 ombygning, men kontrakten er klar nu.
+
+### `DELETE /me` (bearer) — M4: selvbetjent sletning
+Vilkårene lover selvbetjent sletning ("Sletter du din profil, sletter vi
+dine oplysninger"). Kræver, UD OVER et gyldigt bearer-token, en EKSTRA
+bekræftelse i selve requesten — ellers kunne et alene stjålet/lækket token
+slette kontoen.
+
+**Request:**
+```json
+{ "pinkode": "1234" }
+```
+**ÆNDRET (telefon-opfølgning, 2. okt. 2026):** bekræftelsen er nu KUN
+spillerens egen pinkode (4 cifre, SAMME hash som login, se `POST /players`)
+— IKKE længere telefonnummeret. Telefon er blevet valgfrit igen og er derfor
+ikke længere en pålidelig bekræftelsesfaktor for alle spillere. En spiller
+UDEN pinkode (oprettet før 010_pinkode.sql, intet `pin_hash`) kan IKKE
+længere slette sig selv via dette endpoint — kom forbi standen (samme
+begrænsning som `mangler_pin` ved login).
+
+**Delt rate-limit med login (BEVIDST — IKKE en separat/dupliceret tæller):**
+en forkert `pinkode` her registreres i PRÆCIS de samme to lag som et forkert
+login-forsøg i `POST /players`:
+- **Pr.-spiller:** samme `pin_fejl`/`pin_spaerret_til`-kolonner på
+  `spiller`-rækken (`429 pin_spaerret` efter 5 forkerte i træk, 15 min.,
+  eskalerer aldrig — se "Pinkode i stedet for telefon" nedenfor). 5 forkerte
+  DELETE-forsøg låser altså OGSÅ login ude, og omvendt.
+- **IP-bredt (to lag, se S1 ovenfor):** samme `ipLoginLimiter`-instans som
+  login (`429 ip_login_spaerret`, se M3/S1 og `src/app.js`, som opretter ÉN
+  instans og deler den mellem `playersRouter` og `meRouter`). Her bruges
+  spillerens EGEN email (fra `req.player`, sat af auth-middlewaren) som
+  nøgle i det snævre (IP, email)-lag — IKKE en email fra body'en (DELETE
+  /me's body indeholder kun `pinkode`).
+
+Den tidligere version af dette endpoint havde sin EGEN, parallelle
+in-memory-tæller (`sletBekraeftLimiter`, nøglet pr. spiller-id) — det var en
+reel sikkerhedsbrist: forkerte sletningsforsøg talte ikke med i IP-grænsen,
+og accepterede desuden telefon som et selvstændigt bekræftelsesmiddel. Begge
+dele er rettet i denne omgang.
+
+**200 (slettet):** `{ "ok": true }` — spilleren er væk (samme fælles
+`deletePlayerFully()` som admin-slet/admin-nulstil/retention-jobbet, se
+"Sletning og anonymisering": rest-referencer i ANDRE spilleres data
+anonymiseres på samme måde). Loggen i `admin_audit_log` (`handling:
+"selvbetjent_sletning"`) indeholder ALDRIG email/navn/telefon — kun
+spillerens `public_id` og begrundelsen `"selvbetjent sletning"`.
+
+**Fejl:**
+| Status | kode | Betydning |
+|---|---|---|
+| 401 | `ingen_token` / `ugyldigt_token` | Mangler/ugyldigt bearer-token — intet slettes |
+| 403 | `bekraeftelse_forkert` | `pinkode` matchede ikke (eller spilleren har intet `pin_hash`) — intet slettes |
+| 429 | `pin_spaerret` | DENNE spiller er spærret 15 min. efter 5 forkerte pinkoder i træk — DELT tæller med login, se ovenfor |
+| 429 | `ip_login_spaerret` | Samme to-lags IP-grænse som login (se S1 ovenfor) — DELT tæller med login |
 
 ### `POST /me/boost` (bearer)
 Indløser dagens sms-boostkode (svarer til klientens `useCode()`). Body
@@ -514,8 +644,8 @@ telefoner) ser `"Fornavn E."`. Se "Packrush-ændringer".
 | `GET /admin/spillere` | Fuld, KOMPLET organisatordata pr. spiller (PII, tickets, tilmeldinger, forsøg, liv, dagens beaten-notifikationer — se nedenfor) til adminpanelet. |
 | `GET /admin/eksport/spillere.csv` | Alle spillere (navn, email, telefon, firma, vennekode, oprettet, skjult). |
 | `GET /admin/eksport/samtykke/:liste.csv` | Samtykke-hændelseslog for én liste, opsummeret pr. spiller: FØRSTE + SENESTE bekræftelse + `aktiv`-status (`:liste` valideres mod `^[a-z0-9:_.-]+$`). |
-| `GET /admin/eksport/sms.csv` | Spillere med aktiv (`bekraeftet`) sms-status lige nu. |
-| `GET /admin/eksport/revanche.csv` | Sms-tilmeldte (aktiv status) der er blevet overhalet i dag, inkl. sms-tekst-skabelon (se "Afvigelser"). |
+| `GET /admin/eksport/sms.csv` | Spillere med aktiv (`bekraeftet`) sms-status lige nu OG et registreret telefonnummer (telefon-opfølgning: springer spillere uden telefon over — de kan jo ikke modtage en sms). |
+| `GET /admin/eksport/revanche.csv` | Sms-tilmeldte (aktiv status, MED telefon, samme filtrering som sms.csv) der er blevet overhalet i dag, inkl. sms-tekst-skabelon (se "Afvigelser"). |
 | `POST /admin/lodtraekning` `{kort_navn}` | Vægtet tilfældig lodtrækning ud fra `tickets()`, logger i `raffle_draws`. Svar, se nedenfor. |
 | `GET /admin/config` / `PUT /admin/config` | Hent/gem hele config (inkl. `hemmelig.pin`). |
 | `GET /admin/boostkode` | Dagens sms-boostkode (KUN her — aldrig i noget offentligt svar). |
@@ -653,7 +783,8 @@ forudsætningerne.
 ## Sletning og anonymisering
 
 Enhver RIGTIG sletning af en spiller (`DELETE /admin/spillere/:pid`, det
-natlige GDPR-oprydningsjob, og `POST /admin/nulstil`) går gennem samme
+natlige GDPR-oprydningsjob, `POST /admin/nulstil`, og — siden M4,
+sikkerhedsgennemgang — spillerens EGEN `DELETE /me`) går gennem samme
 fælles funktion (`src/playerDeletion.js#deletePlayerFully`), som ud over
 selve cascade-sletningen (forsøg/notifikationer/samtykker) også
 **anonymiserer rest-referencer** til den slettede spiller i ANDRE spilleres
@@ -1277,6 +1408,25 @@ Beslutninger: projektdokumentet `packrush-beslutninger-vilkaar.md`. Vilkår:
   giver en ny tilfældig pinkode, som kun vises i svaret.
 - Sms (sms-liste og sms-boost) er slået fra i config.
 
+### Telefon er igen valgfrit, men påkrævet ved sms (brugerens beslutning, 2. okt. 2026)
+- `POST /players` accepterer igen et VALGFRIT `telefon`-felt, og `PATCH /me
+  { telefon }` kan sætte/rette det bagefter — se de to endpoints ovenfor for
+  den fulde kontrakt (validering, `telefon_i_brug`, `telefon_kraeves`).
+- `spiller_telefon_unik` (001_init.sql) blev ALDRIG fjernet, kun gjort
+  nullable (010_pinkode.sql ovenfor) — ingen ny migration var nødvendig for
+  "unik kun når sat": en almindelig UNIQUE INDEX behandler allerede hvert
+  NULL som forskelligt fra alle andre i Postgres. Koden sørger blot for at
+  gemme NULL (ikke `''`) når feltet er udeladt.
+- `PUT /me/subs` og `PUT /me/ticks` afviser forsøg på at (for)blive tilmeldt
+  `sms` uden et registreret telefonnummer (`400 telefon_kraeves`) — se de to
+  endpoints ovenfor.
+- `GET /admin/eksport/sms.csv` og `GET /admin/eksport/revanche.csv` SPRINGER
+  spillere uden telefon over (de kan jo ikke modtage en sms) — se
+  "Admin"-afsnittet nedenfor. Den generelle `GET /admin/spillere` og `GET
+  /admin/eksport/spillere.csv` er UÆNDREDE og viser FORTSAT alle spillere
+  (inkl. uden telefon) — de bruges til almindelig spilleradministration, ikke
+  kun sms, og en udeladt telefon er der bare tom/`null`.
+
 ### Partnere som tilmeldingslister (src/cfgLoad.js)
 - Aktive, synlige partnere (status `aktiv`, `vist_i_spil`, udfyldt profil inkl.
   CVR, produktkategori og privatlivspolitik) bliver tilmeldingslister på
@@ -1323,3 +1473,66 @@ Beslutninger: projektdokumentet `packrush-beslutninger-vilkaar.md`. Vilkår:
 - `GET /admin/mig`, `GET/POST /admin/brugere` (kun @smartpack.dk, startkode
   mindst 10 tegn), `POST /admin/brugere/:id/nulstil`, `DELETE /admin/brugere/:id`
   (lukker login og sessioner; man kan ikke lukke sig selv).
+
+## Sikkerhedsgennemgang, branch `spil-api-backup` (H2/M3/M4, 2. okt. 2026)
+
+Tre uafhængige fund fra et review af Martins nye pinkode-/partner-/
+lodtrækningsarbejde og den nye auto-deploy-workflow:
+
+### H2) Backup FØR auto-deploy, afbryd ved fejl
+`.github/workflows/deploy-spil-api.yml` kører nu `scripts/backup.sh` på
+serveren (over SSH) FØR selve `rsync`/`deploy.sh`/migrationerne. Fejler
+backup-trinnet (ikke-nul exit), stopper HELE workflowet der — ingen deploy
+eller migration uden en frisk, bekræftet backup lige inden. Se README.md,
+"Drift: natlig backup", for bootstrap-forbeholdet (scriptet skal allerede
+ligge på serveren fra en tidligere udrulning).
+
+### M3) IP-bred rate-limit på pinkode-login
+Se `POST /players` ovenfor (`ip_login_spaerret`, nøglet på `X-Client-IP`) —
+i tillæg til den eksisterende pr.-spiller-spærring (`pin_spaerret`, 5
+forsøg/15 min.), som blev VERIFICERET i denne omgang til at være kort og
+ikke-eskalerende (`pin_fejl` nulstilles samtidig med at spærringen sættes,
+så en ny spærring igen kræver 5 friske forkerte forsøg). **Oprindeligt ét
+fælles loft PÅ TVÆRS AF SPILLERE — se S1 nedenfor for hvorfor og hvordan det
+blev splittet i to lag.**
+
+### M4) Selvbetjent sletning `DELETE /me`
+Se `DELETE /me` ovenfor. Kræver bearer-token OG en ekstra bekræftelse
+(pin ELLER telefon, samme regel som login) — et alene stjålet/lækket
+token kan ikke slette kontoen. Genbruger `deletePlayerFully()`. Logger
+`admin_audit_log` UDEN persondata (kun `public_id` + fast begrundelse).
+
+## Opfølgende merge-review, branch `spil-api-backup` (S1/S2/S4, 2. okt. 2026)
+
+Et merge-review af H2/M3/M4-ændringerne ovenfor blokerede merge pga. ét højt
+fund (S1) og bad om to mindre rettelser (S2, S4):
+
+### S1 (HØJT, blokerede merge): IP-grænsen ramte hele messens Wi-Fi
+Den oprindelige M3-grænse (se ovenfor) var ÉT fælles loft PÅ TVÆRS AF ALLE
+SPILLERES emails. Da `X-Client-IP` i praksis er Cloudflares
+`CF-Connecting-IP`, deler hele messens Wi-Fi/NAT typisk ÉN IP — 10 forkerte
+forsøg FRA HVEM SOM HELST på standen, MOD HVILKEN SOM HELST konto, blokerede
+derfor reelt login for HELE standen i op til 10 minutter. Rettet ved at
+splitte grænsen i to lag (se `POST /players`-afsnittets "S1"-boks og
+`src/routes/players.js#createIpLoginLimiter` ovenfor): ét snævert
+pr.-(IP, email)-lag (uændret 10/10 min., men nu kun pr. konto) og ét nyt,
+højt pr.-IP-alene-lag (300/10 min., på tværs af alle emails). Begge lag
+gælder stadig for BÅDE `POST /players` og `DELETE /me` via den delte
+`ipLoginLimiter`-instans.
+
+### S2 (MIDDEL): backup-kørsel robust mod manglende exec-bit
+`.github/workflows/deploy-spil-api.yml` og den dokumenterede crontab-linje
+(README.md, "Drift: natlig backup") kaldte scriptet direkte
+(`/var/www/spil-api/scripts/backup.sh`), hvilket kræver at exec-biten er
+sat — den mistes let ved kopiering/rsync fra Windows. Begge steder kalder nu
+scriptet via `bash ...` i stedet, så exec-biten er irrelevant.
+
+### S4 (LAVT): backup.sh's tomheds-tjek fangede ikke en tom dump
+`scripts/backup.sh` tjekkede kun at output-filen ikke var tom (`[ -s ... ]`)
+— men en fejlet/afbrudt `pg_dump` kan stadig producere en lille, GYLDIG
+gzip-fil (fx af en tom stream, ~20 byte), der bestod det tjek uden at
+indeholde en brugbar dump. Scriptet verificerer nu EKSPLICIT at indholdet
+rent faktisk er en komplet dump: `zcat <fil> | tail -1` skal indeholde
+strengen `"PostgreSQL database dump complete"` (standard-afslutningslinjen i
+en succesfuld `pg_dump`). Fejler dette tjek, exitter scriptet med fejl og
+logger tydeligt, PRÆCIS som ved enhver anden fejl i scriptet.

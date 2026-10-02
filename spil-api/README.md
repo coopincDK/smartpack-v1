@@ -194,6 +194,64 @@ eller den midlertidige staging-kopi) og målmappen, med en eksplicit
 at være en del af git. Se selve `deploy.sh` for detaljen, og API.md,
 "Tredje opfølgende ændringsrunde", for den fulde historik.
 
+### Drift: natlig backup (`scripts/backup.sh`)
+
+Tager hver nat en **komprimeret, plain SQL**-dump af hele databasen
+(`docker compose exec db pg_dump | gzip` — kører PÅ SERVEREN, hvor
+docker-CLI'en er tilgængelig; ikke at forveksle med `POST /admin/nulstil`s
+in-process `pg_dump` i `src/backup.js`, som kører INDE FRA api-containeren
+og derfor ikke kan bruge docker-socketen).
+
+- **Output:** `/var/backups/spil-api/spilapi-<UTC-tidsstempel>.sql.gz`, fx
+  `spilapi-2026-10-02T02-30-00Z.sql.gz`. Filen `chmod`'es til `600` (kun
+  root kan læse den — den indeholder PII).
+- **Rotation:** scriptet sletter selv sine egne filer (præfiks
+  `spilapi-*.sql.gz`) ældre end 14 dage. Rører ALDRIG `nulstil-*.sql`
+  (sikkerhedsnettet ved `POST /admin/nulstil`, se `src/backup.js`) — det
+  har bevidst et andet præfiks for at undgå dette.
+- **Fejlhåndtering:** `set -euo pipefail` — enhver fejl (pg_dump fejler,
+  disk fuld, tom dump osv.) giver en ikke-nul exit-kode og en tydelig
+  `FEJL`-linje. Scriptet logger selv `OK`/`FEJL` med tidsstempel til
+  stdout/stderr (IKKE direkte til logfilen — det overlader vi til
+  crontab-linjen nedenfor, der omdirigerer begge dele, for at undgå
+  dobbelt-logning).
+
+**Crontab (root, PÅ SERVEREN — ikke en del af git):**
+```
+30 2 * * * bash /var/www/spil-api/scripts/backup.sh >> /var/log/spil-backup.log 2>&1
+10 3 * * * cd /var/www/spil-api && docker compose exec -T api node scripts/retention-job.js >> /var/log/spil-retention.log 2>&1
+```
+(Retention-linjen er identisk med den der er beskrevet i næste afsnit — de
+to job er uafhængige af hinanden og kører bevidst på forskellige
+klokkeslæt. S2, merge-review: `backup.sh` kaldes nu via `bash ...` i stedet
+for direkte — rsync fra Windows mister let exec-biten på scriptet, og
+`bash ...` gør den irrelevant for om kørslen lykkes.)
+
+**Manuel kørsel:**
+```bash
+bash /var/www/spil-api/scripts/backup.sh
+# eller, for at se output samlet samme sted som den natlige kørsel:
+bash /var/www/spil-api/scripts/backup.sh >> /var/log/spil-backup.log 2>&1
+```
+
+**H2 (sikkerhedsgennemgang):** `.github/workflows/deploy-spil-api.yml` kører
+nu DETTE script på serveren (over SSH, som `bash ./scripts/backup.sh` — se
+S2 nedenfor) FØR selve `rsync`/`deploy.sh`/migrationerne ved hver
+auto-udrulning til `main`. Fejler scriptet (ikke-nul exit), stopper hele
+workflowet DER — ingen udrulning eller migration sker uden en frisk,
+bekræftet backup lige inden. **Bootstrap-forbehold:** dette forudsætter at
+`/var/www/spil-api/scripts/backup.sh` allerede findes på serveren FRA EN
+TIDLIGERE udrulning — ved selve den første rigtige udrulning efter at
+denne ændring er merget til `main`, skal scriptet først lægges på serveren
+(manuelt, eller via én forudgående udrulning), ellers fejler (med vilje)
+netop dette trin.
+
+**Gendannelse (manuel, til en TOM database):**
+```bash
+gunzip -c /var/backups/spil-api/spilapi-<tidsstempel>.sql.gz | \
+  docker compose exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+```
+
 ### Drift: GDPR-oprydning (natligt job)
 
 Se API.md, "Packrush-ændringer", opgave C, for selve reglen (hvem
