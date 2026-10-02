@@ -655,6 +655,16 @@ details.more summary:hover{color:var(--text)}
   <details class="more"><summary id="l-bsum">Dine mærker</summary><div class="badges" id="l-badges"></div></details>
   <button class="link" id="b-logout">Næste spiller</button>
   <button class="link" id="b-delme">Slet min profil</button>
+  <dialog id="d-delpin">
+    <form method="dialog" id="f-delpin">
+      <label class="f">Pinkode <small>Bekræft sletning af din profil ved at skrive din pinkode</small><input type="password" id="i-delpin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
+      <p class="err" id="delpin-err" role="alert"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" id="b-delpin-cancel">Annullér</button>
+        <button class="btn primary" type="submit">Slet profilen</button>
+      </div>
+    </form>
+  </dialog>
 </section>
 
 <section class="screen" id="s-game">
@@ -1035,12 +1045,10 @@ const API = {
   /* Telefon vises/kræves kun ved sms-fluebenet (se subsBox) — gemmes her, så PUT /me/ticks({keys:
      ['sms',...]}) ikke længere afvises med telefon_kraeves. */
   setPhone(phone){ return apiFetch('/me', { method: 'PATCH', body: { telefon: phone } }); },
-  /* "Slet min profil": backend-endepunktet bygges på spil-api-backup og er endnu ikke live nogen
-     steder (ingen API.md-dokumentation endnu) — team-lead har bekræftet, at det kræver {pinkode}
-     i selve kaldet (spillerens egen pinkode som bekræftelse, ikke telefon), men resten af
-     kontrakten (DELETE /me, bearer, svarform) er stadig et bud ud fra eksisterende mønstre
-     (PATCH /me, DELETE /me/subs/:liste) og skal bekræftes/rettes, når den rigtige API.md lander.
-     Må IKKE merges til main, før det er sket. */
+  /* "Slet min profil": kontrakten er nu bekræftet i spil-api/API.md på branchen spil-api-backup —
+     DELETE /me {pinkode} (spillerens egen 4-cifrede pinkode, delt spærring med login), 200 {ok:true},
+     403 bekraeftelse_forkert, 429 pin_spaerret/ip_login_spaerret. Branchen er endnu ikke live/merget
+     til main, så en rigtig produktionstest afventer stadig den udrulning. */
   deleteMe(pinkode){ return apiFetch('/me', { method: 'DELETE', body: { pinkode } }); },
   boost(code){ return apiFetch('/me/boost', { method: 'POST', body: { code } }); },
   challenge(code){ return apiFetch('/me/challenge', { method: 'POST', body: { code } }); },
@@ -2363,9 +2371,19 @@ $('#f-reg').addEventListener('submit', e => {
         // N14: PUT /me/ticks erstatter HELE dagens sæt — sender vi kun regSubs() (denne enheds
         // formular), slettes flueben, der blev sat på en ANDEN enhed tidligere i dag. Send i stedet
         // foreningen af det, der allerede står på kontoen (current, lige hentet ovenfor), og det nye.
-        if(subs.length) chain.push(API.setTicks(Array.from(new Set(todayKeys(current).concat(subs)))).catch(() => {}));
+        const desired = Array.from(new Set(todayKeys(current).concat(subs)));
+        // S5: sms uden en kendt telefon afviser HELE kaldet med telefon_kraeves — og fordi fejlen
+        // sluges (.catch), forsvandt også de ØVRIGE, gyldige flueben stille. Send sms for sig selv
+        // udenom i det tilfælde, så resten stadig bliver gemt; spilleren kan sætte sms-fluebenet
+        // igen i lobbyen, hvor telefonfeltet så vises (se subsBox).
+        const smsBlocked = desired.includes('sms') && !current.phone;
+        const safeKeys = smsBlocked ? desired.filter(k => k !== 'sms') : desired;
+        if(safeKeys.length) chain.push(API.setTicks(safeKeys).catch(() => {}));
         const ref = $('#i-ref').value.trim(); if(ref) chain.push(API.challenge(ref).catch(() => {}));
-        if(chain.length) return Promise.all(chain).then(() => API.me()).then(m2 => { current = meFromServer(m2); syncMyAttempts(); cacheMe(current); });
+        if(chain.length) return Promise.all(chain).then(() => API.me()).then(m2 => {
+          current = meFromServer(m2); syncMyAttempts(); cacheMe(current);
+          if(smsBlocked) toast('Sms kræver et telefonnummer — sæt fluebenet igen under "Dagens flueben" i lobbyen.');
+        });
       }
     })
     .then(() => { $('#f-reg').reset(); sfx('badge'); show('s-lobby'); })
@@ -2571,19 +2589,28 @@ $('#l-firm-i').addEventListener('change', e => {
     .catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme firmaet. Tjek din forbindelse.'));
 });
 $('#b-logout').onclick = () => { forgetMe(); current = null; show('s-start'); };
+// S7: pinkoden skal IKKE vises i klartekst (window.prompt gjorde det, uheldigt på en delt
+// standtablet med folk omkring) — et lille <dialog> med et password-felt i stedet.
 $('#b-delme').onclick = () => {
   if(!current) return;
+  $('#i-delpin').value = ''; $('#delpin-err').textContent = '';
+  $('#d-delpin').showModal();
+  setTimeout(() => $('#i-delpin').focus(), 50);
+};
+$('#b-delpin-cancel').onclick = () => $('#d-delpin').close();
+$('#f-delpin').addEventListener('submit', e => {
+  e.preventDefault();
+  const pinkode = $('#i-delpin').value.trim(); if(!pinkode) return;
   // Bekræftelse er spillerens egen pinkode (ikke telefon) — backenden kræver den i selve kaldet
   // (DELETE /me {pinkode}). Samme to-trins-mønster som admins "Nulstil alle": noget at skrive rigtigt
   // PLUS en almindelig ja/nej-bekræftelse, fordi det her er lige så uigenkaldeligt.
-  const pinkode = (prompt('Bekræft sletning af din profil ved at skrive din pinkode:') || '').trim();
-  if(!pinkode) return;
   if(!confirm('Er du helt sikker? Din profil, dine forsøg og tilmeldinger slettes permanent og kan ikke fortrydes.')) return;
   API.deleteMe(pinkode).then(() => {
+    $('#d-delpin').close();
     toast('Din profil er slettet');
     forgetMe(); current = null; show('s-start');
-  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke slette profilen. Tjek din pinkode og forbindelse, og prøv igen.'));
-};
+  }).catch(e => { $('#delpin-err').textContent = (e && e.status ? e.message : 'Kunne ikke slette profilen. Tjek din pinkode og forbindelse, og prøv igen.'); });
+});
 
 /* ---------- runderne hænger sammen ---------- */
 const widthFor = orders => Math.min(0.76, 0.36 + orders * 0.04);
