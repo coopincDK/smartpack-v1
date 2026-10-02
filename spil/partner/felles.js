@@ -136,6 +136,7 @@
     var fsP = el('fieldset', null, [
       el('legend', { text: 'Gave til konkurrencen' }),
       el('label', { class: 'check' }, [cb, document.createTextNode('Ja tak, vi vil gerne give en gave til konkurrencen')]),
+      el('p', { class: 'muted small' }, [document.createTextNode('Gaven gives på '), el('a', { href: '/spil/partnervilkaar/', text: 'vilkårene for partnere' }), document.createTextNode(', blandt andet om levering, frist og flytning til Ehandelsdagen.')]),
       praemieFelter,
     ]);
     // Lange tekstfelter fylder hele bredden.

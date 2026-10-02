@@ -60,3 +60,6 @@ legend{padding:0 6px;font-weight:700;color:var(--muted);font-size:13px;text-tran
 .praemie img{max-height:40px;max-width:140px;background:#fff;border-radius:6px;padding:4px}
 @media (max-width:640px){.praemie{grid-template-columns:1fr}.praemie .vaerdi{white-space:normal;font-size:20px}}
 .foot{color:var(--faint);font-size:12px;text-align:center}
+.oevrig{border-top:1px solid var(--line);padding-top:10px}
+.oevrig:first-child{border-top:0;padding-top:0}
+.oevrig p{margin:4px 0 0}

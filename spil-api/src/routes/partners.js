@@ -655,6 +655,36 @@ function partnersRouter(pool) {
     return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
   };
 
+  // Øvrige aktive partnere med kontaktoplysninger, så partnerne kan finde
+  // hinanden. Kun til læsning, og først når partnervilkårene er accepteret
+  // (vilkårene siger, at kontaktoplysningerne deles med de øvrige partnere).
+  router.get('/partner/partnere', partner, async (req, res, next) => {
+    try {
+      const s = req.partnerSession;
+      const a = await senesteAccept(s.partner_id);
+      if (!a || a.vilkaar_version !== P.PARTNERVILKAAR_VERSION) {
+        return res.status(403).json({ fejl: 'Accepter partnervilkårene først.', kode: 'vilkaar_ikke_accepteret' });
+      }
+      const { rows } = await pool.query(
+        `SELECT ${KOLONNER} FROM partner WHERE status = 'aktiv' AND id <> $1 ORDER BY lower(navn)`,
+        [s.partner_id]
+      );
+      res.json({
+        partnere: rows.map((p) => ({
+          navn: p.navn,
+          firmanavn: p.firmanavn,
+          hjemmeside: p.hjemmeside,
+          kort_beskrivelse: p.kort_beskrivelse,
+          kontakt_navn: p.kontakt_navn,
+          kontakt_email: p.kontakt_email,
+          kontakt_telefon: p.kontakt_telefon,
+        })),
+      });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   router.get('/partner/leads', partner, async (req, res, next) => {
     try {
       const p = await hentPartner(pool, req.partnerSession.partner_id);

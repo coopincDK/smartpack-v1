@@ -368,6 +368,8 @@ test('partnerportal: leads kun fra egne samtykker, kræver accept af alle 7 erkl
   const hent = () => fetch(h.baseUrl + '/partner/leads.csv', { headers: { cookie: pc } });
   const foer = await hent();
   assert.equal(foer.status, 403, 'kræver accept først');
+  const pl0 = await api(h.baseUrl, 'GET', '/partner/partnere', { adminCookie: pc });
+  assert.equal(pl0.status, 403, 'partnerlisten kræver også accept');
 
   const halv = await api(h.baseUrl, 'POST', '/partner/vilkaar', { adminCookie: pc, body: { erklaeringer: { oplysninger: true } } });
   assert.equal(halv.status, 400);
@@ -377,6 +379,15 @@ test('partnerportal: leads kun fra egne samtykker, kræver accept af alle 7 erkl
   const alle = Object.fromEntries(v.body.erklaeringer.map((e) => [e.key, true]));
   const ok = await api(h.baseUrl, 'POST', '/partner/vilkaar', { adminCookie: pc, body: { erklaeringer: alle } });
   assert.equal(ok.status, 200);
+
+  // Øvrige partnere: kun læsning, uden en selv, med kontaktoplysninger.
+  const pl = await api(h.baseUrl, 'GET', '/partner/partnere', { adminCookie: pc });
+  assert.equal(pl.status, 200);
+  assert.deepEqual(pl.body.partnere.map((x) => x.navn), ['Beta']);
+  assert.ok('kontakt_email' in pl.body.partnere[0] && 'kontakt_telefon' in pl.body.partnere[0] && 'kontakt_navn' in pl.body.partnere[0]);
+  assert.equal(pl.body.partnere[0].cvr, undefined, 'kun kontakt- og firmaoplysninger');
+  const ret = await api(h.baseUrl, 'PUT', '/partner/partnere', { adminCookie: pc, body: { navn: 'X' } });
+  assert.equal(ret.status, 404, 'listen kan ikke rettes');
 
   const csvRes = await hent();
   assert.equal(csvRes.status, 200);

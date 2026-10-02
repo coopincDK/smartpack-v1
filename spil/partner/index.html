@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="partner.css">
+<link rel="stylesheet" href="partner.css?v=2">
 </head>
 <body>
 <div class="wrap smal" id="wrap">
@@ -59,7 +59,7 @@
     </div>
     <div class="card">
       <h3>Vilkår og erklæringer</h3>
-      <p class="muted small">Læs <a href="/spil/partnervilkaar/" target="_blank" rel="noopener">vilkårene for partnere</a>, og sæt flueben ved alle erklæringerne. Udfyld og godkend senest tirsdag 6. oktober kl. 12.</p>
+      <p class="muted small">Læs <a href="/spil/partnervilkaar/">vilkårene for partnere</a>, og sæt flueben ved alle erklæringerne. Udfyld og godkend senest tirsdag 6. oktober kl. 12.</p>
       <div id="e-liste" style="display:flex;flex-direction:column;gap:8px"></div>
       <div id="e-msg"></div>
       <div><button class="btn" id="b-accept">Godkend</button></div>
@@ -70,6 +70,11 @@
       <p id="l-antal" class="small"></p>
       <div><button class="btn ghost" id="b-leads">Hent leads som CSV</button></div>
       <div id="ld-msg"></div>
+    </div>
+    <div class="card">
+      <h3>Øvrige partnere</h3>
+      <p class="muted small">De andre partnere i Packrush og deres kontaktperson, så I kan finde hinanden. Kun til at læse. Listen vises, når I har godkendt vilkårene.</p>
+      <div id="o-liste" style="display:flex;flex-direction:column;gap:10px"></div>
     </div>
   </div>
 
@@ -86,6 +91,7 @@
     <label class="f" for="a-web">Hjemmeside<input type="text" id="a-web" placeholder="https://"></label>
     <label class="f" for="a-kort">Hvad kan I hjælpe webshops med?<textarea id="a-kort" maxlength="400"></textarea></label>
     <label class="f" for="a-besked">Besked til SmartPack<small>Fx om I vil give en gave til konkurrencen.</small><textarea id="a-besked"></textarea></label>
+    <p class="muted small">Som partner gælder <a href="/spil/partnervilkaar/">vilkårene for partnere</a>. I godkender dem, når I har fået jeres login.</p>
     <div id="a-msg"></div>
     <div class="row"><button class="btn" type="submit">Send ansøgning</button><a href="#" id="til-login" class="small">Tilbage til login</a></div>
   </form>
@@ -93,7 +99,8 @@
   <p class="foot">Packrush · SmartPack · <a href="/spil/partnervilkaar/">Vilkår for partnere</a></p>
 </div>
 
-<script src="felles.js"></script>
+<script src="felles.js?v=2"></script>
+<script src="../vilkaar-overlay.js?v=1"></script>
 <script>
 (function () {
   'use strict';
@@ -148,6 +155,30 @@
       st.prepend(el('p', { class: 'live-tael ' + (n ? 'mangler' : 'small'), text: n ? n + ' ting mangler, før I er klar (frist tirsdag 6. oktober kl. 12)' + (v.accepteret ? '' : '. Husk at godkende vilkårene nederst.') : 'I er klar. SmartPack slår jer til i spillet.' }));
       SP.besked($('e-msg'), v.accepteret ? 'Godkendt af ' + v.accepteret.bruger_email + ' ' + new Date(v.accepteret.tidspunkt).toLocaleString('da-DK') + '.' : '', 'ok');
       $('b-leads').disabled = !v.accepteret;
+      tegnOevrige(!!v.accepteret);
+    }).catch(function () {});
+  }
+
+  function tegnOevrige(accepteret) {
+    var box = $('o-liste'); box.replaceChildren();
+    if (!accepteret) return;
+    api('/partner/partnere').then(function (r) {
+      if (!r.partnere.length) return box.append(el('p', { class: 'muted small', text: 'Ingen andre partnere endnu.' }));
+      r.partnere.forEach(function (p) {
+        var linjer = [el('strong', { text: p.navn })];
+        if (p.firmanavn && p.firmanavn !== p.navn) linjer.push(el('span', { class: 'muted small', text: ' · ' + p.firmanavn }));
+        var kort = el('div', { class: 'oevrig' }, [el('div', null, linjer)]);
+        if (p.kort_beskrivelse) kort.append(el('p', { class: 'small muted', text: p.kort_beskrivelse }));
+        var kontakt = [];
+        if (p.kontakt_navn) kontakt.push(document.createTextNode(p.kontakt_navn));
+        if (p.kontakt_email) kontakt.push(el('a', { href: 'mailto:' + p.kontakt_email, text: p.kontakt_email }));
+        if (p.kontakt_telefon) kontakt.push(el('a', { href: 'tel:' + p.kontakt_telefon.replace(/[^0-9+]/g, ''), text: p.kontakt_telefon }));
+        if (p.hjemmeside) kontakt.push(el('a', { href: p.hjemmeside, target: '_blank', rel: 'noopener', text: p.hjemmeside.replace(/^https?:\/\//, '').replace(/\/$/, '') }));
+        var k = el('p', { class: 'small' });
+        kontakt.forEach(function (x, i) { if (i) k.append(document.createTextNode(' · ')); k.append(x); });
+        if (kontakt.length) kort.append(k);
+        box.append(kort);
+      });
     }).catch(function () {});
   }
 
