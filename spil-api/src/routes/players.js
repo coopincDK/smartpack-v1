@@ -11,6 +11,7 @@ const { issueToken } = require('../spillerToken');
 const { clientIp } = require('../middleware/clientIp');
 const { createRateLimiter } = require('../middleware/rateLimit');
 const { invalidateStateCache } = require('../publicState');
+const { resolveSessionRole } = require('../middleware/adminAuth');
 
 const MAKS_NAVN = 22;
 const MAKS_FIRMA = 40;
@@ -84,12 +85,32 @@ function emailNoegleFra(req) {
 // separat/dupliceret eksemplar pr. router ville stille en angriber flere
 // selvstændige lofter i stedet for ét fælles pr. lag.
 //
-// Returnerer et objekt med samme `.check(req)`/`.consume(req)`-grænseflade
-// som en almindelig createRateLimiter()-middleware (se src/middleware/
-// rateLimit.js) — men sammensat af DE TO lag beskrevet ved PIN_IP_VINDUE_MS
-// ovenfor. `check` blokerer hvis ENTEN laget rammes; `consume` forbruger ET
-// slot i BEGGE lag for hvert forsøg (et forsøg der rammer det snævre lag,
-// er jo pr. definition også ét forsøg mod IP'en som helhed).
+// S1 (opfølgende sikkerhedsgennemgang, 2. runde): det høje IP-ALENE-lag
+// (PIN_IP_ALENE_MAKS_FORKERTE) gælder i dag for ALLE forbindelser på samme
+// IP — også en standtablet med en i forvejen gyldig stand-/admin-session.
+// Det betyder en angriber bevidst kan udtømme det delte IP-loft fra en
+// ANDEN enhed på samme messe-wifi og dermed lukke standens eget, legitime
+// login, selvom standens forbindelse aldrig selv har lavet et forkert
+// forsøg. Kaldere der allerede ved at DENNE forbindelse bærer en gyldig
+// stand-/admin-session (samme resolveSessionRole()-tjek som ellers bruges
+// til at afgøre fulde-navne-privilegie, se src/middleware/adminAuth.js) kan
+// derfor sende `{ standPrivilegeret: true }` som andet argument til BÅDE
+// check() og consume() — det springer UDELUKKENDE IP-ALENE-laget over for
+// dét kald. Det snævre pr.-(IP, email)-lag (prEmailLimiter) er UPÅVIRKET af
+// flaget: det beskytter én enkelt konto mod gentagne gæt, ikke standen som
+// helhed, og skal blive ved med at ramme uanset session.
+//
+// Rollen slås op ASYNKRONT (DB-opslag) af kalderen (POST /players, DELETE
+// /me) FØR check()/consume() kaldes — selve limiteren her forbliver
+// synkron/ren, så den stadig kan testes direkte uden pool/DB (se
+// test/players.test.js' S1-tests).
+//
+// Returnerer et objekt med samme `.check(req, opts)`/`.consume(req, opts)`-
+// grænseflade som en almindelig createRateLimiter()-middleware (se
+// src/middleware/rateLimit.js) — men sammensat af DE TO lag beskrevet ved
+// PIN_IP_VINDUE_MS ovenfor. `check` blokerer hvis ENTEN laget rammes (og
+// `standPrivilegeret` ikke er sat); `consume` forbruger ET slot i prEmail-
+// laget ALTID, og i ip-alene-laget KUN når `standPrivilegeret` ikke er sat.
 function createIpLoginLimiter() {
   const prEmailLimiter = createRateLimiter({
     windowMs: PIN_IP_VINDUE_MS,
@@ -104,16 +125,18 @@ function createIpLoginLimiter() {
     besked: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
   });
 
-  function check(req) {
+  function check(req, opts) {
+    const standPrivilegeret = !!(opts && opts.standPrivilegeret);
     const emailRetry = prEmailLimiter.check(req);
-    const aleneRetry = ipAleneLimiter.check(req);
+    const aleneRetry = standPrivilegeret ? null : ipAleneLimiter.check(req);
     if (emailRetry === null && aleneRetry === null) return null;
     return Math.max(emailRetry || 0, aleneRetry || 0);
   }
 
-  function consume(req) {
+  function consume(req, opts) {
+    const standPrivilegeret = !!(opts && opts.standPrivilegeret);
     prEmailLimiter.consume(req);
-    ipAleneLimiter.consume(req);
+    if (!standPrivilegeret) ipAleneLimiter.consume(req);
   }
 
   return { check, consume };
@@ -208,11 +231,22 @@ function playersRouter(pool, ws, opts) {
         const p = existing.rows[0];
         const nu = new Date();
 
+        // S1: slår DENNE forbindelses session-rolle op FØR IP-tjekket — en
+        // gyldig stand-/admin-session (samme tjek som maskedName/
+        // resolveSessionRole bruges til andre steder, se
+        // src/middleware/adminAuth.js) skal IKKE kunne blokeres af at en
+        // angriber har udtømt det delte IP-ALENE-loft fra en anden enhed på
+        // samme IP. Det snævre pr.-(IP, email)-lag er UPÅVIRKET (se
+        // createIpLoginLimiter() ovenfor) — det beskytter stadig DENNE ene
+        // konto, uanset standPrivilegeret.
+        const rolle = await resolveSessionRole(pool, req);
+        const standPrivilegeret = rolle === 'stand' || rolle === 'admin';
+
         // M3: IP-grænsen tjekkes FØRST (før vi overhovedet ser på DENNE
         // spillers pinkode/spærring) — en IP der allerede har brugt sine 10
         // forsøg op afvises ens, uanset hvilken spillers email den herefter
         // prøver.
-        const ipRetryAfterSec = ipLoginLimiter.check(req);
+        const ipRetryAfterSec = ipLoginLimiter.check(req, { standPrivilegeret });
         if (ipRetryAfterSec !== null) {
           await client.query('ROLLBACK');
           res.set('Retry-After', String(ipRetryAfterSec));
@@ -227,7 +261,7 @@ function playersRouter(pool, ws, opts) {
           // Tæller også med i IP-grænsen — ellers kunne en angriber "gemme"
           // ubegrænsede forsøg bag en allerede-spærret konto uden selv at
           // bruge af sit IP-loft.
-          ipLoginLimiter.consume(req);
+          ipLoginLimiter.consume(req, { standPrivilegeret });
           return res.status(429).json({
             fejl: 'For mange forkerte pinkoder. Prøv igen om et kvarter, eller kom forbi standen.',
             kode: 'pin_spaerret',
@@ -247,7 +281,7 @@ function playersRouter(pool, ws, opts) {
           await client.query('COMMIT');
           // M3: ét mislykket forsøg — tæller mod IP-grænsen uanset hvilken af
           // de to fejlkoder nedenfor der svares (begge er "forkert login").
-          ipLoginLimiter.consume(req);
+          ipLoginLimiter.consume(req, { standPrivilegeret });
           if (!p.pin_hash) {
             return res.status(400).json({
               fejl: 'Din profil er oprettet før pinkoderne. Kom forbi standen, så nulstiller vi den.',

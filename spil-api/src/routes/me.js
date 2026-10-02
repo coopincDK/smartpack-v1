@@ -622,9 +622,15 @@ function meRouter(pool, ws, opts) {
       await client.query('BEGIN');
       const nu = new Date();
 
+      // S1: samme stand-/admin-session-undtagelse for IP-ALENE-loftet som
+      // login i src/routes/players.js — se begrundelsen ved
+      // createIpLoginLimiter(). Det snævre pr.-(IP, email)-lag er upåvirket.
+      const rolle = await resolveSessionRole(pool, req);
+      const standPrivilegeret = rolle === 'stand' || rolle === 'admin';
+
       // M3: IP-grænsen tjekkes FØRST, nøjagtig samme rækkefølge/begrundelse
       // som login i src/routes/players.js.
-      const ipRetryAfterSec = ipLoginLimiter.check(req);
+      const ipRetryAfterSec = ipLoginLimiter.check(req, { standPrivilegeret });
       if (ipRetryAfterSec !== null) {
         await client.query('ROLLBACK');
         res.set('Retry-After', String(ipRetryAfterSec));
@@ -643,7 +649,7 @@ function meRouter(pool, ws, opts) {
 
       if (pinLaast(row, nu)) {
         await client.query('ROLLBACK');
-        ipLoginLimiter.consume(req);
+        ipLoginLimiter.consume(req, { standPrivilegeret });
         return res.status(429).json({
           fejl: 'For mange forkerte pinkoder. Prøv igen om et kvarter, eller kom forbi standen.',
           kode: 'pin_spaerret',
@@ -655,7 +661,7 @@ function meRouter(pool, ws, opts) {
       if (!godkendt) {
         await registrerPinFejl(client, row, nu);
         await client.query('COMMIT');
-        ipLoginLimiter.consume(req);
+        ipLoginLimiter.consume(req, { standPrivilegeret });
         return res.status(403).json({
           fejl: 'Pinkoden matcher ikke — intet er slettet.',
           kode: 'bekraeftelse_forkert',

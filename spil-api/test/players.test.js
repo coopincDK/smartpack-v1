@@ -785,3 +785,79 @@ test('S1: et stort antal (over det hoeje IP-loft) forkerte forsoeg mod MANGE for
   const andenIpReq = { headers: { 'x-client-ip': '203.0.113.201' }, body: { email: 'mange-emails-0@example.dk' } };
   assert.equal(limiter.check(andenIpReq), null);
 });
+
+// S1 (opfølgende sikkerhedsgennemgang, 2. runde): en forbindelse med en
+// gyldig stand-/admin-session skal IKKE kunne blokeres af at en angriber
+// har udtømt det delte IP-ALENE-loft fra "virtuelle" forbindelser (mange
+// forskellige emails) på samme simulerede IP — ellers kunne en angriber
+// bevidst lukke standens login ved at tømme det fælles budget fra en anden
+// enhed på samme messe-wifi. Det snævre pr.-(IP, email)-lag skal stadig
+// ramme en forbindelse UDEN session, uændret.
+//
+// Rollen slås op ASYNKRONT (DB) af kalderen i den rigtige route — her
+// simuleres det blot ved at sende { standPrivilegeret: true } direkte til
+// check()/consume(), samme grænseflade som src/routes/players.js og
+// src/routes/me.js rent faktisk bruger efter at have kaldt
+// resolveSessionRole() (se src/middleware/adminAuth.js).
+test('S1: en forbindelse med gyldig stand-/admin-session rammer ikke IP-ALENE-loftet, selv naar det er udtoemt af andre', async (t) => {
+  const { createIpLoginLimiter } = require('../src/routes/players');
+  const limiter = createIpLoginLimiter();
+  const IP = '203.0.113.210';
+
+  function reqFor(i) {
+    return { headers: { 'x-client-ip': IP }, body: { email: `stand-undtagelse-${i}@example.dk` } };
+  }
+
+  // Tøm det høje IP-ALENE-loft (300, se PIN_IP_ALENE_MAKS_FORKERTE i
+  // src/routes/players.js) med 300 "virtuelle" forbindelser (forskellige
+  // emails, ingen session) fra samme simulerede IP.
+  const IP_ALENE_LOFT = 300;
+  for (let i = 0; i < IP_ALENE_LOFT; i++) {
+    const req = reqFor(i);
+    limiter.consume(req);
+  }
+
+  // Kontrol: en HELT ALMINDELIG forbindelse (ingen session) på samme IP
+  // rammer nu loftet, som hidtil.
+  const udenSession = reqFor(IP_ALENE_LOFT);
+  assert.notEqual(
+    limiter.check(udenSession),
+    null,
+    'en forbindelse uden session skal stadig rammes af det udtoemte IP-ALENE-loft'
+  );
+
+  // En forbindelse MED gyldig stand-/admin-session, fra SAMME IP, lige EFTER
+  // loftet er tømt — skal IKKE blokeres af IP-ALENE-laget.
+  const medStandSession = { headers: { 'x-client-ip': IP }, body: { email: 'standens-tablet@example.dk' } };
+  assert.equal(
+    limiter.check(medStandSession, { standPrivilegeret: true }),
+    null,
+    'en forbindelse med gyldig stand-/admin-session skal springe IP-ALENE-loftet over'
+  );
+  // consume() skal ligeledes ikke forbruge af IP-ALENE-laget for denne —
+  // gentagne forsøg fra standens forbindelse må aldrig selv bidrage til at
+  // lukke standen ude.
+  limiter.consume(medStandSession, { standPrivilegeret: true });
+  limiter.consume(medStandSession, { standPrivilegeret: true });
+  assert.equal(
+    limiter.check(medStandSession, { standPrivilegeret: true }),
+    null,
+    'gentagne forsøg fra stand-sessionen selv skal heller ikke ramme IP-ALENE-loftet'
+  );
+
+  // Det SNÆVRE pr.-(IP, email)-lag er UPÅVIRKET af standPrivilegeret: samme
+  // (IP, email)-par ramt PIN_IP_MAKS_FORKERTE (10) gange rammer stadig,
+  // uanset session.
+  const snaevertIP = '203.0.113.211';
+  function snaevertReq() {
+    return { headers: { 'x-client-ip': snaevertIP }, body: { email: 'samme-konto@example.dk' } };
+  }
+  for (let i = 0; i < 10; i++) {
+    limiter.consume(snaevertReq(), { standPrivilegeret: true });
+  }
+  assert.notEqual(
+    limiter.check(snaevertReq(), { standPrivilegeret: true }),
+    null,
+    'det snævre pr.-(IP, email)-lag skal ramme uanset standPrivilegeret — det beskytter én konto, ikke hele standen'
+  );
+});

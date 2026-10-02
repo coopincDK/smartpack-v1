@@ -70,14 +70,21 @@ fi
 # S4 (merge-review): en fejlet/afbrudt pg_dump kan stadig producere en lille,
 # GYLDIG gzip-fil (fx en tom stream komprimeret til ~20 byte) — den består
 # [ -s ... ]-tjekket ovenfor uden at indeholde en brugbar dump. En succesfuld
-# pg_dump afslutter ALTID med en fast standardlinje,
-# "-- PostgreSQL database dump complete", som sidste linje i output — vi
-# tjekker derfor EKSPLICIT at den linje rent faktisk er til stede, og
-# fejler (samme måde som enhver anden fejl her: ikke-nul exit, tydelig
-# FEJL-logget af on_exit-trappen) hvis den ikke er.
-if ! zcat "$tmpfile" | tail -1 | grep -q "PostgreSQL database dump complete"; then
+# pg_dump afslutter med en fast standardlinje, "-- PostgreSQL database dump
+# complete", men IKKE nødvendigvis som allersidste linje — en pg_dump
+# 16.11-dump har typisk "--", en tom linje, "\unrestrict <nøgle>" og endnu
+# en tom linje EFTER completion-markøren. Vi tjekker derfor de sidste ~20
+# linjer i stedet for kun den absolut sidste.
+#
+# OBS (SIGPIPE under pipefail): "grep -q" afslutter så snart den finder et
+# match og sender dermed SIGPIPE opstrøms — det kan give pipelinen en falsk
+# fejlkode under "set -o pipefail" ovenfor, selvom grep rent faktisk fandt
+# matchet. Vi undgår det ved IKKE at røre direkte til "grep -q": output
+# fanges først i en variabel, og variablens indhold tjekkes bagefter.
+last_lines="$(zcat "$tmpfile" | tail -n 20)"
+if ! printf '%s\n' "$last_lines" | grep -q -- '-- PostgreSQL database dump complete'; then
   rm -f "$tmpfile"
-  echo "Dumpen er ufuldstændig/korrupt (mangler 'PostgreSQL database dump complete')." >&2
+  echo "Dumpen er ufuldstændig/korrupt (mangler 'PostgreSQL database dump complete' i de sidste 20 linjer)." >&2
   exit 1
 fi
 
