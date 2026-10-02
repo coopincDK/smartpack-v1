@@ -1307,3 +1307,9 @@ Beslutninger: projektdokumentet `packrush-beslutninger-vilkaar.md`. Vilkår:
   hele grundlaget i `konkurrence_traekning`. `GET /admin/konkurrence/traekninger`.
 - Firmaer matches med `matchNoegle()` (som firmKey, men "A/S"/"I/S" fjernes
   først).
+
+### Admin-kode (013_admin_kode.sql)
+- `POST /admin/skift-kode {gammel, ny}` (admin-session): ny kode mindst 12
+  tegn. Gemmes som hash i `admin_kode` og har forrang for
+  `ADMIN_PASSWORD_HASH`. Alle andre admin-sessioner logges ud.
+- Glemt kode: slet rækken i `admin_kode` på serveren, så gælder .env-koden igen.

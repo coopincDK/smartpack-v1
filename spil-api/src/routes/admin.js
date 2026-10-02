@@ -81,14 +81,62 @@ function adminRouter(pool, ws, opts) {
     besked: 'For mange loginforsøg. Prøv igen om lidt.',
   });
 
+  // Den gældende admin-kode: den admin selv har valgt (admin_kode), ellers
+  // ADMIN_PASSWORD_HASH fra .env. Se 013_admin_kode.sql.
+  async function aktuelAdminHash() {
+    const { rows } = await pool.query('SELECT password_hash FROM admin_kode WHERE id = 1');
+    return (rows[0] && rows[0].password_hash) || config.adminPasswordHash || '';
+  }
+
+  const skiftKodeLimiter = createRateLimiter({
+    windowMs: 60 * 1000,
+    max: 5,
+    besked: 'For mange forsøg. Prøv igen om lidt.',
+  });
+
   router.post('/admin/login', loginLimiter, async (req, res, next) => {
     try {
       const password = String((req.body && req.body.password) || '');
-      if (!config.adminPasswordHash || !verifyPassword(password, config.adminPasswordHash)) {
+      const hash = await aktuelAdminHash();
+      if (!hash || !verifyPassword(password, hash)) {
         return res.status(401).json({ fejl: 'Forkert adgangskode.', kode: 'forkert_adgangskode' });
       }
       const token = await createSession(pool, config.adminSessionTtlMs);
       setSessionCookie(res, token, config.cookieSecure, config.adminSessionTtlMs);
+      res.json({ ok: true });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // Skift admin-koden. Kræver den nuværende kode. Alle andre admin-sessioner
+  // logges ud, så en gammel kode ikke kan bruges videre et andet sted.
+  router.post('/admin/skift-kode', skiftKodeLimiter, admin, async (req, res, next) => {
+    try {
+      const gammel = String((req.body && req.body.gammel) || '');
+      const ny = String((req.body && req.body.ny) || '');
+      const hash = await aktuelAdminHash();
+      if (!hash || !verifyPassword(gammel, hash)) {
+        return res.status(401).json({ fejl: 'Den nuværende kode er forkert.', kode: 'forkert_adgangskode' });
+      }
+      if (ny.length < 12) {
+        return res.status(400).json({ fejl: 'Den nye kode skal være mindst 12 tegn.', kode: 'for_kort' });
+      }
+      if (ny === gammel) {
+        return res.status(400).json({ fejl: 'Den nye kode skal være forskellig fra den gamle.', kode: 'samme_kode' });
+      }
+      await pool.query(
+        `INSERT INTO admin_kode (id, password_hash, opdateret) VALUES (1, $1, now())
+         ON CONFLICT (id) DO UPDATE SET password_hash = EXCLUDED.password_hash, opdateret = now()`,
+        [hashPassword(ny)]
+      );
+      await pool.query("DELETE FROM admin_session WHERE id <> $1 AND rolle = 'admin'", [
+        req.adminSession.id,
+      ]);
+      await pool.query(
+        `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer) VALUES ($1, 'admin_kode_skiftet', '{}'::jsonb)`,
+        [req.adminSession.id]
+      );
       res.json({ ok: true });
     } catch (e) {
       next(e);
