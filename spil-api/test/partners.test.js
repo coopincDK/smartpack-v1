@@ -392,3 +392,15 @@ test('partnerportal: leads kun fra egne samtykker, kræver accept af alle 7 erkl
   assert.equal(log.body.downloads[0].bruger_email, 'kim@alfa.dk');
   assert.equal(log.body.accept.length, 1);
 });
+
+test('advarsel når en aktiv partner har alt udfyldt men ingen power-up (kun admin kan vælge power-up)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const ac = await adminCookie(h);
+  const r = await api(h.baseUrl, 'POST', '/admin/partnere', { adminCookie: ac, body: { navn: 'Gamma', ...FULD_PROFIL } });
+  assert.equal(r.body.partner.advarsel_powerup, true);
+  const m = await api(h.baseUrl, 'PUT', '/admin/partnere/' + r.body.partner.id, { adminCookie: ac, body: { powerup: 'promo' } });
+  assert.equal(m.body.partner.advarsel_powerup, false);
+  const uden = await api(h.baseUrl, 'POST', '/admin/partnere', { adminCookie: ac, body: { navn: 'Delta' } });
+  assert.equal(uden.body.partner.advarsel_powerup, false, 'ingen advarsel før profilen er udfyldt');
+});
