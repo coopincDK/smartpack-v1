@@ -7,6 +7,20 @@ name: Deploy spil-api
 # Udrulningen bruger spil-api/deploy.sh (samme script som ved manuel udrulning):
 # rsync --delete af spil-api/ til /var/www/spil-api/ (uden .env), og derefter
 # `docker compose up -d --build`. Migrationerne køres automatisk ved opstart.
+#
+# H2: FØR selve rsync/deploy.sh/migrationerne tager vi en frisk pg_dump via
+# serverens EGET spil-api/scripts/backup.sh (kørt på serveren selv, over SSH —
+# samme script som den natlige backup-cronjob bruger, se scripts/backup.sh og
+# README.md). Fejler dette trin (ikke-nul exit-kode — pg_dump fejlede, disk
+# fuld, tom dump osv.), stopper hele workflowet HER: GitHub Actions kører
+# ikke efterfølgende steps i jobbet efter en fejlet step, så hverken
+# "Deploy via deploy.sh" (rsync + docker compose up, som kører migrationerne)
+# eller noget derefter når at eksekvere. BEMÆRK (bootstrap-forbehold): dette
+# forudsætter at /var/www/spil-api/scripts/backup.sh allerede findes på
+# serveren fra en TIDLIGERE udrulning — ved selve FØRSTE deploy efter at
+# denne gren er merget til main, skal scriptet lægges på serveren manuelt
+# (eller via én forudgående udrulning) FØR denne workflow-ændring er aktiv,
+# ellers fejler (og stopper, med vilje) netop dette trin.
 
 on:
   push:
@@ -108,6 +122,16 @@ jobs:
             echo "$DELETIONS"
             exit 1
           fi
+
+      # H2: sikkerhedskopi FØR udrulning. Kører det eksisterende
+      # spil-api/scripts/backup.sh PÅ SERVEREN (samme script/mekanisme som den
+      # natlige backup-cronjob, se scripts/backup.sh) via SSH — IKKE en ny,
+      # separat backup-mekanisme. Et ikke-nul exit her stopper jobbet, FØR
+      # "Deploy via deploy.sh" (rsync + docker compose up, som kører
+      # migrationerne) når at køre — se bootstrap-forbeholdet i filens toptekst.
+      - name: Sikkerhedskopi af databasen FØR udrulning
+        run: |
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd /var/www/spil-api && ./scripts/backup.sh'
 
       - name: Deploy via deploy.sh
         run: ./spil-api/deploy.sh "$DEPLOY_USER@$DEPLOY_HOST"

@@ -232,6 +232,17 @@ klokkeslæt.)
 /var/www/spil-api/scripts/backup.sh >> /var/log/spil-backup.log 2>&1
 ```
 
+**H2 (sikkerhedsgennemgang):** `.github/workflows/deploy-spil-api.yml` kører
+nu DETTE script på serveren (over SSH) FØR selve `rsync`/`deploy.sh`/
+migrationerne ved hver auto-udrulning til `main`. Fejler scriptet (ikke-nul
+exit), stopper hele workflowet DER — ingen udrulning eller migration sker
+uden en frisk, bekræftet backup lige inden. **Bootstrap-forbehold:** dette
+forudsætter at `/var/www/spil-api/scripts/backup.sh` allerede findes på
+serveren FRA EN TIDLIGERE udrulning — ved selve den første rigtige
+udrulning efter at denne ændring er merget til `main`, skal scriptet først
+lægges på serveren (manuelt, eller via én forudgående udrulning), ellers
+fejler (med vilje) netop dette trin.
+
 **Gendannelse (manuel, til en TOM database):**
 ```bash
 gunzip -c /var/backups/spil-api/spilapi-<tidsstempel>.sql.gz | \

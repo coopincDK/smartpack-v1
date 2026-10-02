@@ -21,12 +21,23 @@ const { firmKey } = require('../rules/firmKey');
 const { currentBag, persistBag, livView, playerToP } = require('../lifeBag');
 const { computeTickets } = require('../gameQueries');
 const { clientIp } = require('../middleware/clientIp');
+const { createRateLimiter } = require('../middleware/rateLimit');
 const { invalidateStateCache } = require('../publicState');
 const { resolveSessionRole } = require('../middleware/adminAuth');
 const { maskedName } = require('../rules/nameDisplay');
-const { MAKS_FIRMA } = require('./players');
+const { verifyPassword } = require('../crypto');
+const { deletePlayerFully } = require('../playerDeletion');
+const { MAKS_FIRMA, normalizePhone, last8, PIN_RE } = require('./players');
 
 const MAKS_KODE = 5;
+// M4 (DELETE /me): beskytter den ekstra bekræftelse (pin ELLER telefon) mod
+// brute force via et evt. stjålet/lækket bearer-token — et bearer-token
+// alene må ALDRIG være nok til at slette kontoen. Nøgles PR. SPILLER (ikke
+// pr. IP — tokenet identificerer allerede spilleren), samme tal som den
+// eksisterende pin-login-spærring (5 forsøg/15 min., se
+// src/routes/players.js#PIN_MAKS_FEJL).
+const SLET_BEKRAEFT_VINDUE_MS = 15 * 60 * 1000;
+const SLET_BEKRAEFT_MAKS_FORSOEG = 5;
 
 async function getCfg(pool) {
   return loadOffentligCfg(pool);
@@ -108,6 +119,12 @@ function maskNotifikation(data, navnMap, privileged) {
 function meRouter(pool, ws) {
   const router = express.Router();
   const auth = requirePlayer(pool);
+  const sletBekraeftLimiter = createRateLimiter({
+    windowMs: SLET_BEKRAEFT_VINDUE_MS,
+    max: SLET_BEKRAEFT_MAKS_FORSOEG,
+    keyFn: (req) => 'slet:' + req.player.id,
+    besked: 'For mange forkerte bekræftelser. Prøv igen om et kvarter, eller kom forbi standen.',
+  });
 
   router.get('/me', auth, async (req, res, next) => {
     const client = await pool.connect();
@@ -482,6 +499,83 @@ function meRouter(pool, ws) {
       next(e);
     } finally {
       client.release();
+    }
+  });
+
+  // M4: selvbetjent sletning. Vilkårene lover "sletter du din profil, sletter
+  // vi dine oplysninger" — kræver bearer-tokenet (auth) OG en EKSTRA
+  // bekræftelse (pinkoden ELLER telefonens sidste 8 cifre, samme regel som
+  // login i src/routes/players.js) i selve requesten, så et alene
+  // stjålet/lækket token ikke kan slette kontoen. Genbruger den FÆLLES
+  // src/playerDeletion.js#deletePlayerFully — SAMME sletning som admin-slet,
+  // admin-nulstil og det natlige retention-job, se API.md, "Sletning og
+  // anonymisering". Loggen i admin_audit_log indeholder ALDRIG persondata
+  // (ikke email/navn/telefon) — kun spillerens public_id (samme neutrale
+  // reference som ellers eksponeres til klienten, fx GET /me's `pid`) og en
+  // fast begrundelse.
+  router.delete('/me', auth, async (req, res, next) => {
+    try {
+      const retryAfterSec = sletBekraeftLimiter.check(req);
+      if (retryAfterSec !== null) {
+        res.set('Retry-After', String(retryAfterSec));
+        return res.status(429).json({
+          fejl: 'For mange forkerte bekræftelser. Prøv igen om et kvarter, eller kom forbi standen.',
+          kode: 'for_mange_forsoeg',
+        });
+      }
+
+      const body = req.body || {};
+      const pin = String(body.pin || '').trim();
+      const telefon = normalizePhone(String(body.telefon || '').trim());
+      const row = req.player;
+
+      // Begge metoder tjekkes UAFHÆNGIGT af hinanden (ikke en if/else-kæde) —
+      // sender klienten begge felter, er det nok at ÉN af dem matcher.
+      let bekraeftet = false;
+      if (PIN_RE.test(pin) && row.pin_hash && verifyPassword(pin, row.pin_hash)) {
+        bekraeftet = true;
+      }
+      if (!bekraeftet && telefon.length >= 8 && row.telefon && last8(normalizePhone(row.telefon)) === last8(telefon)) {
+        bekraeftet = true;
+      }
+
+      if (!bekraeftet) {
+        sletBekraeftLimiter.consume(req);
+        return res.status(403).json({
+          fejl: 'Pinkoden eller telefonnummeret matcher ikke — intet er slettet.',
+          kode: 'bekraeftelse_forkert',
+        });
+      }
+
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+        const { rows } = await client.query(
+          'SELECT id, navn, public_id FROM spiller WHERE id = $1 FOR UPDATE',
+          [row.id]
+        );
+        if (!rows.length) {
+          await client.query('ROLLBACK');
+          return res.status(404).json({ fejl: 'Ukendt spiller.', kode: 'ukendt_spiller' });
+        }
+        await deletePlayerFully(client, rows[0].id, rows[0].navn);
+        await client.query(
+          `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer)
+           VALUES (NULL, 'selvbetjent_sletning', $1)`,
+          [JSON.stringify({ spiller_pid: rows[0].public_id, begrundelse: 'selvbetjent sletning' })]
+        );
+        await client.query('COMMIT');
+        invalidateStateCache();
+        if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
+        res.json({ ok: true });
+      } catch (e) {
+        await client.query('ROLLBACK');
+        next(e);
+      } finally {
+        client.release();
+      }
+    } catch (e) {
+      next(e);
     }
   });
 

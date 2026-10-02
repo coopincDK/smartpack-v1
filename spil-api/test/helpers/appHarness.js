@@ -43,10 +43,16 @@ async function startHarness(opts = {}) {
   };
 }
 
-async function api(baseUrl, method, path, { token, body, adminCookie } = {}) {
+// `headers` (valgfri): ekstra/overskrivende headers — bruges af fx M3-testene
+// til at sætte en fast `X-Client-IP` pr. testklient (serveren stoler
+// UDELUKKENDE på den headeren, se src/middleware/clientIp.js — alle kald fra
+// testsuiten deler ellers samme loopback-socket og ville ellers tælle som
+// samme klient-IP).
+async function api(baseUrl, method, path, { token, body, adminCookie, headers: extraHeaders } = {}) {
   const headers = { 'content-type': 'application/json' };
   if (token) headers['authorization'] = 'Bearer ' + token;
   if (adminCookie) headers['cookie'] = adminCookie;
+  if (extraHeaders) Object.assign(headers, extraHeaders);
   const res = await fetch(baseUrl + path, {
     method,
     headers,

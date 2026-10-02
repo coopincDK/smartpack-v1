@@ -9,6 +9,7 @@ const { SAMTYKKE_VERSION } = require('../partners');
 const { randomPublicId, randomCode, hashPassword, verifyPassword } = require('../crypto');
 const { issueToken } = require('../spillerToken');
 const { clientIp } = require('../middleware/clientIp');
+const { createRateLimiter } = require('../middleware/rateLimit');
 const { invalidateStateCache } = require('../publicState');
 
 const MAKS_NAVN = 22;
@@ -17,8 +18,26 @@ const MAKS_KODE = 5;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PIN_RE = /^[0-9]{4}$/;
 // Spærring efter for mange forkerte pinkoder (pr. spiller, se 010_pinkode.sql).
+// BEVIDST KORT (15 min.) og ESKALERER ALDRIG: pin_fejl nulstilles til 0 i
+// SAMME skrivning som udløser spærringen (se nedenfor), så en ny spærring
+// igen kræver PIN_MAKS_FEJL friske forkerte forsøg EFTER at den forrige er
+// udløbet — spærringen kan altså ikke bruges som et effektivt, langvarigt
+// udelåsningsværktøj mod en enkelt spiller (sikkerhedsgennemgang, M3).
 const PIN_MAKS_FEJL = 5;
 const PIN_SPAERRING_MS = 15 * 60 * 1000;
+// M3 (sikkerhedsgennemgang): den pr.-spiller-spærring ovenfor beskytter IKKE
+// mod (a) at en angriber, der kender mange emails, gætter 5 koder/kvarter på
+// HVER af dem (statistisk ramte nogle, ~4,8%/konto/døgn ved 4-cifret pin),
+// eller (b) at nogen bevidst låser en navngiven kollega ude ved at afprøve
+// forkerte koder for DEN ene email igen og igen. Denne grænse er derfor
+// IP-bred og PÅ TVÆRS AF SPILLERE (nøgles på klient-IP, se
+// src/middleware/clientIp.js — ALDRIG klientens egen IP-header) — i TILLÆG
+// til, ikke i stedet for, spærringen ovenfor. Den tæller KUN mislykkede
+// login-/pin-forsøg (hverken ny registrering eller et vellykket login
+// forbruger et slot), så to kolleger der deler standens wifi ikke rammer
+// hinandens forsøg på at logge ind rigtigt.
+const PIN_IP_VINDUE_MS = 10 * 60 * 1000;
+const PIN_IP_MAKS_FORKERTE = 10;
 
 function normalizePhone(raw) {
   return String(raw || '').replace(/[^0-9]/g, '');
@@ -43,6 +62,16 @@ async function generateUniqueVennekode(client) {
 
 function playersRouter(pool, ws) {
   const router = express.Router();
+
+  // M3: se begrundelsen ved PIN_IP_VINDUE_MS/PIN_IP_MAKS_FORKERTE ovenfor.
+  // ÉN instans pr. app (ikke pr. request) — samme mønster som
+  // src/routes/runs.js' startLimiter — så tælleren rent faktisk deles på
+  // tværs af kald.
+  const ipLoginLimiter = createRateLimiter({
+    windowMs: PIN_IP_VINDUE_MS,
+    max: PIN_IP_MAKS_FORKERTE,
+    besked: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
+  });
 
   router.post('/players', async (req, res, next) => {
     const body = req.body || {};
@@ -74,8 +103,27 @@ function playersRouter(pool, ws) {
         // --- LOGIN ---
         const p = existing.rows[0];
         const nu = new Date();
+
+        // M3: IP-grænsen tjekkes FØRST (før vi overhovedet ser på DENNE
+        // spillers pinkode/spærring) — en IP der allerede har brugt sine 10
+        // forsøg op afvises ens, uanset hvilken spillers email den herefter
+        // prøver.
+        const ipRetryAfterSec = ipLoginLimiter.check(req);
+        if (ipRetryAfterSec !== null) {
+          await client.query('ROLLBACK');
+          res.set('Retry-After', String(ipRetryAfterSec));
+          return res.status(429).json({
+            fejl: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
+            kode: 'ip_login_spaerret',
+          });
+        }
+
         if (p.pin_spaerret_til && new Date(p.pin_spaerret_til).getTime() > nu.getTime()) {
           await client.query('ROLLBACK');
+          // Tæller også med i IP-grænsen — ellers kunne en angriber "gemme"
+          // ubegrænsede forsøg bag en allerede-spærret konto uden selv at
+          // bruge af sit IP-loft.
+          ipLoginLimiter.consume(req);
           return res.status(429).json({
             fejl: 'For mange forkerte pinkoder. Prøv igen om et kvarter, eller kom forbi standen.',
             kode: 'pin_spaerret',
@@ -97,6 +145,9 @@ function playersRouter(pool, ws) {
             p.id,
           ]);
           await client.query('COMMIT');
+          // M3: ét mislykket forsøg — tæller mod IP-grænsen uanset hvilken af
+          // de to fejlkoder nedenfor der svares (begge er "forkert login").
+          ipLoginLimiter.consume(req);
           if (!p.pin_hash) {
             return res.status(400).json({
               fejl: 'Din profil er oprettet før pinkoderne. Kom forbi standen, så nulstiller vi den.',
@@ -265,4 +316,6 @@ function playersRouter(pool, ws) {
   return router;
 }
 
-module.exports = { playersRouter, normalizePhone, MAKS_NAVN, MAKS_FIRMA, PIN_RE };
+// M4: last8 genbruges af DELETE /me (src/routes/me.js) — SAMME
+// telefon-matchningsregel som login ovenfor (sidste 8 cifre).
+module.exports = { playersRouter, normalizePhone, last8, MAKS_NAVN, MAKS_FIRMA, PIN_RE };

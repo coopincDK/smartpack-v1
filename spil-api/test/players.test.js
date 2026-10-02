@@ -281,3 +281,179 @@ test('POST /me/boost: kræver sms-tilmelding, korrekt kode, og kun én gang pr. 
   assert.equal(igen.status, 400);
   assert.equal(igen.body.kode, 'allerede_brugt');
 });
+
+// --- M3: IP-bred rate-limit paa login-/pin-forsoeg (sikkerhedsgennemgang) ---
+
+test('M3: en IP der laver 10+ forkerte pin-forsoeg paa tvaers af forskellige spilleres emails bliver selv blokeret', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const ANGRIBER_IP = { 'x-client-ip': '203.0.113.50' };
+
+  // To FORSKELLIGE spillere, begge forsoegt fra samme IP.
+  const a = await registrerSpiller(h.baseUrl, { email: 'offer-a@example.dk', pin: '1111' });
+  const b = await registrerSpiller(h.baseUrl, { email: 'offer-b@example.dk', pin: '2222' });
+  await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: ANGRIBER_IP });
+  await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: ANGRIBER_IP });
+
+  // 10 forkerte forsoeg, fordelt over de to ofre (ikke 5+5 mod samme — netop
+  // pointen er at graensen er paa tvaers af spillere, ikke pr. spiller).
+  let sidsteStatus;
+  for (let i = 0; i < 10; i++) {
+    const offer = i % 2 === 0 ? a.body : b.body;
+    // eslint-disable-next-line no-await-in-loop
+    const r = await api(h.baseUrl, 'POST', '/players', {
+      body: { ...offer, pin: '0000' },
+      headers: ANGRIBER_IP,
+    });
+    sidsteStatus = r.status;
+  }
+  assert.equal(sidsteStatus, 400, 'de foerste 10 forkerte forsoeg skal stadig behandles som almindelige forkerte pinkoder');
+
+  // Det 11. forkerte forsoeg fra SAMME IP rammer nu IP-graensen.
+  const elevte = await api(h.baseUrl, 'POST', '/players', {
+    body: { ...a.body, pin: '0000' },
+    headers: ANGRIBER_IP,
+  });
+  assert.equal(elevte.status, 429);
+  assert.equal(elevte.body.kode, 'ip_login_spaerret');
+});
+
+test('M3: en spillers korte spaerring (pin_spaerret) paavirker IKKE andre spilleres mulighed for at logge ind fra samme IP', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const STAND_IP = { 'x-client-ip': '198.51.100.9' };
+
+  const a = await registrerSpiller(h.baseUrl, { email: 'kollega-a@example.dk', pin: '1234' });
+  const b = await registrerSpiller(h.baseUrl, { email: 'kollega-b@example.dk', pin: '5678' });
+  await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: STAND_IP });
+  await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: STAND_IP });
+
+  // Laas kollega-A konto (5 forkerte) — under M3-loftet (10) paa denne IP.
+  for (let i = 0; i < 5; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await api(h.baseUrl, 'POST', '/players', { body: { ...a.body, pin: '0000' }, headers: STAND_IP });
+  }
+  const aSpaerret = await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: STAND_IP });
+  assert.equal(aSpaerret.status, 429);
+  assert.equal(aSpaerret.body.kode, 'pin_spaerret');
+
+  // Kollega-B kan stadig logge ind RIGTIGT fra samme IP.
+  const bLogin = await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: STAND_IP });
+  assert.equal(bLogin.status, 200);
+  assert.equal(bLogin.body.type, 'login');
+});
+
+test('M3: et VELLYKKET login forbruger ikke IP-graensens slots', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const IP = { 'x-client-ip': '192.0.2.77' };
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'ok-login@example.dk', pin: '4242' });
+  await api(h.baseUrl, 'POST', '/players', { body, headers: IP });
+
+  for (let i = 0; i < 15; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const r = await api(h.baseUrl, 'POST', '/players', { body, headers: IP });
+    assert.equal(r.status, 200, `vellykket login nr. ${i + 1} skal ikke rammes af IP-graensen`);
+  }
+});
+
+// --- M4: selvbetjent sletning DELETE /me (sikkerhedsgennemgang) ---
+
+test('M4: DELETE /me uden bearer-token afvises (401), intet slettes', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const res = await api(h.baseUrl, 'DELETE', '/me', { body: { pin: '1234' } });
+  assert.equal(res.status, 401);
+});
+
+test('M4: DELETE /me med gyldigt bearer-token men FORKERT pin afvises, intet slettes', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'slet-forkert@example.dk', pin: '1234' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const res = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '9999' } });
+  assert.equal(res.status, 403);
+  assert.equal(res.body.kode, 'bekraeftelse_forkert');
+
+  const fortsatTil = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'slet-forkert@example.dk'");
+  assert.equal(fortsatTil.rows.length, 1);
+  const me = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.equal(me.status, 200);
+});
+
+test('M4: DELETE /me med korrekt bearer + korrekt pin sletter spilleren rigtigt', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'slet-rigtigt@example.dk', pin: '1234' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const res = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '1234' } });
+  assert.equal(res.status, 200);
+  assert.equal(res.body.ok, true);
+
+  const vaek = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'slet-rigtigt@example.dk'");
+  assert.equal(vaek.rows.length, 0, 'spilleren skal vaere helt vaek');
+
+  const meEfter = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.equal(meEfter.status, 401);
+
+  const logRows = await h.pool.query(
+    "SELECT detaljer FROM admin_audit_log WHERE handling = 'selvbetjent_sletning' ORDER BY id DESC LIMIT 1"
+  );
+  assert.equal(logRows.rows.length, 1);
+  const detaljer = JSON.stringify(logRows.rows[0].detaljer);
+  assert.ok(!detaljer.includes('slet-rigtigt@example.dk'), 'email maa ikke optraede i audit-loggen');
+  assert.equal(logRows.rows[0].detaljer.begrundelse, 'selvbetjent sletning');
+});
+
+test('M4: DELETE /me med korrekt telefon (legacy-spiller uden pin) sletter spilleren', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  // Simulerer en spiller oprettet FOER pinkoden: intet pin_hash, kun telefon.
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'legacy@example.dk', pin: '1234' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+  await h.pool.query("UPDATE spiller SET pin_hash = NULL, telefon = '20304050' WHERE email = 'legacy@example.dk'");
+
+  const forkert = await api(h.baseUrl, 'DELETE', '/me', { token, body: { telefon: '20304099' } });
+  assert.equal(forkert.status, 403);
+
+  const rigtig = await api(h.baseUrl, 'DELETE', '/me', { token, body: { telefon: '001120304050' } });
+  assert.equal(rigtig.status, 200);
+  const vaek = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'legacy@example.dk'");
+  assert.equal(vaek.rows.length, 0);
+});
+
+test('M4: 5 forkerte bekraeftelser paa DELETE /me spaerrer yderligere forsoeg i et kvarter (brute-force-beskyttelse)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'slet-bruteforce@example.dk', pin: '1234' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  let sidsteStatus;
+  for (let i = 0; i < 5; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const r = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '0000' } });
+    sidsteStatus = r.status;
+  }
+  assert.equal(sidsteStatus, 403);
+
+  const sjette = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '1234' } });
+  assert.equal(sjette.status, 429);
+  assert.equal(sjette.body.kode, 'for_mange_forsoeg');
+
+  const findes = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'slet-bruteforce@example.dk'");
+  assert.equal(findes.rows.length, 1);
+});

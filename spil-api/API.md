@@ -186,6 +186,23 @@ tokens pr. spiller" nedenfor.
 | 400 | `ugyldigt_navn` / `ugyldigt_firma` | Længde uden for 1–22 / 1–40 tegn |
 | 400 | `mangler_accept` | `accepterer_betingelser` ikke `true` ved ny spiller |
 | 400 | `telefon_optaget` | Telefonnummeret er allerede knyttet til en anden spiller |
+| 429 | `pin_spaerret` | DENNE spiller er spærret 15 min. efter 5 forkerte pinkoder i træk |
+| 429 | `ip_login_spaerret` | M3 (sikkerhedsgennemgang): denne klient-IP har haft 10+ mislykkede login-/pin-forsøg PÅ TVÆRS AF SPILLERE inden for 10 min. — se nedenfor |
+
+**M3 (sikkerhedsgennemgang): IP-bred rate-limit på login-/pin-forsøg.** Den
+pr.-spiller-spærring ovenfor (`pin_spaerret`) beskytter ikke mod (a) at en
+angriber bevidst låser EN navngiven kollegas konto ude ved at afprøve
+forkerte koder for netop DEN email, eller (b) at en angriber afprøver mange
+KENDTE emails × 5 koder/kvarter og statistisk rammer nogle (4-cifret pin).
+Derfor tæller serveren nu OGSÅ mislykkede login-/pin-forsøg PR. KLIENT-IP
+(`X-Client-IP`, se "Klient-IP" — ALDRIG klientens egen IP-header), på tværs
+af alle spilleres emails: 10 mislykkede forsøg inden for 10 minutter
+blokerer DEN IP (`429 ip_login_spaerret`, `Retry-After`-header) for
+yderligere login-/pin-forsøg, resten af vinduet. Dette er i TILLÆG til, ikke
+i stedet for, den pr.-spiller-spærring. Tæller KUN mislykkede forsøg (hverken
+en ny registrering eller et vellykket login forbruger et slot) — to
+kolleger der deler standens wifi rammer derfor ikke hinandens forsøg på at
+logge ind RIGTIGT.
 
 ### `GET /me` (bearer)
 ```json
@@ -296,6 +313,47 @@ en liste der ikke er tilmeldt, fejler ikke.
 `200 { "ok": true, "mine_noegler": [...] }`.
 Findes endnu ikke i spillets UI (`spil/index.html`) — tilføjes i en kommende
 ombygning, men kontrakten er klar nu.
+
+### `DELETE /me` (bearer) — M4: selvbetjent sletning (NY)
+Vilkårene lover selvbetjent sletning ("Sletter du din profil, sletter vi
+dine oplysninger"). Kræver, UD OVER et gyldigt bearer-token, en EKSTRA
+bekræftelse i selve requesten — ellers kunne et alene stjålet/lækket token
+slette kontoen.
+
+**Request:**
+```json
+{ "pin": "1234" }
+```
+eller
+```json
+{ "telefon": "20304050" }
+```
+Mindst ét af felterne skal matche spillerens egen pinkode (4 cifre, samme
+hash som login) ELLER telefonnummer (sidste 8 cifre, samme regel som login
+for spillere oprettet før pinkoden — se `POST /players`). Sendes begge, er
+det nok at ÉT af dem matcher. En spiller uden pinkode (oprettet før
+pinkoden, intet `pin_hash`) skal bruge `telefon`; en spiller uden gemt
+telefonnummer skal bruge `pin`.
+
+**Rate-limit:** højst 5 FORKERTE bekræftelser / 15 min. / spiller (nøgles på
+spiller-id'et fra selve bearer-tokenet, ikke på IP — samme tal som
+pin-login-spærringen, se "Pinkode i stedet for telefon" og M3 ovenfor).
+Beskytter mod at brute-force'e pinkoden via DETTE endpoint, hvis et token
+skulle lække. `429 { "kode": "for_mange_forsoeg" }` med `Retry-After`.
+
+**200 (slettet):** `{ "ok": true }` — spilleren er væk (samme fælles
+`deletePlayerFully()` som admin-slet/admin-nulstil/retention-jobbet, se
+"Sletning og anonymisering": rest-referencer i ANDRE spilleres data
+anonymiseres på samme måde). Loggen i `admin_audit_log` (`handling:
+"selvbetjent_sletning"`) indeholder ALDRIG email/navn/telefon — kun
+spillerens `public_id` og begrundelsen `"selvbetjent sletning"`.
+
+**Fejl:**
+| Status | kode | Betydning |
+|---|---|---|
+| 401 | `ingen_token` / `ugyldigt_token` | Mangler/ugyldigt bearer-token — intet slettes |
+| 403 | `bekraeftelse_forkert` | Hverken `pin` eller `telefon` matchede — intet slettes |
+| 429 | `for_mange_forsoeg` | 5+ forkerte bekræftelser inden for 15 min. for DENNE spiller |
 
 ### `POST /me/boost` (bearer)
 Indløser dagens sms-boostkode (svarer til klientens `useCode()`). Body
@@ -653,7 +711,8 @@ forudsætningerne.
 ## Sletning og anonymisering
 
 Enhver RIGTIG sletning af en spiller (`DELETE /admin/spillere/:pid`, det
-natlige GDPR-oprydningsjob, og `POST /admin/nulstil`) går gennem samme
+natlige GDPR-oprydningsjob, `POST /admin/nulstil`, og — siden M4,
+sikkerhedsgennemgang — spillerens EGEN `DELETE /me`) går gennem samme
 fælles funktion (`src/playerDeletion.js#deletePlayerFully`), som ud over
 selve cascade-sletningen (forsøg/notifikationer/samtykker) også
 **anonymiserer rest-referencer** til den slettede spiller i ANDRE spilleres
@@ -1313,3 +1372,30 @@ Beslutninger: projektdokumentet `packrush-beslutninger-vilkaar.md`. Vilkår:
   tegn. Gemmes som hash i `admin_kode` og har forrang for
   `ADMIN_PASSWORD_HASH`. Alle andre admin-sessioner logges ud.
 - Glemt kode: slet rækken i `admin_kode` på serveren, så gælder .env-koden igen.
+
+## Sikkerhedsgennemgang, branch `spil-api-backup` (H2/M3/M4, 2. okt. 2026)
+
+Tre uafhængige fund fra et review af Martins nye pinkode-/partner-/
+lodtrækningsarbejde og den nye auto-deploy-workflow:
+
+### H2) Backup FØR auto-deploy, afbryd ved fejl
+`.github/workflows/deploy-spil-api.yml` kører nu `scripts/backup.sh` på
+serveren (over SSH) FØR selve `rsync`/`deploy.sh`/migrationerne. Fejler
+backup-trinnet (ikke-nul exit), stopper HELE workflowet der — ingen deploy
+eller migration uden en frisk, bekræftet backup lige inden. Se README.md,
+"Drift: natlig backup", for bootstrap-forbeholdet (scriptet skal allerede
+ligge på serveren fra en tidligere udrulning).
+
+### M3) IP-bred rate-limit på pinkode-login
+Se `POST /players` ovenfor (`ip_login_spaerret`, 10 forkerte forsøg/10 min.,
+PÅ TVÆRS AF SPILLERE, nøglet på `X-Client-IP`) — i tillæg til den
+eksisterende pr.-spiller-spærring (`pin_spaerret`, 5 forsøg/15 min.), som
+blev VERIFICERET i denne omgang til at være kort og ikke-eskalerende
+(`pin_fejl` nulstilles samtidig med at spærringen sættes, så en ny
+spærring igen kræver 5 friske forkerte forsøg).
+
+### M4) Selvbetjent sletning `DELETE /me`
+Se `DELETE /me` ovenfor. Kræver bearer-token OG en ekstra bekræftelse
+(pin ELLER telefon, samme regel som login) — et alene stjålet/lækket
+token kan ikke slette kontoen. Genbruger `deletePlayerFully()`. Logger
+`admin_audit_log` UDEN persondata (kun `public_id` + fast begrundelse).
