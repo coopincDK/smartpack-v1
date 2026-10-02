@@ -21,23 +21,22 @@ const { firmKey } = require('../rules/firmKey');
 const { currentBag, persistBag, livView, playerToP } = require('../lifeBag');
 const { computeTickets } = require('../gameQueries');
 const { clientIp } = require('../middleware/clientIp');
-const { createRateLimiter } = require('../middleware/rateLimit');
 const { invalidateStateCache } = require('../publicState');
 const { resolveSessionRole } = require('../middleware/adminAuth');
 const { maskedName } = require('../rules/nameDisplay');
 const { verifyPassword } = require('../crypto');
 const { deletePlayerFully } = require('../playerDeletion');
-const { MAKS_FIRMA, normalizePhone, last8, PIN_RE } = require('./players');
+const {
+  MAKS_FIRMA,
+  normalizePhone,
+  PIN_RE,
+  createIpLoginLimiter,
+  pinLaast,
+  registrerPinFejl,
+  ryddPinFejl,
+} = require('./players');
 
 const MAKS_KODE = 5;
-// M4 (DELETE /me): beskytter den ekstra bekræftelse (pin ELLER telefon) mod
-// brute force via et evt. stjålet/lækket bearer-token — et bearer-token
-// alene må ALDRIG være nok til at slette kontoen. Nøgles PR. SPILLER (ikke
-// pr. IP — tokenet identificerer allerede spilleren), samme tal som den
-// eksisterende pin-login-spærring (5 forsøg/15 min., se
-// src/routes/players.js#PIN_MAKS_FEJL).
-const SLET_BEKRAEFT_VINDUE_MS = 15 * 60 * 1000;
-const SLET_BEKRAEFT_MAKS_FORSOEG = 5;
 
 async function getCfg(pool) {
   return loadOffentligCfg(pool);
@@ -116,15 +115,21 @@ function maskNotifikation(data, navnMap, privileged) {
   return ud;
 }
 
-function meRouter(pool, ws) {
+function meRouter(pool, ws, opts) {
+  opts = opts || {};
   const router = express.Router();
   const auth = requirePlayer(pool);
-  const sletBekraeftLimiter = createRateLimiter({
-    windowMs: SLET_BEKRAEFT_VINDUE_MS,
-    max: SLET_BEKRAEFT_MAKS_FORSOEG,
-    keyFn: (req) => 'slet:' + req.player.id,
-    besked: 'For mange forkerte bekræftelser. Prøv igen om et kvarter, eller kom forbi standen.',
-  });
+  // M4 (opfølgende sikkerhedsgennemgang): injiceres fra src/app.js — SAMME
+  // instans som src/routes/players.js' login bruger, se
+  // createIpLoginLimiter() og begrundelsen dér. DELETE /me's
+  // pinkode-bekræftelse brugte tidligere sin EGEN, parallelle in-memory-
+  // tæller (keyFn 'slet:'+spillerId) — det var en reel sikkerhedsbrist:
+  // forkerte sletningsforsøg talte ikke med i IP-grænsen, og en angriber med
+  // mange lækkede bearer-tokens kunne afprøve ubegrænsede sletnings-pinkoder
+  // fra samme IP uden nogensinde at ramme et loft. Nu er det den SAMME
+  // pr.-spiller-tæller (pin_fejl/pin_spaerret_til på spiller-rækken) OG den
+  // samme IP-tæller som login, se DELETE /me nedenfor.
+  const ipLoginLimiter = opts.ipLoginLimiter || createIpLoginLimiter();
 
   router.get('/me', auth, async (req, res, next) => {
     const client = await pool.connect();
@@ -199,26 +204,94 @@ function meRouter(pool, ws) {
   // src/rules/firmKey.js) — spillere UDEN firma får en tom nøgle og tæller
   // derved IKKE med i firmakampen (GET /state's companyKey er tom/falsy for
   // dem, og klientens firms() springer allerede falsy companyKey over).
+  //
+  // Telefon-opfølgning (brugerens beslutning): samme endpoint kan nu OGSÅ
+  // sætte/rette telefonnummeret bagefter (fx når sms-fluebenet først kræver
+  // det, se PUT /me/subs og PUT /me/ticks nedenfor). `firma` og `telefon`
+  // opdateres HVER FOR SIG, kun når feltet rent faktisk er med i requesten
+  // (`hasOwnProperty`, ikke bare "truthy") — klienten sender typisk kun ÉT af
+  // felterne ad gangen (se API's setCompany()/setPhone()), og et manglende
+  // felt må ALDRIG nulstille det andet (det ville firma-opdateringen have
+  // gjort mod telefon, og omvendt, hvis begge altid blev skrevet samtidig).
   router.patch('/me', auth, async (req, res, next) => {
-    const firma = String((req.body && req.body.firma) || '').trim();
-    if (firma.length > MAKS_FIRMA) {
-      return res
-        .status(400)
-        .json({ fejl: `Firmanavn må højst være ${MAKS_FIRMA} tegn.`, kode: 'ugyldigt_firma' });
+    const body = req.body || {};
+    const harFirma = Object.prototype.hasOwnProperty.call(body, 'firma');
+    const harTelefon = Object.prototype.hasOwnProperty.call(body, 'telefon');
+    if (!harFirma && !harTelefon) {
+      return res.status(400).json({ fejl: 'Intet at opdatere.', kode: 'intet_at_opdatere' });
     }
+
+    let firma;
+    if (harFirma) {
+      firma = String(body.firma || '').trim();
+      if (firma.length > MAKS_FIRMA) {
+        return res
+          .status(400)
+          .json({ fejl: `Firmanavn må højst være ${MAKS_FIRMA} tegn.`, kode: 'ugyldigt_firma' });
+      }
+    }
+
+    let telefonForDb;
+    if (harTelefon) {
+      const telefonInput = String(body.telefon || '').trim();
+      const telefon = normalizePhone(telefonInput);
+      if (telefonInput && telefon.length < 8) {
+        return res
+          .status(400)
+          .json({ fejl: 'Telefonnummeret skal have mindst 8 cifre.', kode: 'ugyldigt_telefon' });
+      }
+      // Samme NULL-for-tomt-felt-regel som ved registrering (src/routes/
+      // players.js) — se begrundelsen dér for hvorfor det unikke indeks
+      // (spiller_telefon_unik) så kun kolliderer mellem to SATTE numre.
+      telefonForDb = telefon.length >= 8 ? telefon : null;
+    }
+
+    const client = await pool.connect();
     try {
-      await pool.query('UPDATE spiller SET firma = $1, firma_noegle = $2 WHERE id = $3', [
-        firma,
-        firmKey(firma),
-        req.player.id,
-      ]);
+      await client.query('BEGIN');
+      if (harTelefon && telefonForDb) {
+        const findes = await client.query('SELECT 1 FROM spiller WHERE telefon = $1 AND id != $2', [
+          telefonForDb,
+          req.player.id,
+        ]);
+        if (findes.rows.length) {
+          await client.query('ROLLBACK');
+          return res
+            .status(400)
+            .json({ fejl: 'Telefonnummeret er allerede i brug af en anden spiller.', kode: 'telefon_i_brug' });
+        }
+      }
+      if (harFirma) {
+        await client.query('UPDATE spiller SET firma = $1, firma_noegle = $2 WHERE id = $3', [
+          firma,
+          firmKey(firma),
+          req.player.id,
+        ]);
+      }
+      if (harTelefon) {
+        await client.query('UPDATE spiller SET telefon = $1 WHERE id = $2', [telefonForDb, req.player.id]);
+      }
+      await client.query('COMMIT');
       invalidateStateCache();
       // Opgave E: state.changed broadcastes nu også ved firma-ændring (rører
-      // companyKey/company i GET /state's players-liste).
+      // companyKey/company i GET /state's players-liste). Telefon rører
+      // ikke GET /state (det er allerede PII-fritaget, se publicState.js).
       if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
-      res.json({ ok: true, firma });
+      res.json({ ok: true, firma: harFirma ? firma : undefined, telefon: harTelefon ? telefonForDb : undefined });
     } catch (e) {
+      await client.query('ROLLBACK');
+      // Hærdning mod en race mellem to samtidige PATCH /me-kald med SAMME nye
+      // telefonnummer: tjekket ovenfor er ikke låst (SELECT uden FOR UPDATE),
+      // så selve det unikke indeks kan stadig nå at afvise det andet kald
+      // fremfor en nydelig 400 — fang det specifikt i stedet for en rå 500.
+      if (e && e.code === '23505' && e.constraint === 'spiller_telefon_unik') {
+        return res
+          .status(400)
+          .json({ fejl: 'Telefonnummeret er allerede i brug af en anden spiller.', kode: 'telefon_i_brug' });
+      }
       next(e);
+    } finally {
+      client.release();
     }
   });
 
@@ -365,6 +438,18 @@ function meRouter(pool, ws) {
       const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
       const row = rowRes.rows[0];
 
+      // Sikkerhedsgennemgang (telefon-opfølgning): sms kræver et
+      // telefonnummer — se samme tjek og begrundelse ved POST /players og
+      // PUT /me/ticks. Gælder uanset om 'sms' er NYT i `keys` eller blot
+      // bibeholdes fra før (afmelding af sms er ALTID tilladt uden telefon,
+      // det er kun at (for)blive tilmeldt der kræver det).
+      if (keys.includes('sms') && !row.telefon) {
+        await client.query('ROLLBACK');
+        return res
+          .status(400)
+          .json({ fejl: 'Du skal registrere et telefonnummer for at tilmelde dig sms.', kode: 'telefon_kraeves' });
+      }
+
       // Ingen liv-tildeling her, men vi genberegner/persisterer bagen
       // alligevel (håndterer evt. naturlig regen/dags-skift siden sidst).
       const bag = await currentBag(client, row, cfg, now);
@@ -458,6 +543,15 @@ function meRouter(pool, ws) {
       const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
       const row = rowRes.rows[0];
 
+      // Sikkerhedsgennemgang (telefon-opfølgning): samme tjek/begrundelse som
+      // PUT /me/subs ovenfor og POST /players — sms kræver et telefonnummer.
+      if (keys.includes('sms') && !row.telefon) {
+        await client.query('ROLLBACK');
+        return res
+          .status(400)
+          .json({ fejl: 'Du skal registrere et telefonnummer for at tilmelde dig sms.', kode: 'telefon_kraeves' });
+      }
+
       const bagBefore = await currentBag(client, row, cfg, now);
       const result = setTicksPure(playerToP(row), keys, cfg, bagBefore, now);
 
@@ -504,78 +598,86 @@ function meRouter(pool, ws) {
 
   // M4: selvbetjent sletning. Vilkårene lover "sletter du din profil, sletter
   // vi dine oplysninger" — kræver bearer-tokenet (auth) OG en EKSTRA
-  // bekræftelse (pinkoden ELLER telefonens sidste 8 cifre, samme regel som
-  // login i src/routes/players.js) i selve requesten, så et alene
-  // stjålet/lækket token ikke kan slette kontoen. Genbruger den FÆLLES
-  // src/playerDeletion.js#deletePlayerFully — SAMME sletning som admin-slet,
-  // admin-nulstil og det natlige retention-job, se API.md, "Sletning og
-  // anonymisering". Loggen i admin_audit_log indeholder ALDRIG persondata
-  // (ikke email/navn/telefon) — kun spillerens public_id (samme neutrale
-  // reference som ellers eksponeres til klienten, fx GET /me's `pid`) og en
-  // fast begrundelse.
+  // bekræftelse i selve requesten, så et alene stjålet/lækket token ikke kan
+  // slette kontoen. Genbruger den FÆLLES src/playerDeletion.js#deletePlayerFully
+  // — SAMME sletning som admin-slet, admin-nulstil og det natlige
+  // retention-job, se API.md, "Sletning og anonymisering". Loggen i
+  // admin_audit_log indeholder ALDRIG persondata (ikke email/navn/telefon) —
+  // kun spillerens public_id (samme neutrale reference som ellers eksponeres
+  // til klienten, fx GET /me's `pid`) og en fast begrundelse.
+  //
+  // Telefon-opfølgning (brugerens beslutning, 2. okt. 2026): bekræftelsen er
+  // nu KUN pinkoden (samme pinkode som login) — IKKE længere telefon, siden
+  // telefon er blevet valgfrit igen og derfor ikke længere en pålidelig
+  // "noget du ved"-faktor for alle spillere. Brug af pinkoden deler nu
+  // BEVIDST samme spærringsmekanik som login (src/routes/players.js):
+  // SAMME pr.-spiller-tæller (pin_fejl/pin_spaerret_til, se
+  // pinLaast/registrerPinFejl/ryddPinFejl) OG samme IP-brede tæller
+  // (ipLoginLimiter, injiceret fra src/app.js) — IKKE en dupliceret/separat
+  // tæller, som den tidligere sletBekraeftLimiter reelt var (se begrundelsen
+  // ved ipLoginLimiter ovenfor).
   router.delete('/me', auth, async (req, res, next) => {
+    const client = await pool.connect();
     try {
-      const retryAfterSec = sletBekraeftLimiter.check(req);
-      if (retryAfterSec !== null) {
-        res.set('Retry-After', String(retryAfterSec));
+      await client.query('BEGIN');
+      const nu = new Date();
+
+      // M3: IP-grænsen tjekkes FØRST, nøjagtig samme rækkefølge/begrundelse
+      // som login i src/routes/players.js.
+      const ipRetryAfterSec = ipLoginLimiter.check(req);
+      if (ipRetryAfterSec !== null) {
+        await client.query('ROLLBACK');
+        res.set('Retry-After', String(ipRetryAfterSec));
         return res.status(429).json({
-          fejl: 'For mange forkerte bekræftelser. Prøv igen om et kvarter, eller kom forbi standen.',
-          kode: 'for_mange_forsoeg',
+          fejl: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
+          kode: 'ip_login_spaerret',
         });
       }
 
-      const body = req.body || {};
-      const pin = String(body.pin || '').trim();
-      const telefon = normalizePhone(String(body.telefon || '').trim());
-      const row = req.player;
-
-      // Begge metoder tjekkes UAFHÆNGIGT af hinanden (ikke en if/else-kæde) —
-      // sender klienten begge felter, er det nok at ÉN af dem matcher.
-      let bekraeftet = false;
-      if (PIN_RE.test(pin) && row.pin_hash && verifyPassword(pin, row.pin_hash)) {
-        bekraeftet = true;
+      const { rows } = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
+      if (!rows.length) {
+        await client.query('ROLLBACK');
+        return res.status(404).json({ fejl: 'Ukendt spiller.', kode: 'ukendt_spiller' });
       }
-      if (!bekraeftet && telefon.length >= 8 && row.telefon && last8(normalizePhone(row.telefon)) === last8(telefon)) {
-        bekraeftet = true;
+      const row = rows[0];
+
+      if (pinLaast(row, nu)) {
+        await client.query('ROLLBACK');
+        ipLoginLimiter.consume(req);
+        return res.status(429).json({
+          fejl: 'For mange forkerte pinkoder. Prøv igen om et kvarter, eller kom forbi standen.',
+          kode: 'pin_spaerret',
+        });
       }
 
-      if (!bekraeftet) {
-        sletBekraeftLimiter.consume(req);
+      const pinkode = String((req.body && req.body.pinkode) || '').trim();
+      const godkendt = PIN_RE.test(pinkode) && row.pin_hash && verifyPassword(pinkode, row.pin_hash);
+      if (!godkendt) {
+        await registrerPinFejl(client, row, nu);
+        await client.query('COMMIT');
+        ipLoginLimiter.consume(req);
         return res.status(403).json({
-          fejl: 'Pinkoden eller telefonnummeret matcher ikke — intet er slettet.',
+          fejl: 'Pinkoden matcher ikke — intet er slettet.',
           kode: 'bekraeftelse_forkert',
         });
       }
+      await ryddPinFejl(client, row);
 
-      const client = await pool.connect();
-      try {
-        await client.query('BEGIN');
-        const { rows } = await client.query(
-          'SELECT id, navn, public_id FROM spiller WHERE id = $1 FOR UPDATE',
-          [row.id]
-        );
-        if (!rows.length) {
-          await client.query('ROLLBACK');
-          return res.status(404).json({ fejl: 'Ukendt spiller.', kode: 'ukendt_spiller' });
-        }
-        await deletePlayerFully(client, rows[0].id, rows[0].navn);
-        await client.query(
-          `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer)
-           VALUES (NULL, 'selvbetjent_sletning', $1)`,
-          [JSON.stringify({ spiller_pid: rows[0].public_id, begrundelse: 'selvbetjent sletning' })]
-        );
-        await client.query('COMMIT');
-        invalidateStateCache();
-        if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
-        res.json({ ok: true });
-      } catch (e) {
-        await client.query('ROLLBACK');
-        next(e);
-      } finally {
-        client.release();
-      }
+      await deletePlayerFully(client, row.id, row.navn);
+      await client.query(
+        `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer)
+         VALUES (NULL, 'selvbetjent_sletning', $1)`,
+        [JSON.stringify({ spiller_pid: row.public_id, begrundelse: 'selvbetjent sletning' })]
+      );
+      await client.query('COMMIT');
+      invalidateStateCache();
+      if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
+      res.json({ ok: true });
     } catch (e) {
+      await client.query('ROLLBACK');
       next(e);
+    } finally {
+      client.release();
     }
   });
 

@@ -51,6 +51,156 @@ test('firma er valgfrit ved registrering (0-40 tegn); PATCH /me sætter/retter d
   assert.equal(forLangt.body.kode, 'ugyldigt_firma');
 });
 
+// --- Telefon-opfølgning (brugerens beslutning, 2. okt. 2026) ---
+
+test('telefon er valgfrit ved registrering (med og uden), og normaliseres/valideres når det er angivet', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  // Uden telefon: helt OK, samme som hidtil.
+  const uden = await registrerSpiller(h.baseUrl, { email: 'uden-tlf@example.dk' });
+  const regUden = await api(h.baseUrl, 'POST', '/players', { body: uden.body });
+  assert.equal(regUden.status, 201);
+  const meUden = await api(h.baseUrl, 'GET', '/me', { token: regUden.body.token });
+  assert.equal(meUden.body.telefon, null);
+
+  // Med telefon: gemmes normaliseret (kun cifre).
+  const med = await registrerSpiller(h.baseUrl, { email: 'med-tlf@example.dk', telefon: '+45 20 30 40 50' });
+  const regMed = await api(h.baseUrl, 'POST', '/players', { body: med.body });
+  assert.equal(regMed.status, 201);
+  const meMed = await api(h.baseUrl, 'GET', '/me', { token: regMed.body.token });
+  assert.equal(meMed.body.telefon, '4520304050');
+
+  // Angivet, men for kort efter normalisering: afvist, intet oprettes.
+  const forKort = await registrerSpiller(h.baseUrl, { email: 'kort-tlf@example.dk', telefon: '1234567' });
+  const regForKort = await api(h.baseUrl, 'POST', '/players', { body: forKort.body });
+  assert.equal(regForKort.status, 400);
+  assert.equal(regForKort.body.kode, 'ugyldigt_telefon');
+  const findes = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'kort-tlf@example.dk'");
+  assert.equal(findes.rows.length, 0);
+});
+
+test('PATCH /me { telefon } sætter/retter telefonnummeret bagefter, uden at påvirke firma (og omvendt)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'patch-tlf@example.dk', firma: 'Oprindeligt Firma' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const sat = await api(h.baseUrl, 'PATCH', '/me', { token, body: { telefon: '20304050' } });
+  assert.equal(sat.status, 200);
+  assert.equal(sat.body.telefon, '20304050');
+  assert.equal(sat.body.firma, undefined, 'firma var ikke med i denne request og må ikke optræde i svaret');
+
+  // Firma skal STADIG være uændret — en PATCH med kun telefon må ALDRIG rydde det.
+  const me1 = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.equal(me1.body.firma, 'Oprindeligt Firma');
+  assert.equal(me1.body.telefon, '20304050');
+
+  // Omvendt: en PATCH med kun firma må ALDRIG rydde telefonen.
+  const firmaPatch = await api(h.baseUrl, 'PATCH', '/me', { token, body: { firma: 'Nyt Firma' } });
+  assert.equal(firmaPatch.status, 200);
+  assert.equal(firmaPatch.body.telefon, undefined);
+  const me2 = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.equal(me2.body.telefon, '20304050', 'telefon må ikke være ryddet af en firma-kun PATCH');
+  assert.equal(me2.body.firma, 'Nyt Firma');
+
+  // Ret til et andet (gyldigt) nummer.
+  const rettet = await api(h.baseUrl, 'PATCH', '/me', { token, body: { telefon: '30405060' } });
+  assert.equal(rettet.status, 200);
+  assert.equal(rettet.body.telefon, '30405060');
+
+  // For kort: afvist, det gamle nummer bevares.
+  const forKort = await api(h.baseUrl, 'PATCH', '/me', { token, body: { telefon: '123' } });
+  assert.equal(forKort.status, 400);
+  assert.equal(forKort.body.kode, 'ugyldigt_telefon');
+  const me3 = await api(h.baseUrl, 'GET', '/me', { token });
+  assert.equal(me3.body.telefon, '30405060');
+
+  // Intet felt med i det hele taget: afvist.
+  const tomt = await api(h.baseUrl, 'PATCH', '/me', { token, body: {} });
+  assert.equal(tomt.status, 400);
+  assert.equal(tomt.body.kode, 'intet_at_opdatere');
+});
+
+test('telefon er kun unikt NÅR det er sat: to spillere uden telefon er OK, to med samme telefon er det IKKE', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  // To spillere UDEN telefon — helt OK, ikke en kollision.
+  const a = await registrerSpiller(h.baseUrl, { email: 'ingen-tlf-a@example.dk' });
+  const b = await registrerSpiller(h.baseUrl, { email: 'ingen-tlf-b@example.dk' });
+  assert.equal((await api(h.baseUrl, 'POST', '/players', { body: a.body })).status, 201);
+  assert.equal((await api(h.baseUrl, 'POST', '/players', { body: b.body })).status, 201);
+
+  // To spillere med SAMME telefon ved registrering — den anden afvises.
+  const c = await registrerSpiller(h.baseUrl, { email: 'samme-tlf-c@example.dk', telefon: '20304050' });
+  const d = await registrerSpiller(h.baseUrl, { email: 'samme-tlf-d@example.dk', telefon: '20304050' });
+  assert.equal((await api(h.baseUrl, 'POST', '/players', { body: c.body })).status, 201);
+  const regD = await api(h.baseUrl, 'POST', '/players', { body: d.body });
+  assert.equal(regD.status, 400);
+  assert.equal(regD.body.kode, 'telefon_i_brug');
+  const dFindes = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'samme-tlf-d@example.dk'");
+  assert.equal(dFindes.rows.length, 0, 'spiller D må ikke være oprettet');
+
+  // Samme kollision via PATCH /me (spiller B forsøger at sætte spiller C's nummer).
+  const regB = await api(h.baseUrl, 'POST', '/players', { body: b.body });
+  const patchKollision = await api(h.baseUrl, 'PATCH', '/me', {
+    token: regB.body.token,
+    body: { telefon: '20304050' },
+  });
+  assert.equal(patchKollision.status, 400);
+  assert.equal(patchKollision.body.kode, 'telefon_i_brug');
+});
+
+test('sms-tilmelding afvises uden telefon (registrering og PUT /me/subs|ticks), og lykkes efter PATCH /me har sat ét', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
+
+  // Ved registrering: sms uden telefon afvises, intet oprettes.
+  const udenTlf = await registrerSpiller(h.baseUrl, {
+    email: 'sms-uden-tlf@example.dk',
+    tilmeldinger: ['sms'],
+  });
+  const regAfvist = await api(h.baseUrl, 'POST', '/players', { body: udenTlf.body });
+  assert.equal(regAfvist.status, 400);
+  assert.equal(regAfvist.body.kode, 'telefon_kraeves');
+  const findes = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'sms-uden-tlf@example.dk'");
+  assert.equal(findes.rows.length, 0);
+
+  // Registrér UDEN sms (og uden telefon) — derefter PUT /me/subs og
+  // PUT /me/ticks med 'sms' skal begge afvises, indtil telefon er sat.
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'sms-senere@example.dk' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  const subsFoer = await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: ['sms'] } });
+  assert.equal(subsFoer.status, 400);
+  assert.equal(subsFoer.body.kode, 'telefon_kraeves');
+
+  const ticksFoer = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sms'] } });
+  assert.equal(ticksFoer.status, 400);
+  assert.equal(ticksFoer.body.kode, 'telefon_kraeves');
+
+  // Sæt telefon via PATCH /me — nu lykkes begge.
+  const patch = await api(h.baseUrl, 'PATCH', '/me', { token, body: { telefon: '20304050' } });
+  assert.equal(patch.status, 200);
+
+  const subsEfter = await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: ['sms'] } });
+  assert.equal(subsEfter.status, 200);
+  assert.ok(subsEfter.body.mine_noegler.includes('sms'));
+
+  const ticksEfter = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sms'] } });
+  assert.equal(ticksEfter.status, 200);
+  assert.deepEqual(ticksEfter.body.mine_flueben, ['sms']);
+
+  // At AFMELDE sms er derimod altid tilladt, telefon eller ej.
+  const afmeld = await api(h.baseUrl, 'PUT', '/me/subs', { token, body: { keys: [] } });
+  assert.equal(afmeld.status, 200);
+});
+
 test('login kræver at pinkoden matcher — afviser uden at overskrive', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
@@ -152,7 +302,8 @@ test('PUT /me/subs sætter den VARIGE tilmelding, giver IKKE liv, og logger bekr
   t.after(() => h.teardown());
   await slaaSmsTil(h.pool);
 
-  const { body } = await registrerSpiller(h.baseUrl);
+  // Telefon-opfølgning: sms kræver et registreret telefonnummer.
+  const { body } = await registrerSpiller(h.baseUrl, { telefon: '20304050' });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
 
@@ -183,7 +334,8 @@ test('PUT /me/ticks (dagens flueben) giver friske liv, PUT /me/subs gør ikke', 
   t.after(() => h.teardown());
   await slaaSmsTil(h.pool);
 
-  const { body } = await registrerSpiller(h.baseUrl);
+  // Telefon-opfølgning: sms kræver et registreret telefonnummer.
+  const { body } = await registrerSpiller(h.baseUrl, { telefon: '20304050' });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
 
@@ -210,7 +362,8 @@ test('DELETE /me/subs/:liste er en ægte, varig afmelding (trukket_tilbage logge
   const h = await startHarness();
   t.after(() => h.teardown());
 
-  const { body } = await registrerSpiller(h.baseUrl);
+  // Telefon-opfølgning: sms kræver et registreret telefonnummer.
+  const { body } = await registrerSpiller(h.baseUrl, { telefon: '20304050' });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
 
@@ -244,7 +397,8 @@ test('POST /me/boost: kræver sms-tilmelding, korrekt kode, og kun én gang pr. 
   t.after(() => h.teardown());
   await slaaSmsTil(h.pool);
 
-  const { body } = await registrerSpiller(h.baseUrl);
+  // Telefon-opfølgning: sms kræver et registreret telefonnummer.
+  const { body } = await registrerSpiller(h.baseUrl, { telefon: '20304050' });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
 
@@ -361,16 +515,21 @@ test('M3: et VELLYKKET login forbruger ikke IP-graensens slots', async (t) => {
 });
 
 // --- M4: selvbetjent sletning DELETE /me (sikkerhedsgennemgang) ---
+// Telefon-opfølgning (2. okt. 2026): bekræftelsen er nu KUN {pinkode} —
+// IKKE længere telefon (se API.md). Rate-limiten er desuden IKKE længere en
+// separat/dupliceret tæller — den deler SAMME pr.-spiller-tæller
+// (pin_fejl/pin_spaerret_til) og SAMME IP-tæller som login i POST /players,
+// se testene nedenfor for begge dele.
 
 test('M4: DELETE /me uden bearer-token afvises (401), intet slettes', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
-  const res = await api(h.baseUrl, 'DELETE', '/me', { body: { pin: '1234' } });
+  const res = await api(h.baseUrl, 'DELETE', '/me', { body: { pinkode: '1234' } });
   assert.equal(res.status, 401);
 });
 
-test('M4: DELETE /me med gyldigt bearer-token men FORKERT pin afvises, intet slettes', async (t) => {
+test('M4: DELETE /me med gyldigt bearer-token men FORKERT pinkode afvises, intet slettes', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
@@ -378,7 +537,7 @@ test('M4: DELETE /me med gyldigt bearer-token men FORKERT pin afvises, intet sle
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
 
-  const res = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '9999' } });
+  const res = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pinkode: '9999' } });
   assert.equal(res.status, 403);
   assert.equal(res.body.kode, 'bekraeftelse_forkert');
 
@@ -388,7 +547,7 @@ test('M4: DELETE /me med gyldigt bearer-token men FORKERT pin afvises, intet sle
   assert.equal(me.status, 200);
 });
 
-test('M4: DELETE /me med korrekt bearer + korrekt pin sletter spilleren rigtigt', async (t) => {
+test('M4: DELETE /me med korrekt bearer + korrekt pinkode sletter spilleren rigtigt', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
@@ -396,7 +555,7 @@ test('M4: DELETE /me med korrekt bearer + korrekt pin sletter spilleren rigtigt'
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
 
-  const res = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '1234' } });
+  const res = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pinkode: '1234' } });
   assert.equal(res.status, 200);
   assert.equal(res.body.ok, true);
 
@@ -415,7 +574,7 @@ test('M4: DELETE /me med korrekt bearer + korrekt pin sletter spilleren rigtigt'
   assert.equal(logRows.rows[0].detaljer.begrundelse, 'selvbetjent sletning');
 });
 
-test('M4: DELETE /me med korrekt telefon (legacy-spiller uden pin) sletter spilleren', async (t) => {
+test('M4: DELETE /me afviser en legacy-spiller uden pin_hash (telefon er IKKE længere en gyldig bekraeftelse)', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
@@ -425,13 +584,17 @@ test('M4: DELETE /me med korrekt telefon (legacy-spiller uden pin) sletter spill
   const token = reg.body.token;
   await h.pool.query("UPDATE spiller SET pin_hash = NULL, telefon = '20304050' WHERE email = 'legacy@example.dk'");
 
-  const forkert = await api(h.baseUrl, 'DELETE', '/me', { token, body: { telefon: '20304099' } });
-  assert.equal(forkert.status, 403);
+  // Telefon duer IKKE længere som bekræftelse ved sletning.
+  const medTelefon = await api(h.baseUrl, 'DELETE', '/me', { token, body: { telefon: '20304050' } });
+  assert.equal(medTelefon.status, 403);
+  assert.equal(medTelefon.body.kode, 'bekraeftelse_forkert');
 
-  const rigtig = await api(h.baseUrl, 'DELETE', '/me', { token, body: { telefon: '001120304050' } });
-  assert.equal(rigtig.status, 200);
-  const vaek = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'legacy@example.dk'");
-  assert.equal(vaek.rows.length, 0);
+  // Og der er ingen pinkode at matche imod (pin_hash er NULL).
+  const medPin = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pinkode: '1234' } });
+  assert.equal(medPin.status, 403);
+
+  const stadigTil = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'legacy@example.dk'");
+  assert.equal(stadigTil.rows.length, 1, 'legacy-spilleren uden pin kan ikke slette sig selv her — skal forbi standen');
 });
 
 test('M4: 5 forkerte bekraeftelser paa DELETE /me spaerrer yderligere forsoeg i et kvarter (brute-force-beskyttelse)', async (t) => {
@@ -445,15 +608,85 @@ test('M4: 5 forkerte bekraeftelser paa DELETE /me spaerrer yderligere forsoeg i 
   let sidsteStatus;
   for (let i = 0; i < 5; i++) {
     // eslint-disable-next-line no-await-in-loop
-    const r = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '0000' } });
+    const r = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pinkode: '0000' } });
     sidsteStatus = r.status;
   }
-  assert.equal(sidsteStatus, 403);
+  assert.equal(sidsteStatus, 403, 'det 5. (laasende) forsoeg svarer stadig "forkert", ikke "spaerret" — laaset maerkes foerst NAESTE forsoeg');
 
-  const sjette = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pin: '1234' } });
+  // Det 6. forsoeg — selv med KORREKT pinkode — rammer nu pr.-spiller-laaset.
+  const sjette = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pinkode: '1234' } });
   assert.equal(sjette.status, 429);
-  assert.equal(sjette.body.kode, 'for_mange_forsoeg');
+  assert.equal(sjette.body.kode, 'pin_spaerret');
 
   const findes = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'slet-bruteforce@example.dk'");
   assert.equal(findes.rows.length, 1);
+});
+
+test('M4: forkerte DELETE /me-bekraeftelser taeller med i SAMME pr.-spiller-spaerring som login (ikke en separat/duplikeret taeller)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'delt-pinfejl@example.dk', pin: '1234' });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+
+  // 3 forkerte DELETE /me-forsoeg + 2 forkerte LOGIN-forsoeg = 5 forkerte i
+  // alt for SAMME spiller — hvis taellerne var separate, ville ingen af de
+  // to nedenfor vaere laast endnu.
+  for (let i = 0; i < 3; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const r = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pinkode: '0000' } });
+    assert.equal(r.status, 403);
+  }
+  for (let i = 0; i < 2; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const r = await api(h.baseUrl, 'POST', '/players', { body: { ...body, pin: '0000' } });
+    assert.equal(r.status, 400);
+  }
+
+  // Spilleren er nu laast (5. forkerte, uanset hvilket af de to endpoints
+  // det kom fra) — et 6. forsoeg med KORREKT pinkode afvises stadig, baade
+  // ved login og ved sletning.
+  const loginLaast = await api(h.baseUrl, 'POST', '/players', { body });
+  assert.equal(loginLaast.status, 429);
+  assert.equal(loginLaast.body.kode, 'pin_spaerret');
+
+  const sletLaast = await api(h.baseUrl, 'DELETE', '/me', { token, body: { pinkode: '1234' } });
+  assert.equal(sletLaast.status, 429);
+  assert.equal(sletLaast.body.kode, 'pin_spaerret');
+
+  const findes = await h.pool.query("SELECT 1 FROM spiller WHERE email = 'delt-pinfejl@example.dk'");
+  assert.equal(findes.rows.length, 1);
+});
+
+test('M3/M4: IP-graensen er FAELLES mellem forkerte login- og DELETE /me-forsoeg (ikke en separat/duplikeret taeller)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const IP = { 'x-client-ip': '203.0.113.77' };
+
+  const a = await registrerSpiller(h.baseUrl, { email: 'ip-delt-a@example.dk', pin: '1111' });
+  const b = await registrerSpiller(h.baseUrl, { email: 'ip-delt-b@example.dk', pin: '2222' });
+  const regA = await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: IP });
+  await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: IP });
+  const tokenA = regA.body.token;
+
+  // 5 forkerte LOGIN-forsoeg (spiller B) + 5 forkerte DELETE /me-forsoeg
+  // (spiller A's token) = 10 fra SAMME IP, fordelt over to spillere (hver
+  // under deres eget pr.-spiller-loft paa 5).
+  for (let i = 0; i < 5; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const r = await api(h.baseUrl, 'POST', '/players', { body: { ...b.body, pin: '0000' }, headers: IP });
+    assert.equal(r.status, 400);
+  }
+  for (let i = 0; i < 5; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    const r = await api(h.baseUrl, 'DELETE', '/me', { token: tokenA, body: { pinkode: '0000' }, headers: IP });
+    assert.equal(r.status, 403);
+  }
+
+  // Det 11. forsoeg fra SAMME IP rammes af IP-graensen, uanset endpoint og
+  // uanset korrekt kode.
+  const elevte = await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: IP });
+  assert.equal(elevte.status, 429);
+  assert.equal(elevte.body.kode, 'ip_login_spaerret');
 });

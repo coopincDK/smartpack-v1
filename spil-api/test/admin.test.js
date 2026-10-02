@@ -151,9 +151,11 @@ test('opgave G: GET /admin/spillere returnerer komplet organisatordata (tilmeldi
   const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
   const adminCookie = cookieFra(login);
 
+  // Telefon-opfølgning: sms kræver et registreret telefonnummer.
   const { body: b1 } = registrerSpiller(h.baseUrl, {
     navn: 'Organisator Testesen',
     email: 'organisator@example.dk',
+    telefon: '20304050',
     tilmeldinger: ['sms'],
   });
   const reg1 = await api(h.baseUrl, 'POST', '/players', { body: b1 });
@@ -196,7 +198,9 @@ test('opgave G: GET /admin/spillere returnerer komplet organisatordata (tilmeldi
   assert.ok(spiller, 'skal finde spilleren');
 
   assert.equal(spiller.navn, 'Organisator Testesen'); // FULDT, umaskeret navn
-  assert.equal(spiller.telefon, null, "nye spillere har ingen telefon");
+  // Telefon-opfølgning: valgfrit generelt, men PÅKRÆVET her fordi spilleren
+  // er sms-tilmeldt (se registrerSpiller-overrides ovenfor).
+  assert.equal(spiller.telefon, '20304050');
   assert.ok(Array.isArray(spiller.tilmeldinger));
   const smsTilmelding = spiller.tilmeldinger.find((x) => x.liste === 'sms');
   assert.ok(smsTilmelding, 'tilmeldinger skal indeholde sms-listens afledte samtykke-status');
@@ -224,7 +228,11 @@ test('POST /admin/afmeld logger trukket_tilbage for fundne emails og rapporterer
   const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
   const adminCookie = cookieFra(login);
 
-  const { body } = registrerSpiller(h.baseUrl, { email: 'afmeld@example.dk', tilmeldinger: ['sms'] });
+  const { body } = registrerSpiller(h.baseUrl, {
+    email: 'afmeld@example.dk',
+    telefon: '20304050',
+    tilmeldinger: ['sms'],
+  });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   assert.equal(reg.status, 201);
   const token = reg.body.token;
@@ -281,6 +289,7 @@ test('opgave H: POST /admin/afmeld understøtter liste:"alle" (afmelder KUN de l
 
   const { body } = registrerSpiller(h.baseUrl, {
     email: 'alle-lister@example.dk',
+    telefon: '20304050',
     tilmeldinger: ['sp', 'sms'],
   });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
@@ -504,4 +513,72 @@ test('personlige admin-logins: kun @smartpack.dk, startkode skal skiftes, kan lu
   assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: mc })).status, 401, 'lukket login er logget ud');
   const igen = await api(h.baseUrl, 'POST', '/admin/login', { body: { email: 'mikkel@smartpack.dk', password: 'mikkels-egen-kode-1' } });
   assert.equal(igen.status, 401);
+});
+
+// --- Telefon-opfølgning: admin-lister/eksporter skal springe spillere uden telefon over ---
+
+test('telefon-opfølgning: GET /admin/eksport/sms.csv og revanche.csv springer sms-tilmeldte spillere UDEN telefon over', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+
+  // Med telefon: skal med i begge lister.
+  const medTlf = registrerSpiller(h.baseUrl, {
+    navn: 'Med Telefon',
+    email: 'med-telefon@example.dk',
+    telefon: '20304050',
+    tilmeldinger: ['sms'],
+  });
+  const regMedTlf = await api(h.baseUrl, 'POST', '/players', { body: medTlf.body });
+  assert.equal(regMedTlf.status, 201);
+
+  // Uden telefon, men ALLIGEVEL sms-aktiv: simulerer en tilbagestående
+  // datatilstand (fx ryddet via PATCH /me efter tilmelding) — skal IKKE med
+  // i nogen af listerne (kan jo ikke modtage en sms).
+  const udenTlf = registrerSpiller(h.baseUrl, {
+    navn: 'Uden Telefon',
+    email: 'uden-telefon@example.dk',
+    telefon: '30405060',
+    tilmeldinger: ['sms'],
+  });
+  const regUdenTlf = await api(h.baseUrl, 'POST', '/players', { body: udenTlf.body });
+  assert.equal(regUdenTlf.status, 201);
+  const tokenUdenTlf = regUdenTlf.body.token;
+  // Ryd telefonen igen (PATCH /me tillader det, se API.md) — notify er
+  // stadig true, telefonen er nu NULL: netop den tilstand eksporterne skal
+  // filtrere væk.
+  await api(h.baseUrl, 'PATCH', '/me', { token: tokenUdenTlf, body: { telefon: '' } });
+
+  const { todayStr } = require('../src/rules/life');
+  const today = todayStr(new Date());
+  const beatenData = { by: 'Nogen', score: 999, day: today };
+  for (const email of ['med-telefon@example.dk', 'uden-telefon@example.dk']) {
+    // eslint-disable-next-line no-await-in-loop
+    const { rows } = await h.pool.query('SELECT id FROM spiller WHERE email = $1', [email]);
+    // eslint-disable-next-line no-await-in-loop
+    await h.pool.query(`INSERT INTO notifikation (spiller_id, type, data) VALUES ($1, 'beaten', $2::jsonb)`, [
+      rows[0].id,
+      JSON.stringify(beatenData),
+    ]);
+  }
+
+  const smsRes = await fetch(h.baseUrl + '/admin/eksport/sms.csv', { headers: { cookie: adminCookie } });
+  const smsCsv = await smsRes.text();
+  assert.equal(smsRes.status, 200);
+  assert.ok(smsCsv.includes('med-telefon@example.dk'), 'sms.csv skal INDEHOLDE spilleren MED telefon');
+  assert.ok(!smsCsv.includes('uden-telefon@example.dk'), 'sms.csv skal SPRINGE spilleren UDEN telefon over');
+
+  const revRes = await fetch(h.baseUrl + '/admin/eksport/revanche.csv', { headers: { cookie: adminCookie } });
+  const revCsv = await revRes.text();
+  assert.equal(revRes.status, 200);
+  assert.ok(revCsv.includes('med-telefon@example.dk'), 'revanche.csv skal INDEHOLDE spilleren MED telefon');
+  assert.ok(!revCsv.includes('uden-telefon@example.dk'), 'revanche.csv skal SPRINGE spilleren UDEN telefon over');
+
+  // Den generelle admin-spillerliste og -eksport er UÆNDREDE: begge spillere
+  // vises fortsat (bruges til almindelig administration, ikke kun sms).
+  const alleRes = await api(h.baseUrl, 'GET', '/admin/spillere', { adminCookie });
+  assert.ok(alleRes.body.spillere.some((s) => s.email === 'uden-telefon@example.dk'));
 });

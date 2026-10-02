@@ -442,7 +442,12 @@ function adminRouter(pool, ws, opts) {
       const alle = await pool.query(
         `SELECT id, navn, email, telefon, firma FROM spiller WHERE skjult = false ORDER BY navn ASC`
       );
-      const rows = alle.rows.filter((r) => aktiveIds.has(String(r.id)));
+      // Telefon-opfølgning (brugerens beslutning): telefon er nu valgfrit, så
+      // en sms-tilmeldt spiller kan i teorien mangle et nummer (fx tilmeldt
+      // før kravet, eller nummeret siden ryddet via PATCH /me) — de kan jo
+      // ikke modtage en sms, så de SPRINGES OVER her (ikke bare vist med et
+      // tomt felt).
+      const rows = alle.rows.filter((r) => aktiveIds.has(String(r.id)) && r.telefon);
       const csv = toCsv(rows, [
         { title: 'navn', value: (r) => r.navn },
         { title: 'email', value: (r) => r.email },
@@ -471,7 +476,9 @@ function adminRouter(pool, ws, opts) {
          ORDER BY s.navn ASC`,
         [today]
       );
-      const rows = alle.rows.filter((r) => aktiveIds.has(String(r.id)));
+      // Telefon-opfølgning: samme begrundelse som sms.csv ovenfor — springer
+      // spillere uden telefon over (kan ikke modtage revanche-sms'en).
+      const rows = alle.rows.filter((r) => aktiveIds.has(String(r.id)) && r.telefon);
       const csv = toCsv(rows, [
         { title: 'navn', value: (r) => r.navn },
         { title: 'email', value: (r) => r.email },

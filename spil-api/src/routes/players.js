@@ -47,6 +47,48 @@ function last8(digits) {
   return digits.slice(-8);
 }
 
+// M3: ÉN delt instans pr. app (ikke pr. request, og — siden denne
+// opfølgende runde — heller ikke pr. router) — bruges af BÅDE login
+// (nedenfor) og DELETE /me's pinkode-bekræftelse (src/routes/me.js), så de
+// to reelt deler SAMME IP-tæller (se src/app.js, som opretter én instans og
+// sender den til begge routere). Et separat/dupliceret eksemplar pr. router
+// ville stille en angriber to selvstændige lofter i stedet for ét fælles.
+function createIpLoginLimiter() {
+  return createRateLimiter({
+    windowMs: PIN_IP_VINDUE_MS,
+    max: PIN_IP_MAKS_FORKERTE,
+    besked: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
+  });
+}
+
+// M4 (opfølgende sikkerhedsgennemgang): pr.-spiller pin-spærringen
+// (pin_fejl/pin_spaerret_til) var hidtil kun skrevet inline i login-flowet
+// nedenfor. DELETE /me's pinkode-bekræftelse (src/routes/me.js) skal bruge
+// SAMME tæller — ikke en dupliceret, parallel én, der reelt ville give en
+// angriber to uafhængige kvoter af forkerte gæt mod den samme konto. Disse
+// tre funktioner er derfor den ENE autoritative kilde til "er spilleren
+// laast?"/"registrér et forkert forsøg"/"ryd op efter et korrekt forsøg",
+// delt mellem de to endpoints.
+function pinLaast(row, nu) {
+  return !!(row.pin_spaerret_til && new Date(row.pin_spaerret_til).getTime() > nu.getTime());
+}
+
+async function registrerPinFejl(client, row, nu) {
+  const fejl = (row.pin_fejl || 0) + 1;
+  const spaerret = fejl >= PIN_MAKS_FEJL ? new Date(nu.getTime() + PIN_SPAERRING_MS) : null;
+  await client.query('UPDATE spiller SET pin_fejl = $1, pin_spaerret_til = $2 WHERE id = $3', [
+    spaerret ? 0 : fejl,
+    spaerret,
+    row.id,
+  ]);
+}
+
+async function ryddPinFejl(client, row) {
+  if (row.pin_fejl || row.pin_spaerret_til) {
+    await client.query('UPDATE spiller SET pin_fejl = 0, pin_spaerret_til = NULL WHERE id = $1', [row.id]);
+  }
+}
+
 async function getCfg(pool) {
   return loadOffentligCfg(pool);
 }
@@ -60,26 +102,30 @@ async function generateUniqueVennekode(client) {
   throw new Error('Kunne ikke generere unik vennekode.');
 }
 
-function playersRouter(pool, ws) {
+function playersRouter(pool, ws, opts) {
+  opts = opts || {};
   const router = express.Router();
 
-  // M3: se begrundelsen ved PIN_IP_VINDUE_MS/PIN_IP_MAKS_FORKERTE ovenfor.
-  // ÉN instans pr. app (ikke pr. request) — samme mønster som
-  // src/routes/runs.js' startLimiter — så tælleren rent faktisk deles på
-  // tværs af kald.
-  const ipLoginLimiter = createRateLimiter({
-    windowMs: PIN_IP_VINDUE_MS,
-    max: PIN_IP_MAKS_FORKERTE,
-    besked: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
-  });
+  // M3/M4: injiceres fra src/app.js, som opretter ÉN instans og deler den
+  // med meRouter (DELETE /me) — se createIpLoginLimiter() ovenfor. Falder
+  // tilbage til sin egen instans hvis routeren undtagelsesvis bygges alene
+  // (fx et fremtidigt script), men createApp() sender altid den delte ind.
+  const ipLoginLimiter = opts.ipLoginLimiter || createIpLoginLimiter();
 
   router.post('/players', async (req, res, next) => {
     const body = req.body || {};
     const email = String(body.email || '').trim().toLowerCase();
     const navn = String(body.navn || '').trim();
-    // Telefon indsamles ikke længere (vilkår pkt. 4). Feltet læses KUN for at
-    // lade spillere oprettet før pinkoden logge ind som hidtil.
-    const telefon = normalizePhone(String(body.telefon || '').trim());
+    // Telefon er igen VALGFRIT (brugerens beslutning, telefon-opfølgningen):
+    // bruges dels til legacy-login (spillere oprettet før pinkoden, se
+    // godkendt-tjekket nedenfor), dels — hvis angivet — gemt ved selve
+    // registreringen (se "--- REGISTRERING ---" nedenfor, hvor det også
+    // valideres/tjekkes for unikhed). telefonInput er den RÅ, utrimmede
+    // tekst — bruges KUN til at afgøre om feltet overhovedet blev udfyldt
+    // (en tom/udeladt værdi er OK; en udfyldt værdi, der normaliserer til
+    // under 8 cifre, er det ikke, se registreringsblokken).
+    const telefonInput = String(body.telefon || '').trim();
+    const telefon = normalizePhone(telefonInput);
     const pin = String(body.pin || '').trim();
     const firma = String(body.firma || '').trim();
     const vennekode = String(body.vennekode || '').trim().toUpperCase().slice(0, MAKS_KODE);
@@ -118,7 +164,7 @@ function playersRouter(pool, ws) {
           });
         }
 
-        if (p.pin_spaerret_til && new Date(p.pin_spaerret_til).getTime() > nu.getTime()) {
+        if (pinLaast(p, nu)) {
           await client.query('ROLLBACK');
           // Tæller også med i IP-grænsen — ellers kunne en angriber "gemme"
           // ubegrænsede forsøg bag en allerede-spærret konto uden selv at
@@ -137,13 +183,9 @@ function playersRouter(pool, ws) {
           godkendt = telefon.length >= 8 && !!p.telefon && last8(normalizePhone(p.telefon)) === last8(telefon);
         }
         if (!godkendt) {
-          const fejl = (p.pin_fejl || 0) + 1;
-          const spaerret = fejl >= PIN_MAKS_FEJL ? new Date(nu.getTime() + PIN_SPAERRING_MS) : null;
-          await client.query('UPDATE spiller SET pin_fejl = $1, pin_spaerret_til = $2 WHERE id = $3', [
-            spaerret ? 0 : fejl,
-            spaerret,
-            p.id,
-          ]);
+          // M4: samme delte tæller som DELETE /me's pinkode-bekræftelse
+          // bruger, se registrerPinFejl() ovenfor.
+          await registrerPinFejl(client, p, nu);
           await client.query('COMMIT');
           // M3: ét mislykket forsøg — tæller mod IP-grænsen uanset hvilken af
           // de to fejlkoder nedenfor der svares (begge er "forkert login").
@@ -159,9 +201,7 @@ function playersRouter(pool, ws) {
             kode: 'pin_matcher_ikke',
           });
         }
-        if (p.pin_fejl || p.pin_spaerret_til) {
-          await client.query('UPDATE spiller SET pin_fejl = 0, pin_spaerret_til = NULL WHERE id = $1', [p.id]);
-        }
+        await ryddPinFejl(client, p);
 
         let chFromUpdate = p.ekstra_02;
         if (udfordringskode) {
@@ -222,6 +262,43 @@ function playersRouter(pool, ws) {
         return res.status(400).json({ fejl: 'Vælg en pinkode på 4 cifre.', kode: 'ugyldig_pin' });
       }
 
+      // Telefon-opfølgning (brugerens beslutning): valgfrit ved
+      // registrering, men SKAL normalisere til mindst 8 cifre når det rent
+      // faktisk er udfyldt (tomt/udeladt er OK, se telefonInput ovenfor).
+      // telefonForDb gemmes som NULL (ikke ''), når feltet er udeladt — det
+      // eksisterende unikke indeks spiller_telefon_unik (001_init.sql, aldrig
+      // fjernet) er en almindelig UNIQUE INDEX på en nullable kolonne, og
+      // Postgres behandler hvert NULL som forskelligt fra alle andre dér, så
+      // flere spillere uden telefon er allerede OK uden ny migration — kun
+      // to spillere med SAMME satte nummer kolliderer (tjekkes eksplicit
+      // nedenfor for en pæn fejlbesked i stedet for en rå DB-fejl).
+      if (telefonInput && telefon.length < 8) {
+        await client.query('ROLLBACK');
+        return res
+          .status(400)
+          .json({ fejl: 'Telefonnummeret skal have mindst 8 cifre.', kode: 'ugyldigt_telefon' });
+      }
+      const telefonForDb = telefon.length >= 8 ? telefon : null;
+      if (telefonForDb) {
+        const telefonFindes = await client.query('SELECT 1 FROM spiller WHERE telefon = $1', [telefonForDb]);
+        if (telefonFindes.rows.length) {
+          await client.query('ROLLBACK');
+          return res
+            .status(400)
+            .json({ fejl: 'Telefonnummeret er allerede i brug af en anden spiller.', kode: 'telefon_i_brug' });
+        }
+      }
+      // Sikkerhedsgennemgang (telefon-opfølgning): sms kræver et
+      // telefonnummer — SAMME regel som PUT /me/subs og PUT /me/ticks i
+      // src/routes/me.js, ellers kunne kravet omgås ved at sætte
+      // sms-fluebenet allerede her i stedet for bagefter via de endpoints.
+      if (tilmeldinger.includes('sms') && !telefonForDb) {
+        await client.query('ROLLBACK');
+        return res
+          .status(400)
+          .json({ fejl: 'Du skal angive et telefonnummer for at tilmelde dig sms.', kode: 'telefon_kraeves' });
+      }
+
       const cfg = await getCfg(pool);
 
       let refSpillerId = null;
@@ -264,13 +341,13 @@ function playersRouter(pool, ws) {
 
       const ins = await client.query(
         `INSERT INTO spiller (
-           public_id, email, navn, pin_hash, firma, firma_noegle, vennekode,
+           public_id, email, navn, telefon, pin_hash, firma, firma_noegle, vennekode,
            ref_spiller_id, marketing, mail_to, notify,
            liv_dag, liv_n, liv_t, chl, badges, ekstra_01, ekstra_02, tick_dag, tick_keys
-         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,'{}'::jsonb,'[]'::jsonb,$15,$16,$17,$18)
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,'{}'::jsonb,'[]'::jsonb,$16,$17,$18,$19)
          RETURNING id, oprettet`,
         [
-          publicId, email, navn, hashPassword(pin), firma, firmKey(firma), nyVennekode,
+          publicId, email, navn, telefonForDb, hashPassword(pin), firma, firmKey(firma), nyVennekode,
           refSpillerId, nyP.marketing, JSON.stringify(nyP.mailTo), nyP.notify,
           bag.day, bag.n, new Date(bag.t), JSON.stringify(bag.g), chFrom, nyP.tick.day, JSON.stringify(nyP.tick.keys),
         ]
@@ -307,6 +384,14 @@ function playersRouter(pool, ws) {
       });
     } catch (e) {
       await client.query('ROLLBACK');
+      // Hærdning mod en race mellem to samtidige registreringer med SAMME
+      // telefonnummer (tjekket ovenfor er ikke låst) — se tilsvarende
+      // begrundelse i PATCH /me (src/routes/me.js).
+      if (e && e.code === '23505' && e.constraint === 'spiller_telefon_unik') {
+        return res
+          .status(400)
+          .json({ fejl: 'Telefonnummeret er allerede i brug af en anden spiller.', kode: 'telefon_i_brug' });
+      }
       next(e);
     } finally {
       client.release();
@@ -316,6 +401,19 @@ function playersRouter(pool, ws) {
   return router;
 }
 
-// M4: last8 genbruges af DELETE /me (src/routes/me.js) — SAMME
-// telefon-matchningsregel som login ovenfor (sidste 8 cifre).
-module.exports = { playersRouter, normalizePhone, last8, MAKS_NAVN, MAKS_FIRMA, PIN_RE };
+// M4: last8, createIpLoginLimiter, pinLaast, registrerPinFejl og ryddPinFejl
+// genbruges af DELETE /me (src/routes/me.js) — SAMME telefon-matchningsregel
+// (sidste 8 cifre) og SAMME pin-spærringstæller/IP-tæller som login ovenfor,
+// ikke dupliserede/separate udgaver (se begrundelserne ved funktionerne).
+module.exports = {
+  playersRouter,
+  normalizePhone,
+  last8,
+  MAKS_NAVN,
+  MAKS_FIRMA,
+  PIN_RE,
+  createIpLoginLimiter,
+  pinLaast,
+  registrerPinFejl,
+  ryddPinFejl,
+};
