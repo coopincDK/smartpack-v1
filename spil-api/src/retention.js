@@ -3,9 +3,9 @@
 // Packrush, opgave C: natligt GDPR-oprydningsjob. Sletter RIGTIGT (cascade:
 // forsøg, notifikationer, samtykke-hændelser + anonymisering af rest-
 // referencer i andre spilleres data, se src/playerDeletion.js) enhver
-// spiller hvor INGEN liste har varig aktiv status, OG der er gået mindst 12
-// måneder siden det seneste af: spillerens seneste forsøg, ELLER spillerens
-// egen oprettelse hvis vedkommende aldrig har spillet. Spillere med MINDST
+// spiller hvor INGEN liste har varig aktiv status, OG der er gået mindst 24
+// måneder siden det seneste af: spillerens seneste forsøg, seneste login
+// (spiller_token), ELLER spillerens egen oprettelse. Spillere med MINDST
 // én aktiv, varig tilmelding beholdes UANSET alder. Se README.md for
 // hvordan/hvornår jobbet køres, og API.md, "Packrush-ændringer", for
 // baggrunden.
@@ -22,7 +22,7 @@
 // tid (eller andre samtidige transaktioner) mellem den og selve
 // sletningen. deleteInactivePlayers() LÅSER derfor hver kandidat (SELECT
 // ... FOR UPDATE) og GENKONTROLLERER begge betingelser (intet aktivt
-// samtykke OG stadig ≥12 mdr. inaktiv) lige før selve sletningen —
+// samtykke OG stadig ≥24 mdr. inaktiv) lige før selve sletningen —
 // nøjagtig samme mønster som DELETE /admin/spillere/:pid allerede brugte
 // (lås FØR skrivning), blot udvidet med en reel gen-kvalifikation, da denne
 // sletning (i modsætning til admin-enkelt-sletningen) er BETINGET.
@@ -30,15 +30,15 @@
 const { deletePlayerFully } = require('./playerDeletion');
 const config = require('./config');
 
-const RETENTION_MONTHS = 12;
+const RETENTION_MONTHS = 24;
 
-// cutoffDate(now): "nu minus 12 måneder", klemt til den sidste gyldige dag
+// cutoffDate(now): "nu minus 24 måneder", klemt til den sidste gyldige dag
 // i målmåneden i stedet for at lade JS' Date rulle datoen videre ind i
-// næste måned (skudårskanten: 29. februar minus 12 måneder findes ikke i et
+// næste måned (skudårskanten: 29. februar minus 24 måneder findes ikke i et
 // ikke-skudår, og `setUTCMonth` ville ellers stille og roligt give 1.
 // marts). Klemningen er BEVIDST konservativ: den giver en cutoff der er
-// mindst lige så gammel som "præcis 12 måneder" (aldrig yngre) — dvs. i
-// værste fald sletter jobbet én dag SENERE end præcis 12 måneder, ALDRIG
+// mindst lige så gammel som "præcis 24 måneder" (aldrig yngre) — dvs. i
+// værste fald sletter jobbet én dag SENERE end præcis 24 måneder, ALDRIG
 // tidligere.
 function cutoffDate(now) {
   const src = now || new Date();
@@ -46,12 +46,11 @@ function cutoffDate(now) {
   const month = src.getUTCMonth(); // 0-11
   const day = src.getUTCDate();
 
-  let targetYear = year;
-  let targetMonth = month - RETENTION_MONTHS;
-  if (targetMonth < 0) {
-    targetMonth += 12;
-    targetYear -= 1;
-  }
+  // Regnes i hele måneder, så det også virker når RETENTION_MONTHS er
+  // større end 12 (fx 24).
+  const total = year * 12 + month - RETENTION_MONTHS;
+  const targetYear = Math.floor(total / 12);
+  const targetMonth = total - targetYear * 12;
   const daysInTargetMonth = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate();
   const targetDay = Math.min(day, daysInTargetMonth);
 
@@ -87,15 +86,12 @@ async function findRetentionCandidates(client, now) {
   const alleSpillere = await client.query('SELECT id, oprettet FROM spiller');
   const harAktivSamtykke = await activeConsentSpillerIds(client);
 
-  const sidsteForsoeg = await client.query(
-    `SELECT spiller_id, MAX(oprettet) AS sidst FROM forsoeg GROUP BY spiller_id`
-  );
-  const sidstMap = new Map(sidsteForsoeg.rows.map((r) => [String(r.spiller_id), r.sidst]));
+  const sidstMap = await lastActivityMap(client);
 
   const out = [];
   for (const row of alleSpillere.rows) {
     if (harAktivSamtykke.has(String(row.id))) continue;
-    const sidsteAktivitet = sidstMap.get(String(row.id)) || row.oprettet;
+    const sidsteAktivitet = laterOf(sidstMap.get(String(row.id)), row.oprettet);
     if (new Date(sidsteAktivitet).getTime() < cutoff.getTime()) {
       // Bemærk: row.id bevares i sin ORIGINALE form (typisk en streng, da
       // `spiller.id` er bigint og node-pg ikke konverterer bigint til
@@ -107,6 +103,37 @@ async function findRetentionCandidates(client, now) {
     }
   }
   return out;
+}
+
+// Seneste aktivitet pr. spiller = det seneste af: seneste forsøg og seneste
+// login/brug af et spiller-token (oprettet eller sidst_brugt). Vilkårene
+// lover, at "hvert login forlænger perioden", så et login uden at spille
+// skal også tælle. Med `id` hentes kun den ene spiller.
+async function lastActivityMap(client, id) {
+  const params = id === undefined ? [] : [id];
+  const where = id === undefined ? '' : 'WHERE spiller_id = $1';
+  const forsoeg = await client.query(
+    `SELECT spiller_id, MAX(oprettet) AS sidst FROM forsoeg ${where} GROUP BY spiller_id`,
+    params
+  );
+  const tokens = await client.query(
+    `SELECT spiller_id, MAX(sidst_brugt) AS sidst_brugt, MAX(oprettet) AS oprettet
+     FROM spiller_token ${where} GROUP BY spiller_id`,
+    params
+  );
+  const map = new Map();
+  for (const r of forsoeg.rows) map.set(String(r.spiller_id), r.sidst);
+  for (const r of tokens.rows) {
+    const k = String(r.spiller_id);
+    map.set(k, laterOf(laterOf(map.get(k), r.sidst_brugt), r.oprettet));
+  }
+  return map;
+}
+
+function laterOf(a, b) {
+  if (!a) return b;
+  if (!b) return a;
+  return new Date(a).getTime() >= new Date(b).getTime() ? a : b;
 }
 
 // Sættet af spiller-id'er med mindst én liste i aktiv ('bekraeftet') status
@@ -129,11 +156,8 @@ async function stillQualifiesForDeletion(client, id, oprettetFallback, now) {
   const harAktivSamtykke = await activeConsentSpillerIds(client);
   if (harAktivSamtykke.has(String(id))) return false;
 
-  const { rows } = await client.query(
-    `SELECT MAX(oprettet) AS sidst FROM forsoeg WHERE spiller_id = $1`,
-    [id]
-  );
-  const sidsteAktivitet = (rows[0] && rows[0].sidst) || oprettetFallback;
+  const sidstMap = await lastActivityMap(client, id);
+  const sidsteAktivitet = laterOf(sidstMap.get(String(id)), oprettetFallback);
   return new Date(sidsteAktivitet).getTime() < cutoff.getTime();
 }
 

@@ -70,7 +70,7 @@ function registrerSpiller(baseUrl, overrides = {}) {
     {
       navn: 'Test Testesen',
       email: `test-${unik}@example.dk`,
-      telefon: '2' + String(Math.floor(10000000 + Math.random() * 89999999)).slice(0, 7),
+      pin: '1234',
       firma: 'Testfirma ApS',
       tilmeldinger: [],
       accepterer_betingelser: true,
@@ -80,4 +80,12 @@ function registrerSpiller(baseUrl, overrides = {}) {
   return { body };
 }
 
-module.exports = { startHarness, api, registrerSpiller };
+// Sms er slået fra som standard (010_pinkode.sql). Tests der bruger sms-
+// listen som eksempel på en tilmelding, slår den til igen her.
+async function slaaSmsTil(pool) {
+  await pool.query(
+    `UPDATE config SET offentlig = offentlig || '{"smsOn": true, "smsBoost": true}'::jsonb WHERE id = 1`
+  );
+}
+
+module.exports = { startHarness, api, registrerSpiller, slaaSmsTil };

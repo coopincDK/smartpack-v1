@@ -1,5 +1,7 @@
 'use strict';
 
+const { invalidateStateCache } = require('../publicState');
+
 // Partnere til Packrush — se API.md, afsnit "Partnere".
 //  - Offentligt: GET /partnere, GET /partnere/:slug/logo, GET /praemier,
 //    POST /partnere/ansoeg
@@ -14,6 +16,8 @@ const { sha256Hex, hashPassword, verifyPassword } = require('../crypto');
 const { requireAdmin, parseCookies } = require('../middleware/adminAuth');
 const { createRateLimiter } = require('../middleware/rateLimit');
 const P = require('../partners');
+const { toCsv } = require('../csv');
+const { clientIp } = require('../middleware/clientIp');
 
 const PARTNER_COOKIE = 'spil_partner_session';
 const PARTNER_SESSION_TTL_MS = 12 * 3600 * 1000;
@@ -26,6 +30,9 @@ const KOLONNER = `id, slug, status, vist_i_spil, powerup, navn, firmanavn, cvr, 
   kort_beskrivelse, beskrivelse, kontakt_navn, kontakt_email, kontakt_telefon,
   giver_praemie, praemie_titel, praemie_vaerdi, praemie_vaerdi_type, praemie_moms,
   praemie_beskrivelse, praemie_udbytte, praemie_betingelser, praemie_indloesning,
+  produktkategori, privatlivspolitik, afmeld_email, levering_navn, levering_email,
+  praemie_ikke_med, praemie_sidste_frist::text AS praemie_sidste_frist, praemie_flyt,
+  fordel_ydelse, fordel_rabat, fordel_koebskrav, fordel_gyldig_til::text AS fordel_gyldig_til,
   ansoegning_besked, (logo IS NOT NULL) AS har_logo, logo_type, oprettet, opdateret`;
 
 function setPartnerCookie(res, token, maxAgeMs) {
@@ -77,6 +84,9 @@ async function opdaterPartner(pool, id, felter) {
     id,
     ...keys.map((k) => felter[k]),
   ]);
+  // Partnerne indgår i spillets tilmeldingslister (cfg.partnerLister i
+  // GET /state, se src/cfgLoad.js), så state-cachen skal ryddes.
+  invalidateStateCache();
   return hentPartner(pool, id);
 }
 
@@ -311,6 +321,7 @@ function partnersRouter(pool) {
       const { rows } = await pool.query('SELECT count(*)::int AS n FROM partner_bruger WHERE partner_id = $1', [p.id]);
       if ((p.status === 'ansoegt' || p.status === 'afvist') && rows[0].n === 0) {
         await pool.query('DELETE FROM partner WHERE id = $1', [p.id]);
+        invalidateStateCache();
         await audit(pool, req, 'partner_slettet', { partner_id: p.id, navn: p.navn });
         return res.json({ ok: true, resultat: 'slettet' });
       }
@@ -554,6 +565,156 @@ function partnersRouter(pool) {
       res.json({ partner: synlig });
     } catch (e) {
       sendFejl(res, e, next);
+    }
+  });
+
+  // --- Partnervilkår: erklæringer og accept (packrush-tekster.md, afsnit 4E) ---
+
+  async function senesteAccept(partnerId) {
+    const { rows } = await pool.query(
+      `SELECT bruger_email, vilkaar_version, tidspunkt FROM partner_accept
+       WHERE partner_id = $1 ORDER BY tidspunkt DESC LIMIT 1`,
+      [partnerId]
+    );
+    return rows[0] || null;
+  }
+
+  router.get('/partner/vilkaar', partner, async (req, res, next) => {
+    try {
+      const a = await senesteAccept(req.partnerSession.partner_id);
+      res.json({
+        version: P.PARTNERVILKAAR_VERSION,
+        url: '/spil/partnervilkaar/',
+        erklaeringer: P.ERKLAERINGER,
+        accepteret: a && a.vilkaar_version === P.PARTNERVILKAAR_VERSION ? a : null,
+      });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  router.post('/partner/vilkaar', partner, async (req, res, next) => {
+    try {
+      const svar = (req.body && req.body.erklaeringer) || {};
+      const mangler = P.ERKLAERINGER.filter((e) => svar[e.key] !== true).map((e) => e.key);
+      if (mangler.length) {
+        return res.status(400).json({ fejl: 'Sæt flueben ved alle erklæringerne.', kode: 'mangler_erklaeringer', mangler });
+      }
+      const s = req.partnerSession;
+      const erkl = Object.fromEntries(P.ERKLAERINGER.map((e) => [e.key, e.tekst]));
+      await pool.query(
+        `INSERT INTO partner_accept (partner_id, bruger_id, bruger_email, vilkaar_version, erklaeringer, ip)
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [s.partner_id, s.bruger_id, s.email, P.PARTNERVILKAAR_VERSION, JSON.stringify(erkl), clientIp(req)]
+      );
+      res.json({ ok: true, accepteret: await senesteAccept(s.partner_id) });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // --- Leads (partnervilkår pkt. 7) ---
+  // Kun spillere, hvis SENESTE hændelse på listen 'partner:<slug>' er en
+  // bekræftelse. Partneren ser aldrig andre partneres leads. Kræver, at
+  // vilkårene er accepteret. Hver download logges.
+  async function hentLeads(slug) {
+    const liste = 'partner:' + slug;
+    const { rows } = await pool.query(
+      `SELECT spiller_id, type, tidspunkt, tekst, tekst_version, id FROM samtykke
+       WHERE liste = $1 ORDER BY tidspunkt ASC, id ASC`,
+      [liste]
+    );
+    const seneste = new Map();
+    for (const r of rows) seneste.set(String(r.spiller_id), r);
+    const aktive = [...seneste.values()].filter((r) => r.type === 'bekraeftet');
+    if (!aktive.length) return [];
+    const { rows: spillere } = await pool.query(
+      'SELECT id, public_id, navn, email, firma FROM spiller WHERE id = ANY($1::bigint[])',
+      [aktive.map((r) => r.spiller_id)]
+    );
+    const sp = new Map(spillere.map((x) => [String(x.id), x]));
+    return aktive
+      .filter((r) => sp.has(String(r.spiller_id)))
+      .map((r) => {
+        const x = sp.get(String(r.spiller_id));
+        return {
+          lead_id: sha256Hex(slug + ':' + x.public_id).slice(0, 16),
+          navn: x.navn,
+          email: x.email,
+          firma: x.firma,
+          samtykke_tidspunkt: r.tidspunkt,
+          samtykke_tekst: r.tekst || '',
+          samtykke_version: r.tekst_version,
+        };
+      });
+  }
+
+  // Ingen formler i Excel: felter, der starter med = + - @, får et ' foran.
+  const csvSikker = (v) => {
+    const s = v === null || v === undefined ? '' : String(v);
+    return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
+  };
+
+  router.get('/partner/leads', partner, async (req, res, next) => {
+    try {
+      const p = await hentPartner(pool, req.partnerSession.partner_id);
+      const leads = await hentLeads(p.slug);
+      res.json({ antal: leads.length });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  router.get('/partner/leads.csv', partner, async (req, res, next) => {
+    try {
+      const s = req.partnerSession;
+      const a = await senesteAccept(s.partner_id);
+      if (!a || a.vilkaar_version !== P.PARTNERVILKAAR_VERSION) {
+        return res.status(403).json({ fejl: 'Accepter partnervilkårene først.', kode: 'vilkaar_ikke_accepteret' });
+      }
+      const p = await hentPartner(pool, s.partner_id);
+      const leads = await hentLeads(p.slug);
+      const filId = crypto.randomUUID();
+      await pool.query(
+        `INSERT INTO partner_lead_download (partner_id, bruger_id, bruger_email, antal, fil_id, ip)
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [s.partner_id, s.bruger_id, s.email, leads.length, filId, clientIp(req)]
+      );
+      const csv = toCsv(leads, [
+        { title: 'lead_id', value: (r) => r.lead_id },
+        { title: 'navn', value: (r) => csvSikker(r.navn) },
+        { title: 'arbejdsmail', value: (r) => csvSikker(r.email) },
+        { title: 'virksomhed', value: (r) => csvSikker(r.firma) },
+        { title: 'samtykke_tidspunkt', value: (r) => new Date(r.samtykke_tidspunkt).toISOString() },
+        { title: 'samtykke_tekst', value: (r) => csvSikker(r.samtykke_tekst) },
+        { title: 'samtykke_version', value: (r) => r.samtykke_version },
+        { title: 'kanal', value: () => 'e-mail' },
+      ]);
+      res.set('Content-Type', 'text/csv; charset=utf-8');
+      res.set('Content-Disposition', `attachment; filename="packrush-leads-${p.slug}.csv"`);
+      res.set('X-Fil-Id', filId);
+      res.send('\ufeff' + csv);
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // Admin: hvem har accepteret, og hvem har hentet leads.
+  router.get('/admin/partnere/:id/log', admin, async (req, res, next) => {
+    try {
+      const p = await hentPartner(pool, req.params.id);
+      if (!p) return res.status(404).json({ fejl: 'Partneren findes ikke.', kode: 'ikke_fundet' });
+      const { rows: accept } = await pool.query(
+        'SELECT bruger_email, vilkaar_version, tidspunkt FROM partner_accept WHERE partner_id = $1 ORDER BY tidspunkt DESC',
+        [p.id]
+      );
+      const { rows: downloads } = await pool.query(
+        'SELECT bruger_email, antal, fil_id, tidspunkt FROM partner_lead_download WHERE partner_id = $1 ORDER BY tidspunkt DESC',
+        [p.id]
+      );
+      res.json({ accept, downloads });
+    } catch (e) {
+      next(e);
     }
   });
 

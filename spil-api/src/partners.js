@@ -32,12 +32,42 @@ const TEKSTFELTER = {
   praemie_udbytte: 2000,
   praemie_betingelser: 2000,
   praemie_indloesning: 2000,
+  produktkategori: 60,
+  privatlivspolitik: 300,
+  afmeld_email: 200,
+  levering_navn: 200,
+  levering_email: 200,
+  praemie_ikke_med: 2000,
+  fordel_ydelse: 300,
+  fordel_rabat: 300,
+  fordel_koebskrav: 1000,
 };
+
+// Datofelter (YYYY-MM-DD eller tom).
+const DATOFELTER = ['praemie_sidste_frist', 'fordel_gyldig_til'];
+
+// Version af partnervilkårene (/spil/partnervilkaar/), som partneren
+// accepterer i portalen. Hæves, når vilkårene ændres.
+const PARTNERVILKAAR_VERSION = '1 (2026-10-02)';
+
+// De syv erklæringer i partnerportalen (packrush-tekster.md, afsnit 4E).
+// Nøglerne gemmes i partner_accept.erklaeringer.
+const ERKLAERINGER = [
+  { key: 'oplysninger', tekst: 'Oplysningerne om os er korrekte.' },
+  { key: 'gave', tekst: 'Gaven er beskrevet præcist, og værdien er retvisende.' },
+  { key: 'levering', tekst: 'Vi kan levere gaven som beskrevet og inden for fristen.' },
+  { key: 'leads', tekst: 'Vi bruger kun leads fra vores eget login og kun til det, spilleren har sagt ja til.' },
+  { key: 'deling', tekst: 'Vi deler hverken spil eller præmie før 8. oktober, og præmien omtales kun på messen.' },
+  { key: 'fejl', tekst: 'Kommer noget ud ved en fejl, giver vi straks SmartPack besked.' },
+  { key: 'vilkaar', tekst: 'Vi accepterer partnervilkårene.' },
+];
 
 // Felter, partneren selv må rette. Navn (visningsnavnet i spillet), status,
 // "vist i spil" og power-up styrer kun admin.
 const PARTNER_REDIGERBARE = [
   ...Object.keys(TEKSTFELTER),
+  ...DATOFELTER,
+  'praemie_flyt',
   'giver_praemie',
   'praemie_vaerdi',
   'praemie_vaerdi_type',
@@ -59,18 +89,20 @@ function renTekst(v, max) {
 }
 
 // Kun http(s)-adresser. Mangler protokollen, sættes https:// foran.
-function renHjemmeside(v) {
-  let s = renTekst(v, TEKSTFELTER.hjemmeside);
+function renHjemmeside(v, felt) {
+  felt = felt || 'hjemmeside';
+  const navn = felt === 'hjemmeside' ? 'Hjemmesiden' : 'Linket';
+  let s = renTekst(v, TEKSTFELTER[felt] || 300);
   if (!s) return '';
   if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
   let u;
   try {
     u = new URL(s);
   } catch (e) {
-    throw new Valideringsfejl('Hjemmesiden er ikke en gyldig adresse.', 'hjemmeside');
+    throw new Valideringsfejl(`${navn} er ikke en gyldig adresse.`, felt);
   }
   if (u.protocol !== 'http:' && u.protocol !== 'https:') {
-    throw new Valideringsfejl('Hjemmesiden skal starte med http:// eller https://.', 'hjemmeside');
+    throw new Valideringsfejl(`${navn} skal starte med http:// eller https://.`, felt);
   }
   return u.toString();
 }
@@ -91,7 +123,19 @@ function renFelter(input, tilladte) {
     if (!(k in input)) continue;
     const v = input[k];
     if (k === 'hjemmeside') ud[k] = renHjemmeside(v);
-    else if (k === 'kontakt_email') ud[k] = renEmail(v, 'kontakt_email');
+    else if (k === 'privatlivspolitik') ud[k] = renHjemmeside(v, 'privatlivspolitik');
+    else if (k === 'kontakt_email' || k === 'afmeld_email' || k === 'levering_email') ud[k] = renEmail(v, k);
+    else if (k === 'cvr') {
+      const c = renTekst(v, TEKSTFELTER.cvr).replace(/[\s-]/g, '').replace(/^DK/i, '');
+      if (c && !/^[0-9]{8}$/.test(c)) throw new Valideringsfejl('CVR-nummeret skal være 8 cifre.', 'cvr');
+      ud[k] = c;
+    } else if (DATOFELTER.includes(k)) {
+      const d = renTekst(v, 10);
+      if (d && (!/^\d{4}-\d{2}-\d{2}$/.test(d) || Number.isNaN(Date.parse(d)))) {
+        throw new Valideringsfejl('Datoen skal skrives som ÅÅÅÅ-MM-DD.', k);
+      }
+      ud[k] = d || null;
+    } else if (k === 'praemie_flyt') ud[k] = ['ja', 'nej'].includes(v) ? v : 'spoerg';
     else if (k in TEKSTFELTER) ud[k] = renTekst(v, TEKSTFELTER[k]);
     else if (k === 'navn') {
       ud[k] = renTekst(v, 80);
@@ -128,6 +172,11 @@ function manglerProfil(p) {
   if (!p.firmanavn) m.push('firmanavn');
   if (!p.hjemmeside) m.push('hjemmeside');
   if (!p.kort_beskrivelse) m.push('kort_beskrivelse');
+  // Partnervilkår: samtykket skal kunne navngive firma, CVR og produkt, og
+  // spilleren skal kunne læse partnerens privatlivspolitik.
+  if (!p.cvr) m.push('cvr');
+  if (!p.produktkategori) m.push('produktkategori');
+  if (!p.privatlivspolitik) m.push('privatlivspolitik');
   return m;
 }
 
@@ -138,6 +187,8 @@ function manglerPraemie(p) {
   if (p.praemie_vaerdi === null || p.praemie_vaerdi === undefined) m.push('praemie_vaerdi');
   if (!p.praemie_beskrivelse) m.push('praemie_beskrivelse');
   if (p.praemie_vaerdi_type === 'op_til' && !p.praemie_betingelser) m.push('praemie_betingelser');
+  if (!p.praemie_indloesning) m.push('praemie_indloesning');
+  if (!p.praemie_sidste_frist) m.push('praemie_sidste_frist');
   return m;
 }
 
@@ -161,7 +212,44 @@ function offentligPraemie(p) {
     udbytte: p.praemie_udbytte,
     betingelser: p.praemie_betingelser,
     indloesning: p.praemie_indloesning,
+    ikke_med: p.praemie_ikke_med,
+    sidste_frist: p.praemie_sidste_frist ? isoDato(p.praemie_sidste_frist) : null,
   };
+}
+
+function isoDato(d) {
+  if (d instanceof Date) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${dd}`;
+  }
+  return String(d).slice(0, 10);
+}
+
+// Partnerfordel ved køb (D1-D4) vises for sig og tæller ikke i præmiepuljen.
+function offentligFordel(p) {
+  if (!p.fordel_ydelse || !p.fordel_rabat) return null;
+  return {
+    ydelse: p.fordel_ydelse,
+    rabat: p.fordel_rabat,
+    koebskrav: p.fordel_koebskrav,
+    gyldig_til: p.fordel_gyldig_til ? isoDato(p.fordel_gyldig_til) : null,
+  };
+}
+
+// Den faste samtykketekst for én partner (packrush-tekster.md, afsnit 2).
+// Bygges altid af partnerens egne felter; partneren kan ikke skrive den frit.
+const SAMTYKKE_VERSION = 2;
+function samtykkeTekst(p) {
+  const firma = p.firmanavn || p.navn;
+  const cvr = p.cvr ? `, CVR ${p.cvr}` : '';
+  const kat = p.produktkategori || 'sine produkter';
+  return (
+    `Ja tak, ${firma}${cvr} må sende mig mails om ${kat}. ` +
+    `${p.navn} får mit navn, min arbejdsmail og min virksomhed. ` +
+    'Jeg kan altid afmelde mig igen. Det påvirker ikke mine chancer for at vinde.'
+  );
 }
 
 function offentligPartner(p) {
@@ -176,6 +264,9 @@ function offentligPartner(p) {
     powerup_effekt: p.powerup && POWERUPS[p.powerup] ? POWERUPS[p.powerup].effekt : null,
     logo_url: logoUrl(p),
     praemie: offentligPraemie(p),
+    fordel: offentligFordel(p),
+    privatlivspolitik: p.privatlivspolitik,
+    samtykke_tekst: samtykkeTekst(p),
   };
 }
 
@@ -189,6 +280,7 @@ function fuldPartner(p) {
     mangler_profil: manglerProfil(p),
     mangler_praemie: manglerPraemie(p),
     synlig: erSynlig(p),
+    samtykke_tekst: samtykkeTekst(p),
   };
 }
 
@@ -221,4 +313,9 @@ module.exports = {
   offentligPartner,
   fuldPartner,
   slugFra,
+  samtykkeTekst,
+  SAMTYKKE_VERSION,
+  ERKLAERINGER,
+  PARTNERVILKAAR_VERSION,
+  isoDato,
 };

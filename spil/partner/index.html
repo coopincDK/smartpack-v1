@@ -57,6 +57,20 @@
       <div id="p-msg"></div>
       <div><button class="btn" id="b-gem">Gem</button></div>
     </div>
+    <div class="card">
+      <h3>Vilkår og erklæringer</h3>
+      <p class="muted small">Læs <a href="/spil/partnervilkaar/" target="_blank" rel="noopener">vilkårene for partnere</a>, og sæt flueben ved alle erklæringerne. Udfyld og godkend senest tirsdag 6. oktober kl. 12.</p>
+      <div id="e-liste" style="display:flex;flex-direction:column;gap:8px"></div>
+      <div id="e-msg"></div>
+      <div><button class="btn" id="b-accept">Godkend</button></div>
+    </div>
+    <div class="card">
+      <h3>Jeres leads</h3>
+      <p class="muted small">Kun spillere, der selv har sat flueben ved jer. Brug dem kun til mails om det, der stod i samtykket, og husk en nem afmelding i hver mail. Hver download bliver logget.</p>
+      <p id="l-antal" class="small"></p>
+      <div><button class="btn ghost" id="b-leads">Hent leads som CSV</button></div>
+      <div id="ld-msg"></div>
+    </div>
   </div>
 
   <!-- Ansøg -->
@@ -114,7 +128,41 @@
     });
     lb.append(fil, el('span', { class: 'muted small', text: 'PNG, JPG, WEBP eller SVG, højst 600 KB. Gerne på transparent eller hvid baggrund.' }));
     SP.bygFormular($('p-form'), p);
+    tegnVilkaar();
+    api('/partner/leads').then(function (r) { $('l-antal').textContent = r.antal === 1 ? '1 spiller har sagt ja til jer.' : r.antal + ' spillere har sagt ja til jer.'; }).catch(function () {});
   }
+
+  function tegnVilkaar() {
+    api('/partner/vilkaar').then(function (v) {
+      var box = $('e-liste'); box.replaceChildren();
+      v.erklaeringer.forEach(function (e) {
+        var cb = el('input', { type: 'checkbox', 'data-k': e.key });
+        if (v.accepteret) { cb.checked = true; cb.disabled = true; }
+        box.append(el('label', { class: 'check' }, [cb, document.createTextNode(e.tekst)]));
+      });
+      $('b-accept').hidden = !!v.accepteret;
+      SP.besked($('e-msg'), v.accepteret ? 'Godkendt af ' + v.accepteret.bruger_email + ' ' + new Date(v.accepteret.tidspunkt).toLocaleString('da-DK') + '.' : '', 'ok');
+      $('b-leads').disabled = !v.accepteret;
+    }).catch(function () {});
+  }
+
+  $('b-accept').addEventListener('click', function () {
+    var svar = {};
+    $('e-liste').querySelectorAll('input[data-k]').forEach(function (i) { svar[i.getAttribute('data-k')] = i.checked; });
+    api('/partner/vilkaar', { method: 'POST', body: { erklaeringer: svar } })
+      .then(function () { tegnVilkaar(); })
+      .catch(function (e) { SP.besked($('e-msg'), e.message, 'err'); });
+  });
+
+  $('b-leads').addEventListener('click', function () {
+    fetch(SP.API + '/partner/leads.csv', { credentials: 'same-origin' }).then(function (r) {
+      if (!r.ok) return r.json().then(function (j) { throw new Error((j && j.fejl) || 'Kunne ikke hente leads.'); });
+      var navn = (r.headers.get('Content-Disposition') || '').replace(/.*filename="?([^"]+)"?.*/, '$1') || 'packrush-leads.csv';
+      return r.blob().then(function (b) {
+        var a = el('a', { href: URL.createObjectURL(b), download: navn }); document.body.append(a); a.click(); a.remove();
+      });
+    }).catch(function (e) { SP.besked($('ld-msg'), e.message, 'err'); });
+  });
 
   $('b-gem').addEventListener('click', function () {
     var b = $('b-gem'); b.disabled = true;

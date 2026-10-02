@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { startHarness, api, registrerSpiller } = require('./helpers/appHarness');
+const { startHarness, api, registrerSpiller, slaaSmsTil } = require('./helpers/appHarness');
 const { boostCode } = require('../src/rules/boostCode');
 const { todayStr } = require('../src/rules/life');
 
@@ -51,19 +51,23 @@ test('firma er valgfrit ved registrering (0-40 tegn); PATCH /me sætter/retter d
   assert.equal(forLangt.body.kode, 'ugyldigt_firma');
 });
 
-test('login kræver at telefonnummeret matcher — afviser uden at overskrive', async (t) => {
+test('login kræver at pinkoden matcher — afviser uden at overskrive', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
-  const { body } = await registrerSpiller(h.baseUrl, { email: 'login@example.dk', telefon: '20304050' });
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'login@example.dk', pin: '4321' });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   assert.equal(reg.status, 201);
 
+  const gemt = await h.pool.query(`SELECT telefon, pin_hash FROM spiller WHERE email = 'login@example.dk'`);
+  assert.equal(gemt.rows[0].telefon, null, 'telefon må ikke gemmes');
+  assert.ok(gemt.rows[0].pin_hash && gemt.rows[0].pin_hash !== '4321', 'pinkoden gemmes kun som hash');
+
   const forkert = await api(h.baseUrl, 'POST', '/players', {
-    body: { ...body, telefon: '99999999' },
+    body: { ...body, pin: '0000' },
   });
   assert.equal(forkert.status, 400);
-  assert.equal(forkert.body.kode, 'telefon_matcher_ikke');
+  assert.equal(forkert.body.kode, 'pin_matcher_ikke');
 
   const korrekt = await api(h.baseUrl, 'POST', '/players', { body });
   assert.equal(korrekt.status, 200);
@@ -107,22 +111,46 @@ test('opgave C: en spiller kan være logget ind på FLERE enheder samtidig — l
   assert.equal(meTablet.status, 200);
 });
 
-test('unikt telefonnummer pr. spiller — dublet afvises', async (t) => {
+test('registrering kræver en pinkode på 4 cifre', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
-  const { body: b1 } = await registrerSpiller(h.baseUrl, { email: 'a@example.dk', telefon: '20304050' });
-  await api(h.baseUrl, 'POST', '/players', { body: b1 });
+  for (const pin of ['', '123', '12345', 'abcd']) {
+    const { body } = await registrerSpiller(h.baseUrl, { pin });
+    const res = await api(h.baseUrl, 'POST', '/players', { body });
+    assert.equal(res.status, 400, `pin "${pin}" skal afvises`);
+    assert.equal(res.body.kode, 'ugyldig_pin');
+  }
+});
 
-  const { body: b2 } = await registrerSpiller(h.baseUrl, { email: 'b@example.dk', telefon: '20304050' });
-  const res = await api(h.baseUrl, 'POST', '/players', { body: b2 });
-  assert.equal(res.status, 400);
-  assert.equal(res.body.kode, 'telefon_optaget');
+test('5 forkerte pinkoder spærrer spilleren i 15 min., også for den rigtige kode', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'spaer@example.dk', pin: '1111' });
+  await api(h.baseUrl, 'POST', '/players', { body });
+  for (let i = 0; i < 5; i++) {
+    const r = await api(h.baseUrl, 'POST', '/players', { body: { ...body, pin: '2222' } });
+    assert.equal(r.status, 400);
+  }
+  const spaerret = await api(h.baseUrl, 'POST', '/players', { body });
+  assert.equal(spaerret.status, 429);
+  assert.equal(spaerret.body.kode, 'pin_spaerret');
+
+  // Ophæv spærringen (som efter 15 min.) — så virker den rigtige kode igen,
+  // og tælleren nulstilles.
+  await h.pool.query(`UPDATE spiller SET pin_spaerret_til = now() - interval '1 minute' WHERE email = 'spaer@example.dk'`);
+  const ok = await api(h.baseUrl, 'POST', '/players', { body });
+  assert.equal(ok.status, 200);
+  const r = await h.pool.query(`SELECT pin_fejl, pin_spaerret_til FROM spiller WHERE email = 'spaer@example.dk'`);
+  assert.equal(r.rows[0].pin_fejl, 0);
+  assert.equal(r.rows[0].pin_spaerret_til, null);
 });
 
 test('PUT /me/subs sætter den VARIGE tilmelding, giver IKKE liv, og logger bekraeftet/trukket_tilbage', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
 
   const { body } = await registrerSpiller(h.baseUrl);
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
@@ -153,6 +181,7 @@ test('PUT /me/subs sætter den VARIGE tilmelding, giver IKKE liv, og logger bekr
 test('PUT /me/ticks (dagens flueben) giver friske liv, PUT /me/subs gør ikke', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
 
   const { body } = await registrerSpiller(h.baseUrl);
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
@@ -213,6 +242,7 @@ test('GET /me kræver bearer-token', async (t) => {
 test('POST /me/boost: kræver sms-tilmelding, korrekt kode, og kun én gang pr. dag', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
 
   const { body } = await registrerSpiller(h.baseUrl);
   const reg = await api(h.baseUrl, 'POST', '/players', { body });

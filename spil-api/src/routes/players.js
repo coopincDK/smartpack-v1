@@ -1,9 +1,12 @@
 'use strict';
 
+const { loadOffentligCfg } = require('../cfgLoad');
+
 const express = require('express');
 const { firmKey } = require('../rules/firmKey');
-const { lifeState, setSubsPure, setTicksPure, todayStr } = require('../rules/life');
-const { randomPublicId, randomCode } = require('../crypto');
+const { lifeState, setSubsPure, setTicksPure, todayStr, samtykkeTekstFor } = require('../rules/life');
+const { SAMTYKKE_VERSION } = require('../partners');
+const { randomPublicId, randomCode, hashPassword, verifyPassword } = require('../crypto');
 const { issueToken } = require('../spillerToken');
 const { clientIp } = require('../middleware/clientIp');
 const { invalidateStateCache } = require('../publicState');
@@ -12,6 +15,10 @@ const MAKS_NAVN = 22;
 const MAKS_FIRMA = 40;
 const MAKS_KODE = 5;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PIN_RE = /^[0-9]{4}$/;
+// Spærring efter for mange forkerte pinkoder (pr. spiller, se 010_pinkode.sql).
+const PIN_MAKS_FEJL = 5;
+const PIN_SPAERRING_MS = 15 * 60 * 1000;
 
 function normalizePhone(raw) {
   return String(raw || '').replace(/[^0-9]/g, '');
@@ -22,8 +29,7 @@ function last8(digits) {
 }
 
 async function getCfg(pool) {
-  const { rows } = await pool.query('SELECT offentlig FROM config WHERE id = 1');
-  return (rows[0] && rows[0].offentlig) || {};
+  return loadOffentligCfg(pool);
 }
 
 async function generateUniqueVennekode(client) {
@@ -42,9 +48,11 @@ function playersRouter(pool, ws) {
     const body = req.body || {};
     const email = String(body.email || '').trim().toLowerCase();
     const navn = String(body.navn || '').trim();
-    const telefonRaw = String(body.telefon || '').trim();
+    // Telefon indsamles ikke længere (vilkår pkt. 4). Feltet læses KUN for at
+    // lade spillere oprettet før pinkoden logge ind som hidtil.
+    const telefon = normalizePhone(String(body.telefon || '').trim());
+    const pin = String(body.pin || '').trim();
     const firma = String(body.firma || '').trim();
-    const telefon = normalizePhone(telefonRaw);
     const vennekode = String(body.vennekode || '').trim().toUpperCase().slice(0, MAKS_KODE);
     const udfordringskode = String(body.udfordringskode || '').trim().toUpperCase().slice(0, MAKS_KODE);
     const tilmeldinger = Array.isArray(body.tilmeldinger) ? body.tilmeldinger.map(String) : [];
@@ -52,8 +60,8 @@ function playersRouter(pool, ws) {
     if (!EMAIL_RE.test(email)) {
       return res.status(400).json({ fejl: 'Ugyldig emailadresse.', kode: 'ugyldig_email' });
     }
-    if (telefon.length < 8) {
-      return res.status(400).json({ fejl: 'Ugyldigt telefonnummer.', kode: 'ugyldigt_telefon' });
+    if (!PIN_RE.test(pin) && telefon.length < 8) {
+      return res.status(400).json({ fejl: 'Pinkoden skal være 4 cifre.', kode: 'ugyldig_pin' });
     }
 
     const client = await pool.connect();
@@ -65,12 +73,43 @@ function playersRouter(pool, ws) {
       if (existing.rows.length) {
         // --- LOGIN ---
         const p = existing.rows[0];
-        if (last8(normalizePhone(p.telefon)) !== last8(telefon)) {
+        const nu = new Date();
+        if (p.pin_spaerret_til && new Date(p.pin_spaerret_til).getTime() > nu.getTime()) {
           await client.query('ROLLBACK');
-          return res.status(400).json({
-            fejl: 'Telefonnummeret matcher ikke vores oplysninger for denne email.',
-            kode: 'telefon_matcher_ikke',
+          return res.status(429).json({
+            fejl: 'For mange forkerte pinkoder. Prøv igen om et kvarter, eller kom forbi standen.',
+            kode: 'pin_spaerret',
           });
+        }
+        let godkendt;
+        if (p.pin_hash) {
+          godkendt = PIN_RE.test(pin) && verifyPassword(pin, p.pin_hash);
+        } else {
+          // Spiller oprettet før pinkoden: login med telefonnummeret som hidtil.
+          godkendt = telefon.length >= 8 && !!p.telefon && last8(normalizePhone(p.telefon)) === last8(telefon);
+        }
+        if (!godkendt) {
+          const fejl = (p.pin_fejl || 0) + 1;
+          const spaerret = fejl >= PIN_MAKS_FEJL ? new Date(nu.getTime() + PIN_SPAERRING_MS) : null;
+          await client.query('UPDATE spiller SET pin_fejl = $1, pin_spaerret_til = $2 WHERE id = $3', [
+            spaerret ? 0 : fejl,
+            spaerret,
+            p.id,
+          ]);
+          await client.query('COMMIT');
+          if (!p.pin_hash) {
+            return res.status(400).json({
+              fejl: 'Din profil er oprettet før pinkoderne. Kom forbi standen, så nulstiller vi den.',
+              kode: 'mangler_pin',
+            });
+          }
+          return res.status(400).json({
+            fejl: 'Pinkoden passer ikke til denne e-mail.',
+            kode: 'pin_matcher_ikke',
+          });
+        }
+        if (p.pin_fejl || p.pin_spaerret_til) {
+          await client.query('UPDATE spiller SET pin_fejl = 0, pin_spaerret_til = NULL WHERE id = $1', [p.id]);
         }
 
         let chFromUpdate = p.ekstra_02;
@@ -127,13 +166,9 @@ function playersRouter(pool, ws) {
           .json({ fejl: 'Du skal acceptere betingelserne for at oprette en spiller.', kode: 'mangler_accept' });
       }
 
-      const telefonKonflikt = await client.query('SELECT 1 FROM spiller WHERE telefon = $1', [telefon]);
-      if (telefonKonflikt.rows.length) {
+      if (!PIN_RE.test(pin)) {
         await client.query('ROLLBACK');
-        return res.status(400).json({
-          fejl: 'Der findes allerede en spiller med dette telefonnummer.',
-          kode: 'telefon_optaget',
-        });
+        return res.status(400).json({ fejl: 'Vælg en pinkode på 4 cifre.', kode: 'ugyldig_pin' });
       }
 
       const cfg = await getCfg(pool);
@@ -178,13 +213,13 @@ function playersRouter(pool, ws) {
 
       const ins = await client.query(
         `INSERT INTO spiller (
-           public_id, email, navn, telefon, firma, firma_noegle, vennekode,
+           public_id, email, navn, pin_hash, firma, firma_noegle, vennekode,
            ref_spiller_id, marketing, mail_to, notify,
            liv_dag, liv_n, liv_t, chl, badges, ekstra_01, ekstra_02, tick_dag, tick_keys
          ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,'{}'::jsonb,'[]'::jsonb,$15,$16,$17,$18)
          RETURNING id, oprettet`,
         [
-          publicId, email, navn, telefon, firma, firmKey(firma), nyVennekode,
+          publicId, email, navn, hashPassword(pin), firma, firmKey(firma), nyVennekode,
           refSpillerId, nyP.marketing, JSON.stringify(nyP.mailTo), nyP.notify,
           bag.day, bag.n, new Date(bag.t), JSON.stringify(bag.g), chFrom, nyP.tick.day, JSON.stringify(nyP.tick.keys),
         ]
@@ -198,10 +233,11 @@ function playersRouter(pool, ws) {
       const nowIso = new Date();
       for (const key of subResult.added) {
         const liste = key === 'sp' ? 'smartpack' : key === 'sms' ? 'sms' : 'partner:' + key.slice(2);
+        const tekst = samtykkeTekstFor(cfg, key);
         await client.query(
-          `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
-           VALUES ($1,$2,$3,1,'registrering',$4,$5,'bekraeftet')`,
-          [spillerId, liste, nowIso, clientIp(req), req.headers['user-agent'] || null]
+          `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst, tekst_version, kilde, ip, user_agent, type)
+           VALUES ($1,$2,$3,$4,$5,'registrering',$6,$7,'bekraeftet')`,
+          [spillerId, liste, nowIso, tekst, tekst ? SAMTYKKE_VERSION : 1, clientIp(req), req.headers['user-agent'] || null]
         );
       }
 
@@ -229,4 +265,4 @@ function playersRouter(pool, ws) {
   return router;
 }
 
-module.exports = { playersRouter, normalizePhone, MAKS_NAVN, MAKS_FIRMA };
+module.exports = { playersRouter, normalizePhone, MAKS_NAVN, MAKS_FIRMA, PIN_RE };

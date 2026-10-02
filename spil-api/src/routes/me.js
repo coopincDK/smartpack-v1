@@ -1,5 +1,8 @@
 'use strict';
 
+const { loadOffentligCfg } = require('../cfgLoad');
+const { SAMTYKKE_VERSION } = require('../partners');
+
 const express = require('express');
 const { requirePlayer } = require('../middleware/playerAuth');
 const {
@@ -10,6 +13,7 @@ const {
   listNameFor,
   todayStr,
   todayTickKeys,
+  samtykkeTekstFor,
 } = require('../rules/life');
 const { boostCode } = require('../rules/boostCode');
 const { MAX_LIVES } = require('../rules/constants');
@@ -25,8 +29,7 @@ const { MAKS_FIRMA } = require('./players');
 const MAKS_KODE = 5;
 
 async function getCfg(pool) {
-  const { rows } = await pool.query('SELECT offentlig FROM config WHERE id = 1');
-  return (rows[0] && rows[0].offentlig) || {};
+  return loadOffentligCfg(pool);
 }
 
 // Samtykke-hændelsesloggen (se migrations/003_packrush.sql) giver ét svar
@@ -57,11 +60,11 @@ async function samtykkerFor(client, spillerId) {
 
 // Logger én samtykke-hændelse (bekraeftet/trukket_tilbage) — se API.md,
 // afsnit "Packrush-ændringer".
-async function logSamtykke(client, spillerId, liste, type, kilde, req, now) {
+async function logSamtykke(client, spillerId, liste, type, kilde, req, now, tekst) {
   await client.query(
-    `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst_version, kilde, ip, user_agent, type)
-     VALUES ($1,$2,$3,1,$4,$5,$6,$7)`,
-    [spillerId, liste, now, kilde, clientIp(req), req.headers['user-agent'] || null, type]
+    `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst, tekst_version, kilde, ip, user_agent, type)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+    [spillerId, liste, now, tekst || null, tekst ? SAMTYKKE_VERSION : 1, kilde, clientIp(req), req.headers['user-agent'] || null, type]
   );
 }
 
@@ -357,7 +360,7 @@ function meRouter(pool, ws) {
       );
 
       for (const key of result.added) {
-        await logSamtykke(client, row.id, listNameFor(key), 'bekraeftet', 'subs', req, now);
+        await logSamtykke(client, row.id, listNameFor(key), 'bekraeftet', 'subs', req, now, samtykkeTekstFor(cfg, key));
       }
       for (const key of result.removed) {
         await logSamtykke(client, row.id, listNameFor(key), 'trukket_tilbage', 'subs', req, now);
@@ -459,7 +462,7 @@ function meRouter(pool, ws) {
       );
 
       for (const key of result.added) {
-        await logSamtykke(client, row.id, listNameFor(key), 'bekraeftet', 'ticks', req, now);
+        await logSamtykke(client, row.id, listNameFor(key), 'bekraeftet', 'ticks', req, now, samtykkeTekstFor(cfg, key));
       }
 
       await client.query('COMMIT');

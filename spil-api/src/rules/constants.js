@@ -29,7 +29,7 @@ const DEFAULT_CFG = {
   partners: true,
   prize: '',
   smsSponsor: 'InMobile',
-  smsOn: true,
+  smsOn: false,
   mailPartners: 'Herodesk, Revershero, Active Promotion, Sprii, Element Logic',
   lifeBonus: true,
   referral: true,
@@ -37,7 +37,7 @@ const DEFAULT_CFG = {
   hourly: true,
   hourPrize: '',
   duel: true,
-  smsBoost: true,
+  smsBoost: false,
   boostLives: 2,
   shareUrl: '',
   // Opfølgning: MIN/MAX for klientens PÅSTÅEDE aktive spilletid ved

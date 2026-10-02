@@ -8,7 +8,7 @@ const ADMIN_PW = 'test-admin-adgangskode';
 process.env.ADMIN_PASSWORD_HASH = hashPassword(ADMIN_PW);
 process.env.COOKIE_SECURE = 'false'; // tests kører over http, ikke https
 
-const { startHarness, api, registrerSpiller } = require('./helpers/appHarness');
+const { startHarness, api, registrerSpiller, slaaSmsTil } = require('./helpers/appHarness');
 
 function cookieFra(res) {
   const raw = res.headers.get('set-cookie');
@@ -146,6 +146,7 @@ test('DELETE /admin/spillere/:pid sletter spilleren og anonymiserer rest-referen
 test('opgave G: GET /admin/spillere returnerer komplet organisatordata (tilmeldinger, beaten_i_dag, forsoeg, liv)', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
 
   const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
   const adminCookie = cookieFra(login);
@@ -195,7 +196,7 @@ test('opgave G: GET /admin/spillere returnerer komplet organisatordata (tilmeldi
   assert.ok(spiller, 'skal finde spilleren');
 
   assert.equal(spiller.navn, 'Organisator Testesen'); // FULDT, umaskeret navn
-  assert.ok(spiller.telefon);
+  assert.equal(spiller.telefon, null, "nye spillere har ingen telefon");
   assert.ok(Array.isArray(spiller.tilmeldinger));
   const smsTilmelding = spiller.tilmeldinger.find((x) => x.liste === 'sms');
   assert.ok(smsTilmelding, 'tilmeldinger skal indeholde sms-listens afledte samtykke-status');
@@ -218,6 +219,7 @@ test('opgave G: GET /admin/spillere returnerer komplet organisatordata (tilmeldi
 test('POST /admin/afmeld logger trukket_tilbage for fundne emails og rapporterer fundet/ikke_fundet', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
 
   const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
   const adminCookie = cookieFra(login);
@@ -312,6 +314,7 @@ test('opgave H: POST /admin/afmeld understøtter liste:"alle" (afmelder KUN de l
 test('opgave H: POST /admin/afmeld matcher også på telefonnummer (sidste 8 cifre), ikke kun email', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
+  await slaaSmsTil(h.pool);
 
   const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
   const adminCookie = cookieFra(login);
@@ -323,6 +326,9 @@ test('opgave H: POST /admin/afmeld matcher også på telefonnummer (sidste 8 cif
   });
   const reg = await api(h.baseUrl, 'POST', '/players', { body });
   const token = reg.body.token;
+  // Nye spillere gemmer ikke telefon (010_pinkode.sql); afmelding på telefon
+  // virker stadig for spillere oprettet før — simulér sådan én.
+  await h.pool.query(`UPDATE spiller SET telefon = '20304099' WHERE email = 'telefon-match@example.dk'`);
 
   const res = await api(h.baseUrl, 'POST', '/admin/afmeld', {
     adminCookie,
@@ -408,4 +414,32 @@ test('POST /admin/nulstil kræver admin-session (ikke stand)', async (t) => {
     body: { bekraeft: 'NULSTIL' },
   });
   assert.equal(res.status, 403);
+});
+
+test('spiller oprettet før pinkoderne kan logge ind med telefon; standen kan nulstille til en ny pinkode', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const { body } = await registrerSpiller(h.baseUrl, { email: 'gammel@example.dk' });
+  await api(h.baseUrl, 'POST', '/players', { body });
+  await h.pool.query(`UPDATE spiller SET pin_hash = NULL, telefon = '20304050' WHERE email = 'gammel@example.dk'`);
+
+  const medTelefon = await api(h.baseUrl, 'POST', '/players', {
+    body: { email: 'gammel@example.dk', telefon: '+45 20 30 40 50' },
+  });
+  assert.equal(medTelefon.status, 200);
+
+  const medPin = await api(h.baseUrl, 'POST', '/players', { body: { email: 'gammel@example.dk', pin: '1234' } });
+  assert.equal(medPin.status, 400);
+  assert.equal(medPin.body.kode, 'mangler_pin');
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const adminCookie = cookieFra(login);
+  const pid = (await h.pool.query(`SELECT public_id FROM spiller WHERE email = 'gammel@example.dk'`)).rows[0].public_id;
+  const nul = await api(h.baseUrl, 'POST', `/admin/spillere/${pid}/nulstil-pin`, { adminCookie });
+  assert.equal(nul.status, 200);
+  assert.match(nul.body.pin, /^[0-9]{4}$/);
+
+  const nyPin = await api(h.baseUrl, 'POST', '/players', { body: { email: 'gammel@example.dk', pin: nul.body.pin } });
+  assert.equal(nyPin.status, 200);
 });

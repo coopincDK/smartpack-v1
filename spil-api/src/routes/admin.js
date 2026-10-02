@@ -1,8 +1,9 @@
 'use strict';
 
 const express = require('express');
+const { medPartnere, partnerLister } = require('../cfgLoad');
 const config = require('../config');
-const { verifyPassword, randomCode } = require('../crypto');
+const { verifyPassword, randomCode, hashPassword } = require('../crypto');
 const {
   requireAdmin,
   createSession,
@@ -30,9 +31,14 @@ const NULSTIL_BEKRAEFT = 'NULSTIL';
 const STAND_KODE_TTL_MS = 5 * 60 * 1000;
 const STAND_KODE_LEN = 6;
 
-async function getCfgRow(pool) {
+// `raw: true` giver config præcis som den står i databasen (bruges, når den
+// skal gemmes igen). Ellers lægges de aktive partnere ind som lister, se
+// src/cfgLoad.js.
+async function getCfgRow(pool, { raw = false } = {}) {
   const { rows } = await pool.query('SELECT offentlig, hemmelig FROM config WHERE id = 1');
-  return rows[0] || { offentlig: {}, hemmelig: {} };
+  const row = rows[0] || { offentlig: {}, hemmelig: {} };
+  if (raw) return row;
+  return { ...row, offentlig: medPartnere(row.offentlig, await partnerLister(pool)) };
 }
 
 // Hvilke spiller-id'er har aktiv ('bekraeftet') status for én bestemt liste
@@ -339,8 +345,11 @@ function adminRouter(pool, ws, opts) {
   router.put('/admin/config', admin, async (req, res, next) => {
     try {
       const body = req.body || {};
-      const cfgRow = await getCfgRow(pool);
-      const offentlig = body.offentlig ? { ...cfgRow.offentlig, ...body.offentlig } : cfgRow.offentlig;
+      const cfgRow = await getCfgRow(pool, { raw: true });
+      // partnerLister er afledt af partner-tabellen og må ikke gemmes i config.
+      const ind = body.offentlig ? { ...body.offentlig } : null;
+      if (ind) delete ind.partnerLister;
+      const offentlig = ind ? { ...cfgRow.offentlig, ...ind } : cfgRow.offentlig;
       const hemmelig = body.hemmelig ? { ...cfgRow.hemmelig, ...body.hemmelig } : cfgRow.hemmelig;
       await pool.query('UPDATE config SET offentlig = $1, hemmelig = $2 WHERE id = 1', [
         JSON.stringify(offentlig),
@@ -381,6 +390,30 @@ function adminRouter(pool, ws, opts) {
       next(e);
     }
   });
+
+  // Nulstil en spillers pinkode (glemt pinkode eller profil oprettet før
+  // pinkoderne). Standen giver spilleren en ny, tilfældig 4-cifret pinkode,
+  // som kun vises her én gang. Spærringen ophæves samtidig.
+  async function nulstilPin(res, next, where, value) {
+    try {
+      const pin = randomCode(4, '0123456789');
+      const { rowCount } = await pool.query(
+        `UPDATE spiller SET pin_hash = $1, pin_fejl = 0, pin_spaerret_til = NULL WHERE ${where} = $2`,
+        [hashPassword(pin), value]
+      );
+      if (!rowCount) return res.status(404).json({ fejl: 'Ukendt spiller.', kode: 'ukendt_spiller' });
+      res.json({ ok: true, pin });
+    } catch (e) {
+      next(e);
+    }
+  }
+  router.post('/admin/spillere/:pid/nulstil-pin', admin, (req, res, next) =>
+    nulstilPin(res, next, 'public_id', req.params.pid)
+  );
+  // Samme, men slået op på e-mail (det standen har ved hånden).
+  router.post('/admin/nulstil-pin', admin, (req, res, next) =>
+    nulstilPin(res, next, 'email', String((req.body && req.body.email) || '').trim().toLowerCase())
+  );
 
   // Rigtig sletning (GDPR) — sletter spilleren og alt tilhørende data, samt
   // anonymiserer rest-referencer i andre spilleres data (se

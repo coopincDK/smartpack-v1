@@ -54,10 +54,10 @@ async function mkToken(pool, spillerId, sidstBrugt, tilbagekaldt) {
   return rows[0].id;
 }
 
-test('cutoffDate regner præcis 12 måneder tilbage', () => {
+test('cutoffDate regner præcis 24 måneder tilbage', () => {
   const now = new Date('2026-09-30T12:00:00Z');
   const cutoff = cutoffDate(now);
-  assert.equal(cutoff.toISOString().slice(0, 10), '2025-09-30');
+  assert.equal(cutoff.toISOString().slice(0, 10), '2024-09-30');
 });
 
 test('cutoffDate klemmer konservativt til sidste dag i februar over en skudårskant (aldrig for tidligt)', () => {
@@ -65,12 +65,16 @@ test('cutoffDate klemmer konservativt til sidste dag i februar over en skudårsk
   // skudår) — klemmes til 28. februar 2027, IKKE rullet videre til 1. marts
   // (som ville gøre cutoff nyere, dvs. gøre det NEMMERE at kvalificere til
   // sletning end præcis 12 måneder tilsiger).
-  const now = new Date('2028-02-29T00:00:00Z');
-  const cutoff = cutoffDate(now);
-  assert.equal(cutoff.toISOString().slice(0, 10), '2027-02-28');
+  const now = new Date('2029-02-28T00:00:00Z');
+  assert.equal(cutoffDate(now).toISOString().slice(0, 10), '2027-02-28');
+  // 31. marts minus 24 måneder i et år hvor februar ikke har 29 dage osv.:
+  // dagen klemmes til sidste gyldige dag i målmåneden.
+  assert.equal(cutoffDate(new Date('2028-04-30T00:00:00Z')).toISOString().slice(0, 10), '2026-04-30');
+  assert.equal(cutoffDate(new Date('2030-02-28T00:00:00Z')).toISOString().slice(0, 10), '2028-02-28');
+  assert.equal(cutoffDate(new Date('2026-01-15T00:00:00Z')).toISOString().slice(0, 10), '2024-01-15');
 });
 
-test('GDPR-oprydning: kun spillere UDEN aktivt samtykke OG >12 mdr. inaktive kvalificerer', async (t) => {
+test('GDPR-oprydning: kun spillere UDEN aktivt samtykke OG >24 mdr. inaktive kvalificerer', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
@@ -102,6 +106,15 @@ test('GDPR-oprydning: kun spillere UDEN aktivt samtykke OG >12 mdr. inaktive kva
   await mkSamtykke(h.pool, e, 'sms', 'trukket_tilbage', new Date(forGammel.getTime() + 1000));
   await h.pool.query(`INSERT INTO notifikation (spiller_id, type, data) VALUES ($1,'beaten','{}'::jsonb)`, [e]);
 
+  // f) gammelt forsøg, men har logget ind for nylig (token brugt) -> IKKE slettet.
+  const f = await mkSpiller(h.pool, forGammel);
+  await mkForsoeg(h.pool, f, forGammel);
+  await mkToken(h.pool, f, nyligt);
+
+  // g) sidst spillet for 18 mdr. siden (mellem 12 og 24) -> IKKE slettet.
+  const g = await mkSpiller(h.pool, forGammel);
+  await mkForsoeg(h.pool, g, new Date('2025-03-30T00:00:00Z'));
+
   const kandidater = await findRetentionCandidates(h.pool, now);
   assert.deepEqual(new Set(kandidater), new Set([c, d, e]));
 
@@ -111,7 +124,7 @@ test('GDPR-oprydning: kun spillere UDEN aktivt samtykke OG >12 mdr. inaktive kva
   const tilbage = await h.pool.query('SELECT id FROM spiller ORDER BY id');
   assert.deepEqual(
     new Set(tilbage.rows.map((r) => r.id)),
-    new Set([a, b])
+    new Set([a, b, f, g])
   );
 
   // Cascade: forsøg/notifikationer/samtykke for e er væk.

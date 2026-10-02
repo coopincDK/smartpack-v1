@@ -611,13 +611,13 @@ details.more summary:hover{color:var(--text)}
 
 <section class="screen" id="s-reg">
   <h2 style="font-size:48px">Tilmeld dig</h2>
-  <p class="muted">Allerede tilmeldt? Brug samme e-mail og telefonnummer, så fortsætter du med dine liv.</p>
+  <p class="muted">Allerede tilmeldt? Brug samme e-mail og pinkode, så fortsætter du med dine liv.</p>
   <form id="f-reg" novalidate>
     <label class="f">E-mail<input type="email" id="i-email" autocomplete="email" inputmode="email"></label>
-    <label class="f">Telefon<input type="tel" id="i-phone" autocomplete="tel" inputmode="tel"></label>
+    <label class="f">Pinkode <small>4 cifre, du selv vælger. Du skal bruge den, hvis du logger ind på en anden telefon</small><input type="password" id="i-pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
     <label class="f">Navn på topscoren<input type="text" id="i-name" maxlength="22" autocomplete="nickname" placeholder="Kun første gang"></label>
-    <label class="f" id="l-company">Webshop eller firma <small>Står ved dit navn på topscoren</small><input type="text" id="i-company" maxlength="40" autocomplete="organization" placeholder="Fx minwebshop.dk"></label>
-    <label class="check"><input type="checkbox" id="i-terms">Jeg accepterer, at SmartPack gemmer mine oplysninger til konkurrencen og kontakter mig, hvis jeg vinder.</label>
+    <label class="f" id="l-company">Webshop eller firma <small>Står ved dit navn på topscoren. Skriv det som på din billet til konferencen, så kan I vinde</small><input type="text" id="i-company" maxlength="40" autocomplete="organization" placeholder="Fx minwebshop.dk"></label>
+    <label class="check"><input type="checkbox" id="i-terms"><span>Jeg accepterer <a href="/spil/vilkaar/" target="_blank" rel="noopener">vilkårene</a>, og at SmartPack gemmer mine oplysninger til konkurrencen og kontakter mig, hvis jeg vinder.</span></label>
     <div class="subs" id="reg-subs"></div>
     <label class="f" id="l-ref">Har du en vens kode? <small>Så får din ven fuld liv, når du har spillet dit første spil</small><input type="text" id="i-ref" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="Fx KX7P"></label>
     <p class="err" id="reg-err" role="alert"></p>
@@ -765,9 +765,18 @@ details.more summary:hover{color:var(--text)}
   </div>
 
   <div class="adm">
-    <h3>Lodtrækning</h3>
-    <p class="muted small" id="a-raffle"></p>
-    <button class="btn" id="b-draw">Træk en vinder</button>
+    <h3>Præmiekonkurrencen</h3>
+    <p class="muted small" id="a-raffle">Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. Firmaet får 1 lod pr. påbegyndte 500 point i sit bedste spil i spilperioden. Se <a href="/spil/vilkaar/" target="_blank" rel="noopener">vilkårene</a>.</p>
+    <label class="f">Deltagerliste <small>Kopiér firmakolonnen fra Dansk Erhvervs Google Sheet og sæt den ind her, ét firma pr. linje. Kopierer du flere kolonner, så skriv nedenfor, hvilken kolonne firmaet står i</small><textarea id="a-dl" style="min-height:90px"></textarea></label>
+    <div class="grid2">
+      <label class="f">Firmaet står i kolonne nr.<input type="number" id="a-dlkol" min="1" max="50" value="1"></label>
+      <label class="f">Sådan<select id="a-dlmode"><option value="erstat">Erstat listen (ny udgave)</option><option value="tilfoej">Tilføj firmaer</option></select></label>
+    </div>
+    <button class="btn small" id="b-dl">Gem deltagerliste</button>
+    <p class="muted small" id="a-dl-res"></p>
+    <button class="btn small" id="b-lodder">Vis lodder lige nu</button>
+    <div id="a-lodder"></div>
+    <button class="btn" id="b-draw">Træk vinderen</button>
     <div id="a-draw"></div>
   </div>
 
@@ -795,6 +804,10 @@ details.more summary:hover{color:var(--text)}
     <label class="f">Listen<select id="a-unlist"></select></label>
     <button class="btn small" id="b-unsub">Afmeld dem fra listen</button>
     <p class="muted small" id="a-unsub-res"></p>
+    <h4 class="sub">Glemt pinkode</h4>
+    <label class="f">Spillerens e-mail <small>Spilleren får en ny pinkode, som kun vises her</small><input type="email" id="a-pinmail" autocomplete="off"></label>
+    <button class="btn small" id="b-pin">Giv ny pinkode</button>
+    <p class="muted small" id="a-pin-res"></p>
     <h4 class="sub">Nulstil alt</h4>
     <p class="muted small">Sletter ALLE spillere, forsøg og scores permanent. Kan ikke fortrydes. Brug kun før messen starter, aldrig under eller efter.</p>
     <label class="f">Skriv NULSTIL for at bekræfte<input type="text" id="a-resetconfirm" autocomplete="off"></label>
@@ -982,7 +995,7 @@ const API = {
   me(){ return getToken() ? apiFetch('/me') : Promise.resolve(null); },
   register(payload){
     return apiFetch('/players', { method: 'POST', noAuth: true, body: {
-      navn: payload.name, email: payload.email, telefon: payload.phone, firma: payload.company,
+      navn: payload.name, email: payload.email, pin: payload.pin, firma: payload.company,
       vennekode: payload.ref || '', udfordringskode: payload.chCode || '',
       tilmeldinger: payload.subs || [], accepterer_betingelser: true,
     } }).then(r => { if(r && r.token) setToken(r.token); return r; });
@@ -1032,7 +1045,11 @@ const API = {
     boostCode(){ return apiFetch('/admin/boostkode', { admin: true }); },
     exportUrl(kind){ return API_BASE + '/admin/eksport/' + kind + '.csv'; },
     draw(kortNavn){ return apiFetch('/admin/lodtraekning', { method: 'POST', body: { kort_navn: kortNavn || cfg.periodName || 'Packrush' }, admin: true }); },
+    saveDeltagerliste(tekst, kolonne, tilstand){ return apiFetch('/admin/deltagerliste', { method: 'POST', body: { tekst, kolonne, tilstand }, admin: true }); },
+    lodder(){ return apiFetch('/admin/konkurrence/lodder', { admin: true }); },
+    traek(){ return apiFetch('/admin/konkurrence/traek', { method: 'POST', admin: true }); },
     unsubscribeBulk(liste, emails){ return apiFetch('/admin/afmeld', { method: 'POST', body: { liste, emails }, admin: true }); },
+    resetPin(email){ return apiFetch('/admin/nulstil-pin', { method: 'POST', body: { email }, admin: true }); },
     resetAll(){ return apiFetch('/admin/nulstil', { method: 'POST', body: { bekraeft: 'NULSTIL' }, admin: true }); },
     standLoginCode(){ return apiFetch('/admin/stand-login-kode', { method: 'POST', admin: true }); },
   },
@@ -1325,7 +1342,10 @@ const mailPartners = () => String(cfg.mailPartners || '').split(',').map(x => x.
 /* hver liste har sin egen nøgle: 'sp' er SmartPacks egne nyheder, 'm:<partner>' en partners mail, 'sms' sponsorens sms-liste */
 function subOptions(){
   const o = [{ k: 'sp', name: 'SmartPack', text: 'Nyheder fra SmartPack om lager og e-handel på mail', life: false }];
-  mailPartners().forEach(n => o.push({ k: 'm:' + n, name: n, text: `Nyheder fra ${n} på mail`, life: true }));
+  // Partnerne kommer fra partnerportalen (cfg.partnerLister): nøglen er partnerens faste id, og teksten er den
+  // faste samtykketekst med firma og CVR. Findes listen ikke (ingen partnere slået til), bruges navnene som før.
+  const info = new Map((cfg.partnerLister || []).map(l => [l.slug, l]));
+  mailPartners().forEach(n => { const l = info.get(n); o.push({ k: 'm:' + n, name: l ? l.navn : n, text: l ? l.tekst : `Nyheder fra ${n} på mail`, privacy: l ? l.privatlivspolitik : '', life: true }); });
   if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: cfg.smsSponsor, text: `Sms'er om spillet, fx når nogen slår din score. Sendes af ${cfg.smsSponsor}, og du kommer på ${cfg.smsSponsor}s sms-liste`, life: true });
   return o;
 }
@@ -1339,12 +1359,16 @@ function subsBox(box, initial, onChange, fold){
   box.replaceChildren();
   const head = el('div', 'subs-head'), t = el('div');
   t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Fluebenene starter tomme hver dag, så du vælger selv. Hver partner, du sætter flueben ved, giver et ekstra liv i dag, og så får du et liv tilbage hver halve time, når du er under 3. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
-  const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button';
+  // Ingen "Tilmeld alle": hver partner skal vælges for sig (vilkår pkt. 12). Knappen findes stadig i koden,
+  // så resten af logikken er uændret, men den vises ikke.
+  const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button'; all.hidden = true;
   head.append(t, all); box.append(head);
   const list = el('div', 'subs-list'), inputs = [];
   opts.forEach(o => {
     const l = el('label', 'check'), i = el('input'); i.type = 'checkbox'; i.checked = chosen.has(o.k); i.dataset.k = o.k;
-    const sp = el('span'); sp.append(o.text + '.'); if(bonus && o.life) sp.append(' ', el('b', 'plus', '+1 liv i dag'));
+    const sp = el('span'); sp.append(/[.!?]$/.test(o.text) ? o.text : o.text + '.');
+    if(o.privacy){ const a = el('a', null, `Læs ${o.name}s privatlivspolitik`); a.href = o.privacy; a.target = '_blank'; a.rel = 'noopener'; sp.append(' ', a); }
+    if(bonus && o.life) sp.append(' ', el('b', 'plus', '+1 liv i dag'));
     l.append(i, sp); list.append(l); inputs.push(i);
     i.onchange = () => { i.checked ? chosen.add(o.k) : chosen.delete(o.k); sync(); onChange && onChange([...chosen]); };
   });
@@ -2256,25 +2280,26 @@ function renderStart(){
 let regSubs = () => [];
 $('#b-play').onclick = () => {
   $('#reg-err').textContent = '';
-  regSubs = subsBox($('#reg-subs'), [], null, true);
+  // Ikke foldet sammen: uden "Tilmeld alle" skal hver partners flueben kunne ses med det samme.
+  regSubs = subsBox($('#reg-subs'), [], null, false);
   $('#l-ref').hidden = cfg.referral === false;
   const hv = (location.hash.match(/ven=([A-Za-z0-9]{4,5})/) || [])[1]; if(hv) $('#i-ref').value = hv.toUpperCase();
   audio(); show('s-reg');
 };
 $('#b-all').onclick = () => show('s-board');
-/* Tilmelding/login er ét kald: serveren afgør, om e-mailen er ny eller kendt (og om telefonen matcher),
+/* Tilmelding/login er ét kald: serveren afgør, om e-mailen er ny eller kendt (og om pinkoden matcher),
    sætter dagens flueben, tjekker vennekoden og returnerer den fulde record. Klienten kan ikke længere
    selv slå andre spilleres data op (kun den offentlige tavle findes lokalt), så al den logik er flyttet dertil. */
 $('#f-reg').addEventListener('submit', e => {
   e.preventDefault();
-  const name = $('#i-name').value.trim(), email = $('#i-email').value.trim().toLowerCase(), phone = $('#i-phone').value.replace(/[^\d+]/g, ''), company = $('#i-company').value.trim();
+  const name = $('#i-name').value.trim(), email = $('#i-email').value.trim().toLowerCase(), pin = $('#i-pin').value.replace(/\D/g, ''), company = $('#i-company').value.trim();
   const err = m => { $('#reg-err').textContent = m; sfx('wrong'); };
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err('Skriv en gyldig e-mail.');
-  if(phone.replace(/\D/g, '').length < 8) return err('Skriv et telefonnummer med mindst 8 cifre.');
+  if(!/^\d{4}$/.test(pin)) return err('Pinkoden skal være 4 cifre.');
   if(!$('#i-terms').checked) return err('Sæt flueben ved betingelserne for at deltage.');
   const btn = $('#f-reg').querySelector('button[type=submit]'); btn.disabled = true;
   let regType = null;
-  API.register({ name, email, phone, company, subs: regSubs(), ref: $('#i-ref').value.trim() })
+  API.register({ name, email, pin, company, subs: regSubs(), ref: $('#i-ref').value.trim() })
     .then(r => { regType = r && r.type; RT.rehello(); return API.me(); }) // K2b: den fysiske ws-forbindelse skal vide, hvem der nu er logget ind
     .then(m => {
       current = meFromServer(m); syncMyAttempts(); cacheMe(current);
@@ -3082,8 +3107,7 @@ function renderAdmin(){
     $('#a-mode').textContent = 'Tilmeldinger, topscore og opsætning ligger på serveren og deles af alle enheder ved standen.';
     $('#a-csv').hidden = true;
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
-    const elig = ps.filter(p => tickets(p) > 0), n = elig.reduce((a, p) => a + tickets(p), 0);
-    $('#a-raffle').textContent = cfg.raffle ? `${elig.length} spillere har tilsammen ${n} lodder i ${pnl()}. Hver dag man gennemfører et spil giver ét lod${cfg.goal > 0 ? ', og missionens mål giver et ekstra' : ''}.` : 'Lodtrækning er slået fra i opsætningen. Du kan stadig trække blandt periodens spillere.';
+    // Teksten under Præmiekonkurrencen er fast (vilkårene); lodderne hentes med "Vis lodder lige nu".
     renderSms(); fillUnlist();
     const ah = $('#a-hours'); ah.replaceChildren();
     if(cfg.hourly !== false){ const ws = hourWinners(ps), top = hourBoard(ps)[0]; ah.append(el('h4', 'sub', 'Timens boss i dag'));
@@ -3099,21 +3123,42 @@ function renderAdmin(){
    Svarformen for POST /admin/lodtraekning er ikke givet med et eksempel i API.md, så
    feltnavnene herunder er et gæt (vinder/winner, tickets_total/ticketsTotal) — ret til,
    når det er testet mod den rigtige server. */
+/* Præmiekonkurrencen (vilkår pkt. 5-7): serveren regner lodderne ud fra firmaets bedste spil i spilperioden,
+   tjekker firmaet mod deltagerlisten og trækker vinderen med et tilfældigt tal. Animationen her lander bare
+   på det svar, serveren allerede har givet. */
+const fmtDT = d => d ? new Date(d).toLocaleString('da-DK', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }) : '?';
+$('#b-dl').onclick = () => {
+  const tekst = $('#a-dl').value; if(!tekst.trim()) return toast('Sæt deltagerlisten ind først');
+  const kolonne = Math.max(0, (parseInt($('#a-dlkol').value, 10) || 1) - 1), tilstand = $('#a-dlmode').value;
+  API.admin.saveDeltagerliste(tekst, kolonne, tilstand).then(r => {
+    $('#a-dl-res').textContent = `${r.indlaest} firmaer læst, ${r.nye} nye. Listen har nu ${r.antal} firmaer.`; $('#a-dl').value = '';
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme listen.'));
+};
+$('#b-lodder').onclick = () => {
+  const box = $('#a-lodder'); box.replaceChildren(el('p', 'muted small', 'Henter...'));
+  API.admin.lodder().then(r => {
+    box.replaceChildren(el('p', 'muted small', `Spilperiode ${fmtDT(r.spil_start)} til ${fmtDT(r.spil_slut)}. Deltagerlisten har ${r.deltagerliste_antal} firmaer. ${r.lodder_i_alt} lodder i alt blandt dem, der kan vinde.`));
+    if(!r.firmaer.length) return box.append(el('p', 'muted small', 'Ingen har spillet i perioden endnu.'));
+    r.firmaer.forEach(f => {
+      const why = f.kan_vinde ? `${f.lodder} lodder` : f.udelukket ? 'arrangør, kan ikke vinde' : 'ikke på deltagerlisten';
+      box.append(el('p', 'small', `${f.firma}: ${fmt(f.bedste)} point, ${why}`));
+    });
+  }).catch(e => box.replaceChildren(el('p', 'muted', e && e.status ? e.message : 'Kunne ikke hente lodderne.')));
+};
 $('#b-draw').onclick = () => {
+  if(!confirm('Træk vinderen nu? Trækningen bliver gemt og kan ikke laves om.')) return;
   const box = $('#a-draw'); box.replaceChildren();
-  API.admin.draw().then(res => {
-    const w = res && (res.vinder || res.winner);
-    if(!w) return box.append(el('p', 'muted', (res && (res.besked || res.message)) || 'Ingen har lodder endnu.'));
-    const pool = adminPlayers.filter(p => (cfg.raffle ? tickets(p) : (daysPlayed(p, F.period) ? 1 : 0)) > 0);
-    const total = res.tickets_total != null ? res.tickets_total : (res.ticketsTotal != null ? res.ticketsTotal : pool.length);
-    let i = 0, spins = pool.length ? 18 : 0;
+  Promise.all([API.admin.lodder().catch(() => null), API.admin.traek()]).then(([l, res]) => {
+    const w = res.vinder;
+    const pool = l ? l.firmaer.filter(f => f.kan_vinde).map(f => f.firma) : [];
+    let i = 0, spins = pool.length > 1 ? 18 : 0;
     const d = el('div', 'draw'), nm = el('strong'), info = el('p', 'muted small'); d.append(el('span', 'muted small', 'Vinderen er'), nm, info); box.append(d);
     const done = () => {
-      nm.textContent = w.navn || w.name;
-      info.textContent = `${(w.firma || w.company) ? (w.firma || w.company) + ', ' : ''}${w.email}, ${w.telefon || w.phone}. ${w.tickets != null ? w.tickets : ''} lodder ud af ${total}.`; sfx('record');
+      nm.textContent = w.firma;
+      info.textContent = `Bedste spil ${fmt(w.bedste)} point, ${w.lodder} af ${res.lodder_i_alt} lodder. Kontakt: ${w.spiller_navn}, ${w.spiller_email}. Trækning nr. ${res.id}.`; sfx('record');
     };
     if(!spins) return done();
-    const spin = () => { const p = pool[Math.floor(Math.random() * pool.length)]; nm.textContent = p.name; sfx('tick'); if(++i < spins) return setTimeout(spin, 40 + i * i * 1.2); done(); };
+    const spin = () => { nm.textContent = pool[Math.floor(Math.random() * pool.length)]; sfx('tick'); if(++i < spins) return setTimeout(spin, 40 + i * i * 1.2); done(); };
     spin();
   }).catch(e => box.append(el('p', 'muted', e && e.status ? e.message : 'Kunne ikke trække en vinder. Tjek din forbindelse.')));
 };
@@ -3146,6 +3191,12 @@ $('#b-unsub').onclick = () => {
       : 'Afmeldt.';
     renderAdmin();
   }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke afmelde. Tjek din forbindelse.'));
+};
+$('#b-pin').onclick = () => {
+  const email = $('#a-pinmail').value.trim().toLowerCase();
+  if(!email) return toast('Skriv spillerens e-mail');
+  API.admin.resetPin(email).then(r => { $('#a-pin-res').textContent = `Ny pinkode til ${email}: ${r.pin}`; $('#a-pinmail').value = ''; })
+    .catch(e => toast(e && e.status === 404 ? 'Der er ingen spiller med den e-mail' : 'Kunne ikke nulstille pinkoden.'));
 };
 /* "Nulstil alle spillere" kræver, at admin skriver NULSTIL, plus en almindelig browser-bekræftelse,
    fordi handlingen er permanent og rammer alle spillere på én gang. */

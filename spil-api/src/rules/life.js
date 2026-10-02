@@ -18,8 +18,10 @@ function mailPartnersList(cfg) {
 // mail-partnere og evt. sms giver liv.
 function subOptions(cfg) {
   const opts = [{ key: 'sp', label: 'SmartPack nyheder', life: false }];
+  const info = new Map(((cfg && cfg.partnerLister) || []).map((l) => [l.slug, l]));
   for (const navn of mailPartnersList(cfg)) {
-    opts.push({ key: 'm:' + navn, label: navn, life: true });
+    const l = info.get(navn);
+    opts.push({ key: 'm:' + navn, label: l ? l.navn : navn, tekst: l ? l.tekst : null, life: true });
   }
   if (cfg.smsOn !== false && cfg.smsSponsor) {
     opts.push({ key: 'sms', label: cfg.smsSponsor, life: true });
@@ -125,6 +127,15 @@ function refill(bag, p, cfg, now) {
   return { ...bag, n: Math.min(MAX_LIVES, Math.max(bag.n, dailyStart(p, cfg, now))), t: now.getTime() };
 }
 
+// Den tekst, spilleren så ved fluebenet, gemmes i samtykke.tekst. Partnernes
+// tekst bygges af partner-tabellen (firma, CVR, produkt), se src/partners.js.
+const SP_SAMTYKKE_TEKST = 'Ja tak, SmartPack må sende mig nyheder på mail. Jeg kan altid afmelde mig igen.';
+function samtykkeTekstFor(cfg, key) {
+  if (key === 'sp') return SP_SAMTYKKE_TEKST;
+  const o = subOptions(cfg || {}).find((x) => x.key === key);
+  return (o && o.tekst) || null;
+}
+
 function listNameFor(key) {
   if (key === 'sp') return 'smartpack';
   if (key === 'sms') return 'sms';
@@ -211,6 +222,7 @@ module.exports = {
   useLife,
   refill,
   listNameFor,
+  samtykkeTekstFor,
   setSubsPure,
   setTicksPure,
 };

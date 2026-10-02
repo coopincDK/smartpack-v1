@@ -8,7 +8,7 @@ const ADMIN_PW = 'test-admin-adgangskode';
 process.env.ADMIN_PASSWORD_HASH = hashPassword(ADMIN_PW);
 process.env.COOKIE_SECURE = 'false';
 
-const { startHarness, api } = require('./helpers/appHarness');
+const { startHarness, api, registrerSpiller } = require('./helpers/appHarness');
 
 function cookieFra(res) {
   const raw = res.headers.get('set-cookie');
@@ -21,10 +21,15 @@ async function adminCookie(h) {
   return cookieFra(r);
 }
 
+const GAVE_FELTER = { praemie_indloesning: 'Vinderen skriver til os', praemie_sidste_frist: '2027-06-30' };
+
 const FULD_PROFIL = {
   firmanavn: 'Herodesk ApS',
   hjemmeside: 'herodesk.dk',
   kort_beskrivelse: 'AI-agent til kundeservice',
+  cvr: '12345678',
+  produktkategori: 'kundeservice-software',
+  privatlivspolitik: 'herodesk.dk/privatliv',
 };
 
 test('admin opretter, retter og viser en partner; offentlig liste kræver vist_i_spil og udfyldt profil', async (t) => {
@@ -41,7 +46,7 @@ test('admin opretter, retter og viser en partner; offentlig liste kræver vist_i
   assert.equal(p.slug, 'herodesk');
   assert.equal(p.status, 'aktiv');
   assert.equal(p.synlig, false);
-  assert.deepEqual(p.mangler_profil, ['firmanavn', 'hjemmeside', 'kort_beskrivelse']);
+  assert.deepEqual(p.mangler_profil, ['firmanavn', 'hjemmeside', 'kort_beskrivelse', 'cvr', 'produktkategori', 'privatlivspolitik']);
 
   // Ikke synlig endnu.
   let pub = await api(h.baseUrl, 'GET', '/partnere');
@@ -85,12 +90,13 @@ test('præmieoversigt: sorteret efter værdi, "op til" kræver betingelser, konk
     return r.body.partner;
   }
 
-  await partnerMedPraemie('Lille', { praemie_titel: 'Kaffe', praemie_vaerdi: 500, praemie_beskrivelse: 'En pose kaffe' });
+  await partnerMedPraemie('Lille', { praemie_titel: 'Kaffe', praemie_vaerdi: 500, praemie_beskrivelse: 'En pose kaffe', ...GAVE_FELTER });
   const stor = await partnerMedPraemie('Stor', {
     praemie_titel: 'Onlinekursus',
     praemie_vaerdi: '24.000',
     praemie_vaerdi_type: 'op_til',
     praemie_beskrivelse: 'Et års kursus',
+    ...GAVE_FELTER,
   });
   assert.equal(stor.praemie_vaerdi, 24000);
   assert.deepEqual(stor.mangler_praemie, ['praemie_betingelser']);
@@ -107,7 +113,12 @@ test('præmieoversigt: sorteret efter værdi, "op til" kræver betingelser, konk
   assert.equal(pr.body.samlet_vaerdi, 24500);
   assert.equal(pr.body.samlet_indeholder_op_til, true);
 
+  // 012_konkurrence_lodtraekning.sql sætter lodtrækningen til 8/10 2026 kl. 16.45.
+  const { rows: kk } = await h.pool.query('SELECT lodtraekning FROM konkurrence WHERE id = 1');
+  assert.equal(new Date(kk[0].lodtraekning).toISOString(), '2026-10-08T14:45:00.000Z');
   // Ingen dato = ingen aktiv konkurrence.
+  await h.pool.query('UPDATE konkurrence SET lodtraekning = NULL WHERE id = 1');
+  pr = await api(h.baseUrl, 'GET', '/praemier');
   assert.equal(pr.body.konkurrence.aktiv, false);
   const fremtid = new Date(Date.now() + 86400000).toISOString();
   await api(h.baseUrl, 'PUT', '/admin/konkurrence', {
@@ -280,4 +291,104 @@ test('logo: upload, offentlig visning og afvisning af forkerte typer', async (t)
     body: '<script>alert(1)</script>',
   });
   assert.equal(forkert.status, 400);
+});
+
+test('synlig partner bliver en tilmeldingsliste på sit faste id, og samtykket gemmes med firma og CVR', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const ac = await adminCookie(h);
+
+  const r = await api(h.baseUrl, 'POST', '/admin/partnere', {
+    adminCookie: ac,
+    body: { navn: 'Herodesk', ...FULD_PROFIL, vist_i_spil: true },
+  });
+  assert.equal(r.status, 201);
+  const slug = r.body.partner.slug;
+
+  const st = await api(h.baseUrl, 'GET', '/state');
+  const cfg = st.body.cfg || st.body.config || {};
+  assert.ok(String(cfg.mailPartners).split(',').map((x) => x.trim()).includes(slug));
+  const liste = (cfg.partnerLister || []).find((l) => l.slug === slug);
+  assert.ok(liste, 'partneren skal stå i cfg.partnerLister');
+  assert.match(liste.tekst, /Herodesk ApS, CVR 12345678 må sende mig mails om kundeservice-software/);
+
+  const { body } = registrerSpiller(h.baseUrl, { email: 'samtykke@example.dk', tilmeldinger: ['m:' + slug] });
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  assert.equal(reg.status, 201);
+  const { rows } = await h.pool.query(
+    `SELECT s.liste, s.tekst, s.tekst_version FROM samtykke s JOIN spiller p ON p.id = s.spiller_id
+     WHERE p.email = 'samtykke@example.dk'`
+  );
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].liste, 'partner:' + slug);
+  assert.match(rows[0].tekst, /CVR 12345678/);
+  assert.equal(rows[0].tekst_version, 2);
+});
+
+test('partnerportal: leads kun fra egne samtykker, kræver accept af alle 7 erklæringer, og hver download logges', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const ac = await adminCookie(h);
+
+  const mk = async (navn, cvr) => {
+    const r = await api(h.baseUrl, 'POST', '/admin/partnere', {
+      adminCookie: ac,
+      body: { navn, ...FULD_PROFIL, cvr, vist_i_spil: true },
+    });
+    assert.equal(r.status, 201);
+    return r.body.partner;
+  };
+  const alfa = await mk('Alfa', '11111111');
+  const beta = await mk('Beta', '22222222');
+
+  // Tre spillere: én siger ja til Alfa, én til Beta, én til Alfa og trækker det tilbage.
+  const reg = async (email, keys) => {
+    const { body } = registrerSpiller(h.baseUrl, { email, tilmeldinger: keys });
+    const r = await api(h.baseUrl, 'POST', '/players', { body });
+    assert.equal(r.status, 201);
+    return r.body.token;
+  };
+  await reg('ja-alfa@example.dk', ['m:' + alfa.slug]);
+  await reg('ja-beta@example.dk', ['m:' + beta.slug]);
+  const tok = await reg('fortryder@example.dk', ['m:' + alfa.slug]);
+  const af = await api(h.baseUrl, 'DELETE', '/me/subs/' + encodeURIComponent('m:' + alfa.slug), { token: tok });
+  assert.ok(af.status === 200 || af.status === 204, 'afmelding: ' + af.status);
+
+  await api(h.baseUrl, 'POST', `/admin/partnere/${alfa.id}/brugere`, {
+    adminCookie: ac,
+    body: { email: 'kim@alfa.dk', navn: 'Kim', kode: 'startkode-123' },
+  });
+  const login = await api(h.baseUrl, 'POST', '/partner/login', { body: { email: 'kim@alfa.dk', kode: 'startkode-123' } });
+  const pc = login.headers.get('set-cookie').split(';')[0];
+  await api(h.baseUrl, 'POST', '/partner/skift-kode', { adminCookie: pc, body: { gammel: 'startkode-123', ny: 'min-egen-kode-456' } });
+
+  const antal = await api(h.baseUrl, 'GET', '/partner/leads', { adminCookie: pc });
+  assert.equal(antal.body.antal, 1);
+
+  const hent = () => fetch(h.baseUrl + '/partner/leads.csv', { headers: { cookie: pc } });
+  const foer = await hent();
+  assert.equal(foer.status, 403, 'kræver accept først');
+
+  const halv = await api(h.baseUrl, 'POST', '/partner/vilkaar', { adminCookie: pc, body: { erklaeringer: { oplysninger: true } } });
+  assert.equal(halv.status, 400);
+  assert.equal(halv.body.mangler.length, 6);
+
+  const v = await api(h.baseUrl, 'GET', '/partner/vilkaar', { adminCookie: pc });
+  const alle = Object.fromEntries(v.body.erklaeringer.map((e) => [e.key, true]));
+  const ok = await api(h.baseUrl, 'POST', '/partner/vilkaar', { adminCookie: pc, body: { erklaeringer: alle } });
+  assert.equal(ok.status, 200);
+
+  const csvRes = await hent();
+  assert.equal(csvRes.status, 200);
+  const csv = await csvRes.text();
+  assert.match(csv, /ja-alfa@example\.dk/);
+  assert.doesNotMatch(csv, /ja-beta@example\.dk/, 'aldrig andre partneres leads');
+  assert.doesNotMatch(csv, /fortryder@example\.dk/, 'tilbagetrukne samtykker er ikke med');
+  assert.match(csv, /CVR 11111111/);
+
+  const log = await api(h.baseUrl, 'GET', `/admin/partnere/${alfa.id}/log`, { adminCookie: ac });
+  assert.equal(log.body.downloads.length, 1);
+  assert.equal(log.body.downloads[0].antal, 1);
+  assert.equal(log.body.downloads[0].bruger_email, 'kim@alfa.dk');
+  assert.equal(log.body.accept.length, 1);
 });

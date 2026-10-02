@@ -1,5 +1,7 @@
 'use strict';
 
+const { loadOffentligCfg } = require('./cfgLoad');
+
 // Bygger det offentlige udtræk til GET /state. Dette er den ENESTE vej
 // klienter (inkl. andre spilleres browsere og standvæggen) må læse
 // spildata på — INGEN email/telefon/samtykker/vennekode/ref-info må
@@ -27,8 +29,7 @@ function sanitizeDuel(duel) {
 }
 
 async function buildPublicState(pool) {
-  const cfgRes = await pool.query('SELECT offentlig FROM config WHERE id = 1');
-  const cfg = (cfgRes.rows[0] && cfgRes.rows[0].offentlig) || {};
+  const cfg = await loadOffentligCfg(pool);
 
   const spillereRes = await pool.query(
     `SELECT id, public_id, navn, firma, firma_noegle, oprettet, badges

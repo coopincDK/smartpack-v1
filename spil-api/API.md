@@ -953,9 +953,11 @@ i `spil/index.html`). Kort opsummeret hvad der ændrede sig og hvorfor:
 ### C) Natlig GDPR-oprydning
 
 - `src/retention.js#findRetentionCandidates` (ren, testbar funktion) finder
-  spillere UDEN nogen liste med aktiv (`bekraeftet`) status OG ≥12 måneder
-  siden seneste aktivitet (seneste `forsoeg.oprettet`, ellers spillerens
-  egen `oprettet`). `deleteInactivePlayers` LÅSER derefter hver kandidat
+  spillere UDEN nogen liste med aktiv (`bekraeftet`) status OG ≥24 måneder
+  siden seneste aktivitet (det seneste af `forsoeg.oprettet`,
+  `spiller_token.oprettet`/`sidst_brugt` (login) og spillerens egen
+  `oprettet`). 24 måneder og "login tæller" svarer til deltagervilkårene,
+  pkt. 11 (/spil/vilkaar/). `deleteInactivePlayers` LÅSER derefter hver kandidat
   (`SELECT ... FOR UPDATE`), GENKONTROLLERER begge betingelser lige før
   selve sletningen (se "Sletning og anonymisering" og
   `stillQualifiesForDeletion`), og udfører selve sletningen + anonymisering
@@ -966,7 +968,7 @@ i `spil/index.html`). Kort opsummeret hvad der ændrede sig og hvorfor:
   DOKUMENTATION i denne runde).
 - `cutoffDate()` klemmer til den sidste gyldige dag i målmåneden i stedet
   for at lade en 29. februar rulle videre ind i marts over en skudårskant —
-  BEVIDST konservativt (giver aldrig en yngre cutoff end præcis 12 måneder,
+  BEVIDST konservativt (giver aldrig en yngre cutoff end præcis 24 måneder,
   i værste fald én dag ældre).
 - **Bemærk (portabilitets-workaround):** `findRetentionCandidates` og de to
   admin-CSV'er der filtrerer på "aktiv liste lige nu" (`sms.csv`,
@@ -1258,3 +1260,50 @@ Ellers bruges den indbyggede standardliste. Nyhedsmail-listerne
 | `POST /partner/login`, `POST /partner/logout` | 5/min/IP | Cookie `spil_partner_session` (12 t) |
 | `POST /partner/skift-kode` | partner | Påkrævet før alt andet, når `skal_skifte_kode` |
 | `GET/PUT /partner/mig`, `PUT /partner/mig/logo` | partner | Egen profil og præmie (ikke navn, status, vist, power-up) |
+
+## Partnervilkår og præmiekonkurrence (2. okt. 2026)
+
+Beslutninger: projektdokumentet `packrush-beslutninger-vilkaar.md`. Vilkår:
+`/spil/vilkaar/` (spillere) og `/spil/partnervilkaar/` (partnere).
+
+### Pinkode i stedet for telefon (010_pinkode.sql)
+- `POST /players` tager `pin` (4 cifre) i stedet for `telefon`. Telefon
+  gemmes ikke længere. Ved login fra ny enhed: e-mail + pinkode.
+- 5 forkerte pinkoder i træk spærrer spilleren i 15 min. (429
+  `pin_spaerret`). Spærringen er pr. spiller, ikke pr. IP (standens tablets).
+- Spillere oprettet før pinkoden (`pin_hash` NULL) kan stadig logge ind med
+  `telefon`; ellers svar 400 `mangler_pin`.
+- `POST /admin/nulstil-pin {email}` og `POST /admin/spillere/:pid/nulstil-pin`
+  giver en ny tilfældig pinkode, som kun vises i svaret.
+- Sms (sms-liste og sms-boost) er slået fra i config.
+
+### Partnere som tilmeldingslister (src/cfgLoad.js)
+- Aktive, synlige partnere (status `aktiv`, `vist_i_spil`, udfyldt profil inkl.
+  CVR, produktkategori og privatlivspolitik) bliver tilmeldingslister på
+  deres slug: nøgle `m:<slug>`, samtykkeliste `partner:<slug>`.
+- `GET /state`'s `cfg.partnerLister` har navn, fast samtykketekst (med firma
+  og CVR) og link til privatlivspolitik. Samtykketeksten gemmes i
+  `samtykke.tekst` med `tekst_version = 2`.
+
+### Partnerportal (011_partnervilkaar.sql)
+- Nye partnerfelter: produktkategori, privatlivspolitik, afmeld_email,
+  levering_navn/-email, praemie_ikke_med, praemie_sidste_frist, praemie_flyt
+  (ja/nej/spoerg), fordel_* (partnerfordel ved køb, tæller ikke i puljen).
+- `GET/POST /partner/vilkaar`: de 7 erklæringer; alle skal være sat.
+  Gemmes i `partner_accept` med version, bruger og IP.
+- `GET /partner/leads` (antal) og `GET /partner/leads.csv`: kun spillere,
+  hvis seneste hændelse på `partner:<slug>` er en bekræftelse. Kræver accept.
+  Hver download logges i `partner_lead_download`.
+- `GET /admin/partnere/:id/log`: accepter og downloads.
+
+### Præmiekonkurrencen (012_konkurrence_lodtraekning.sql, src/konkurrence.js)
+- Deltagerlisten gemmes kun som firmanavne: `GET/POST /admin/deltagerliste`
+  (`tekst`, `kolonne`, `tilstand` = `erstat`/`tilfoej`).
+- `GET /admin/konkurrence/lodder`: firmaets bedste godkendte spil mellem
+  `konkurrence.spil_start` og `spil_slut`, 1 lod pr. påbegyndte
+  `point_pr_lod` point, kun firmaer på listen, `udelukkede_firmaer`
+  (standard `smartpack`) kan ikke vinde.
+- `POST /admin/konkurrence/traek`: trækker med `crypto.randomInt` og gemmer
+  hele grundlaget i `konkurrence_traekning`. `GET /admin/konkurrence/traekninger`.
+- Firmaer matches med `matchNoegle()` (som firmKey, men "A/S"/"I/S" fjernes
+  først).

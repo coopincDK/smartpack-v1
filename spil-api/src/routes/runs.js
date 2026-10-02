@@ -1,5 +1,7 @@
 'use strict';
 
+const { loadOffentligCfg } = require('../cfgLoad');
+
 const express = require('express');
 const crypto = require('crypto');
 const { requirePlayer } = require('../middleware/playerAuth');
@@ -21,8 +23,7 @@ const config = require('../config');
 const MAKS_STATS_FELTER = 40; // simpel størrelses-guard på indsendt s-objekt
 
 async function getCfg(pool) {
-  const { rows } = await pool.query('SELECT offentlig FROM config WHERE id = 1');
-  return (rows[0] && rows[0].offentlig) || {};
+  return loadOffentligCfg(pool);
 }
 
 function sanitizeStats(s) {

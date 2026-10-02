@@ -55,7 +55,7 @@
   var FELTER = {
     virksomhed: [
       { k: 'firmanavn', l: 'Firmanavn', req: true },
-      { k: 'cvr', l: 'CVR-nummer' },
+      { k: 'cvr', l: 'CVR-nummer', req: true, small: '8 cifre. Står i samtykket, spillerne giver til jer.' },
       { k: 'adresse', l: 'Adresse' },
       { k: 'hjemmeside', l: 'Hjemmeside', req: true, t: 'url', ph: 'https://' },
       { k: 'kort_beskrivelse', l: 'Kort beskrivelse', req: true, area: true, small: 'Én til to sætninger om, hvad I kan hjælpe en ejerleder eller onlinevirksomhed med. Vises ved jeres power-up i spillet.' },
@@ -65,6 +65,13 @@
       { k: 'kontakt_navn', l: 'Kontaktperson' },
       { k: 'kontakt_email', l: 'E-mail', t: 'email' },
       { k: 'kontakt_telefon', l: 'Telefon', t: 'tel' },
+      { k: 'levering_navn', l: 'Ansvarlig for at levere gaven', small: 'Kan være den samme som kontaktpersonen.' },
+      { k: 'levering_email', l: 'Mail til den ansvarlige', t: 'email' },
+      { k: 'afmeld_email', l: 'Mail til afmeldinger og persondata', t: 'email' },
+    ],
+    samtykke: [
+      { k: 'produktkategori', l: 'Hvad sender I mails om?', req: true, ph: 'Fx "kundeservice-software"', small: 'Kort, højst 60 tegn. Står i samtykket: "… må sende mig mails om [det her]".' },
+      { k: 'privatlivspolitik', l: 'Link til jeres privatlivspolitik', req: true, t: 'url', ph: 'https://' },
     ],
     praemie: [
       { k: 'praemie_titel', l: 'Overskrift på gaven', req: true, ph: 'Fx "Et års onlinekursus i e-mailmarketing"' },
@@ -74,7 +81,16 @@
       { k: 'praemie_beskrivelse', l: 'Hvad er gaven præcist?', req: true, area: true },
       { k: 'praemie_udbytte', l: 'Hvad får vinderen ud af at bruge den?', area: true },
       { k: 'praemie_betingelser', l: 'Betingelser', area: true, small: 'Påkrævet ved "op til". Skriv tydeligt, hvordan man får hele værdien, fx: "2.000 kr. pr. måned i op til et år. Stopper forløbet før, betales resten ikke." eller "Frit valg af to plukkevogne, op til 12.000 kr. i alt."' },
-      { k: 'praemie_indloesning', l: 'Sådan indløses gaven', area: true, small: 'Hvem kontakter hvem, og hvornår skal den senest bruges?' },
+      { k: 'praemie_indloesning', l: 'Sådan indløses gaven', req: true, area: true, small: 'Hvem kontakter hvem?' },
+      { k: 'praemie_ikke_med', l: 'Hvad er ikke med?', area: true, small: 'Fx transport, opsætning eller ekstra moduler. Skriv "intet", hvis alt er med.' },
+      { k: 'praemie_sidste_frist', l: 'Sidste frist for at bruge gaven', req: true, t: 'date' },
+      { k: 'praemie_flyt', l: 'Svarer vinderen ikke inden 14 dage: må gaven flyttes med til Ehandelsdagen 11. februar 2027?', sel: [['spoerg', 'Spørg os først'], ['ja', 'Ja'], ['nej', 'Nej']] },
+    ],
+    fordel: [
+      { k: 'fordel_ydelse', l: 'Produkt eller ydelse' },
+      { k: 'fordel_rabat', l: 'Rabat', ph: 'Fx "20 % de første 6 måneder, højst 6.000 kr."' },
+      { k: 'fordel_koebskrav', l: 'Hvad skal man købe for at få den?', area: true },
+      { k: 'fordel_gyldig_til', l: 'Gyldig til', t: 'date' },
     ],
   };
 
@@ -109,6 +125,14 @@
     var praemieFelter = el('div', { class: 'grid2' }, FELTER.praemie.map(function (d) { return felt(d, p[d.k]); }));
     praemieFelter.hidden = !cb.checked;
     cb.addEventListener('change', function () { praemieFelter.hidden = !cb.checked; });
+    var fsS = el('fieldset', null, [el('legend', { text: 'Samtykke fra spillerne' }),
+      el('p', { class: 'muted small', text: 'Spillerne sætter selv flueben ved jer. Teksten bygges af jeres firmanavn, CVR og feltet herunder, og I kan ikke skrive den frit.' })]);
+    FELTER.samtykke.forEach(function (d) { fsS.append(felt(d, p[d.k])); });
+    if (p.samtykke_tekst) fsS.append(el('p', { class: 'small', text: 'Sådan ser den ud nu: ' + p.samtykke_tekst }));
+    var fsF = el('fieldset', null, [el('legend', { text: 'Partnerfordel ved køb (valgfri)' }),
+      el('p', { class: 'muted small', text: 'En rabat er ikke en gave. Den vises for sig og tæller ikke med i præmiepuljens værdi.' }),
+      el('div', { class: 'grid2' }, FELTER.fordel.map(function (d) { return felt(d, p[d.k]); }))]);
+    fsF.querySelectorAll('textarea').forEach(function (t) { t.closest('label').style.gridColumn = '1 / -1'; });
     var fsP = el('fieldset', null, [
       el('legend', { text: 'Gave til konkurrencen' }),
       el('label', { class: 'check' }, [cb, document.createTextNode('Ja tak, vi vil gerne give en gave til konkurrencen')]),
@@ -116,7 +140,8 @@
     ]);
     // Lange tekstfelter fylder hele bredden.
     praemieFelter.querySelectorAll('textarea').forEach(function (t) { t.closest('label').style.gridColumn = '1 / -1'; });
-    mount.append(fsV, fsK, fsP);
+    var flyt = praemieFelter.querySelector('#f-praemie_flyt'); if (flyt) flyt.closest('label').style.gridColumn = '1 / -1';
+    mount.append(fsV, fsS, fsK, fsP, fsF);
   }
 
   function laesFormular(mount) {
