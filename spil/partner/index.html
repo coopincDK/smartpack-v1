@@ -112,6 +112,8 @@
   function tegnProfil(p) {
     $('p-navn').textContent = p.navn;
     var st = $('p-status'); st.replaceChildren();
+    var mangler = (p.mangler_profil || []).length + (p.giver_praemie ? (p.mangler_praemie || []).length : 0);
+    st.dataset.mangler = mangler;
     if (p.synlig) st.append(el('span', { class: 'chip ok', text: 'Vises i spillet' }));
     else if (p.mangler_profil.length) st.append(el('p', { class: 'mangler', text: 'Udfyld: ' + SP.manglerTekst(p.mangler_profil) }));
     else st.append(el('span', { class: 'chip', text: 'Afventer SmartPacks godkendelse' }));
@@ -141,6 +143,9 @@
         box.append(el('label', { class: 'check' }, [cb, document.createTextNode(e.tekst)]));
       });
       $('b-accept').hidden = !!v.accepteret;
+      var st = $('p-status'), n = (parseInt(st.dataset.mangler, 10) || 0) + (v.accepteret ? 0 : 1);
+      var gl = st.querySelector('.live-tael'); if (gl) gl.remove();
+      st.prepend(el('p', { class: 'live-tael ' + (n ? 'mangler' : 'small'), text: n ? n + ' ting mangler, før I er klar (frist tirsdag 6. oktober kl. 12)' + (v.accepteret ? '' : '. Husk at godkende vilkårene nederst.') : 'I er klar. SmartPack slår jer til i spillet.' }));
       SP.besked($('e-msg'), v.accepteret ? 'Godkendt af ' + v.accepteret.bruger_email + ' ' + new Date(v.accepteret.tidspunkt).toLocaleString('da-DK') + '.' : '', 'ok');
       $('b-leads').disabled = !v.accepteret;
     }).catch(function () {});

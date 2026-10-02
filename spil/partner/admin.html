@@ -42,6 +42,7 @@
   </form>
 
   <div id="app" hidden>
+    <div class="card" id="tjek" style="margin-bottom:20px"></div>
     <div class="layout">
       <div class="liste">
         <div class="row" style="justify-content:space-between">
@@ -84,7 +85,28 @@
     }).catch(function (e) { if (e.status === 401 || e.status === 403) visLogin(); else alert(e.message); });
   }
 
+  // Tjekliste før konkurrencen: "x ting mangler for at komme live", samlet og pr. partner.
+  function tegnTjek() {
+    api('/admin/konkurrence/status').then(function (r) {
+      var box = $('tjek'); box.replaceChildren();
+      var n = r.advarsler.length;
+      box.append(el('h3', { text: n ? n + (n === 1 ? ' ting mangler' : ' ting mangler') + ' for at komme live' : 'Alt er klar til konkurrencen' }));
+      box.append(el('p', { class: 'muted small', text: r.synlige_partnere + ' partnere vises i spillet · ' + r.gaver_i_puljen + ' gaver i puljen · ' + r.deltagerliste_antal + ' firmaer på deltagerlisten' }));
+      var generelt = r.advarsler.filter(function (a) { return !a.partner; });
+      generelt.forEach(function (a) { box.append(el('p', { class: a.niveau === 'fejl' ? 'mangler' : 'small', text: (a.niveau === 'fejl' ? '⚠ ' : '') + a.tekst })); });
+      var pr = {};
+      var navne = {};
+      r.advarsler.filter(function (a) { return a.partner; }).forEach(function (a) { var k = a.slug || a.partner; navne[k] = a.partner; (pr[k] = pr[k] || []).push(a); });
+      Object.keys(pr).forEach(function (navn) {
+        var d = el('details', null, [el('summary', { text: navne[navn] + ': ' + pr[navn].length + (pr[navn].length === 1 ? ' ting mangler' : ' ting mangler') + ' for at komme live' })]);
+        pr[navn].forEach(function (a) { d.append(el('p', { class: a.niveau === 'fejl' ? 'mangler' : 'small', text: a.tekst })); });
+        box.append(d);
+      });
+    }).catch(function () {});
+  }
+
   function tegnListe() {
+    tegnTjek();
     var l = $('liste'); l.replaceChildren();
     if (!state.partnere.length) l.append(el('p', { class: 'muted small', text: 'Ingen partnere endnu.' }));
     state.partnere.forEach(function (p) {

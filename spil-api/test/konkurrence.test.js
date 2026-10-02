@@ -112,3 +112,33 @@ test('ingen lodder -> ingen trækning', async (t) => {
   assert.equal(tr.status, 400);
   assert.equal(tr.body.kode, 'ingen_lodder');
 });
+
+test('tjekliste: tom konkurrence giver fejl, og de forsvinder, når alt er på plads', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const ac = await adminCookie(h);
+  let st = await api(h.baseUrl, 'GET', '/admin/konkurrence/status', { adminCookie: ac });
+  assert.equal(st.status, 200);
+  const tekster = st.body.advarsler.map((a) => a.tekst).join(' | ');
+  assert.match(tekster, /Deltagerlisten er tom/);
+  assert.match(tekster, /Ingen partnere vises/);
+  assert.match(tekster, /Præmiepuljen er tom/);
+
+  await api(h.baseUrl, 'POST', '/admin/deltagerliste', { adminCookie: ac, body: { tekst: 'Webshop ApS' } });
+  const p = await api(h.baseUrl, 'POST', '/admin/partnere', {
+    adminCookie: ac,
+    body: {
+      navn: 'Herodesk', firmanavn: 'Herodesk ApS', hjemmeside: 'herodesk.dk', kort_beskrivelse: 'AI', cvr: '12345678',
+      produktkategori: 'kundeservice', privatlivspolitik: 'herodesk.dk/p', vist_i_spil: true,
+      giver_praemie: true, praemie_titel: 'Gave', praemie_vaerdi: 1000, praemie_beskrivelse: 'x',
+      praemie_indloesning: 'mail', praemie_sidste_frist: '2027-06-30',
+    },
+  });
+  st = await api(h.baseUrl, 'GET', '/admin/konkurrence/status', { adminCookie: ac });
+  assert.equal(st.body.antal_fejl, 0, JSON.stringify(st.body.advarsler));
+  const herodesk = st.body.advarsler.filter((a) => a.partner === 'Herodesk').map((a) => a.tekst).join(' | ');
+  assert.match(herodesk, /Ingen power-up/);
+  assert.match(herodesk, /intet login/);
+  assert.match(herodesk, /ikke godkendt partnervilkårene/);
+  assert.ok(p.body.partner.id);
+});

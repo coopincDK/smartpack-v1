@@ -200,4 +200,67 @@ function parseDeltagerliste(tekst, kolonne) {
   return ud;
 }
 
-module.exports = { matchNoegle, lodderFor, beregnLodder, traekVinder, vinderFraTal, parseDeltagerliste, hentKonkurrence };
+// Tjekliste før konkurrencen: alt der mangler, samlet ét sted, så standen
+// kan se det i admin. niveau 'fejl' = konkurrencen virker ikke som lovet i
+// vilkårene; 'advarsel' = bør ordnes.
+const PARTNERFRIST = new Date('2026-10-06T12:00:00+02:00');
+
+async function konkurrenceStatus(db, now) {
+  const P = require('./partners');
+  const nu = now || new Date();
+  const ud = [];
+  const k = await hentKonkurrence(db);
+  if (!k || !k.spil_start || !k.spil_slut) ud.push({ niveau: 'fejl', tekst: 'Spilperioden er ikke sat.' });
+  if (!k || !k.lodtraekning) ud.push({ niveau: 'fejl', tekst: 'Tidspunktet for lodtrækningen er ikke sat.' });
+
+  const dl = await db.query('SELECT count(*)::int AS n FROM deltagerliste_firma');
+  if (!dl.rows[0].n) ud.push({ niveau: 'fejl', tekst: 'Deltagerlisten er tom. Ingen kan vinde, før den er indlæst.' });
+
+  const { rows: partnere } = await db.query(
+    `SELECT p.*,
+       (SELECT count(*)::int FROM partner_bruger b WHERE b.partner_id = p.id) AS antal_logins,
+       (SELECT max(tidspunkt) FROM partner_accept a WHERE a.partner_id = p.id AND a.vilkaar_version = $1) AS accepteret
+     FROM partner p WHERE p.status IN ('aktiv', 'ansoegt') ORDER BY p.navn`,
+    [P.PARTNERVILKAAR_VERSION]
+  );
+  const aktive = partnere.filter((p) => p.status === 'aktiv');
+  const synlige = aktive.filter((p) => P.erSynlig(p));
+  if (!synlige.length) ud.push({ niveau: 'fejl', tekst: 'Ingen partnere vises i spillet endnu.' });
+  const medGave = synlige.filter((p) => p.giver_praemie && !P.manglerPraemie(p).length);
+  if (!medGave.length) ud.push({ niveau: 'fejl', tekst: 'Præmiepuljen er tom: ingen partner har en færdig gave.' });
+
+  const efterFrist = nu.getTime() > PARTNERFRIST.getTime();
+  for (const p of partnere) {
+    const navn = p.navn;
+    const slug = p.slug;
+    if (p.status === 'ansoegt') {
+      ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Har søgt om at blive partner og venter på dit svar.' });
+      continue;
+    }
+    const mp = P.manglerProfil(p);
+    if (mp.length) ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Mangler: ' + mp.join(', ') + '. Vises ikke i spillet.' });
+    if (p.giver_praemie) {
+      const mg = P.manglerPraemie(p);
+      if (mg.length) ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Gaven mangler: ' + mg.join(', ') + '. Kommer ikke med i puljen.' });
+    }
+    if (!mp.length && !p.powerup) ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Ingen power-up valgt.' });
+    if (!mp.length && !p.vist_i_spil) ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Alt er udfyldt, men "Vis i spillet" er ikke slået til.' });
+    if (!p.antal_logins) ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Har intet login til partnerportalen endnu.' });
+    if (!p.accepteret) {
+      ud.push({
+        niveau: efterFrist ? 'fejl' : 'advarsel',
+        partner: navn, slug,
+        tekst: 'Har ikke godkendt partnervilkårene' + (efterFrist ? ', og fristen 6/10 kl. 12 er overskredet.' : ' (frist 6/10 kl. 12).'),
+      });
+    }
+  }
+  return {
+    advarsler: ud,
+    antal_fejl: ud.filter((x) => x.niveau === 'fejl').length,
+    synlige_partnere: synlige.length,
+    gaver_i_puljen: medGave.length,
+    deltagerliste_antal: dl.rows[0].n,
+  };
+}
+
+module.exports = { konkurrenceStatus, matchNoegle, lodderFor, beregnLodder, traekVinder, vinderFraTal, parseDeltagerliste, hentKonkurrence };

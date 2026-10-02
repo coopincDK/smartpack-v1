@@ -83,6 +83,15 @@ function konkurrenceRouter(pool) {
     }
   });
 
+  // Tjekliste: alt der mangler før konkurrencen.
+  router.get('/admin/konkurrence/status', admin, async (req, res, next) => {
+    try {
+      res.json(await K.konkurrenceStatus(pool));
+    } catch (e) {
+      next(e);
+    }
+  });
+
   router.post('/admin/konkurrence/traek', admin, async (req, res, next) => {
     try {
       const r = await K.traekVinder(pool, req.adminSession && req.adminSession.id);

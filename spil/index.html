@@ -793,6 +793,7 @@ details.more summary:hover{color:var(--text)}
       <label class="f">Firmaet står i kolonne nr.<input type="number" id="a-dlkol" min="1" max="50" value="1"></label>
       <label class="f">Sådan<select id="a-dlmode"><option value="erstat">Erstat listen (ny udgave)</option><option value="tilfoej">Tilføj firmaer</option></select></label>
     </div>
+    <div id="a-tjek"></div>
     <button class="btn small" id="b-dl">Gem deltagerliste</button>
     <p class="muted small" id="a-dl-res"></p>
     <button class="btn small" id="b-lodder">Vis lodder lige nu</button>
@@ -1098,6 +1099,7 @@ const API = {
     saveDeltagerliste(tekst, kolonne, tilstand){ return apiFetch('/admin/deltagerliste', { method: 'POST', body: { tekst, kolonne, tilstand }, admin: true }); },
     lodder(){ return apiFetch('/admin/konkurrence/lodder', { admin: true }); },
     traek(){ return apiFetch('/admin/konkurrence/traek', { method: 'POST', admin: true }); },
+    konkStatus(){ return apiFetch('/admin/konkurrence/status', { admin: true }); },
     unsubscribeBulk(liste, emails){ return apiFetch('/admin/afmeld', { method: 'POST', body: { liste, emails }, admin: true }); },
     changeCode(gammel, ny){ return apiFetch('/admin/skift-kode', { method: 'POST', body: { gammel, ny }, admin: true }); },
     resetPin(email){ return apiFetch('/admin/nulstil-pin', { method: 'POST', body: { email }, admin: true }); },
@@ -3246,7 +3248,7 @@ function renderAdmin(){
     $('#a-csv').hidden = true;
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
     // Teksten under Præmiekonkurrencen er fast (vilkårene); lodderne hentes med "Vis lodder lige nu".
-    renderSms(); fillUnlist(); renderUsers();
+    renderSms(); fillUnlist(); renderUsers(); renderTjek();
     const ah = $('#a-hours'); ah.replaceChildren();
     if(cfg.hourly !== false){ const ws = hourWinners(ps), top = hourBoard(ps)[0]; ah.append(el('h4', 'sub', 'Timens boss i dag'));
       if(!ws.length && !top) ah.append(el('p', 'muted small', 'Ingen vindere endnu.'));
@@ -3330,6 +3332,14 @@ $('#b-unsub').onclick = () => {
     renderAdmin();
   }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke afmelde. Tjek din forbindelse.'));
 };
+function renderTjek(){
+  const box = $('#a-tjek'); if(!box) return;
+  API.admin.konkStatus().then(r => {
+    const n = r.advarsler.length, fejl = r.advarsler.filter(a => a.niveau === 'fejl');
+    box.replaceChildren(el('p', fejl.length ? 'err' : 'muted small', n ? `${n} ting mangler for at komme live${fejl.length ? `, heraf ${fejl.length} vigtige` : ''}. Se detaljer på partnersiden.` : 'Alt er klar til konkurrencen.'));
+    fejl.forEach(a => box.append(el('p', 'small', (a.partner ? a.partner + ': ' : '') + a.tekst)));
+  }).catch(() => {});
+}
 function renderUsers(){
   const box = $('#a-users'); if(!box) return;
   API.admin.users().then(r => {
