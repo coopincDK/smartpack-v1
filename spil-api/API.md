@@ -207,7 +207,7 @@ tokens pr. spiller" nedenfor.
 | 400 | `ugyldigt_navn` / `ugyldigt_firma` | Længde uden for 1–22 / 1–40 tegn |
 | 400 | `mangler_accept` | `accepterer_betingelser` ikke `true` ved ny spiller |
 | 429 | `pin_spaerret` | DENNE spiller er spærret 15 min. efter 5 forkerte pinkoder i træk — se nedenfor. **Delt tæller** med `DELETE /me`s pinkode-bekræftelse (samme `pin_fejl`/`pin_spaerret_til`-kolonner, se dér) |
-| 429 | `ip_login_spaerret` | M3 (sikkerhedsgennemgang): denne klient-IP har haft 10+ mislykkede login-/pin-forsøg PÅ TVÆRS AF SPILLERE inden for 10 min. — se nedenfor. **Delt tæller** med `DELETE /me` (samme `ipLoginLimiter`-instans, se `src/app.js`) |
+| 429 | `ip_login_spaerret` | M3/S1 (sikkerhedsgennemgang): denne klient-IP har ramt ét af de to IP-lag beskrevet nedenfor. **Delt tæller** med `DELETE /me` (samme `ipLoginLimiter`-instans, se `src/app.js`) |
 
 **M3 (sikkerhedsgennemgang): IP-bred rate-limit på login-/pin-forsøg.** Den
 pr.-spiller-spærring ovenfor (`pin_spaerret`) beskytter ikke mod (a) at en
@@ -215,14 +215,31 @@ angriber bevidst låser EN navngiven kollegas konto ude ved at afprøve
 forkerte koder for netop DEN email, eller (b) at en angriber afprøver mange
 KENDTE emails × 5 koder/kvarter og statistisk rammer nogle (4-cifret pin).
 Derfor tæller serveren nu OGSÅ mislykkede login-/pin-forsøg PR. KLIENT-IP
-(`X-Client-IP`, se "Klient-IP" — ALDRIG klientens egen IP-header), på tværs
-af alle spilleres emails: 10 mislykkede forsøg inden for 10 minutter
-blokerer DEN IP (`429 ip_login_spaerret`, `Retry-After`-header) for
-yderligere login-/pin-forsøg, resten af vinduet. Dette er i TILLÆG til, ikke
-i stedet for, den pr.-spiller-spærring. Tæller KUN mislykkede forsøg (hverken
-en ny registrering eller et vellykket login forbruger et slot) — to
-kolleger der deler standens wifi rammer derfor ikke hinandens forsøg på at
-logge ind RIGTIGT.
+(`X-Client-IP`, se "Klient-IP" — ALDRIG klientens egen IP-header). Dette er
+i TILLÆG til, ikke i stedet for, den pr.-spiller-spærring. Tæller KUN
+mislykkede forsøg (hverken en ny registrering eller et vellykket login
+forbruger et slot).
+
+**S1 (opfølgende sikkerhedsgennemgang, merge-review, 2. okt. 2026):** da
+`X-Client-IP` i praksis er Cloudflares `CF-Connecting-IP`, deler HELE en
+messestands Wi-Fi/NAT typisk ÉN IP. Den oprindelige M3-grænse var et ÉT,
+fælles loft PÅ TVÆRS AF ALLE SPILLERES emails — det betød reelt at 10
+forkerte forsøg FRA HVEM SOM HELST på standen, MOD HVILKEN SOM HELST konto,
+blokerede login for HELE standen i op til 10 minutter. Grænsen er derfor nu
+TO LAG, begge nøglet på `X-Client-IP`:
+1. **Pr. (IP, email):** samme loft som hidtil (10 forkerte/10 min.), men nu
+   kun på tværs af forsøg mod SAMME konto fra samme sted — to kolleger der
+   deler standens wifi rammer derfor hverken hinandens forsøg på at logge
+   ind RIGTIGT, eller låser hinanden ude af HVER SIN konto.
+2. **Pr. IP ALENE, på tværs af ALLE emails:** et markant højere loft (300
+   forkerte/10 min.) — fanger stadig storskala-udtømningsforsøg (mange
+   forskellige emails afprøvet fra samme sted), uden at ramme almindelig
+   messetrafik.
+
+`check`/`consume` forbruger/tjekker BEGGE lag for hvert forsøg — rammes
+ENTEN af det snævre pr.-konto-loft eller det høje IP-alene-loft, svares der
+`429 ip_login_spaerret` (samme fejlkode som før, uændret for klienten). Se
+`src/routes/players.js#createIpLoginLimiter`.
 
 ### `GET /me` (bearer)
 ```json
@@ -382,9 +399,12 @@ login-forsøg i `POST /players`:
   `spiller`-rækken (`429 pin_spaerret` efter 5 forkerte i træk, 15 min.,
   eskalerer aldrig — se "Pinkode i stedet for telefon" nedenfor). 5 forkerte
   DELETE-forsøg låser altså OGSÅ login ude, og omvendt.
-- **IP-bredt:** samme `ipLoginLimiter`-instans som login (`429
-  ip_login_spaerret`, se M3 og `src/app.js`, som opretter ÉN instans og
-  deler den mellem `playersRouter` og `meRouter`).
+- **IP-bredt (to lag, se S1 ovenfor):** samme `ipLoginLimiter`-instans som
+  login (`429 ip_login_spaerret`, se M3/S1 og `src/app.js`, som opretter ÉN
+  instans og deler den mellem `playersRouter` og `meRouter`). Her bruges
+  spillerens EGEN email (fra `req.player`, sat af auth-middlewaren) som
+  nøgle i det snævre (IP, email)-lag — IKKE en email fra body'en (DELETE
+  /me's body indeholder kun `pinkode`).
 
 Den tidligere version af dette endpoint havde sin EGEN, parallelle
 in-memory-tæller (`sletBekraeftLimiter`, nøglet pr. spiller-id) — det var en
@@ -405,7 +425,7 @@ spillerens `public_id` og begrundelsen `"selvbetjent sletning"`.
 | 401 | `ingen_token` / `ugyldigt_token` | Mangler/ugyldigt bearer-token — intet slettes |
 | 403 | `bekraeftelse_forkert` | `pinkode` matchede ikke (eller spilleren har intet `pin_hash`) — intet slettes |
 | 429 | `pin_spaerret` | DENNE spiller er spærret 15 min. efter 5 forkerte pinkoder i træk — DELT tæller med login, se ovenfor |
-| 429 | `ip_login_spaerret` | Samme IP-brede grænse som login (10 mislykkede forsøg/10 min. PÅ TVÆRS AF SPILLERE) — DELT tæller med login, se ovenfor |
+| 429 | `ip_login_spaerret` | Samme to-lags IP-grænse som login (se S1 ovenfor) — DELT tæller med login |
 
 ### `POST /me/boost` (bearer)
 Indløser dagens sms-boostkode (svarer til klientens `useCode()`). Body
@@ -1468,15 +1488,51 @@ eller migration uden en frisk, bekræftet backup lige inden. Se README.md,
 ligge på serveren fra en tidligere udrulning).
 
 ### M3) IP-bred rate-limit på pinkode-login
-Se `POST /players` ovenfor (`ip_login_spaerret`, 10 forkerte forsøg/10 min.,
-PÅ TVÆRS AF SPILLERE, nøglet på `X-Client-IP`) — i tillæg til den
-eksisterende pr.-spiller-spærring (`pin_spaerret`, 5 forsøg/15 min.), som
-blev VERIFICERET i denne omgang til at være kort og ikke-eskalerende
-(`pin_fejl` nulstilles samtidig med at spærringen sættes, så en ny
-spærring igen kræver 5 friske forkerte forsøg).
+Se `POST /players` ovenfor (`ip_login_spaerret`, nøglet på `X-Client-IP`) —
+i tillæg til den eksisterende pr.-spiller-spærring (`pin_spaerret`, 5
+forsøg/15 min.), som blev VERIFICERET i denne omgang til at være kort og
+ikke-eskalerende (`pin_fejl` nulstilles samtidig med at spærringen sættes,
+så en ny spærring igen kræver 5 friske forkerte forsøg). **Oprindeligt ét
+fælles loft PÅ TVÆRS AF SPILLERE — se S1 nedenfor for hvorfor og hvordan det
+blev splittet i to lag.**
 
 ### M4) Selvbetjent sletning `DELETE /me`
 Se `DELETE /me` ovenfor. Kræver bearer-token OG en ekstra bekræftelse
 (pin ELLER telefon, samme regel som login) — et alene stjålet/lækket
 token kan ikke slette kontoen. Genbruger `deletePlayerFully()`. Logger
 `admin_audit_log` UDEN persondata (kun `public_id` + fast begrundelse).
+
+## Opfølgende merge-review, branch `spil-api-backup` (S1/S2/S4, 2. okt. 2026)
+
+Et merge-review af H2/M3/M4-ændringerne ovenfor blokerede merge pga. ét højt
+fund (S1) og bad om to mindre rettelser (S2, S4):
+
+### S1 (HØJT, blokerede merge): IP-grænsen ramte hele messens Wi-Fi
+Den oprindelige M3-grænse (se ovenfor) var ÉT fælles loft PÅ TVÆRS AF ALLE
+SPILLERES emails. Da `X-Client-IP` i praksis er Cloudflares
+`CF-Connecting-IP`, deler hele messens Wi-Fi/NAT typisk ÉN IP — 10 forkerte
+forsøg FRA HVEM SOM HELST på standen, MOD HVILKEN SOM HELST konto, blokerede
+derfor reelt login for HELE standen i op til 10 minutter. Rettet ved at
+splitte grænsen i to lag (se `POST /players`-afsnittets "S1"-boks og
+`src/routes/players.js#createIpLoginLimiter` ovenfor): ét snævert
+pr.-(IP, email)-lag (uændret 10/10 min., men nu kun pr. konto) og ét nyt,
+højt pr.-IP-alene-lag (300/10 min., på tværs af alle emails). Begge lag
+gælder stadig for BÅDE `POST /players` og `DELETE /me` via den delte
+`ipLoginLimiter`-instans.
+
+### S2 (MIDDEL): backup-kørsel robust mod manglende exec-bit
+`.github/workflows/deploy-spil-api.yml` og den dokumenterede crontab-linje
+(README.md, "Drift: natlig backup") kaldte scriptet direkte
+(`/var/www/spil-api/scripts/backup.sh`), hvilket kræver at exec-biten er
+sat — den mistes let ved kopiering/rsync fra Windows. Begge steder kalder nu
+scriptet via `bash ...` i stedet, så exec-biten er irrelevant.
+
+### S4 (LAVT): backup.sh's tomheds-tjek fangede ikke en tom dump
+`scripts/backup.sh` tjekkede kun at output-filen ikke var tom (`[ -s ... ]`)
+— men en fejlet/afbrudt `pg_dump` kan stadig producere en lille, GYLDIG
+gzip-fil (fx af en tom stream, ~20 byte), der bestod det tjek uden at
+indeholde en brugbar dump. Scriptet verificerer nu EKSPLICIT at indholdet
+rent faktisk er en komplet dump: `zcat <fil> | tail -1` skal indeholde
+strengen `"PostgreSQL database dump complete"` (standard-afslutningslinjen i
+en succesfuld `pg_dump`). Fejler dette tjek, exitter scriptet med fejl og
+logger tydeligt, PRÆCIS som ved enhver anden fejl i scriptet.

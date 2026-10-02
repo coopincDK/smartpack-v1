@@ -30,14 +30,32 @@ const PIN_SPAERRING_MS = 15 * 60 * 1000;
 // HVER af dem (statistisk ramte nogle, ~4,8%/konto/døgn ved 4-cifret pin),
 // eller (b) at nogen bevidst låser en navngiven kollega ude ved at afprøve
 // forkerte koder for DEN ene email igen og igen. Denne grænse er derfor
-// IP-bred og PÅ TVÆRS AF SPILLERE (nøgles på klient-IP, se
-// src/middleware/clientIp.js — ALDRIG klientens egen IP-header) — i TILLÆG
-// til, ikke i stedet for, spærringen ovenfor. Den tæller KUN mislykkede
-// login-/pin-forsøg (hverken ny registrering eller et vellykket login
-// forbruger et slot), så to kolleger der deler standens wifi ikke rammer
-// hinandens forsøg på at logge ind rigtigt.
+// IP-bred — i TILLÆG til, ikke i stedet for, spærringen ovenfor. Den tæller
+// KUN mislykkede login-/pin-forsøg (hverken ny registrering eller et
+// vellykket login forbruger et slot).
+//
+// S1 (opfølgende sikkerhedsgennemgang, merge-review): da klient-IP'en
+// (src/middleware/clientIp.js) er CF-Connecting-IP, deler HELE messens
+// Wi-Fi/NAT typisk ÉN IP — en ren IP-bred grænse PÅ TVÆRS AF SPILLERE låste
+// derfor reelt HELE standen ude efter blot 10 forkerte forsøg FRA HVEM SOM
+// HELST, mod HVILKEN SOM HELST konto. Grænsen er derfor nu TO LAG:
+//
+//  1) PIN_IP_MAKS_FORKERTE pr. (IP, email) — samme loft som hidtil, men
+//     rammer nu KUN gentagne forsøg mod SAMME konto fra samme sted (to
+//     kolleger der deler standens wifi rammer stadig ikke hinandens forsøg
+//     på at logge ind rigtigt, og låser heller ikke hinanden ude af HVER
+//     SIN konto).
+//  2) PIN_IP_ALENE_MAKS_FORKERTE pr. IP ALENE, på tværs af ALLE emails — et
+//     markant højere loft, der stadig fanger storskala-udtømningsforsøg
+//     (mange forskellige emails afprøvet fra samme sted), uden at ramme
+//     almindelig messetrafik. 300/10 min er ~30x det snævre pr.-konto-loft
+//     og langt under den generelle skrive-rate-limit (1000/min/IP, se
+//     app.js) — rigeligt til at rumme ægte fejltastninger spredt over en
+//     hel stands mange enheder, men lavt nok til at stoppe et scan mod
+//     mange konti.
 const PIN_IP_VINDUE_MS = 10 * 60 * 1000;
 const PIN_IP_MAKS_FORKERTE = 10;
+const PIN_IP_ALENE_MAKS_FORKERTE = 300;
 
 function normalizePhone(raw) {
   return String(raw || '').replace(/[^0-9]/g, '');
@@ -47,18 +65,58 @@ function last8(digits) {
   return digits.slice(-8);
 }
 
-// M3: ÉN delt instans pr. app (ikke pr. request, og — siden denne
-// opfølgende runde — heller ikke pr. router) — bruges af BÅDE login
-// (nedenfor) og DELETE /me's pinkode-bekræftelse (src/routes/me.js), så de
-// to reelt deler SAMME IP-tæller (se src/app.js, som opretter én instans og
-// sender den til begge routere). Et separat/dupliceret eksemplar pr. router
-// ville stille en angriber to selvstændige lofter i stedet for ét fælles.
+// S1: nøglen for det snævre (IP, email)-lag. DELETE /me har ingen email i
+// sin body (kun `pinkode`) — der bruges i stedet req.player.email, sat af
+// auth-middlewaren (requirePlayer, se src/middleware/playerAuth.js) FØR
+// routehandleren kører. POST /players har req.player ikke sat, og bruger i
+// stedet email fra selve requestens body (samme normalisering — trim +
+// lowercase — som den lokale `email`-variabel i login-/registreringsflowet
+// nedenfor).
+function emailNoegleFra(req) {
+  if (req.player && req.player.email) return String(req.player.email).trim().toLowerCase();
+  return String((req.body && req.body.email) || '').trim().toLowerCase();
+}
+
+// M3/S1: ÉN delt instans pr. app (ikke pr. request, og ikke pr. router) —
+// bruges af BÅDE login (nedenfor) og DELETE /me's pinkode-bekræftelse
+// (src/routes/me.js), så de to reelt deler SAMME to-lags-tæller (se
+// src/app.js, som opretter én instans og sender den til begge routere). Et
+// separat/dupliceret eksemplar pr. router ville stille en angriber flere
+// selvstændige lofter i stedet for ét fælles pr. lag.
+//
+// Returnerer et objekt med samme `.check(req)`/`.consume(req)`-grænseflade
+// som en almindelig createRateLimiter()-middleware (se src/middleware/
+// rateLimit.js) — men sammensat af DE TO lag beskrevet ved PIN_IP_VINDUE_MS
+// ovenfor. `check` blokerer hvis ENTEN laget rammes; `consume` forbruger ET
+// slot i BEGGE lag for hvert forsøg (et forsøg der rammer det snævre lag,
+// er jo pr. definition også ét forsøg mod IP'en som helhed).
 function createIpLoginLimiter() {
-  return createRateLimiter({
+  const prEmailLimiter = createRateLimiter({
     windowMs: PIN_IP_VINDUE_MS,
     max: PIN_IP_MAKS_FORKERTE,
+    keyFn: (req) => `${clientIp(req)}:${emailNoegleFra(req)}`,
     besked: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
   });
+  const ipAleneLimiter = createRateLimiter({
+    windowMs: PIN_IP_VINDUE_MS,
+    max: PIN_IP_ALENE_MAKS_FORKERTE,
+    keyFn: (req) => clientIp(req),
+    besked: 'For mange mislykkede loginforsøg fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
+  });
+
+  function check(req) {
+    const emailRetry = prEmailLimiter.check(req);
+    const aleneRetry = ipAleneLimiter.check(req);
+    if (emailRetry === null && aleneRetry === null) return null;
+    return Math.max(emailRetry || 0, aleneRetry || 0);
+  }
+
+  function consume(req) {
+    prEmailLimiter.consume(req);
+    ipAleneLimiter.consume(req);
+  }
+
+  return { check, consume };
 }
 
 // M4 (opfølgende sikkerhedsgennemgang): pr.-spiller pin-spærringen

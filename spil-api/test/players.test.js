@@ -438,39 +438,89 @@ test('POST /me/boost: kræver sms-tilmelding, korrekt kode, og kun én gang pr. 
 
 // --- M3: IP-bred rate-limit paa login-/pin-forsoeg (sikkerhedsgennemgang) ---
 
-test('M3: en IP der laver 10+ forkerte pin-forsoeg paa tvaers af forskellige spilleres emails bliver selv blokeret', async (t) => {
+// S1 (merge-review, opfølgende sikkerhedsgennemgang): denne test dækkede
+// FØR den rene IP-brede grænse (ÉT fælles loft på 10, på tværs af ALLE
+// spilleres emails) — det var selve den opførsel, der blokerede hele
+// messens delte Wi-Fi efter blot 10 forkerte forsøg FRA HVEM SOM HELST mod
+// HVILKEN SOM HELST konto. Testen er erstattet af to-lags-testene nedenfor,
+// der dækker PRÆCIS det modsatte, ønskede scenarie: mange forkerte forsøg
+// mod ÉN konto rammer IKKE andre spilleres login fra samme IP, mens et
+// SÆRLIGT HØJT antal forkerte forsøg spredt over MANGE forskellige konti
+// stadig rammer et fælles IP-loft.
+
+test('S1: 10 forkerte forsoeg mod ÉN e-mail blokerer IKKE en ANDEN spillers login fra SAMME IP', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
 
-  const ANGRIBER_IP = { 'x-client-ip': '203.0.113.50' };
+  const STAND_IP = { 'x-client-ip': '203.0.113.50' };
 
-  // To FORSKELLIGE spillere, begge forsoegt fra samme IP.
+  // To FORSKELLIGE spillere, begge registreret fra samme (delte) IP.
   const a = await registrerSpiller(h.baseUrl, { email: 'offer-a@example.dk', pin: '1111' });
   const b = await registrerSpiller(h.baseUrl, { email: 'offer-b@example.dk', pin: '2222' });
-  await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: ANGRIBER_IP });
-  await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: ANGRIBER_IP });
+  await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: STAND_IP });
+  await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: STAND_IP });
 
-  // 10 forkerte forsoeg, fordelt over de to ofre (ikke 5+5 mod samme — netop
-  // pointen er at graensen er paa tvaers af spillere, ikke pr. spiller).
-  let sidsteStatus;
+  // 10 forkerte forsoeg mod SAMME konto (spiller A), fra SAMME IP. Kontoen
+  // laases efter PIN_MAKS_FEJL (5) af dem (pin_spaerret) — resten af de 10
+  // rammer derfor det laas, ikke en frisk "forkert pin"-fejl, men det er
+  // netop pointen: selv et tocifret antal forsoeg, der UDTØMMER det snaevre
+  // (IP, email)-lag for ÉN konto, maa ikke smitte af paa andre konti paa
+  // samme IP (se naeste assertion).
   for (let i = 0; i < 10; i++) {
-    const offer = i % 2 === 0 ? a.body : b.body;
     // eslint-disable-next-line no-await-in-loop
     const r = await api(h.baseUrl, 'POST', '/players', {
-      body: { ...offer, pin: '0000' },
-      headers: ANGRIBER_IP,
+      body: { ...a.body, pin: '0000' },
+      headers: STAND_IP,
     });
-    sidsteStatus = r.status;
+    assert.ok([400, 429].includes(r.status), `forsoeg ${i + 1} mod spiller A skal vaere 400 (forkert) eller 429 (konto-laast), ikke en IP-bred blokering`);
+    assert.notEqual(r.body.kode, 'ip_login_spaerret', `forsoeg ${i + 1} mod KUN spiller A maa ikke ramme det IP-brede loft`);
   }
-  assert.equal(sidsteStatus, 400, 'de foerste 10 forkerte forsoeg skal stadig behandles som almindelige forkerte pinkoder');
 
-  // Det 11. forkerte forsoeg fra SAMME IP rammer nu IP-graensen.
-  const elevte = await api(h.baseUrl, 'POST', '/players', {
-    body: { ...a.body, pin: '0000' },
-    headers: ANGRIBER_IP,
+  // Spiller B — en ANDEN konto, SAMME IP — kan stadig logge rigtigt ind.
+  const bLogin = await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: STAND_IP });
+  assert.equal(bLogin.status, 200, 'spiller B maa IKKE vaere blokeret af spiller A\'s forkerte forsoeg fra samme IP');
+  assert.equal(bLogin.body.type, 'login');
+});
+
+test('S1: det snaevre (IP, email)-loft er FAELLES mellem login (POST /players) og DELETE /me — rammer ÉN konto, ikke andre konti paa samme IP', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const STAND_IP = { 'x-client-ip': '198.51.100.9' };
+
+  const a = await registrerSpiller(h.baseUrl, { email: 'ip-email-a@example.dk', pin: '1111' });
+  const b = await registrerSpiller(h.baseUrl, { email: 'ip-email-b@example.dk', pin: '2222' });
+  const regA = await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: STAND_IP });
+  await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: STAND_IP });
+  const tokenA = regA.body.token;
+
+  // 10 forkerte forsoeg mod spiller A's konto, FORDELT over begge
+  // endpoints (login + DELETE /me) — begge bruger den samme delte
+  // ipLoginLimiter (se src/app.js), saa det snaevre (IP, email)-loft paa 10
+  // naas uanset hvilket af de to endpoints forsoegene kommer fra.
+  for (let i = 0; i < 5; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await api(h.baseUrl, 'POST', '/players', { body: { ...a.body, pin: '0000' }, headers: STAND_IP });
+  }
+  for (let i = 0; i < 5; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await api(h.baseUrl, 'DELETE', '/me', { token: tokenA, body: { pinkode: '0000' }, headers: STAND_IP });
+  }
+
+  // Det 11. forsoeg mod SAMME konto (uanset endpoint) rammer nu det
+  // snaevre (IP, email)-loft.
+  const elevte = await api(h.baseUrl, 'DELETE', '/me', {
+    token: tokenA,
+    body: { pinkode: '0000' },
+    headers: STAND_IP,
   });
   assert.equal(elevte.status, 429);
   assert.equal(elevte.body.kode, 'ip_login_spaerret');
+
+  // Men spiller B — en ANDEN konto, SAMME IP — er helt upaavirket: kan
+  // stadig logge korrekt ind.
+  const bLogin = await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: STAND_IP });
+  assert.equal(bLogin.status, 200, 'spiller B maa ikke rammes af det loft spiller A har udtoemt');
 });
 
 test('M3: en spillers korte spaerring (pin_spaerret) paavirker IKKE andre spilleres mulighed for at logge ind fra samme IP', async (t) => {
@@ -659,7 +709,7 @@ test('M4: forkerte DELETE /me-bekraeftelser taeller med i SAMME pr.-spiller-spae
   assert.equal(findes.rows.length, 1);
 });
 
-test('M3/M4: IP-graensen er FAELLES mellem forkerte login- og DELETE /me-forsoeg (ikke en separat/duplikeret taeller)', async (t) => {
+test('S1: forkerte forsoeg mod TO FORSKELLIGE konti, fordelt over login og DELETE /me, fra SAMME IP rammer IKKE laengere et faelles loft paa 10 (det var S1-fejlen)', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());
   const IP = { 'x-client-ip': '203.0.113.77' };
@@ -670,23 +720,68 @@ test('M3/M4: IP-graensen er FAELLES mellem forkerte login- og DELETE /me-forsoeg
   await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: IP });
   const tokenA = regA.body.token;
 
-  // 5 forkerte LOGIN-forsoeg (spiller B) + 5 forkerte DELETE /me-forsoeg
-  // (spiller A's token) = 10 fra SAMME IP, fordelt over to spillere (hver
-  // under deres eget pr.-spiller-loft paa 5).
-  for (let i = 0; i < 5; i++) {
+  // 4 forkerte LOGIN-forsoeg (spiller B) + 4 forkerte DELETE /me-forsoeg
+  // (spiller A) = 8 fra SAMME IP, fordelt over to FORSKELLIGE konti og to
+  // FORSKELLIGE endpoints — UNDER baade pr.-spiller-loftet (5) og det
+  // snaevre (IP, email)-loft (10) for hver konto for sig. FØR S1-fixet delte
+  // alle forsoeg fra samme IP ÉT loft paa 10 UANSET email — her ville det
+  // 9./10. forsoeg (uanset hvilken konto) altsaa have ramt det. Nu, hvor
+  // loftet er pr. (IP, email) i stedet, rammer ingen af dem noget som
+  // helst.
+  for (let i = 0; i < 4; i++) {
     // eslint-disable-next-line no-await-in-loop
     const r = await api(h.baseUrl, 'POST', '/players', { body: { ...b.body, pin: '0000' }, headers: IP });
     assert.equal(r.status, 400);
   }
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     // eslint-disable-next-line no-await-in-loop
     const r = await api(h.baseUrl, 'DELETE', '/me', { token: tokenA, body: { pinkode: '0000' }, headers: IP });
     assert.equal(r.status, 403);
   }
 
-  // Det 11. forsoeg fra SAMME IP rammes af IP-graensen, uanset endpoint og
-  // uanset korrekt kode.
-  const elevte = await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: IP });
-  assert.equal(elevte.status, 429);
-  assert.equal(elevte.body.kode, 'ip_login_spaerret');
+  // Begge konti kan nu logge korrekt ind fra samme IP — intet faelles loft
+  // paa tvaers af de to konti blev ramt.
+  const aLogin = await api(h.baseUrl, 'POST', '/players', { body: a.body, headers: IP });
+  assert.equal(aLogin.status, 200);
+  const bLogin = await api(h.baseUrl, 'POST', '/players', { body: b.body, headers: IP });
+  assert.equal(bLogin.status, 200);
+});
+
+// S1: det høje, IP-ALENE lag (PIN_IP_ALENE_MAKS_FORKERTE, på tværs af ALLE
+// emails) testes direkte mod den RIGTIGE, eksporterede createIpLoginLimiter()
+// — altså den faktiske produktionsfunktion som src/app.js opretter ÉN
+// instans af og deler mellem POST /players og DELETE /me (ikke en
+// isoleret/dupliceret genimplementering). Vi undgår bevidst at gå via
+// fuld HTTP+DB for de 300+ forskellige konti dette kræver (ville gøre
+// testsuiten unødigt langsom) — i stedet bygges minimale `req`-objekter,
+// der efterligner PRÆCIS det `req.body.email`/`req.headers`-shape routerne
+// selv læser (se emailNoegleFra() i src/routes/players.js).
+test('S1: et stort antal (over det hoeje IP-loft) forkerte forsoeg mod MANGE forskellige emails fra samme IP rammer stadig IP-loftet', async (t) => {
+  const { createIpLoginLimiter } = require('../src/routes/players');
+  const limiter = createIpLoginLimiter();
+  const IP = '203.0.113.200';
+
+  function reqFor(i) {
+    return { headers: { 'x-client-ip': IP }, body: { email: `mange-emails-${i}@example.dk` } };
+  }
+
+  // 300 forkerte forsoeg mod 300 FORSKELLIGE emails fra SAMME IP — hver
+  // enkelt er langt under det snaevre (IP, email)-loft (10, samme email
+  // optraeder jo kun ÉN gang), men de deler alle det IP-ALENE loft.
+  for (let i = 0; i < 300; i++) {
+    const req = reqFor(i);
+    assert.equal(limiter.check(req), null, `forsoeg ${i + 1} skal stadig vaere tilladt (under det hoeje IP-loft)`);
+    limiter.consume(req);
+  }
+
+  // Det 301. forsoeg — igen mod en HELT NY email, samme IP — rammer nu det
+  // hoeje IP-alene-loft.
+  const sidsteReq = reqFor(300);
+  const retryAfterSec = limiter.check(sidsteReq);
+  assert.notEqual(retryAfterSec, null, 'det 301. forsoeg paa tvaers af 301 forskellige emails skal rammes af IP-loftet');
+
+  // Kontrol: en HELT ANDEN IP er upaavirket af dette — samme lave email-tal
+  // ville ikke engang vaere taet paa noget loft.
+  const andenIpReq = { headers: { 'x-client-ip': '203.0.113.201' }, body: { email: 'mange-emails-0@example.dk' } };
+  assert.equal(limiter.check(andenIpReq), null);
 });

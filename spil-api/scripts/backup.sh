@@ -67,6 +67,20 @@ if [ ! -s "$tmpfile" ]; then
   exit 1
 fi
 
+# S4 (merge-review): en fejlet/afbrudt pg_dump kan stadig producere en lille,
+# GYLDIG gzip-fil (fx en tom stream komprimeret til ~20 byte) — den består
+# [ -s ... ]-tjekket ovenfor uden at indeholde en brugbar dump. En succesfuld
+# pg_dump afslutter ALTID med en fast standardlinje,
+# "-- PostgreSQL database dump complete", som sidste linje i output — vi
+# tjekker derfor EKSPLICIT at den linje rent faktisk er til stede, og
+# fejler (samme måde som enhver anden fejl her: ikke-nul exit, tydelig
+# FEJL-logget af on_exit-trappen) hvis den ikke er.
+if ! zcat "$tmpfile" | tail -1 | grep -q "PostgreSQL database dump complete"; then
+  rm -f "$tmpfile"
+  echo "Dumpen er ufuldstændig/korrupt (mangler 'PostgreSQL database dump complete')." >&2
+  exit 1
+fi
+
 mv "$tmpfile" "$outfile"
 chmod 600 "$outfile"
 log "Dump gemt: $outfile ($(stat -c%s "$outfile") bytes)"

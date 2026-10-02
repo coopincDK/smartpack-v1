@@ -21,6 +21,11 @@ name: Deploy spil-api
 # denne gren er merget til main, skal scriptet lægges på serveren manuelt
 # (eller via én forudgående udrulning) FØR denne workflow-ændring er aktiv,
 # ellers fejler (og stopper, med vilje) netop dette trin.
+#
+# S2 (merge-review): scriptet kaldes som `bash ./scripts/backup.sh`, ikke
+# direkte (`./scripts/backup.sh`) — rsync fra Windows mister let exec-biten,
+# og en direkte kørsel ville så fejle med "Permission denied" i stedet for
+# at lave backuppen. `bash ...` gør exec-biten irrelevant.
 
 on:
   push:
@@ -131,7 +136,7 @@ jobs:
       # migrationerne) når at køre — se bootstrap-forbeholdet i filens toptekst.
       - name: Sikkerhedskopi af databasen FØR udrulning
         run: |
-          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd /var/www/spil-api && ./scripts/backup.sh'
+          ssh "$DEPLOY_USER@$DEPLOY_HOST" 'cd /var/www/spil-api && bash ./scripts/backup.sh'
 
       - name: Deploy via deploy.sh
         run: ./spil-api/deploy.sh "$DEPLOY_USER@$DEPLOY_HOST"
