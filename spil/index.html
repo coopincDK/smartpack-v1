@@ -808,6 +808,11 @@ details.more summary:hover{color:var(--text)}
     <label class="f">Spillerens e-mail <small>Spilleren får en ny pinkode, som kun vises her</small><input type="email" id="a-pinmail" autocomplete="off"></label>
     <button class="btn small" id="b-pin">Giv ny pinkode</button>
     <p class="muted small" id="a-pin-res"></p>
+    <h4 class="sub">Skift admin-kode</h4>
+    <label class="f">Nuværende kode<input type="password" id="a-kode-gl" autocomplete="current-password"></label>
+    <label class="f">Ny kode <small>Mindst 12 tegn. Alle andre admin-logins bliver logget ud</small><input type="password" id="a-kode-ny" autocomplete="new-password"></label>
+    <label class="f">Gentag ny kode<input type="password" id="a-kode-ny2" autocomplete="new-password"></label>
+    <button class="btn small" id="b-kode">Skift koden</button>
     <h4 class="sub">Nulstil alt</h4>
     <p class="muted small">Sletter ALLE spillere, forsøg og scores permanent. Kan ikke fortrydes. Brug kun før messen starter, aldrig under eller efter.</p>
     <label class="f">Skriv NULSTIL for at bekræfte<input type="text" id="a-resetconfirm" autocomplete="off"></label>
@@ -1049,6 +1054,7 @@ const API = {
     lodder(){ return apiFetch('/admin/konkurrence/lodder', { admin: true }); },
     traek(){ return apiFetch('/admin/konkurrence/traek', { method: 'POST', admin: true }); },
     unsubscribeBulk(liste, emails){ return apiFetch('/admin/afmeld', { method: 'POST', body: { liste, emails }, admin: true }); },
+    changeCode(gammel, ny){ return apiFetch('/admin/skift-kode', { method: 'POST', body: { gammel, ny }, admin: true }); },
     resetPin(email){ return apiFetch('/admin/nulstil-pin', { method: 'POST', body: { email }, admin: true }); },
     resetAll(){ return apiFetch('/admin/nulstil', { method: 'POST', body: { bekraeft: 'NULSTIL' }, admin: true }); },
     standLoginCode(){ return apiFetch('/admin/stand-login-kode', { method: 'POST', admin: true }); },
@@ -3191,6 +3197,13 @@ $('#b-unsub').onclick = () => {
       : 'Afmeldt.';
     renderAdmin();
   }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke afmelde. Tjek din forbindelse.'));
+};
+$('#b-kode').onclick = () => {
+  const gl = $('#a-kode-gl').value, ny = $('#a-kode-ny').value, ny2 = $('#a-kode-ny2').value;
+  if(ny.length < 12) return toast('Den nye kode skal være mindst 12 tegn');
+  if(ny !== ny2) return toast('De to nye koder er ikke ens');
+  API.admin.changeCode(gl, ny).then(() => { ['#a-kode-gl', '#a-kode-ny', '#a-kode-ny2'].forEach(i => { $(i).value = ''; }); toast('Admin-koden er skiftet'); })
+    .catch(e => toast(e && e.message ? e.message : 'Kunne ikke skifte koden.'));
 };
 $('#b-pin').onclick = () => {
   const email = $('#a-pinmail').value.trim().toLowerCase();

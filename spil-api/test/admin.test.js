@@ -443,3 +443,29 @@ test('spiller oprettet før pinkoderne kan logge ind med telefon; standen kan nu
   const nyPin = await api(h.baseUrl, 'POST', '/players', { body: { email: 'gammel@example.dk', pin: nul.body.pin } });
   assert.equal(nyPin.status, 200);
 });
+
+test('admin kan selv skifte koden: kræver den nuværende, mindst 12 tegn, gammel kode virker ikke bagefter', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+
+  const l1 = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const c1 = cookieFra(l1);
+  const l2 = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const c2 = cookieFra(l2);
+
+  const forkert = await api(h.baseUrl, 'POST', '/admin/skift-kode', { adminCookie: c1, body: { gammel: 'nej', ny: 'en-helt-ny-kode-123' } });
+  assert.equal(forkert.status, 401);
+  const kort = await api(h.baseUrl, 'POST', '/admin/skift-kode', { adminCookie: c1, body: { gammel: ADMIN_PW, ny: 'kort' } });
+  assert.equal(kort.status, 400);
+  const ok = await api(h.baseUrl, 'POST', '/admin/skift-kode', { adminCookie: c1, body: { gammel: ADMIN_PW, ny: 'en-helt-ny-kode-123' } });
+  assert.equal(ok.status, 200);
+
+  const gammelLogin = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  assert.equal(gammelLogin.status, 401);
+  const nyLogin = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: 'en-helt-ny-kode-123' } });
+  assert.equal(nyLogin.status, 200);
+
+  // Egen session virker stadig, den anden er logget ud.
+  assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: c1 })).status, 200);
+  assert.equal((await api(h.baseUrl, 'GET', '/admin/config', { adminCookie: c2 })).status, 401);
+});
