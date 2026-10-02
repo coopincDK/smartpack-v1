@@ -997,6 +997,9 @@ const API = {
   register(payload){
     return apiFetch('/players', { method: 'POST', noAuth: true, body: {
       navn: payload.name, email: payload.email, pin: payload.pin, firma: payload.company,
+      // Telefon er nu valgfrit (brugerens beslutning) og sendes kun med, når sms-fluebenet er sat
+      // ved selve tilmeldingen (se #f-reg's submit-handler, som så kræver det udfyldt).
+      telefon: payload.phone || undefined,
       vennekode: payload.ref || '', udfordringskode: payload.chCode || '',
       tilmeldinger: payload.subs || [], accepterer_betingelser: true,
     } }).then(r => { if(r && r.token) setToken(r.token); return r; });
@@ -1029,11 +1032,16 @@ const API = {
   unsubscribe(listKey){ return apiFetch('/me/subs/' + encodeURIComponent(listKey), { method: 'DELETE' }); },
   /* Firma er valgfrit igen (brugerens beslutning): kan sættes bagefter i lobbyen */
   setCompany(company){ return apiFetch('/me', { method: 'PATCH', body: { firma: company } }); },
+  /* Telefon vises/kræves kun ved sms-fluebenet (se subsBox) — gemmes her, så PUT /me/ticks({keys:
+     ['sms',...]}) ikke længere afvises med telefon_kraeves. */
+  setPhone(phone){ return apiFetch('/me', { method: 'PATCH', body: { telefon: phone } }); },
   /* "Slet min profil": backend-endepunktet bygges på spil-api-backup og er endnu ikke live nogen
-     steder (ingen API.md-dokumentation endnu) — kontrakten her (DELETE /me, bearer) er et bud ud
-     fra de eksisterende mønstre (PATCH /me, DELETE /me/subs/:liste) og skal bekræftes/rettes, når
-     den rigtige API.md lander. Må IKKE merges til main, før det er sket. */
-  deleteMe(){ return apiFetch('/me', { method: 'DELETE' }); },
+     steder (ingen API.md-dokumentation endnu) — team-lead har bekræftet, at det kræver {pinkode}
+     i selve kaldet (spillerens egen pinkode som bekræftelse, ikke telefon), men resten af
+     kontrakten (DELETE /me, bearer, svarform) er stadig et bud ud fra eksisterende mønstre
+     (PATCH /me, DELETE /me/subs/:liste) og skal bekræftes/rettes, når den rigtige API.md lander.
+     Må IKKE merges til main, før det er sket. */
+  deleteMe(pinkode){ return apiFetch('/me', { method: 'DELETE', body: { pinkode } }); },
   boost(code){ return apiFetch('/me/boost', { method: 'POST', body: { code } }); },
   challenge(code){ return apiFetch('/me/challenge', { method: 'POST', body: { code } }); },
   seen(ids){ return apiFetch('/me/seen', { method: 'POST', body: ids ? { ids } : {} }); },
@@ -1359,10 +1367,14 @@ function subKeys(p){ const k = []; if(p.marketing) k.push('sp'); (p.mailTo || []
 /* dagens flueben: separat fra den varige tilmelding (subKeys). At fjerne et flueben her afmelder IKKE
    listen varigt (kun "Mine tilmeldinger" gør det) — det betyder blot, at man ikke får dagens liv-bonus. */
 const todayKeys = p => (p && p.todayTicks) || [];
-function subsBox(box, initial, onChange, fold){
+// Brugerens beslutning: telefonnummer vises og kræves KUN, når sms-fluebenet sættes (ikke resten
+// af tilmeldingen) — både ved selve tilmeldingen og ved dagens flueben i lobbyen. knownPhone er den
+// allerede gemte telefon (fra /me, ved genlogin/dagens flueben); er den tom, skal feltet udfyldes.
+function subsBox(box, initial, onChange, fold, knownPhone){
   // "Tilmeld alle" øverst, og hver liste kan fjernes enkeltvis nedenunder
   const opts = subOptions(), chosen = new Set(initial), lifeOpts = opts.filter(o => o.life).length, bonus = cfg.lifeBonus !== false;
   box.replaceChildren();
+  box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
   t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Fluebenene starter tomme hver dag, så du vælger selv. Hver partner, du sætter flueben ved, giver et ekstra liv i dag, og så får du et liv tilbage hver halve time, når du er under 3. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
   // Ingen "Tilmeld alle": hver partner skal vælges for sig (vilkår pkt. 12). Knappen findes stadig i koden,
@@ -1376,7 +1388,34 @@ function subsBox(box, initial, onChange, fold){
     if(o.privacy){ const a = el('a', null, `Læs ${o.name}s privatlivspolitik`); a.href = o.privacy; a.target = '_blank'; a.rel = 'noopener'; sp.append(' ', a); }
     if(bonus && o.life) sp.append(' ', el('b', 'plus', '+1 liv i dag'));
     l.append(i, sp); list.append(l); inputs.push(i);
-    i.onchange = () => { i.checked ? chosen.add(o.k) : chosen.delete(o.k); sync(); onChange && onChange([...chosen]); };
+    let phoneRow = null;
+    if(o.k === 'sms'){
+      const pl = el('label', 'f'); pl.append('Telefonnummer ', el('small', null, 'Kun til sms, bruges ikke til andet'));
+      const pi = el('input'); pi.type = 'tel'; pi.inputMode = 'tel'; pi.autocomplete = 'tel'; pi.placeholder = 'Fx 12345678'; pi.value = knownPhone || '';
+      pl.append(pi); phoneRow = el('div', 'sms-phone'); phoneRow.append(pl);
+      box._phoneInput = pi;
+      if(onChange){
+        // Lobby (dagens flueben): telefonen skal gemmes (PATCH /me) FØR selve fluebenet sættes —
+        // ved tilmelding (onChange er null) bliver den i stedet sendt med i selve POST /players.
+        const saveBtn = el('button', 'btn small', 'Gem og sæt flueben'); saveBtn.type = 'button';
+        saveBtn.onclick = () => {
+          const v = pi.value.replace(/\D/g, ''); if(v.length < 8) return toast('Skriv et telefonnummer med mindst 8 cifre.');
+          API.setPhone(v).then(() => { current.phone = v; onChange([...chosen]); })
+            .catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme telefonnummeret. Tjek din forbindelse.'));
+        };
+        phoneRow.append(saveBtn);
+      }
+      phoneRow.hidden = !(i.checked && !knownPhone);
+      list.append(phoneRow);
+    }
+    i.onchange = () => {
+      i.checked ? chosen.add(o.k) : chosen.delete(o.k); sync();
+      if(phoneRow) phoneRow.hidden = !(i.checked && !knownPhone);
+      // Lobby: sms lige blevet sat, og telefonen mangler endnu — vent på "Gem og sæt flueben"
+      // ovenfor i stedet for at sende et kald, serveren alligevel ville afvise (telefon_kraeves).
+      if(o.k === 'sms' && i.checked && !knownPhone && onChange) return;
+      onChange && onChange([...chosen]);
+    };
   });
   const sync = () => { const every = inputs.every(i => i.checked); all.textContent = every ? 'Alle er valgt' : 'Tilmeld alle'; all.disabled = every; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
   all.onclick = () => { inputs.forEach(i => { i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge'); onChange && onChange([...chosen]); };
@@ -2303,9 +2342,17 @@ $('#f-reg').addEventListener('submit', e => {
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err('Skriv en gyldig e-mail.');
   if(!/^\d{4}$/.test(pin)) return err('Pinkoden skal være 4 cifre.');
   if(!$('#i-terms').checked) return err('Sæt flueben ved betingelserne for at deltage.');
+  // Telefon kræves kun, hvis sms-fluebenet er sat (brugerens beslutning) — se subsBox, som viser feltet.
+  const subs = regSubs();
+  let phone = '';
+  if(subs.includes('sms')){
+    const pi = $('#reg-subs')._phoneInput;
+    phone = pi ? pi.value.replace(/\D/g, '') : '';
+    if(phone.length < 8) return err('Skriv et telefonnummer med mindst 8 cifre for at få sms.');
+  }
   const btn = $('#f-reg').querySelector('button[type=submit]'); btn.disabled = true;
   let regType = null;
-  API.register({ name, email, pin, company, subs: regSubs(), ref: $('#i-ref').value.trim() })
+  API.register({ name, email, pin, company, subs, phone, ref: $('#i-ref').value.trim() })
     .then(r => { regType = r && r.type; RT.rehello(); return API.me(); }) // K2b: den fysiske ws-forbindelse skal vide, hvem der nu er logget ind
     .then(m => {
       current = meFromServer(m); syncMyAttempts(); cacheMe(current);
@@ -2402,7 +2449,7 @@ function renderLobby(){
     const box = el('div', 'subs'); d.append(sm, box); mb.append(d);
     subsBox(box, todayKeys(p), keys => {
       applyTicks(keys, d);
-    });
+    }, undefined, p.phone);
   }
   renderSubsBox();
   const cb = $('#l-code');
@@ -2526,11 +2573,16 @@ $('#l-firm-i').addEventListener('change', e => {
 $('#b-logout').onclick = () => { forgetMe(); current = null; show('s-start'); };
 $('#b-delme').onclick = () => {
   if(!current) return;
-  if(!confirm('Slet din profil permanent? Dine data, forsøg og tilmeldinger fjernes, og det kan ikke fortrydes.')) return;
-  API.deleteMe().then(() => {
+  // Bekræftelse er spillerens egen pinkode (ikke telefon) — backenden kræver den i selve kaldet
+  // (DELETE /me {pinkode}). Samme to-trins-mønster som admins "Nulstil alle": noget at skrive rigtigt
+  // PLUS en almindelig ja/nej-bekræftelse, fordi det her er lige så uigenkaldeligt.
+  const pinkode = (prompt('Bekræft sletning af din profil ved at skrive din pinkode:') || '').trim();
+  if(!pinkode) return;
+  if(!confirm('Er du helt sikker? Din profil, dine forsøg og tilmeldinger slettes permanent og kan ikke fortrydes.')) return;
+  API.deleteMe(pinkode).then(() => {
     toast('Din profil er slettet');
     forgetMe(); current = null; show('s-start');
-  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke slette profilen. Tjek din forbindelse, og prøv igen.'));
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke slette profilen. Tjek din pinkode og forbindelse, og prøv igen.'));
 };
 
 /* ---------- runderne hænger sammen ---------- */
