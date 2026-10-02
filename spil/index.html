@@ -654,6 +654,7 @@ details.more summary:hover{color:var(--text)}
   <div class="more-lives" id="l-subs"></div>
   <details class="more"><summary id="l-bsum">Dine mærker</summary><div class="badges" id="l-badges"></div></details>
   <button class="link" id="b-logout">Næste spiller</button>
+  <button class="link" id="b-delme">Slet min profil</button>
 </section>
 
 <section class="screen" id="s-game">
@@ -1028,6 +1029,11 @@ const API = {
   unsubscribe(listKey){ return apiFetch('/me/subs/' + encodeURIComponent(listKey), { method: 'DELETE' }); },
   /* Firma er valgfrit igen (brugerens beslutning): kan sættes bagefter i lobbyen */
   setCompany(company){ return apiFetch('/me', { method: 'PATCH', body: { firma: company } }); },
+  /* "Slet min profil": backend-endepunktet bygges på spil-api-backup og er endnu ikke live nogen
+     steder (ingen API.md-dokumentation endnu) — kontrakten her (DELETE /me, bearer) er et bud ud
+     fra de eksisterende mønstre (PATCH /me, DELETE /me/subs/:liste) og skal bekræftes/rettes, når
+     den rigtige API.md lander. Må IKKE merges til main, før det er sket. */
+  deleteMe(){ return apiFetch('/me', { method: 'DELETE' }); },
   boost(code){ return apiFetch('/me/boost', { method: 'POST', body: { code } }); },
   challenge(code){ return apiFetch('/me/challenge', { method: 'POST', body: { code } }); },
   seen(ids){ return apiFetch('/me/seen', { method: 'POST', body: ids ? { ids } : {} }); },
@@ -2518,6 +2524,14 @@ $('#l-firm-i').addEventListener('change', e => {
     .catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme firmaet. Tjek din forbindelse.'));
 });
 $('#b-logout').onclick = () => { forgetMe(); current = null; show('s-start'); };
+$('#b-delme').onclick = () => {
+  if(!current) return;
+  if(!confirm('Slet din profil permanent? Dine data, forsøg og tilmeldinger fjernes, og det kan ikke fortrydes.')) return;
+  API.deleteMe().then(() => {
+    toast('Din profil er slettet');
+    forgetMe(); current = null; show('s-start');
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke slette profilen. Tjek din forbindelse, og prøv igen.'));
+};
 
 /* ---------- runderne hænger sammen ---------- */
 const widthFor = orders => Math.min(0.76, 0.36 + orders * 0.04);
