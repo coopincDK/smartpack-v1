@@ -655,17 +655,21 @@ details.more summary:hover{color:var(--text)}
   <details class="more"><summary id="l-bsum">Dine mærker</summary><div class="badges" id="l-badges"></div></details>
   <button class="link" id="b-logout">Næste spiller</button>
   <button class="link" id="b-delme">Slet min profil</button>
-  <dialog id="d-delpin">
-    <form method="dialog" id="f-delpin">
-      <label class="f">Pinkode <small>Bekræft sletning af din profil ved at skrive din pinkode</small><input type="password" id="i-delpin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
-      <p class="err" id="delpin-err" role="alert"></p>
-      <div class="row">
-        <button class="btn ghost" type="button" id="b-delpin-cancel">Annullér</button>
-        <button class="btn primary" type="submit">Slet profilen</button>
-      </div>
-    </form>
-  </dialog>
 </section>
+<!-- B2: ligger bevidst UDEN FOR enhver .screen-sektion (ikke inde i #s-lobby) — en skærm, der bliver
+     display:none under en åben modal (fx standens idle-timer, "Næste spiller"), ville ellers gøre
+     dialogen usynlig uden at lukke den, og siden ville forblive låst til en reload. show() lukker
+     den desuden altid eksplicit ved ethvert skærmskift, som en ekstra sikkerhed. -->
+<dialog id="d-delpin">
+  <form method="dialog" id="f-delpin">
+    <label class="f">Pinkode <small>Bekræft sletning af din profil ved at skrive din pinkode</small><input type="password" id="i-delpin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
+    <p class="err" id="delpin-err" role="alert"></p>
+    <div class="row">
+      <button class="btn ghost" type="button" id="b-delpin-cancel">Annullér</button>
+      <button class="btn primary" type="submit">Slet profilen</button>
+    </div>
+  </form>
+</dialog>
 
 <section class="screen" id="s-game">
   <div class="hud">
@@ -2223,6 +2227,10 @@ class Send extends Base {
 /* ---------- navigation ---------- */
 let screen = 's-start';
 function show(id){
+  // B2: et åbent <dialog> (fx "Slet min profil") bliver usynligt, men FORBLIVER modalt/låst, hvis
+  // skærmen under det skifter (standens idle-timer, "Næste spiller", m.m.) — luk derfor altid
+  // ethvert åbent dialog-element ved enhver skærmskift, uanset årsag.
+  document.querySelectorAll('dialog[open]').forEach(d => d.close());
   screen = id;
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   window.scrollTo(0, 0);
@@ -2304,7 +2312,7 @@ function crownLine(){
 function forgetMe(){ API.logout(); savedMe = null; RT.rehello(); }
 $('#b-me').onclick = () => { if(!savedMe) return; audio(); current = savedMe; syncMyAttempts(); show('s-lobby'); };
 let idleT = 0;
-function idleReset(){ clearTimeout(idleT); if(!isStand()) return; idleT = setTimeout(() => { if(['s-lobby', 's-result', 's-reg', 's-board'].includes(screen)){ current = null; forgetMe(); show('s-start'); } }, 120000); }
+function idleReset(){ clearTimeout(idleT); if(!isStand()) return; idleT = setTimeout(() => { if(['s-lobby', 's-result', 's-reg', 's-board'].includes(screen)){ $('#d-delpin').close(); current = null; forgetMe(); show('s-start'); } }, 120000); }
 ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, idleReset, { passive: true }));
 function renderStart(){
   const me = isStand() ? null : savedMe, bm = $('#b-me');
@@ -2588,7 +2596,7 @@ $('#l-firm-i').addEventListener('change', e => {
   API.setCompany(v).then(() => { current.company = v; current.companyKey = firmKey(v); toast('Du spiller nu for ' + v); renderLobby(); })
     .catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme firmaet. Tjek din forbindelse.'));
 });
-$('#b-logout').onclick = () => { forgetMe(); current = null; show('s-start'); };
+$('#b-logout').onclick = () => { $('#d-delpin').close(); forgetMe(); current = null; show('s-start'); };
 // S7: pinkoden skal IKKE vises i klartekst (window.prompt gjorde det, uheldigt på en delt
 // standtablet med folk omkring) — et lille <dialog> med et password-felt i stedet.
 $('#b-delme').onclick = () => {
