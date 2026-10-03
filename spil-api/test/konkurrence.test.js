@@ -104,6 +104,40 @@ test('lodder: kun spil i perioden, firmaets bedste spil, kun firmaer på listen,
   assert.equal(genskabt.firma_noegle === 'helloretail' ? 'Hello Retail ApS' : 'MinShop A/S', g.vinder_firma);
 });
 
+test('spillerens egen konkurrencestatus i GET /me: deltagerliste, lodder, godkendelse fra standen', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const ac = await adminCookie(h);
+  await api(h.baseUrl, 'POST', '/admin/deltagerliste', { adminCookie: ac, body: { tekst: 'MinShop A/S' } });
+
+  const reg = async (email, firma) => {
+    const { body } = registrerSpiller(h.baseUrl, { email, firma });
+    const r = await api(h.baseUrl, 'POST', '/players', { body });
+    return r.body.token;
+  };
+  const tMin = await reg('m@example.dk', 'MinShop');
+  const tNy = await reg('n@example.dk', 'Nyt Firma ApS');
+  const tSp = await reg('s@example.dk', 'SmartPack');
+
+  const me = async (tok) => (await api(h.baseUrl, 'GET', '/me', { token: tok })).body.konkurrence;
+  let k = await me(tMin);
+  assert.equal(k.paa_deltagerliste, true);
+  assert.equal(k.lodder, 0);
+  assert.equal((await me(tSp)).udelukket, true);
+  assert.equal((await me(tNy)).paa_deltagerliste, false);
+
+  const idMin = (await h.pool.query("SELECT id FROM spiller WHERE email = 'm@example.dk'")).rows[0].id;
+  await spil(h, idMin, 1400, '2026-10-08 12:00:00+02');
+  k = await me(tMin);
+  assert.equal(k.bedste, 1400);
+  assert.equal(k.lodder, 3);
+
+  // Standen godkender et firma, der har stavet sig anderledes end på listen.
+  const ok = await api(h.baseUrl, 'POST', '/admin/deltagerliste', { adminCookie: ac, body: { tekst: 'Nyt Firma ApS', tilstand: 'tilfoej' } });
+  assert.equal(ok.body.nye, 1);
+  assert.equal((await me(tNy)).paa_deltagerliste, true);
+});
+
 test('ingen lodder -> ingen trækning', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());

@@ -137,10 +137,11 @@ input[type=text],input[type=email],input[type=tel],input[type=number],input[type
 .bf input{width:24px;height:24px;flex:none;accent-color:var(--yellow);margin-top:2px}
 .bf strong{display:block}
 .bf.used{opacity:.45;border-color:var(--line);background:transparent}
-.tickets{display:flex;gap:12px;align-items:center;font-size:14px;color:var(--muted)}
+.tickets{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin:4px 0}.tickets .dot{margin-top:4px}.tickets.warn{border-color:#FCD34D66}
 .tickets b{color:var(--text)}
 .tickets .tk{display:flex;gap:3px}
 .tickets .tk i{width:12px;height:18px;border-radius:2px;background:var(--green);display:block}
+.tickets.warn{color:#FCD34D}.tickets.ok{color:var(--muted)}.tickets .dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block;background:var(--green)}.tickets.warn .dot{background:#FCD34D}
 
 /* Mærker */
 .badges{display:flex;flex-wrap:wrap;gap:6px}
@@ -639,6 +640,7 @@ details.more summary:hover{color:var(--text)}
   <p class="nearmiss" id="l-near"></p>
   <p class="hourline" id="l-hour" hidden></p>
   <label class="bf" id="l-bf"><input type="checkbox" id="bf"><span><strong>Brug Black Friday-vagten</strong><span class="muted small" id="l-bftext">Højere tempo og dobbelte point. Du har én om dagen, så vælg forsøget med omhu.</span></span></label>
+  <div class="tickets" id="l-tickets" hidden></div>
   <label class="f" id="l-firm" hidden>Hvilken webshop eller hvilket firma er du fra? <small>Det står ved dit navn på topscoren</small><input type="text" id="l-firm-i" maxlength="40" placeholder="Fx minwebshop.dk"></label>
   <p class="muted small" id="l-rule">Et liv bruges, så snart du trykker start.</p>
   <button class="btn primary" id="b-start">Start</button>
@@ -646,7 +648,6 @@ details.more summary:hover{color:var(--text)}
   <div class="duelbox" id="l-duel" hidden></div>
   <details class="more" id="l-extra"><summary id="l-xsum">Mission, lodtrækning og koder</summary><div class="xbox">
   <div class="mission" id="l-mission" hidden></div>
-  <div class="tickets" id="l-tickets" hidden></div>
   <div class="codeform" id="l-codeform"><label class="f">Har du en kode? <small>Fra en sms eller fra en ven, der har udfordret dig</small><span class="row"><input type="text" id="l-codei" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="Fx K7PM"><button class="btn small" id="l-codeb" type="button">Brug koden</button></span></label><p class="err" id="l-codemsg"></p></div>
   <div class="code" id="l-code" hidden></div>
   </div></details>
@@ -792,7 +793,7 @@ details.more summary:hover{color:var(--text)}
     <label class="f">Deltagerliste <small>Kopiér firmakolonnen fra Dansk Erhvervs Google Sheet og sæt den ind her, ét firma pr. linje. Kopierer du flere kolonner, så skriv nedenfor, hvilken kolonne firmaet står i</small><textarea id="a-dl" style="min-height:90px"></textarea></label>
     <div class="grid2">
       <label class="f">Firmaet står i kolonne nr.<input type="number" id="a-dlkol" min="1" max="50" value="1"></label>
-      <label class="f">Sådan<select id="a-dlmode"><option value="erstat">Erstat listen (ny udgave)</option><option value="tilfoej">Tilføj firmaer</option></select></label>
+      <label class="f">Sådan<select id="a-dlmode"><option value="erstat">Erstat listen (ny udgave)</option><option value="tilfoej">Tilføj/godkend firmaer (fx et firma, der har stavet navnet anderledes)</option></select></label>
     </div>
     <div id="a-tjek"></div>
     <button class="btn small" id="b-dl">Gem deltagerliste</button>
@@ -960,7 +961,7 @@ function meFromServer(m){
     mailTo: noegler.filter(k => k.startsWith('m:')).map(k => k.slice(2)),
     mineNoegler: noegler, todayTicks, samtykker: m.samtykker || [],
     liv: m.liv || null, livAt: Date.now(),
-    beaten, gifts, tickets: m.tickets || 0,
+    beaten, gifts, tickets: m.tickets || 0, konkurrence: m.konkurrence || null,
   };
   return norm(me);
 }
@@ -2548,10 +2549,24 @@ function renderLobby(){
   } else ms.hidden = true;
   // lodder
   const tk = $('#l-tickets');
-  if(cfg.raffle){
-    const n = tickets(p), s = dayStreak(p), box = el('span', 'tk'); for(let i = 0; i < Math.min(n, 12); i++) box.append(el('i'));
-    const tt = el('span'); tt.append('Du har ', el('b', null, `${n} ${n === 1 ? 'lod' : 'lodder'}`), ` i lodtrækningen for ${pnl()}. ${daysPlayed(p, a => a.day === today() && F.period(a)) ? 'Spil igen i morgen for et lod mere.' : 'Gennemfør et spil i dag for et lod mere.'}${s > 1 ? ` Du har spillet ${s} dage i træk.` : ''}`);
-    tk.replaceChildren(box, tt); tk.hidden = false;
+  tk.classList.remove('warn', 'ok');
+  if(cfg.raffle && p.konkurrence){
+    // Præmiekonkurrencen (vilkår pkt. 2 og 5-7): står firmaet på deltagerlisten, og hvor mange lodder har det.
+    const k = p.konkurrence, tt = el('span'), dot = el('span', 'dot');
+    const dag = k.spil_start ? new Date(k.spil_start).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }) : '';
+    const tid = k.spil_start && k.spil_slut ? ` kl. ${new Date(k.spil_start).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}–${new Date(k.spil_slut).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}` : '';
+    const lod = `${k.lodder} ${k.lodder === 1 ? 'lod' : 'lodder'}`;
+    if(!k.har_firma){ tk.classList.add('warn'); tt.append('Skriv jeres firma herunder for at være med i lodtrækningen om præmierne.'); }
+    else if(k.udelukket){ tk.classList.add('ok'); tt.append(`${k.firma} står for konkurrencen og kan ikke vinde, men I kan stadig toppe tavlen.`); }
+    else if(!k.paa_deltagerliste){ tk.classList.add('warn'); tt.append(el('b', null, k.firma), ' står ikke på deltagerlisten til konferencen, så I er ikke med i lodtrækningen endnu. Er I med på dagen? Kom forbi SmartPacks stand, så retter vi det.'); }
+    else {
+      tk.classList.add('ok');
+      tt.append(el('b', null, k.firma), ' står på deltagerlisten. ');
+      if(k.periode === 'foer') tt.append(`Lodtrækningen gælder spil ${dag}${tid}. 1 lod pr. påbegyndte ${k.point_pr_lod} point i firmaets bedste spil.`);
+      else if(k.periode === 'efter') tt.append(`Spilperioden er slut. Firmaet endte med ${lod}${k.bedste ? ` (bedste spil ${fmt(k.bedste)} point)` : ''}.`);
+      else tt.append('Firmaet har ', el('b', null, lod), k.bedste ? ` lige nu (bedste spil ${fmt(k.bedste)} point, 1 lod pr. påbegyndte ${k.point_pr_lod}). Slå det, og I får flere.` : ` endnu. Gennemfør et spil, så får I 1 lod pr. påbegyndte ${k.point_pr_lod} point.`);
+    }
+    tk.replaceChildren(dot, tt); tk.hidden = false;
   } else tk.hidden = true;
   // firma
   $('#l-firm').hidden = !!p.company;
@@ -3285,7 +3300,15 @@ $('#b-lodder').onclick = () => {
     if(!r.firmaer.length) return box.append(el('p', 'muted small', 'Ingen har spillet i perioden endnu.'));
     r.firmaer.forEach(f => {
       const why = f.kan_vinde ? `${f.lodder} lodder` : f.udelukket ? 'arrangør, kan ikke vinde' : 'ikke på deltagerlisten';
-      box.append(el('p', 'small', `${f.firma}: ${fmt(f.bedste)} point, ${why}`));
+      const row = el('p', 'small', `${f.firma}: ${fmt(f.bedste)} point, ${why}`);
+      if(!f.paa_deltagerliste && !f.udelukket){
+        // Firmaet er med på konferencen, men har stavet navnet anderledes end på listen: godkend det her, så det kan vinde.
+        const b = el('button', 'btn small', 'Godkend til konkurrencen'); b.type = 'button'; b.style.marginLeft = '8px';
+        b.onclick = () => { if(!confirm(`Godkend "${f.firma}" til konkurrencen? Firmaet lægges på deltagerlisten.`)) return;
+          API.admin.saveDeltagerliste(f.firma, 0, 'tilfoej').then(() => { toast(`${f.firma} er godkendt`); $('#b-lodder').click(); }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke godkende.')); };
+        row.append(b);
+      }
+      box.append(row);
     });
   }).catch(e => box.replaceChildren(el('p', 'muted', e && e.status ? e.message : 'Kunne ikke hente lodderne.')));
 };

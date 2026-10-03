@@ -109,6 +109,44 @@ async function beregnLodder(db) {
   };
 }
 
+// Spillerens egen status i konkurrencen (vises i lobbyen): står firmaet på
+// deltagerlisten, hvor mange lodder har firmaet lige nu, og kører perioden.
+async function firmaStatus(db, firma, now) {
+  const k = await hentKonkurrence(db);
+  const noegle = matchNoegle(firma);
+  const nu = now || new Date();
+  const ud = {
+    firma: firma || '',
+    har_firma: !!noegle,
+    paa_deltagerliste: false,
+    udelukket: false,
+    lodder: 0,
+    bedste: 0,
+    point_pr_lod: (k && k.point_pr_lod) || 500,
+    spil_start: k && k.spil_start,
+    spil_slut: k && k.spil_slut,
+    periode: !k || !k.spil_start ? 'ukendt' : nu < k.spil_start ? 'foer' : nu > k.spil_slut ? 'efter' : 'nu',
+  };
+  if (!noegle || !k) return ud;
+  const { rows: dl } = await db.query('SELECT 1 FROM deltagerliste_firma WHERE firma_noegle = $1', [noegle]);
+  ud.paa_deltagerliste = dl.length > 0;
+  ud.udelukket = udelukkedeNoegler(k).has(noegle);
+  if (k.spil_start && k.spil_slut) {
+    // spiller.firma_noegle bruger firmKey(); her matches med matchNoegle()
+    // (A/S strippes), så samme regel som i beregnLodder().
+    const { rows } = await db.query(
+      `SELECT s.firma, max(f.samlet)::int AS bedste FROM forsoeg f JOIN spiller s ON s.id = f.spiller_id
+       WHERE f.status = 'godkendt' AND f.samlet IS NOT NULL AND s.skjult = false AND s.firma <> ''
+         AND COALESCE(f.slut_server, f.oprettet) >= $1 AND COALESCE(f.slut_server, f.oprettet) <= $2
+       GROUP BY s.firma`,
+      [k.spil_start, k.spil_slut]
+    );
+    ud.bedste = rows.filter((r) => matchNoegle(r.firma) === noegle).reduce((m, r) => Math.max(m, r.bedste || 0), 0);
+    ud.lodder = lodderFor(ud.bedste, ud.point_pr_lod);
+  }
+  return ud;
+}
+
 // Vælger vinderen ud fra et tal i [0, lodderIAlt). Ren funktion, så den kan
 // testes og bruges til at genskabe en gemt trækning.
 function vinderFraTal(kanVinde, tal) {
@@ -263,4 +301,4 @@ async function konkurrenceStatus(db, now) {
   };
 }
 
-module.exports = { konkurrenceStatus, matchNoegle, lodderFor, beregnLodder, traekVinder, vinderFraTal, parseDeltagerliste, hentKonkurrence };
+module.exports = { konkurrenceStatus, firmaStatus, matchNoegle, lodderFor, beregnLodder, traekVinder, vinderFraTal, parseDeltagerliste, hentKonkurrence };

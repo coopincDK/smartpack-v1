@@ -24,6 +24,7 @@ const { clientIp } = require('../middleware/clientIp');
 const { invalidateStateCache } = require('../publicState');
 const { resolveSessionRole } = require('../middleware/adminAuth');
 const { maskedName } = require('../rules/nameDisplay');
+const K = require('../konkurrence');
 const { verifyPassword } = require('../crypto');
 const { deletePlayerFully } = require('../playerDeletion');
 const {
@@ -168,6 +169,7 @@ function meRouter(pool, ws, opts) {
       }
 
       const tickets = await computeTickets(client, row.id, cfg);
+      const konkurrence = await K.firmaStatus(client, row.firma, now);
 
       res.json({
         pid: row.public_id,
@@ -190,6 +192,7 @@ function meRouter(pool, ws, opts) {
           seen: n.set,
         })),
         tickets,
+        konkurrence,
       });
     } catch (e) {
       next(e);
