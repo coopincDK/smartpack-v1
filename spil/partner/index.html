@@ -68,7 +68,9 @@
       <h3>Jeres leads</h3>
       <p class="muted small">Kun spillere, der selv har sat flueben ved jer. Brug dem kun til mails om det, der stod i samtykket, og husk en nem afmelding i hver mail. Hver download bliver logget.</p>
       <p id="l-antal" class="small"></p>
-      <div><button class="btn ghost" id="b-leads">Hent leads som CSV</button></div>
+      <p id="l-sidst" class="muted small"></p>
+      <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn" id="b-leads-nye" hidden>Hent ændringer siden sidst</button><button class="btn ghost" id="b-leads">Hent alle aktive leads</button></div>
+      <p class="muted small">Hver download sætter et tidsstempel. "Ændringer siden sidst" giver kun nye tilmeldinger og dem, der har trukket deres samtykke tilbage siden jeres seneste download. Dem med status <strong>afmeldt</strong> skal I fjerne fra jeres egen liste.</p>
       <div id="ld-msg"></div>
     </div>
     <div class="card">
@@ -138,7 +140,18 @@
     lb.append(fil, el('span', { class: 'muted small', text: 'PNG, JPG, WEBP eller SVG, højst 600 KB. Gerne på transparent eller hvid baggrund.' }));
     SP.bygFormular($('p-form'), p);
     tegnVilkaar();
-    api('/partner/leads').then(function (r) { $('l-antal').textContent = r.antal === 1 ? '1 spiller har sagt ja til jer.' : r.antal + ' spillere har sagt ja til jer.'; }).catch(function () {});
+    tegnLeads();
+  }
+
+  function tegnLeads() {
+    api('/partner/leads').then(function (r) {
+      $('l-antal').textContent = r.antal === 1 ? '1 spiller har sagt ja til jer.' : r.antal + ' spillere har sagt ja til jer.';
+      var harSidst = !!r.sidst_hentet;
+      $('b-leads-nye').hidden = !harSidst;
+      $('l-sidst').textContent = harSidst
+        ? 'Sidst hentet ' + new Date(r.sidst_hentet).toLocaleString('da-DK', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) + '. Siden da: ' + r.nye_siden_sidst + ' ' + (r.nye_siden_sidst === 1 ? 'ny' : 'nye') + ' og ' + r.afmeldte_siden_sidst + ' ' + (r.afmeldte_siden_sidst === 1 ? 'afmeldt' : 'afmeldte') + '.'
+        : 'I har ikke hentet leads endnu.';
+    }).catch(function () {});
   }
 
   function tegnVilkaar() {
@@ -154,7 +167,7 @@
       var gl = st.querySelector('.live-tael'); if (gl) gl.remove();
       st.prepend(el('p', { class: 'live-tael ' + (n ? 'mangler' : 'small'), text: n ? n + ' ting mangler, før I er klar (frist tirsdag 6. oktober kl. 12)' + (v.accepteret ? '' : '. Husk at godkende vilkårene nederst.') : 'I er klar. SmartPack slår jer til i spillet.' }));
       SP.besked($('e-msg'), v.accepteret ? 'Godkendt af ' + v.accepteret.bruger_email + ' ' + new Date(v.accepteret.tidspunkt).toLocaleString('da-DK') + '.' : '', 'ok');
-      $('b-leads').disabled = !v.accepteret;
+      $('b-leads').disabled = !v.accepteret; $('b-leads-nye').disabled = !v.accepteret;
       tegnOevrige(!!v.accepteret);
     }).catch(function () {});
   }
@@ -190,15 +203,19 @@
       .catch(function (e) { SP.besked($('e-msg'), e.message, 'err'); });
   });
 
-  $('b-leads').addEventListener('click', function () {
-    fetch(SP.API + '/partner/leads.csv', { credentials: 'same-origin' }).then(function (r) {
+  function hentCsv(sti) {
+    fetch(SP.API + sti, { credentials: 'same-origin' }).then(function (r) {
       if (!r.ok) return r.json().then(function (j) { throw new Error((j && j.fejl) || 'Kunne ikke hente leads.'); });
       var navn = (r.headers.get('Content-Disposition') || '').replace(/.*filename="?([^"]+)"?.*/, '$1') || 'packrush-leads.csv';
       return r.blob().then(function (b) {
         var a = el('a', { href: URL.createObjectURL(b), download: navn }); document.body.append(a); a.click(); a.remove();
+        SP.besked($('ld-msg'), 'Hentet. Tidsstemplet er sat.', 'ok');
+        tegnLeads();
       });
     }).catch(function (e) { SP.besked($('ld-msg'), e.message, 'err'); });
-  });
+  }
+  $('b-leads').addEventListener('click', function () { hentCsv('/partner/leads.csv'); });
+  $('b-leads-nye').addEventListener('click', function () { hentCsv('/partner/leads.csv?siden=sidst'); });
 
   $('b-gem').addEventListener('click', function () {
     var b = $('b-gem'); b.disabled = true;

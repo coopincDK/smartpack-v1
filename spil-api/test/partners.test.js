@@ -397,9 +397,35 @@ test('partnerportal: leads kun fra egne samtykker, kræver accept af alle 7 erkl
   assert.doesNotMatch(csv, /fortryder@example\.dk/, 'tilbagetrukne samtykker er ikke med');
   assert.match(csv, /CVR 11111111/);
 
+  // "Siden sidst": en ny spiller siger ja, og ja-alfa trækker sit samtykke tilbage.
+  // Næste download med ?siden=sidst giver præcis de to: én ny og én afmeldt.
+  await new Promise((r) => setTimeout(r, 20));
+  const tokNy = await reg('ny-alfa@example.dk', ['m:' + alfa.slug]);
+  const tokGl = await api(h.baseUrl, 'POST', '/players', { body: registrerSpiller(h.baseUrl, { email: 'ja-alfa@example.dk', tilmeldinger: [] }).body });
+  assert.ok(tokGl.body.token, 'login igen');
+  const af2 = await api(h.baseUrl, 'DELETE', '/me/subs/' + encodeURIComponent('m:' + alfa.slug), { token: tokGl.body.token });
+  assert.ok(af2.status === 200 || af2.status === 204);
+  const st = await api(h.baseUrl, 'GET', '/partner/leads', { adminCookie: pc });
+  assert.equal(st.body.nye_siden_sidst, 1);
+  assert.equal(st.body.afmeldte_siden_sidst, 1);
+  assert.ok(st.body.sidst_hentet);
+  const d2 = await fetch(h.baseUrl + '/partner/leads.csv?siden=sidst', { headers: { cookie: pc } });
+  const csv2 = await d2.text();
+  const linjer = csv2.trim().split(/\r?\n/).slice(1);
+  assert.equal(linjer.length, 2, csv2);
+  assert.match(csv2, /ny,.*ny-alfa@example\.dk/);
+  assert.match(csv2, /afmeldt,.*ja-alfa@example\.dk/);
+  assert.doesNotMatch(csv2, /ja-beta@example\.dk/);
+  // Tredje download siden sidst: ingen ændringer.
+  const d3 = await fetch(h.baseUrl + '/partner/leads.csv?siden=sidst', { headers: { cookie: pc } });
+  assert.equal((await d3.text()).trim().split(/\r?\n/).length, 1, 'kun overskrift');
+  void tokNy;
+
   const log = await api(h.baseUrl, 'GET', `/admin/partnere/${alfa.id}/log`, { adminCookie: ac });
-  assert.equal(log.body.downloads.length, 1);
-  assert.equal(log.body.downloads[0].antal, 1);
+  assert.equal(log.body.downloads.length, 3);
+  assert.equal(log.body.downloads[2].slags, 'alle');
+  assert.equal(log.body.downloads[1].slags, 'aendringer');
+  assert.equal(log.body.downloads[2].antal, 1);
   assert.equal(log.body.downloads[0].bruger_email, 'kim@alfa.dk');
   assert.equal(log.body.accept.length, 1);
 });

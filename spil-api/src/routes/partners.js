@@ -617,36 +617,86 @@ function partnersRouter(pool) {
   // Kun spillere, hvis SENESTE hændelse på listen 'partner:<slug>' er en
   // bekræftelse. Partneren ser aldrig andre partneres leads. Kræver, at
   // vilkårene er accepteret. Hver download logges.
-  async function hentLeads(slug) {
+  // Samtykkerne er en log (bekraeftet/trukket_tilbage pr. spiller og liste).
+  // Tilstanden "pr. et tidspunkt" er den seneste hændelse før tidspunktet.
+  // Bruges til "siden sidst": nye = aktiv nu, men ikke aktiv ved sidste
+  // download; afmeldte = aktiv ved sidste download, men ikke nu. En spiller,
+  // der afmelder sig og tilmelder sig igen, bliver "ny" igen.
+  async function samtykkeTilstande(slug) {
     const liste = 'partner:' + slug;
     const { rows } = await pool.query(
       `SELECT spiller_id, type, tidspunkt, tekst, tekst_version, id FROM samtykke
        WHERE liste = $1 ORDER BY tidspunkt ASC, id ASC`,
       [liste]
     );
-    const seneste = new Map();
-    for (const r of rows) seneste.set(String(r.spiller_id), r);
-    const aktive = [...seneste.values()].filter((r) => r.type === 'bekraeftet');
-    if (!aktive.length) return [];
-    const { rows: spillere } = await pool.query(
-      'SELECT id, public_id, navn, email, firma FROM spiller WHERE id = ANY($1::bigint[])',
-      [aktive.map((r) => r.spiller_id)]
+    return rows;
+  }
+  function tilstandVed(rows, tidspunkt) {
+    const m = new Map();
+    for (const r of rows) {
+      if (tidspunkt && new Date(r.tidspunkt) > tidspunkt) continue;
+      m.set(String(r.spiller_id), r);
+    }
+    return m;
+  }
+  function sidsteAfmelding(rows, spillerId) {
+    let t = null;
+    for (const r of rows) if (String(r.spiller_id) === String(spillerId) && r.type === 'trukket_tilbage') t = r.tidspunkt;
+    return t;
+  }
+  async function spillerMap(ids) {
+    if (!ids.length) return new Map();
+    const { rows } = await pool.query('SELECT id, public_id, navn, email, firma FROM spiller WHERE id = ANY($1::bigint[])', [ids]);
+    return new Map(rows.map((x) => [String(x.id), x]));
+  }
+  function tilLead(slug, x, r, status, afmeldt) {
+    return {
+      lead_id: sha256Hex(slug + ':' + x.public_id).slice(0, 16),
+      navn: x.navn,
+      email: x.email,
+      firma: x.firma,
+      status,
+      samtykke_tidspunkt: r.type === 'bekraeftet' ? r.tidspunkt : null,
+      afmeldt_tidspunkt: afmeldt || null,
+      samtykke_tekst: r.type === 'bekraeftet' ? r.tekst || '' : '',
+      samtykke_version: r.tekst_version,
+    };
+  }
+
+  async function sidsteDownload(partnerId) {
+    const { rows } = await pool.query(
+      'SELECT tidspunkt, antal, slags FROM partner_lead_download WHERE partner_id = $1 ORDER BY tidspunkt DESC LIMIT 1',
+      [partnerId]
     );
-    const sp = new Map(spillere.map((x) => [String(x.id), x]));
-    return aktive
-      .filter((r) => sp.has(String(r.spiller_id)))
-      .map((r) => {
-        const x = sp.get(String(r.spiller_id));
-        return {
-          lead_id: sha256Hex(slug + ':' + x.public_id).slice(0, 16),
-          navn: x.navn,
-          email: x.email,
-          firma: x.firma,
-          samtykke_tidspunkt: r.tidspunkt,
-          samtykke_tekst: r.tekst || '',
-          samtykke_version: r.tekst_version,
-        };
-      });
+    return rows[0] || null;
+  }
+
+  // Alle aktive leads lige nu.
+  async function hentLeads(slug) {
+    const rows = await samtykkeTilstande(slug);
+    const nu = tilstandVed(rows, null);
+    const aktive = [...nu.values()].filter((r) => r.type === 'bekraeftet');
+    const sp = await spillerMap(aktive.map((r) => r.spiller_id));
+    return aktive.filter((r) => sp.has(String(r.spiller_id))).map((r) => tilLead(slug, sp.get(String(r.spiller_id)), r, 'aktiv'));
+  }
+
+  // Ændringer siden et tidspunkt (sidste download): nye og afmeldte.
+  async function hentAendringer(slug, siden) {
+    const rows = await samtykkeTilstande(slug);
+    const foer = tilstandVed(rows, siden);
+    const nu = tilstandVed(rows, null);
+    const ud = [];
+    for (const [sid, r] of nu) {
+      const varAktiv = foer.has(sid) && foer.get(sid).type === 'bekraeftet';
+      const erAktiv = r.type === 'bekraeftet';
+      if (erAktiv && !varAktiv) ud.push({ sid, r, status: 'ny' });
+      else if (!erAktiv && varAktiv) ud.push({ sid, r, status: 'afmeldt' });
+    }
+    const sp = await spillerMap(ud.map((u) => u.r.spiller_id));
+    return ud
+      .filter((u) => sp.has(u.sid))
+      .map((u) => tilLead(slug, sp.get(u.sid), u.r, u.status, u.status === 'afmeldt' ? sidsteAfmelding(rows, u.sid) : null))
+      .sort((a, b) => (a.status === b.status ? 0 : a.status === 'ny' ? -1 : 1));
   }
 
   // Ingen formler i Excel: felter, der starter med = + - @, får et ' foran.
@@ -689,7 +739,14 @@ function partnersRouter(pool) {
     try {
       const p = await hentPartner(pool, req.partnerSession.partner_id);
       const leads = await hentLeads(p.slug);
-      res.json({ antal: leads.length });
+      const sidst = await sidsteDownload(p.id);
+      let nye = 0, afmeldte = 0;
+      if (sidst) {
+        const ae = await hentAendringer(p.slug, new Date(sidst.tidspunkt));
+        nye = ae.filter((x) => x.status === 'ny').length;
+        afmeldte = ae.filter((x) => x.status === 'afmeldt').length;
+      }
+      res.json({ antal: leads.length, sidst_hentet: sidst ? sidst.tidspunkt : null, sidst_antal: sidst ? sidst.antal : null, nye_siden_sidst: nye, afmeldte_siden_sidst: afmeldte });
     } catch (e) {
       next(e);
     }
@@ -703,25 +760,33 @@ function partnersRouter(pool) {
         return res.status(403).json({ fejl: 'Accepter partnervilkårene først.', kode: 'vilkaar_ikke_accepteret' });
       }
       const p = await hentPartner(pool, s.partner_id);
-      const leads = await hentLeads(p.slug);
+      // ?siden=sidst: kun ændringer siden partnerens seneste download (nye +
+      // afmeldte). Uden en tidligere download er det hele den aktive liste.
+      const sidst = await sidsteDownload(p.id);
+      const aendringer = String(req.query.siden || '') === 'sidst' && sidst;
+      const siden = aendringer ? new Date(sidst.tidspunkt) : null;
+      const leads = aendringer ? await hentAendringer(p.slug, siden) : await hentLeads(p.slug);
       const filId = crypto.randomUUID();
       await pool.query(
-        `INSERT INTO partner_lead_download (partner_id, bruger_id, bruger_email, antal, fil_id, ip)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [s.partner_id, s.bruger_id, s.email, leads.length, filId, clientIp(req)]
+        `INSERT INTO partner_lead_download (partner_id, bruger_id, bruger_email, antal, fil_id, ip, slags, siden)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [s.partner_id, s.bruger_id, s.email, leads.length, filId, clientIp(req), aendringer ? 'aendringer' : 'alle', siden]
       );
+      const iso = (d) => (d ? new Date(d).toISOString() : '');
       const csv = toCsv(leads, [
         { title: 'lead_id', value: (r) => r.lead_id },
+        { title: 'status', value: (r) => r.status },
         { title: 'navn', value: (r) => csvSikker(r.navn) },
         { title: 'arbejdsmail', value: (r) => csvSikker(r.email) },
         { title: 'virksomhed', value: (r) => csvSikker(r.firma) },
-        { title: 'samtykke_tidspunkt', value: (r) => new Date(r.samtykke_tidspunkt).toISOString() },
+        { title: 'samtykke_tidspunkt', value: (r) => iso(r.samtykke_tidspunkt) },
+        { title: 'afmeldt_tidspunkt', value: (r) => iso(r.afmeldt_tidspunkt) },
         { title: 'samtykke_tekst', value: (r) => csvSikker(r.samtykke_tekst) },
         { title: 'samtykke_version', value: (r) => r.samtykke_version },
         { title: 'kanal', value: () => 'e-mail' },
       ]);
       res.set('Content-Type', 'text/csv; charset=utf-8');
-      res.set('Content-Disposition', `attachment; filename="packrush-leads-${p.slug}.csv"`);
+      res.set('Content-Disposition', `attachment; filename="packrush-leads-${p.slug}${aendringer ? '-aendringer' : ''}.csv"`);
       res.set('X-Fil-Id', filId);
       res.send('\ufeff' + csv);
     } catch (e) {
@@ -739,7 +804,7 @@ function partnersRouter(pool) {
         [p.id]
       );
       const { rows: downloads } = await pool.query(
-        'SELECT bruger_email, antal, fil_id, tidspunkt FROM partner_lead_download WHERE partner_id = $1 ORDER BY tidspunkt DESC',
+        'SELECT bruger_email, antal, fil_id, tidspunkt, slags, siden FROM partner_lead_download WHERE partner_id = $1 ORDER BY tidspunkt DESC',
         [p.id]
       );
       res.json({ accept, downloads });
