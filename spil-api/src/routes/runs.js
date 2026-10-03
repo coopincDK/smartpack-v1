@@ -120,7 +120,7 @@ function runsRouter(pool, ws) {
       }
 
       const bag = await currentBag(client, row, cfg, now);
-      const brugt = useLife(bag);
+      const brugt = useLife(bag, cfg);
       if (!brugt) {
         await client.query('ROLLBACK');
         return res.status(400).json({ fejl: 'Du har ikke flere liv lige nu.', kode: 'ingen_liv' });

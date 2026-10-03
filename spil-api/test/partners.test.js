@@ -430,6 +430,41 @@ test('partnerportal: leads kun fra egne samtykker, kræver accept af alle 7 erkl
   assert.equal(log.body.accept.length, 1);
 });
 
+test('standardprivatlivspolitik: kræver afmeldingsmail, udfylder linket, kan vælges fra igen, og siden er offentlig', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const ac = await adminCookie(h);
+  const { privatlivspolitik, ...udenPolitik } = FULD_PROFIL;
+  const r = await api(h.baseUrl, 'POST', '/admin/partnere', { adminCookie: ac, body: { navn: 'Rielands', ...udenPolitik, afmeld_email: '' } });
+  const id = r.body.partner.id, slug = r.body.partner.slug;
+  assert.ok(r.body.partner.mangler_profil.includes('privatlivspolitik'));
+
+  const uden = await api(h.baseUrl, 'PUT', `/admin/partnere/${id}`, { adminCookie: ac, body: { privatliv_standard: true, kontakt_email: '', afmeld_email: '' } });
+  assert.equal(uden.status, 400, 'kræver en mail');
+  assert.equal(uden.body.felt, 'afmeld_email');
+
+  const ok = await api(h.baseUrl, 'PUT', `/admin/partnere/${id}`, { adminCookie: ac, body: { privatliv_standard: true, afmeld_email: 'm@rielands.dk' } });
+  assert.equal(ok.status, 200);
+  assert.equal(ok.body.partner.privatliv_standard, true);
+  assert.match(ok.body.partner.privatlivspolitik, /\/spil\/partnerprivatliv\/\?p=/);
+  assert.ok(!ok.body.partner.mangler_profil.includes('privatlivspolitik'));
+
+  const side = await api(h.baseUrl, 'GET', `/partnere/${slug}/privatliv`);
+  assert.equal(side.status, 200);
+  assert.equal(side.body.mail, 'm@rielands.dk');
+  assert.equal(side.body.cvr, FULD_PROFIL.cvr);
+
+  // Egen politik skrevet ind: standarden slås fra af sig selv.
+  const egen = await api(h.baseUrl, 'PUT', `/admin/partnere/${id}`, { adminCookie: ac, body: { privatlivspolitik: 'https://rielands.dk/privatliv' } });
+  assert.equal(egen.body.partner.privatliv_standard, false);
+  assert.equal((await api(h.baseUrl, 'GET', `/partnere/${slug}/privatliv`)).status, 404);
+
+  // Vælges fra igen med standardlinket stående: linket ryddes.
+  await api(h.baseUrl, 'PUT', `/admin/partnere/${id}`, { adminCookie: ac, body: { privatliv_standard: true } });
+  const fra = await api(h.baseUrl, 'PUT', `/admin/partnere/${id}`, { adminCookie: ac, body: { privatliv_standard: false } });
+  assert.equal(fra.body.partner.privatlivspolitik, '');
+});
+
 test('advarsel når en aktiv partner har alt udfyldt men ingen power-up (kun admin kan vælge power-up)', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());

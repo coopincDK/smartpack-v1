@@ -1,6 +1,6 @@
 'use strict';
 
-const { REGEN_MS, REGEN_CAP, MAX_LIVES } = require('./constants');
+const { REGEN_MS, regenCap, MAX_LIVES } = require('./constants');
 const { todayStr } = require('./tzDate');
 
 // Dags-nøgle brugt overalt i liv-reglen — 'YYYY-MM-DD' i Europe/Copenhagen
@@ -14,10 +14,10 @@ function mailPartnersList(cfg) {
     .filter(Boolean);
 }
 
-// subOptions(cfg): liste over tilmeldingsmuligheder. 'sp' giver ALDRIG liv,
+// subOptions(cfg): liste over tilmeldingsmuligheder. Alle flueben giver liv (Martin 3/10 2026),
 // mail-partnere og evt. sms giver liv.
 function subOptions(cfg) {
-  const opts = [{ key: 'sp', label: 'SmartPack nyheder', life: false }];
+  const opts = [{ key: 'sp', label: 'SmartPack nyheder', life: true }];
   const info = new Map(((cfg && cfg.partnerLister) || []).map((l) => [l.slug, l]));
   for (const navn of mailPartnersList(cfg)) {
     const l = info.get(navn);
@@ -88,14 +88,18 @@ function lifeState(bag, p, cfg, now, attemptsToday) {
     g = lifeKeys(p, cfg, now);
     day = today;
   }
-  const subsN = subsCount(p, cfg, now);
-  if (subsN > 0 && n < REGEN_CAP) {
+  // Naturlig regen: ét liv pr. REGEN_MS op til grundtallet (cfg.perDay), uanset flueben.
+  const cap = regenCap(cfg);
+  if (n < cap) {
     const ticks = Math.floor((now.getTime() - t) / REGEN_MS);
     if (ticks > 0) {
-      const add = Math.min(ticks, REGEN_CAP - n);
+      const add = Math.min(ticks, cap - n);
       n += add;
       t += add * REGEN_MS;
     }
+  } else if (n > cap) {
+    // Over grundtallet (bonusliv): ankeret følger med, så regen først tæller fra det øjeblik, man er under.
+    t = now.getTime();
   }
   // Packrush: MAX_LIVES er et hårdt loft over ALT liv, uanset kilde.
   n = Math.min(n, MAX_LIVES);
@@ -105,8 +109,7 @@ function lifeState(bag, p, cfg, now, attemptsToday) {
 // Hvor lang tid (ms) til næste naturlige regen — null hvis der ikke regenereres
 // (ingen dagens-flueben-abonnementer, eller allerede ved cap).
 function nextRegenMs(bag, p, cfg, now) {
-  const subsN = subsCount(p, cfg, now);
-  if (subsN <= 0 || bag.n >= REGEN_CAP) return null;
+  if (bag.n >= regenCap(cfg)) return null;
   const t = bag.t instanceof Date ? bag.t.getTime() : bag.t;
   const elapsed = now.getTime() - t;
   return Math.max(0, REGEN_MS - (elapsed % REGEN_MS));
@@ -114,9 +117,9 @@ function nextRegenMs(bag, p, cfg, now) {
 
 // useLife(bag): null hvis intet liv tilbage. Ellers: hvis n var ved cap,
 // nulstil regen-ankeret til nu (undgår at "banke" regen-tid op mens man er fuld).
-function useLife(bag) {
+function useLife(bag, cfg) {
   if (bag.n <= 0) return null;
-  const t = bag.n >= REGEN_CAP ? Date.now() : bag.t;
+  const t = bag.n >= regenCap(cfg) ? Date.now() : bag.t;
   return { ...bag, n: bag.n - 1, t };
 }
 

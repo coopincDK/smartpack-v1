@@ -30,7 +30,7 @@ const KOLONNER = `id, slug, status, vist_i_spil, powerup, navn, firmanavn, cvr, 
   kort_beskrivelse, beskrivelse, kontakt_navn, kontakt_email, kontakt_telefon,
   giver_praemie, praemie_titel, praemie_vaerdi, praemie_vaerdi_type, praemie_moms,
   praemie_beskrivelse, praemie_udbytte, praemie_betingelser, praemie_indloesning,
-  produktkategori, privatlivspolitik, afmeld_email, levering_navn, levering_email,
+  produktkategori, privatlivspolitik, afmeld_email, levering_navn, levering_email, privatliv_standard, privatliv_standard_tid,
   praemie_ikke_med, praemie_sidste_frist::text AS praemie_sidste_frist, praemie_flyt,
   fordel_ydelse, fordel_rabat, fordel_koebskrav, fordel_gyldig_til::text AS fordel_gyldig_til,
   ansoegning_besked, (logo IS NOT NULL) AS har_logo, logo_type, oprettet, opdateret`;
@@ -77,8 +77,28 @@ async function unikSlug(pool, navn) {
 
 // UPDATE partner SET <felter>, opdateret = now() WHERE id = $1
 async function opdaterPartner(pool, id, felter) {
+  felter = { ...felter };
+  const foer = await hentPartner(pool, id);
+  if (!foer) return null;
+  // Standardprivatlivspolitik: når den vælges, peger linket på vores side for
+  // partneren; vælges den fra, fjernes linket igen (kun hvis det var vores).
+  if ('privatliv_standard' in felter) {
+    const efter = { ...foer, ...felter };
+    if (felter.privatliv_standard) {
+      if (!P.privatlivMail(efter)) {
+        throw new P.Valideringsfejl('Skriv en mail til afmeldinger og persondata først. Den står i standardpolitikken.', 'afmeld_email');
+      }
+      felter.privatlivspolitik = P.standardPrivatlivUrl(foer.slug);
+      if (!foer.privatliv_standard) felter.privatliv_standard_tid = new Date();
+    } else if ((felter.privatlivspolitik ?? foer.privatlivspolitik) === P.standardPrivatlivUrl(foer.slug)) {
+      felter.privatlivspolitik = '';
+    }
+  } else if (foer.privatliv_standard && 'privatlivspolitik' in felter && felter.privatlivspolitik && felter.privatlivspolitik !== P.standardPrivatlivUrl(foer.slug)) {
+    // Partneren skriver sit eget link: så bruges standarden ikke længere.
+    felter.privatliv_standard = false;
+  }
   const keys = Object.keys(felter);
-  if (!keys.length) return hentPartner(pool, id);
+  if (!keys.length) return foer;
   const sets = keys.map((k, i) => `${k} = $${i + 2}`);
   await pool.query(`UPDATE partner SET ${sets.join(', ')}, opdateret = now() WHERE id = $1`, [
     id,
@@ -165,6 +185,31 @@ function partnersRouter(pool) {
       const partnere = rows.filter(P.erSynlig).map(P.offentligPartner);
       res.set('Cache-Control', 'public, max-age=60');
       res.json({ partnere, powerups: P.POWERUPS });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // Standardprivatlivspolitikkens data (kun partnere, der har valgt standarden).
+  router.get('/partnere/:slug/privatliv', async (req, res, next) => {
+    try {
+      const { rows } = await pool.query(
+        `SELECT ${KOLONNER} FROM partner WHERE slug = $1 AND status = 'aktiv' AND privatliv_standard = true`,
+        [String(req.params.slug)]
+      );
+      if (!rows.length) return res.status(404).json({ fejl: 'Ingen standardpolitik for den partner.', kode: 'ikke_fundet' });
+      const p = rows[0];
+      res.set('Cache-Control', 'public, max-age=60');
+      res.json({
+        navn: p.navn,
+        firmanavn: p.firmanavn || p.navn,
+        cvr: p.cvr,
+        adresse: p.adresse,
+        hjemmeside: p.hjemmeside,
+        produktkategori: p.produktkategori || 'sine produkter og ydelser',
+        mail: P.privatlivMail(p),
+        valgt: p.privatliv_standard_tid,
+      });
     } catch (e) {
       next(e);
     }

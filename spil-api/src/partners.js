@@ -72,7 +72,19 @@ const PARTNER_REDIGERBARE = [
   'praemie_vaerdi',
   'praemie_vaerdi_type',
   'praemie_moms',
+  'privatliv_standard',
 ];
+
+// Packrush' standardprivatlivspolitik for partnere uden egen. Siden bygges
+// af partnerens oplysninger (se spil/partnerprivatliv/ og GET
+// /partnere/:slug/privatliv). Kræver en mail til afmelding/persondata.
+const STANDARD_PRIVATLIV_URL = 'https://smartpack.dk/spil/partnerprivatliv/';
+function standardPrivatlivUrl(slug) {
+  return STANDARD_PRIVATLIV_URL + '?p=' + encodeURIComponent(slug);
+}
+function privatlivMail(p) {
+  return p.afmeld_email || p.kontakt_email || '';
+}
 
 const ADMIN_REDIGERBARE = [...PARTNER_REDIGERBARE, 'navn', 'status', 'vist_i_spil', 'powerup', 'ansoegning_besked'];
 
@@ -140,7 +152,7 @@ function renFelter(input, tilladte) {
     else if (k === 'navn') {
       ud[k] = renTekst(v, 80);
       if (!ud[k]) throw new Valideringsfejl('Partneren skal have et navn.', 'navn');
-    } else if (k === 'giver_praemie' || k === 'vist_i_spil') ud[k] = v === true || v === 'true';
+    } else if (k === 'giver_praemie' || k === 'vist_i_spil' || k === 'privatliv_standard') ud[k] = v === true || v === 'true';
     else if (k === 'praemie_vaerdi') {
       if (v === '' || v === null || v === undefined) ud[k] = null;
       else {
@@ -266,6 +278,7 @@ function offentligPartner(p) {
     praemie: offentligPraemie(p),
     fordel: offentligFordel(p),
     privatlivspolitik: p.privatlivspolitik,
+    privatliv_standard: !!p.privatliv_standard,
     samtykke_tekst: samtykkeTekst(p),
   };
 }
@@ -306,6 +319,9 @@ module.exports = {
   STATUSSER,
   PARTNER_REDIGERBARE,
   ADMIN_REDIGERBARE,
+  standardPrivatlivUrl,
+  privatlivMail,
+  STANDARD_PRIVATLIV_URL,
   Valideringsfejl,
   renFelter,
   renEmail,

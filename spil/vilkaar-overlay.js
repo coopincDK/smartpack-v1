@@ -3,7 +3,7 @@
    nemmere at lukke igen på en mobil. Uden JavaScript virker linket som normalt. */
 (function () {
   'use strict';
-  var STI = /^\/spil\/(partner)?vilkaar\/?$/;
+  var STI = /^\/spil\/((partner)?vilkaar|partnerprivatliv)\/?$/;
   var lag = null, ramme = null, titel = null, sidstFokus = null;
 
   function byg() {
@@ -64,6 +64,6 @@
     if (u.origin !== location.origin || !STI.test(u.pathname)) return;
     e.preventDefault();
     e.stopPropagation();
-    aabn(u.pathname, /partner/.test(u.pathname) ? 'Vilkår for partnere' : 'Vilkår for konkurrencen');
+    aabn(u.pathname + u.search, /privatliv/.test(u.pathname) ? 'Privatlivspolitik' : /partner/.test(u.pathname) ? 'Vilkår for partnere' : 'Vilkår for konkurrencen');
   }, true);
 })();

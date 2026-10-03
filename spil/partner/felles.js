@@ -128,6 +128,25 @@
     var fsS = el('fieldset', null, [el('legend', { text: 'Samtykke fra spillerne' }),
       el('p', { class: 'muted small', text: 'Spillerne sætter selv flueben ved jer. Teksten bygges af jeres firmanavn, CVR og feltet herunder, og I kan ikke skrive den frit.' })]);
     FELTER.samtykke.forEach(function (d) { fsS.append(felt(d, p[d.k])); });
+    // Ingen egen privatlivspolitik? Så kan partneren bruge Packrush' standard (bygges af firmanavn, CVR og afmeldingsmail).
+    var std = el('input', { type: 'checkbox', id: 'f-privatliv_standard', name: 'privatliv_standard' });
+    std.checked = !!p.privatliv_standard;
+    var stdBoks = el('div', { class: 'std-privatliv' }, [
+      el('label', { class: 'check' }, [std, document.createTextNode('Vi har ikke et link til en egen privatlivspolitik og bruger Packrush\' standard')]),
+      el('div', { class: 'small muted', id: 'std-tekst' }, [
+        el('p', null, [document.createTextNode('Standarden fortæller spilleren, at I er dataansvarlige, hvad I har fået (navn, arbejdsmail, virksomhed), at I kun sender mails om det, der stod i samtykket, at man kan afmelde sig i hver mail eller på jeres mail til persondata, og at afmeldte slettes senest 30 dage efter. '), el('a', { href: '/spil/partnerprivatliv/?p=' + encodeURIComponent(p.slug || ''), text: 'Se standardpolitikken' }), document.createTextNode('.')]),
+        el('p', null, [el('strong', { text: 'Ved at vælge standarden bekræfter I, at I efterlever den.' }), document.createTextNode(' Det kræver, at feltet "Mail til afmeldinger og persondata" er udfyldt. Linket udfyldes automatisk, når I gemmer.')]),
+      ]),
+    ]);
+    var urlFelt = fsS.querySelector('#f-privatlivspolitik');
+    function visStd() {
+      var on = std.checked;
+      stdBoks.querySelector('#std-tekst').hidden = !on;
+      if (urlFelt) { var lab = urlFelt.closest('label'); if (lab) lab.hidden = on; }
+    }
+    std.addEventListener('change', visStd);
+    fsS.append(stdBoks);
+    visStd();
     if (p.samtykke_tekst) fsS.append(el('p', { class: 'small', text: 'Sådan ser den ud nu: ' + p.samtykke_tekst }));
     var fsF = el('fieldset', null, [el('legend', { text: 'Partnerfordel ved køb (valgfri)' }),
       el('p', { class: 'muted small', text: 'En rabat er ikke en gave. Den vises for sig og tæller ikke med i præmiepuljens værdi.' }),

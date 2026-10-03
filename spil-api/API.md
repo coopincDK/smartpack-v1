@@ -1024,6 +1024,17 @@ i `spil/index.html`). Kort opsummeret hvad der ændrede sig og hvorfor:
 
 ### A) Liv: nyt loft + dagens flueben vs. varig tilmelding
 
+> **Liv-regler pr. 3. okt. 2026 (gælder nu, erstatter tallene nedenfor):**
+> grundtallet `perDay` er **1**. Når det er brugt, kommer der ét nyt pr.
+> `REGEN_MS` = **60 min**, op til grundtallet (`regenCap(cfg)` =
+> `cfg.perDay`) — **uanset flueben**. Hvert flueben (SmartPack, partner, sms)
+> giver **+1 liv med det samme**, én gang pr. liste pr. dag (`bag.g`).
+> Bonusliv regenereres ikke. `MAX_LIVES` = **12**. Klienten: Black
+> Friday-vagter = 1 + antal afsluttede timer i dag, hvor man var i top 10
+> (kun klient-håndhævet, som før). Afsnittet nedenfor beskriver de tidligere
+> tal og er beholdt som historik.
+
+
 - **`perDay`** (dagligt grundtal af liv) sænket fra `5` til `3` — både i
   `DEFAULT_CFG` (`src/rules/constants.js`) og i den allerede seedede
   config-række (migration `003_packrush.sql` opdaterer `offentlig.perDay`

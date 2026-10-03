@@ -594,7 +594,7 @@ details.more summary:hover{color:var(--text)}
     <h1 class="prlogo"><img src="packrush-logo.webp" alt="Packrush" width="1200" height="233" decoding="async"></h1>
     <div class="rule"></div>
   </div>
-  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du har <b id="st-per">3 liv om dagen</b>, og din bedste score kommer på tavlen.</p>
+  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du har <b id="st-per">1 liv ad gangen og får et nyt hver time</b>, og din bedste score kommer på tavlen.</p>
   <div class="live" id="st-live"></div>
   <div class="mission" id="st-mission" hidden></div>
   <button class="btn primary" id="b-me" hidden></button>
@@ -761,11 +761,11 @@ details.more summary:hover{color:var(--text)}
     <label class="f">Perioden slutter <small>Scores fra efter denne dag tæller ikke. Til messen: samme dag som start, så kun messedagen tæller. Tomt betyder ingen slutdato</small><input type="text" id="c-pend" placeholder="ÅÅÅÅ-MM-DD" maxlength="10"></label>
     <label class="f">Arrangementets navn <small>Bruges i lagerrapporten, fx E-handelskonferencen. Tomt betyder ingen</small><input type="text" id="c-event" maxlength="40"></label>
     <div class="grid2">
-      <label class="f">Liv pr. dag<input type="number" id="c-per" min="1" max="20"></label>
+      <label class="f">Liv ad gangen <small>Grundtallet. Når de er brugt, kommer der ét nyt pr. time op til dette tal</small><input type="number" id="c-per" min="1" max="20"></label>
       <label class="f">Kåring kl.<input type="time" id="c-ctime"></label>
     </div>
     <label class="check"><input type="checkbox" id="c-crown">Kår dagens vinder med nedtælling på væggen</label>
-    <label class="check"><input type="checkbox" id="c-bf">Black Friday-vagt, ét spil om dagen med dobbelte point</label>
+    <label class="check"><input type="checkbox" id="c-bf">Black Friday-vagt, ét spil om dagen med dobbelte point, plus én ekstra pr. time man er i top 10</label>
     <label class="check"><input type="checkbox" id="c-teams">Firmakamp, gennemsnit af hvert firmas 3 bedste spillere</label>
     <label class="check"><input type="checkbox" id="c-partners">Partner-power-ups: Element Logic i Pluk og to af Herodesk, Revershero, Active Promotion og Sprii i Send</label>
     <label class="check"><input type="checkbox" id="c-raffle">Lodtrækning, ét lod for hver dag man spiller</label>
@@ -773,7 +773,7 @@ details.more summary:hover{color:var(--text)}
     <label class="check"><input type="checkbox" id="c-sms">Sms'er om spillet, når nogen bliver overhalet, og om præmier</label>
     <label class="f">Sponsor for sms'erne <small>Man kommer på sponsorens sms-liste, når man siger ja til sms</small><input type="text" id="c-sponsor" maxlength="30"></label>
     <label class="f">Partnere på nyhedsmailen <small>Adskil med komma. Man kommer på alle deres lister, når man siger ja til nyheder</small><input type="text" id="c-mailp" maxlength="200"></label>
-    <label class="check"><input type="checkbox" id="c-life">Ekstra liv for tilmelding: ét pr. partner om dagen, og ét liv tilbage hver halve time op til 3</label>
+    <label class="check"><input type="checkbox" id="c-life">Ekstra liv for flueben: ét pr. liste om dagen, med det samme (grundlivet kommer igen hver time uanset)</label>
     <label class="check"><input type="checkbox" id="c-ref">Vennekoder og udfordringer: fuld liv for en ny ven, ét liv i timen for hver ven, der tager udfordringen op</label>
     <label class="f">Link til spillet <small>Bruges i udfordringer og på LinkedIn, når spillet ligger på jeres egen side. Tomt betyder, at kun koden bliver delt</small><input type="url" id="c-share" maxlength="200" placeholder="https://"></label>
     <label class="check"><input type="checkbox" id="c-fixed">Samme bane for alle hele dagen, så det er dygtighed og ikke held, der afgør tavlen</label>
@@ -938,7 +938,7 @@ const pnl = () => { const n = cfg.periodName || 'Perioden'; return n[0].toLowerC
 const MONTHS = ['januar','februar','marts','april','maj','juni','juli','august','september','oktober','november','december'];
 
 /* ---------- opsætning ---------- */
-const DEFAULT_CFG = { perDay: 3, bf: true, crownOn: true, crownTime: '16:00', mission: 'total', goal: 0, periodName: 'Hele messen', periodStart: '2000-01-01', teams: true, raffle: true, eventName: '', partners: true, prize: '', smsSponsor: 'InMobile', smsOn: true, mailPartners: 'Herodesk, Revershero, Active Promotion, Sprii, Element Logic', lifeBonus: true, referral: true, fixed: true, hourly: true, hourPrize: '', duel: true, smsBoost: true, boostLives: 2, shareUrl: '' };
+const DEFAULT_CFG = { perDay: 1, bf: true, crownOn: true, crownTime: '16:00', mission: 'total', goal: 0, periodName: 'Hele messen', periodStart: '2000-01-01', teams: true, raffle: true, eventName: '', partners: true, prize: '', smsSponsor: 'InMobile', smsOn: true, mailPartners: 'Herodesk, Revershero, Active Promotion, Sprii, Element Logic', lifeBonus: true, referral: true, fixed: true, hourly: true, hourPrize: '', duel: true, smsBoost: true, boostLives: 2, shareUrl: '' };
 /* cfg starter som fallback og bliver overskrevet af serverens /state, så snart den svarer (se applyState herunder) */
 let cfg = { ...DEFAULT_CFG };
 
@@ -1421,7 +1421,7 @@ function nextLifeMs(p){
 const mailPartners = () => String(cfg.mailPartners || '').split(',').map(x => x.trim()).filter(Boolean);
 /* hver liste har sin egen nøgle: 'sp' er SmartPacks egne nyheder, 'm:<partner>' en partners mail, 'sms' sponsorens sms-liste */
 function subOptions(){
-  const o = [{ k: 'sp', name: 'SmartPack', text: 'Nyheder fra SmartPack om lager og e-handel på mail', life: false }];
+  const o = [{ k: 'sp', name: 'SmartPack', text: 'Nyheder fra SmartPack om lager og e-handel på mail', life: true }];
   // Partnerne kommer fra partnerportalen (cfg.partnerLister): nøglen er partnerens faste id, og teksten er den
   // faste samtykketekst med firma og CVR. Findes listen ikke (ingen partnere slået til), bruges navnene som før.
   const info = new Map((cfg.partnerLister || []).map(l => [l.slug, l]));
@@ -1442,7 +1442,7 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   box.replaceChildren();
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
-  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Fluebenene starter tomme hver dag, så du vælger selv. Hver partner, du sætter flueben ved, giver et ekstra liv i dag, og så får du et liv tilbage hver halve time, når du er under 3. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
+  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Fluebenene starter tomme hver dag, så du vælger selv. Hvert flueben giver et ekstra liv med det samme. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
   // Ingen "Tilmeld alle": hver partner skal vælges for sig (vilkår pkt. 12). Knappen findes stadig i koden,
   // så resten af logikken er uændret, men den vises ikke.
   const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button'; all.hidden = true;
@@ -1514,7 +1514,16 @@ function hourWinners(pool){
 }
 function hourBoard(pool){ const ps = pool || Object.values(data.players), won = new Set(hourWinners(ps).map(w => w.p.pid)); return rank('total', inHour(nowHour()), ps).filter(x => !won.has(x.p.pid)); }
 const hourLeftMin = () => 60 - cphParts(new Date()).minute;
-const bfToday = p => todays(p).some(a => a.bf);
+/* Black Friday-vagter: én om dagen, plus én for hver afsluttet time i dag, hvor man var i top 10 (Martins regel 3. okt. 2026). */
+function hourTop10(p, pool){
+  const ps = pool || Object.values(data.players), now = nowHour(), hs = new Set();
+  done(p).filter(F.today).forEach(a => hs.add(hourOf(a.end || a.at)));
+  return [...hs].filter(h => h < now).filter(h => rank('total', inHour(h), ps).slice(0, 10).some(x => x.p.pid === p.pid)).sort((a, b) => a - b);
+}
+const bfAllowed = p => 1 + hourTop10(p).length;
+const bfUsed = p => todays(p).filter(a => a.bf).length;
+const bfLeft = p => Math.max(0, bfAllowed(p) - bfUsed(p));
+const bfToday = p => bfLeft(p) <= 0;
 function crownMs(){ const [h, m] = (cfg.crownTime || '16:00').split(':').map(Number); return cphTodayAt(h || 0, m || 0); }
 const F = {
   today: a => a.day === today(),
@@ -2376,7 +2385,7 @@ function renderStart(){
   const me = isStand() ? null : savedMe, bm = $('#b-me');
   bm.hidden = !me; if(me) bm.textContent = `Fortsæt som ${me.name}`;
   $('#b-play').classList.toggle('ghost', !!me); $('#b-play').classList.toggle('primary', !me); $('#b-play').textContent = me ? 'Ny spiller' : 'Spil med';
-  $('#st-per').textContent = `${cfg.perDay} liv om dagen`;
+  $('#st-per').textContent = cfg.perDay === 1 ? '1 liv ad gangen og får et nyt hver time' : `${cfg.perDay} liv ad gangen og får et nyt hver time`;
   const live = $('#st-live'); live.replaceChildren();
   const players = rank('total', F.today), boss = players[0];
   const c1 = el('p', 'chip'); c1.append(el('span', 'dot'));
@@ -2509,7 +2518,7 @@ function renderLobby(){
   }
   const nx = nextLifeMs(p), mins = nx != null ? Math.ceil(nx / 60000) : 0;
   if(nx != null && nx <= 0) debouncedRefreshMe(); // M4: nedtællingen er udløbet — hent /me igen for at få den friske livtælling
-  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Nye liv ved midnat.' : ' Kom igen i morgen.');
+  $('#l-left').textContent = (l ? `Du har ${l} liv lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Sæt et flueben, og få et ekstra.' : ' Et nyt liv kommer om lidt.');
   const pips = $('#l-pips'); pips.replaceChildren(); const shown = Math.min(12, Math.max(l, 1)); pips.classList.toggle('many', shown > 6);
   for(let i = 0; i < shown; i++){ const d = el('div', 'pip ' + (i < l ? 'free' : 'used')); const im = new Image(); im.src = IMG.cubeW; im.alt = ''; d.append(im); pips.append(d); }
   // gaver fra venner
@@ -2551,6 +2560,7 @@ function renderLobby(){
     else if(top && top.p.pid === p.pid) hb.append('Du er ', el('b', null, 'timens boss'), ` lige nu. Hold pladsen til kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
     else if(top) hb.append('Timens boss: ', el('b', null, `${top.p.name}, ${fmt(top.v)}`), `. Kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
     else hb.append('Ingen har spillet i denne time. Spil nu, og bliv ', el('b', null, 'timens boss'), ` kl. ${hh(h + 1)}.`);
+    hb.append(` Top 10 i timen får en ekstra Black Friday-vagt${cfg.hourPrize ? ', og timens boss vinder ' + cfg.hourPrize : ''}.`);
   }
   // kodefelt til sms-koder og udfordringer
   $('#l-codeform').hidden = !(cfg.referral !== false || cfg.smsBoost !== false);
@@ -2605,10 +2615,11 @@ function renderLobby(){
   $('#l-bf').hidden = !cfg.bf;
   $('#bf').checked = false; $('#bf').disabled = bu || !l;
   $('#l-bf').classList.toggle('used', bu);
-  $('#l-bftext').textContent = bu ? 'Dagens Black Friday-vagt er brugt. Du får en ny i morgen.' : 'Højere tempo og dobbelte point. Du har én om dagen, så vælg forsøget med omhu.';
+  { const bl = bfLeft(p), bt = hourTop10(p).length;
+    $('#l-bftext').textContent = bu ? `Dine Black Friday-vagter er brugt i dag. Kom i top 10 i en time, så får du en ekstra.` : `Højere tempo og dobbelte point. Du har ${bl === 1 ? 'én' : bl} tilbage i dag${bt ? ` (${bt} ekstra for top 10 i timen)` : ''}. Kom i top 10 i en time, så får du en ekstra.`; }
   $('#l-rule').textContent = 'Et liv bruges, så snart du trykker start.' + (cfg.crownOn && Date.now() < crownMs() ? ` Dagens vinder kåres kl. ${cfg.crownTime.replace(':', '.')}.` : '');
   $('#b-start').disabled = !l;
-  $('#b-start').textContent = l ? `Start dagens spil nr. ${used + 1}` : (nx != null ? `Næste liv om ${mins} min.` : 'Ingen liv tilbage i dag');
+  $('#b-start').textContent = l ? `Start dagens spil nr. ${used + 1}` : (nx != null ? `Næste liv om ${mins} min.` : 'Ingen liv lige nu');
   const bb = $('#l-badges'); bb.replaceChildren(...BADGES.map(b => badgeEl(b, !!p.badges[b.k])));
   $('#l-bsum').textContent = `Dine mærker, ${BADGES.filter(b => p.badges[b.k]).length} af ${BADGES.length}`;
 }
@@ -3049,7 +3060,7 @@ function showResult(p, g){
   const l = left(p);
   const tk = cfg.raffle ? ` Du har ${tickets(p)} ${tickets(p) === 1 ? 'lod' : 'lodder'} i lodtrækningen.` : '';
   const nx = nextLifeMs(p);
-  $('#r-rank').textContent = (l ? `Du har ${l} liv tilbage.` : nx != null ? `Du har ikke flere liv lige nu. Næste liv om ${Math.ceil(nx / 60000)} min.` : 'Du har ikke flere liv i dag. Kom igen i morgen.') + tk;
+  $('#r-rank').textContent = (l ? `Du har ${l} liv tilbage.` : nx != null ? `Du har ikke flere liv lige nu. Næste liv om ${Math.ceil(nx / 60000)} min.` : 'Du har ikke flere liv lige nu. Sæt et flueben, og få et ekstra.') + tk;
   $('#b-again').hidden = !l;
   $('#b-again').textContent = l ? 'Spil igen' : '';
   $('#r-post').hidden = true;
@@ -3185,7 +3196,7 @@ function fillCfg(){
   $('#c-mission').value = cfg.mission; $('#c-prize').value = cfg.prize || ''; $('#c-sms').checked = cfg.smsOn !== false; $('#c-sponsor').value = cfg.smsSponsor || ''; $('#c-mailp').value = cfg.mailPartners || ''; $('#c-life').checked = cfg.lifeBonus !== false; $('#c-ref').checked = cfg.referral !== false; $('#c-goal').value = cfg.goal || 0;
   $('#c-share').value = cfg.shareUrl || ''; $('#c-fixed').checked = cfg.fixed !== false; $('#c-hourly').checked = cfg.hourly !== false; $('#c-hprize').value = cfg.hourPrize || ''; $('#c-duel').checked = cfg.duel !== false; $('#c-boost').checked = cfg.smsBoost !== false; $('#c-boostn').value = cfg.boostLives || 2;
 }
-$('#p-messe').onclick = () => { $('#c-pname').value = 'Messedagen'; $('#c-pstart').value = today(); $('#c-pend').value = today(); $('#c-per').value = 5; $('#c-crown').checked = true; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = false; $('#c-mission').value = 'total'; $('#c-goal').value = 0; toast('Messeopsætning udfyldt. Tryk Gem.'); };
+$('#p-messe').onclick = () => { $('#c-pname').value = '8. oktober'; $('#c-pstart').value = today(); $('#c-pend').value = today(); $('#c-per').value = 1; $('#c-crown').checked = true; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = false; $('#c-mission').value = 'total'; $('#c-goal').value = 0; toast('Messeopsætning udfyldt. Tryk Gem.'); };
 $('#p-month').onclick = () => { const d = new Date(); d.setDate(1); const m = MONTHS[d.getMonth()]; $('#c-pname').value = m[0].toUpperCase() + m.slice(1); $('#c-pstart').value = d.toLocaleDateString('sv-SE'); $('#c-pend').value = ''; $('#c-per').value = 3; $('#c-crown').checked = false; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = true; if($('#c-mission').value === 'total') $('#c-mission').value = 'tower'; toast('Månedsopsætning udfyldt. Tryk Gem.'); };
 $('#b-save').onclick = () => {
   const ps = $('#c-pstart').value.trim();
@@ -3194,7 +3205,7 @@ $('#b-save').onclick = () => {
   if(pe && !/^\d{4}-\d{2}-\d{2}$/.test(pe)) return toast('Skriv slutdatoen som ÅÅÅÅ-MM-DD');
   if(pe && pe < (ps || '2000-01-01')) return toast('Slutdatoen ligger før startdatoen');
   const patch = { periodName: $('#c-pname').value.trim() || 'Perioden', periodStart: ps || '2000-01-01', periodEnd: pe, eventName: $('#c-event').value.trim(),
-    perDay: clamp(parseInt($('#c-per').value, 10) || 3, 1, 20), crownTime: $('#c-ctime').value || '16:00', crownOn: $('#c-crown').checked, bf: $('#c-bf').checked,
+    perDay: clamp(parseInt($('#c-per').value, 10) || 1, 1, 20), crownTime: $('#c-ctime').value || '16:00', crownOn: $('#c-crown').checked, bf: $('#c-bf').checked,
     prize: $('#c-prize').value.trim(), smsOn: $('#c-sms').checked, smsSponsor: $('#c-sponsor').value.trim(), mailPartners: $('#c-mailp').value.trim(), lifeBonus: $('#c-life').checked, referral: $('#c-ref').checked, shareUrl: $('#c-share').value.trim(), fixed: $('#c-fixed').checked, hourly: $('#c-hourly').checked, hourPrize: $('#c-hprize').value.trim(), duel: $('#c-duel').checked, smsBoost: $('#c-boost').checked, boostLives: clamp(parseInt($('#c-boostn').value, 10) || 2, 1, 5), teams: $('#c-teams').checked, partners: $('#c-partners').checked, raffle: $('#c-raffle').checked, mission: $('#c-mission').value, goal: Math.max(0, parseFloat($('#c-goal').value) || 0) };
   API.admin.saveConfig(patch).then(res => {
     // H5: vis kun "gemt", når svaret bekræfter det — en 200 er ikke i sig selv et bevis
@@ -3468,7 +3479,7 @@ function wallPanels(){
     foot: [rec ? ['Rekord i ' + pnl() + ': ', `${fmt(rec.v)} af ${rec.p.name}`] : null, n ? ['', `${n} ${n === 1 ? 'spiller' : 'spillere'} i dag`] : null] });
   if(cfg.hourly !== false){
     const h = nowHour(), r = hourBoard().slice(0, 7);
-    P.push({ dur: 10, title: `Timens boss, kåres kl. ${hh(h + 1)}`, note: `Om ${hourLeftMin()} min${cfg.hourPrize ? '. Præmie: ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen`, rows: r.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i denne time endnu. Bliv timens boss.' });
+    P.push({ dur: 10, title: `Timens boss, kåres kl. ${hh(h + 1)}`, note: `Om ${hourLeftMin()} min${cfg.hourPrize ? '. Præmie: ' + cfg.hourPrize : ''}. Top 10 får en ekstra Black Friday-vagt`, rows: r.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i denne time endnu. Bliv timens boss.' });
   }
   if(cfg.mission && cfg.mission !== 'total'){
     const m = MET[cfg.mission], r = rank(cfg.mission, F.period).slice(0, 7);
@@ -3759,6 +3770,6 @@ window.addEventListener('online', flushFinishQueue);
 setInterval(flushFinishQueue, 30000);
 })();
 </script>
-<script src="/spil/vilkaar-overlay.js?v=1"></script>
+<script src="/spil/vilkaar-overlay.js?v=2"></script>
 </body>
 </html>
