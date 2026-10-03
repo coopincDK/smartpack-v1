@@ -800,6 +800,9 @@ details.more summary:hover{color:var(--text)}
     <p class="muted small" id="a-dl-res"></p>
     <button class="btn small" id="b-lodder">Vis lodder lige nu</button>
     <div id="a-lodder"></div>
+    <h4 class="sub">QR-kode på standen</h4>
+    <p class="muted small">Print den og hæng den på standen. Scanner en spiller den på messedagen, bliver spillerens firma godkendt til konkurrencen, også selvom navnet er stavet anderledes end på deltagerlisten. Virker kun 8. oktober til kl. 16.30.</p>
+    <div id="a-qr"></div>
     <button class="btn" id="b-draw">Træk vinderen</button>
     <div id="a-draw"></div>
   </div>
@@ -878,6 +881,26 @@ details.more summary:hover{color:var(--text)}
 /* testtilstand til røgtest: kun aktiv på localhost/127.0.0.1 med ?pr_test=1, virker aldrig i produktion */
 const IS_LOCALHOST = /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname);
 const TEST_MODE = /(^|[?&])pr_test=1(&|$)/.test(location.search) && IS_LOCALHOST;
+/* QR-koden på standen: /spil/?stand=KODE. Koden gemmes, til spilleren er logget ind (tilmeldingen kommer
+   først, hvis man er ny), og sendes så til serveren, som godkender firmaet til konkurrencen. */
+const STAND_KODE_STORE = 'sp_standkode';
+(() => { const m = location.search.match(/(?:^|[?&])stand=([^&]+)/); if(!m) return;
+  try{ sessionStorage.setItem(STAND_KODE_STORE, decodeURIComponent(m[1])); }catch(e){}
+  try{ history.replaceState(null, '', location.pathname + location.hash); }catch(e){} })();
+function standKodeVentende(){ try{ return sessionStorage.getItem(STAND_KODE_STORE) || ''; }catch(e){ return ''; } }
+function standKodeBrugt(){ try{ sessionStorage.removeItem(STAND_KODE_STORE); }catch(e){} }
+function sendStandKode(){
+  const kode = standKodeVentende(); if(!kode || !current || !getToken()) return;
+  standKodeBrugt();
+  API.stand(kode).then(r => {
+    if(r && r.konkurrence) current.konkurrence = r.konkurrence;
+    toast(`${(r && r.konkurrence && r.konkurrence.firma) || 'Jeres firma'} er godkendt til konkurrencen`);
+    if(screen === 's-lobby') renderLobby();
+  }).catch(e => {
+    if(e && e.kode === 'firma_mangler'){ toast('Skriv jeres firma herunder, og scan koden igen.'); try{ sessionStorage.setItem(STAND_KODE_STORE, kode); }catch(x){} }
+    else toast(e && e.status ? e.message : 'Kunne ikke godkende firmaet. Prøv igen ved standen.');
+  });
+}
 const ROUND_T = TEST_MODE ? 5 : 30, MUTE_STORE = 'packrush.mute';
 const $ = s => document.querySelector(s);
 const EMOJI = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
@@ -1031,6 +1054,7 @@ function apiFetch(path, opts){
 const API = {
   state(){ return apiFetch('/state', { noAuth: true }); },
   me(){ return getToken() ? apiFetch('/me') : Promise.resolve(null); },
+  stand(kode){ return apiFetch('/me/stand', { method: 'POST', body: { kode } }); },
   register(payload){
     return apiFetch('/players', { method: 'POST', noAuth: true, body: {
       navn: payload.name, email: payload.email, pin: payload.pin, firma: payload.company,
@@ -1088,6 +1112,7 @@ const API = {
   admin: {
     login(password, email){ return apiFetch('/admin/login', { method: 'POST', body: { password, email: email || '' }, noAuth: true, admin: true }); },
     users(){ return apiFetch('/admin/brugere', { admin: true }); },
+    standKode(){ return apiFetch('/admin/standkode', { admin: true }); },
     addUser(email, navn, kode){ return apiFetch('/admin/brugere', { method: 'POST', body: { email, navn, kode }, admin: true }); },
     resetUser(id, kode){ return apiFetch('/admin/brugere/' + encodeURIComponent(id) + '/nulstil', { method: 'POST', body: { kode }, admin: true }); },
     closeUser(id){ return apiFetch('/admin/brugere/' + encodeURIComponent(id), { method: 'DELETE', admin: true }); },
@@ -2467,6 +2492,7 @@ $('#l-codei').addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preven
 /* ---------- lobby ---------- */
 function renderLobby(){
   const p = current, l = left(p), used = todays(p).length;
+  if(standKodeVentende()) sendStandKode();
   $('#l-hi').textContent = `Hej, ${p.name}`;
   // overhalet?
   const bx = $('#l-beaten'); bx.replaceChildren();
@@ -3267,7 +3293,7 @@ function renderAdmin(){
     $('#a-csv').hidden = true;
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
     // Teksten under Præmiekonkurrencen er fast (vilkårene); lodderne hentes med "Vis lodder lige nu".
-    renderSms(); fillUnlist(); renderUsers(); renderTjek();
+    renderSms(); fillUnlist(); renderUsers(); renderTjek(); renderQr();
     const ah = $('#a-hours'); ah.replaceChildren();
     if(cfg.hourly !== false){ const ws = hourWinners(ps), top = hourBoard(ps)[0]; ah.append(el('h4', 'sub', 'Timens boss i dag'));
       if(!ws.length && !top) ah.append(el('p', 'muted small', 'Ingen vindere endnu.'));
@@ -3293,6 +3319,17 @@ $('#b-dl').onclick = () => {
     $('#a-dl-res').textContent = `${r.indlaest} firmaer læst, ${r.nye} nye. Listen har nu ${r.antal} firmaer.`; $('#a-dl').value = '';
   }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme listen.'));
 };
+function renderQr(){
+  const box = $('#a-qr'); if(!box) return;
+  API.admin.standKode().then(r => {
+    box.replaceChildren();
+    const img = el('img'); img.src = API_BASE + '/admin/standkode.svg?t=' + Date.now(); img.alt = 'QR-kode til standen'; img.style.cssText = 'width:200px;height:200px;background:#fff;padding:8px;border-radius:8px;display:block';
+    const a = el('a', 'link', 'Åbn QR-koden stor til print'); a.href = API_BASE + '/admin/standkode.svg'; a.target = '_blank'; a.rel = 'noopener';
+    box.append(img, el('p', 'muted small', `Linket i koden: ${r.url}`), a);
+    const g = r.godkendt_paa_standen || [];
+    box.append(el('p', 'small', g.length ? `Godkendt via QR på standen (${g.length}): ${g.map(x => x.firma).join(', ')}` : 'Ingen firmaer er godkendt via QR endnu.'));
+  }).catch(() => {});
+}
 $('#b-lodder').onclick = () => {
   const box = $('#a-lodder'); box.replaceChildren(el('p', 'muted small', 'Henter...'));
   API.admin.lodder().then(r => {

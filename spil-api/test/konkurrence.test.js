@@ -138,6 +138,41 @@ test('spillerens egen konkurrencestatus i GET /me: deltagerliste, lodder, godken
   assert.equal((await me(tNy)).paa_deltagerliste, true);
 });
 
+test('QR-koden på standen godkender spillerens firma, kun med rigtig kode og kun på messedagen', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const ac = await adminCookie(h);
+  const sk = await api(h.baseUrl, 'GET', '/admin/standkode', { adminCookie: ac });
+  assert.equal(sk.status, 200);
+  assert.match(sk.body.url, /\/spil\/\?stand=/);
+  const svg = await fetch(h.baseUrl + '/admin/standkode.svg', { headers: { cookie: ac } });
+  assert.equal(svg.status, 200);
+  assert.match(await svg.text(), /<svg/);
+
+  const { body } = registrerSpiller(h.baseUrl, { email: 'q@example.dk', firma: 'Scannet Shop' });
+  const tok = (await api(h.baseUrl, 'POST', '/players', { body })).body.token;
+
+  // Uden for perioden (seedet konkurrence er 8/10 2026): afvises.
+  const udenfor = await api(h.baseUrl, 'POST', '/me/stand', { token: tok, body: { kode: sk.body.kode } });
+  assert.equal(udenfor.status, 400);
+  assert.equal(udenfor.body.kode, 'uden_for_perioden');
+
+  // Flyt perioden til nu, så koden virker.
+  await h.pool.query("UPDATE konkurrence SET spil_start = now() - interval '1 hour', spil_slut = now() + interval '1 hour' WHERE id = 1");
+  const forkert = await api(h.baseUrl, 'POST', '/me/stand', { token: tok, body: { kode: 'forkert-kode' } });
+  assert.equal(forkert.status, 400);
+  const ok = await api(h.baseUrl, 'POST', '/me/stand', { token: tok, body: { kode: sk.body.kode } });
+  assert.equal(ok.status, 200);
+  assert.equal(ok.body.konkurrence.paa_deltagerliste, true);
+  const igen = await api(h.baseUrl, 'POST', '/me/stand', { token: tok, body: { kode: sk.body.kode } });
+  assert.equal(igen.status, 200, 'anden scanning er harmløs');
+
+  const liste = await api(h.baseUrl, 'GET', '/admin/standkode', { adminCookie: ac });
+  assert.deepEqual(liste.body.godkendt_paa_standen.map((x) => x.firma), ['Scannet Shop']);
+  const uden = await api(h.baseUrl, 'POST', '/me/stand', { token: tok, body: {} });
+  assert.equal(uden.status, 400);
+});
+
 test('ingen lodder -> ingen trækning', async (t) => {
   const h = await startHarness();
   t.after(() => h.teardown());

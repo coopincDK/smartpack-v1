@@ -4,8 +4,28 @@
 // lodtrækning. Se src/konkurrence.js og deltagervilkårene (/spil/vilkaar/).
 
 const express = require('express');
+const crypto = require('crypto');
+const QRCode = require('qrcode');
 const { requireAdmin } = require('../middleware/adminAuth');
+const { requirePlayer } = require('../middleware/playerAuth');
 const K = require('../konkurrence');
+
+// Standens QR-kode: en fast, hemmelig kode i et link til spillet. Scanner en
+// spiller den på standen, godkendes spillerens firma til konkurrencen (lægges
+// på deltagerlisten med kilde 'stand'), selv om firmaet har stavet sig
+// anderledes end på Dansk Erhvervs liste. Koden virker kun på messedagen.
+const STAND_URL = 'https://smartpack.dk/spil/';
+async function hentStandKode(pool) {
+  const { rows } = await pool.query('SELECT hemmelig FROM config WHERE id = 1');
+  const hem = (rows[0] && rows[0].hemmelig) || {};
+  if (hem.standKode) return hem.standKode;
+  const kode = crypto.randomBytes(9).toString('base64url').replace(/[-_]/g, 'x').slice(0, 12);
+  await pool.query("UPDATE config SET hemmelig = COALESCE(hemmelig, '{}'::jsonb) || jsonb_build_object('standKode', $1::text) WHERE id = 1", [kode]);
+  return kode;
+}
+function standLink(kode) {
+  return STAND_URL + '?stand=' + encodeURIComponent(kode);
+}
 
 function konkurrenceRouter(pool) {
   const router = express.Router();
@@ -116,7 +136,59 @@ function konkurrenceRouter(pool) {
     }
   });
 
+  // --- Standens QR-kode ---
+  router.get('/admin/standkode', admin, async (req, res, next) => {
+    try {
+      const kode = await hentStandKode(pool);
+      const { rows } = await pool.query("SELECT firma, oprettet FROM deltagerliste_firma WHERE kilde = 'stand' ORDER BY oprettet DESC");
+      res.json({ kode, url: standLink(kode), godkendt_paa_standen: rows });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  router.get('/admin/standkode.svg', admin, async (req, res, next) => {
+    try {
+      const kode = await hentStandKode(pool);
+      const svg = await QRCode.toString(standLink(kode), { type: 'svg', errorCorrectionLevel: 'M', margin: 2, width: 1024 });
+      res.set('Content-Type', 'image/svg+xml');
+      res.set('Cache-Control', 'no-store');
+      res.send(svg);
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // Spilleren har scannet QR-koden på standen: godkend firmaet til konkurrencen.
+  const spiller = requirePlayer(pool);
+  router.post('/me/stand', spiller, async (req, res, next) => {
+    try {
+      const kode = String((req.body && req.body.kode) || '').trim();
+      const rigtig = await hentStandKode(pool);
+      if (!kode || kode.length !== rigtig.length || !crypto.timingSafeEqual(Buffer.from(kode), Buffer.from(rigtig))) {
+        return res.status(400).json({ fejl: 'Koden er ikke gyldig. Scan QR-koden på SmartPacks stand igen.', kode: 'ugyldig_standkode' });
+      }
+      const k = await K.hentKonkurrence(pool);
+      const nu = new Date();
+      if (!k || !k.spil_start || !k.spil_slut) return res.status(400).json({ fejl: 'Konkurrencen er ikke sat op endnu.', kode: 'ingen_konkurrence' });
+      const fra = new Date(new Date(k.spil_start).getTime() - 12 * 3600 * 1000);
+      if (nu < fra || nu > new Date(k.spil_slut)) {
+        return res.status(400).json({ fejl: 'QR-koden virker kun på messedagen, indtil spilperioden slutter.', kode: 'uden_for_perioden' });
+      }
+      const firma = String(req.player.firma || '').trim();
+      const noegle = K.matchNoegle(firma);
+      if (!noegle) return res.status(400).json({ fejl: 'Skriv først, hvilket firma du spiller for.', kode: 'firma_mangler' });
+      await pool.query(
+        `INSERT INTO deltagerliste_firma (firma, firma_noegle, kilde) VALUES ($1, $2, 'stand') ON CONFLICT (firma_noegle) DO NOTHING`,
+        [firma.slice(0, 200), noegle]
+      );
+      res.json({ ok: true, konkurrence: await K.firmaStatus(pool, firma, nu) });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   return router;
 }
 
-module.exports = { konkurrenceRouter };
+module.exports = { konkurrenceRouter, hentStandKode };
