@@ -575,6 +575,10 @@ details.more summary:hover{color:var(--text)}
   #s-start::before,.l-top::after,#s-result.active::after,#s-result.active::before{animation:none!important}
   #s-result::before{display:none}
 }
+
+/* Tilmelding: "Fortsæt" følger med nederst på skærmen, så man ikke skal scrolle forbi alle partnernes flueben */
+#f-reg > button[type=submit]{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom, 0px));z-index:6;
+  box-shadow:0 -14px 28px 6px var(--bg),0 12px 28px -12px rgba(249,115,22,.65)}
 </style>
 </head>
 <body>
@@ -775,7 +779,7 @@ details.more summary:hover{color:var(--text)}
     <label class="check"><input type="checkbox" id="c-sms">Sms'er om spillet, når nogen bliver overhalet, og om præmier</label>
     <label class="f">Sponsor for sms'erne <small>Man kommer på sponsorens sms-liste, når man siger ja til sms</small><input type="text" id="c-sponsor" maxlength="30"></label>
     <label class="f">Partnere på nyhedsmailen <small>Adskil med komma. Man kommer på alle deres lister, når man siger ja til nyheder</small><input type="text" id="c-mailp" maxlength="200"></label>
-    <label class="check"><input type="checkbox" id="c-life">Ekstra liv for tilmelding: ét pr. partner om dagen, og ét liv tilbage hver halve time op til 3</label>
+    <label class="check"><input type="checkbox" id="c-life">Ekstra liv for tilmelding: ét pr. partner om dagen, og ét nyt liv hver time, når man er løbet tør</label>
     <label class="check"><input type="checkbox" id="c-ref">Vennekoder og udfordringer: fuld liv for en ny ven, ét liv i timen for hver ven, der tager udfordringen op</label>
     <label class="f">Link til spillet <small>Bruges i udfordringer og på LinkedIn, når spillet ligger på jeres egen side. Tomt betyder, at kun koden bliver delt</small><input type="url" id="c-share" maxlength="200" placeholder="https://"></label>
     <label class="check"><input type="checkbox" id="c-fixed">Samme bane for alle hele dagen, så det er dygtighed og ikke held, der afgør tavlen</label>
@@ -889,10 +893,29 @@ const STAND_KODE_STORE = 'sp_standkode';
 /* Invitationslink fra en ven: /spil/#ven=KODE eller /spil/?ven=KODE. Koden gemmes, så den udfyldes
    automatisk ved tilmeldingen, også selvom man først kigger rundt. */
 const VEN_STORE = 'sp_venkode';
-(() => { const m = (location.hash + '&' + location.search).match(/[#?&]ven=([A-Za-z0-9]{4,5})/); if(!m) return;
-  try{ sessionStorage.setItem(VEN_STORE, m[1].toUpperCase()); }catch(e){}
-  try{ history.replaceState(null, '', location.pathname); }catch(e){} })();
-function venKode(){ try{ return sessionStorage.getItem(VEN_STORE) || ''; }catch(e){ return ''; } }
+/* Koden gemmes både i sessionStorage og i localStorage (i 7 dage), så den overlever, at linket
+   åbnes i fx LinkedIns indbyggede browser og spillet bagefter åbnes et andet sted, og at spillet
+   allerede var åbent (så kommer koden som hashchange og ikke som ny sideindlæsning). */
+const VEN_TTL_MS = 7 * 24 * 3600 * 1000;
+function fangVenKode(){
+  const m = (location.hash + '&' + location.search).match(/[#?&]ven=([A-Za-z0-9]{4,5})/); if(!m) return false;
+  const k = m[1].toUpperCase();
+  try{ sessionStorage.setItem(VEN_STORE, k); }catch(e){}
+  try{ localStorage.setItem(VEN_STORE, JSON.stringify({ k, t: Date.now() })); }catch(e){}
+  try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  return true;
+}
+fangVenKode();
+window.addEventListener('hashchange', () => {
+  if(!fangVenKode()) return;
+  // Er tilmeldingen allerede åben, så udfyld feltet med det samme.
+  const f = document.getElementById('i-ref'); if(f && !f.value) f.value = venKode();
+});
+function venKode(){
+  try{ const s = sessionStorage.getItem(VEN_STORE); if(s) return s; }catch(e){}
+  try{ const o = JSON.parse(localStorage.getItem(VEN_STORE) || 'null'); if(o && o.k && Date.now() - o.t < VEN_TTL_MS) return o.k; }catch(e){}
+  return '';
+}
 (() => { const m = location.search.match(/(?:^|[?&])stand=([^&]+)/); if(!m) return;
   try{ sessionStorage.setItem(STAND_KODE_STORE, decodeURIComponent(m[1])); }catch(e){}
   try{ history.replaceState(null, '', location.pathname + location.hash); }catch(e){} })();
@@ -1451,7 +1474,7 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   box.replaceChildren();
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
-  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Fluebenene starter tomme hver dag, så du vælger selv. Hver partner, du sætter flueben ved, giver et ekstra liv i dag, og så får du et liv tilbage hver halve time, når du er under 3. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
+  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Fluebenene starter tomme hver dag, så du vælger selv. Når dine liv er brugt, får du et nyt hver time. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
   // Ingen "Tilmeld alle": hver partner skal vælges for sig (vilkår pkt. 12). Knappen findes stadig i koden,
   // så resten af logikken er uændret, men den vises ikke.
   const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button'; all.hidden = true;
@@ -2457,7 +2480,7 @@ $('#f-reg').addEventListener('submit', e => {
         const smsBlocked = desired.includes('sms') && !current.phone;
         const safeKeys = smsBlocked ? desired.filter(k => k !== 'sms') : desired;
         if(safeKeys.length) chain.push(API.setTicks(safeKeys).catch(() => {}));
-        const ref = $('#i-ref').value.trim(); if(ref){ chain.push(API.challenge(ref).catch(() => {})); try{ sessionStorage.removeItem(VEN_STORE); }catch(e){} }
+        const ref = $('#i-ref').value.trim(); if(ref){ chain.push(API.challenge(ref).catch(() => {})); try{ sessionStorage.removeItem(VEN_STORE); }catch(e){} try{ localStorage.removeItem(VEN_STORE); }catch(e){} }
         if(chain.length) return Promise.all(chain).then(() => API.me()).then(m2 => {
           current = meFromServer(m2); syncMyAttempts(); cacheMe(current);
           if(smsBlocked) toast('Sms kræver et telefonnummer — sæt fluebenet igen under "Dagens flueben" i lobbyen.');
