@@ -20,6 +20,7 @@ const { createRateLimiter } = require('../middleware/rateLimit');
 const { clientIp } = require('../middleware/clientIp');
 const { csvEscape } = require('../csv');
 const { beregnLodder, matchNoegle } = require('../konkurrence');
+const { synkKampagneRaekke } = require('../crm');
 
 // Kendte kampagner. Ukendte kampagnenavne afvises, så siden ikke kan oprette
 // tilfældige lister.
@@ -85,11 +86,13 @@ async function hentListe(pool, kampagneId) {
       lodder_basis: k.basislodder,
       lodder_spil: fraSpil,
       lodder: k.basislodder + fraSpil,
+      crm_sendt: r.crm_sendt,
+      crm_fejl: r.crm_fejl,
     };
   });
 }
 
-function kampagneRouter(pool) {
+function kampagneRouter(pool, opts = {}) {
   const router = express.Router();
   const admin = requireAdmin(pool);
   // Messe-wifi deler ofte én IP mellem mange telefoner, så grænsen er pr. IP
@@ -117,7 +120,7 @@ function kampagneRouter(pool) {
       const kilde = KILDER.has(String(b.kilde || '')) ? String(b.kilde) : 'messe';
       const nyhedsbrev = b.nyhedsbrev === true || b.nyhedsbrev === 'ja';
       const samtykke = samtykkeTekst(k, nyhedsbrev);
-      await pool.query(
+      const ins = await pool.query(
         `INSERT INTO kampagne_tilmelding
            (kampagne, navn, klub, firma, firma_noegle, email, telefon, ordrer, hvor,
             nyhedsbrev, nyhedsbrev_tid, samtykke_tekst, kilde, kilder, ip)
@@ -136,7 +139,9 @@ function kampagneRouter(pool) {
            kilde = EXCLUDED.kilde,
            kilder = CASE WHEN EXCLUDED.kilde = ANY(kampagne_tilmelding.kilder) THEN kampagne_tilmelding.kilder
                          ELSE kampagne_tilmelding.kilder || EXCLUDED.kilde END,
-           opdateret = now()`,
+           opdateret = now(),
+           crm_sendt = NULL
+         RETURNING id`,
         [
           kampagneId,
           navn,
@@ -154,6 +159,33 @@ function kampagneRouter(pool) {
         ]
       );
       res.status(201).json({ ok: true, kampagne: k.navn, lodder_basis: k.basislodder, lodtraekning: k.lodtraekning });
+      // Kopi til CRM'et efter svaret, så en langsom CRM aldrig forsinker formularen.
+      if (!opts.udenCrm) {
+        synkKampagneRaekke(pool, ins.rows[0].id, k.navn).catch((e) => console.error('[crm] kampagne', e.message));
+      }
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // Sender de tilmeldinger, der ikke er nået frem til CRM'et (fx fordi nøglen
+  // manglede, eller CRM'et var nede). Højst 500 pr. kald.
+  router.post('/admin/kampagne/:kampagne/crm-send', admin, async (req, res, next) => {
+    try {
+      const k = KAMPAGNER[req.params.kampagne];
+      if (!k) return res.status(404).json({ fejl: 'Ukendt kampagne.', kode: 'ikke_fundet' });
+      const { rows } = await pool.query(
+        'SELECT id FROM kampagne_tilmelding WHERE kampagne = $1 AND crm_sendt IS NULL ORDER BY id LIMIT 500',
+        [req.params.kampagne]
+      );
+      let sendt = 0;
+      let fejl = null;
+      for (const r of rows) {
+        const x = await synkKampagneRaekke(pool, r.id, k.navn);
+        if (x.ok) sendt++;
+        else fejl = x.fejl;
+      }
+      res.json({ forsoegt: rows.length, sendt, seneste_fejl: fejl });
     } catch (e) {
       next(e);
     }
@@ -200,6 +232,7 @@ function kampagneRouter(pool) {
         kampagne: { id: req.params.kampagne, ...k },
         antal: liste.length,
         mailliste: liste.filter((r) => r.nyhedsbrev).length,
+        crm_mangler: liste.filter((r) => !r.crm_sendt).length,
         lodder_i_alt: liste.reduce((a, r) => a + r.lodder, 0),
         tilmeldinger: liste,
       });

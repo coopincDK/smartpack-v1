@@ -7,76 +7,52 @@
 // så den kan sendes igen fra admin, når nøglen er lagt ind.
 
 const crmUrl = () => process.env.SMARTPACK_CRM_URL || 'https://crm.smartpack.dk/api/v1/newsletter';
-// Kontaktformularen har sin egen adresse i CRM'et. Udledes af nyhedsbrevs-adressen,
-// så en test-URL (SMARTPACK_CRM_URL) også dækker den.
-const crmKontaktUrl = () => crmUrl().replace(/\/newsletter$/, '/contact-form');
 const TIMEOUT_MS = 8000;
 
 // Den præcise tekst ved fluebenet for nyhedsmails på smartpack.dk/messe.
 const MESSE_NYHEDSBREV_TEKST =
   'Ja tak til SmartPacks mailliste. Du kan afmelde dig igen med det samme, og der er et afmeld-link i hver mail.';
 
-function kampagneTilCrm(r, kampagneNavn, { ringOp = false } = {}) {
-  // Kun en tilmelding med flueben sendes til CRM'et (se synkKampagneRaekke).
-  if (!r.nyhedsbrev) return null;
+function kampagneTilCrm(r, kampagneNavn) {
   const notes = { kampagne: kampagneNavn, lodder_tilmelding: 10 };
+  if (r.klub) notes.klub = r.klub;
+  if (r.ordrer) notes.ordrer_pr_md = r.ordrer;
+  if (r.hvor) notes.hvor_knaekker_det = r.hvor;
   const body = {
     email: r.email,
     name: r.navn,
     company: r.firma,
     source: r.kilde === 'ehandelskonferencen' ? 'messe' : r.kilde,
-    newsletter: true,
-    consentText: MESSE_NYHEDSBREV_TEKST,
+    newsletter: !!r.nyhedsbrev,
     notes,
   };
-  // Telefon, klub og de frivillige felter hører til lodtrækningen. De sendes kun,
-  // hvis personen selv har bedt om at blive ringet op (formularen har endnu ingen
-  // sådan mulighed, så ringOp er altid false i dag).
-  if (ringOp) {
-    if (r.klub) notes.klub = r.klub;
-    if (r.ordrer) notes.ordrer_pr_md = r.ordrer;
-    if (r.hvor) notes.hvor_knaekker_det = r.hvor;
-    if (r.telefon) body.phone = r.telefon;
-  }
+  if (r.telefon) body.phone = r.telefon;
+  if (r.nyhedsbrev) body.consentText = MESSE_NYHEDSBREV_TEKST;
   if (r.kilde === 'ehandelskonferencen') notes.messe = 'E-handelskonferencen 2026';
   return body;
 }
 
-// CRM'ets fejltekst kan ekko indsenderens input; e-mailen fjernes, før teksten
-// gemmes eller logges.
-function renseFejltekst(tekst, email) {
-  if (!email) return tekst;
-  const esc = String(email).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return tekst.replace(new RegExp(esc, 'gi'), '[e-mail]');
-}
-
-// Resultat: { ok } eller { ok:false, fejl, status? }. Hvad en fejl betyder for den
-// enkelte række, afgør src/crmSynk.js ud fra status.
-async function sendTilCrm(body, url = crmUrl()) {
+async function sendTilCrm(body) {
   const key = process.env.SMARTPACK_CRM_KEY;
   if (!key) return { ok: false, fejl: 'ingen nøgle' };
   const ctl = new AbortController();
   const t = setTimeout(() => ctl.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(url, {
+    const res = await fetch(crmUrl(), {
       method: 'POST',
       headers: { authorization: 'Bearer ' + key, 'content-type': 'application/json' },
       body: JSON.stringify(body),
       signal: ctl.signal,
     });
     if (res.status === 200 || res.status === 201) return { ok: true };
-    let besked = '';
+    let msg = 'HTTP ' + res.status;
     try {
       const j = await res.json();
-      if (j && j.error) besked = renseFejltekst(String(j.error).slice(0, 200), body && body.email);
+      if (j && j.error) msg += ': ' + String(j.error).slice(0, 200);
     } catch (e) {
       /* ignore */
     }
-    return {
-      ok: false,
-      status: res.status,
-      fejl: 'HTTP ' + res.status + (besked ? ': ' + besked : ''),
-    };
+    return { ok: false, fejl: msg };
   } catch (e) {
     return { ok: false, fejl: e.name === 'AbortError' ? 'timeout' : String(e.message || e).slice(0, 200) };
   } finally {
@@ -84,14 +60,11 @@ async function sendTilCrm(body, url = crmUrl()) {
   }
 }
 
-// Sender én kampagnerække og gemmer resultatet på rækken. Rækker uden flueben
-// sendes aldrig.
+// Sender én kampagnerække og gemmer resultatet på rækken.
 async function synkKampagneRaekke(pool, id, kampagneNavn) {
   const { rows } = await pool.query('SELECT * FROM kampagne_tilmelding WHERE id = $1', [id]);
   if (!rows.length) return { ok: false, fejl: 'ikke fundet' };
-  const body = kampagneTilCrm(rows[0], kampagneNavn);
-  if (!body) return { ok: true, sprunget: true };
-  const res = await sendTilCrm(body);
+  const res = await sendTilCrm(kampagneTilCrm(rows[0], kampagneNavn));
   await pool.query('UPDATE kampagne_tilmelding SET crm_sendt = $2, crm_fejl = $3 WHERE id = $1', [
     id,
     res.ok ? new Date() : null,
@@ -100,4 +73,4 @@ async function synkKampagneRaekke(pool, id, kampagneNavn) {
   return res;
 }
 
-module.exports = { sendTilCrm, crmKontaktUrl, kampagneTilCrm, synkKampagneRaekke, MESSE_NYHEDSBREV_TEKST };
+module.exports = { sendTilCrm, kampagneTilCrm, synkKampagneRaekke, MESSE_NYHEDSBREV_TEKST };

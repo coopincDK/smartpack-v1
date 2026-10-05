@@ -44,16 +44,18 @@ test('kampagnetilmelding sendes til CRM med kilde, notater og samtykketekst', as
   assert.equal(k.body.source, 'digiday');
   assert.equal(k.body.newsletter, true);
   assert.match(k.body.consentText, /Ja tak til SmartPacks mailliste/);
-  assert.equal(k.body.notes.klub, undefined);
-  assert.equal(k.body.phone, undefined);
+  assert.equal(k.body.notes.klub, 'AGF');
+  assert.equal(k.body.phone, '12345678');
   const row = (await h.pool.query('SELECT crm_sendt, crm_fejl FROM kampagne_tilmelding')).rows[0];
   assert.ok(row.crm_sendt);
   assert.equal(row.crm_fejl, null);
 
-  // Uden flueben sendes intet til CRM'et (H4)
+  // Uden flueben: ingen samtykketekst, newsletter false
   await api(h.baseUrl, 'POST', '/kampagne/tilmeld', { body: { navn: 'Bo', firma: 'X', email: 'bo@x.dk' } });
   await vent(400);
-  assert.equal(crm.kald.length, 1);
+  assert.equal(crm.kald[1].body.newsletter, false);
+  assert.equal(crm.kald[1].body.consentText, undefined);
+  assert.equal(crm.kald[1].body.source, 'messe');
 });
 
 test('uden nøgle markeres rækken, og admin kan sende de manglende bagefter', async (t) => {
@@ -63,7 +65,7 @@ test('uden nøgle markeres rækken, og admin kan sende de manglende bagefter', a
   const h = await startHarness();
   t.after(async () => { await h.teardown(); crm.srv.close(); delete process.env.SMARTPACK_CRM_KEY; delete process.env.SMARTPACK_CRM_URL; });
 
-  await api(h.baseUrl, 'POST', '/kampagne/tilmeld', { body: { navn: 'C', firma: 'Y', email: 'c@y.dk', nyhedsbrev: true } });
+  await api(h.baseUrl, 'POST', '/kampagne/tilmeld', { body: { navn: 'C', firma: 'Y', email: 'c@y.dk' } });
   await vent(300);
   assert.equal(crm.kald.length, 0);
   let row = (await h.pool.query('SELECT crm_sendt, crm_fejl FROM kampagne_tilmelding')).rows[0];
