@@ -178,7 +178,7 @@ async function deleteInactivePlayers(pool, now) {
       if (!rows.length) continue; // slettet af en anden proces i mellemtiden
       const stadigKvalificeret = await stillQualifiesForDeletion(client, id, rows[0].oprettet, nowResolved);
       if (!stadigKvalificeret) continue; // fx: bekræftede et samtykke eller spillede et forsøg siden findRetentionCandidates()
-      await deletePlayerFully(client, id, rows[0].navn);
+      await deletePlayerFully(client, id, rows[0].navn, { afmeldCrm: true });
       antalSlettet++;
     }
 

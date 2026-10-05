@@ -14,6 +14,7 @@ const { startHarness, api, registrerSpiller } = require('./helpers/appHarness');
 const { synkOnce } = require('../src/crmSynk');
 const { kampagneTilCrm } = require('../src/crm');
 const { deletePlayerFully } = require('../src/playerDeletion');
+const { deleteInactivePlayers } = require('../src/retention');
 
 // svar(body, url) -> [status, tekst]. Standard: 201.
 function fakeCrm(svar = () => [201, '{}']) {
@@ -39,11 +40,11 @@ const ryd = () => {
   delete process.env.SMARTPACK_CRM_URL;
 };
 
-async function opsaet(t, svar) {
+async function opsaet(t, svar, harnessOpts) {
   const crm = await fakeCrm(svar);
   process.env.SMARTPACK_CRM_URL = crm.url;
   process.env.SMARTPACK_CRM_KEY = 'spk_hemmelig_noegle';
-  const h = await startHarness();
+  const h = await startHarness(harnessOpts);
   t.after(async () => {
     await h.teardown();
     crm.srv.close();
@@ -94,26 +95,6 @@ test('H1: DELETE /me lægger en afmelding i udbakken, som sendes og slettes, nå
   assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
 });
 
-test('H1: admin-sletning og retention (deletePlayerFully) afmelder kun spillere med aktivt ja', async (t) => {
-  const { h } = await opsaet(t);
-  await nySpiller(h, 'Cille Ja', 'cille-h1@shop.dk');
-  await nySpiller(h, 'Dan Nej', 'dan-h1@shop.dk', []);
-  const eva = await nySpiller(h, 'Eva Tilbage', 'eva-h1@shop.dk');
-  await api(h.baseUrl, 'DELETE', '/me/subs/sp', { token: eva.token });
-
-  const client = await h.pool.connect();
-  try {
-    await client.query('BEGIN');
-    const { rows } = await client.query('SELECT id, navn FROM spiller ORDER BY id FOR UPDATE');
-    for (const r of rows) await deletePlayerFully(client, r.id, r.navn);
-    await client.query('COMMIT');
-  } finally {
-    client.release();
-  }
-  const ud = (await h.pool.query('SELECT email FROM crm_udbakke')).rows.map((r) => r.email);
-  assert.deepEqual(ud, ['cille-h1@shop.dk']);
-});
-
 test('H1: rulles sletningen tilbage, rulles udbakken også tilbage', async (t) => {
   const { h } = await opsaet(t);
   await nySpiller(h, 'Fie Ja', 'fie-h1@shop.dk');
@@ -159,47 +140,6 @@ for (const kode of [401, 403, 404]) {
     assert.equal(ok.sendt, 2);
   });
 }
-
-test('H2: en reel valideringsfejl (422 med fejltekst) springer kun den række over og logger række-id, ikke e-mail', async (t) => {
-  const { crm, h } = await opsaet(t, (body) =>
-    body.email === 'daarlig-h2@shop.dk' ? [422, '{"error":"Ugyldig e-mail"}'] : [201, '{}']
-  );
-  await nySpiller(h, 'Daarlig', 'daarlig-h2@shop.dk');
-  await nySpiller(h, 'God', 'god-h2@shop.dk');
-  const log = fangLog();
-  let r;
-  try {
-    r = await synkOnce(h.pool);
-  } finally {
-    log.stop();
-  }
-  assert.equal(r.stop, null);
-  assert.equal(r.sendt, 1);
-  assert.equal(crm.kald.length, 2);
-  const stat = (await h.pool.query("SELECT crm_synk_status FROM samtykke WHERE liste = 'smartpack' ORDER BY id")).rows;
-  assert.deepEqual(stat.map((x) => x.crm_synk_status), ['sprunget', 'sendt']);
-  const tekst = log.linjer.join('\n');
-  assert.match(tekst, /springer samtykke id=\d+/);
-  assert.ok(!tekst.includes('daarlig-h2@shop.dk'));
-});
-
-test('H2: en 400 uden fejltekst, eller mange afviste rækker i træk, tolkes som opsætningsfejl og stopper', async (t) => {
-  let svar = [400, '{}'];
-  const { h } = await opsaet(t, () => svar);
-  await nySpiller(h, 'A', 'a-h2b@shop.dk');
-  const log = fangLog();
-  try {
-    assert.match((await synkOnce(h.pool)).stop, /HTTP 400/);
-    svar = [422, '{"error":"Ugyldig"}'];
-    for (let i = 0; i < 5; i++) await nySpiller(h, 'X' + i, `x${i}-h2b@shop.dk`);
-    const r = await synkOnce(h.pool);
-    assert.match(r.stop, /for mange afviste/);
-  } finally {
-    log.stop();
-  }
-  const markeret = (await h.pool.query('SELECT 1 FROM samtykke WHERE crm_synk_status IS NOT NULL')).rowCount;
-  assert.equal(markeret, 0, 'intet er markeret, da kørslen stoppede');
-});
 
 test('H3 + H4: en indsendelse uden flueben sender intet, og kan aldrig gentilmelde', async (t) => {
   const { crm, h } = await opsaet(t);
@@ -410,4 +350,199 @@ test('migration 020: markerer kun rækker op til den gamle markør som behandlet
   const st = (await h.pool.query("SELECT id, crm_synk_status FROM samtykke WHERE liste = 'smartpack' ORDER BY id")).rows;
   assert.equal(st[0].crm_synk_status, 'sendt');
   assert.equal(st[1].crm_synk_status, null);
+});
+
+test('H1/N2/N4: sletning afmelder kun, når ja er SENDT; admin-slet og DELETE /me afmelder, nulstil og retention gør ikke', async (t) => {
+  const { h } = await opsaet(t, undefined, { adminRouterOpts: { runBackup: async () => '/tmp/x.sql' } });
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: 'x-test-adgangskode' } });
+  const adminCookie = (login.headers.get('set-cookie') || '').split(';')[0];
+
+  await nySpiller(h, 'Cille Ja', 'cille-n4@shop.dk');
+  await nySpiller(h, 'Gus Usendt', 'gus-n4@shop.dk');
+  await nySpiller(h, 'Dan Nej', 'dan-n4@shop.dk', []);
+  // Gus' ja sendes IKKE (rækken gøres usynlig under synk), så CRM'et ikke kender ham
+  await h.pool.query("UPDATE samtykke SET liste = 'senere' WHERE spiller_id = (SELECT id FROM spiller WHERE email = 'gus-n4@shop.dk')");
+  await synkOnce(h.pool);
+  await h.pool.query("UPDATE samtykke SET liste = 'smartpack' WHERE liste = 'senere'");
+  const udbakke = async () => (await h.pool.query('SELECT email FROM crm_udbakke ORDER BY id')).rows.map((r) => r.email);
+  const pid = async (email) => (await h.pool.query('SELECT public_id FROM spiller WHERE email = $1', [email])).rows[0].public_id;
+
+  // 1) admin-slet af Gus (ja ikke sendt): ingen afmelding
+  assert.equal((await api(h.baseUrl, 'DELETE', '/admin/spillere/' + (await pid('gus-n4@shop.dk')), { adminCookie })).status, 200);
+  assert.deepEqual(await udbakke(), []);
+  // 2) admin-slet af Cille (ja sendt): afmelding
+  assert.equal((await api(h.baseUrl, 'DELETE', '/admin/spillere/' + (await pid('cille-n4@shop.dk')), { adminCookie })).status, 200);
+  assert.deepEqual(await udbakke(), ['cille-n4@shop.dk']);
+
+  // 3) retention rammer kun spillere uden aktivt ja: Dan slettes, ingen ny afmelding
+  const slettet = await deleteInactivePlayers(h.pool, new Date(Date.now() + 5 * 365 * 86400000));
+  assert.ok(slettet >= 1);
+  assert.equal((await h.pool.query("SELECT 1 FROM spiller WHERE email = 'dan-n4@shop.dk'")).rowCount, 0);
+  assert.deepEqual(await udbakke(), ['cille-n4@shop.dk']);
+
+  // 4) nulstil: en sendt abonnent slettes uden afmelding
+  await h.pool.query('DELETE FROM crm_udbakke');
+  await nySpiller(h, 'Eva Nulstil', 'eva-n4@shop.dk');
+  await synkOnce(h.pool);
+  assert.equal((await api(h.baseUrl, 'POST', '/admin/nulstil', { adminCookie, body: { bekraeft: 'NULSTIL' } })).status, 200);
+  assert.equal((await h.pool.query('SELECT 1 FROM spiller')).rowCount, 0);
+  assert.deepEqual(await udbakke(), []);
+
+  // 5) DELETE /me af en sendt abonnent afmelder
+  const fie = await nySpiller(h, 'Fie Selv', 'fie-n4@shop.dk');
+  await synkOnce(h.pool);
+  assert.equal((await api(h.baseUrl, 'DELETE', '/me', { token: fie.token, body: { pinkode: fie.pin } })).status, 200);
+  assert.deepEqual(await udbakke(), ['fie-n4@shop.dk']);
+});
+
+test('N2: et gentaget ja (markeret sprunget) hindrer ikke afmeldingen, når det første ja blev sendt', async (t) => {
+  const { h } = await opsaet(t);
+  const a = await nySpiller(h, 'Gentag', 'gentag-n2@shop.dk');
+  await synkOnce(h.pool);
+  // dagens flueben: ja efter ja bliver 'sprunget', men kontakten findes i CRM'et
+  await h.pool.query(
+    "INSERT INTO samtykke (spiller_id, liste, type, kilde) SELECT id, 'smartpack', 'bekraeftet', 'ticks' FROM spiller WHERE email = 'gentag-n2@shop.dk'"
+  );
+  await synkOnce(h.pool);
+  assert.equal((await api(h.baseUrl, 'DELETE', '/me', { token: a.token, body: { pinkode: a.pin } })).status, 200);
+  assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 1);
+});
+
+for (const kode of [404, 409]) {
+  test(`N2: ${kode} på en afmelding i udbakken er færdig, logges med id, og blokerer ikke almindelige tilmeldinger`, async (t) => {
+    const { crm, h } = await opsaet(t, (body, url) => (url.endsWith('/unsubscribe') ? [kode, '{}'] : [201, '{}']));
+    await h.pool.query("INSERT INTO crm_udbakke (email) VALUES ('ukendt-n2@shop.dk')");
+    await nySpiller(h, 'Bo Ny', 'bo-n2@shop.dk');
+    const log = fangLog();
+    let r;
+    try {
+      r = await synkOnce(h.pool);
+    } finally {
+      log.stop();
+    }
+    assert.equal(r.stop, null);
+    assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
+    assert.equal(crm.kald.filter((k) => k.body.email === 'bo-n2@shop.dk').length, 1);
+    const tekst = log.linjer.join('\n');
+    assert.match(tekst, /udbakken id=\d+/);
+    assert.ok(!tekst.includes('ukendt-n2@shop.dk'));
+  });
+}
+
+test('N2: 404 på ALLE afmeldinger (forkert URL) afslutter dem ikke', async (t) => {
+  const { h } = await opsaet(t, (body, url) => (url.endsWith('/unsubscribe') ? [404, '{}'] : [201, '{}']));
+  for (let i = 0; i < 3; i++) await h.pool.query('INSERT INTO crm_udbakke (email) VALUES ($1)', [`u${i}-n2@shop.dk`]);
+  const log = fangLog();
+  let r;
+  try {
+    r = await synkOnce(h.pool);
+  } finally {
+    log.stop();
+  }
+  assert.match(r.stop, /404/);
+  assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 3);
+});
+
+test('N1: en række, CRM afviser, opgives efter 3 forsøg, og gyldige rækker bagved sendes straks', async (t) => {
+  const { crm, h } = await opsaet(t, (body) => (body.email === 'daarlig-n1@shop.dk' ? [400, '{}'] : [201, '{}']));
+  await nySpiller(h, 'Daarlig', 'daarlig-n1@shop.dk');
+  await nySpiller(h, 'God', 'god-n1@shop.dk');
+  const log = fangLog();
+  try {
+    const r1 = await synkOnce(h.pool);
+    assert.equal(r1.stop, null, 'afvisningen stopper ikke jobbet');
+    assert.equal(r1.sendt, 1, 'den gyldige række bagved sendes i samme kørsel');
+    const status = async () =>
+      (await h.pool.query("SELECT crm_synk_status AS s, crm_forsoeg AS f FROM samtykke WHERE spiller_id = (SELECT id FROM spiller WHERE email = 'daarlig-n1@shop.dk')")).rows[0];
+    assert.deepEqual(await status(), { s: null, f: 1 });
+
+    // Inden ventetiden er gået, forsøges rækken ikke igen
+    const n = crm.kald.length;
+    await synkOnce(h.pool);
+    assert.equal(crm.kald.length, n);
+
+    const frem = () => h.pool.query("UPDATE samtykke SET crm_naeste_forsoeg = now() - interval '1 minute'");
+    await frem();
+    await synkOnce(h.pool);
+    assert.deepEqual(await status(), { s: null, f: 2 });
+    await frem();
+    await synkOnce(h.pool);
+    assert.deepEqual(await status(), { s: 'sprunget', f: 3 });
+  } finally {
+    log.stop();
+  }
+  assert.ok(!log.linjer.join('\n').includes('daarlig-n1@shop.dk'));
+});
+
+test('N1: 5 afviste rækker i samme kørsel giver pause og alarm, ikke et evigt stop; gyldige rækker sendes bagefter', async (t) => {
+  const { crm, h } = await opsaet(t, (body) => (/^x\d-n1/.test(body.email) ? [422, '{"error":"Ugyldig"}'] : [201, '{}']));
+  for (let i = 0; i < 5; i++) await nySpiller(h, 'X' + i, `x${i}-n1@shop.dk`);
+  await nySpiller(h, 'God', 'god2-n1@shop.dk');
+  const log = fangLog();
+  try {
+    const r1 = await synkOnce(h.pool);
+    assert.match(r1.stop, /for mange afviste/);
+    assert.match(log.linjer.join('\n'), /ALARM/);
+    // Under pausen sker intet
+    const n = crm.kald.length;
+    assert.equal((await synkOnce(h.pool)).stop, 'pause');
+    assert.equal(crm.kald.length, n);
+    // Pausen udløber: de afviste rækker venter, den gyldige sendes
+    await h.pool.query("UPDATE crm_synk SET pause_til = now() - interval '1 minute'");
+    const r2 = await synkOnce(h.pool);
+    assert.equal(r2.stop, null);
+    assert.equal(r2.sendt, 1);
+    assert.equal(crm.kald[crm.kald.length - 1].body.email, 'god2-n1@shop.dk');
+  } finally {
+    log.stop();
+  }
+});
+
+test('N1: en afmelding i udbakken, som CRM afviser, opgives også efter 3 forsøg', async (t) => {
+  const { h } = await opsaet(t, () => [422, '{"error":"Ugyldig"}']);
+  await h.pool.query("INSERT INTO crm_udbakke (email) VALUES ('ugyldig-n1@shop.dk')");
+  const log = fangLog();
+  try {
+    for (let i = 0; i < 3; i++) {
+      await synkOnce(h.pool);
+      await h.pool.query("UPDATE crm_udbakke SET crm_naeste_forsoeg = now() - interval '1 minute'");
+    }
+  } finally {
+    log.stop();
+  }
+  assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
+});
+
+test('N3: /hjemmeside/nyhedsbrev og /afmeld har Origin-tjek, honeypot, rate-limit og logger aldrig e-mail', async (t) => {
+  const { crm, h } = await opsaet(t, () => [500, '{"error":"fejl"}']);
+  const ond = { origin: 'https://ond.example' };
+  assert.equal((await api(h.baseUrl, 'POST', '/hjemmeside/nyhedsbrev', { body: { email: 'a@b.dk', consent: true }, headers: ond })).status, 403);
+  assert.equal((await api(h.baseUrl, 'POST', '/hjemmeside/afmeld', { body: { email: 'a@b.dk' }, headers: ond })).status, 403);
+  assert.equal(crm.kald.length, 0);
+
+  // Honeypot: ok, men intet sendes
+  const hp = await api(h.baseUrl, 'POST', '/hjemmeside/nyhedsbrev', { body: { email: 'bot-n3@b.dk', consent: true, _hp: 'x' } });
+  assert.equal(hp.status, 200);
+  assert.equal(crm.kald.length, 0);
+
+  // CRM-fejl logges uden e-mail
+  const log = fangLog();
+  try {
+    await api(h.baseUrl, 'POST', '/hjemmeside/nyhedsbrev', { body: { email: 'log-n3@b.dk', consent: true } });
+    await api(h.baseUrl, 'POST', '/hjemmeside/afmeld', { body: { email: 'log-n3@b.dk' } });
+  } finally {
+    log.stop();
+  }
+  assert.equal(log.linjer.length, 2);
+  assert.ok(!log.linjer.join('\n').includes('log-n3@b.dk'));
+
+  // Pr. e-mail: 3 pr. 10 min (afmeldingen ovenfor tæller med)
+  const afm = (email) => api(h.baseUrl, 'POST', '/hjemmeside/afmeld', { body: { email } });
+  assert.equal((await afm('log-n3@b.dk')).status, 200);
+  assert.equal((await afm('log-n3@b.dk')).status, 200);
+  assert.equal((await afm('LOG-n3@b.dk')).status, 429);
+  // Pr. IP: 10 pr. minut
+  let sidste;
+  for (let i = 0; i < 10; i++) sidste = await afm(`ip${i}-n3@b.dk`);
+  assert.equal(sidste.status, 429);
 });

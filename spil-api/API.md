@@ -1598,13 +1598,16 @@ sendes videre. Endpointet kræver Origin/Referer fra smartpack.dk (som kampagnen
 ovenfor). Svaret er altid `{ok:true, crm}` (20/min/IP); intet gemmes i Packrush'
 database, og indsenderens e-mail logges aldrig.
 
-## Packrush-spillere → CRM (`src/crmSynk.js`, migrationerne `019_crm_synk.sql` og `020_crm_udbakke_og_synkstatus.sql`)
+## Packrush-spillere → CRM (`src/crmSynk.js`, migrationerne `019_crm_synk.sql`, `020_crm_udbakke_og_synkstatus.sql` og `021_crm_forsoeg.sql`)
 
 Et baggrundsjob (startet i `server.js`, hvert minut) behandler to ting, i denne rækkefølge:
 
-1. **`crm_udbakke`**: sletter en spiller sig (DELETE /me, admin-sletning, retention
-   eller nulstil, alle via `src/playerDeletion.js`) og har aktivt ja til SmartPack, lægges
-   en `afmeld` (kun e-mail + tidspunkt) i udbakken i samme transaktion som sletningen.
+1. **`crm_udbakke`**: slettes en spiller (DELETE /me, admin-sletning af en enkelt spiller
+   eller retention, via `deletePlayerFully(..., { afmeldCrm })` i `src/playerDeletion.js`),
+   og vedkommendes ja til SmartPack faktisk ER sendt til CRM'et (`crm_synk_status =
+   'sendt'`), lægges en `afmeld` (kun e-mail + tidspunkt) i udbakken i samme transaktion
+   som sletningen. `POST /admin/nulstil` (rydning af testdata) afmelder bevidst ikke
+   (`afmeldCrm: false`).
    Jobbet sender den som `POST /newsletter/unsubscribe` og sletter rækken, når CRM'et
    har svaret ok. Ligger CRM'et nede, bliver rækken liggende.
 2. **Samtykke-loggen** for listen `smartpack`: hver række har sin egen status
@@ -1616,12 +1619,16 @@ Et baggrundsjob (startet i `server.js`, hvert minut) behandler to ting, i denne 
    forudgående ja giver intet kald.
 
 Uden `SMARTPACK_CRM_KEY` sker intet; der fortsættes derfra, når nøglen er lagt ind.
-Fejl: kun en reel valideringsfejl for den enkelte række (400/422 med en fejltekst fra
-CRM'et) springer rækken over (logges med række-id, aldrig e-mail). 401, 403, 404, 5xx,
-429, netværksfejl og en 400/422 uden fejltekst stopper jobbet uden at flytte noget og
-logges som `[crm-synk] STOP` (uden persondata og uden nøglen). Springes 5 rækker over i
-samme kørsel, stopper jobbet også, og de 5 markeres ikke. Kun spillere med ja til
-SmartPack sendes; partnernes lister sendes aldrig til CRM'et.
+Fejl, pr. kald: 200/201 er færdig. 404/409 på en afmelding betyder, at kontakten ikke
+findes eller allerede er afmeldt, og er også færdig (logges med række-id; er det ALLE
+afmeldinger i en kørsel, tolkes det som en forkert URL, og intet afsluttes). 400, 409, 413
+og 422 betyder, at CRM'et afviser netop den række: der tælles et forsøg (`crm_forsoeg`),
+rækken venter (15 min, derefter 60 min), og efter 3 afvisninger springes den over, mens
+rækker bagved sendes videre. Afvises 5 rækker i samme kørsel, holder jobbet 10 minutters
+pause (`crm_synk.pause_til`) og logger `[crm-synk] ALARM`. 401, 403, 404, 429, 5xx og
+netværksfejl stopper jobbet uden at flytte noget og logges som `[crm-synk] STOP` (uden
+persondata og uden nøglen). Kun spillere med ja til SmartPack sendes; partnernes lister
+sendes aldrig til CRM'et.
 
 ### Kendte begrænsninger (CRM-integrationen)
 
@@ -1630,9 +1637,11 @@ SmartPack sendes; partnernes lister sendes aldrig til CRM'et.
   bekræfte, at e-mailen tilhører indsenderen, så man kan tilmelde en fremmed. Afklar
   med CRM-ejeren, om CRM'et selv laver double opt-in, før nøglen tændes. Det gælder
   også en kampagneindsendelse med flueben for en e-mail, der er afmeldt i CRM'et.
-- **Afmelding af ukendt e-mail:** udbakken sender også en afmelding for en spiller, hvis
-  ja aldrig nåede frem. Vi har antaget, at CRM'ets `/unsubscribe` svarer 200/201 for en
-  ukendt e-mail; svarer den 404, står udbakken stille (alarmeret via `[crm-synk] STOP`).
+- **CRM'ets statuskoder for unsubscribe er antaget:** 200/201 = ok, 404/409 = ukendt eller
+  allerede afmeldt (behandles som færdig). Det er ikke bekræftet af CRM-ejeren.
+- **`/hjemmeside/afmeld` er anonym:** alle kan afmelde en vilkårlig e-mail i CRM'et. Den har
+  Origin-tjek, 10/min/IP og 3 pr. 10 min pr. e-mail, men ingen verifikation af ejeren (et
+  afmeldingslink med token ville kræve en ændring af footeren).
 - **L1:** kun 200 og 201 tæller som ok; svarer CRM'et 202/204, gentages kaldet hvert minut.
 - **L2:** en permanent 5xx på én bestemt række blokerer hele køen, uden loft for forsøg.
 - **L3:** den første kørsel sender alle `smartpack`-samtykker, også skjulte spillere og

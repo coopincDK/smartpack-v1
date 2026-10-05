@@ -50,10 +50,8 @@ function renseFejltekst(tekst, email) {
   return tekst.replace(new RegExp(esc, 'gi'), '[e-mail]');
 }
 
-// Resultat: { ok } eller { ok:false, fejl, status?, raekkefejl? }. `raekkefejl`
-// er kun sand ved en reel valideringsfejl for den enkelte række (400/422 med en
-// fejltekst fra CRM'et). Alt andet (401/403/404, 5xx, netværk) er en fejl i
-// opsætningen eller hos CRM'et og må aldrig få en række til at blive sprunget over.
+// Resultat: { ok } eller { ok:false, fejl, status? }. Hvad en fejl betyder for den
+// enkelte række, afgør src/crmSynk.js ud fra status.
 async function sendTilCrm(body, url = crmUrl()) {
   const key = process.env.SMARTPACK_CRM_KEY;
   if (!key) return { ok: false, fejl: 'ingen nøgle' };
@@ -78,7 +76,6 @@ async function sendTilCrm(body, url = crmUrl()) {
       ok: false,
       status: res.status,
       fejl: 'HTTP ' + res.status + (besked ? ': ' + besked : ''),
-      raekkefejl: (res.status === 400 || res.status === 422) && !!besked,
     };
   } catch (e) {
     return { ok: false, fejl: e.name === 'AbortError' ? 'timeout' : String(e.message || e).slice(0, 200) };

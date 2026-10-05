@@ -672,7 +672,7 @@ function meRouter(pool, ws, opts) {
       }
       await ryddPinFejl(client, row);
 
-      await deletePlayerFully(client, row.id, row.navn);
+      await deletePlayerFully(client, row.id, row.navn, { afmeldCrm: true });
       await client.query(
         `INSERT INTO admin_audit_log (admin_session_id, handling, detaljer)
          VALUES (NULL, 'selvbetjent_sletning', $1)`,
