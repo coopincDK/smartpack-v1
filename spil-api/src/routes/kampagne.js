@@ -18,10 +18,8 @@ const express = require('express');
 const { requireAdmin } = require('../middleware/adminAuth');
 const { createRateLimiter } = require('../middleware/rateLimit');
 const { clientIp } = require('../middleware/clientIp');
-const { kraevSmartpackOrigin } = require('../middleware/origin');
 const { csvEscape } = require('../csv');
 const { beregnLodder, matchNoegle } = require('../konkurrence');
-const { synkKampagneRaekke } = require('../crm');
 
 // Kendte kampagner. Ukendte kampagnenavne afvises, så siden ikke kan oprette
 // tilfældige lister.
@@ -87,13 +85,11 @@ async function hentListe(pool, kampagneId) {
       lodder_basis: k.basislodder,
       lodder_spil: fraSpil,
       lodder: k.basislodder + fraSpil,
-      crm_sendt: r.crm_sendt,
-      crm_fejl: r.crm_fejl,
     };
   });
 }
 
-function kampagneRouter(pool, opts = {}) {
+function kampagneRouter(pool) {
   const router = express.Router();
   const admin = requireAdmin(pool);
   // Messe-wifi deler ofte én IP mellem mange telefoner, så grænsen er pr. IP
@@ -104,16 +100,12 @@ function kampagneRouter(pool, opts = {}) {
     besked: 'For mange tilmeldinger lige nu. Prøv igen om et øjeblik.',
   });
 
-  router.post('/kampagne/tilmeld', tilmeldLimiter, kraevSmartpackOrigin, async (req, res, next) => {
+  router.post('/kampagne/tilmeld', tilmeldLimiter, async (req, res, next) => {
     try {
       const b = req.body || {};
       const kampagneId = String(b.kampagne || 'ehandelsdagen-2027');
       const k = KAMPAGNER[kampagneId];
       if (!k) return res.status(400).json({ fejl: 'Ukendt kampagne.', kode: 'ukendt_kampagne' });
-      // Honeypot (hvis formularen har ét): udfyldt = bot. Svar som normalt, men gem og send intet.
-      if (tekst(b._hp, 10)) {
-        return res.status(201).json({ ok: true, kampagne: k.navn, lodder_basis: k.basislodder, lodtraekning: k.lodtraekning });
-      }
       const navn = tekst(b.navn, 120);
       const firma = tekst(b.firma, 120);
       const email = tekst(b.email, 200);
@@ -125,28 +117,26 @@ function kampagneRouter(pool, opts = {}) {
       const kilde = KILDER.has(String(b.kilde || '')) ? String(b.kilde) : 'messe';
       const nyhedsbrev = b.nyhedsbrev === true || b.nyhedsbrev === 'ja';
       const samtykke = samtykkeTekst(k, nyhedsbrev);
-      const ins = await pool.query(
+      await pool.query(
         `INSERT INTO kampagne_tilmelding
            (kampagne, navn, klub, firma, firma_noegle, email, telefon, ordrer, hvor,
             nyhedsbrev, nyhedsbrev_tid, samtykke_tekst, kilde, kilder, ip)
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, CASE WHEN $10 THEN now() END, $11, $12, ARRAY[$12]::text[], $13)
-         -- En fremmed med en andens e-mail må ikke overskrive tilmeldingen: kun tomme
-         -- felter udfyldes. Mailliste-status, samtykketekst og CRM-status ændres kun af
-         -- en indsendelse med flueben; en indsendelse uden flueben rører dem aldrig.
          ON CONFLICT (kampagne, email) DO UPDATE SET
-           klub = COALESCE(kampagne_tilmelding.klub, EXCLUDED.klub),
-           telefon = COALESCE(kampagne_tilmelding.telefon, EXCLUDED.telefon),
-           ordrer = COALESCE(kampagne_tilmelding.ordrer, EXCLUDED.ordrer),
-           hvor = COALESCE(kampagne_tilmelding.hvor, EXCLUDED.hvor),
+           navn = EXCLUDED.navn,
+           klub = COALESCE(EXCLUDED.klub, kampagne_tilmelding.klub),
+           firma = EXCLUDED.firma,
+           firma_noegle = EXCLUDED.firma_noegle,
+           telefon = COALESCE(EXCLUDED.telefon, kampagne_tilmelding.telefon),
+           ordrer = COALESCE(EXCLUDED.ordrer, kampagne_tilmelding.ordrer),
+           hvor = COALESCE(EXCLUDED.hvor, kampagne_tilmelding.hvor),
            nyhedsbrev = kampagne_tilmelding.nyhedsbrev OR EXCLUDED.nyhedsbrev,
-           nyhedsbrev_tid = CASE WHEN EXCLUDED.nyhedsbrev THEN now() ELSE kampagne_tilmelding.nyhedsbrev_tid END,
-           samtykke_tekst = CASE WHEN EXCLUDED.nyhedsbrev THEN EXCLUDED.samtykke_tekst ELSE kampagne_tilmelding.samtykke_tekst END,
-           kilde = CASE WHEN EXCLUDED.nyhedsbrev THEN EXCLUDED.kilde ELSE kampagne_tilmelding.kilde END,
+           nyhedsbrev_tid = COALESCE(kampagne_tilmelding.nyhedsbrev_tid, EXCLUDED.nyhedsbrev_tid),
+           samtykke_tekst = EXCLUDED.samtykke_tekst,
+           kilde = EXCLUDED.kilde,
            kilder = CASE WHEN EXCLUDED.kilde = ANY(kampagne_tilmelding.kilder) THEN kampagne_tilmelding.kilder
                          ELSE kampagne_tilmelding.kilder || EXCLUDED.kilde END,
-           opdateret = now(),
-           crm_sendt = CASE WHEN EXCLUDED.nyhedsbrev THEN NULL ELSE kampagne_tilmelding.crm_sendt END
-         RETURNING id`,
+           opdateret = now()`,
         [
           kampagneId,
           navn,
@@ -164,34 +154,6 @@ function kampagneRouter(pool, opts = {}) {
         ]
       );
       res.status(201).json({ ok: true, kampagne: k.navn, lodder_basis: k.basislodder, lodtraekning: k.lodtraekning });
-      // Kopi til CRM'et efter svaret, så en langsom CRM aldrig forsinker formularen.
-      // Kun en indsendelse med flueben giver et CRM-kald.
-      if (!opts.udenCrm && nyhedsbrev) {
-        synkKampagneRaekke(pool, ins.rows[0].id, k.navn).catch((e) => console.error('[crm] kampagne', e.message));
-      }
-    } catch (e) {
-      next(e);
-    }
-  });
-
-  // Sender de tilmeldinger, der ikke er nået frem til CRM'et (fx fordi nøglen
-  // manglede, eller CRM'et var nede). Højst 500 pr. kald.
-  router.post('/admin/kampagne/:kampagne/crm-send', admin, async (req, res, next) => {
-    try {
-      const k = KAMPAGNER[req.params.kampagne];
-      if (!k) return res.status(404).json({ fejl: 'Ukendt kampagne.', kode: 'ikke_fundet' });
-      const { rows } = await pool.query(
-        'SELECT id FROM kampagne_tilmelding WHERE kampagne = $1 AND nyhedsbrev AND crm_sendt IS NULL ORDER BY id LIMIT 500',
-        [req.params.kampagne]
-      );
-      let sendt = 0;
-      let fejl = null;
-      for (const r of rows) {
-        const x = await synkKampagneRaekke(pool, r.id, k.navn);
-        if (x.ok) sendt++;
-        else fejl = x.fejl;
-      }
-      res.json({ forsoegt: rows.length, sendt, seneste_fejl: fejl });
     } catch (e) {
       next(e);
     }
@@ -238,7 +200,6 @@ function kampagneRouter(pool, opts = {}) {
         kampagne: { id: req.params.kampagne, ...k },
         antal: liste.length,
         mailliste: liste.filter((r) => r.nyhedsbrev).length,
-        crm_mangler: liste.filter((r) => r.nyhedsbrev && !r.crm_sendt).length,
         lodder_i_alt: liste.reduce((a, r) => a + r.lodder, 0),
         tilmeldinger: liste,
       });

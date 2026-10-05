@@ -53,17 +53,14 @@ td b{font-weight:700}
       <div class="stat"><div class="n" id="s-spil">–</div><div class="l">har også spillet</div></div>
       <div class="stat"><div class="n" id="s-mail">–</div><div class="l">ja til maillisten</div></div>
       <div class="stat"><div class="n" id="s-lodder">–</div><div class="l">lodder i alt</div></div>
-      <div class="stat"><div class="n" id="s-crm">–</div><div class="l">mangler i CRM</div></div>
     </div>
     <div class="row">
       <input type="search" id="q" placeholder="Søg på navn, firma, klub eller mail">
       <a class="btn" id="csv" href="#">Hent som CSV (Excel)</a>
       <button class="ghost" id="opd">Opdatér</button>
-      <button class="ghost" id="crm" hidden>Send manglende til CRM</button>
-      <span id="crm-svar" style="color:var(--muted);font-size:13px"></span>
     </div>
     <div class="tablewrap"><table>
-      <thead><tr><th>Navn</th><th>Klub</th><th>Firma</th><th>Kontakt</th><th>Fra</th><th>Mailliste</th><th>Tilmeldt</th><th class="num">Tilmelding</th><th class="num">Packrush</th><th class="num">I alt</th><th>CRM</th></tr></thead>
+      <thead><tr><th>Navn</th><th>Klub</th><th>Firma</th><th>Kontakt</th><th>Fra</th><th>Mailliste</th><th>Tilmeldt</th><th class="num">Tilmelding</th><th class="num">Packrush</th><th class="num">I alt</th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
   </div>
@@ -85,8 +82,8 @@ function vis() {
     <td>${(r.kilder || []).map((k) => `<span class="pill">${esc(KILDE[k] || k)}</span>`).join('')}</td>
     <td>${r.nyhedsbrev ? '<span class="pill ja">ja</span>' : '<span class="pill">nej</span>'}</td>
     <td>${esc(dato(r.oprettet))}</td>
-    <td class="num">${r.lodder_basis}</td><td class="num">${r.lodder_spil || (r.har_spillet ? '0' : '')}</td><td class="num"><b>${r.lodder}</b></td><td>${r.crm_sendt ? '<span class="pill ja">sendt</span>' : '<span class="pill" title="' + esc(r.crm_fejl || '') + '">mangler</span>'}</td></tr>`).join('')
-    : '<tr><td colspan="11" class="empty">Ingen tilmeldinger endnu.</td></tr>';
+    <td class="num">${r.lodder_basis}</td><td class="num">${r.lodder_spil || (r.har_spillet ? '0' : '')}</td><td class="num"><b>${r.lodder}</b></td></tr>`).join('')
+    : '<tr><td colspan="10" class="empty">Ingen tilmeldinger endnu.</td></tr>';
 }
 async function load() {
   let res; try { res = await fetch(API + '/admin/kampagne/' + KAMP, { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return fejl('Ingen forbindelse til serveren.'); }
@@ -97,21 +94,11 @@ async function load() {
   $('sub').textContent = `Tilmeldinger fra smartpack.dk/messe til lodtrækningen på ${b.kampagne.lodtraekning}. Hver tilmelding giver ${b.kampagne.basislodder} lodder, og lodder fra Packrush lægges oveni. Warehouse Warrior kobles på senere.`;
   $('s-antal').textContent = b.antal; $('s-mail').textContent = b.mailliste; $('s-lodder').textContent = b.lodder_i_alt;
   $('s-spil').textContent = data.filter((r) => r.har_spillet).length;
-  $('s-crm').textContent = b.crm_mangler; $('crm').hidden = !b.crm_mangler;
   $('fejl').innerHTML = ''; $('indhold').hidden = false; vis();
 }
 function fejl(t) { $('fejl').innerHTML = '<div class="msg">' + t + '</div>'; $('indhold').hidden = true; }
 $('q').addEventListener('input', vis);
 $('opd').addEventListener('click', load);
-$('crm').addEventListener('click', async () => {
-  $('crm').disabled = true; $('crm-svar').textContent = 'Sender…';
-  try {
-    const r = await fetch(API + '/admin/kampagne/' + KAMP + '/crm-send', { method: 'POST', credentials: 'same-origin' });
-    const b = await r.json();
-    $('crm-svar').textContent = r.ok ? `Sendt ${b.sendt} af ${b.forsoegt}.` + (b.seneste_fejl ? ' Fejl: ' + b.seneste_fejl : '') : (b.fejl || 'Fejl ' + r.status);
-  } catch (e) { $('crm-svar').textContent = 'Ingen forbindelse.'; }
-  $('crm').disabled = false; load();
-});
 $('csv').addEventListener('click', (e) => { e.preventDefault(); location.href = API + '/admin/kampagne/' + KAMP + '.csv'; });
 load();
 </script>
