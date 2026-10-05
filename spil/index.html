@@ -632,7 +632,7 @@ details.more summary:hover{color:var(--text)}
     <label class="f">E-mail<input type="email" id="i-email" autocomplete="email" inputmode="email"></label>
     <label class="f">Pinkode <small>4 cifre, du selv vælger. Du skal bruge den, hvis du logger ind på en anden telefon</small><input type="password" id="i-pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
     <label class="f">Navn på topscoren<input type="text" id="i-name" maxlength="22" autocomplete="nickname" placeholder="Kun første gang"></label>
-    <label class="f" id="l-company">Webshop eller firma <small>Står ved dit navn på topscoren. Skriv det som på din billet til konferencen, så kan I vinde</small><input type="text" id="i-company" maxlength="40" autocomplete="organization" placeholder="Fx minwebshop.dk"></label>
+    <label class="f" id="l-company">Webshop eller firma <small>Står ved dit navn på topscoren. Skriv virksomhedsnavnet, som det står på konferencens deltagerliste. Kun spil i den lukkede messe-turnering den 8. oktober kan give lodder.</small><input type="text" id="i-company" maxlength="40" autocomplete="organization" placeholder="Fx minwebshop.dk"></label>
     <label class="check"><input type="checkbox" id="i-terms"><span>Jeg accepterer <a href="/spil/vilkaar/">vilkårene</a>, og at SmartPack gemmer mine oplysninger til konkurrencen og kontakter mig, hvis jeg vinder.</span></label>
     <div class="subs" id="reg-subs"></div>
     <label class="f" id="l-ref">Har du en vens kode? <small>Så får din ven fuld liv, når du har spillet dit første spil</small><input type="text" id="i-ref" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="Fx KX7P"></label>
@@ -2708,8 +2708,8 @@ function renderLobby(){
   if(cfg.raffle && p.konkurrence){
     // Præmiekonkurrencen (vilkår pkt. 2 og 5-7): står firmaet på deltagerlisten, og hvor mange lodder har det.
     const k = p.konkurrence, tt = el('span'), dot = el('span', 'dot');
-    const dag = k.spil_start ? new Date(k.spil_start).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }) : '';
-    const tid = k.spil_start && k.spil_slut ? ` kl. ${new Date(k.spil_start).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}–${new Date(k.spil_slut).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}` : '';
+    const dag = k.spil_start ? new Date(k.spil_start).toLocaleDateString('da-DK', { day: 'numeric', month: 'long', timeZone: CPH_TZ }) : '';
+    const tid = k.spil_start && k.spil_slut ? ` kl. ${new Date(k.spil_start).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit', timeZone: CPH_TZ })}–${new Date(k.spil_slut).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit', timeZone: CPH_TZ })}` : '';
     const lod = `${k.lodder} ${k.lodder === 1 ? 'lod' : 'lodder'}`;
     if(!k.har_firma){ tk.classList.add('warn'); tt.append('Skriv jeres firma herunder for at være med i lodtrækningen om præmierne.'); }
     else if(k.udelukket){ tk.classList.add('ok'); tt.append(`${k.firma} står for konkurrencen og kan ikke vinde, men I kan stadig toppe tavlen.`); }
