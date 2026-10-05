@@ -11,14 +11,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../partner/partner.css">
 <style>
-.hero{display:flex;flex-direction:column;gap:10px}
-.total{font-family:var(--display);font-weight:800;font-size:clamp(28px,6vw,44px);color:var(--accent)}
-.partnerkort{scroll-margin-top:16px}
-.partnerkort:target{border-color:var(--accent)}
-.detaljer{display:flex;flex-direction:column;gap:8px;font-size:15px}
-.detaljer h4{margin:6px 0 0;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.wrap{max-width:1040px;gap:26px}
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 140% at 100% 0%,rgba(249,115,22,.18),transparent 55%),radial-gradient(90% 120% at 0% 100%,rgba(200,149,90,.14),transparent 60%),var(--panel);padding:26px 22px;gap:12px}
+.hero .eyebrow{font:700 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--kraft)}
+.hero h1{font-size:clamp(30px,6vw,46px)}
+.total{font-family:var(--display);font-weight:800;font-size:clamp(34px,8vw,58px);line-height:1;color:var(--accent);letter-spacing:-.03em}
+.total small{display:block;font:600 13px var(--body);color:var(--muted);letter-spacing:0;margin-bottom:6px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.cd{font-variant-numeric:tabular-nums}
+.vinder{color:var(--text);border:1px solid var(--accent);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;background:linear-gradient(135deg,rgba(249,115,22,.14),transparent)}
+.nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:-10px 0;background:linear-gradient(var(--bg) 75%,transparent)}
+.nav a{flex:none;text-decoration:none;color:var(--muted);font-weight:700;font-size:14px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--panel)}
+.nav a.on,.nav a:hover{color:var(--text);border-color:var(--accent)}
+.nav a b{color:var(--accent);margin-left:4px}
+section.blok{display:flex;flex-direction:column;gap:14px;scroll-margin-top:64px}
+.blokhead{display:flex;flex-direction:column;gap:6px}
+.blokhead h2{font-size:clamp(22px,4vw,28px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.grid.smal{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.kort{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,transform .15s}
+.kort:hover{border-color:#34445a;transform:translateY(-1px)}
+.kort:target{border-color:var(--accent)}
+.kort .hoved{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px}
+.logo{display:flex;align-items:center;height:48px}
+.logo img{max-height:48px;max-width:150px;border-radius:8px;background:#fff;padding:4px}
+.navn{font:800 15px var(--display);color:var(--text)}
+.badge{flex:none;font:800 15px var(--display);color:#1a0d00;background:var(--accent);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.badge.gron{background:var(--green);color:#052e1c}
+.vaerdi{font:800 22px/1.1 var(--display);color:var(--accent);letter-spacing:-.01em}
+a.btn{text-decoration:none;display:inline-block}
+.kort h3{font-size:18px}
+.kort .fra{font-size:13px;color:var(--muted)}
+.kort .fra a{color:var(--muted)}
 .pre{white-space:pre-wrap}
-.vinder{color:var(--text);border:1px solid var(--accent);border-radius:12px;padding:14px;margin-bottom:12px;display:flex;flex-direction:column;gap:6px;background:linear-gradient(135deg,rgba(249,115,22,.14),transparent)}
+details.mere{border-top:1px solid var(--line);padding-top:8px;margin-top:auto}
+details.mere summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--accent);list-style:none}
+details.mere summary::-webkit-details-marker{display:none}
+details.mere summary::after{content:' +'}
+details.mere[open] summary::after{content:' −'}
+details.mere .indhold{display:flex;flex-direction:column;gap:6px;margin-top:8px;font-size:14px}
+details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.fordel .rabat{font:800 20px/1.15 var(--display);color:var(--green)}
+.tip{display:flex;gap:12px;align-items:flex-start;background:#0f2e22;border:1px solid #1f5a40;border-radius:14px;padding:14px;color:#b5f5d8;font-size:14px}
+.tip b{color:#fff}
+.pu{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--accent);border:1px solid #6b3a15;border-radius:999px;padding:3px 10px;align-self:flex-start}
+.bliv{background:linear-gradient(135deg,rgba(200,149,90,.12),transparent),var(--panel)}
+@media (max-width:640px){.hero{padding:20px 16px}.grid,.grid.smal{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -29,23 +68,51 @@
   </div>
 
   <section class="hero card" id="konk">
+    <div class="eyebrow">Præmier i Packrush</div>
     <h1>Det kan du vinde</h1>
-    <div id="konk-tekst" class="muted">Henter …</div>
     <div id="total"></div>
+    <div id="konk-tekst" class="muted">Henter …</div>
+    <div class="cta">
+      <a class="btn" href="../">Spil og få lodder</a>
+      <a class="btn ghost" href="#fordele">Se fordelene ved tilmelding</a>
+    </div>
   </section>
 
-  <section id="praemier" style="display:flex;flex-direction:column;gap:14px"></section>
+  <nav class="nav" id="nav" aria-label="Afsnit">
+    <a href="#praemier">Præmier<b id="n-pr"></b></a>
+    <a href="#fordele">Fordele ved tilmelding<b id="n-fo"></b></a>
+    <a href="#partnere">Partnerne<b id="n-pa"></b></a>
+  </nav>
 
-  <section style="display:flex;flex-direction:column;gap:14px">
-    <h2>Partnerne bag power-ups og præmier</h2>
-    <div id="partnere" style="display:flex;flex-direction:column;gap:14px"></div>
+  <section class="blok" id="praemier">
+    <div class="blokhead">
+      <h2>Præmiepuljen</h2>
+      <p class="muted">Vinderen vælger selv, hvilke af præmierne han vil have. Partnerne leverer hver deres præmie.</p>
+    </div>
+    <div class="grid" id="praemie-liste"></div>
   </section>
 
-  <div class="card">
+  <section class="blok" id="fordele">
+    <div class="blokhead">
+      <h2>Fordele ved tilmelding</h2>
+      <p class="muted">Rabatter og tilbud fra partnerne. De gælder alle, der spiller, ikke kun vinderen.</p>
+    </div>
+    <div class="tip"><span aria-hidden="true">💡</span><div><b>Sæt flueben ved partnerne, når du tilmelder dig i spillet.</b> Hvert flueben giver dig et ekstra liv i dag, og partneren kan kontakte dig med sit tilbud. Du kan altid afmelde dig igen.</div></div>
+    <div class="grid" id="fordel-liste"></div>
+  </section>
+
+  <section class="blok" id="partnere">
+    <div class="blokhead">
+      <h2>Partnerne</h2>
+      <p class="muted">Firmaerne bag power-ups og præmier i Packrush.</p>
+    </div>
+    <div class="grid smal" id="partner-liste"></div>
+  </section>
+
+  <div class="card bliv">
     <h3>Vil I være partner?</h3>
     <p class="muted">Har I et produkt eller en ydelse, der hjælper webshops, og vil I være med som power-up eller give en præmie?</p>
-    <div><a class="btn ghost" href="../partner/#ansoeg">Søg om at blive partner</a></div>
-    <p class="muted"><a href="/spil/partnervilkaar/">Læs vilkårene for partnere</a></p>
+    <div class="row"><a class="btn ghost" href="../partner/#ansoeg">Søg om at blive partner</a><a class="small" href="/spil/partnervilkaar/">Læs vilkårene for partnere</a></div>
   </div>
   <p class="foot">Packrush er lavet af SmartPack. Præmierne gives af partnerne, og den enkelte partner står for at levere sin præmie. <a href="/spil/vilkaar/">Læs vilkårene for konkurrencen</a>.</p>
 </div>
@@ -56,74 +123,103 @@
 (function () {
   'use strict';
   var el = SP.el, $ = function (id) { return document.getElementById(id); };
-
   function linkTilSide(url, tekst) {
     try { var u = new URL(url); if (u.protocol !== 'https:' && u.protocol !== 'http:') return null; } catch (e) { return null; }
     return el('a', { href: url, target: '_blank', rel: 'noopener', text: tekst || url.replace(/^https?:\/\//, '').replace(/\/$/, '') });
   }
-
-  function logo(p, h) {
-    return p.logo_url ? el('img', { src: SP.API + p.logo_url, alt: p.navn + ' logo', style: h ? 'max-height:' + h + 'px' : null, loading: 'lazy' }) : null;
+  function logo(p) {
+    return p.logo_url ? el('div', { class: 'logo' }, [el('img', { src: SP.API + p.logo_url, alt: p.navn + ' logo', loading: 'lazy' })]) : el('div', { class: 'navn', text: p.navn });
   }
-
-  function sektion(titel, tekst) {
-    if (!tekst) return [];
-    return [el('h4', { text: titel }), el('p', { class: 'pre', text: tekst })];
+  function dato(d) { return d ? new Date(d + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long' }) : ''; }
+  function sektion(titel, tekst) { return tekst ? [el('h4', { text: titel }), el('p', { class: 'pre', text: tekst })] : []; }
+  function mere(titel, dele) {
+    dele = dele.filter(Boolean); if (!dele.length) return null;
+    return el('details', { class: 'mere' }, [el('summary', { text: titel }), el('div', { class: 'indhold' }, dele)]);
+  }
+  function nedtaelling(t) {
+    var ms = new Date(t) - Date.now(); if (ms <= 0) return null;
+    var d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60;
+    return d > 0 ? d + ' d. ' + h + ' t.' : h > 0 ? h + ' t. ' + m + ' min.' : m + ' min.';
   }
 
   Promise.all([SP.api('/praemier'), SP.api('/partnere')]).then(function (res) {
-    var pr = res[0], pa = res[1];
-    var k = pr.konkurrence;
-    var kt = $('konk-tekst'); kt.replaceChildren();
+    var pr = res[0], pa = res[1], k = pr.konkurrence, kt = $('konk-tekst'); kt.replaceChildren();
     if (k.vinder) {
       var v = k.vinder;
       kt.append(el('div', { class: 'vinder' }, [
-        el('p', { class: 'small', style: 'text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700', text: 'Vinder' + (v.dato ? ' · ' + new Date(v.dato + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long' }) : '') }),
+        el('p', { class: 'small', style: 'text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700', text: 'Vinder' + (v.dato ? ' · ' + dato(v.dato) : '') }),
         el('h2', { text: '🏆 ' + v.navn + (v.firma ? ', ' + v.firma : '') }),
         v.tekst ? el('p', { class: 'pre', text: v.tekst }) : null,
       ]));
     }
     if (k.aktiv) {
-      kt.append(el('p', null, [el('strong', { text: k.navn }), document.createTextNode(' · lodtrækning ' + new Date(k.lodtraekning).toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short' }))]));
+      var cd = nedtaelling(k.lodtraekning);
+      kt.append(el('div', { class: 'meta' }, [
+        el('span', { class: 'chip warn', text: k.navn }),
+        el('span', { class: 'chip', text: 'Lodtrækning ' + new Date(k.lodtraekning).toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short' }) }),
+        cd ? el('span', { class: 'chip ok cd', text: 'Om ' + cd }) : null,
+      ]));
       if (k.tekst) kt.append(el('p', { class: 'pre', text: k.tekst }));
-      kt.append(el('p', null, [document.createTextNode('Vinderen vælger selv blandt alle præmierne herunder. Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. '), el('a', { href: '/spil/vilkaar/', text: 'Læs vilkårene' })]));
+      kt.append(el('p', { class: 'small' }, [document.createTextNode('Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. '), el('a', { href: '/spil/vilkaar/', text: 'Læs vilkårene' })]));
     } else {
       kt.append(el('div', { class: 'msg info', role: 'status' }, [el('strong', { text: 'Lige nu er der ingen aktiv konkurrence.' }),
         k.tekst && k.tekst !== 'Lige nu er der ingen aktiv konkurrence.' ? el('p', { class: 'pre', text: k.tekst, style: 'margin-top:6px' }) : null]));
     }
-    if (pr.praemier.length) {
-      $('total').append(el('p', { class: 'muted small', text: 'Samlet værdi' }),
-        el('div', { class: 'total', text: (pr.samlet_indeholder_op_til ? 'Op til ' : '') + SP.kr(pr.samlet_vaerdi) }));
-    }
+    if (pr.praemier.length) $('total').append(el('div', { class: 'total' }, [el('small', { text: 'Samlet værdi af præmiepuljen' }), document.createTextNode((pr.samlet_indeholder_op_til ? 'Op til ' : '') + SP.kr(pr.samlet_vaerdi))]));
 
-    var ps = $('praemier');
-    if (!pr.praemier.length) ps.append(el('p', { class: 'muted', text: 'Præmierne offentliggøres på dagen, 8. oktober. Kom forbi SmartPacks stand.' }));
+    var ps = $('praemie-liste');
+    $('n-pr').textContent = pr.praemier.length || '';
+    if (!pr.praemier.length) ps.append(el('p', { class: 'muted', text: 'Præmierne offentliggøres på dagen. Kom forbi SmartPacks stand.' }));
     pr.praemier.forEach(function (p) {
       var x = p.praemie;
-      ps.append(el('article', { class: 'card praemie' }, [
-        el('div', null, [el('div', { class: 'vaerdi', text: SP.vaerdiTekst(x) }), logo(p, 40)]),
-        el('div', { class: 'detaljer' }, [
-          el('h3', { text: x.titel }),
-          el('p', { class: 'muted small' }, [document.createTextNode('Fra '), el('a', { href: '#' + encodeURIComponent(p.slug), text: p.navn })]),
-          el('p', { class: 'pre', text: x.beskrivelse }),
-        ].concat(sektion('Det får du ud af den', x.udbytte), sektion('Betingelser', x.betingelser), sektion('Det er ikke med', x.ikke_med),
-          sektion('Sådan indløses den', x.indloesning), sektion('Sidste frist', x.sidste_frist ? new Date(x.sidste_frist + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long' }) : ''))),
+      ps.append(el('article', { class: 'kort' }, [
+        el('div', { class: 'hoved' }, [logo(p)]),
+        el('div', { class: 'vaerdi', text: SP.vaerdiTekst(x) }),
+        el('h3', { text: x.titel }),
+        el('p', { class: 'fra' }, [document.createTextNode('Fra '), el('a', { href: '#' + encodeURIComponent(p.slug), text: p.navn })]),
+        x.beskrivelse ? el('p', { class: 'pre', text: x.beskrivelse }) : null,
+        mere('Betingelser og indløsning', [].concat(sektion('Det får du ud af den', x.udbytte), sektion('Betingelser', x.betingelser), sektion('Det er ikke med', x.ikke_med), sektion('Sådan indløses den', x.indloesning), sektion('Sidste frist', dato(x.sidste_frist)))),
       ]));
     });
 
-    var pl = $('partnere');
-    if (!pa.partnere.length) pl.append(el('p', { class: 'muted', text: 'Partnerne bliver præsenteret her.' }));
-    pa.partnere.forEach(function (p) {
-      pl.append(el('article', { class: 'card partnerkort', id: p.slug }, [
-        el('div', { class: 'top' }, [el('h3', { text: p.navn }), logo(p, 48)]),
-        el('p', { text: p.kort_beskrivelse }),
-        p.powerup_effekt ? el('p', { class: 'small' }, [el('span', { class: 'chip warn', text: 'Power-up' }), document.createTextNode(' ' + p.powerup_effekt)]) : null,
-        p.beskrivelse ? el('p', { class: 'pre muted', text: p.beskrivelse }) : null,
-        p.praemie ? el('p', { class: 'small' }, [el('strong', { text: 'Præmie: ' }), document.createTextNode(p.praemie.titel + ' (' + SP.vaerdiTekst(p.praemie) + ')')]) : null,
-        p.fordel ? el('p', { class: 'small' }, [el('strong', { text: 'Partnerfordel ved køb: ' }), document.createTextNode(p.fordel.rabat + ' på ' + p.fordel.ydelse + (p.fordel.koebskrav ? '. Kræver: ' + p.fordel.koebskrav : '') + (p.fordel.gyldig_til ? '. Gyldig til ' + new Date(p.fordel.gyldig_til + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long' }) : '') + '. Tæller ikke med i præmiepuljen.')]) : null,
-        el('p', null, [linkTilSide(p.hjemmeside), p.privatlivspolitik ? document.createTextNode(' · ') : null, p.privatlivspolitik ? linkTilSide(p.privatlivspolitik, 'Privatlivspolitik') : null]),
+    var fl = $('fordel-liste'), fordele = pa.partnere.filter(function (p) { return p.fordel && p.fordel.rabat; });
+    $('n-fo').textContent = fordele.length || '';
+    if (!fordele.length) fl.append(el('p', { class: 'muted', text: 'Fordelene bliver præsenteret her.' }));
+    fordele.forEach(function (p) {
+      var f = p.fordel;
+      fl.append(el('article', { class: 'kort fordel' }, [
+        el('div', { class: 'hoved' }, [logo(p), el('span', { class: 'badge gron', text: 'Fordel' })]),
+        el('p', { class: 'rabat', text: f.rabat }),
+        el('p', { text: f.ydelse }),
+        f.koebskrav ? el('p', { class: 'small muted pre', text: f.koebskrav }) : null,
+        f.gyldig_til ? el('p', { class: 'small muted', text: 'Gælder til ' + dato(f.gyldig_til) }) : null,
+        el('p', { class: 'fra' }, [el('a', { href: '#' + encodeURIComponent(p.slug), text: 'Om ' + p.navn })]),
       ]));
     });
+
+    var pl = $('partner-liste');
+    $('n-pa').textContent = pa.partnere.length || '';
+    if (!pa.partnere.length) pl.append(el('p', { class: 'muted', text: 'Partnerne bliver præsenteret her.' }));
+    pa.partnere.forEach(function (p) {
+      pl.append(el('article', { class: 'kort', id: p.slug }, [
+        p.logo_url ? el('div', { class: 'hoved' }, [logo(p)]) : null,
+        el('h3', { text: p.navn }),
+        p.kort_beskrivelse ? el('p', { class: 'small', text: p.kort_beskrivelse }) : null,
+        p.powerup_effekt ? el('span', { class: 'pu', text: '⚡ ' + p.powerup_effekt }) : null,
+        mere('Læs mere', [
+          p.beskrivelse ? el('p', { class: 'pre muted', text: p.beskrivelse }) : null,
+          p.praemie ? el('p', null, [el('strong', { text: 'Præmie: ' }), document.createTextNode(p.praemie.titel + ' (' + SP.vaerdiTekst(p.praemie) + ')')]) : null,
+          el('p', null, [linkTilSide(p.hjemmeside), p.privatlivspolitik ? document.createTextNode(' · ') : null, p.privatlivspolitik ? linkTilSide(p.privatlivspolitik, 'Privatlivspolitik') : null]),
+        ]),
+      ]));
+    });
+
+    // markér aktivt afsnit i menuen
+    var links = [].slice.call(document.querySelectorAll('#nav a'));
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); }); }); }, { rootMargin: '-40% 0px -55% 0px' });
+      ['praemier', 'fordele', 'partnere'].forEach(function (id) { io.observe($(id)); });
+    }
     if (location.hash) { var t = document.getElementById(decodeURIComponent(location.hash.slice(1))); if (t) t.scrollIntoView(); }
   }).catch(function () {
     $('konk-tekst').replaceChildren(el('div', { class: 'msg err', text: 'Præmierne kunne ikke hentes lige nu. Prøv igen om lidt.' }));
