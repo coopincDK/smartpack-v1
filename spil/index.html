@@ -2463,7 +2463,7 @@ function renderBoard(list, note, limit){
   if(scope === 'mission') note.textContent = `${MET[k].name}. ${MET[k].how}`;
   if(scope === 'period' && cfg.periodEnd && cfg.periodStart > today()) note.textContent = `Tavlen åbner ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}. Indtil da kan du varme op under "Opvarmning".`;
   else if(scope === 'period' && cfg.periodStart > '2000-01-01'){ const dd = d => new Date(d).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }); note.textContent = cfg.periodEnd && cfg.periodEnd === cfg.periodStart ? `Kun forsøg fra ${dd(cfg.periodStart)}.` : cfg.periodEnd ? `Alle forsøg fra ${dd(cfg.periodStart)} til ${dd(cfg.periodEnd)}.` : `Alle forsøg fra ${dd(cfg.periodStart)}.`; }
-  if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
+  if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize + ', som hentes på standen inden for en time' : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
   if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
   r.forEach(({ p, v }, i) => {
@@ -2672,7 +2672,7 @@ function renderLobby(){
   const hb = $('#l-hour'); hb.hidden = cfg.hourly === false;
   if(cfg.hourly !== false){
     const mine = hourWinners().find(w => w.p.pid === p.pid), top = hourBoard()[0], h = nowHour(); hb.replaceChildren();
-    if(mine) hb.append('Du vandt ', el('b', null, `timens boss kl. ${hh(mine.h + 1)}`), `${cfg.hourPrize ? '. Hent ' + cfg.hourPrize + ' ved standen' : ''}. Nu får de andre en chance.`);
+    if(mine) hb.append('Du vandt ', el('b', null, `timens boss kl. ${hh(mine.h + 1)}`), `${cfg.hourPrize ? '. Hent ' + cfg.hourPrize + ' på SmartPacks stand inden for en time' : ''}. Nu får de andre en chance.`);
     else if(top && top.p.pid === p.pid) hb.append('Du er ', el('b', null, 'timens boss'), ` lige nu. Hold pladsen til kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
     else if(top) hb.append('Timens boss: ', el('b', null, `${top.p.name}, ${fmt(top.v)}`), `. Kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
     else hb.append('Ingen har spillet i denne time. Spil nu, og bliv ', el('b', null, 'timens boss'), ` kl. ${hh(h + 1)}.`);
