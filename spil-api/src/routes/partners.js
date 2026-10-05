@@ -18,6 +18,7 @@ const { createRateLimiter } = require('../middleware/rateLimit');
 const P = require('../partners');
 const { toCsv } = require('../csv');
 const { clientIp } = require('../middleware/clientIp');
+const { sendTilCrm, crmKontaktUrl } = require('../crm');
 
 const PARTNER_COOKIE = 'spil_partner_session';
 const PARTNER_SESSION_TTL_MS = 12 * 3600 * 1000;
@@ -278,6 +279,18 @@ function partnersRouter(pool) {
         [id, slug, firmanavn, kontaktNavn, email, felter.kontakt_telefon || '', felter.hjemmeside || '', felter.kort_beskrivelse || '', besked]
       );
       res.status(201).json({ ok: true });
+      // Kopi til CRM'ets indbakke (kontaktformularen), så ansøgningen kan blive til et lead.
+      // Efter svaret og uden at kunne fejle ansøgningen; uden SMARTPACK_CRM_KEY sker intet.
+      const crmBody = {
+        name: kontaktNavn, email, company: firmanavn, type: 'Partneransøgning (Packrush)',
+        message: ['Ansøgning om at blive partner i Packrush.', felter.kort_beskrivelse, besked].filter(Boolean).join('\n\n'),
+        page: 'https://smartpack.dk/spil/partner/',
+      };
+      if (felter.kontakt_telefon) crmBody.phone = felter.kontakt_telefon;
+      if (felter.hjemmeside) crmBody.hjemmeside = felter.hjemmeside;
+      sendTilCrm(crmBody, crmKontaktUrl())
+        .then((r) => { if (!r.ok) console.error('[crm] partneransøgning', r.fejl); })
+        .catch((e) => console.error('[crm] partneransøgning', e.message));
     } catch (e) {
       sendFejl(res, e, next);
     }
