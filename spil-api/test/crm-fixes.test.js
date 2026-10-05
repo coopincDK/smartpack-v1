@@ -22,10 +22,10 @@ function fakeCrm(svar = () => [201, '{}']) {
   const srv = http.createServer((req, res) => {
     let b = '';
     req.on('data', (c) => (b += c));
-    req.on('end', () => {
+    req.on('end', async () => {
       const body = JSON.parse(b || '{}');
       kald.push({ url: req.url, body });
-      const [status, txt] = svar(body, req.url);
+      const [status, txt] = await svar(body, req.url);
       res.writeHead(status, { 'content-type': 'application/json' });
       res.end(txt);
     });
@@ -545,4 +545,60 @@ test('N3: /hjemmeside/nyhedsbrev og /afmeld har Origin-tjek, honeypot, rate-limi
   let sidste;
   for (let i = 0; i < 10; i++) sidste = await afm(`ip${i}-n3@b.dk`);
   assert.equal(sidste.status, 429);
+});
+
+test('N2-race: sletning midt i afsendelsen af et ja giver en afmelding i udbakken, som derefter sendes', async (t) => {
+  let h2;
+  let slettet = false;
+  const { crm, h } = await opsaet(t, async (body, url) => {
+    // Midt i afsendelsen af ja'et sletter spilleren sig (committet, før CRM'et svarer)
+    if (!url.endsWith('/unsubscribe') && body.email === 'race@shop.dk' && !slettet) {
+      slettet = true;
+      const client = await h2.pool.connect();
+      try {
+        await client.query('BEGIN');
+        const { rows } = await client.query("SELECT id, navn FROM spiller WHERE email = 'race@shop.dk' FOR UPDATE");
+        await deletePlayerFully(client, rows[0].id, rows[0].navn);
+        await client.query('COMMIT');
+      } finally {
+        client.release();
+      }
+    }
+    return [201, '{}'];
+  });
+  h2 = h;
+  await nySpiller(h, 'Race', 'race@shop.dk');
+  const r1 = await synkOnce(h.pool);
+  assert.equal(r1.stop, null);
+  assert.ok(slettet);
+  assert.equal((await h.pool.query("SELECT 1 FROM spiller WHERE email = 'race@shop.dk'")).rowCount, 0);
+  assert.deepEqual((await h.pool.query('SELECT email FROM crm_udbakke')).rows.map((x) => x.email), ['race@shop.dk']);
+
+  await synkOnce(h.pool);
+  const sidste = crm.kald[crm.kald.length - 1];
+  assert.equal(sidste.url, '/api/v1/newsletter/unsubscribe');
+  assert.equal(sidste.body.email, 'race@shop.dk');
+  assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
+});
+
+test('N2-race: sletning, der venter på samtykke-rækkens lås, ser status sendt og afmelder selv', async (t) => {
+  const { h } = await opsaet(t);
+  await nySpiller(h, 'Laas', 'laas@shop.dk');
+  // crmSynk "holder" rækken: en åben transaktion har den låst og markerer den sendt, mens sletningen starter
+  const sync = await h.pool.connect();
+  const del = await h.pool.connect();
+  try {
+    await sync.query('BEGIN');
+    await sync.query("UPDATE samtykke SET crm_synk_status = 'sendt' WHERE liste = 'smartpack'");
+    await del.query('BEGIN');
+    const { rows } = await del.query("SELECT id, navn FROM spiller WHERE email = 'laas@shop.dk' FOR UPDATE");
+    const sletning = deletePlayerFully(del, rows[0].id, rows[0].navn).then(() => del.query('COMMIT'));
+    await vent(300); // sletningen står og venter på rækkelåsen
+    await sync.query('COMMIT');
+    await sletning;
+  } finally {
+    sync.release();
+    del.release();
+  }
+  assert.deepEqual((await h.pool.query('SELECT email FROM crm_udbakke')).rows.map((x) => x.email), ['laas@shop.dk']);
 });

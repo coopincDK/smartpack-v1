@@ -92,6 +92,10 @@ async function cascadeDeletePlayer(client, id, { afmeldCrm = true } = {}) {
   // sletningen. afmeldCrm = false bruges af admin/nulstil (rydning af testdata er
   // ikke en tilbagetrækning af samtykket).
   if (afmeldCrm) {
+    // Lås de smartpack-samtykker først: crmSynk markerer et ja 'sendt' med en UPDATE på
+    // samme række. Så ser vi enten status 'sendt' (og afmelder her), eller crmSynk
+    // opdager bagefter, at rækken er væk, og afmelder selv (src/crmSynk.js).
+    await client.query("SELECT id FROM samtykke WHERE spiller_id = $1 AND liste = 'smartpack' FOR UPDATE", [id]);
     await client.query(
       `INSERT INTO crm_udbakke (email, type)
        SELECT p.email, 'afmeld' FROM spiller p

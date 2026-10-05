@@ -195,7 +195,14 @@ async function synkOnce(pool, max = 50) {
         udenKontakt.push(-r.id);
       } else {
         sendt++;
-        await marker(r.id, 'sendt');
+        // Blev spilleren slettet, mens ja'et var på vej (rækken er væk, så opdateringen
+        // rammer intet), kender CRM'et nu en kontakt, ingen længere afmelder: læg en
+        // afmelding i udbakken med det samme. Opdateringen venter på en slettende
+        // transaktions rækkelås, så de to kan ikke krydse hinanden (se playerDeletion.js).
+        const { rowCount } = await marker(r.id, 'sendt');
+        if (rowCount === 0 && !erAfmelding) {
+          await pool.query("INSERT INTO crm_udbakke (email, type) VALUES ($1, 'afmeld')", [r.email]);
+        }
       }
       behandlet++;
     }
