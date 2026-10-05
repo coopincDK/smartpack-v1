@@ -1564,3 +1564,11 @@ Packrush-lodder fra konferencens periode (samme regel som `beregnLodder()`;
 firmaet findes via spilleren med samme e-mail, ellers via firmanavnet).
 Konferencens egen lodtrækning påvirkes ikke. Warehouse Warrior kobles på senere.
 Admin-side: `spil/kampagne/`.
+
+**CRM-kobling** (`src/crm.js`, migration `018_kampagne_crm.sql`): hver tilmelding
+sendes efter svaret til `POST https://crm.smartpack.dk/api/v1/newsletter` med
+`Authorization: Bearer $SMARTPACK_CRM_KEY` (kun i serverens `.env`, aldrig i
+repoet). `source` = kilden (ehandelskonferencen sendes som `messe`), `newsletter`
++ `consentText` kun ved flueben, klub/ordrer/hvor i `notes`. Status gemmes i
+`crm_sendt`/`crm_fejl`. `POST /admin/kampagne/:kampagne/crm-send` (admin)
+sender alle rækker uden `crm_sendt`, højst 500 pr. kald.
