@@ -83,6 +83,19 @@ async function anonymizeReferencesToPlayer(client, id, navn) {
 // holder de to trin tydeligt adskilte).
 async function cascadeDeletePlayer(client, id) {
   await client.query('DELETE FROM notifikation WHERE spiller_id = $1', [id]);
+  // Havde spilleren aktivt ja til SmartPack, lægges en afmelding i CRM-udbakken
+  // (kun e-mail + tidspunkt) i SAMME transaktion som sletningen, så den hverken kan
+  // gå tabt eller ske uden at sletningen sker. src/crmSynk.js sender den og sletter
+  // rækken, når CRM'et har bekræftet. Skal ske FØR samtykke-rækkerne slettes.
+  await client.query(
+    `INSERT INTO crm_udbakke (email, type)
+     SELECT p.email, 'afmeld' FROM spiller p
+      WHERE p.id = $1 AND p.email IS NOT NULL
+        AND (SELECT s.type FROM samtykke s
+              WHERE s.spiller_id = p.id AND s.liste = 'smartpack'
+              ORDER BY s.tidspunkt DESC, s.id DESC LIMIT 1) = 'bekraeftet'`,
+    [id]
+  );
   await client.query('DELETE FROM samtykke WHERE spiller_id = $1', [id]);
   await client.query('DELETE FROM forsoeg WHERE spiller_id = $1', [id]);
   // Opgave C: spiller_token (flere samtidige tokens, se migrations/

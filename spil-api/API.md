@@ -1568,10 +1568,20 @@ Admin-side: `spil/kampagne/`.
 **CRM-kobling** (`src/crm.js`, migration `018_kampagne_crm.sql`): hver tilmelding
 sendes efter svaret til `POST https://crm.smartpack.dk/api/v1/newsletter` med
 `Authorization: Bearer $SMARTPACK_CRM_KEY` (kun i serverens `.env`, aldrig i
-repoet). `source` = kilden (ehandelskonferencen sendes som `messe`), `newsletter`
-+ `consentText` kun ved flueben, klub/ordrer/hvor i `notes`. Status gemmes i
-`crm_sendt`/`crm_fejl`. `POST /admin/kampagne/:kampagne/crm-send` (admin)
-sender alle rækker uden `crm_sendt`, højst 500 pr. kald.
+repoet). Kun en indsendelse **med flueben** sendes (`newsletter: true` +
+`consentText`); en indsendelse uden flueben giver intet CRM-kald og rører aldrig
+rækkens mailliste-status eller CRM-status. `source` = kilden (ehandelskonferencen
+sendes som `messe`). Telefon, klub, ordrer og "hvor knækker det" sendes kun, hvis
+personen har bedt om at blive ringet op (formularen har endnu ingen sådan mulighed,
+så de sendes i dag aldrig). Status gemmes i `crm_sendt`/`crm_fejl` (CRM'ets
+fejltekst gemmes uden indsenderens e-mail). `POST /admin/kampagne/:kampagne/crm-send`
+(admin) sender alle flueben-rækker uden `crm_sendt`, højst 500 pr. kald.
+
+En ny indsendelse for en e-mail, der allerede er tilmeldt, overskriver intet:
+kun tomme felter udfyldes, og navn/firma beholdes. Endpointet kræver Origin (eller
+Referer) fra `https://smartpack.dk`/`https://www.smartpack.dk` (403 `forkert_origin`
+ellers; `SPIL_TILLADTE_ORIGINS` kan udvide listen), og et udfyldt `_hp` besvares
+som normalt uden at gemme eller sende noget.
 
 ## Hjemmesidens kontaktformular → CRM (`src/routes/hjemmeside.js`)
 
@@ -1583,16 +1593,57 @@ kommentaren; generel/support: emne + besked), page, type (Lead/Generel/Support)
 og de øvrige svar (cvr, ordrer, webshop, erp, fragt, hastegrad, hørt via) som
 ekstra felter, der havner i CRM-notatet. Flueben for nyhedsmails →
 `newsletter: true` + `consentText: "Ja tak til praktiske tips om lager og
-logistik"`. Honeypot-feltet `_hp` sendes med. Svaret er altid `{ok:true, crm}`
-(20/min/IP); intet gemmes i Packrush' database.
+logistik"`. Er honeypot-feltet `_hp` udfyldt, svares `{ok:true, crm:false}`, og intet
+sendes videre. Endpointet kræver Origin/Referer fra smartpack.dk (som kampagnen
+ovenfor). Svaret er altid `{ok:true, crm}` (20/min/IP); intet gemmes i Packrush'
+database, og indsenderens e-mail logges aldrig.
 
-## Packrush-spillere → CRM (`src/crmSynk.js`, migration `019_crm_synk.sql`)
+## Packrush-spillere → CRM (`src/crmSynk.js`, migrationerne `019_crm_synk.sql` og `020_crm_udbakke_og_synkstatus.sql`)
 
-Et baggrundsjob (startet i `server.js`, hvert minut) læser samtykke-loggen for
-listen `smartpack` fra `crm_synk.sidste_id`: `bekraeftet` → `POST /newsletter`
-(source `packrush`, newsletter true, spillerens præcise tekst og tidspunkt),
-`trukket_tilbage` → `POST /newsletter/unsubscribe`. Uden `SMARTPACK_CRM_KEY`
-sker intet; der fortsættes fra samme sted, når nøglen er lagt ind (også de
-spillere, der allerede har sagt ja). Netværksfejl/5xx/429: stop og prøv igen;
-øvrige 4xx: log og spring over. Kun spillere med ja til SmartPack sendes;
-partnernes lister sendes aldrig til CRM'et.
+Et baggrundsjob (startet i `server.js`, hvert minut) behandler to ting, i denne rækkefølge:
+
+1. **`crm_udbakke`**: sletter en spiller sig (DELETE /me, admin-sletning, retention
+   eller nulstil, alle via `src/playerDeletion.js`) og har aktivt ja til SmartPack, lægges
+   en `afmeld` (kun e-mail + tidspunkt) i udbakken i samme transaktion som sletningen.
+   Jobbet sender den som `POST /newsletter/unsubscribe` og sletter rækken, når CRM'et
+   har svaret ok. Ligger CRM'et nede, bliver rækken liggende.
+2. **Samtykke-loggen** for listen `smartpack`: hver række har sin egen status
+   (`samtykke.crm_synk_status`: NULL, `sendt` eller `sprunget`), så en række, der først
+   bliver synlig efter en senere én, ikke tabes. `bekraeftet` → `POST /newsletter`
+   (source `packrush`, newsletter true, spillerens præcise tekst og tidspunkt, ingen
+   telefon), `trukket_tilbage` → `POST /newsletter/unsubscribe`. Der sendes kun ved en
+   reel statusændring: et ja efter et ja (dagens flueben) og en afmelding uden et
+   forudgående ja giver intet kald.
+
+Uden `SMARTPACK_CRM_KEY` sker intet; der fortsættes derfra, når nøglen er lagt ind.
+Fejl: kun en reel valideringsfejl for den enkelte række (400/422 med en fejltekst fra
+CRM'et) springer rækken over (logges med række-id, aldrig e-mail). 401, 403, 404, 5xx,
+429, netværksfejl og en 400/422 uden fejltekst stopper jobbet uden at flytte noget og
+logges som `[crm-synk] STOP` (uden persondata og uden nøglen). Springes 5 rækker over i
+samme kørsel, stopper jobbet også, og de 5 markeres ikke. Kun spillere med ja til
+SmartPack sendes; partnernes lister sendes aldrig til CRM'et.
+
+### Kendte begrænsninger (CRM-integrationen)
+
+- **Ingen double opt-in (M2):** `/hjemmeside/kontakt` (`newsletter`), `/kampagne/tilmeld`
+  (`nyhedsbrev`) og Packrush-registrering med `sp` sender `newsletter: true` uden at
+  bekræfte, at e-mailen tilhører indsenderen, så man kan tilmelde en fremmed. Afklar
+  med CRM-ejeren, om CRM'et selv laver double opt-in, før nøglen tændes. Det gælder
+  også en kampagneindsendelse med flueben for en e-mail, der er afmeldt i CRM'et.
+- **Afmelding af ukendt e-mail:** udbakken sender også en afmelding for en spiller, hvis
+  ja aldrig nåede frem. Vi har antaget, at CRM'ets `/unsubscribe` svarer 200/201 for en
+  ukendt e-mail; svarer den 404, står udbakken stille (alarmeret via `[crm-synk] STOP`).
+- **L1:** kun 200 og 201 tæller som ok; svarer CRM'et 202/204, gentages kaldet hvert minut.
+- **L2:** en permanent 5xx på én bestemt række blokerer hele køen, uden loft for forsøg.
+- **L3:** den første kørsel sender alle `smartpack`-samtykker, også skjulte spillere og
+  testspillere, og afmelder dem igen, hvis de siden har sagt nej.
+- **L4:** CSV-eksporten (`/admin/kampagne/:kampagne.csv`) escaper ikke formler (`=`, `+`,
+  `-`, `@` først i en værdi).
+- **L5:** `kampagne_tilmelding` slettes ikke efter 6 måneder, som vilkårenes pkt. 8 lover;
+  `src/retention.js` dækker ikke tabellen.
+- **L6:** admin `crm-send` kan køre samtidig med den automatiske afsendelse (dobbeltsending)
+  og kan blive en meget lang request (op til 500 kald).
+- **Rate-limits** er i hukommelsen og nulstilles ved genstart. Om origin-serveren kun
+  accepterer Cloudflare, er uverificeret; ellers kan `X-Client-IP` forfalskes.
+- **Origin-tjekket** stopper ikke et script, der selv sætter headeren; det fjerner kun simple
+  bots og tilfældige curl-kald.

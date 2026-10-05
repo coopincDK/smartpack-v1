@@ -18,6 +18,7 @@ const express = require('express');
 const { requireAdmin } = require('../middleware/adminAuth');
 const { createRateLimiter } = require('../middleware/rateLimit');
 const { clientIp } = require('../middleware/clientIp');
+const { kraevSmartpackOrigin } = require('../middleware/origin');
 const { csvEscape } = require('../csv');
 const { beregnLodder, matchNoegle } = require('../konkurrence');
 const { synkKampagneRaekke } = require('../crm');
@@ -103,12 +104,16 @@ function kampagneRouter(pool, opts = {}) {
     besked: 'For mange tilmeldinger lige nu. Prøv igen om et øjeblik.',
   });
 
-  router.post('/kampagne/tilmeld', tilmeldLimiter, async (req, res, next) => {
+  router.post('/kampagne/tilmeld', tilmeldLimiter, kraevSmartpackOrigin, async (req, res, next) => {
     try {
       const b = req.body || {};
       const kampagneId = String(b.kampagne || 'ehandelsdagen-2027');
       const k = KAMPAGNER[kampagneId];
       if (!k) return res.status(400).json({ fejl: 'Ukendt kampagne.', kode: 'ukendt_kampagne' });
+      // Honeypot (hvis formularen har ét): udfyldt = bot. Svar som normalt, men gem og send intet.
+      if (tekst(b._hp, 10)) {
+        return res.status(201).json({ ok: true, kampagne: k.navn, lodder_basis: k.basislodder, lodtraekning: k.lodtraekning });
+      }
       const navn = tekst(b.navn, 120);
       const firma = tekst(b.firma, 120);
       const email = tekst(b.email, 200);
@@ -125,22 +130,22 @@ function kampagneRouter(pool, opts = {}) {
            (kampagne, navn, klub, firma, firma_noegle, email, telefon, ordrer, hvor,
             nyhedsbrev, nyhedsbrev_tid, samtykke_tekst, kilde, kilder, ip)
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, CASE WHEN $10 THEN now() END, $11, $12, ARRAY[$12]::text[], $13)
+         -- En fremmed med en andens e-mail må ikke overskrive tilmeldingen: kun tomme
+         -- felter udfyldes. Mailliste-status, samtykketekst og CRM-status ændres kun af
+         -- en indsendelse med flueben; en indsendelse uden flueben rører dem aldrig.
          ON CONFLICT (kampagne, email) DO UPDATE SET
-           navn = EXCLUDED.navn,
-           klub = COALESCE(EXCLUDED.klub, kampagne_tilmelding.klub),
-           firma = EXCLUDED.firma,
-           firma_noegle = EXCLUDED.firma_noegle,
-           telefon = COALESCE(EXCLUDED.telefon, kampagne_tilmelding.telefon),
-           ordrer = COALESCE(EXCLUDED.ordrer, kampagne_tilmelding.ordrer),
-           hvor = COALESCE(EXCLUDED.hvor, kampagne_tilmelding.hvor),
+           klub = COALESCE(kampagne_tilmelding.klub, EXCLUDED.klub),
+           telefon = COALESCE(kampagne_tilmelding.telefon, EXCLUDED.telefon),
+           ordrer = COALESCE(kampagne_tilmelding.ordrer, EXCLUDED.ordrer),
+           hvor = COALESCE(kampagne_tilmelding.hvor, EXCLUDED.hvor),
            nyhedsbrev = kampagne_tilmelding.nyhedsbrev OR EXCLUDED.nyhedsbrev,
-           nyhedsbrev_tid = COALESCE(kampagne_tilmelding.nyhedsbrev_tid, EXCLUDED.nyhedsbrev_tid),
-           samtykke_tekst = EXCLUDED.samtykke_tekst,
-           kilde = EXCLUDED.kilde,
+           nyhedsbrev_tid = CASE WHEN EXCLUDED.nyhedsbrev THEN now() ELSE kampagne_tilmelding.nyhedsbrev_tid END,
+           samtykke_tekst = CASE WHEN EXCLUDED.nyhedsbrev THEN EXCLUDED.samtykke_tekst ELSE kampagne_tilmelding.samtykke_tekst END,
+           kilde = CASE WHEN EXCLUDED.nyhedsbrev THEN EXCLUDED.kilde ELSE kampagne_tilmelding.kilde END,
            kilder = CASE WHEN EXCLUDED.kilde = ANY(kampagne_tilmelding.kilder) THEN kampagne_tilmelding.kilder
                          ELSE kampagne_tilmelding.kilder || EXCLUDED.kilde END,
            opdateret = now(),
-           crm_sendt = NULL
+           crm_sendt = CASE WHEN EXCLUDED.nyhedsbrev THEN NULL ELSE kampagne_tilmelding.crm_sendt END
          RETURNING id`,
         [
           kampagneId,
@@ -160,7 +165,8 @@ function kampagneRouter(pool, opts = {}) {
       );
       res.status(201).json({ ok: true, kampagne: k.navn, lodder_basis: k.basislodder, lodtraekning: k.lodtraekning });
       // Kopi til CRM'et efter svaret, så en langsom CRM aldrig forsinker formularen.
-      if (!opts.udenCrm) {
+      // Kun en indsendelse med flueben giver et CRM-kald.
+      if (!opts.udenCrm && nyhedsbrev) {
         synkKampagneRaekke(pool, ins.rows[0].id, k.navn).catch((e) => console.error('[crm] kampagne', e.message));
       }
     } catch (e) {
@@ -175,7 +181,7 @@ function kampagneRouter(pool, opts = {}) {
       const k = KAMPAGNER[req.params.kampagne];
       if (!k) return res.status(404).json({ fejl: 'Ukendt kampagne.', kode: 'ikke_fundet' });
       const { rows } = await pool.query(
-        'SELECT id FROM kampagne_tilmelding WHERE kampagne = $1 AND crm_sendt IS NULL ORDER BY id LIMIT 500',
+        'SELECT id FROM kampagne_tilmelding WHERE kampagne = $1 AND nyhedsbrev AND crm_sendt IS NULL ORDER BY id LIMIT 500',
         [req.params.kampagne]
       );
       let sendt = 0;
@@ -232,7 +238,7 @@ function kampagneRouter(pool, opts = {}) {
         kampagne: { id: req.params.kampagne, ...k },
         antal: liste.length,
         mailliste: liste.filter((r) => r.nyhedsbrev).length,
-        crm_mangler: liste.filter((r) => !r.crm_sendt).length,
+        crm_mangler: liste.filter((r) => r.nyhedsbrev && !r.crm_sendt).length,
         lodder_i_alt: liste.reduce((a, r) => a + r.lodder, 0),
         tilmeldinger: liste,
       });

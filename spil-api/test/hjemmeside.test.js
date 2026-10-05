@@ -46,11 +46,15 @@ test('kontaktformularen sendes til CRM /contact-form med felter, nyhedsbrev og h
   assert.equal(k.body.consentText, 'Ja tak til praktiske tips om lager og logistik');
   assert.equal(k.body._hp, undefined);
 
-  await api(h.baseUrl, 'POST', '/hjemmeside/kontakt', { body: { type: 'support', name: 'B', email: 'b@x.dk', subject: 'Label', message: 'Printer driller', newsletter: 'Nej', _hp: 'spam' } });
+  await api(h.baseUrl, 'POST', '/hjemmeside/kontakt', { body: { type: 'support', name: 'B', email: 'b@x.dk', subject: 'Label', message: 'Printer driller', newsletter: 'Nej', _hp: '' } });
   const k2 = crm.kald[1].body;
   assert.equal(k2.message, 'Label\n\nPrinter driller');
   assert.equal(k2.newsletter, undefined);
-  assert.equal(k2._hp, 'spam');
+
+  // Honeypot udfyldt: svar ok, men intet sendes videre (se også crm-fixes.test.js)
+  const bot = await api(h.baseUrl, 'POST', '/hjemmeside/kontakt', { body: { name: 'Bot', email: 'bot@x.dk', message: 'spam', _hp: 'spam' } });
+  assert.equal(bot.status, 200);
+  assert.equal(crm.kald.length, 2);
 });
 
 test('uden nøgle svarer endpointet stadig ok, men crm:false', async (t) => {

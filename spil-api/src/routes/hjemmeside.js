@@ -12,6 +12,7 @@
 
 const express = require('express');
 const { createRateLimiter } = require('../middleware/rateLimit');
+const { kraevSmartpackOrigin } = require('../middleware/origin');
 const { sendTilCrm, crmKontaktUrl } = require('../crm');
 
 // Footerens nyhedsbrevstilmelding (js/footer.js), den præcise tekst ved fluebenet.
@@ -96,7 +97,6 @@ function kontaktTilCrm(b) {
     body.newsletter = true;
     body.consentText = KONTAKT_NYHEDSBREV_TEKST;
   }
-  if (b._hp) body._hp = t(b._hp, 200);
   return body;
 }
 
@@ -108,19 +108,21 @@ function hjemmesideRouter() {
     besked: 'For mange henvendelser lige nu. Prøv igen om et øjeblik.',
   });
 
-  router.post('/hjemmeside/kontakt', limiter, async (req, res, next) => {
+  router.post('/hjemmeside/kontakt', limiter, kraevSmartpackOrigin, async (req, res, next) => {
     try {
       const b = req.body || {};
       if (typeof b !== 'object' || Array.isArray(b) || ugyldigtFelt(b)) {
         return res.status(400).json({ fejl: 'Formularen indeholder ugyldige felter.', kode: 'ugyldigt_input' });
       }
+      // Honeypot: et udfyldt skjult felt er en bot. Svar ok, men send intet videre.
+      if (t(b._hp)) return res.json({ ok: true, crm: false });
       const email = t(b.email, 200);
       if (!email || !EMAIL_RE.test(email)) {
         return res.status(400).json({ fejl: 'Skriv en gyldig e-mail.', kode: 'ugyldig_email' });
       }
       if (!t(b.name)) return res.status(400).json({ fejl: 'Skriv dit navn.', kode: 'mangler_navn' });
       const r = await sendTilCrm(kontaktTilCrm(b), crmKontaktUrl());
-      if (!r.ok) console.error('[crm] kontaktformular', email, r.fejl);
+      if (!r.ok) console.error('[crm] kontaktformular', r.status ? 'HTTP ' + r.status : r.fejl);
       // Formularen har sin egen mail-afsendelse, så svaret er altid ok; crm fortæller om kopien kom frem.
       res.json({ ok: true, crm: r.ok });
     } catch (e) {
