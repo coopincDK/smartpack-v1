@@ -13,6 +13,15 @@ const POWERUPS = {
   // Nøglen hedder stadig 'sprii', men power-uppen er fra okt. 2026 InMobiles sms-kampagne.
   sprii: { runde: 'Send', effekt: 'Sms-kampagne: svarene bliver til ordrer i 8 sek.' },
   elementlogic: { runde: 'Pluk', effekt: 'Lagerrobot, der hjælper med plukket.' },
+  // Ekstra power-ups (okt. 2026), se XPU i spil/index.html
+  skancode: { runde: 'Pluk', effekt: 'Scanner: fejlpluk koster ingenting i 8 sek.' },
+  smartpack: { runde: 'Pluk', effekt: 'Optimeret plukrute: +50 % point i 8 sek.' },
+  unitroll: { runde: 'Pak', effekt: 'Rullevogn: dobbelt point i 8 sek.' },
+  rielands: { runde: 'Pak', effekt: 'Frigjort tid: +10 sek. på uret.' },
+  sitesage: { runde: 'Send', effekt: 'Kunderne venter: uret står stille i 5 sek.' },
+  poetype: { runde: 'Send', effekt: 'Nyhedsbrev: genkøb giver +50 % point i 8 sek.' },
+  zignifikant: { runde: 'Send', effekt: 'Bundlinje-bonus: +10 % af rundens point.' },
+  boardroom: { runde: 'Send', effekt: 'Rådgiveren: din næste fejl bliver tilgivet.' },
 };
 
 const STATUSSER = ['ansoegt', 'aktiv', 'afvist', 'arkiveret'];

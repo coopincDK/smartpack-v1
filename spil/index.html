@@ -2059,6 +2059,7 @@ function applyPartnerList(list){
     PARTNERS[k].text = PARTNERS[k].text.split(old).join(p.navn);
   });
   if(by.elementlogic){ EL.name = by.elementlogic.navn; EL.slug = by.elementlogic.slug; } else EL.on = false;
+  Object.keys(XPU).forEach(k => { const p = by[k]; XPU[k].on = !!p; if(p){ XPU[k].name = p.navn; XPU[k].slug = p.slug; } });
 }
 fetch(API_BASE + '/partnere', { credentials: 'same-origin' }).then(r => r.ok ? r.json() : null).then(j => { if(j) applyPartnerList(j.partnere); }).catch(() => {});
 /* Power-uppen hedder stadig 'sprii' internt (nøglen i admin og databasen), men er fra okt. 2026 InMobiles sms-kampagne. */
@@ -2078,6 +2079,83 @@ function partnerPill(c, x, y, R, name, rem, k){
   c.fillStyle = C.orange; c.fillRect(-w / 2 + h / 2, h / 2 + 5, (w - h) * rem, 3);
   c.restore();
   return { w: w + 16, h: h + 16 };
+}
+/* ---------- Ekstra partner-power-ups i alle tre runder (okt. 2026) ----------
+   Et lag oven på runderne, så Pluk/Pak/Send ikke skal ombygges: én pille pr. runde
+   dukker op, man trykker på den, og effekten virker via rundens score/uret.
+   Nøglerne matcher POWERUPS i spil-api/src/partners.js og vælges pr. partner i admin.
+   fx: 'mult' (point ganges k i dur sek.), 'tilgiv' (fald i score/kombo/glemte rulles
+   tilbage i dur sek., eller én gang hvis once), 'tid' (+sek på uret), 'pct' (+k af rundens point nu). */
+const XPU = {
+  skancode:    { r: 0, name: 'SkanCode',     fx: 'tilgiv', dur: 8,  on: false, say: n => `${n}-scanneren fanger alle fejlpluk i 8 sek.` },
+  smartpack:   { r: 0, name: 'SmartPack',    fx: 'mult', k: 1.5, dur: 8, on: false, say: n => `${n}: optimeret plukrute, +50 % point i 8 sek.` },
+  unitroll:    { r: 1, name: 'UNI-TROLL',    fx: 'mult', k: 2, dur: 8, on: false, say: n => `${n}-rullevognen: dobbelt point i 8 sek.` },
+  rielands:    { r: 1, name: 'Rielands',     fx: 'tid', sek: 10, on: false, say: n => `${n}: frigjort tid, +10 sek. på uret` },
+  sitesage:    { r: 2, name: 'SiteSage',     fx: 'tid', sek: 5, on: false, say: n => `${n}: kunderne venter, uret står stille i 5 sek.` },
+  poetype:     { r: 2, name: 'Poetype',      fx: 'mult', k: 1.5, dur: 8, on: false, say: n => `${n}: nyhedsbrevet sender genkøb, +50 % point i 8 sek.` },
+  zignifikant: { r: 2, name: 'Zignifikant',  fx: 'pct', k: 0.1, on: false, say: n => `${n}: bundlinje-bonus, +10 % af rundens point` },
+  boardroom:   { r: 2, name: 'The Boardroom', fx: 'tilgiv', once: true, on: false, say: n => `${n}: rådgiveren redder din næste fejl` },
+};
+const XPU_AT = [20, 9, 16.5];
+let X = null;
+function xpuStart(i){
+  X = null;
+  if(cfg.partners === false) return;
+  const pool = Object.keys(XPU).filter(k => XPU[k].on && XPU[k].r === i);
+  if(!pool.length) return;
+  const key = pool[Math.floor(Math.random() * pool.length)];
+  X = { key, at: XPU_AT[i], pill: null, act: 0, used: false, once: false, last: null };
+}
+function xpuSnap(r){ return { s: r.score, c: r.combo, st: r.streak, sk: r.strikes, e: r.errors }; }
+function xpuTick(dt){
+  if(!X || !G || !G.round) return;
+  const r = G.round, P = XPU[X.key];
+  if(!X.pill && !X.used && r.t >= X.at){ X.pill = { x: r.w / 2, y: Math.max(70, r.h * 0.2), life: 4.5 }; sfx('badge'); }
+  if(X.pill){ X.pill.life -= dt; if(X.pill.life <= 0){ X.pill = null; X.used = true; } }
+  const now = xpuSnap(r), L = X.last;
+  if(L && (X.act > 0 || X.once)){
+    const d = now.s - L.s;
+    if(P.fx === 'mult' && X.act > 0 && d > 0){ const ex = Math.round(d * (P.k - 1)); if(ex){ r.score += ex; now.s += ex; } }
+    if(P.fx === 'tilgiv'){
+      const fejl = d < 0 || (now.sk != null && L.sk != null && now.sk > L.sk) || (now.e != null && L.e != null && now.e > L.e);
+      if(fejl){
+        r.score = L.s; now.s = L.s;
+        if(L.c != null && now.c < L.c){ r.combo = L.c; now.c = L.c; }
+        if(L.sk != null && now.sk > L.sk){ r.strikes = L.sk; now.sk = L.sk; }
+        r.pop(r.w / 2, Math.max(90, r.h * 0.28), `${P.name}: fejlen er tilgivet`, C.green, true);
+        if(X.once){ X.once = false; }
+      }
+    }
+  }
+  if(X.act > 0) X.act = Math.max(0, X.act - dt);
+  X.last = now;
+}
+function xpuTap(x, y){
+  if(!X || !X.pill || !G || !G.round) return false;
+  const p = X.pill, r = G.round, P = XPU[X.key];
+  if(Math.abs(x - p.x) > (p.hw || 140) / 2 || Math.abs(y - p.y) > (p.hh || 50) / 2 + 6) return false;
+  X.pill = null; X.used = true;
+  r.score += 25; if(r.partners != null) r.partners++;
+  if(P.fx === 'mult') X.act = P.dur;
+  if(P.fx === 'tilgiv'){ if(P.once) X.once = true; else X.act = P.dur; }
+  if(P.fx === 'tid'){ G.time += P.sek; if(G.time > 10){ G.hurry = false; } }
+  if(P.fx === 'pct'){ const b = Math.max(0, Math.round(r.score * P.k)); r.score += b; r.pop(p.x, p.y + 30, `Bundlinje +${b}`, C.green, true); }
+  X.last = xpuSnap(r);
+  r.pop(p.x, p.y - 22, `${P.name} +25`, C.text, true);
+  r.say(P.say(P.name)); r.burst(p.x, p.y, 34, CONF, 320); r.glow(C.text, .4); sfx('power');
+  try{ navigator.vibrate && navigator.vibrate([20, 40, 20]); }catch(e){}
+  return true;
+}
+function xpuDraw(c){
+  if(!X || !G || !G.round) return;
+  const r = G.round, P = XPU[X.key];
+  if(X.pill){ const d = partnerPill(c, X.pill.x, X.pill.y, 22, P.name, X.pill.life / 4.5, r.t); X.pill.hw = d.w; X.pill.hh = d.h; }
+  if(X.act > 0 || X.once){
+    const txt = X.once ? `${P.name}: næste fejl tilgives` : `${P.name} ${Math.ceil(X.act)} sek.`;
+    c.font = `800 12px ${DFONT}`; const tw = c.measureText(txt).width + 20, y = r.h - 22;
+    c.fillStyle = 'rgba(241,245,249,.92)'; rr(c, r.w / 2 - tw / 2, y - 12, tw, 24, 12); c.fill();
+    c.fillStyle = C.navy; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(txt, r.w / 2, y + 1);
+  }
 }
 class Send extends Base {
   constructor(sp, stock, ctx){
@@ -2772,6 +2850,7 @@ cv.addEventListener('pointerdown', e => {
   if(!G || !G.running || !G.round) return;
   e.preventDefault();
   const r = cv.getBoundingClientRect();
+  if(xpuTap(e.clientX - r.left, e.clientY - r.top)) return;
   G.round.tap(e.clientX - r.left, e.clientY - r.top);
 });
 
@@ -2859,7 +2938,7 @@ function makeRound(){
   hideCd();
   const i = G.idx, rc = { rec: G.rec, partners: cfg.partners !== false };
   G.round = i === 0 ? new Pluk(G.sp, rc) : i === 1 ? new Pak(G.sp, widthFor(G.stats[0]), rc) : new Send(G.sp, stockFor(G.stats[1]), rc);
-  G.time = ROUND_T; G.running = false; G.hurry = false; fit(); intro();
+  G.time = ROUND_T; G.running = false; G.hurry = false; xpuStart(i); fit(); intro();
 }
 function roundPts(){ return G && G.round ? Math.max(0, Math.round(G.round.score * G.mult)) : 0; }
 
@@ -2944,7 +3023,7 @@ function setHud(){
   const hp = $('#h-pts'); hp.textContent = fmt(total);
   if(total > lastPts){ hp.classList.remove('bump'); void hp.offsetWidth; hp.classList.add('bump'); }
   lastPts = total;
-  const frac = Math.max(0, G.time / ROUND_T);
+  const frac = Math.min(1, Math.max(0, G.time / ROUND_T));
   $('#h-bar').style.width = (frac * 100) + '%';
   $('#h-timer').classList.toggle('low', frac < 1 / 3);
   const rv = $('#h-rival'); rv.replaceChildren();
@@ -2971,7 +3050,7 @@ function loop(t){
   const dt = Math.min(0.05, (t - last) / 1000 || 0); last = t;
   if(G && G.round && G.w){
     if(G.running){
-      G.time = Math.max(0, G.time - dt); G.round.update(dt);
+      G.time = Math.max(0, G.time - dt); G.round.update(dt); xpuTick(dt);
       if(!G.hurry && G.time <= 10){ G.hurry = true; musicHurry(); sfx('hurry'); G.round.say('10 sekunder tilbage', C.orange); }
       if(G.time <= 10 && G.time > 0){ const sec = Math.ceil(G.time); if(sec !== G.lastSec){ G.lastSec = sec; sfx('dik', sec); tickCd(sec); } }
       // kun det første tårn må bygges færdigt; har man væltet, slutter runden på tid
@@ -2983,7 +3062,7 @@ function loop(t){
       const r = G.round;
       ctx.clearRect(0, 0, G.w, G.h); ctx.save();
       if(r.shake > 0){ const k = r.shake / 0.25; ctx.translate((Math.random() - .5) * 8 * k, (Math.random() - .5) * 6 * k); }
-      r.draw(ctx); ctx.restore();
+      r.draw(ctx); ctx.restore(); xpuDraw(ctx);
       if(G.running && G.time < 5 && !G.round.overtime){ const a = (5 - G.time) / 5 * (0.5 + 0.5 * Math.sin(t / 90)); const g = ctx.createRadialGradient(G.w / 2, G.h / 2, Math.min(G.w, G.h) * .35, G.w / 2, G.h / 2, Math.max(G.w, G.h) * .75); g.addColorStop(0, 'rgba(249,115,22,0)'); g.addColorStop(1, `rgba(249,115,22,${a * .28})`); ctx.fillStyle = g; ctx.fillRect(0, 0, G.w, G.h); }
       if(G.running) setHud();
     }
@@ -3789,7 +3868,7 @@ if('serviceWorker' in navigator && canInstallHere() && location.protocol === 'ht
 paintInstall();
 
 /* L4: #test-hooken eksponerer bl.a. finishNow() (kan give sig selv liv/point) og må derfor aldrig findes i produktion */
-if(IS_LOCALHOST && location.hash === '#test') window.__T = { get G(){ return G; }, get data(){ return data; }, get cfg(){ return cfg; }, show, refresh, Send, finishNow: () => finish(), makeRound: () => makeRound() };
+if(IS_LOCALHOST && location.hash === '#test') window.__T = { get G(){ return G; }, get X(){ return X; }, XPU, xpuStart, get data(){ return data; }, get cfg(){ return cfg; }, show, refresh, Send, finishNow: () => finish(), makeRound: () => makeRound() };
 refresh();
 bootMe();
 flushFinishQueue();
