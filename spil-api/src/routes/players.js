@@ -195,6 +195,22 @@ function playersRouter(pool, ws, opts) {
 
   router.post('/players', async (req, res, next) => {
     const body = req.body || {};
+    // Kun tekst/tal i tekstfelterne og en liste af tekster i tilmeldinger —
+    // et objekt med egen toString ville ellers kaste i String() herunder,
+    // FØR try-blokken, og tage hele processen ned.
+    const erSkalar = (v) =>
+      v === undefined || v === null || (typeof v === 'string' && v.length <= 500) ||
+      (typeof v === 'number' && Number.isFinite(v));
+    const tekstFelter = ['email', 'navn', 'telefon', 'pin', 'firma', 'vennekode', 'udfordringskode'];
+    if (
+      typeof body !== 'object' || Array.isArray(body) ||
+      !tekstFelter.every((k) => erSkalar(body[k])) ||
+      (body.tilmeldinger !== undefined && body.tilmeldinger !== null &&
+        (!Array.isArray(body.tilmeldinger) || body.tilmeldinger.length > 30 ||
+          !body.tilmeldinger.every((x) => typeof x === 'string' && x.length <= 100)))
+    ) {
+      return res.status(400).json({ fejl: 'Ugyldigt input.', kode: 'ugyldigt_input' });
+    }
     const email = String(body.email || '').trim().toLowerCase();
     const navn = String(body.navn || '').trim();
     // Telefon er igen VALGFRIT (brugerens beslutning, telefon-opfølgningen):

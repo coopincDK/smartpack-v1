@@ -12,6 +12,7 @@ const { konkurrenceRouter } = require('./routes/konkurrence');
 const { kampagneRouter } = require('./routes/kampagne');
 const { hjemmesideRouter } = require('./routes/hjemmeside');
 const { createRateLimiter } = require('./middleware/rateLimit');
+const { paalaegAsyncFejlhaandtering } = require('./middleware/asyncFejl');
 
 // Bygger Express-appen. `ws` (fra src/ws.js) er valgfri — bruges til at
 // broadcaste state.changed når spillerdata/config ændres via API'et.
@@ -20,6 +21,8 @@ const { createRateLimiter } = require('./middleware/rateLimit');
 // src/backup.js), så testsuiten ikke kræver en rigtig pg_dump-klient.
 function createApp(pool, ws, opts) {
   opts = opts || {};
+  // Async-fejl i en handler må aldrig nå process-niveau (se middleware/asyncFejl.js).
+  paalaegAsyncFejlhaandtering();
   const app = express();
   app.disable('x-powered-by');
   // Ingen CORS-headers (same-origin). Ingen app.set('trust proxy', ...) —
@@ -66,8 +69,16 @@ function createApp(pool, ws, opts) {
   // eslint-disable-next-line no-unused-vars
   app.use((err, req, res, next) => {
     // eslint-disable-next-line no-console
-    console.error(err);
+    // Klientfejl fra body-parseren (ugyldig JSON, for stor body) er 4xx, ikke 500.
+    const klientFejl = err && Number.isInteger(err.status) && err.status >= 400 && err.status < 500;
+    if (!klientFejl) console.error(err);
     if (res.headersSent) return;
+    if (klientFejl) {
+      return res.status(err.status).json({
+        fejl: err.status === 413 ? 'Forespørgslen er for stor.' : 'Ugyldig forespørgsel.',
+        kode: err.status === 413 ? 'for_stor' : 'ugyldigt_input',
+      });
+    }
     res.status(500).json({ fejl: 'Der skete en uventet serverfejl.', kode: 'serverfejl' });
   });
 
