@@ -101,6 +101,13 @@
   .lead input:focus,.lead select:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
   .lead button{font-family:var(--display);font-weight:700;font-size:18px;color:#0B0A06;background:var(--orange);
     border:0;border-radius:12px;padding:17px;cursor:pointer;margin-top:4px}
+  .konk-kort{margin-top:18px}
+  .konk-kort .b{margin:10px 0 0}
+  .konk-kort .b:first-of-type{margin-top:8px}
+  details.vilkaar{margin-top:6px;font-size:13px;color:var(--ink-3)}
+  details.vilkaar summary{cursor:pointer;color:var(--ink-2);font-weight:600}
+  details.vilkaar ol{padding-left:18px;margin:10px 0 0}
+  details.vilkaar li{margin:0 0 6px}
   .minitekst{font-size:13px;color:var(--ink-3);margin:0}
   footer{margin-top:64px;padding-top:26px;border-top:1px solid var(--line);color:var(--ink-3);font-size:14px}
   footer a{color:var(--green)}
@@ -300,13 +307,25 @@
     <div class="praemie">
       <div class="eyebrow">Konkurrence</div>
       <h2 class="stor">Vind en tur til<br>Kattegat Cup</h2>
-      <p class="manchet">Udfyld formularen, så er du med i lodtrækningen. Maillisten er frivillig.</p>
+      <p class="manchet">Vi giver to klubber en tur til Kattegat Cup 2027. Skriv dig op herunder, så er du med i lodtrækningen.</p>
       <p class="praemietekst">Kattegat Cup er et fodboldstævne i Grenaa, der har kørt siden 1986. De kalder det selv Danmarks hyggeligste fodboldstævne. Vi holder til i samme by og er sponsor af både Kattegat Cup og U12, så vi ved godt, hvad en tur derned betyder for en klub.</p>
-      <p class="praemietekst">Vil du ikke have mails, kan du afmelde dig igen med det samme. Der er et afmeld-link i hver eneste mail, og du er med i lodtrækningen uanset hvad. <a class="udlink" href="https://kgcup.dk/" rel="nofollow">Se hvad Kattegat Cup er &rsaquo;</a></p>
+
+      <div class="kort konk-kort">
+        <div class="k">TO LODTRÆKNINGER, TO KLUBBER</div>
+        <p class="b"><b>1. Til E-handelskonferencen, 8. oktober 2026.</b> Spil <a class="udlink" href="/spil/">Packrush</a>. Dit firmas bedste spil giver lodder, og vinderen trækkes på dagen. Kun firmaer på deltagerlisten til konferencen kan vinde. <a class="udlink" href="/spil/vilkaar/">Vilkår for Packrush &rsaquo;</a></p>
+        <p class="b"><b>2. Til Ehandelsdagen i Skive, 11. februar 2027.</b> Det er den store, samlede lodtrækning. Skriv dig op her, så får du 10 lodder. Lodderne fra Packrush tæller med oveni, og senere også lodder fra Warehouse Warrior. Du kan skrive dig op på konferencen, på Digi Day og frem til Ehandelsdagen.</p>
+      </div>
+
+      <div class="kort konk-kort">
+        <div class="k">DET FÅR KLUBBEN</div>
+        <p class="b">Hele klubben med til Kattegat Cup 2027, 28. juli til 1. august i Grenaa. Ubegrænset antal hold. Morgenmad, aftensmad, overnatning, tilmeldingsgebyr og to ledere pr. hold er med. Værdi 10.000 kr. inkl. moms.</p>
+        <p class="b"><b>Ikke med:</b> transport, lommepenge og ekstra ledere ud over to pr. hold. Ekstra ledere koster 400 kr. pr. leder hos Kattegat Cup.</p>
+      </div>
+
+      <p class="praemietekst"><a class="udlink" href="https://kgcup.dk/" rel="nofollow">Læs mere om Kattegat Cup &rsaquo;</a> Der kan du også tilmelde din klub direkte, uden om konkurrencen.</p>
     </div>
 
-    <!-- LEADFORMULAR: saet action til jeres eget endpoint, fx /api/lead.
-         Indtil da falder knappen tilbage til en mail til bundlinjeboost@smartpack.dk. -->
+    <!-- LEADFORMULAR: sendes til Packrush-serveren (se scriptet nederst). -->
     <form class="lead" method="post" action="" id="leadform">
       <label>Navn<input name="navn" type="text" autocomplete="name" required></label>
       <label>Klubben det gælder<input name="klub" type="text" placeholder="klubbens navn" required></label>
@@ -326,7 +345,21 @@
       <label class="tjek"><input name="nyhedsbrev" type="checkbox" value="ja">
         <span><b>Ja tak til SmartPacks mailliste.</b> Du kan afmelde dig igen med det samme, og der er et afmeld-link i hver mail.</span></label>
       <button type="submit">Deltag i lodtrækningen</button>
-      <p class="minitekst">Alle der er med, får en hilsen fra os bagefter. Navn, klub, firma og kontaktoplysninger bruges til lodtrækningen, og til maillisten hvis du siger ja. De to sidste felter er frivillige og bruges kun, hvis du selv beder om at blive ringet op. [Indsæt dato for lodtrækning og konkurrencevilkår.]</p>
+      <p class="minitekst">Du er med i lodtrækningen på Ehandelsdagen 11. februar 2027 med 10 lodder. Dit navn, din klub, dit firma og dine kontaktoplysninger bruges til lodtrækningen og til at kontakte vinderen, og til maillisten kun hvis du sætter flueben. De to frivillige felter bruges kun, hvis du selv beder om at blive ringet op. SmartPack ApS, CVR 42007617, er dataansvarlig.</p>
+      <details class="vilkaar">
+        <summary>Vilkår for lodtrækningen på Ehandelsdagen</summary>
+        <ol>
+          <li><b>Arrangør:</b> SmartPack ApS, CVR 42007617, Østerbrogade 67A, 8500 Grenaa. Spørgsmål: bundlinjeboost@smartpack.dk.</li>
+          <li><b>Deltagelse:</b> gratis og uden købskrav. Én tilmelding pr. e-mail. Skriver du dig op igen, fx på Digi Day, giver det ikke flere lodder.</li>
+          <li><b>Lodder:</b> 10 lodder pr. tilmelding. Spiller du <a class="udlink" href="/spil/">Packrush</a> med samme e-mail, får du oveni de lodder, dit firma fik i spillet på E-handelskonferencen, efter samme regel som i <a class="udlink" href="/spil/vilkaar/">Packrush' vilkår</a>. Lodder fra Warehouse Warrior tæller også med, når spillet er koblet på konkurrencen. Tilmeldingen her giver ingen lodder til konferencens egen lodtrækning.</li>
+          <li><b>Lodtrækning:</b> på Ehandelsdagen i Skive 11. februar 2027. Vinderen trækkes tilfældigt blandt alle lodder.</li>
+          <li><b>Præmie:</b> en tur til Kattegat Cup 2027 for hele den klub, vinderen vælger, som beskrevet ovenfor. Præmien kan ikke byttes til kontanter, og klubben skal selv tilmelde sig stævnet. SmartPack betaler klubprisen direkte til Kattegat Cup.</li>
+          <li><b>Vinderen</b> kontaktes på mail. Svarer vinderen ikke inden 14 dage, trækkes en ny.</li>
+          <li><b>Kan ikke vinde:</b> SmartPacks medarbejdere og deres husstand.</li>
+          <li><b>Dine data</b> slettes senest 6 måneder efter lodtrækningen, medmindre du har sagt ja til maillisten. Du kan altid bede om at få dem slettet før.</li>
+        </ol>
+      </details>
+      <p class="minitekst" id="lead-svar" role="status" hidden></p>
     </form>
   </section>
 
@@ -340,19 +373,53 @@
 </div>
 
 <script>
-  // Falder tilbage til en mail, saa lang tid formularen ikke har et endpoint
+  // Sender tilmeldingen til Packrush-serveren (POST /api/spil/kampagne/tilmeld).
+  // Svarer serveren ikke, falder den tilbage til en mail til bundlinjeboost@.
+  // Kilden kan sættes i QR-linket, fx smartpack.dk/messe?kilde=digiday.
   (function(){
     var f = document.getElementById('leadform');
     if(!f) return;
-    f.addEventListener('submit', function(e){
-      if (f.getAttribute('action')) return;
-      e.preventDefault();
+    var svar = document.getElementById('lead-svar');
+    var knap = f.querySelector('button[type=submit]');
+    function kilde(){
+      var k = (new URLSearchParams(location.search).get('kilde') || '').toLowerCase();
+      if (['messe','ehandelskonferencen','digiday','andet'].indexOf(k) >= 0) return k;
+      var d = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Copenhagen' });
+      return d === '2026-10-08' ? 'ehandelskonferencen' : 'messe';
+    }
+    function mailFallback(){
       var d = new FormData(f), l = [];
       d.forEach(function(v,k){ if(v) l.push(k + ': ' + v); });
       var krop = encodeURIComponent(l.join('\n') + '\n\nSendt fra messesiden.');
       window.location.href = 'mailto:bundlinjeboost@smartpack.dk'
         + '?subject=' + encodeURIComponent('Kattegat Cup - deltagelse og vores lager')
         + '&body=' + krop;
+    }
+    function vis(t, ok){ svar.hidden = false; svar.textContent = t; svar.style.color = ok ? 'var(--green)' : '#fdba74'; }
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var d = new FormData(f);
+      var data = {
+        kampagne: 'ehandelsdagen-2027', kilde: kilde(),
+        navn: d.get('navn'), klub: d.get('klub'), firma: d.get('firma'), email: d.get('email'),
+        telefon: d.get('telefon'), ordrer: d.get('ordrer'), hvor: d.get('hvor'),
+        nyhedsbrev: d.get('nyhedsbrev') === 'ja'
+      };
+      knap.disabled = true; knap.textContent = 'Sender…';
+      fetch('/api/spil/kampagne/tilmeld', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(b){ return { status: r.status, body: b }; }); })
+        .then(function(r){
+          if (r.status === 201) {
+            f.querySelectorAll('label,.todelt').forEach(function(el){ el.hidden = true; });
+            knap.hidden = true;
+            vis('Tak, ' + data.navn + '! Du er med i lodtrækningen på Ehandelsdagen med 10 lodder. Spil Packrush med samme e-mail, så får du flere oveni og er også med om konferencens præmie.', true);
+            return;
+          }
+          knap.disabled = false; knap.textContent = 'Deltag i lodtrækningen';
+          if (r.status >= 400 && r.status < 500 && r.status !== 404 && r.body && r.body.fejl) return vis(r.body.fejl, false);
+          mailFallback();
+        })
+        .catch(function(){ knap.disabled = false; knap.textContent = 'Deltag i lodtrækningen'; mailFallback(); });
     });
   })();
 </script>

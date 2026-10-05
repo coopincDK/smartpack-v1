@@ -1547,3 +1547,20 @@ rent faktisk er en komplet dump: `zcat <fil> | tail -1` skal indeholde
 strengen `"PostgreSQL database dump complete"` (standard-afslutningslinjen i
 en succesfuld `pg_dump`). Fejler dette tjek, exitter scriptet med fejl og
 logger tydeligt, PRÆCIS som ved enhver anden fejl i scriptet.
+
+## Kampagnetilmeldinger (migration `017_kampagne_tilmelding.sql`, `src/routes/kampagne.js`)
+
+Formularen på smartpack.dk/messe sender hertil. Én række pr. (kampagne, e-mail);
+gentilmelding opdaterer rækken og samler `kilder` (messe, ehandelskonferencen,
+digiday, andet). Kilden sættes i QR-linket, fx `smartpack.dk/messe?kilde=digiday`;
+uden parameter bliver det `ehandelskonferencen` den 8/10-2026, ellers `messe`.
+
+- `POST /kampagne/tilmeld` `{kampagne:'ehandelsdagen-2027', kilde, navn, klub, firma, email, telefon, ordrer, hvor, nyhedsbrev}` → 201. 60/min/IP. Samtykketeksten gemmes på rækken.
+- `GET /admin/kampagne/:kampagne` (admin) → tilmeldinger med `lodder_basis` (10), `lodder_spil` (Packrush) og `lodder` (i alt).
+- `GET /admin/kampagne/:kampagne.csv` (admin) → samme som CSV (semikolon, BOM).
+
+Ehandelsdagen er den samlede lodtrækning: tilmeldingens 10 lodder + firmaets
+Packrush-lodder fra konferencens periode (samme regel som `beregnLodder()`;
+firmaet findes via spilleren med samme e-mail, ellers via firmanavnet).
+Konferencens egen lodtrækning påvirkes ikke. Warehouse Warrior kobles på senere.
+Admin-side: `spil/kampagne/`.

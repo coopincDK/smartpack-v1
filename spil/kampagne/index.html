@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#010E22">
+<title>Kampagnetilmeldinger – Packrush</title>
+<link rel="icon" href="../icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@700;800&display=swap">
+<style>
+:root{--bg:#010E22;--panel:#0D1520;--line:#243041;--kraft:#C8955A;--orange:#F97316;--green:#3ECF8E;--text:#F1F5F9;--muted:#94A3B8;
+  --display:"Inter Tight",Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--body:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--text);font:15px/1.5 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 16px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+header img{height:30px}
+h1{font:800 clamp(26px,5vw,38px)/1.05 var(--display);letter-spacing:-.02em;margin:0 0 6px}
+p.sub{color:var(--muted);margin:0 0 20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat .n{font:800 28px/1 var(--display)}
+.stat .l{color:var(--muted);font-size:13px;margin-top:6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 14px}
+a.btn,button{font:700 14px/1 var(--body);border:0;border-radius:10px;padding:12px 16px;cursor:pointer;color:#1a0d00;background:var(--orange);text-decoration:none;display:inline-block}
+button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+input[type=search]{background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--text);font:15px var(--body);padding:11px 12px;min-width:220px;flex:1}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:var(--panel);position:sticky;top:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td b{font-weight:700}
+.pill{display:inline-block;font:600 11px var(--body);padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin:0 4px 2px 0}
+.pill.ja{color:var(--green);border-color:rgba(62,207,142,.45)}
+.empty{padding:26px;text-align:center;color:var(--muted)}
+.msg{background:rgba(234,88,12,.14);color:#fdba74;border-radius:10px;padding:12px 14px;margin:10px 0}
+.msg a{color:#fdba74}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><img src="../packrush-logo.webp" alt="Packrush"><a class="btn" href="../partner/admin" style="background:transparent;color:var(--muted);border:1px solid var(--line)">Partneradmin</a></header>
+  <h1>Kampagnetilmeldinger</h1>
+  <p class="sub" id="sub">Tilmeldinger fra smartpack.dk/messe til lodtrækningen.</p>
+  <div id="fejl"></div>
+  <div id="indhold" hidden>
+    <div class="stats">
+      <div class="stat"><div class="n" id="s-antal">–</div><div class="l">tilmeldte</div></div>
+      <div class="stat"><div class="n" id="s-spil">–</div><div class="l">har også spillet</div></div>
+      <div class="stat"><div class="n" id="s-mail">–</div><div class="l">ja til maillisten</div></div>
+      <div class="stat"><div class="n" id="s-lodder">–</div><div class="l">lodder i alt</div></div>
+    </div>
+    <div class="row">
+      <input type="search" id="q" placeholder="Søg på navn, firma, klub eller mail">
+      <a class="btn" id="csv" href="#">Hent som CSV (Excel)</a>
+      <button class="ghost" id="opd">Opdatér</button>
+    </div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Navn</th><th>Klub</th><th>Firma</th><th>Kontakt</th><th>Fra</th><th>Mailliste</th><th>Tilmeldt</th><th class="num">Tilmelding</th><th class="num">Packrush</th><th class="num">I alt</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+</div>
+<script>
+const API = '/api/spil', KAMP = 'ehandelsdagen-2027';
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dato = (d) => d ? new Date(d).toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+const KILDE = { messe: 'Messesiden', ehandelskonferencen: 'E-handelskonferencen', digiday: 'Digi Day', andet: 'Andet' };
+let data = [];
+function vis() {
+  const q = $('q').value.trim().toLowerCase();
+  const l = q ? data.filter((r) => [r.navn, r.firma, r.klub, r.email].join(' ').toLowerCase().includes(q)) : data;
+  $('rows').innerHTML = l.length ? l.map((r) => `<tr>
+    <td><b>${esc(r.navn)}</b></td><td>${esc(r.klub)}</td>
+    <td>${esc(r.firma)}${false ? `` : ''}</td>
+    <td><a href="mailto:${esc(r.email)}" style="color:var(--text)">${esc(r.email)}</a>${r.telefon ? '<br>' + esc(r.telefon) : ''}</td>
+    <td>${(r.kilder || []).map((k) => `<span class="pill">${esc(KILDE[k] || k)}</span>`).join('')}</td>
+    <td>${r.nyhedsbrev ? '<span class="pill ja">ja</span>' : '<span class="pill">nej</span>'}</td>
+    <td>${esc(dato(r.oprettet))}</td>
+    <td class="num">${r.lodder_basis}</td><td class="num">${r.lodder_spil || (r.har_spillet ? '0' : '')}</td><td class="num"><b>${r.lodder}</b></td></tr>`).join('')
+    : '<tr><td colspan="10" class="empty">Ingen tilmeldinger endnu.</td></tr>';
+}
+async function load() {
+  let res; try { res = await fetch(API + '/admin/kampagne/' + KAMP, { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return fejl('Ingen forbindelse til serveren.'); }
+  if (res.status === 401 || res.status === 403) return fejl('Du er ikke logget ind som admin. Log ind via <a href="/spil/">smartpack.dk/spil</a> → Login → Arrangør, og kom tilbage hertil.');
+  if (!res.ok) return fejl('Serveren svarede med fejl ' + res.status + '. Er den nye serverkode lagt op?');
+  const b = await res.json();
+  data = b.tilmeldinger || [];
+  $('sub').textContent = `Tilmeldinger fra smartpack.dk/messe til lodtrækningen på ${b.kampagne.lodtraekning}. Hver tilmelding giver ${b.kampagne.basislodder} lodder, og lodder fra Packrush lægges oveni. Warehouse Warrior kobles på senere.`;
+  $('s-antal').textContent = b.antal; $('s-mail').textContent = b.mailliste; $('s-lodder').textContent = b.lodder_i_alt;
+  $('s-spil').textContent = data.filter((r) => r.har_spillet).length;
+  $('fejl').innerHTML = ''; $('indhold').hidden = false; vis();
+}
+function fejl(t) { $('fejl').innerHTML = '<div class="msg">' + t + '</div>'; $('indhold').hidden = true; }
+$('q').addEventListener('input', vis);
+$('opd').addEventListener('click', load);
+$('csv').addEventListener('click', (e) => { e.preventDefault(); location.href = API + '/admin/kampagne/' + KAMP + '.csv'; });
+load();
+</script>
+</body>
+</html>
