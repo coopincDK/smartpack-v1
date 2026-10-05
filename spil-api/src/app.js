@@ -10,6 +10,7 @@ const { adminRouter } = require('./routes/admin');
 const { partnersRouter } = require('./routes/partners');
 const { konkurrenceRouter } = require('./routes/konkurrence');
 const { kampagneRouter } = require('./routes/kampagne');
+const { hjemmesideRouter } = require('./routes/hjemmeside');
 const { createRateLimiter } = require('./middleware/rateLimit');
 
 // Bygger Express-appen. `ws` (fra src/ws.js) er valgfri — bruges til at
@@ -55,6 +56,7 @@ function createApp(pool, ws, opts) {
   app.use(partnersRouter(pool));
   app.use(konkurrenceRouter(pool));
   app.use(kampagneRouter(pool));
+  app.use(hjemmesideRouter());
 
   app.use((req, res) => {
     res.status(404).json({ fejl: 'Ukendt endpoint.', kode: 'ikke_fundet' });

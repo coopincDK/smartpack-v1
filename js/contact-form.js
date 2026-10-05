@@ -141,6 +141,7 @@
     '    <div class="sp-field"><label for="spcov-company">Virksomhed <span class="req">*</span></label><input type="text" id="spcov-company" placeholder="Webshop ApS" autocomplete="organization"></div>',
     '  </div>',
     '  <div class="sp-field"><label for="spcov-email">E-mail <span class="req">*</span></label><input type="email" id="spcov-email" placeholder="mikkel@firma.dk" autocomplete="email"></div>',
+    '  <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label for="spcov-hp">Lad dette felt være tomt</label><input type="text" id="spcov-hp" name="_hp" tabindex="-1" autocomplete="off"></div>',
     '  <div id="spcov-s1-error" class="sp-err">Udfyld venligst navn, virksomhed og en gyldig e-mail.</div>',
     '  <hr class="sp-hr">',
     '  <div class="sp-sect-lbl">Hvad handler det om?</div>',
@@ -497,6 +498,13 @@
 
       if (btn) { btn.disabled = true; btn.textContent = 'Sender...'; }
       var data = collectData();
+
+      /* Kopi til SmartPacks CRM via Packrush-serveren (nøglen ligger på serveren,
+         ikke her). Fire-and-forget: mailen herunder sendes uanset hvad. */
+      try {
+        var crmBody = Object.assign({}, data, { page: location.href, _hp: (g('spcov-hp') || {}).value || '' });
+        fetch('/api/spil/hjemmeside/kontakt', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(crmBody), keepalive: true }).catch(function () {});
+      } catch (crmErr) { /* ignorer */ }
 
       function openMailto() {
         var to = selectedType === 'learn' ? 'bundlinjeboost@smartpack.dk' : 'support@smartpack.dk';

@@ -1572,3 +1572,27 @@ repoet). `source` = kilden (ehandelskonferencen sendes som `messe`), `newsletter
 + `consentText` kun ved flueben, klub/ordrer/hvor i `notes`. Status gemmes i
 `crm_sendt`/`crm_fejl`. `POST /admin/kampagne/:kampagne/crm-send` (admin)
 sender alle rækker uden `crm_sendt`, højst 500 pr. kald.
+
+## Hjemmesidens kontaktformular → CRM (`src/routes/hjemmeside.js`)
+
+`js/contact-form.js` på smartpack.dk sender (ud over sin egen mail) en kopi til
+`POST /api/spil/hjemmeside/kontakt`. Serveren sender den videre til
+`https://crm.smartpack.dk/api/v1/contact-form` med `SMARTPACK_CRM_KEY`, så nøglen
+aldrig er i browseren. Felter: name, email, phone, company, message (lead:
+kommentaren; generel/support: emne + besked), page, type (Lead/Generel/Support)
+og de øvrige svar (cvr, ordrer, webshop, erp, fragt, hastegrad, hørt via) som
+ekstra felter, der havner i CRM-notatet. Flueben for nyhedsmails →
+`newsletter: true` + `consentText: "Ja tak til praktiske tips om lager og
+logistik"`. Honeypot-feltet `_hp` sendes med. Svaret er altid `{ok:true, crm}`
+(20/min/IP); intet gemmes i Packrush' database.
+
+## Packrush-spillere → CRM (`src/crmSynk.js`, migration `019_crm_synk.sql`)
+
+Et baggrundsjob (startet i `server.js`, hvert minut) læser samtykke-loggen for
+listen `smartpack` fra `crm_synk.sidste_id`: `bekraeftet` → `POST /newsletter`
+(source `packrush`, newsletter true, spillerens præcise tekst og tidspunkt),
+`trukket_tilbage` → `POST /newsletter/unsubscribe`. Uden `SMARTPACK_CRM_KEY`
+sker intet; der fortsættes fra samme sted, når nøglen er lagt ind (også de
+spillere, der allerede har sagt ja). Netværksfejl/5xx/429: stop og prøv igen;
+øvrige 4xx: log og spring over. Kun spillere med ja til SmartPack sendes;
+partnernes lister sendes aldrig til CRM'et.
