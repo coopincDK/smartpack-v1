@@ -14,6 +14,11 @@ const express = require('express');
 const { createRateLimiter } = require('../middleware/rateLimit');
 const { sendTilCrm, crmKontaktUrl } = require('../crm');
 
+// Footerens nyhedsbrevstilmelding (js/footer.js), den præcise tekst ved fluebenet.
+const FOOTER_NYHEDSBREV_TEKST = 'Jeg accepterer at modtage nyhedsmail fra SmartPack. Du kan afmelde dig igen når som helst.';
+const nlUrl = () => process.env.SMARTPACK_CRM_URL || 'https://crm.smartpack.dk/api/v1/newsletter';
+const kunTekst = (b, felter) => felter.every((k) => b[k] === undefined || b[k] === null || (typeof b[k] === 'string' && b[k].length <= 500));
+
 // Den præcise tekst ved fluebenet i kontaktformularen.
 const KONTAKT_NYHEDSBREV_TEKST = 'Ja tak til praktiske tips om lager og logistik';
 const TYPER = { learn: 'Lead', general: 'Generel', support: 'Support' };
@@ -123,7 +128,48 @@ function hjemmesideRouter() {
     }
   });
 
+  // Footerens nyhedsbrev: { email, name?, company?, page?, _hp? }. Kræver at fluebenet
+  // er sat i browseren (consent: true); teksten ved fluebenet sendes med som samtykke.
+  router.post('/hjemmeside/nyhedsbrev', limiter, async (req, res, next) => {
+    try {
+      const b = req.body || {};
+      if (typeof b !== 'object' || Array.isArray(b) || !kunTekst(b, ['email', 'name', 'company', 'page', '_hp'])) {
+        return res.status(400).json({ fejl: 'Formularen indeholder ugyldige felter.', kode: 'ugyldigt_input' });
+      }
+      const email = t(b.email, 200);
+      if (!email || !EMAIL_RE.test(email)) return res.status(400).json({ fejl: 'Skriv en gyldig e-mail.', kode: 'ugyldig_email' });
+      if (b.consent !== true) return res.status(400).json({ fejl: 'Sæt flueben for at tilmelde dig.', kode: 'mangler_samtykke' });
+      const body = { email, source: 'hjemmeside', newsletter: true, consentText: FOOTER_NYHEDSBREV_TEKST, notes: { formular: 'Nyhedsbrev i footeren' } };
+      if (t(b.name, 120)) body.name = t(b.name, 120);
+      if (t(b.company, 160)) body.company = t(b.company, 160);
+      if (t(b.page, 500)) body.notes.side = t(b.page, 500);
+      if (b._hp) body._hp = t(b._hp, 200);
+      const r = await sendTilCrm(body, nlUrl());
+      if (!r.ok) console.error('[crm] nyhedsbrev', email, r.fejl);
+      res.json({ ok: true, crm: r.ok });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  // Afmelding fra footerens "afmeld"-vindue: { email }.
+  router.post('/hjemmeside/afmeld', limiter, async (req, res, next) => {
+    try {
+      const b = req.body || {};
+      if (typeof b !== 'object' || Array.isArray(b) || !kunTekst(b, ['email'])) {
+        return res.status(400).json({ fejl: 'Ugyldige felter.', kode: 'ugyldigt_input' });
+      }
+      const email = t(b.email, 200);
+      if (!email || !EMAIL_RE.test(email)) return res.status(400).json({ fejl: 'Skriv en gyldig e-mail.', kode: 'ugyldig_email' });
+      const r = await sendTilCrm({ email, source: 'hjemmeside' }, nlUrl() + '/unsubscribe');
+      if (!r.ok) console.error('[crm] afmeld', email, r.fejl);
+      res.json({ ok: true, crm: r.ok });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   return router;
 }
 
-module.exports = { hjemmesideRouter, kontaktTilCrm, KONTAKT_NYHEDSBREV_TEKST };
+module.exports = { hjemmesideRouter, kontaktTilCrm, KONTAKT_NYHEDSBREV_TEKST, FOOTER_NYHEDSBREV_TEKST };

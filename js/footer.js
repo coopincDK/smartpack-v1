@@ -126,6 +126,14 @@
         msg.style.color = '#94a3b8';
         msg.textContent = '';
 
+        /* Kopi til SmartPacks CRM via Packrush-serveren (nøglen ligger på serveren). */
+        try {
+          fetch('/api/spil/hjemmeside/nyhedsbrev', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+            body: JSON.stringify({ email: emailEl.value.toLowerCase().trim(), name: nameEl.value.trim(), company: companyEl.value.trim(), consent: true, page: location.href })
+          }).catch(function () {});
+        } catch (crmErr) { /* ignorer */ }
+
         fetch('https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers', {
           method: 'POST',
           headers: {
@@ -205,6 +213,10 @@
           var msg   = document.getElementById('sp-afmeld-msg');
           btn.disabled = true; btn.textContent = 'Afmelder...';
           btn.disabled = true; btn.textContent = 'Afmelder...';
+          /* Afmeld også i SmartPacks CRM */
+          try {
+            fetch('/api/spil/hjemmeside/afmeld', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ email: email }) }).catch(function () {});
+          } catch (crmErr) { /* ignorer */ }
           // Tjek om email eksisterer, slet derefter
           var SB_URL = 'https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers';
           var SB_KEY = 'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE';

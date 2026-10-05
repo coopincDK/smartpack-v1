@@ -61,3 +61,27 @@ test('uden nøgle svarer endpointet stadig ok, men crm:false', async (t) => {
   assert.equal(r.status, 200);
   assert.equal(r.body.crm, false);
 });
+
+test('footerens nyhedsbrev og afmelding sendes til CRM', async (t) => {
+  const crm = await fakeCrm();
+  process.env.SMARTPACK_CRM_URL = crm.url;
+  process.env.SMARTPACK_CRM_KEY = 'spk_test';
+  const h = await startHarness();
+  t.after(async () => { await h.teardown(); crm.srv.close(); delete process.env.SMARTPACK_CRM_KEY; delete process.env.SMARTPACK_CRM_URL; });
+
+  assert.equal((await api(h.baseUrl, 'POST', '/hjemmeside/nyhedsbrev', { body: { email: 'a@b.dk' } })).status, 400);
+  assert.equal((await api(h.baseUrl, 'POST', '/hjemmeside/nyhedsbrev', { body: { email: { toString: 1 }, consent: true } })).status, 400);
+  const r = await api(h.baseUrl, 'POST', '/hjemmeside/nyhedsbrev', { body: { email: 'Lise@Shop.dk', name: 'Lise', company: 'Shop', consent: true, page: 'https://smartpack.dk/priser' } });
+  assert.equal(r.status, 200);
+  const k = crm.kald[0];
+  assert.equal(k.url, '/api/v1/newsletter');
+  assert.equal(k.body.source, 'hjemmeside');
+  assert.equal(k.body.newsletter, true);
+  assert.match(k.body.consentText, /modtage nyhedsmail fra SmartPack/);
+  assert.equal(k.body.notes.side, 'https://smartpack.dk/priser');
+
+  const a = await api(h.baseUrl, 'POST', '/hjemmeside/afmeld', { body: { email: 'lise@shop.dk' } });
+  assert.equal(a.status, 200);
+  assert.equal(crm.kald[1].url, '/api/v1/newsletter/unsubscribe');
+  assert.equal(crm.kald[1].body.email, 'lise@shop.dk');
+});
