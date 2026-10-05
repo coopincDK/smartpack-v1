@@ -2704,7 +2704,7 @@ function renderLobby(){
     const lod = `${k.lodder} ${k.lodder === 1 ? 'lod' : 'lodder'}`;
     if(!k.har_firma){ tk.classList.add('warn'); tt.append('Skriv jeres firma herunder for at være med i lodtrækningen om præmierne.'); }
     else if(k.udelukket){ tk.classList.add('ok'); tt.append(`${k.firma} står for konkurrencen og kan ikke vinde, men I kan stadig toppe tavlen.`); }
-    else if(!k.paa_deltagerliste){ tk.classList.add('warn'); tt.append(el('b', null, k.firma), ' står ikke på deltagerlisten til konferencen, så I er ikke med i lodtrækningen endnu. Er I med på dagen? Kom forbi SmartPacks stand, så retter vi det.'); }
+    else if(!k.paa_deltagerliste){ tk.classList.add('warn'); tt.append(el('b', null, k.firma), ' står ikke på deltagerlisten til konferencen, så I er ikke med i lodtrækningen endnu. Er I med på dagen? Kom forbi SmartPacks stand og scan QR-koden dér, så bliver I godkendt med det samme.'); }
     else {
       tk.classList.add('ok');
       tt.append(el('b', null, k.firma), ' står på deltagerlisten. ');
