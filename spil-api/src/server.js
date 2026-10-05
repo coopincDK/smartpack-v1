@@ -28,7 +28,28 @@ async function main() {
   return { server, pool };
 }
 
+// En afvist løfte-kæde uden handler (fx en glemt await i baggrundsarbejde) må
+// ikke tage hele serveren ned: log fejlen — kun navn og besked, aldrig
+// request-body eller persondata — og kør videre. Route-fejl går i øvrigt til
+// Express' fejl-handler (middleware/asyncFejl.js) og når aldrig hertil.
+// uncaughtException er derimod ægte ukendt tilstand: log og afslut, så
+// Docker genstarter containeren.
+function installerProcesHandlere() {
+  process.on('unhandledRejection', (aarsag) => {
+    const navn = aarsag && aarsag.name ? aarsag.name : typeof aarsag;
+    const besked = aarsag && aarsag.message ? aarsag.message : '';
+    // eslint-disable-next-line no-console
+    console.error(`[spil-api] unhandledRejection: ${navn}: ${besked}`);
+  });
+  process.on('uncaughtException', (e) => {
+    // eslint-disable-next-line no-console
+    console.error('[spil-api] uncaughtException:', e);
+    process.exit(1);
+  });
+}
+
 if (require.main === module) {
+  installerProcesHandlere();
   main().catch((e) => {
     // eslint-disable-next-line no-console
     console.error(e);

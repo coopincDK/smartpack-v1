@@ -12,6 +12,7 @@
 
 const express = require('express');
 const { createRateLimiter } = require('../middleware/rateLimit');
+const { kraevSmartpackOrigin } = require('../middleware/origin');
 const { sendTilCrm, crmKontaktUrl } = require('../crm');
 
 // Footerens nyhedsbrevstilmelding (js/footer.js), den præcise tekst ved fluebenet.
@@ -96,7 +97,6 @@ function kontaktTilCrm(b) {
     body.newsletter = true;
     body.consentText = KONTAKT_NYHEDSBREV_TEKST;
   }
-  if (b._hp) body._hp = t(b._hp, 200);
   return body;
 }
 
@@ -107,20 +107,37 @@ function hjemmesideRouter() {
     max: 20,
     besked: 'For mange henvendelser lige nu. Prøv igen om et øjeblik.',
   });
+  const afmeldIpLimiter = createRateLimiter({
+    windowMs: 60 * 1000,
+    max: 10,
+    besked: 'For mange afmeldinger lige nu. Prøv igen om et øjeblik.',
+  });
+  // Pr. e-mail (kun tekst; alt andet samles under én nøgle og afvises af handleren).
+  const afmeldEmailLimiter = createRateLimiter({
+    windowMs: 10 * 60 * 1000,
+    max: 3,
+    keyFn: (req) => {
+      const e = req.body && req.body.email;
+      return typeof e === 'string' ? 'e:' + e.trim().toLowerCase().slice(0, 200) : 'ugyldig';
+    },
+    besked: 'Der er allerede sendt en afmelding for denne e-mail. Prøv igen senere.',
+  });
 
-  router.post('/hjemmeside/kontakt', limiter, async (req, res, next) => {
+  router.post('/hjemmeside/kontakt', limiter, kraevSmartpackOrigin, async (req, res, next) => {
     try {
       const b = req.body || {};
       if (typeof b !== 'object' || Array.isArray(b) || ugyldigtFelt(b)) {
         return res.status(400).json({ fejl: 'Formularen indeholder ugyldige felter.', kode: 'ugyldigt_input' });
       }
+      // Honeypot: et udfyldt skjult felt er en bot. Svar ok, men send intet videre.
+      if (t(b._hp)) return res.json({ ok: true, crm: false });
       const email = t(b.email, 200);
       if (!email || !EMAIL_RE.test(email)) {
         return res.status(400).json({ fejl: 'Skriv en gyldig e-mail.', kode: 'ugyldig_email' });
       }
       if (!t(b.name)) return res.status(400).json({ fejl: 'Skriv dit navn.', kode: 'mangler_navn' });
       const r = await sendTilCrm(kontaktTilCrm(b), crmKontaktUrl());
-      if (!r.ok) console.error('[crm] kontaktformular', email, r.fejl);
+      if (!r.ok) console.error('[crm] kontaktformular', r.status ? 'HTTP ' + r.status : r.fejl);
       // Formularen har sin egen mail-afsendelse, så svaret er altid ok; crm fortæller om kopien kom frem.
       res.json({ ok: true, crm: r.ok });
     } catch (e) {
@@ -130,12 +147,14 @@ function hjemmesideRouter() {
 
   // Footerens nyhedsbrev: { email, name?, company?, page?, _hp? }. Kræver at fluebenet
   // er sat i browseren (consent: true); teksten ved fluebenet sendes med som samtykke.
-  router.post('/hjemmeside/nyhedsbrev', limiter, async (req, res, next) => {
+  router.post('/hjemmeside/nyhedsbrev', limiter, kraevSmartpackOrigin, async (req, res, next) => {
     try {
       const b = req.body || {};
       if (typeof b !== 'object' || Array.isArray(b) || !kunTekst(b, ['email', 'name', 'company', 'page', '_hp'])) {
         return res.status(400).json({ fejl: 'Formularen indeholder ugyldige felter.', kode: 'ugyldigt_input' });
       }
+      // Honeypot: udfyldt = bot. Svar ok, men send intet videre.
+      if (t(b._hp)) return res.json({ ok: true, crm: false });
       const email = t(b.email, 200);
       if (!email || !EMAIL_RE.test(email)) return res.status(400).json({ fejl: 'Skriv en gyldig e-mail.', kode: 'ugyldig_email' });
       if (b.consent !== true) return res.status(400).json({ fejl: 'Sæt flueben for at tilmelde dig.', kode: 'mangler_samtykke' });
@@ -143,17 +162,17 @@ function hjemmesideRouter() {
       if (t(b.name, 120)) body.name = t(b.name, 120);
       if (t(b.company, 160)) body.company = t(b.company, 160);
       if (t(b.page, 500)) body.notes.side = t(b.page, 500);
-      if (b._hp) body._hp = t(b._hp, 200);
       const r = await sendTilCrm(body, nlUrl());
-      if (!r.ok) console.error('[crm] nyhedsbrev', email, r.fejl);
+      if (!r.ok) console.error('[crm] nyhedsbrev', r.status ? 'HTTP ' + r.status : r.fejl);
       res.json({ ok: true, crm: r.ok });
     } catch (e) {
       next(e);
     }
   });
 
-  // Afmelding fra footerens "afmeld"-vindue: { email }.
-  router.post('/hjemmeside/afmeld', limiter, async (req, res, next) => {
+  // Afmelding fra footerens "afmeld"-vindue: { email }. Anonym (ingen verifikation af
+  // ejeren), så den har sin egen grænse pr. IP og pr. e-mail ud over Origin-tjekket.
+  router.post('/hjemmeside/afmeld', afmeldIpLimiter, kraevSmartpackOrigin, afmeldEmailLimiter, async (req, res, next) => {
     try {
       const b = req.body || {};
       if (typeof b !== 'object' || Array.isArray(b) || !kunTekst(b, ['email'])) {
@@ -162,7 +181,7 @@ function hjemmesideRouter() {
       const email = t(b.email, 200);
       if (!email || !EMAIL_RE.test(email)) return res.status(400).json({ fejl: 'Skriv en gyldig e-mail.', kode: 'ugyldig_email' });
       const r = await sendTilCrm({ email, source: 'hjemmeside' }, nlUrl() + '/unsubscribe');
-      if (!r.ok) console.error('[crm] afmeld', email, r.fejl);
+      if (!r.ok) console.error('[crm] afmeld', r.status ? 'HTTP ' + r.status : r.fejl);
       res.json({ ok: true, crm: r.ok });
     } catch (e) {
       next(e);
