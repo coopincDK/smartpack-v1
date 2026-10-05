@@ -54,7 +54,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="../../js/header.js"></script>
+<script src="../../js/header.js?v=20261005"></script>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
   <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Typiske integrationsfejl</span></nav>
@@ -162,7 +162,7 @@
 
 </main>
 <div id="sp-footer"></div>
-<script src="../../js/footer.js"></script>
+<script src="../../js/footer.js?v=20261005"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den farligste type integrationsfejl?","acceptedAnswer":{"@type":"Answer","text":"Stille fejl. Systemet rapporterer intet, men data overføres ikke. Det opdages typisk af kunder eller ved manuel optælling. Dage kan gå inden nogen opdager det."}},{"@type":"Question","name":"Hvorfor udløber BC client secret?","acceptedAnswer":{"@type":"Answer","text":"Microsoft kræver rotation af client secrets i Azure AD/Entra ID. Maksimal levetid er 2 år. Det er en sikkerhedsforanstaltning der sniger sig op på dig uden reminder."}},{"@type":"Question","name":"Hvad sker der, hvis en webhook sendes to gange?","acceptedAnswer":{"@type":"Answer","text":"Shopify sender retries ved manglende kvittering. Hvis dit system ikke er idempotent, oprettes der duplikat-ordrer. Implementer idempotency-nøgler baseret på ordre-ID."}},{"@type":"Question","name":"Kan jeg teste integrationer uden rigtige ordrer?","acceptedAnswer":{"@type":"Answer","text":"Ja. Shopify har \"Send test notification\" for webhooks. Business Central og e-conomic kan testes med testmiljøer/sandbox. Brug altid sandbox ved opsætning."}},{"@type":"Question","name":"Hvad er delvis synkronisering, og hvad gør jeg ved det?","acceptedAnswer":{"@type":"Answer","text":"Kun dele af data overføres, fx ordren importeres men adresse mangler. Detekteres via validering ved import og fejlkø med notifikation."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Typiske integrationsfejl i lagerstyring: og hvordan du undgår dem", "description": "Integrationsfejl i WMS sker oftest usynligt og opdages sent. Lær om stille fejl, BC client secret, leveringsmetode-mapping og hvordan du undgår dem.", "datePublished": "2025-04-30", "dateModified": "2026-09-15", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/typiske-integrationsfejl", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/typiske-integrationsfejl"}, "inLanguage": "da-DK"}</script>

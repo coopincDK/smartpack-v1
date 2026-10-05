@@ -54,7 +54,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="../../js/header.js"></script>
+<script src="../../js/header.js?v=20261005"></script>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
   <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>&rsaquo;</span><a href="../">Viden</a><span>&rsaquo;</span><a href="./">Tech &amp; Integration</a><span>&rsaquo;</span><span>Shopify integration</span></nav>
@@ -160,7 +160,7 @@
 
 </main>
 <div id="sp-footer"></div>
-<script src="../../js/footer.js"></script>
+<script src="../../js/footer.js?v=20261005"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad kræves for at integrere Shopify med et WMS?","acceptedAnswer":{"@type":"Answer","text":"En custom app i Shopify med korrekte API-scopes, webhook-konfiguration med HMAC-validering, leveringsmetode-mapping og fulfillment-endpoint."}},{"@type":"Question","name":"Hvad er shopify_custom_dk?","acceptedAnswer":{"@type":"Answer","text":"Den interne Shopify-reference for brugerdefinerede leveringsmetoder (custom shipping rates). Skal mappes korrekt i WMS til den tilsvarende fragtprofil."}},{"@type":"Question","name":"Kan jeg integrere Shopify uden webhook og kun bruge API-polling?","acceptedAnswer":{"@type":"Answer","text":"Ja, men det giver forsinkelse på ordrebehandling. Webhooks er stærkt anbefalet for ordrehændelser. API-polling kan bruges som fallback."}},{"@type":"Question","name":"Hvad er Shopify API-versioner?","acceptedAnswer":{"@type":"Answer","text":"Shopify versionerer sit API kvartalsvis (fx 2024-01). ældre versioner udfases med 12 måneders varsel. Brug altid versionerede endpoints."}},{"@type":"Question","name":"Hvad sker der, hvis min Shopify custom app slettes?","acceptedAnswer":{"@type":"Answer","text":"Access token invalideres øjeblikkeligt. Alle integrationer holder op med at virke. Gem app-credentials sikkert og hav procedure for genoprettelse."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Shopify integration med WMS: komplet opsætningsguide", "description": "Shopify WMS integration kræver webhooks, HMAC-validering og korrekt leveringsmetode-mapping. Lær de gotchas du ikke finder før du er i produktion.", "datePublished": "2025-04-30", "dateModified": "2026-09-15", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/shopify-integration", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/shopify-integration"}, "inLanguage": "da-DK"}</script>

@@ -51,7 +51,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="../../js/header.js"></script>
+<script src="../../js/header.js?v=20261005"></script>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
   <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>Fulfillment sync</span></nav>
@@ -161,7 +161,7 @@
 
 </main>
 <div id="sp-footer"></div>
-<script src="../../js/footer.js"></script>
+<script src="../../js/footer.js?v=20261005"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er fulfillment i Shopify?","acceptedAnswer":{"@type":"Answer","text":"En fulfillment er en registrering i Shopify om, at (dele af) en ordre er afsendt. Den indeholder tracking-nummer, fragtmand og tidsstempler. Oprettelse af fulfillment trigger forsendelsesmailen til kunden."}},{"@type":"Question","name":"Hvornår sendes forsendelsesmailen til kunden?","acceptedAnswer":{"@type":"Answer","text":"Shopify sender forsendelsesmailen automatisk, når en fulfillment oprettes med notify_customer: true. Det sker typisk inden for sekunder."}},{"@type":"Question","name":"Kan jeg sende fulfillment manuelt?","acceptedAnswer":{"@type":"Answer","text":"Ja, direkte i Shopify admin. Men i et WMS-setup bør det ske automatisk. Manuel fulfillment er fejlbehæftet og ikke skalerbart."}},{"@type":"Question","name":"Hvad sker der, hvis jeg sender fulfillment to gange til samme ordre?","acceptedAnswer":{"@type":"Answer","text":"Shopify vil typisk returnere fejl (ordre er allerede fully fulfilled). Implementér idempotency-check i WMS baseret på Shopify fulfillment-ID."}},{"@type":"Question","name":"Kan fulfillment-sync bruges til dropshipping?","acceptedAnswer":{"@type":"Answer","text":"Ja. Dropshipping-leverandørens system sender fulfillment-bekræftelse til WMS/webshop, når varen er afsendt fra leverandørens lager."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Fulfillment sync , fra plukket ordre til bekræftet forsendelse", "description": "Fulfillment sync sender tracking til Shopify ved afsendelse og udløser forsendelsesmailen til kunden. Se fejltyper, retry-logik og best practices.", "datePublished": "2025-04-30", "dateModified": "2026-09-15", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/fulfillment-sync", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/fulfillment-sync"}, "inLanguage": "da-DK"}</script>

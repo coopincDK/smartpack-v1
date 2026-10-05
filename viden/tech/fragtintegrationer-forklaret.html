@@ -51,7 +51,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="../../js/header.js"></script>
+<script src="../../js/header.js?v=20261005"></script>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
   <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Tech &amp; Integration</a><span>›</span><span>Fragtintegrationer</span></nav>
@@ -176,7 +176,7 @@ Authorization: Bearer {access_token}
 
 </main>
 <div id="sp-footer"></div>
-<script src="../../js/footer.js"></script>
+<script src="../../js/footer.js?v=20261005"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er MISKOS-nummer og hvem har det?","acceptedAnswer":{"@type":"Answer","text":"Et 9-cifret PostNord-kundenummer, der identificerer din virksomhed i PostNords system. Det udleveres af PostNord ved aftaleoprettelse. Det er obligatorisk i alle API-kald til PostNord."}},{"@type":"Question","name":"Hvad er GLS metode-nøgler?","acceptedAnswer":{"@type":"Answer","text":"Interne identifikatorer for GLS-fragtprodukter brugt i API-integration. De tre primære: gls_private_droppoint, gls_business_delivery, gls_flex_delivery. Skal matches præcist mod webshop-leveringsmetoder."}},{"@type":"Question","name":"Hvad sker der, hvis fragtmand-API er nede?","acceptedAnswer":{"@type":"Answer","text":"Pakkens label kan ikke genereres. WMS bør have alert ved API-fejl og procedure for manuel bestilling som backup."}},{"@type":"Question","name":"Kan jeg sende med flere fragtmænd fra samme WMS?","acceptedAnswer":{"@type":"Answer","text":"Ja. WMS konfigureres med fragtprofiler pr. fragtmand. Valg af fragtmand sker automatisk baseret på ordrekriterierne: leveringsland, fragtmetode valgt af kunden, pakke-dimensioner."}},{"@type":"Question","name":"Hvad er ZPL-format til fragtlabels?","acceptedAnswer":{"@type":"Answer","text":"Zebra Programming Language, et printerspecifikt format til thermallabel-printere. Hurtigere og mere præcis end PDF til høj-volumen labelprint. Understøttes af de fleste fragtmænd."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Fragtintegrationer forklaret , GLS, PostNord, Bring og hvad der skiller dem", "description": "GLS metode-nøgler, PostNord MISKOS-nummer og Bring telefonnummer-format. Den tekniske guide til fragtintegrationer i dit WMS.", "datePublished": "2025-04-30", "dateModified": "2026-09-15", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/tech/fragtintegrationer-forklaret", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/tech/fragtintegrationer-forklaret"}, "inLanguage": "da-DK"}</script>

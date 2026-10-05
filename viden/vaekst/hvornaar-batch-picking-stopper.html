@@ -51,7 +51,7 @@
 </head>
 <body>
 <div id="sp-header"></div>
-<script src="../../js/header.js"></script>
+<script src="../../js/header.js?v=20261005"></script>
 <main id="main-content">
 <div class="article-page"><div class="article-wrap">
   <nav class="article-breadcrumb"><a href="../../">SmartPack</a><span>›</span><a href="../">Viden</a><span>›</span><a href="./">Vækst</a><span>›</span><span>Batch picking grænser</span></nav>
@@ -130,7 +130,7 @@
 
 </main>
 <div id="sp-footer"></div>
-<script src="../../js/footer.js"></script>
+<script src="../../js/footer.js?v=20261005"></script>
 <script src="../../js/main.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Hvad er den optimale batchstørrelse?","acceptedAnswer":{"@type":"Answer","text":"8 til 16 ordrer per tur er ikke et dokumenteret branchetal. Det er hvad der i praksis kan være på en plukkevogn og stadig holdes logisk adskilt. Dit præcise optimum afhænger af layout og ordrekompleksitet, så mål din fejlrate ved forskellige størrelser."}},{"@type":"Question","name":"Kan man batch-picke ordrer med mange linjer?","acceptedAnswer":{"@type":"Answer","text":"Op til fem linjer kan lade sig gøre, hvis sorteringen sker ved pakkestationen med scanning som kontrol i stedet for i rum på vognen. Over fem linjer bliver sorteringen tung, og zone picking eller wave picking er ofte bedre."}},{"@type":"Question","name":"Hvad gør SmartPack ved batch-optimering?","acceptedAnswer":{"@type":"Answer","text":"SmartPack bruger TSP-algoritmer til at clustere ordrer med geografisk overlap og A*-pathfinding til at optimere ruterne inden for hvert batch."}},{"@type":"Question","name":"Hvordan undgår jeg sorterings-fejl?","acceptedAnswer":{"@type":"Answer","text":"Scanner hvert pluk og lad WMS tildele det korrekte rum/kasse. Manuel sortering under tidspres er fejlkilden."}},{"@type":"Question","name":"Hvornår skal jeg skifte fra batch til wave picking?","acceptedAnswer":{"@type":"Answer","text":"Når dit daglige volumen overstiger 500 ordrer med høj ordrelinjer-kompleksitet. Wave picking koordinerer plukkere på tværs af zoner og egner sig til høj volumen."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Hvornår holder batch picking op med at virke?", "description": "Batch picking er effektivt op til 16 ordrer per batch. Over 20 fordobles fejlraten. Se hvornår strategien knækker og hvad du skal gøre i stedet.", "datePublished": "2025-04-30", "dateModified": "2026-09-21", "author": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk"}, "publisher": {"@type": "Organization", "@id": "https://smartpack.dk/#organization", "name": "SmartPack ApS", "url": "https://smartpack.dk", "logo": {"@type": "ImageObject", "url": "https://smartpack.dk/assets/cropped-favicon-smartpack.png"}}, "url": "https://smartpack.dk/viden/vaekst/hvornaar-batch-picking-stopper", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://smartpack.dk/viden/vaekst/hvornaar-batch-picking-stopper"}, "inLanguage": "da-DK"}</script>
