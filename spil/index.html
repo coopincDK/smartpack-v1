@@ -64,6 +64,7 @@ p{margin:0}
 .chip.crown .dot{background:var(--yellow);box-shadow:0 0 0 0 rgba(249,115,22,.6)}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(62,207,142,.5)}70%{box-shadow:0 0 0 9px rgba(62,207,142,0)}100%{box-shadow:0 0 0 0 rgba(62,207,142,0)}}
 .btn{appearance:none;border:0;border-radius:10px;font:700 17px/1 var(--body);padding:17px 18px;cursor:pointer;width:100%;color:var(--text);background:var(--panel-2);transition:transform .12s var(--out)}
+a.btn{display:block;text-align:center;text-decoration:none}
 .btn:active{transform:scale(.97)}
 .btn.primary{background:var(--yellow);color:#fff}
 .btn.primary:active{background:var(--red)}
@@ -136,10 +137,11 @@ input[type=text],input[type=email],input[type=tel],input[type=number],input[type
 .bf input{width:24px;height:24px;flex:none;accent-color:var(--yellow);margin-top:2px}
 .bf strong{display:block}
 .bf.used{opacity:.45;border-color:var(--line);background:transparent}
-.tickets{display:flex;gap:12px;align-items:center;font-size:14px;color:var(--muted)}
+.tickets{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin:4px 0}.tickets .dot{margin-top:4px}.tickets.warn{border-color:#FCD34D66}
 .tickets b{color:var(--text)}
 .tickets .tk{display:flex;gap:3px}
 .tickets .tk i{width:12px;height:18px;border-radius:2px;background:var(--green);display:block}
+.tickets.warn{color:#FCD34D}.tickets.ok{color:var(--muted)}.tickets .dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block;background:var(--green)}.tickets.warn .dot{background:#FCD34D}
 
 /* Mærker */
 .badges{display:flex;flex-wrap:wrap;gap:6px}
@@ -592,8 +594,9 @@ details.more summary:hover{color:var(--text)}
     <h1 class="prlogo"><img src="packrush-logo.webp" alt="Packrush" width="1200" height="233" decoding="async"></h1>
     <div class="rule"></div>
   </div>
-  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du har <b id="st-per">3 liv om dagen</b>, og din bedste score kommer på tavlen.</p>
+  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b> med mulighed for at få flere, og din bedste score kommer på tavlen.</p>
   <div class="live" id="st-live"></div>
+  <p class="muted small" id="st-invited" hidden></p>
   <div class="mission" id="st-mission" hidden></div>
   <button class="btn primary" id="b-me" hidden></button>
   <button class="btn primary" id="b-play">Spil med</button>
@@ -603,20 +606,23 @@ details.more summary:hover{color:var(--text)}
   <p class="boardnote" id="note-top"></p>
   <ol class="board" id="board-top"></ol>
   <button class="link" id="b-all">Se hele listen</button>
-  <div class="foot"><img src="data:image/png;base64,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" alt=""><span>smartpack.dk</span><button class="icon vib" type="button" aria-label="Vibration til og fra" hidden></button><button class="icon snd" type="button" aria-label="Lyd til og fra"></button><button class="link" id="b-admin">Arrangør</button></div>
+  <a class="link" href="praemier/" style="text-align:center">Præmier og partnere</a>
+  <a class="link" href="/spil/vilkaar/" style="text-align:center">Vilkår for konkurrencen</a>
+  <div class="foot"><img src="data:image/png;base64,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" alt=""><span>smartpack.dk</span><button class="icon vib" type="button" aria-label="Vibration til og fra" hidden></button><button class="icon snd" type="button" aria-label="Lyd til og fra"></button><button class="link" id="b-admin">Login</button></div>
 </section>
 
 <section class="screen" id="s-reg">
   <h2 style="font-size:48px">Tilmeld dig</h2>
-  <p class="muted">Allerede tilmeldt? Brug samme e-mail og telefonnummer, så fortsætter du med dine liv.</p>
+  <p class="muted">Allerede tilmeldt? Brug samme e-mail og pinkode, så fortsætter du med dine liv.</p>
   <form id="f-reg" novalidate>
     <label class="f">E-mail<input type="email" id="i-email" autocomplete="email" inputmode="email"></label>
-    <label class="f">Telefon<input type="tel" id="i-phone" autocomplete="tel" inputmode="tel"></label>
+    <label class="f">Pinkode <small>4 cifre, du selv vælger. Du skal bruge den, hvis du logger ind på en anden telefon</small><input type="password" id="i-pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
     <label class="f">Navn på topscoren<input type="text" id="i-name" maxlength="22" autocomplete="nickname" placeholder="Kun første gang"></label>
-    <label class="f" id="l-company">Webshop eller firma <small>Står ved dit navn på topscoren</small><input type="text" id="i-company" maxlength="40" autocomplete="organization" placeholder="Fx minwebshop.dk"></label>
-    <label class="check"><input type="checkbox" id="i-terms">Jeg accepterer, at SmartPack gemmer mine oplysninger til konkurrencen og kontakter mig, hvis jeg vinder.</label>
+    <label class="f" id="l-company">Webshop eller firma <small>Står ved dit navn på topscoren. Skriv det som på din billet til konferencen, så kan I vinde</small><input type="text" id="i-company" maxlength="40" autocomplete="organization" placeholder="Fx minwebshop.dk"></label>
+    <label class="check"><input type="checkbox" id="i-terms"><span>Jeg accepterer <a href="/spil/vilkaar/">vilkårene</a>, og at SmartPack gemmer mine oplysninger til konkurrencen og kontakter mig, hvis jeg vinder.</span></label>
     <div class="subs" id="reg-subs"></div>
     <label class="f" id="l-ref">Har du en vens kode? <small>Så får din ven fuld liv, når du har spillet dit første spil</small><input type="text" id="i-ref" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="Fx KX7P"></label>
+    <p class="muted small" id="ref-invited" hidden></p>
     <p class="err" id="reg-err" role="alert"></p>
     <button class="btn primary" type="submit">Fortsæt</button>
     <button class="link" type="button" data-go="s-start">Tilbage</button>
@@ -636,6 +642,7 @@ details.more summary:hover{color:var(--text)}
   <p class="nearmiss" id="l-near"></p>
   <p class="hourline" id="l-hour" hidden></p>
   <label class="bf" id="l-bf"><input type="checkbox" id="bf"><span><strong>Brug Black Friday-vagten</strong><span class="muted small" id="l-bftext">Højere tempo og dobbelte point. Du har én om dagen, så vælg forsøget med omhu.</span></span></label>
+  <div class="tickets" id="l-tickets" hidden></div>
   <label class="f" id="l-firm" hidden>Hvilken webshop eller hvilket firma er du fra? <small>Det står ved dit navn på topscoren</small><input type="text" id="l-firm-i" maxlength="40" placeholder="Fx minwebshop.dk"></label>
   <p class="muted small" id="l-rule">Et liv bruges, så snart du trykker start.</p>
   <button class="btn primary" id="b-start">Start</button>
@@ -643,7 +650,6 @@ details.more summary:hover{color:var(--text)}
   <div class="duelbox" id="l-duel" hidden></div>
   <details class="more" id="l-extra"><summary id="l-xsum">Mission, lodtrækning og koder</summary><div class="xbox">
   <div class="mission" id="l-mission" hidden></div>
-  <div class="tickets" id="l-tickets" hidden></div>
   <div class="codeform" id="l-codeform"><label class="f">Har du en kode? <small>Fra en sms eller fra en ven, der har udfordret dig</small><span class="row"><input type="text" id="l-codei" maxlength="5" autocapitalize="characters" autocomplete="off" placeholder="Fx K7PM"><button class="btn small" id="l-codeb" type="button">Brug koden</button></span></label><p class="err" id="l-codemsg"></p></div>
   <div class="code" id="l-code" hidden></div>
   </div></details>
@@ -651,7 +657,22 @@ details.more summary:hover{color:var(--text)}
   <div class="more-lives" id="l-subs"></div>
   <details class="more"><summary id="l-bsum">Dine mærker</summary><div class="badges" id="l-badges"></div></details>
   <button class="link" id="b-logout">Næste spiller</button>
+  <button class="link" id="b-delme">Slet min profil</button>
 </section>
+<!-- B2: ligger bevidst UDEN FOR enhver .screen-sektion (ikke inde i #s-lobby) — en skærm, der bliver
+     display:none under en åben modal (fx standens idle-timer, "Næste spiller"), ville ellers gøre
+     dialogen usynlig uden at lukke den, og siden ville forblive låst til en reload. show() lukker
+     den desuden altid eksplicit ved ethvert skærmskift, som en ekstra sikkerhed. -->
+<dialog id="d-delpin">
+  <form method="dialog" id="f-delpin">
+    <label class="f">Pinkode <small>Bekræft sletning af din profil ved at skrive din pinkode</small><input type="password" id="i-delpin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label>
+    <p class="err" id="delpin-err" role="alert"></p>
+    <div class="row">
+      <button class="btn ghost" type="button" id="b-delpin-cancel">Annullér</button>
+      <button class="btn primary" type="submit">Slet profilen</button>
+    </div>
+  </form>
+</dialog>
 
 <section class="screen" id="s-game">
   <div class="hud">
@@ -698,10 +719,19 @@ details.more summary:hover{color:var(--text)}
 </section>
 
 <section class="screen" id="s-pin">
-  <h2 style="font-size:44px">Arrangør</h2>
-  <p class="muted">Skriv adgangskoden for at åbne indstillinger og data.</p>
+  <h2 style="font-size:44px">Login</h2>
+  <a class="btn primary" href="partner/">Partnerportal</a>
+  <p class="muted small">Partnere logger ind her med den e-mail og kode, de har fået fra SmartPack.</p>
+  <h3 style="margin-top:12px">Arrangør</h3>
+  <p class="muted">Log ind med din smartpack.dk-mail og din egen kode. Har du kun den fælles kode, så lad e-mail stå tom.</p>
   <form id="f-pin" novalidate>
-    <label class="f">Adgangskode<input type="password" id="i-pin" autocomplete="current-password"></label>
+    <label class="f">E-mail<input type="email" id="i-amail" autocomplete="username" inputmode="email" placeholder="navn@smartpack.dk"></label>
+    <label class="f">Adgangskode<input type="password" id="i-adminpw" autocomplete="current-password"></label>
+    <div id="pin-ny" hidden>
+      <p class="muted small">Første gang skal du vælge din egen kode. Mindst 12 tegn.</p>
+      <label class="f">Ny kode<input type="password" id="i-pinny" autocomplete="new-password"></label>
+      <label class="f">Gentag ny kode<input type="password" id="i-pinny2" autocomplete="new-password"></label>
+    </div>
     <p class="err" id="pin-err" role="alert"></p>
     <button class="btn primary" type="submit">Åbn</button>
     <button class="link" type="button" data-go="s-start">Tilbage</button>
@@ -714,6 +744,7 @@ details.more summary:hover{color:var(--text)}
 
 <section class="screen" id="s-admin">
   <div class="head"><h2>Arrangør</h2><button class="link" data-go="s-start">Tilbage</button></div>
+  <a class="btn ghost small" href="partner/admin.html" target="_blank" rel="noopener">Partnere, præmier og vinder</a>
   <p id="a-stats"></p>
   <div class="hours" id="a-hours"></div>
   <label class="check"><input type="checkbox" id="a-stand">Denne enhed er en standtablet. Den husker ikke spilleren og går tilbage til start efter 2 minutter uden tryk</label>
@@ -729,6 +760,7 @@ details.more summary:hover{color:var(--text)}
     <div class="row"><button class="btn ghost small" id="p-messe">Messe</button><button class="btn ghost small" id="p-month">Månedskonkurrence</button></div>
     <label class="f">Navn på perioden <small>Står på fanen og på standvæggen, fx "Hele messen" eller "Oktober"</small><input type="text" id="c-pname" maxlength="30"></label>
     <label class="f">Perioden starter <small>Scores fra før denne dag tæller ikke i periodens tavle, mission og lodtrækning</small><input type="text" id="c-pstart" placeholder="ÅÅÅÅ-MM-DD" maxlength="10"></label>
+    <label class="f">Perioden slutter <small>Scores fra efter denne dag tæller ikke. Til messen: samme dag som start, så kun messedagen tæller. Tomt betyder ingen slutdato</small><input type="text" id="c-pend" placeholder="ÅÅÅÅ-MM-DD" maxlength="10"></label>
     <label class="f">Arrangementets navn <small>Bruges i lagerrapporten, fx E-handelskonferencen. Tomt betyder ingen</small><input type="text" id="c-event" maxlength="40"></label>
     <div class="grid2">
       <label class="f">Liv pr. dag<input type="number" id="c-per" min="1" max="20"></label>
@@ -758,9 +790,22 @@ details.more summary:hover{color:var(--text)}
   </div>
 
   <div class="adm">
-    <h3>Lodtrækning</h3>
-    <p class="muted small" id="a-raffle"></p>
-    <button class="btn" id="b-draw">Træk en vinder</button>
+    <h3>Præmiekonkurrencen</h3>
+    <p class="muted small" id="a-raffle">Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. Firmaet får 1 lod pr. påbegyndte 500 point i sit bedste spil i spilperioden. Se <a href="/spil/vilkaar/">vilkårene</a>.</p>
+    <label class="f">Deltagerliste <small>Kopiér firmakolonnen fra Dansk Erhvervs Google Sheet og sæt den ind her, ét firma pr. linje. Kopierer du flere kolonner, så skriv nedenfor, hvilken kolonne firmaet står i</small><textarea id="a-dl" style="min-height:90px"></textarea></label>
+    <div class="grid2">
+      <label class="f">Firmaet står i kolonne nr.<input type="number" id="a-dlkol" min="1" max="50" value="1"></label>
+      <label class="f">Sådan<select id="a-dlmode"><option value="erstat">Erstat listen (ny udgave)</option><option value="tilfoej">Tilføj/godkend firmaer (fx et firma, der har stavet navnet anderledes)</option></select></label>
+    </div>
+    <div id="a-tjek"></div>
+    <button class="btn small" id="b-dl">Gem deltagerliste</button>
+    <p class="muted small" id="a-dl-res"></p>
+    <button class="btn small" id="b-lodder">Vis lodder lige nu</button>
+    <div id="a-lodder"></div>
+    <h4 class="sub">QR-kode på standen</h4>
+    <p class="muted small">Print den og hæng den på standen. Scanner en spiller den på messedagen, bliver spillerens firma godkendt til konkurrencen, også selvom navnet er stavet anderledes end på deltagerlisten. Virker kun 8. oktober til kl. 16.30.</p>
+    <div id="a-qr"></div>
+    <button class="btn" id="b-draw">Træk vinderen</button>
     <div id="a-draw"></div>
   </div>
 
@@ -788,6 +833,24 @@ details.more summary:hover{color:var(--text)}
     <label class="f">Listen<select id="a-unlist"></select></label>
     <button class="btn small" id="b-unsub">Afmeld dem fra listen</button>
     <p class="muted small" id="a-unsub-res"></p>
+    <h4 class="sub">Glemt pinkode</h4>
+    <label class="f">Spillerens e-mail <small>Spilleren får en ny pinkode, som kun vises her</small><input type="email" id="a-pinmail" autocomplete="off"></label>
+    <button class="btn small" id="b-pin">Giv ny pinkode</button>
+    <p class="muted small" id="a-pin-res"></p>
+    <h4 class="sub">Admins fra SmartPack</h4>
+    <p class="muted small">Kun @smartpack.dk. Giv kollegaen startkoden mundtligt eller på Slack; den skal skiftes ved første login.</p>
+    <div id="a-users"></div>
+    <div class="grid2">
+      <label class="f">E-mail<input type="email" id="a-umail" placeholder="navn@smartpack.dk" autocomplete="off"></label>
+      <label class="f">Navn<input type="text" id="a-unavn" autocomplete="off"></label>
+    </div>
+    <label class="f">Startkode <small>Mindst 10 tegn</small><input type="text" id="a-ukode" autocomplete="off"></label>
+    <button class="btn small" id="b-uadd">Opret admin</button>
+    <h4 class="sub">Skift din kode</h4>
+    <label class="f">Nuværende kode<input type="password" id="a-kode-gl" autocomplete="current-password"></label>
+    <label class="f">Ny kode <small>Mindst 12 tegn. Dine andre logins bliver logget ud</small><input type="password" id="a-kode-ny" autocomplete="new-password"></label>
+    <label class="f">Gentag ny kode<input type="password" id="a-kode-ny2" autocomplete="new-password"></label>
+    <button class="btn small" id="b-kode">Skift koden</button>
     <h4 class="sub">Nulstil alt</h4>
     <p class="muted small">Sletter ALLE spillere, forsøg og scores permanent. Kan ikke fortrydes. Brug kun før messen starter, aldrig under eller efter.</p>
     <label class="f">Skriv NULSTIL for at bekræfte<input type="text" id="a-resetconfirm" autocomplete="off"></label>
@@ -820,6 +883,33 @@ details.more summary:hover{color:var(--text)}
 /* testtilstand til røgtest: kun aktiv på localhost/127.0.0.1 med ?pr_test=1, virker aldrig i produktion */
 const IS_LOCALHOST = /^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname);
 const TEST_MODE = /(^|[?&])pr_test=1(&|$)/.test(location.search) && IS_LOCALHOST;
+/* QR-koden på standen: /spil/?stand=KODE. Koden gemmes, til spilleren er logget ind (tilmeldingen kommer
+   først, hvis man er ny), og sendes så til serveren, som godkender firmaet til konkurrencen. */
+const STAND_KODE_STORE = 'sp_standkode';
+/* Invitationslink fra en ven: /spil/#ven=KODE eller /spil/?ven=KODE. Koden gemmes, så den udfyldes
+   automatisk ved tilmeldingen, også selvom man først kigger rundt. */
+const VEN_STORE = 'sp_venkode';
+(() => { const m = (location.hash + '&' + location.search).match(/[#?&]ven=([A-Za-z0-9]{4,5})/); if(!m) return;
+  try{ sessionStorage.setItem(VEN_STORE, m[1].toUpperCase()); }catch(e){}
+  try{ history.replaceState(null, '', location.pathname); }catch(e){} })();
+function venKode(){ try{ return sessionStorage.getItem(VEN_STORE) || ''; }catch(e){ return ''; } }
+(() => { const m = location.search.match(/(?:^|[?&])stand=([^&]+)/); if(!m) return;
+  try{ sessionStorage.setItem(STAND_KODE_STORE, decodeURIComponent(m[1])); }catch(e){}
+  try{ history.replaceState(null, '', location.pathname + location.hash); }catch(e){} })();
+function standKodeVentende(){ try{ return sessionStorage.getItem(STAND_KODE_STORE) || ''; }catch(e){ return ''; } }
+function standKodeBrugt(){ try{ sessionStorage.removeItem(STAND_KODE_STORE); }catch(e){} }
+function sendStandKode(){
+  const kode = standKodeVentende(); if(!kode || !current || !getToken()) return;
+  standKodeBrugt();
+  API.stand(kode).then(r => {
+    if(r && r.konkurrence) current.konkurrence = r.konkurrence;
+    toast(`${(r && r.konkurrence && r.konkurrence.firma) || 'Jeres firma'} er godkendt til konkurrencen`);
+    if(screen === 's-lobby') renderLobby();
+  }).catch(e => {
+    if(e && e.kode === 'firma_mangler'){ toast('Skriv jeres firma herunder, og scan koden igen.'); try{ sessionStorage.setItem(STAND_KODE_STORE, kode); }catch(x){} }
+    else toast(e && e.status ? e.message : 'Kunne ikke godkende firmaet. Prøv igen ved standen.');
+  });
+}
 const ROUND_T = TEST_MODE ? 5 : 30, MUTE_STORE = 'packrush.mute';
 const $ = s => document.querySelector(s);
 const EMOJI = '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';
@@ -903,7 +993,7 @@ function meFromServer(m){
     mailTo: noegler.filter(k => k.startsWith('m:')).map(k => k.slice(2)),
     mineNoegler: noegler, todayTicks, samtykker: m.samtykker || [],
     liv: m.liv || null, livAt: Date.now(),
-    beaten, gifts, tickets: m.tickets || 0,
+    beaten, gifts, tickets: m.tickets || 0, konkurrence: m.konkurrence || null,
   };
   return norm(me);
 }
@@ -973,9 +1063,13 @@ function apiFetch(path, opts){
 const API = {
   state(){ return apiFetch('/state', { noAuth: true }); },
   me(){ return getToken() ? apiFetch('/me') : Promise.resolve(null); },
+  stand(kode){ return apiFetch('/me/stand', { method: 'POST', body: { kode } }); },
   register(payload){
     return apiFetch('/players', { method: 'POST', noAuth: true, body: {
-      navn: payload.name, email: payload.email, telefon: payload.phone, firma: payload.company,
+      navn: payload.name, email: payload.email, pin: payload.pin, firma: payload.company,
+      // Telefon er nu valgfrit (brugerens beslutning) og sendes kun med, når sms-fluebenet er sat
+      // ved selve tilmeldingen (se #f-reg's submit-handler, som så kræver det udfyldt).
+      telefon: payload.phone || undefined,
       vennekode: payload.ref || '', udfordringskode: payload.chCode || '',
       tilmeldinger: payload.subs || [], accepterer_betingelser: true,
     } }).then(r => { if(r && r.token) setToken(r.token); return r; });
@@ -1008,6 +1102,14 @@ const API = {
   unsubscribe(listKey){ return apiFetch('/me/subs/' + encodeURIComponent(listKey), { method: 'DELETE' }); },
   /* Firma er valgfrit igen (brugerens beslutning): kan sættes bagefter i lobbyen */
   setCompany(company){ return apiFetch('/me', { method: 'PATCH', body: { firma: company } }); },
+  /* Telefon vises/kræves kun ved sms-fluebenet (se subsBox) — gemmes her, så PUT /me/ticks({keys:
+     ['sms',...]}) ikke længere afvises med telefon_kraeves. */
+  setPhone(phone){ return apiFetch('/me', { method: 'PATCH', body: { telefon: phone } }); },
+  /* "Slet min profil": kontrakten er nu bekræftet i spil-api/API.md på branchen spil-api-backup —
+     DELETE /me {pinkode} (spillerens egen 4-cifrede pinkode, delt spærring med login), 200 {ok:true},
+     403 bekraeftelse_forkert, 429 pin_spaerret/ip_login_spaerret. Branchen er endnu ikke live/merget
+     til main, så en rigtig produktionstest afventer stadig den udrulning. */
+  deleteMe(pinkode){ return apiFetch('/me', { method: 'DELETE', body: { pinkode } }); },
   boost(code){ return apiFetch('/me/boost', { method: 'POST', body: { code } }); },
   challenge(code){ return apiFetch('/me/challenge', { method: 'POST', body: { code } }); },
   seen(ids){ return apiFetch('/me/seen', { method: 'POST', body: ids ? { ids } : {} }); },
@@ -1017,7 +1119,12 @@ const API = {
      om enheden husker sin egen spiller. En stand-tablet/standvæg bør have begge slået til. */
   standLogin(code){ return apiFetch('/stand-login', { method: 'POST', noAuth: true, body: { kode: code } }); },
   admin: {
-    login(password){ return apiFetch('/admin/login', { method: 'POST', body: { password }, noAuth: true, admin: true }); },
+    login(password, email){ return apiFetch('/admin/login', { method: 'POST', body: { password, email: email || '' }, noAuth: true, admin: true }); },
+    users(){ return apiFetch('/admin/brugere', { admin: true }); },
+    standKode(){ return apiFetch('/admin/standkode', { admin: true }); },
+    addUser(email, navn, kode){ return apiFetch('/admin/brugere', { method: 'POST', body: { email, navn, kode }, admin: true }); },
+    resetUser(id, kode){ return apiFetch('/admin/brugere/' + encodeURIComponent(id) + '/nulstil', { method: 'POST', body: { kode }, admin: true }); },
+    closeUser(id){ return apiFetch('/admin/brugere/' + encodeURIComponent(id), { method: 'DELETE', admin: true }); },
     logout(){ return apiFetch('/admin/logout', { method: 'POST', admin: true }); },
     players(){ return apiFetch('/admin/spillere', { admin: true }); },
     config(){ return apiFetch('/admin/config', { admin: true }); },
@@ -1025,7 +1132,13 @@ const API = {
     boostCode(){ return apiFetch('/admin/boostkode', { admin: true }); },
     exportUrl(kind){ return API_BASE + '/admin/eksport/' + kind + '.csv'; },
     draw(kortNavn){ return apiFetch('/admin/lodtraekning', { method: 'POST', body: { kort_navn: kortNavn || cfg.periodName || 'Packrush' }, admin: true }); },
+    saveDeltagerliste(tekst, kolonne, tilstand){ return apiFetch('/admin/deltagerliste', { method: 'POST', body: { tekst, kolonne, tilstand }, admin: true }); },
+    lodder(){ return apiFetch('/admin/konkurrence/lodder', { admin: true }); },
+    traek(){ return apiFetch('/admin/konkurrence/traek', { method: 'POST', admin: true }); },
+    konkStatus(){ return apiFetch('/admin/konkurrence/status', { admin: true }); },
     unsubscribeBulk(liste, emails){ return apiFetch('/admin/afmeld', { method: 'POST', body: { liste, emails }, admin: true }); },
+    changeCode(gammel, ny){ return apiFetch('/admin/skift-kode', { method: 'POST', body: { gammel, ny }, admin: true }); },
+    resetPin(email){ return apiFetch('/admin/nulstil-pin', { method: 'POST', body: { email }, admin: true }); },
     resetAll(){ return apiFetch('/admin/nulstil', { method: 'POST', body: { bekraeft: 'NULSTIL' }, admin: true }); },
     standLoginCode(){ return apiFetch('/admin/stand-login-kode', { method: 'POST', admin: true }); },
   },
@@ -1318,7 +1431,10 @@ const mailPartners = () => String(cfg.mailPartners || '').split(',').map(x => x.
 /* hver liste har sin egen nøgle: 'sp' er SmartPacks egne nyheder, 'm:<partner>' en partners mail, 'sms' sponsorens sms-liste */
 function subOptions(){
   const o = [{ k: 'sp', name: 'SmartPack', text: 'Nyheder fra SmartPack om lager og e-handel på mail', life: false }];
-  mailPartners().forEach(n => o.push({ k: 'm:' + n, name: n, text: `Nyheder fra ${n} på mail`, life: true }));
+  // Partnerne kommer fra partnerportalen (cfg.partnerLister): nøglen er partnerens faste id, og teksten er den
+  // faste samtykketekst med firma og CVR. Findes listen ikke (ingen partnere slået til), bruges navnene som før.
+  const info = new Map((cfg.partnerLister || []).map(l => [l.slug, l]));
+  mailPartners().forEach(n => { const l = info.get(n); o.push({ k: 'm:' + n, name: l ? l.navn : n, text: l ? l.tekst : `Nyheder fra ${n} på mail`, privacy: l ? l.privatlivspolitik : '', life: true }); });
   if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: cfg.smsSponsor, text: `Sms'er om spillet, fx når nogen slår din score. Sendes af ${cfg.smsSponsor}, og du kommer på ${cfg.smsSponsor}s sms-liste`, life: true });
   return o;
 }
@@ -1326,20 +1442,55 @@ function subKeys(p){ const k = []; if(p.marketing) k.push('sp'); (p.mailTo || []
 /* dagens flueben: separat fra den varige tilmelding (subKeys). At fjerne et flueben her afmelder IKKE
    listen varigt (kun "Mine tilmeldinger" gør det) — det betyder blot, at man ikke får dagens liv-bonus. */
 const todayKeys = p => (p && p.todayTicks) || [];
-function subsBox(box, initial, onChange, fold){
+// Brugerens beslutning: telefonnummer vises og kræves KUN, når sms-fluebenet sættes (ikke resten
+// af tilmeldingen) — både ved selve tilmeldingen og ved dagens flueben i lobbyen. knownPhone er den
+// allerede gemte telefon (fra /me, ved genlogin/dagens flueben); er den tom, skal feltet udfyldes.
+function subsBox(box, initial, onChange, fold, knownPhone){
   // "Tilmeld alle" øverst, og hver liste kan fjernes enkeltvis nedenunder
   const opts = subOptions(), chosen = new Set(initial), lifeOpts = opts.filter(o => o.life).length, bonus = cfg.lifeBonus !== false;
   box.replaceChildren();
+  box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
   t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Fluebenene starter tomme hver dag, så du vælger selv. Hver partner, du sætter flueben ved, giver et ekstra liv i dag, og så får du et liv tilbage hver halve time, når du er under 3. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
-  const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button';
+  // Ingen "Tilmeld alle": hver partner skal vælges for sig (vilkår pkt. 12). Knappen findes stadig i koden,
+  // så resten af logikken er uændret, men den vises ikke.
+  const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button'; all.hidden = true;
   head.append(t, all); box.append(head);
   const list = el('div', 'subs-list'), inputs = [];
   opts.forEach(o => {
     const l = el('label', 'check'), i = el('input'); i.type = 'checkbox'; i.checked = chosen.has(o.k); i.dataset.k = o.k;
-    const sp = el('span'); sp.append(o.text + '.'); if(bonus && o.life) sp.append(' ', el('b', 'plus', '+1 liv i dag'));
+    const sp = el('span'); sp.append(/[.!?]$/.test(o.text) ? o.text : o.text + '.');
+    if(o.privacy){ const a = el('a', null, `Læs ${o.name}s privatlivspolitik`); a.href = o.privacy; a.target = '_blank'; a.rel = 'noopener'; sp.append(' ', a); }
+    if(bonus && o.life) sp.append(' ', el('b', 'plus', '+1 liv i dag'));
     l.append(i, sp); list.append(l); inputs.push(i);
-    i.onchange = () => { i.checked ? chosen.add(o.k) : chosen.delete(o.k); sync(); onChange && onChange([...chosen]); };
+    let phoneRow = null;
+    if(o.k === 'sms'){
+      const pl = el('label', 'f'); pl.append('Telefonnummer ', el('small', null, 'Kun til sms, bruges ikke til andet'));
+      const pi = el('input'); pi.type = 'tel'; pi.inputMode = 'tel'; pi.autocomplete = 'tel'; pi.placeholder = 'Fx 12345678'; pi.value = knownPhone || '';
+      pl.append(pi); phoneRow = el('div', 'sms-phone'); phoneRow.append(pl);
+      box._phoneInput = pi;
+      if(onChange){
+        // Lobby (dagens flueben): telefonen skal gemmes (PATCH /me) FØR selve fluebenet sættes —
+        // ved tilmelding (onChange er null) bliver den i stedet sendt med i selve POST /players.
+        const saveBtn = el('button', 'btn small', 'Gem og sæt flueben'); saveBtn.type = 'button';
+        saveBtn.onclick = () => {
+          const v = pi.value.replace(/\D/g, ''); if(v.length < 8) return toast('Skriv et telefonnummer med mindst 8 cifre.');
+          API.setPhone(v).then(() => { current.phone = v; onChange([...chosen]); })
+            .catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme telefonnummeret. Tjek din forbindelse.'));
+        };
+        phoneRow.append(saveBtn);
+      }
+      phoneRow.hidden = !(i.checked && !knownPhone);
+      list.append(phoneRow);
+    }
+    i.onchange = () => {
+      i.checked ? chosen.add(o.k) : chosen.delete(o.k); sync();
+      if(phoneRow) phoneRow.hidden = !(i.checked && !knownPhone);
+      // Lobby: sms lige blevet sat, og telefonen mangler endnu — vent på "Gem og sæt flueben"
+      // ovenfor i stedet for at sende et kald, serveren alligevel ville afvise (telefon_kraeves).
+      if(o.k === 'sms' && i.checked && !knownPhone && onChange) return;
+      onChange && onChange([...chosen]);
+    };
   });
   const sync = () => { const every = inputs.every(i => i.checked); all.textContent = every ? 'Alle er valgt' : 'Tilmeld alle'; all.disabled = every; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
   all.onclick = () => { inputs.forEach(i => { i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge'); onChange && onChange([...chosen]); };
@@ -1376,7 +1527,7 @@ const bfToday = p => todays(p).some(a => a.bf);
 function crownMs(){ const [h, m] = (cfg.crownTime || '16:00').split(':').map(Number); return cphTodayAt(h || 0, m || 0); }
 const F = {
   today: a => a.day === today(),
-  period: a => a.day >= (cfg.periodStart || '2000-01-01'),
+  period: a => a.day >= (cfg.periodStart || '2000-01-01') && (!cfg.periodEnd || a.day <= cfg.periodEnd),
   all: () => true,
   crown: a => a.day === today() && Date.parse(a.end || a.at) <= crownMs(),
 };
@@ -1655,8 +1806,8 @@ class Pluk extends Base {
   tap(x, y){
     const pu = this.elPu;
     if(pu && Math.abs(x - pu.x) < (pu.hw || 120) / 2 && Math.abs(y - pu.y) < (pu.hh || 50) / 2 + 6){
-      this.elPu = null; this.robot = 8; this.robotUsed = true; this.score += 25; this.pop(pu.x, pu.y - 22, 'Element Logic +25', C.text, true);
-      this.say('Element Logic-robotten henter varerne til dig i 8 sek.'); this.burst(pu.x, pu.y, 34, CONF, 320); this.glow(C.text, .4); sfx('power'); return;
+      this.elPu = null; this.robot = 8; this.robotUsed = true; this.score += 25; this.pop(pu.x, pu.y - 22, EL.name + ' +25', C.text, true);
+      this.say(EL.name + '-robotten henter varerne til dig i 8 sek.'); this.burst(pu.x, pu.y, 34, CONF, 320); this.glow(C.text, .4); sfx('power'); return;
     }
     const h = this.cellAt(x, y); if(!h || this.picked[h.i]) return;
     const mx = h.cx + this.cell / 2, my = h.cy + this.cell / 2;
@@ -1686,7 +1837,7 @@ class Pluk extends Base {
   }
   update(dt){
     this.orderT += dt; this.slipIn = Math.min(1, this.slipIn + dt * 4); this.hitT = this.hitT.map(v => Math.max(0, v - dt)); this.tickFx(dt);
-    if(!this.robotUsed && !this.elPu && this.t >= this.elAt){ this.elPu = { x: this.w / 2, y: this.gy - 18, life: 4.5, t: 0 }; this.elAt = 99; sfx('badge'); }
+    if(EL.on && !this.robotUsed && !this.elPu && this.t >= this.elAt){ this.elPu = { x: this.w / 2, y: this.gy - 18, life: 4.5, t: 0 }; this.elAt = 99; sfx('badge'); }
     if(this.elPu){ this.elPu.t += dt; this.elPu.life -= dt; if(this.elPu.life <= 0) this.elPu = null; }
     if(this.robot > 0){ this.robot = Math.max(0, this.robot - dt); if(this.robot === 0) this.say(`Robotten er færdig: ${this.robotPicks} varer hentet`); }
     const ti = this.robot > 0 ? this.grid.indexOf(this.need[this.step]) : -1;
@@ -1695,7 +1846,7 @@ class Pluk extends Base {
   drawRobot(c){
     // Element Logic: robot på skinnen over reolen, der løfter den næste vare op til dig
     if(this.robot <= 0 && !this.elPu) return;
-    if(this.elPu){ const p = this.elPu, d = partnerPill(c, p.x, p.y, 20, 'Element Logic', p.life / 4.5, this.t); p.hw = d.w; p.hh = d.h; }
+    if(this.elPu){ const p = this.elPu, d = partnerPill(c, p.x, p.y, 20, EL.name, p.life / 4.5, this.t); p.hw = d.w; p.hh = d.h; }
     if(this.robot <= 0) return;
     const ti = this.grid.indexOf(this.need[this.step]); if(ti < 0 || this.robotX == null) return;
     const cx = this.gx + (ti % 3) * (this.cell + this.gap), cy = this.gy + Math.floor(ti / 3) * (this.cell + this.gap), rx = this.robotX, ry = this.gy - 10;
@@ -1867,6 +2018,25 @@ const PARTNERS = {
   promo:    { name: 'Active Promotion', dur: 8, text: 'Kampagne i 8 sek.: flere ordrer, og hver ordre er dobbelt så meget værd.' },
   sprii:    { name: 'Sprii', dur: 8, text: 'Sprii går live i 8 sek.: kommentarerne bliver til ordrer i hobetal. Glemmer du ingen, er livet udsolgt og giver +100.' },
 };
+/* Partnere fra partneradmin (GET /partnere). Når mindst én partner i admin er
+   knyttet til en power-up, styrer admin listen: kun de partnere vises, og med
+   det navn, der står i admin. Er der endnu ingen (eller kan serveren ikke
+   nås), bruges standardlisten ovenfor uændret. */
+const EL = { name: 'Element Logic', on: true };
+function applyPartnerList(list){
+  const med = (list || []).filter(p => p.powerup);
+  if(!med.length) return;
+  const by = {}; med.forEach(p => { by[p.powerup] = p; });
+  Object.keys(PARTNERS).forEach(k => {
+    const p = by[k];
+    if(!p){ delete PARTNERS[k]; return; }
+    const old = PARTNERS[k].name;
+    PARTNERS[k].name = p.navn; PARTNERS[k].slug = p.slug;
+    PARTNERS[k].text = PARTNERS[k].text.split(old).join(p.navn);
+  });
+  if(by.elementlogic){ EL.name = by.elementlogic.navn; EL.slug = by.elementlogic.slug; } else EL.on = false;
+}
+fetch(API_BASE + '/partnere', { credentials: 'same-origin' }).then(r => r.ok ? r.json() : null).then(j => { if(j) applyPartnerList(j.partnere); }).catch(() => {});
 const SPRII_CMTS = ['KØB', 'Køb 2 stk.', 'Jeg vil have en!', 'Solgt 🔥', 'KØB KØB', '❤️', 'Har I den i blå?', 'Købt!', 'Skriv KØB', '🛒 KØB'];
 function returnBox(c, cx, cy, s, swap){
   kraftBox(c, cx - s / 2, cy - s / 2, s, s, 1);
@@ -2120,6 +2290,10 @@ class Send extends Base {
 /* ---------- navigation ---------- */
 let screen = 's-start';
 function show(id){
+  // B2: et åbent <dialog> (fx "Slet min profil") bliver usynligt, men FORBLIVER modalt/låst, hvis
+  // skærmen under det skifter (standens idle-timer, "Næste spiller", m.m.) — luk derfor altid
+  // ethvert åbent dialog-element ved enhver skærmskift, uanset årsag.
+  document.querySelectorAll('dialog[open]').forEach(d => d.close());
   screen = id;
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
   window.scrollTo(0, 0);
@@ -2137,6 +2311,8 @@ document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', 
 /* ---------- tavler ---------- */
 function scopes(){
   const s = [['today', 'I dag']]; if(cfg.hourly !== false) s.push(['hour', 'Timen']); s.push(['period', cfg.periodName || 'Perioden']);
+  // Før en afgrænset periode (messedagen) er periodens tavle tom: vis en opvarmningstavle med alt, der er spillet indtil nu.
+  if(cfg.periodEnd && cfg.periodStart > today()) s.push(['warmup', 'Opvarmning']);
   if(cfg.mission && cfg.mission !== 'total') s.push(['mission', 'Mission']);
   if(cfg.teams) s.push(['firms', 'Firmaer']);
   s.push(['records', 'Rekorder']);
@@ -2170,9 +2346,11 @@ function renderBoard(list, note, limit){
     r.forEach((f, i) => { const li = el('li'); if(current && current.companyKey === f.key) li.classList.add('me'); li.append(el('span', 'rank', i + 1), el('span', 'name', f.name), el('span', 'score', fmt(f.v)), el('span', 'left', f.n === 1 ? '1 spiller' : `${f.n} spillere${f.n > 3 ? ', de 3 bedste tæller' : ''}`)); list.append(li); });
     return;
   }
-  const k = scope === 'mission' ? cfg.mission : 'total', filt = scope === 'today' ? F.today : F.period;
+  const k = scope === 'mission' ? cfg.mission : 'total', filt = scope === 'today' ? F.today : scope === 'warmup' ? F.all : F.period;
+  if(scope === 'warmup') note.textContent = `Alle spil indtil nu. Tavlen starter forfra ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}, hvor kun dagens spil tæller.`;
   if(scope === 'mission') note.textContent = `${MET[k].name}. ${MET[k].how}`;
-  if(scope === 'period' && cfg.periodStart > '2000-01-01') note.textContent = `Alle forsøg fra ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}.`;
+  if(scope === 'period' && cfg.periodEnd && cfg.periodStart > today()) note.textContent = `Tavlen åbner ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}. Indtil da kan du varme op under "Opvarmning".`;
+  else if(scope === 'period' && cfg.periodStart > '2000-01-01'){ const dd = d => new Date(d).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }); note.textContent = cfg.periodEnd && cfg.periodEnd === cfg.periodStart ? `Kun forsøg fra ${dd(cfg.periodStart)}.` : cfg.periodEnd ? `Alle forsøg fra ${dd(cfg.periodStart)} til ${dd(cfg.periodEnd)}.` : `Alle forsøg fra ${dd(cfg.periodStart)}.`; }
   if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
   if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
@@ -2201,13 +2379,14 @@ function crownLine(){
 function forgetMe(){ API.logout(); savedMe = null; RT.rehello(); }
 $('#b-me').onclick = () => { if(!savedMe) return; audio(); current = savedMe; syncMyAttempts(); show('s-lobby'); };
 let idleT = 0;
-function idleReset(){ clearTimeout(idleT); if(!isStand()) return; idleT = setTimeout(() => { if(['s-lobby', 's-result', 's-reg', 's-board'].includes(screen)){ current = null; forgetMe(); show('s-start'); } }, 120000); }
+function idleReset(){ clearTimeout(idleT); if(!isStand()) return; idleT = setTimeout(() => { if(['s-lobby', 's-result', 's-reg', 's-board'].includes(screen)){ $('#d-delpin').close(); current = null; forgetMe(); show('s-start'); } }, 120000); }
 ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, idleReset, { passive: true }));
 function renderStart(){
+  { const hv = venKode(); const si = $('#st-invited'); if(si){ si.hidden = !hv || !!current; if(hv && !current) si.textContent = `Du er inviteret af en ven (kode ${hv}). Tilmeld dig, så får din ven et ekstra liv.`; } }
   const me = isStand() ? null : savedMe, bm = $('#b-me');
   bm.hidden = !me; if(me) bm.textContent = `Fortsæt som ${me.name}`;
   $('#b-play').classList.toggle('ghost', !!me); $('#b-play').classList.toggle('primary', !me); $('#b-play').textContent = me ? 'Ny spiller' : 'Spil med';
-  $('#st-per').textContent = `${cfg.perDay} liv om dagen`;
+  /* Startteksten siger fast "1 liv i timen": der kommer ét nyt liv hver time, uanset cfg.perDay. */
   const live = $('#st-live'); live.replaceChildren();
   const players = rank('total', F.today), boss = players[0];
   const c1 = el('p', 'chip'); c1.append(el('span', 'dot'));
@@ -2230,25 +2409,35 @@ function renderStart(){
 let regSubs = () => [];
 $('#b-play').onclick = () => {
   $('#reg-err').textContent = '';
-  regSubs = subsBox($('#reg-subs'), [], null, true);
+  // Ikke foldet sammen: uden "Tilmeld alle" skal hver partners flueben kunne ses med det samme.
+  regSubs = subsBox($('#reg-subs'), [], null, false);
   $('#l-ref').hidden = cfg.referral === false;
-  const hv = (location.hash.match(/ven=([A-Za-z0-9]{4,5})/) || [])[1]; if(hv) $('#i-ref').value = hv.toUpperCase();
+  const hv = venKode(); if(hv) $('#i-ref').value = hv;
+  $('#ref-invited').hidden = !hv; if(hv) $('#ref-invited').textContent = `Du er inviteret med koden ${hv}. Din ven får et ekstra liv, når du har spillet dit første spil.`;
   audio(); show('s-reg');
 };
 $('#b-all').onclick = () => show('s-board');
-/* Tilmelding/login er ét kald: serveren afgør, om e-mailen er ny eller kendt (og om telefonen matcher),
+/* Tilmelding/login er ét kald: serveren afgør, om e-mailen er ny eller kendt (og om pinkoden matcher),
    sætter dagens flueben, tjekker vennekoden og returnerer den fulde record. Klienten kan ikke længere
    selv slå andre spilleres data op (kun den offentlige tavle findes lokalt), så al den logik er flyttet dertil. */
 $('#f-reg').addEventListener('submit', e => {
   e.preventDefault();
-  const name = $('#i-name').value.trim(), email = $('#i-email').value.trim().toLowerCase(), phone = $('#i-phone').value.replace(/[^\d+]/g, ''), company = $('#i-company').value.trim();
+  const name = $('#i-name').value.trim(), email = $('#i-email').value.trim().toLowerCase(), pin = $('#i-pin').value.replace(/\D/g, ''), company = $('#i-company').value.trim();
   const err = m => { $('#reg-err').textContent = m; sfx('wrong'); };
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err('Skriv en gyldig e-mail.');
-  if(phone.replace(/\D/g, '').length < 8) return err('Skriv et telefonnummer med mindst 8 cifre.');
+  if(!/^\d{4}$/.test(pin)) return err('Pinkoden skal være 4 cifre.');
   if(!$('#i-terms').checked) return err('Sæt flueben ved betingelserne for at deltage.');
+  // Telefon kræves kun, hvis sms-fluebenet er sat (brugerens beslutning) — se subsBox, som viser feltet.
+  const subs = regSubs();
+  let phone = '';
+  if(subs.includes('sms')){
+    const pi = $('#reg-subs')._phoneInput;
+    phone = pi ? pi.value.replace(/\D/g, '') : '';
+    if(phone.length < 8) return err('Skriv et telefonnummer med mindst 8 cifre for at få sms.');
+  }
   const btn = $('#f-reg').querySelector('button[type=submit]'); btn.disabled = true;
   let regType = null;
-  API.register({ name, email, phone, company, subs: regSubs(), ref: $('#i-ref').value.trim() })
+  API.register({ name, email, pin, company, subs, phone, ref: $('#i-ref').value.trim() })
     .then(r => { regType = r && r.type; RT.rehello(); return API.me(); }) // K2b: den fysiske ws-forbindelse skal vide, hvem der nu er logget ind
     .then(m => {
       current = meFromServer(m); syncMyAttempts(); cacheMe(current);
@@ -2259,9 +2448,19 @@ $('#f-reg').addEventListener('submit', e => {
         // N14: PUT /me/ticks erstatter HELE dagens sæt — sender vi kun regSubs() (denne enheds
         // formular), slettes flueben, der blev sat på en ANDEN enhed tidligere i dag. Send i stedet
         // foreningen af det, der allerede står på kontoen (current, lige hentet ovenfor), og det nye.
-        if(subs.length) chain.push(API.setTicks(Array.from(new Set(todayKeys(current).concat(subs)))).catch(() => {}));
-        const ref = $('#i-ref').value.trim(); if(ref) chain.push(API.challenge(ref).catch(() => {}));
-        if(chain.length) return Promise.all(chain).then(() => API.me()).then(m2 => { current = meFromServer(m2); syncMyAttempts(); cacheMe(current); });
+        const desired = Array.from(new Set(todayKeys(current).concat(subs)));
+        // S5: sms uden en kendt telefon afviser HELE kaldet med telefon_kraeves — og fordi fejlen
+        // sluges (.catch), forsvandt også de ØVRIGE, gyldige flueben stille. Send sms for sig selv
+        // udenom i det tilfælde, så resten stadig bliver gemt; spilleren kan sætte sms-fluebenet
+        // igen i lobbyen, hvor telefonfeltet så vises (se subsBox).
+        const smsBlocked = desired.includes('sms') && !current.phone;
+        const safeKeys = smsBlocked ? desired.filter(k => k !== 'sms') : desired;
+        if(safeKeys.length) chain.push(API.setTicks(safeKeys).catch(() => {}));
+        const ref = $('#i-ref').value.trim(); if(ref){ chain.push(API.challenge(ref).catch(() => {})); try{ sessionStorage.removeItem(VEN_STORE); }catch(e){} }
+        if(chain.length) return Promise.all(chain).then(() => API.me()).then(m2 => {
+          current = meFromServer(m2); syncMyAttempts(); cacheMe(current);
+          if(smsBlocked) toast('Sms kræver et telefonnummer — sæt fluebenet igen under "Dagens flueben" i lobbyen.');
+        });
       }
     })
     .then(() => { $('#f-reg').reset(); sfx('badge'); show('s-lobby'); })
@@ -2270,10 +2469,10 @@ $('#f-reg').addEventListener('submit', e => {
 });
 
 /* ---------- koder og udfordringer ---------- */
-const challengeLink = p => cfg.shareUrl ? cfg.shareUrl.replace(/#.*$/, '') + '#ven=' + p.code : '';
+const challengeLink = p => p.code ? (cfg.shareUrl ? cfg.shareUrl.replace(/#.*$/, '') : location.origin + location.pathname) + '#ven=' + p.code : '';
 async function challenge(p){
   const b = bestToday(p), link = challengeLink(p);
-  const t = `${b ? `Jeg har ${fmt(b)} point i` : 'Jeg udfordrer dig i'} SmartPacks lagerspil Packrush. Kan du slå mig? Skriv min kode ${p.code}, når du spiller.${link ? ' ' + link : ''}`;
+  const t = `${b ? `Jeg har ${fmt(b)} point i` : 'Jeg udfordrer dig i'} SmartPacks lagerspil Packrush. Kan du slå mig? Spil med her, så er min kode udfyldt: ${link}`;
   try{ if(navigator.share){ await navigator.share({ text: t }); return; } }catch(e){ if(e && e.name === 'AbortError') return; }
   try{ await navigator.clipboard.writeText(t); toast('Udfordringen er kopieret. Sæt den ind i en besked'); }catch(e){ toast(`Din kode er ${p.code}`); }
 }
@@ -2308,6 +2507,7 @@ $('#l-codei').addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preven
 /* ---------- lobby ---------- */
 function renderLobby(){
   const p = current, l = left(p), used = todays(p).length;
+  if(standKodeVentende()) sendStandKode();
   $('#l-hi').textContent = `Hej, ${p.name}`;
   // overhalet?
   const bx = $('#l-beaten'); bx.replaceChildren();
@@ -2345,14 +2545,16 @@ function renderLobby(){
     const box = el('div', 'subs'); d.append(sm, box); mb.append(d);
     subsBox(box, todayKeys(p), keys => {
       applyTicks(keys, d);
-    });
+    }, undefined, p.phone);
   }
   renderSubsBox();
   const cb = $('#l-code');
   if(cfg.referral !== false){
     const t = el('div'); t.append(el('p', null, 'Din vennekode'), el('b', null, p.code || '–'));
     const btn = el('button', 'btn green small', 'Udfordr en ven'); btn.type = 'button'; btn.onclick = () => challenge(p);
-    cb.replaceChildren(t, el('p', null, 'Spiller en ny ven med din kode, får du fuld liv. Tager en ven din udfordring op, får du et ekstra liv, højst ét i timen fra hver ven.'), btn); cb.hidden = false;
+    const kop = el('button', 'btn ghost small', 'Kopiér mit invitationslink'); kop.type = 'button'; kop.style.marginLeft = '8px';
+    kop.onclick = async () => { try{ await navigator.clipboard.writeText(challengeLink(p)); toast('Linket er kopieret. Send det til en kollega'); }catch(e){ toast(challengeLink(p)); } };
+    cb.replaceChildren(t, el('p', null, 'Del dit link, så er din kode udfyldt, når vennen tilmelder sig. Spiller en ny ven med din kode, får du fuld liv. Tager en ven din udfordring op, får du et ekstra liv, højst ét i timen fra hver ven.'), btn, kop); cb.hidden = false;
   } else cb.hidden = true;
   // timens boss
   const hb = $('#l-hour'); hb.hidden = cfg.hourly === false;
@@ -2390,10 +2592,24 @@ function renderLobby(){
   } else ms.hidden = true;
   // lodder
   const tk = $('#l-tickets');
-  if(cfg.raffle){
-    const n = tickets(p), s = dayStreak(p), box = el('span', 'tk'); for(let i = 0; i < Math.min(n, 12); i++) box.append(el('i'));
-    const tt = el('span'); tt.append('Du har ', el('b', null, `${n} ${n === 1 ? 'lod' : 'lodder'}`), ` i lodtrækningen for ${pnl()}. ${daysPlayed(p, a => a.day === today() && F.period(a)) ? 'Spil igen i morgen for et lod mere.' : 'Gennemfør et spil i dag for et lod mere.'}${s > 1 ? ` Du har spillet ${s} dage i træk.` : ''}`);
-    tk.replaceChildren(box, tt); tk.hidden = false;
+  tk.classList.remove('warn', 'ok');
+  if(cfg.raffle && p.konkurrence){
+    // Præmiekonkurrencen (vilkår pkt. 2 og 5-7): står firmaet på deltagerlisten, og hvor mange lodder har det.
+    const k = p.konkurrence, tt = el('span'), dot = el('span', 'dot');
+    const dag = k.spil_start ? new Date(k.spil_start).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }) : '';
+    const tid = k.spil_start && k.spil_slut ? ` kl. ${new Date(k.spil_start).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}–${new Date(k.spil_slut).toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}` : '';
+    const lod = `${k.lodder} ${k.lodder === 1 ? 'lod' : 'lodder'}`;
+    if(!k.har_firma){ tk.classList.add('warn'); tt.append('Skriv jeres firma herunder for at være med i lodtrækningen om præmierne.'); }
+    else if(k.udelukket){ tk.classList.add('ok'); tt.append(`${k.firma} står for konkurrencen og kan ikke vinde, men I kan stadig toppe tavlen.`); }
+    else if(!k.paa_deltagerliste){ tk.classList.add('warn'); tt.append(el('b', null, k.firma), ' står ikke på deltagerlisten til konferencen, så I er ikke med i lodtrækningen endnu. Er I med på dagen? Kom forbi SmartPacks stand, så retter vi det.'); }
+    else {
+      tk.classList.add('ok');
+      tt.append(el('b', null, k.firma), ' står på deltagerlisten. ');
+      if(k.periode === 'foer') tt.append(`Lodtrækningen gælder spil ${dag}${tid}. 1 lod pr. påbegyndte ${k.point_pr_lod} point i firmaets bedste spil.`);
+      else if(k.periode === 'efter') tt.append(`Spilperioden er slut. Firmaet endte med ${lod}${k.bedste ? ` (bedste spil ${fmt(k.bedste)} point)` : ''}.`);
+      else tt.append('Firmaet har ', el('b', null, lod), k.bedste ? ` lige nu (bedste spil ${fmt(k.bedste)} point, 1 lod pr. påbegyndte ${k.point_pr_lod}). Slå det, og I får flere.` : ` endnu. Gennemfør et spil, så får I 1 lod pr. påbegyndte ${k.point_pr_lod} point.`);
+    }
+    tk.replaceChildren(dot, tt); tk.hidden = false;
   } else tk.hidden = true;
   // firma
   $('#l-firm').hidden = !!p.company;
@@ -2466,7 +2682,29 @@ $('#l-firm-i').addEventListener('change', e => {
   API.setCompany(v).then(() => { current.company = v; current.companyKey = firmKey(v); toast('Du spiller nu for ' + v); renderLobby(); })
     .catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme firmaet. Tjek din forbindelse.'));
 });
-$('#b-logout').onclick = () => { forgetMe(); current = null; show('s-start'); };
+$('#b-logout').onclick = () => { $('#d-delpin').close(); forgetMe(); current = null; show('s-start'); };
+// S7: pinkoden skal IKKE vises i klartekst (window.prompt gjorde det, uheldigt på en delt
+// standtablet med folk omkring) — et lille <dialog> med et password-felt i stedet.
+$('#b-delme').onclick = () => {
+  if(!current) return;
+  $('#i-delpin').value = ''; $('#delpin-err').textContent = '';
+  $('#d-delpin').showModal();
+  setTimeout(() => $('#i-delpin').focus(), 50);
+};
+$('#b-delpin-cancel').onclick = () => $('#d-delpin').close();
+$('#f-delpin').addEventListener('submit', e => {
+  e.preventDefault();
+  const pinkode = $('#i-delpin').value.trim(); if(!pinkode) return;
+  // Bekræftelse er spillerens egen pinkode (ikke telefon) — backenden kræver den i selve kaldet
+  // (DELETE /me {pinkode}). Samme to-trins-mønster som admins "Nulstil alle": noget at skrive rigtigt
+  // PLUS en almindelig ja/nej-bekræftelse, fordi det her er lige så uigenkaldeligt.
+  if(!confirm('Er du helt sikker? Din profil, dine forsøg og tilmeldinger slettes permanent og kan ikke fortrydes.')) return;
+  API.deleteMe(pinkode).then(() => {
+    $('#d-delpin').close();
+    toast('Din profil er slettet');
+    forgetMe(); current = null; show('s-start');
+  }).catch(e => { $('#delpin-err').textContent = (e && e.status ? e.message : 'Kunne ikke slette profilen. Tjek din pinkode og forbindelse, og prøv igen.'); });
+});
 
 /* ---------- runderne hænger sammen ---------- */
 const widthFor = orders => Math.min(0.76, 0.36 + orders * 0.04);
@@ -2929,31 +3167,46 @@ $('#b-copy').onclick = async () => {
    og al arrangørdata (lister, eksporter, lodtrækning, opsætning) hentes fra admin-endpoints,
    aldrig fra den offentlige data.players. */
 let adminOk = false;
-$('#b-admin').onclick = () => { if(adminOk) return show('s-admin'); $('#pin-err').textContent = ''; $('#i-pin').value = ''; show('s-pin'); setTimeout(() => $('#i-pin').focus(), 50); };
+$('#b-admin').onclick = () => { if(adminOk) return show('s-admin'); $('#pin-err').textContent = ''; $('#i-adminpw').value = ''; $('#pin-ny').hidden = true; show('s-pin'); setTimeout(() => ($('#i-amail').value ? $('#i-adminpw') : $('#i-amail')).focus(), 50); };
+let skalSkifte = false;
 $('#f-pin').addEventListener('submit', e => {
   e.preventDefault();
-  API.admin.login($('#i-pin').value.trim()).then(() => {
+  // Personligt login med startkode: vælg egen kode, før arrangør-skærmen åbnes.
+  if(skalSkifte){
+    const ny = $('#i-pinny').value, ny2 = $('#i-pinny2').value;
+    if(ny.length < 12) return ($('#pin-err').textContent = 'Den nye kode skal være mindst 12 tegn.');
+    if(ny !== ny2) return ($('#pin-err').textContent = 'De to nye koder er ikke ens.');
+    return API.admin.changeCode($('#i-adminpw').value, ny).then(() => {
+      skalSkifte = false; $('#pin-ny').hidden = true; ['#i-adminpw', '#i-pinny', '#i-pinny2'].forEach(i => { $(i).value = ''; });
+      adminOk = true; show('s-admin'); stateETag = null; loadState(); toast('Din kode er gemt');
+    }).catch(err => { $('#pin-err').textContent = (err && err.message) || 'Kunne ikke gemme koden.'; });
+  }
+  API.admin.login($('#i-adminpw').value.trim(), $('#i-amail').value.trim()).then(r => {
+    if(r && r.skal_skifte_kode){ skalSkifte = true; $('#pin-ny').hidden = false; $('#pin-err').textContent = ''; $('#i-pinny').focus(); return; }
     adminOk = true; show('s-admin');
     // N16 (samme klasse fejl som stand-login): et 304-svar mod det GAMLE (maskerede) ETag ville
     // forhindre de nu-privilegerede, fulde navne i overhovedet at komme frem — fx på standvæggen.
     stateETag = null; loadState();
   })
-    .catch(e => { $('#pin-err').textContent = e && e.status === 429 ? 'For mange forsøg. Vent lidt, og prøv igen.' : 'Forkert adgangskode.'; sfx('wrong'); });
+    .catch(e => { $('#pin-err').textContent = e && e.status === 429 ? 'For mange forsøg. Vent lidt, og prøv igen.' : ($('#i-amail').value.trim() ? 'Forkert e-mail eller kode.' : 'Forkert adgangskode.'); sfx('wrong'); });
 });
 const sel = $('#c-mission'); MISSIONS.forEach(k => { const o = el('option', null, k === 'total' ? 'Ingen mission, kun højeste score' : MET[k].name); o.value = k; sel.append(o); });
 function fillCfg(){
-  $('#c-pname').value = cfg.periodName || ''; $('#c-pstart').value = cfg.periodStart > '2000-01-01' ? cfg.periodStart : '';
+  $('#c-pname').value = cfg.periodName || ''; $('#c-pstart').value = cfg.periodStart > '2000-01-01' ? cfg.periodStart : ''; $('#c-pend').value = cfg.periodEnd || '';
   $('#c-event').value = cfg.eventName || ''; $('#c-per').value = cfg.perDay; $('#c-ctime').value = cfg.crownTime;
   $('#c-crown').checked = !!cfg.crownOn; $('#c-bf').checked = !!cfg.bf; $('#c-teams').checked = !!cfg.teams; $('#c-raffle').checked = !!cfg.raffle; $('#c-partners').checked = cfg.partners !== false;
   $('#c-mission').value = cfg.mission; $('#c-prize').value = cfg.prize || ''; $('#c-sms').checked = cfg.smsOn !== false; $('#c-sponsor').value = cfg.smsSponsor || ''; $('#c-mailp').value = cfg.mailPartners || ''; $('#c-life').checked = cfg.lifeBonus !== false; $('#c-ref').checked = cfg.referral !== false; $('#c-goal').value = cfg.goal || 0;
   $('#c-share').value = cfg.shareUrl || ''; $('#c-fixed').checked = cfg.fixed !== false; $('#c-hourly').checked = cfg.hourly !== false; $('#c-hprize').value = cfg.hourPrize || ''; $('#c-duel').checked = cfg.duel !== false; $('#c-boost').checked = cfg.smsBoost !== false; $('#c-boostn').value = cfg.boostLives || 2;
 }
-$('#p-messe').onclick = () => { $('#c-pname').value = 'Hele messen'; $('#c-pstart').value = today(); $('#c-per').value = 5; $('#c-crown').checked = true; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = false; $('#c-mission').value = 'total'; $('#c-goal').value = 0; toast('Messeopsætning udfyldt. Tryk Gem.'); };
-$('#p-month').onclick = () => { const d = new Date(); d.setDate(1); const m = MONTHS[d.getMonth()]; $('#c-pname').value = m[0].toUpperCase() + m.slice(1); $('#c-pstart').value = d.toLocaleDateString('sv-SE'); $('#c-per').value = 3; $('#c-crown').checked = false; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = true; if($('#c-mission').value === 'total') $('#c-mission').value = 'tower'; toast('Månedsopsætning udfyldt. Tryk Gem.'); };
+$('#p-messe').onclick = () => { $('#c-pname').value = 'Messedagen'; $('#c-pstart').value = today(); $('#c-pend').value = today(); $('#c-per').value = 5; $('#c-crown').checked = true; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = false; $('#c-mission').value = 'total'; $('#c-goal').value = 0; toast('Messeopsætning udfyldt. Tryk Gem.'); };
+$('#p-month').onclick = () => { const d = new Date(); d.setDate(1); const m = MONTHS[d.getMonth()]; $('#c-pname').value = m[0].toUpperCase() + m.slice(1); $('#c-pstart').value = d.toLocaleDateString('sv-SE'); $('#c-pend').value = ''; $('#c-per').value = 3; $('#c-crown').checked = false; $('#c-bf').checked = true; $('#c-teams').checked = true; $('#c-raffle').checked = true; if($('#c-mission').value === 'total') $('#c-mission').value = 'tower'; toast('Månedsopsætning udfyldt. Tryk Gem.'); };
 $('#b-save').onclick = () => {
   const ps = $('#c-pstart').value.trim();
   if(ps && !/^\d{4}-\d{2}-\d{2}$/.test(ps)) return toast('Skriv startdatoen som ÅÅÅÅ-MM-DD');
-  const patch = { periodName: $('#c-pname').value.trim() || 'Perioden', periodStart: ps || '2000-01-01', eventName: $('#c-event').value.trim(),
+  const pe = $('#c-pend').value.trim();
+  if(pe && !/^\d{4}-\d{2}-\d{2}$/.test(pe)) return toast('Skriv slutdatoen som ÅÅÅÅ-MM-DD');
+  if(pe && pe < (ps || '2000-01-01')) return toast('Slutdatoen ligger før startdatoen');
+  const patch = { periodName: $('#c-pname').value.trim() || 'Perioden', periodStart: ps || '2000-01-01', periodEnd: pe, eventName: $('#c-event').value.trim(),
     perDay: clamp(parseInt($('#c-per').value, 10) || 3, 1, 20), crownTime: $('#c-ctime').value || '16:00', crownOn: $('#c-crown').checked, bf: $('#c-bf').checked,
     prize: $('#c-prize').value.trim(), smsOn: $('#c-sms').checked, smsSponsor: $('#c-sponsor').value.trim(), mailPartners: $('#c-mailp').value.trim(), lifeBonus: $('#c-life').checked, referral: $('#c-ref').checked, shareUrl: $('#c-share').value.trim(), fixed: $('#c-fixed').checked, hourly: $('#c-hourly').checked, hourPrize: $('#c-hprize').value.trim(), duel: $('#c-duel').checked, smsBoost: $('#c-boost').checked, boostLives: clamp(parseInt($('#c-boostn').value, 10) || 2, 1, 5), teams: $('#c-teams').checked, partners: $('#c-partners').checked, raffle: $('#c-raffle').checked, mission: $('#c-mission').value, goal: Math.max(0, parseFloat($('#c-goal').value) || 0) };
   API.admin.saveConfig(patch).then(res => {
@@ -3056,9 +3309,8 @@ function renderAdmin(){
     $('#a-mode').textContent = 'Tilmeldinger, topscore og opsætning ligger på serveren og deles af alle enheder ved standen.';
     $('#a-csv').hidden = true;
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
-    const elig = ps.filter(p => tickets(p) > 0), n = elig.reduce((a, p) => a + tickets(p), 0);
-    $('#a-raffle').textContent = cfg.raffle ? `${elig.length} spillere har tilsammen ${n} lodder i ${pnl()}. Hver dag man gennemfører et spil giver ét lod${cfg.goal > 0 ? ', og missionens mål giver et ekstra' : ''}.` : 'Lodtrækning er slået fra i opsætningen. Du kan stadig trække blandt periodens spillere.';
-    renderSms(); fillUnlist();
+    // Teksten under Præmiekonkurrencen er fast (vilkårene); lodderne hentes med "Vis lodder lige nu".
+    renderSms(); fillUnlist(); renderUsers(); renderTjek(); renderQr();
     const ah = $('#a-hours'); ah.replaceChildren();
     if(cfg.hourly !== false){ const ws = hourWinners(ps), top = hourBoard(ps)[0]; ah.append(el('h4', 'sub', 'Timens boss i dag'));
       if(!ws.length && !top) ah.append(el('p', 'muted small', 'Ingen vindere endnu.'));
@@ -3073,21 +3325,61 @@ function renderAdmin(){
    Svarformen for POST /admin/lodtraekning er ikke givet med et eksempel i API.md, så
    feltnavnene herunder er et gæt (vinder/winner, tickets_total/ticketsTotal) — ret til,
    når det er testet mod den rigtige server. */
+/* Præmiekonkurrencen (vilkår pkt. 5-7): serveren regner lodderne ud fra firmaets bedste spil i spilperioden,
+   tjekker firmaet mod deltagerlisten og trækker vinderen med et tilfældigt tal. Animationen her lander bare
+   på det svar, serveren allerede har givet. */
+const fmtDT = d => d ? new Date(d).toLocaleString('da-DK', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }) : '?';
+$('#b-dl').onclick = () => {
+  const tekst = $('#a-dl').value; if(!tekst.trim()) return toast('Sæt deltagerlisten ind først');
+  const kolonne = Math.max(0, (parseInt($('#a-dlkol').value, 10) || 1) - 1), tilstand = $('#a-dlmode').value;
+  API.admin.saveDeltagerliste(tekst, kolonne, tilstand).then(r => {
+    $('#a-dl-res').textContent = `${r.indlaest} firmaer læst, ${r.nye} nye. Listen har nu ${r.antal} firmaer.`; $('#a-dl').value = '';
+  }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke gemme listen.'));
+};
+function renderQr(){
+  const box = $('#a-qr'); if(!box) return;
+  API.admin.standKode().then(r => {
+    box.replaceChildren();
+    const img = el('img'); img.src = API_BASE + '/admin/standkode.svg?t=' + Date.now(); img.alt = 'QR-kode til standen'; img.style.cssText = 'width:200px;height:200px;background:#fff;padding:8px;border-radius:8px;display:block';
+    const a = el('a', 'link', 'Åbn QR-koden stor til print'); a.href = API_BASE + '/admin/standkode.svg'; a.target = '_blank'; a.rel = 'noopener';
+    box.append(img, el('p', 'muted small', `Linket i koden: ${r.url}`), a);
+    const g = r.godkendt_paa_standen || [];
+    box.append(el('p', 'small', g.length ? `Godkendt via QR på standen (${g.length}): ${g.map(x => x.firma).join(', ')}` : 'Ingen firmaer er godkendt via QR endnu.'));
+  }).catch(() => {});
+}
+$('#b-lodder').onclick = () => {
+  const box = $('#a-lodder'); box.replaceChildren(el('p', 'muted small', 'Henter...'));
+  API.admin.lodder().then(r => {
+    box.replaceChildren(el('p', 'muted small', `Spilperiode ${fmtDT(r.spil_start)} til ${fmtDT(r.spil_slut)}. Deltagerlisten har ${r.deltagerliste_antal} firmaer. ${r.lodder_i_alt} lodder i alt blandt dem, der kan vinde.`));
+    if(!r.firmaer.length) return box.append(el('p', 'muted small', 'Ingen har spillet i perioden endnu.'));
+    r.firmaer.forEach(f => {
+      const why = f.kan_vinde ? `${f.lodder} lodder` : f.udelukket ? 'arrangør, kan ikke vinde' : 'ikke på deltagerlisten';
+      const row = el('p', 'small', `${f.firma}: ${fmt(f.bedste)} point, ${why}`);
+      if(!f.paa_deltagerliste && !f.udelukket){
+        // Firmaet er med på konferencen, men har stavet navnet anderledes end på listen: godkend det her, så det kan vinde.
+        const b = el('button', 'btn small', 'Godkend til konkurrencen'); b.type = 'button'; b.style.marginLeft = '8px';
+        b.onclick = () => { if(!confirm(`Godkend "${f.firma}" til konkurrencen? Firmaet lægges på deltagerlisten.`)) return;
+          API.admin.saveDeltagerliste(f.firma, 0, 'tilfoej').then(() => { toast(`${f.firma} er godkendt`); $('#b-lodder').click(); }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke godkende.')); };
+        row.append(b);
+      }
+      box.append(row);
+    });
+  }).catch(e => box.replaceChildren(el('p', 'muted', e && e.status ? e.message : 'Kunne ikke hente lodderne.')));
+};
 $('#b-draw').onclick = () => {
+  if(!confirm('Træk vinderen nu? Trækningen bliver gemt og kan ikke laves om.')) return;
   const box = $('#a-draw'); box.replaceChildren();
-  API.admin.draw().then(res => {
-    const w = res && (res.vinder || res.winner);
-    if(!w) return box.append(el('p', 'muted', (res && (res.besked || res.message)) || 'Ingen har lodder endnu.'));
-    const pool = adminPlayers.filter(p => (cfg.raffle ? tickets(p) : (daysPlayed(p, F.period) ? 1 : 0)) > 0);
-    const total = res.tickets_total != null ? res.tickets_total : (res.ticketsTotal != null ? res.ticketsTotal : pool.length);
-    let i = 0, spins = pool.length ? 18 : 0;
+  Promise.all([API.admin.lodder().catch(() => null), API.admin.traek()]).then(([l, res]) => {
+    const w = res.vinder;
+    const pool = l ? l.firmaer.filter(f => f.kan_vinde).map(f => f.firma) : [];
+    let i = 0, spins = pool.length > 1 ? 18 : 0;
     const d = el('div', 'draw'), nm = el('strong'), info = el('p', 'muted small'); d.append(el('span', 'muted small', 'Vinderen er'), nm, info); box.append(d);
     const done = () => {
-      nm.textContent = w.navn || w.name;
-      info.textContent = `${(w.firma || w.company) ? (w.firma || w.company) + ', ' : ''}${w.email}, ${w.telefon || w.phone}. ${w.tickets != null ? w.tickets : ''} lodder ud af ${total}.`; sfx('record');
+      nm.textContent = w.firma;
+      info.textContent = `Bedste spil ${fmt(w.bedste)} point, ${w.lodder} af ${res.lodder_i_alt} lodder. Kontakt: ${w.spiller_navn}, ${w.spiller_email}. Trækning nr. ${res.id}.`; sfx('record');
     };
     if(!spins) return done();
-    const spin = () => { const p = pool[Math.floor(Math.random() * pool.length)]; nm.textContent = p.name; sfx('tick'); if(++i < spins) return setTimeout(spin, 40 + i * i * 1.2); done(); };
+    const spin = () => { nm.textContent = pool[Math.floor(Math.random() * pool.length)]; sfx('tick'); if(++i < spins) return setTimeout(spin, 40 + i * i * 1.2); done(); };
     spin();
   }).catch(e => box.append(el('p', 'muted', e && e.status ? e.message : 'Kunne ikke trække en vinder. Tjek din forbindelse.')));
 };
@@ -3120,6 +3412,49 @@ $('#b-unsub').onclick = () => {
       : 'Afmeldt.';
     renderAdmin();
   }).catch(e => toast(e && e.status ? e.message : 'Kunne ikke afmelde. Tjek din forbindelse.'));
+};
+function renderTjek(){
+  const box = $('#a-tjek'); if(!box) return;
+  API.admin.konkStatus().then(r => {
+    const n = r.advarsler.length, fejl = r.advarsler.filter(a => a.niveau === 'fejl');
+    box.replaceChildren(el('p', fejl.length ? 'err' : 'muted small', n ? `${n} ting mangler for at komme live${fejl.length ? `, heraf ${fejl.length} vigtige` : ''}. Se detaljer på partnersiden.` : 'Alt er klar til konkurrencen.'));
+    fejl.forEach(a => box.append(el('p', 'small', (a.partner ? a.partner + ': ' : '') + a.tekst)));
+  }).catch(() => {});
+}
+function renderUsers(){
+  const box = $('#a-users'); if(!box) return;
+  API.admin.users().then(r => {
+    box.replaceChildren();
+    (r.brugere || []).filter(u => u.aktiv).forEach(u => {
+      const row = el('div', 'check'), sp = el('span'); sp.append(`${u.navn ? u.navn + ', ' : ''}${u.email}${u.skal_skifte_kode ? ' (har ikke logget ind endnu)' : ''}`);
+      const ny = el('button', 'link', 'Ny startkode'); ny.type = 'button';
+      ny.onclick = () => { const k = prompt(`Ny startkode til ${u.email} (mindst 10 tegn)`); if(!k) return; API.admin.resetUser(u.id, k).then(() => toast('Startkoden er skiftet')).catch(e => toast(e.message || 'Kunne ikke skifte')); };
+      const luk = el('button', 'link', 'Luk'); luk.type = 'button';
+      luk.onclick = () => { if(!confirm(`Luk ${u.email}s admin-login?`)) return; API.admin.closeUser(u.id).then(renderUsers).catch(e => toast(e.message || 'Kunne ikke lukke')); };
+      row.append(sp, ny, luk); box.append(row);
+    });
+    if(!box.childElementCount) box.append(el('p', 'muted small', 'Ingen personlige admins endnu.'));
+  }).catch(() => {});
+}
+$('#b-uadd').onclick = () => {
+  const email = $('#a-umail').value.trim().toLowerCase(), navn = $('#a-unavn').value.trim(), kode = $('#a-ukode').value;
+  if(!/@smartpack\.dk$/.test(email)) return toast('Kun @smartpack.dk-adresser');
+  if(kode.length < 10) return toast('Startkoden skal være mindst 10 tegn');
+  API.admin.addUser(email, navn, kode).then(() => { ['#a-umail', '#a-unavn', '#a-ukode'].forEach(i => { $(i).value = ''; }); toast(`${email} er oprettet`); renderUsers(); })
+    .catch(e => toast(e.message || 'Kunne ikke oprette'));
+};
+$('#b-kode').onclick = () => {
+  const gl = $('#a-kode-gl').value, ny = $('#a-kode-ny').value, ny2 = $('#a-kode-ny2').value;
+  if(ny.length < 12) return toast('Den nye kode skal være mindst 12 tegn');
+  if(ny !== ny2) return toast('De to nye koder er ikke ens');
+  API.admin.changeCode(gl, ny).then(() => { ['#a-kode-gl', '#a-kode-ny', '#a-kode-ny2'].forEach(i => { $(i).value = ''; }); toast('Admin-koden er skiftet'); })
+    .catch(e => toast(e && e.message ? e.message : 'Kunne ikke skifte koden.'));
+};
+$('#b-pin').onclick = () => {
+  const email = $('#a-pinmail').value.trim().toLowerCase();
+  if(!email) return toast('Skriv spillerens e-mail');
+  API.admin.resetPin(email).then(r => { $('#a-pin-res').textContent = `Ny pinkode til ${email}: ${r.pin}`; $('#a-pinmail').value = ''; })
+    .catch(e => toast(e && e.status === 404 ? 'Der er ingen spiller med den e-mail' : 'Kunne ikke nulstille pinkoden.'));
 };
 /* "Nulstil alle spillere" kræver, at admin skriver NULSTIL, plus en almindelig browser-bekræftelse,
    fordi handlingen er permanent og rammer alle spillere på én gang. */
@@ -3437,5 +3772,6 @@ window.addEventListener('online', flushFinishQueue);
 setInterval(flushFinishQueue, 30000);
 })();
 </script>
+<script src="/spil/vilkaar-overlay.js?v=1"></script>
 </body>
 </html>
