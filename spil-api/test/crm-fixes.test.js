@@ -602,3 +602,37 @@ test('N2-race: sletning, der venter på samtykke-rækkens lås, ser status sendt
   }
   assert.deepEqual((await h.pool.query('SELECT email FROM crm_udbakke')).rows.map((x) => x.email), ['laas@shop.dk']);
 });
+
+test('T1: sendt ja, så nej i spillet (ikke sendt, CRM nede), så sletning, giver stadig en afmelding', async (t) => {
+  let status = 201;
+  const { crm, h } = await opsaet(t, () => [status, '{}']);
+  const anna = await nySpiller(h, 'Anna T1', 'anna-t1@shop.dk');
+  await synkOnce(h.pool); // ja er sendt
+  status = 503; // CRM nede
+  assert.equal((await api(h.baseUrl, 'DELETE', '/me/subs/sp', { token: anna.token })).status, 200);
+  assert.match((await synkOnce(h.pool)).stop, /HTTP 503/); // nej'et kan ikke sendes
+  assert.equal(
+    (await h.pool.query("SELECT 1 FROM samtykke WHERE type = 'trukket_tilbage' AND crm_synk_status IS NULL")).rowCount,
+    1,
+    'forudsætning: nej er ikke sendt'
+  );
+  assert.equal((await api(h.baseUrl, 'DELETE', '/me', { token: anna.token, body: { pinkode: anna.pin } })).status, 200);
+  assert.deepEqual((await h.pool.query('SELECT email FROM crm_udbakke')).rows.map((x) => x.email), ['anna-t1@shop.dk']);
+
+  status = 201;
+  await synkOnce(h.pool);
+  const sidste = crm.kald[crm.kald.length - 1];
+  assert.equal(sidste.url, '/api/v1/newsletter/unsubscribe');
+  assert.equal(sidste.body.email, 'anna-t1@shop.dk');
+  assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
+});
+
+test('T1: sendt ja og sendt nej, så sletning, giver ingen afmelding', async (t) => {
+  const { h } = await opsaet(t);
+  const bo = await nySpiller(h, 'Bo T1', 'bo-t1@shop.dk');
+  await synkOnce(h.pool);
+  await api(h.baseUrl, 'DELETE', '/me/subs/sp', { token: bo.token });
+  await synkOnce(h.pool);
+  assert.equal((await api(h.baseUrl, 'DELETE', '/me', { token: bo.token, body: { pinkode: bo.pin } })).status, 200);
+  assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
+});

@@ -87,7 +87,9 @@ async function cascadeDeletePlayer(client, id, { afmeldCrm = true } = {}) {
   // (kun e-mail + tidspunkt) i SAMME transaktion som sletningen, så den hverken kan
   // gå tabt eller ske uden at sletningen sker. src/crmSynk.js sender den og sletter
   // rækken, når CRM'et har bekræftet. Skal ske FØR samtykke-rækkerne slettes.
-  // Kun hvis ja'et faktisk ER sendt til CRM'et (crm_synk_status = 'sendt'); ellers
+  // Afmeld, når det seneste SENDTE smartpack-samtykke er et ja, uanset hvad den seneste
+  // hændelse er: et nej, der ikke er sendt endnu, er ikke nået frem til CRM'et, og rækken
+  // forsvinder med sletningen. Kun hvis ja'et faktisk ER sendt (crm_synk_status = 'sendt'); ellers
   // kender CRM'et ikke kontakten, og et ja, der aldrig blev sendt, forsvinder med
   // sletningen. afmeldCrm = false bruges af admin/nulstil (rydning af testdata er
   // ikke en tilbagetrækning af samtykket).
@@ -100,9 +102,6 @@ async function cascadeDeletePlayer(client, id, { afmeldCrm = true } = {}) {
       `INSERT INTO crm_udbakke (email, type)
        SELECT p.email, 'afmeld' FROM spiller p
         WHERE p.id = $1 AND p.email IS NOT NULL
-          AND (SELECT s.type FROM samtykke s
-                WHERE s.spiller_id = p.id AND s.liste = 'smartpack'
-                ORDER BY s.tidspunkt DESC, s.id DESC LIMIT 1) = 'bekraeftet'
           AND (SELECT s.type FROM samtykke s
                 WHERE s.spiller_id = p.id AND s.liste = 'smartpack' AND s.crm_synk_status = 'sendt'
                 ORDER BY s.tidspunkt DESC, s.id DESC LIMIT 1) = 'bekraeftet'`,
