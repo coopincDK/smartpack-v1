@@ -126,21 +126,36 @@
         msg.style.color = '#94a3b8';
         msg.textContent = '';
 
-        /* Tilmeldingen går til SmartPacks CRM via Packrush-serveren (nøglen ligger på serveren).
-           Den gamle Supabase-liste er lukket ned (domænet svarer ikke længere). */
-        fetch('/api/spil/hjemmeside/nyhedsbrev', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: emailEl.value.toLowerCase().trim(), name: nameEl.value.trim(), company: companyEl.value.trim(), consent: true, page: location.href })
+        /* Kopi til SmartPacks CRM via Packrush-serveren (nøglen ligger på serveren). */
+        try {
+          fetch('/api/spil/hjemmeside/nyhedsbrev', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+            body: JSON.stringify({ email: emailEl.value.toLowerCase().trim(), name: nameEl.value.trim(), company: companyEl.value.trim(), consent: true, page: location.href })
+          }).catch(function () {});
+        } catch (crmErr) { /* ignorer */ }
+
+        fetch('https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': 'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE',
+            'Authorization': 'Bearer sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(Object.assign(
+            { email: emailEl.value.toLowerCase().trim() },
+            nameEl.value.trim()    ? { name: nameEl.value.trim() }       : {},
+            companyEl.value.trim() ? { company: companyEl.value.trim() } : {}
+          ))
         })
-        .then(function(r) { return r.json().catch(function() { return {}; }).then(function(b) { return { status: r.status, body: b }; }); })
         .then(function(r) {
-          if (r.status === 200 && r.body && r.body.crm) {
+          if (r.status === 201 || r.status === 409) {
             msg.style.color = '#4ade80';
             msg.textContent = 'Tak - du er tilmeldt!';
             form.reset();
           } else {
             msg.style.color = '#f87171';
-            msg.textContent = (r.body && r.body.fejl) || 'Noget gik galt. Pr\u00f8v igen.';
+            msg.textContent = 'Noget gik galt. Pr\u00f8v igen.';
           }
           btn.disabled = false;
           btn.textContent = 'Tilmeld \u2192';
@@ -198,18 +213,36 @@
           var msg   = document.getElementById('sp-afmeld-msg');
           btn.disabled = true; btn.textContent = 'Afmelder...';
           btn.disabled = true; btn.textContent = 'Afmelder...';
-          /* Afmeldingen går til SmartPacks CRM via Packrush-serveren. */
-          fetch('/api/spil/hjemmeside/afmeld', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email }) })
-          .then(function(r) { return r.json().catch(function() { return {}; }).then(function(b) { return { status: r.status, body: b }; }); })
+          /* Afmeld også i SmartPacks CRM */
+          try {
+            fetch('/api/spil/hjemmeside/afmeld', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true, body: JSON.stringify({ email: email }) }).catch(function () {});
+          } catch (crmErr) { /* ignorer */ }
+          // Tjek om email eksisterer, slet derefter
+          var SB_URL = 'https://midtkaplyhxhrdtujmda.supabase.co/rest/v1/newsletter_subscribers';
+          var SB_KEY = 'sb_publishable_TMt9jbZhbV8KzrvDUA7kuA_RXZW4mwE';
+          var hdrs   = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+          fetch(SB_URL + '?email=eq.' + encodeURIComponent(email) + '&select=id', { headers: hdrs })
+          .then(function(r) { return r.json(); })
+          .then(function(rows) {
+            if (!Array.isArray(rows) || rows.length === 0) {
+              msg.style.display = 'block';
+              msg.style.cssText += ';background:#fee2e2;color:#991b1b';
+              msg.textContent = 'Vi kunne ikke finde den e-mail.';
+              btn.disabled = false; btn.textContent = 'Afmeld nyhedsmail';
+              return;
+            }
+            return fetch(SB_URL + '?email=eq.' + encodeURIComponent(email), { method: 'DELETE', headers: hdrs });
+          })
           .then(function(r) {
+            if (!r) return;
             msg.style.display = 'block';
-            if (r.status === 200 && r.body && r.body.crm) {
+            if (r.ok) {
               msg.style.cssText += ';background:#dcfce7;color:#166534';
               msg.textContent = '\u2705 Du er nu afmeldt.';
               document.getElementById('sp-afmeld-form').style.display = 'none';
             } else {
               msg.style.cssText += ';background:#fee2e2;color:#991b1b';
-              msg.textContent = (r.body && r.body.fejl) || 'Noget gik galt. Pr\u00f8v igen.';
+              msg.textContent = 'Noget gik galt. Pr\u00f8v igen.';
               btn.disabled = false; btn.textContent = 'Afmeld nyhedsmail';
             }
           })
