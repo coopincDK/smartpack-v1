@@ -21,6 +21,12 @@ const { clientIp } = require('../middleware/clientIp');
 const { csvEscape } = require('../csv');
 const { beregnLodder, matchNoegle } = require('../konkurrence');
 const { synkKampagneRaekke } = require('../crm');
+const crypto = require('crypto');
+const QRCode = require('qrcode');
+
+// Link, som arrangementets QR-kode peger på.
+const arrLink = (kode) => 'https://smartpack.dk/messe?a=' + encodeURIComponent(kode);
+const KODE_RE = /^[a-z0-9]{8,32}$/;
 
 // Kendte kampagner. Ukendte kampagnenavne afvises, så siden ikke kan oprette
 // tilfældige lister.
@@ -31,7 +37,7 @@ const KAMPAGNER = {
     lodtraekning: 'Ehandelsdagen i Skive, 11. februar 2027',
   },
 };
-const KILDER = new Set(['messe', 'ehandelskonferencen', 'digiday', 'andet']);
+const KILDER = new Set(['messe', 'ehandelskonferencen', 'digiday', 'ehandelsdagen', 'andet']);
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const tekst = (v, max) => {
@@ -56,9 +62,10 @@ function samtykkeTekst(k, nyhedsbrev) {
 async function hentListe(pool, kampagneId) {
   const k = KAMPAGNER[kampagneId];
   const { rows } = await pool.query(
-    `SELECT t.*, s.firma AS spiller_firma, (s.id IS NOT NULL) AS har_profil
+    `SELECT t.*, s.firma AS spiller_firma, (s.id IS NOT NULL) AS har_profil, a.navn AS arrangement_navn
        FROM kampagne_tilmelding t
        LEFT JOIN spiller s ON lower(s.email) = lower(t.email)
+       LEFT JOIN kampagne_arrangement a ON a.id = t.arrangement_id
       WHERE t.kampagne = $1
       ORDER BY t.oprettet DESC`,
     [kampagneId]
@@ -88,6 +95,8 @@ async function hentListe(pool, kampagneId) {
       lodder: k.basislodder + fraSpil,
       crm_sendt: r.crm_sendt,
       crm_fejl: r.crm_fejl,
+      bekraeftet: !!r.verificeret_tid,
+      arrangement: r.arrangement_navn || null,
     };
   });
 }
@@ -117,14 +126,25 @@ function kampagneRouter(pool, opts = {}) {
       if (!email || !EMAIL_RE.test(email)) {
         return res.status(400).json({ fejl: 'Skriv en gyldig e-mail.', kode: 'ugyldig_email' });
       }
-      const kilde = KILDER.has(String(b.kilde || '')) ? String(b.kilde) : 'messe';
+      let kilde = KILDER.has(String(b.kilde || '')) ? String(b.kilde) : 'messe';
+      // Arrangementets hemmelige QR-kode (?a=...): bekræfter deltagelse, hvis den er gyldig nu.
+      let arr = null;
+      const qr = String(b.qr || '').trim().toLowerCase();
+      if (KODE_RE.test(qr)) {
+        const { rows: ar } = await pool.query(
+          'SELECT id, kilde, navn FROM kampagne_arrangement WHERE kode = $1 AND kampagne = $2 AND now() BETWEEN gyldig_fra AND gyldig_til',
+          [qr, kampagneId]
+        );
+        if (ar.length) { arr = ar[0]; kilde = arr.kilde; }
+      }
       const nyhedsbrev = b.nyhedsbrev === true || b.nyhedsbrev === 'ja';
       const samtykke = samtykkeTekst(k, nyhedsbrev);
       const ins = await pool.query(
         `INSERT INTO kampagne_tilmelding
            (kampagne, navn, klub, firma, firma_noegle, email, telefon, ordrer, hvor,
-            nyhedsbrev, nyhedsbrev_tid, samtykke_tekst, kilde, kilder, ip)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, CASE WHEN $10 THEN now() END, $11, $12, ARRAY[$12]::text[], $13)
+            nyhedsbrev, nyhedsbrev_tid, samtykke_tekst, kilde, kilder, ip, arrangement_id, verificeret_tid)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, CASE WHEN $10 THEN now() END, $11, $12, ARRAY[$12]::text[], $13,
+                 $14::bigint, CASE WHEN $14::bigint IS NULL THEN NULL ELSE now() END)
          ON CONFLICT (kampagne, email) DO UPDATE SET
            navn = EXCLUDED.navn,
            klub = COALESCE(EXCLUDED.klub, kampagne_tilmelding.klub),
@@ -139,6 +159,8 @@ function kampagneRouter(pool, opts = {}) {
            kilde = EXCLUDED.kilde,
            kilder = CASE WHEN EXCLUDED.kilde = ANY(kampagne_tilmelding.kilder) THEN kampagne_tilmelding.kilder
                          ELSE kampagne_tilmelding.kilder || EXCLUDED.kilde END,
+           arrangement_id = COALESCE(kampagne_tilmelding.arrangement_id, EXCLUDED.arrangement_id),
+           verificeret_tid = COALESCE(kampagne_tilmelding.verificeret_tid, EXCLUDED.verificeret_tid),
            opdateret = now(),
            crm_sendt = NULL
          RETURNING id`,
@@ -156,9 +178,10 @@ function kampagneRouter(pool, opts = {}) {
           samtykke,
           kilde,
           safeIp(req),
+          arr ? arr.id : null,
         ]
       );
-      res.status(201).json({ ok: true, kampagne: k.navn, lodder_basis: k.basislodder, lodtraekning: k.lodtraekning });
+      res.status(201).json({ ok: true, kampagne: k.navn, lodder_basis: k.basislodder, lodtraekning: k.lodtraekning, bekraeftet: !!arr, arrangement: arr ? arr.navn : null });
       // Kopi til CRM'et efter svaret, så en langsom CRM aldrig forsinker formularen.
       if (!opts.udenCrm) {
         synkKampagneRaekke(pool, ins.rows[0].id, k.navn).catch((e) => console.error('[crm] kampagne', e.message));
@@ -191,6 +214,52 @@ function kampagneRouter(pool, opts = {}) {
     }
   });
 
+  // Arrangementer med hver sin hemmelige QR-kode (lukkede lodtrækninger).
+  router.get('/admin/kampagne/:kampagne/arrangementer', admin, async (req, res, next) => {
+    try {
+      if (!KAMPAGNER[req.params.kampagne]) return res.status(404).json({ fejl: 'Ukendt kampagne.', kode: 'ikke_fundet' });
+      const { rows } = await pool.query(
+        `SELECT a.*, (SELECT count(*)::int FROM kampagne_tilmelding t WHERE t.arrangement_id = a.id) AS antal
+           FROM kampagne_arrangement a WHERE a.kampagne = $1 ORDER BY a.gyldig_fra`,
+        [req.params.kampagne]
+      );
+      const ud = [];
+      for (const a of rows) {
+        const link = arrLink(a.kode);
+        const svg = await QRCode.toString(link, { type: 'svg', errorCorrectionLevel: 'M', margin: 2, width: 1024 });
+        ud.push({ id: String(a.id), navn: a.navn, kilde: a.kilde, gyldig_fra: a.gyldig_fra, gyldig_til: a.gyldig_til, antal: a.antal, link, qr_svg: svg });
+      }
+      res.set('Cache-Control', 'no-store');
+      res.json({ arrangementer: ud });
+    } catch (e) {
+      next(e);
+    }
+  });
+
+  router.post('/admin/kampagne/:kampagne/arrangementer', admin, async (req, res, next) => {
+    try {
+      if (!KAMPAGNER[req.params.kampagne]) return res.status(404).json({ fejl: 'Ukendt kampagne.', kode: 'ikke_fundet' });
+      const b = req.body || {};
+      const navn = tekst(b.navn, 120);
+      const kilde = String(b.kilde || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40);
+      const dato = String(b.dato || '');
+      if (!navn) return res.status(400).json({ fejl: 'Skriv arrangementets navn.', kode: 'mangler_navn' });
+      if (!kilde) return res.status(400).json({ fejl: 'Skriv en kort kilde, fx digiday.', kode: 'mangler_kilde' });
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dato)) return res.status(400).json({ fejl: 'Vælg datoen for arrangementet.', kode: 'mangler_dato' });
+      const til = /^\d{4}-\d{2}-\d{2}$/.test(String(b.til || '')) ? String(b.til) : dato;
+      const kode = crypto.randomBytes(8).toString('hex');
+      await pool.query(
+        `INSERT INTO kampagne_arrangement (kampagne, navn, kilde, kode, gyldig_fra, gyldig_til)
+         VALUES ($1, $2, $3, $4, ($5 || ' 00:00')::timestamp AT TIME ZONE 'Europe/Copenhagen', ($6 || ' 23:59')::timestamp AT TIME ZONE 'Europe/Copenhagen')`,
+        [req.params.kampagne, navn, kilde, kode, dato, til]
+      );
+      KILDER.add(kilde);
+      res.status(201).json({ ok: true });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   router.get('/admin/kampagne/:kampagne.csv', admin, async (req, res, next) => {
     try {
       if (!KAMPAGNER[req.params.kampagne]) return res.status(404).json({ fejl: 'Ukendt kampagne.', kode: 'ikke_fundet' });
@@ -206,6 +275,8 @@ function kampagneRouter(pool, opts = {}) {
         ['hvor_knaekker_det', (r) => r.hvor],
         ['mailliste', (r) => (r.nyhedsbrev ? 'ja' : 'nej')],
         ['tilmeldt_fra', (r) => (r.kilder || []).join(' + ')],
+        ['bekraeftet_deltager', (r) => (r.bekraeftet ? 'ja' : 'nej')],
+        ['arrangement', (r) => r.arrangement || ''],
         ['tilmeldt', (r) => dk(r.oprettet)],
         ['lodder_tilmelding', (r) => r.lodder_basis],
         ['lodder_packrush', (r) => r.lodder_spil],
@@ -232,6 +303,8 @@ function kampagneRouter(pool, opts = {}) {
         kampagne: { id: req.params.kampagne, ...k },
         antal: liste.length,
         mailliste: liste.filter((r) => r.nyhedsbrev).length,
+        bekraeftede: liste.filter((r) => r.bekraeftet).length,
+        lodder_bekraeftede: liste.filter((r) => r.bekraeftet).reduce((a, r) => a + r.lodder, 0),
         crm_mangler: liste.filter((r) => !r.crm_sendt).length,
         lodder_i_alt: liste.reduce((a, r) => a + r.lodder, 0),
         tilmeldinger: liste,

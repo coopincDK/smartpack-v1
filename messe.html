@@ -313,7 +313,7 @@
       <div class="kort konk-kort">
         <div class="k">TO LODTRÆKNINGER, TO KLUBBER</div>
         <p class="b"><b>1. Til E-handelskonferencen, 8. oktober 2026.</b> Spil <a class="udlink" href="/spil/">Packrush</a>. Dit firmas bedste spil giver lodder, og vinderen trækkes på dagen. Kun firmaer på deltagerlisten til konferencen kan vinde. <a class="udlink" href="/spil/vilkaar/">Vilkår for Packrush &rsaquo;</a></p>
-        <p class="b"><b>2. Til Ehandelsdagen i Skive, 11. februar 2027.</b> Det er den store, samlede lodtrækning. Skriv dig op her, så får du 10 lodder. Lodderne fra Packrush tæller med oveni, og senere også lodder fra Warehouse Warrior. Du kan skrive dig op på konferencen, på Digi Day og frem til Ehandelsdagen.</p>
+        <p class="b"><b>2. Til Ehandelsdagen i Skive, 11. februar 2027.</b> Det er den store, samlede lodtrækning. Skriv dig op her, så får du 10 lodder. Lodderne fra Packrush tæller med oveni, og senere også lodder fra Warehouse Warrior. Du kan skrive dig op på konferencen, på Digi Day og frem til Ehandelsdagen. Lodtrækningen er lukket: kun deltagere på arrangementerne kan vinde.</p>
       </div>
 
       <div class="kort konk-kort">
@@ -350,9 +350,10 @@
         <summary>Vilkår for lodtrækningen på Ehandelsdagen</summary>
         <ol>
           <li><b>Arrangør:</b> SmartPack ApS, CVR 42007617, Østerbrogade 67A, 8500 Grenaa. Spørgsmål: bundlinjeboost@smartpack.dk.</li>
+          <li><b>Hvem kan vinde:</b> lodtrækningen er lukket for deltagere på E-handelskonferencen 8. oktober 2026, Digi Day og Ehandelsdagen 11. februar 2027. Du bliver registreret som deltager, når du skriver dig op via arrangementets QR-kode på dagen. Tilmeldinger uden for arrangementerne er ikke med i lodtrækningen.</li>
           <li><b>Deltagelse:</b> gratis og uden købskrav. Én tilmelding pr. e-mail. Skriver du dig op igen, fx på Digi Day, giver det ikke flere lodder.</li>
           <li><b>Lodder:</b> 10 lodder pr. tilmelding. Spiller du <a class="udlink" href="/spil/">Packrush</a> med samme e-mail, får du oveni de lodder, dit firma fik i spillet på E-handelskonferencen, efter samme regel som i <a class="udlink" href="/spil/vilkaar/">Packrush' vilkår</a>. Lodder fra Warehouse Warrior tæller også med, når spillet er koblet på konkurrencen. Tilmeldingen her giver ingen lodder til konferencens egen lodtrækning.</li>
-          <li><b>Lodtrækning:</b> på Ehandelsdagen i Skive 11. februar 2027. Vinderen trækkes tilfældigt blandt alle lodder.</li>
+          <li><b>Lodtrækning:</b> på Ehandelsdagen i Skive 11. februar 2027. Vinderen trækkes tilfældigt blandt de bekræftede deltageres lodder, og lodtrækningen og den anvendte lodliste dokumenteres.</li>
           <li><b>Præmie:</b> en tur til Kattegat Cup 2027 for hele den klub, vinderen vælger, som beskrevet ovenfor. Præmien kan ikke byttes til kontanter, og klubben skal selv tilmelde sig stævnet. SmartPack betaler klubprisen direkte til Kattegat Cup.</li>
           <li><b>Vinderen</b> kontaktes på mail. Svarer vinderen ikke inden 14 dage, trækkes en ny.</li>
           <li><b>Kan ikke vinde:</b> SmartPacks medarbejdere og deres husstand.</li>
@@ -404,7 +405,7 @@
       e.preventDefault();
       var d = new FormData(f);
       var data = {
-        kampagne: 'ehandelsdagen-2027', kilde: kilde(),
+        kampagne: 'ehandelsdagen-2027', kilde: kilde(), qr: (new URLSearchParams(location.search).get('a') || ''),
         navn: d.get('navn'), klub: d.get('klub'), firma: d.get('firma'), email: d.get('email'),
         telefon: d.get('telefon'), ordrer: d.get('ordrer'), hvor: d.get('hvor'),
         nyhedsbrev: d.get('nyhedsbrev') === 'ja'
@@ -416,7 +417,7 @@
           if (r.status === 201) {
             f.querySelectorAll('label,.todelt').forEach(function(el){ el.hidden = true; });
             knap.hidden = true;
-            vis('Tak, ' + data.navn + '! Du er med i lodtrækningen på Ehandelsdagen med 10 lodder. Spil Packrush med samme e-mail, så får du flere oveni og er også med om konferencens præmie.', true);
+            vis('Tak, ' + data.navn + '! Du er med i lodtrækningen på Ehandelsdagen med 10 lodder.' + (r.body && r.body.bekraeftet ? ' Du er registreret som deltager på ' + r.body.arrangement + '.' : '') + ' Spil Packrush med samme e-mail, så får du flere oveni og er også med om konferencens præmie.', true);
             var sk = document.getElementById('spil-knap'); if (sk) { sk.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
             return;
           }

@@ -169,6 +169,11 @@ test('QR-koden på standen godkender spillerens firma, kun med rigtig kode og ku
 
   const liste = await api(h.baseUrl, 'GET', '/admin/standkode', { adminCookie: ac });
   assert.deepEqual(liste.body.godkendt_paa_standen.map((x) => x.firma), ['Scannet Shop']);
+  const log = await api(h.baseUrl, 'GET', '/admin/konkurrence/stand-godkendelser', { adminCookie: ac });
+  assert.equal(log.status, 200);
+  assert.equal(log.body.godkendelser.length, 2, 'begge scanninger logges');
+  assert.equal(log.body.godkendelser.filter((g) => g.ny_paa_listen).length, 1);
+  assert.equal(log.body.godkendelser[0].firma, 'Scannet Shop');
   const uden = await api(h.baseUrl, 'POST', '/me/stand', { token: tok, body: {} });
   assert.equal(uden.status, 400);
 });

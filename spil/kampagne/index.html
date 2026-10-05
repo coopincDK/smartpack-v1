@@ -51,6 +51,7 @@ td b{font-weight:700}
     <div class="stats">
       <div class="stat"><div class="n" id="s-antal">–</div><div class="l">tilmeldte</div></div>
       <div class="stat"><div class="n" id="s-spil">–</div><div class="l">har også spillet</div></div>
+      <div class="stat"><div class="n" id="s-bek">–</div><div class="l">bekræftede deltagere</div></div>
       <div class="stat"><div class="n" id="s-mail">–</div><div class="l">ja til maillisten</div></div>
       <div class="stat"><div class="n" id="s-lodder">–</div><div class="l">lodder i alt</div></div>
       <div class="stat"><div class="n" id="s-crm">–</div><div class="l">mangler i CRM</div></div>
@@ -63,9 +64,23 @@ td b{font-weight:700}
       <span id="crm-svar" style="color:var(--muted);font-size:13px"></span>
     </div>
     <div class="tablewrap"><table>
-      <thead><tr><th>Navn</th><th>Klub</th><th>Firma</th><th>Kontakt</th><th>Fra</th><th>Mailliste</th><th>Tilmeldt</th><th class="num">Tilmelding</th><th class="num">Packrush</th><th class="num">I alt</th><th>CRM</th></tr></thead>
+      <thead><tr><th>Navn</th><th>Klub</th><th>Firma</th><th>Kontakt</th><th>Fra</th><th>Deltager</th><th>Mailliste</th><th>Tilmeldt</th><th class="num">Tilmelding</th><th class="num">Packrush</th><th class="num">I alt</th><th>CRM</th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
+
+    <h2 style="font:800 22px var(--display);margin:28px 0 6px">Arrangementer og QR-koder</h2>
+    <p class="sub" style="margin-bottom:12px">Hvert arrangement har sin egen hemmelige QR-kode. Tilmelder man sig via den på dagen, bliver man markeret som bekræftet deltager. Kun bekræftede deltagere kan vinde, når lodtrækningen er lukket.</p>
+    <div id="arr" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px"></div>
+    <div class="stat" style="margin-top:14px">
+      <div style="font-weight:700;margin-bottom:8px">Nyt arrangement</div>
+      <div class="row" style="margin:0">
+        <input type="search" id="a-navn" placeholder="Navn, fx Digi Day 2026" style="min-width:180px">
+        <input type="search" id="a-kilde" placeholder="Kort kilde, fx digiday" style="min-width:140px;flex:0 1 180px">
+        <input type="date" id="a-dato" style="background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:10px">
+        <button id="a-opret">Opret QR-kode</button>
+      </div>
+      <div id="a-msg" class="sub" style="margin:8px 0 0"></div>
+    </div>
   </div>
 </div>
 <script>
@@ -83,10 +98,11 @@ function vis() {
     <td>${esc(r.firma)}${false ? `` : ''}</td>
     <td><a href="mailto:${esc(r.email)}" style="color:var(--text)">${esc(r.email)}</a>${r.telefon ? '<br>' + esc(r.telefon) : ''}</td>
     <td>${(r.kilder || []).map((k) => `<span class="pill">${esc(KILDE[k] || k)}</span>`).join('')}</td>
+    <td>${r.bekraeftet ? `<span class="pill ja">✓ ${esc(r.arrangement || '')}</span>` : '<span class="pill" title="Ikke tilmeldt via et arrangements QR-kode">ikke bekræftet</span>'}</td>
     <td>${r.nyhedsbrev ? '<span class="pill ja">ja</span>' : '<span class="pill">nej</span>'}</td>
     <td>${esc(dato(r.oprettet))}</td>
     <td class="num">${r.lodder_basis}</td><td class="num">${r.lodder_spil || (r.har_spillet ? '0' : '')}</td><td class="num"><b>${r.lodder}</b></td><td>${r.crm_sendt ? '<span class="pill ja">sendt</span>' : '<span class="pill" title="' + esc(r.crm_fejl || '') + '">mangler</span>'}</td></tr>`).join('')
-    : '<tr><td colspan="11" class="empty">Ingen tilmeldinger endnu.</td></tr>';
+    : '<tr><td colspan="12" class="empty">Ingen tilmeldinger endnu.</td></tr>';
 }
 async function load() {
   let res; try { res = await fetch(API + '/admin/kampagne/' + KAMP, { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return fejl('Ingen forbindelse til serveren.'); }
@@ -95,7 +111,7 @@ async function load() {
   const b = await res.json();
   data = b.tilmeldinger || [];
   $('sub').textContent = `Tilmeldinger fra smartpack.dk/messe til lodtrækningen på ${b.kampagne.lodtraekning}. Hver tilmelding giver ${b.kampagne.basislodder} lodder, og lodder fra Packrush lægges oveni. Warehouse Warrior kobles på senere.`;
-  $('s-antal').textContent = b.antal; $('s-mail').textContent = b.mailliste; $('s-lodder').textContent = b.lodder_i_alt;
+  $('s-antal').textContent = b.antal; $('s-bek').textContent = b.bekraeftede ?? 0; $('s-mail').textContent = b.mailliste; $('s-lodder').textContent = b.lodder_i_alt;
   $('s-spil').textContent = data.filter((r) => r.har_spillet).length;
   $('s-crm').textContent = b.crm_mangler; $('crm').hidden = !b.crm_mangler;
   $('fejl').innerHTML = ''; $('indhold').hidden = false; vis();
@@ -103,6 +119,26 @@ async function load() {
 function fejl(t) { $('fejl').innerHTML = '<div class="msg">' + t + '</div>'; $('indhold').hidden = true; }
 $('q').addEventListener('input', vis);
 $('opd').addEventListener('click', load);
+async function loadArr() {
+  let r; try { r = await fetch(API + '/admin/kampagne/' + KAMP + '/arrangementer', { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return; }
+  if (!r.ok) return;
+  const b = await r.json();
+  const dag = (d) => new Date(d).toLocaleDateString('da-DK', { timeZone: 'Europe/Copenhagen', day: 'numeric', month: 'long', year: 'numeric' });
+  $('arr').innerHTML = (b.arrangementer || []).map((a, i) => `<div class="stat" style="display:flex;flex-direction:column;gap:8px">
+    <div style="font-weight:800">${esc(a.navn)}</div>
+    <div class="l">${esc(dag(a.gyldig_fra))}${dag(a.gyldig_fra) !== dag(a.gyldig_til) ? ' – ' + esc(dag(a.gyldig_til)) : ''} · ${a.antal} tilmeldt</div>
+    <div style="background:#fff;border-radius:10px;padding:8px">${a.qr_svg}</div>
+    <a class="btn" download="qr-${esc(a.kilde)}.svg" href="data:image/svg+xml;charset=utf-8,${encodeURIComponent(a.qr_svg)}">Hent QR-kode</a>
+    <div class="l" style="word-break:break-all">${esc(a.link)}</div></div>`).join('') || '<div class="l">Ingen arrangementer endnu.</div>';
+  $('arr').querySelectorAll('svg').forEach((v) => { v.setAttribute('width', '100%'); v.setAttribute('height', 'auto'); });
+}
+$('a-opret').addEventListener('click', async () => {
+  const body = { navn: $('a-navn').value, kilde: $('a-kilde').value, dato: $('a-dato').value };
+  const r = await fetch(API + '/admin/kampagne/' + KAMP + '/arrangementer', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  const b = await r.json().catch(() => ({}));
+  $('a-msg').textContent = r.ok ? 'Oprettet.' : (b.fejl || 'Fejl ' + r.status);
+  if (r.ok) { $('a-navn').value = ''; $('a-kilde').value = ''; loadArr(); }
+});
 $('crm').addEventListener('click', async () => {
   $('crm').disabled = true; $('crm-svar').textContent = 'Sender…';
   try {
@@ -113,7 +149,7 @@ $('crm').addEventListener('click', async () => {
   $('crm').disabled = false; load();
 });
 $('csv').addEventListener('click', (e) => { e.preventDefault(); location.href = API + '/admin/kampagne/' + KAMP + '.csv'; });
-load();
+load(); loadArr();
 </script>
 </body>
 </html>

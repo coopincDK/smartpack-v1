@@ -9,6 +9,7 @@ const QRCode = require('qrcode');
 const { requireAdmin } = require('../middleware/adminAuth');
 const { requirePlayer } = require('../middleware/playerAuth');
 const K = require('../konkurrence');
+const { clientIp } = require('../middleware/clientIp');
 
 // Standens QR-kode: en fast, hemmelig kode i et link til spillet. Scanner en
 // spiller den på standen, godkendes spillerens firma til konkurrencen (lægges
@@ -136,6 +137,21 @@ function konkurrenceRouter(pool) {
     }
   });
 
+  // Godkendelser via standens QR-kode, til kontrol før lodtrækningen.
+  router.get('/admin/konkurrence/stand-godkendelser', admin, async (req, res, next) => {
+    try {
+      const { rows } = await pool.query(
+        `SELECT g.tidspunkt, g.firma, g.ny_paa_listen, g.ip, g.user_agent, s.navn AS spiller_navn, s.email AS spiller_email
+           FROM stand_godkendelse g LEFT JOIN spiller s ON s.id = g.spiller_id
+          ORDER BY g.tidspunkt DESC LIMIT 2000`
+      );
+      res.set('Cache-Control', 'no-store');
+      res.json({ godkendelser: rows });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   // --- Standens QR-kode ---
   router.get('/admin/standkode', admin, async (req, res, next) => {
     try {
@@ -178,9 +194,14 @@ function konkurrenceRouter(pool) {
       const firma = String(req.player.firma || '').trim();
       const noegle = K.matchNoegle(firma);
       if (!noegle) return res.status(400).json({ fejl: 'Skriv først, hvilket firma du spiller for.', kode: 'firma_mangler' });
-      await pool.query(
-        `INSERT INTO deltagerliste_firma (firma, firma_noegle, kilde) VALUES ($1, $2, 'stand') ON CONFLICT (firma_noegle) DO NOTHING`,
+      const ins = await pool.query(
+        `INSERT INTO deltagerliste_firma (firma, firma_noegle, kilde) VALUES ($1, $2, 'stand') ON CONFLICT (firma_noegle) DO NOTHING RETURNING 1`,
         [firma.slice(0, 200), noegle]
+      );
+      // Dokumentation: hvem, hvornår og fra hvilken enhed (vilkår pkt. 2 og 7).
+      await pool.query(
+        `INSERT INTO stand_godkendelse (spiller_id, firma, firma_noegle, ny_paa_listen, ip, user_agent) VALUES ($1, $2, $3, $4, $5, $6)`,
+        [req.player.id, firma.slice(0, 200), noegle, ins.rowCount > 0, clientIp(req) || null, String(req.headers['user-agent'] || '').slice(0, 300) || null]
       );
       res.json({ ok: true, konkurrence: await K.firmaStatus(pool, firma, nu) });
     } catch (e) {

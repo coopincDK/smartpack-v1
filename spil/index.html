@@ -580,6 +580,14 @@ details.more summary:hover{color:var(--text)}
 /* Tilmelding: "Fortsæt" følger med nederst på skærmen, så man ikke skal scrolle forbi alle partnernes flueben */
 #f-reg > button[type=submit]{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom, 0px));z-index:6;
   box-shadow:0 -14px 28px 6px var(--bg),0 12px 28px -12px rgba(249,115,22,.65)}
+
+/* Lukket messe-turnering: lille skilt på startskærmen */
+.turn-chip{display:flex;align-items:center;gap:10px;margin:2px 0 4px;padding:9px 12px;border-radius:12px;text-decoration:none;
+  color:var(--muted);font-size:13px;line-height:1.35;border:1px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(135deg,#F5C451,rgba(245,196,81,.15) 60%,#C8955A) border-box}
+.turn-chip b{color:#F5C451;font-weight:800;margin-right:4px}
+.turn-chip .tc-ikon{font-size:18px;flex:none}
+.turn-chip .tc-pil{margin-left:auto;font-size:18px;opacity:.6;flex:none}
 </style>
 </head>
 <body>
@@ -600,6 +608,7 @@ details.more summary:hover{color:var(--text)}
     <div class="rule"></div>
   </div>
   <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b> med mulighed for at få flere, og din bedste score kommer på tavlen.</p>
+  <a class="turn-chip" href="vilkaar/"><span class="tc-ikon" aria-hidden="true">🏆</span><span><b>Lukket turnering 8. okt.</b> Kun konferencedeltagere får lodder til præmierne.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <div class="live" id="st-live"></div>
   <p class="muted small" id="st-invited" hidden></p>
   <div class="mission" id="st-mission" hidden></div>
