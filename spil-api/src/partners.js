@@ -10,7 +10,8 @@ const POWERUPS = {
   herodesk: { runde: 'Send', effekt: 'AI-agent, der løser ordrer af sig selv i 10 sek.' },
   reverse: { runde: 'Send', effekt: 'Returpakker bliver til ombytninger og giver dobbelt point i 8 sek.' },
   promo: { runde: 'Send', effekt: 'Kampagne: flere ordrer, og hver ordre er dobbelt så meget værd i 8 sek.' },
-  sprii: { runde: 'Send', effekt: 'Live-salg: kommentarerne bliver til ordrer i 8 sek.' },
+  // Nøglen hedder stadig 'sprii', men power-uppen er fra okt. 2026 InMobiles sms-kampagne.
+  sprii: { runde: 'Send', effekt: 'Sms-kampagne: svarene bliver til ordrer i 8 sek.' },
   elementlogic: { runde: 'Pluk', effekt: 'Lagerrobot, der hjælper med plukket.' },
 };
 
