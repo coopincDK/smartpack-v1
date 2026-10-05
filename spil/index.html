@@ -594,7 +594,7 @@ details.more summary:hover{color:var(--text)}
     <h1 class="prlogo"><img src="packrush-logo.webp" alt="Packrush" width="1200" height="233" decoding="async"></h1>
     <div class="rule"></div>
   </div>
-  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du har <b id="st-per">3 liv om dagen</b>, og din bedste score kommer på tavlen.</p>
+  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b> med mulighed for at få flere, og din bedste score kommer på tavlen.</p>
   <div class="live" id="st-live"></div>
   <p class="muted small" id="st-invited" hidden></p>
   <div class="mission" id="st-mission" hidden></div>
@@ -2386,7 +2386,7 @@ function renderStart(){
   const me = isStand() ? null : savedMe, bm = $('#b-me');
   bm.hidden = !me; if(me) bm.textContent = `Fortsæt som ${me.name}`;
   $('#b-play').classList.toggle('ghost', !!me); $('#b-play').classList.toggle('primary', !me); $('#b-play').textContent = me ? 'Ny spiller' : 'Spil med';
-  $('#st-per').textContent = `${cfg.perDay} liv om dagen`;
+  /* Startteksten siger fast "1 liv i timen": der kommer ét nyt liv hver time, uanset cfg.perDay. */
   const live = $('#st-live'); live.replaceChildren();
   const players = rank('total', F.today), boss = players[0];
   const c1 = el('p', 'chip'); c1.append(el('span', 'dot'));
