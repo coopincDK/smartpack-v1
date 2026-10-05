@@ -17,12 +17,12 @@
 //
 // Fejl, pr. kald:
 //   - 200/201: færdig.
-//   - 404/409 på en afmelding: kontakten findes ikke, eller er allerede afmeldt.
-//     Færdig (logges med række-id).
+//     (CRM'ets unsubscribe svarer 200 både for en ukendt og en allerede afmeldt
+//     e-mail, så 404 er aldrig et legitimt svar.)
 //   - 400/409/413/422: CRM'et afviser netop den række. Tæl et forsøg og vent
 //     (FORSOEG_VENT_MIN); efter MAKS_FORSOEG forsøg springes rækken over. Rækker
 //     bagved sendes imens videre, så ingen række kan holde jobbet fast.
-//   - alt andet (401/403/404, 429, 5xx, netværk): opsætning eller nedetid. Stop,
+//   - alt andet (401/403/404 = forkert nøgle eller URL, 429, 5xx, netværk): opsætning eller nedetid. Stop,
 //     ryk intet, prøv igen næste gang.
 // Afvises MAKS_AFVIST rækker i samme kørsel, er det nok opsætningen: jobbet holder
 // pause i PAUSE_MIN minutter og logger en alarm.
@@ -35,7 +35,6 @@ const MAKS_FORSOEG = 3;
 const FORSOEG_VENT_MIN = [15, 60]; // ventetid efter 1. og 2. afvisning
 const MAKS_AFVIST = 5;
 const PAUSE_MIN = 10;
-const MAKS_UDEN_KONTAKT = 3;
 const nlUrl = () => process.env.SMARTPACK_CRM_URL || 'https://crm.smartpack.dk/api/v1/newsletter';
 
 // Tydelig fejl i loggen: aldrig persondata og aldrig nøglen.
@@ -51,9 +50,8 @@ function loegStop(res) {
   }
 }
 
-function afgoer(res, erAfmelding) {
+function afgoer(res) {
   if (res.ok) return 'ok';
-  if (erAfmelding && (res.status === 404 || res.status === 409)) return 'uden_kontakt';
   if ([400, 409, 413, 422].includes(res.status)) return 'afvist';
   return 'stop';
 }
@@ -114,10 +112,9 @@ async function synkOnce(pool, max = 50) {
       ORDER BY id LIMIT $1`,
     [max]
   );
-  const udenKontakt = []; // positive id'er = udbakke, negative = samtykke
   for (const r of udbakke) {
     const res = await sendTilCrm({ email: r.email, source: 'packrush' }, nlUrl() + '/unsubscribe');
-    const udfald = afgoer(res, true);
+    const udfald = afgoer(res);
     if (udfald === 'stop') {
       await stopMed(res);
       break;
@@ -130,13 +127,8 @@ async function synkOnce(pool, max = 50) {
       if (await tjekAfvist()) break;
       continue;
     }
-    if (udfald === 'uden_kontakt') {
-      console.error(`[crm-synk] afmelding i udbakken id=${r.id}: kontakten findes ikke eller er allerede afmeldt (HTTP ${res.status})`);
-      udenKontakt.push(r.id);
-    } else {
-      sendt++;
-      await pool.query('DELETE FROM crm_udbakke WHERE id = $1', [r.id]);
-    }
+    sendt++;
+    await pool.query('DELETE FROM crm_udbakke WHERE id = $1', [r.id]);
     behandlet++;
   }
 
@@ -177,7 +169,7 @@ async function synkOnce(pool, max = 50) {
             notes: { packrush: 'Ja til SmartPacks nyhedsmails i Packrush' },
           };
       const res = await sendTilCrm(body, erAfmelding ? nlUrl() + '/unsubscribe' : nlUrl());
-      const udfald = afgoer(res, erAfmelding);
+      const udfald = afgoer(res);
       if (udfald === 'stop') {
         await stopMed(res);
         break;
@@ -190,36 +182,19 @@ async function synkOnce(pool, max = 50) {
         if (await tjekAfvist()) break;
         continue;
       }
-      if (udfald === 'uden_kontakt') {
-        console.error(`[crm-synk] afmelding samtykke id=${r.id}: kontakten findes ikke eller er allerede afmeldt (HTTP ${res.status})`);
-        udenKontakt.push(-r.id);
-      } else {
-        sendt++;
-        // Blev spilleren slettet, mens ja'et var på vej (rækken er væk, så opdateringen
-        // rammer intet), kender CRM'et nu en kontakt, ingen længere afmelder: læg en
-        // afmelding i udbakken med det samme. Opdateringen venter på en slettende
-        // transaktions rækkelås, så de to kan ikke krydse hinanden (se playerDeletion.js).
-        const { rowCount } = await marker(r.id, 'sendt');
-        if (rowCount === 0 && !erAfmelding) {
-          await pool.query("INSERT INTO crm_udbakke (email, type) VALUES ($1, 'afmeld')", [r.email]);
-        }
+      sendt++;
+      // Blev spilleren slettet, mens ja'et var på vej (rækken er væk, så opdateringen
+      // rammer intet), kender CRM'et nu en kontakt, ingen længere afmelder: læg en
+      // afmelding i udbakken med det samme. Opdateringen venter på en slettende
+      // transaktions rækkelås, så de to kan ikke krydse hinanden (se playerDeletion.js).
+      const { rowCount } = await marker(r.id, 'sendt');
+      if (rowCount === 0 && !erAfmelding) {
+        await pool.query("INSERT INTO crm_udbakke (email, type) VALUES ($1, 'afmeld')", [r.email]);
       }
       behandlet++;
     }
   }
 
-  // Afmeldinger, CRM'et ikke kender, afsluttes først her, og kun hvis det ikke er
-  // ALLE afmeldinger i kørslen (så en forkert URL, der giver 404 på alt, ikke lader
-  // afmeldinger forsvinde).
-  if (!stop && udenKontakt.length >= MAKS_UDEN_KONTAKT && sendt === 0) {
-    await stopMed({ fejl: 'HTTP 404/409 på alle afmeldinger', status: 404 });
-  }
-  if (!stop) {
-    for (const id of udenKontakt) {
-      if (id > 0) await pool.query('DELETE FROM crm_udbakke WHERE id = $1', [id]);
-      else await pool.query("UPDATE samtykke SET crm_synk_status = 'sendt' WHERE id = $1", [-id]);
-    }
-  }
   if (!stop && behandlet) await pool.query('UPDATE crm_synk SET seneste_fejl = NULL WHERE navn = $1', [NAVN]);
   return { sendt, behandlet, stop };
 }

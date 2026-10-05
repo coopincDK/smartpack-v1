@@ -408,41 +408,6 @@ test('N2: et gentaget ja (markeret sprunget) hindrer ikke afmeldingen, når det 
   assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 1);
 });
 
-for (const kode of [404, 409]) {
-  test(`N2: ${kode} på en afmelding i udbakken er færdig, logges med id, og blokerer ikke almindelige tilmeldinger`, async (t) => {
-    const { crm, h } = await opsaet(t, (body, url) => (url.endsWith('/unsubscribe') ? [kode, '{}'] : [201, '{}']));
-    await h.pool.query("INSERT INTO crm_udbakke (email) VALUES ('ukendt-n2@shop.dk')");
-    await nySpiller(h, 'Bo Ny', 'bo-n2@shop.dk');
-    const log = fangLog();
-    let r;
-    try {
-      r = await synkOnce(h.pool);
-    } finally {
-      log.stop();
-    }
-    assert.equal(r.stop, null);
-    assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
-    assert.equal(crm.kald.filter((k) => k.body.email === 'bo-n2@shop.dk').length, 1);
-    const tekst = log.linjer.join('\n');
-    assert.match(tekst, /udbakken id=\d+/);
-    assert.ok(!tekst.includes('ukendt-n2@shop.dk'));
-  });
-}
-
-test('N2: 404 på ALLE afmeldinger (forkert URL) afslutter dem ikke', async (t) => {
-  const { h } = await opsaet(t, (body, url) => (url.endsWith('/unsubscribe') ? [404, '{}'] : [201, '{}']));
-  for (let i = 0; i < 3; i++) await h.pool.query('INSERT INTO crm_udbakke (email) VALUES ($1)', [`u${i}-n2@shop.dk`]);
-  const log = fangLog();
-  let r;
-  try {
-    r = await synkOnce(h.pool);
-  } finally {
-    log.stop();
-  }
-  assert.match(r.stop, /404/);
-  assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 3);
-});
-
 test('N1: en række, CRM afviser, opgives efter 3 forsøg, og gyldige rækker bagved sendes straks', async (t) => {
   const { crm, h } = await opsaet(t, (body) => (body.email === 'daarlig-n1@shop.dk' ? [400, '{}'] : [201, '{}']));
   await nySpiller(h, 'Daarlig', 'daarlig-n1@shop.dk');
@@ -635,4 +600,45 @@ test('T1: sendt ja og sendt nej, så sletning, giver ingen afmelding', async (t)
   await synkOnce(h.pool);
   assert.equal((await api(h.baseUrl, 'DELETE', '/me', { token: bo.token, body: { pinkode: bo.pin } })).status, 200);
   assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 0);
+});
+
+test('CRM-kontrakt: 404 er aldrig færdig. Hverken afmelding (udbakken bevares) eller tilmelding (intet markeres) — jobbet stopper', async (t) => {
+  let svar = (body, url) => (url.endsWith('/unsubscribe') ? [404, '{}'] : [201, '{}']);
+  const { crm, h } = await opsaet(t, (body, url) => svar(body, url));
+  await h.pool.query("INSERT INTO crm_udbakke (email) VALUES ('ukendt-404@shop.dk')");
+  await nySpiller(h, 'Bo 404', 'bo-404@shop.dk');
+  const log = fangLog();
+  try {
+    const r = await synkOnce(h.pool);
+    assert.match(r.stop, /HTTP 404/);
+    assert.equal((await h.pool.query('SELECT 1 FROM crm_udbakke')).rowCount, 1, 'udbakken bevares');
+    assert.equal(crm.kald.filter((k) => k.body.email === 'bo-404@shop.dk').length, 0, 'stopper før samtykke-rækkerne');
+    assert.match(log.linjer.join('\n'), /STOP/);
+    assert.ok(!log.linjer.join('\n').includes('ukendt-404@shop.dk'));
+
+    // 404 på selve tilmeldingen: intet markeres
+    await h.pool.query('DELETE FROM crm_udbakke');
+    svar = () => [404, '{}'];
+    assert.match((await synkOnce(h.pool)).stop, /HTTP 404/);
+    assert.equal((await h.pool.query('SELECT 1 FROM samtykke WHERE crm_synk_status IS NOT NULL')).rowCount, 0);
+  } finally {
+    log.stop();
+  }
+});
+
+test('CRM-kontrakt: 409 på en afmelding er en almindelig afvisning med forsøgstæller, ikke færdig', async (t) => {
+  const { h } = await opsaet(t, (body, url) => (url.endsWith('/unsubscribe') ? [409, '{}'] : [201, '{}']));
+  await h.pool.query("INSERT INTO crm_udbakke (email) VALUES ('konflikt@shop.dk')");
+  await nySpiller(h, 'Bo 409', 'bo-409@shop.dk');
+  const log = fangLog();
+  let r;
+  try {
+    r = await synkOnce(h.pool);
+  } finally {
+    log.stop();
+  }
+  assert.equal(r.stop, null, 'blokerer ikke almindelige tilmeldinger');
+  assert.equal(r.sendt, 1);
+  const rk = (await h.pool.query('SELECT crm_forsoeg FROM crm_udbakke')).rows;
+  assert.deepEqual(rk, [{ crm_forsoeg: 1 }], 'rækken er bevaret med ét forsøg');
 });

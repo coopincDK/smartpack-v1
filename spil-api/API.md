@@ -1619,9 +1619,8 @@ Et baggrundsjob (startet i `server.js`, hvert minut) behandler to ting, i denne 
    forudgående ja giver intet kald.
 
 Uden `SMARTPACK_CRM_KEY` sker intet; der fortsættes derfra, når nøglen er lagt ind.
-Fejl, pr. kald: 200/201 er færdig. 404/409 på en afmelding betyder, at kontakten ikke
-findes eller allerede er afmeldt, og er også færdig (logges med række-id; er det ALLE
-afmeldinger i en kørsel, tolkes det som en forkert URL, og intet afsluttes). 400, 409, 413
+Fejl, pr. kald: 200/201 er færdig (CRM'ets unsubscribe svarer 200 både for en ukendt og en
+allerede afmeldt e-mail, verificeret med et rigtigt kald). 400, 409, 413
 og 422 betyder, at CRM'et afviser netop den række: der tælles et forsøg (`crm_forsoeg`),
 rækken venter (15 min, derefter 60 min), og efter 3 afvisninger springes den over, mens
 rækker bagved sendes videre. Afvises 5 rækker i samme kørsel, holder jobbet 10 minutters
@@ -1637,8 +1636,9 @@ sendes aldrig til CRM'et.
   bekræfte, at e-mailen tilhører indsenderen, så man kan tilmelde en fremmed. Afklar
   med CRM-ejeren, om CRM'et selv laver double opt-in, før nøglen tændes. Det gælder
   også en kampagneindsendelse med flueben for en e-mail, der er afmeldt i CRM'et.
-- **CRM'ets statuskoder for unsubscribe er antaget:** 200/201 = ok, 404/409 = ukendt eller
-  allerede afmeldt (behandles som færdig). Det er ikke bekræftet af CRM-ejeren.
+- **Unsubscribe opretter en kontakt:** et kald for en ukendt e-mail svarer 200 og opretter
+  kontakten i CRM'et (som afmeldt). Udbakken sender derfor kun afmeldinger for spillere, hvis
+  ja faktisk er sendt.
 - **`/hjemmeside/afmeld` er anonym:** alle kan afmelde en vilkårlig e-mail i CRM'et. Den har
   Origin-tjek, 10/min/IP og 3 pr. 10 min pr. e-mail, men ingen verifikation af ejeren (et
   afmeldingslink med token ville kræve en ændring af footeren).
