@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="da">
 <head>
-<script>/* Uden skråstreg til sidst peger relative stier (../) forkert, og siden mister sit design. Send altid til adressen med /. */if(!/\/$/.test(location.pathname)){location.replace(location.pathname+"/"+location.search+location.hash);}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Præmier og partnere – Packrush</title>
@@ -74,10 +73,9 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
     <div id="total"></div>
     <div id="konk-tekst" class="muted">Henter …</div>
     <div class="cta">
-      <a class="btn" href="../">Spil Packrush</a>
+      <a class="btn" href="../">Spil og få lodder</a>
       <a class="btn ghost" href="#fordele">Se fordelene ved tilmelding</a>
     </div>
-    <p class="small muted" style="margin:-4px 0 0">Lodder kan kun optjenes i den lukkede messe-turnering den 8. oktober af konferencedeltagere.</p>
   </section>
 
   <nav class="nav" id="nav" aria-label="Afsnit">
@@ -133,7 +131,7 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
   function logo(p) {
     return p.logo_url ? el('div', { class: 'logo' }, [el('img', { src: SP.API + p.logo_url, alt: p.navn + ' logo', loading: 'lazy' })]) : el('div', { class: 'navn', text: p.navn });
   }
-  function dato(d) { return d ? new Date(d + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long', timeZone: 'Europe/Copenhagen' }) : ''; }
+  function dato(d) { return d ? new Date(d + 'T12:00:00').toLocaleDateString('da-DK', { dateStyle: 'long' }) : ''; }
   function sektion(titel, tekst) { return tekst ? [el('h4', { text: titel }), el('p', { class: 'pre', text: tekst })] : []; }
   function mere(titel, dele) {
     dele = dele.filter(Boolean); if (!dele.length) return null;
@@ -159,7 +157,7 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
       var cd = nedtaelling(k.lodtraekning);
       kt.append(el('div', { class: 'meta' }, [
         el('span', { class: 'chip warn', text: k.navn }),
-        el('span', { class: 'chip', text: 'Lodtrækning ' + new Date(k.lodtraekning).toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Europe/Copenhagen' }) }),
+        el('span', { class: 'chip', text: 'Lodtrækning ' + new Date(k.lodtraekning).toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short' }) }),
         cd ? el('span', { class: 'chip ok cd', text: 'Om ' + cd }) : null,
       ]));
       if (k.tekst) kt.append(el('p', { class: 'pre', text: k.tekst }));
@@ -168,15 +166,7 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
       kt.append(el('div', { class: 'msg info', role: 'status' }, [el('strong', { text: 'Lige nu er der ingen aktiv konkurrence.' }),
         k.tekst && k.tekst !== 'Lige nu er der ingen aktiv konkurrence.' ? el('p', { class: 'pre', text: k.tekst, style: 'margin-top:6px' }) : null]));
     }
-    if (pr.praemier.length) {
-      // Moms-sammenligneligt: gaver ekskl. moms lægges sammen; gaver angivet inkl. moms nævnes for sig.
-      var eks = pr.praemier.filter(function (p) { return p.praemie.moms !== 'inkl'; });
-      var ink = pr.praemier.filter(function (p) { return p.praemie.moms === 'inkl'; });
-      var sum = eks.reduce(function (a, p) { return a + (p.praemie.vaerdi || 0); }, 0);
-      var opTil = eks.some(function (p) { return p.praemie.vaerdi_type === 'op_til'; });
-      $('total').append(el('div', { class: 'total' }, [el('small', { text: 'Samlet værdi af præmiepuljen' }), document.createTextNode((opTil ? 'Op til ' : '') + SP.kr(sum) + ' ekskl. moms')]));
-      if (ink.length) $('total').append(el('p', { class: 'small muted', style: 'margin-top:6px', text: 'plus ' + ink.map(function (p) { return p.navn + 's gave (' + p.praemie.titel + ') til ' + SP.kr(p.praemie.vaerdi) + ' inkl. moms'; }).join(' og ') + '.' }));
-    }
+    if (pr.praemier.length) $('total').append(el('div', { class: 'total' }, [el('small', { text: 'Samlet værdi af præmiepuljen' }), document.createTextNode((pr.samlet_indeholder_op_til ? 'Op til ' : '') + SP.kr(pr.samlet_vaerdi))]));
 
     var ps = $('praemie-liste');
     $('n-pr').textContent = pr.praemier.length || '';
