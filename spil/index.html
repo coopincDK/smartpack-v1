@@ -769,7 +769,7 @@ details.more summary:hover{color:var(--text)}
     <label class="check"><input type="checkbox" id="c-crown">Kår dagens vinder med nedtælling på væggen</label>
     <label class="check"><input type="checkbox" id="c-bf">Black Friday-vagt, ét spil om dagen med dobbelte point</label>
     <label class="check"><input type="checkbox" id="c-teams">Firmakamp, gennemsnit af hvert firmas 3 bedste spillere</label>
-    <label class="check"><input type="checkbox" id="c-partners">Partner-power-ups: Element Logic i Pluk og to af Herodesk, Revershero, Active Promotion og Sprii i Send</label>
+    <label class="check"><input type="checkbox" id="c-partners">Partner-power-ups: lagerrobotten i Pluk og to af Herodesk, Revershero, Active Promotion og InMobile i Send</label>
     <label class="check"><input type="checkbox" id="c-raffle">Lodtrækning, ét lod for hver dag man spiller</label>
     <label class="f">Præmie <small>Vises på start, i lobbyen og på væggen, fx "en flaske vin til dagens vinder"</small><input type="text" id="c-prize" maxlength="60"></label>
     <label class="check"><input type="checkbox" id="c-sms">Sms'er om spillet, når nogen bliver overhalet, og om præmier</label>
@@ -2016,7 +2016,7 @@ const PARTNERS = {
   herodesk: { name: 'Herodesk', dur: 10, text: 'Herodesk sender en AI-agent, der løser en ordre hvert andet sekund i 10 sek.' },
   reverse:  { name: 'Revershero', dur: 8, text: 'Returpakker bliver til ombytninger i 8 sek. og giver dobbelt point.' },
   promo:    { name: 'Active Promotion', dur: 8, text: 'Kampagne i 8 sek.: flere ordrer, og hver ordre er dobbelt så meget værd.' },
-  sprii:    { name: 'Sprii', dur: 8, text: 'Sprii går live i 8 sek.: kommentarerne bliver til ordrer i hobetal. Glemmer du ingen, er livet udsolgt og giver +100.' },
+  sprii:    { name: 'InMobile', dur: 8, text: 'InMobile sender en sms-kampagne i 8 sek.: svarene bliver til ordrer i hobetal. Glemmer du ingen, er kampagnen udsolgt og giver +100.' },
 };
 /* Partnere fra partneradmin (GET /partnere). Når mindst én partner i admin er
    knyttet til en power-up, styrer admin listen: kun de partnere vises, og med
@@ -2037,7 +2037,8 @@ function applyPartnerList(list){
   if(by.elementlogic){ EL.name = by.elementlogic.navn; EL.slug = by.elementlogic.slug; } else EL.on = false;
 }
 fetch(API_BASE + '/partnere', { credentials: 'same-origin' }).then(r => r.ok ? r.json() : null).then(j => { if(j) applyPartnerList(j.partnere); }).catch(() => {});
-const SPRII_CMTS = ['KØB', 'Køb 2 stk.', 'Jeg vil have en!', 'Solgt 🔥', 'KØB KØB', '❤️', 'Har I den i blå?', 'Købt!', 'Skriv KØB', '🛒 KØB'];
+/* Power-uppen hedder stadig 'sprii' internt (nøglen i admin og databasen), men er fra okt. 2026 InMobiles sms-kampagne. */
+const SPRII_CMTS = ['JA TAK', 'Bestil 2 stk.', 'Køber! 📲', 'Send den 🔥', 'JA', '👍', 'Har I den i blå?', 'Bestilt!', 'Ja tak, 1 stk.', '📲 KØB'];
 function returnBox(c, cx, cy, s, swap){
   kraftBox(c, cx - s / 2, cy - s / 2, s, s, 1);
   c.fillStyle = swap ? C.green : C.orange; c.fillRect(cx - s / 2, cy - s / 2, s, s * 0.32);
@@ -2167,7 +2168,7 @@ class Send extends Base {
       if(p.kind === 'herodesk'){ this.agent = P.dur; this.agentT = 0.3; this.say('Herodesk-agenten løser en ordre hvert andet sekund'); }
       if(p.kind === 'reverse'){ this.rev = P.dur; this.rets.forEach(r => r.swap = true); this.say('Revershero: returer er ombytninger og giver dobbelt point'); }
       if(p.kind === 'promo'){ this.promo = P.dur; this.say('Active Promotion: kampagne, flere ordrer til dobbelt værdi'); }
-      if(p.kind === 'sprii'){ this.live = P.dur; this.liveMiss = 0; this.liveSold = 0; this.viewers = 1200 + Math.floor(this.rC() * 800); this.spawnT = 0.1; this.say('Sprii er gået live: kommentarerne bliver til ordrer', C.red); }
+      if(p.kind === 'sprii'){ this.live = P.dur; this.liveMiss = 0; this.liveSold = 0; this.viewers = 1200 + Math.floor(this.rC() * 800); this.spawnT = 0.1; this.say(P.name + ': sms-kampagnen er sendt, svarene bliver til ordrer', C.red); }
       this.pop(p.x, p.y - this.R - 8, `${P.name} +25`, C.text, true);
     }
     this.burst(p.x, p.y, 40, CONF, 340); this.glow(p.kind === 'smart' ? C.green : C.text, .45); sfx('power');
@@ -2237,10 +2238,10 @@ class Send extends Base {
       for(const b of this.beams){ c.globalAlpha = 1 - b.t / 0.45; c.strokeStyle = C.text; c.lineWidth = 3; c.setLineDash([6, 5]); c.beginPath(); c.moveTo(ax, ay + 10); c.lineTo(b.x, b.y); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; }
     }
     if(this.live > 0){
-      // Sprii-studiet: LIVE-mærke med seertal og kommentarer, der stiger op
+      // Sms-kampagnen (InMobile): mærke med antal modtagere og svar, der stiger op
       const bl = 1 + 0.06 * Math.sin(this.t * 10);
       c.save(); c.translate(w / 2 + 20, this.ly(0) - this.lh * 0.36); c.font = `800 12px ${FONT}`; c.textBaseline = 'middle'; c.textAlign = 'left';
-      const txt = `Sprii LIVE  ${fmt(Math.round(this.viewers))} ser med, ${Math.ceil(this.live)} sek.`, tw = c.measureText(txt).width + 34;
+      const txt = `${PARTNERS.sprii ? PARTNERS.sprii.name : 'InMobile'} SMS  ${fmt(Math.round(this.viewers))} har fået sms'en, ${Math.ceil(this.live)} sek.`, tw = c.measureText(txt).width + 34;
       c.fillStyle = C.red; rr(c, -tw / 2, -12, tw, 24, 12); c.fill();
       c.fillStyle = '#fff'; c.beginPath(); c.arc(-tw / 2 + 14, 0, 4.5 * bl, 0, Math.PI * 2); c.fill();
       c.fillText(txt, -tw / 2 + 24, 1); c.restore();
@@ -2725,7 +2726,7 @@ function legend(){
     [iconURL(c => returnBox(c, 22, 22, 30)), 'Retur', 'Tryk, når den er i det grønne felt. Så er den på lager igen.'],
     [iconURL(c => { c.fillStyle = C.green; c.beginPath(); c.arc(22, 22, 19, 0, Math.PI * 2); c.fill(); if(CUBEW.complete) c.drawImage(CUBEW, 10, 10, 24, 24); }), 'SmartPack', 'Tryk på den for en bonus.'],
   ];
-  if(cfg.partners !== false) LEGEND.push([iconURL(c => { rr(c, 2, 12, 40, 20, 10); c.fillStyle = C.text; c.fill(); c.fillStyle = C.navy; c.font = `800 9px ${DFONT}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('Partner', 22, 22); }), 'Partnere', 'To af Herodesk, Revershero, Active Promotion og Sprii hjælper dig.']);
+  if(cfg.partners !== false) LEGEND.push([iconURL(c => { rr(c, 2, 12, 40, 20, 10); c.fillStyle = C.text; c.fill(); c.fillStyle = C.navy; c.font = `800 9px ${DFONT}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('Partner', 22, 22); }), 'Partnere', 'To af ' + Object.values(PARTNERS).map(p => p.name).join(', ').replace(/, ([^,]*)$/, ' og $1') + ' hjælper dig.']);
   const box = el('div', 'legend');
   LEGEND.forEach(([src, name, text]) => { const d = el('div'), im = new Image(); im.src = src; im.alt = ''; const p = el('p'); p.append(el('b', null, name + ' '), text); d.append(im, p); box.append(d); });
   return box;
