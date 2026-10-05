@@ -81,8 +81,33 @@ async function anonymizeReferencesToPlayer(client, id, navn) {
 // slettet de forsøg/notifikations-rækker vi lige har opdateret andre
 // spilleres referencer ud fra (irrelevant rækkefølge for selve dataene, men
 // holder de to trin tydeligt adskilte).
-async function cascadeDeletePlayer(client, id) {
+async function cascadeDeletePlayer(client, id, { afmeldCrm = true } = {}) {
   await client.query('DELETE FROM notifikation WHERE spiller_id = $1', [id]);
+  // Havde spilleren aktivt ja til SmartPack, lægges en afmelding i CRM-udbakken
+  // (kun e-mail + tidspunkt) i SAMME transaktion som sletningen, så den hverken kan
+  // gå tabt eller ske uden at sletningen sker. src/crmSynk.js sender den og sletter
+  // rækken, når CRM'et har bekræftet. Skal ske FØR samtykke-rækkerne slettes.
+  // Afmeld, når det seneste SENDTE smartpack-samtykke er et ja, uanset hvad den seneste
+  // hændelse er: et nej, der ikke er sendt endnu, er ikke nået frem til CRM'et, og rækken
+  // forsvinder med sletningen. Kun hvis ja'et faktisk ER sendt (crm_synk_status = 'sendt'); ellers
+  // kender CRM'et ikke kontakten, og et ja, der aldrig blev sendt, forsvinder med
+  // sletningen. afmeldCrm = false bruges af admin/nulstil (rydning af testdata er
+  // ikke en tilbagetrækning af samtykket).
+  if (afmeldCrm) {
+    // Lås de smartpack-samtykker først: crmSynk markerer et ja 'sendt' med en UPDATE på
+    // samme række. Så ser vi enten status 'sendt' (og afmelder her), eller crmSynk
+    // opdager bagefter, at rækken er væk, og afmelder selv (src/crmSynk.js).
+    await client.query("SELECT id FROM samtykke WHERE spiller_id = $1 AND liste = 'smartpack' FOR UPDATE", [id]);
+    await client.query(
+      `INSERT INTO crm_udbakke (email, type)
+       SELECT p.email, 'afmeld' FROM spiller p
+        WHERE p.id = $1 AND p.email IS NOT NULL
+          AND (SELECT s.type FROM samtykke s
+                WHERE s.spiller_id = p.id AND s.liste = 'smartpack' AND s.crm_synk_status = 'sendt'
+                ORDER BY s.tidspunkt DESC, s.id DESC LIMIT 1) = 'bekraeftet'`,
+      [id]
+    );
+  }
   await client.query('DELETE FROM samtykke WHERE spiller_id = $1', [id]);
   await client.query('DELETE FROM forsoeg WHERE spiller_id = $1', [id]);
   // Opgave C: spiller_token (flere samtidige tokens, se migrations/
@@ -97,9 +122,9 @@ async function cascadeDeletePlayer(client, id) {
 // andre spilleres data, sletter derefter spillerens egne rækker (cascade) +
 // selve spiller-rækken. `navn` skal være spillerens navn PÅ SLETNINGS-
 // TIDSPUNKTET (hentet af kalderen via den FOR UPDATE-låste række).
-async function deletePlayerFully(client, id, navn) {
+async function deletePlayerFully(client, id, navn, opts) {
   await anonymizeReferencesToPlayer(client, id, navn);
-  await cascadeDeletePlayer(client, id);
+  await cascadeDeletePlayer(client, id, opts);
 }
 
 module.exports = { SLETTET_SPILLER, anonymizeReferencesToPlayer, cascadeDeletePlayer, deletePlayerFully };

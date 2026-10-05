@@ -614,7 +614,7 @@ function adminRouter(pool, ws, opts) {
         await client.query('ROLLBACK');
         return res.status(404).json({ fejl: 'Ukendt spiller.', kode: 'ukendt_spiller' });
       }
-      await deletePlayerFully(client, rows[0].id, rows[0].navn);
+      await deletePlayerFully(client, rows[0].id, rows[0].navn, { afmeldCrm: true });
       await client.query('COMMIT');
       invalidateStateCache();
       // Opgave E: state.changed broadcastes nu også ved sletning af én
@@ -762,7 +762,8 @@ function adminRouter(pool, ws, opts) {
         await client.query('BEGIN');
         const { rows } = await client.query('SELECT id, navn FROM spiller ORDER BY id FOR UPDATE');
         for (const r of rows) {
-          await deletePlayerFully(client, r.id, r.navn);
+          // Nulstil rydder testdata: ingen afmelding i CRM'et (se playerDeletion.js).
+          await deletePlayerFully(client, r.id, r.navn, { afmeldCrm: false });
         }
         await client.query(
           `INSERT INTO admin_audit_log (admin_session_id, handling, antal, detaljer)

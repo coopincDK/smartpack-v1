@@ -49,7 +49,8 @@ async function startHarness(opts = {}) {
 // testsuiten deler ellers samme loopback-socket og ville ellers tælle som
 // samme klient-IP).
 async function api(baseUrl, method, path, { token, body, adminCookie, headers: extraHeaders } = {}) {
-  const headers = { 'content-type': 'application/json' };
+  // De offentlige formular-endpoints kræver Origin fra smartpack.dk (src/middleware/origin.js).
+  const headers = { 'content-type': 'application/json', origin: 'https://smartpack.dk' };
   if (token) headers['authorization'] = 'Bearer ' + token;
   if (adminCookie) headers['cookie'] = adminCookie;
   if (extraHeaders) Object.assign(headers, extraHeaders);
