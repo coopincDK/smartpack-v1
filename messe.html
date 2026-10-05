@@ -359,6 +359,10 @@
           <li><b>Dine data</b> slettes senest 6 måneder efter lodtrækningen, medmindre du har sagt ja til maillisten. Du kan altid bede om at få dem slettet før.</li>
         </ol>
       </details>
+      <a class="knap frem" id="spil-knap" href="/spil/" style="margin-top:18px">
+        <div><div class="t">Vær også med om konferencens præmie</div><div class="u">spil Packrush. Dit firmas bedste spil giver lodder til lodtrækningen 8. oktober.</div></div>
+        <span class="pil">›</span>
+      </a>
       <p class="minitekst" id="lead-svar" role="status" hidden></p>
     </form>
   </section>
@@ -413,6 +417,7 @@
             f.querySelectorAll('label,.todelt').forEach(function(el){ el.hidden = true; });
             knap.hidden = true;
             vis('Tak, ' + data.navn + '! Du er med i lodtrækningen på Ehandelsdagen med 10 lodder. Spil Packrush med samme e-mail, så får du flere oveni og er også med om konferencens præmie.', true);
+            var sk = document.getElementById('spil-knap'); if (sk) { sk.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
             return;
           }
           knap.disabled = false; knap.textContent = 'Deltag i lodtrækningen';
