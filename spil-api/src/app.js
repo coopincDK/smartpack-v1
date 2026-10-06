@@ -10,6 +10,7 @@ const { adminRouter } = require('./routes/admin');
 const { partnersRouter } = require('./routes/partners');
 const { konkurrenceRouter } = require('./routes/konkurrence');
 const { kampagneRouter } = require('./routes/kampagne');
+const { efteraarRouter } = require('./routes/efteraar');
 const { hjemmesideRouter } = require('./routes/hjemmeside');
 const { createRateLimiter } = require('./middleware/rateLimit');
 const { paalaegAsyncFejlhaandtering } = require('./middleware/asyncFejl');
@@ -59,6 +60,7 @@ function createApp(pool, ws, opts) {
   app.use(partnersRouter(pool));
   app.use(konkurrenceRouter(pool));
   app.use(kampagneRouter(pool));
+  app.use(efteraarRouter(pool));
   app.use(hjemmesideRouter());
 
   app.use((req, res) => {

@@ -69,6 +69,17 @@ td b{font-weight:700}
       <tbody id="rows"></tbody>
     </table></div>
 
+    <h2 style="font:800 22px var(--display);margin:28px 0 6px">Efterårsferieudfordringen</h2>
+    <p class="sub" style="margin-bottom:12px">Åben konkurrence 6.–18. oktober, adskilt fra messe-turneringen. Ét lod pr. person pr. dag. Træk vinderne mandag 19. oktober. <a href="/spil/efteraar/" style="color:var(--kraft)">Vilkår</a></p>
+    <div class="stats" style="margin-bottom:10px">
+      <div class="stat"><div class="n" id="e-sp">–</div><div class="l">spillere med lod</div></div>
+      <div class="stat"><div class="n" id="e-lod">–</div><div class="l">lodder i alt</div></div>
+      <div class="stat"><div class="n" id="e-top">–</div><div class="l">topscore</div></div>
+    </div>
+    <div class="row" style="margin:0 0 10px"><button id="e-traek-top" class="ghost">Find topscore-vinderen (2 flasker)</button><button id="e-traek-lod" class="ghost">Træk lodtrækningsvinderen (1 flaske)</button></div>
+    <div id="e-res" class="sub"></div>
+    <div class="tablewrap" style="margin-bottom:28px"><table><thead><tr><th>Navn</th><th>Firma</th><th>Kontakt</th><th class="num">Lodder</th><th class="num">Bedste score</th></tr></thead><tbody id="e-rows"><tr><td colspan="5" class="empty">Henter …</td></tr></tbody></table></div>
+
     <h2 style="font:800 22px var(--display);margin:28px 0 6px">Arrangementer og QR-koder</h2>
     <p class="sub" style="margin-bottom:12px">Hvert arrangement har sin egen hemmelige QR-kode. Tilmelder man sig via den på dagen, bliver man markeret som bekræftet deltager. Kun bekræftede deltagere kan vinde, når lodtrækningen er lukket.</p>
     <div id="arr" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px"></div>
@@ -150,7 +161,24 @@ $('crm').addEventListener('click', async () => {
   $('crm').disabled = false; load();
 });
 $('csv').addEventListener('click', (e) => { e.preventDefault(); location.href = API + '/admin/kampagne/' + KAMP + '.csv'; });
-load(); loadArr();
+async function loadEft() {
+  let r; try { r = await fetch(API + '/admin/efteraar', { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return; }
+  if (!r.ok) return;
+  const b = await r.json();
+  $('e-sp').textContent = b.spillere.length; $('e-lod').textContent = b.lodder_i_alt; $('e-top').textContent = b.top[0] ? b.top[0].bedste : '–';
+  $('e-rows').innerHTML = b.spillere.length ? b.spillere.map((p) => `<tr><td><b>${esc(p.navn)}</b></td><td>${esc(p.firma || '')}</td><td>${esc(p.email)}</td><td class="num">${p.lodder}</td><td class="num">${p.bedste}</td></tr>`).join('') : '<tr><td colspan="5" class="empty">Ingen lodder endnu.</td></tr>';
+  if (b.traekninger && b.traekninger.length) $('e-res').innerHTML = b.traekninger.map((t) => `${new Date(t.tidspunkt).toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })}: ${t.type === 'top' ? 'Topscore' : 'Lodtrækning'} → <b>${esc(t.vinder_navn)}</b> (${esc(t.vinder_email)}). Reserver: ${(t.reserver || []).map((x) => esc(x.navn)).join(', ') || 'ingen'}`).join('<br>');
+}
+async function traekEft(type) {
+  if (!confirm(type === 'top' ? 'Find topscore-vinderen nu? Det bliver logget.' : 'Træk lodtrækningsvinderen nu? Det bliver logget og kan ikke gøres om.')) return;
+  const r = await fetch(API + '/admin/efteraar/traek', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ type }) });
+  const b = await r.json().catch(() => ({}));
+  if (!r.ok) { $('e-res').textContent = b.fejl || 'Fejl ' + r.status; return; }
+  loadEft();
+}
+$('e-traek-top').addEventListener('click', () => traekEft('top'));
+$('e-traek-lod').addEventListener('click', () => traekEft('lod'));
+load(); loadArr(); loadEft();
 </script>
 </body>
 </html>

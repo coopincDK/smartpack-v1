@@ -285,10 +285,12 @@ async function konkurrenceStatus(db, now) {
     if (!mp.length && !p.vist_i_spil) ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Alt er udfyldt, men "Vis i spillet" er ikke slået til.' });
     if (!p.antal_logins) ud.push({ niveau: 'advarsel', partner: navn, slug, tekst: 'Har intet login til partnerportalen endnu.' });
     if (!p.accepteret) {
+      // Fristen er kun en påmindelse: partneren er med i spillet, men kan først hente leads
+      // efter accept (Martin, 5/10). Derfor advarsel, ikke fejl, også efter fristen.
       ud.push({
-        niveau: efterFrist ? 'fejl' : 'advarsel',
+        niveau: 'advarsel',
         partner: navn, slug,
-        tekst: 'Har ikke godkendt partnervilkårene' + (efterFrist ? ', og fristen 6/10 kl. 12 er overskredet.' : ' (frist 6/10 kl. 12).'),
+        tekst: 'Har ikke godkendt partnervilkårene' + (efterFrist ? ' (fristen 6/10 kl. 12 er overskredet). Leadlisten er låst, indtil de godkender.' : ' (frist 6/10 kl. 12).'),
       });
     }
   }

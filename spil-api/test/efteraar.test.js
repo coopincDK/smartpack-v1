@@ -1,0 +1,77 @@
+'use strict';
+
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const { hashPassword } = require('../src/crypto');
+const ADMIN_PW = 'test-admin-adgangskode';
+process.env.ADMIN_PASSWORD_HASH = hashPassword(ADMIN_PW);
+process.env.COOKIE_SECURE = 'false';
+const { startHarness, api, registrerSpiller } = require('./helpers/appHarness');
+
+async function spiller(h, email, firma) {
+  const { body } = registrerSpiller(h.baseUrl, { email, firma });
+  const r = await api(h.baseUrl, 'POST', '/players', { body });
+  assert.equal(r.status, 201, JSON.stringify(r.body));
+  return (await h.pool.query('SELECT id FROM spiller WHERE email = $1', [email])).rows[0].id;
+}
+async function spil(h, id, samlet, slut) {
+  await h.pool.query(
+    `INSERT INTO forsoeg (spiller_id, runde_id, start_server, slut_server, samlet, status, oprettet)
+     VALUES ($1, gen_random_uuid(), $2::timestamptz - interval '2 minutes', $2, $3, 'godkendt', $2)`,
+    [id, slut, samlet]
+  );
+}
+
+test('efterårsferie: 1 lod pr. dag, messe-firmaer først efter turneringen, adskilt fra messen', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const { matchNoegle } = require('../src/konkurrence');
+  await h.pool.query("INSERT INTO deltagerliste_firma (firma, firma_noegle, kilde) VALUES ('Messe Shop', $1, 'test') ON CONFLICT DO NOTHING", [matchNoegle('Messe Shop')]);
+
+  const ude = await spiller(h, 'ude@x.dk', 'Ude ApS');
+  const messe = await spiller(h, 'messe@x.dk', 'Messe Shop');
+  const sp = await spiller(h, 'ansat@smartpack.dk', 'SmartPack');
+
+  // Udenfor: før start (tæller ikke), 2 spil samme dag (1 lod), en anden dag (1 lod), efter slut (tæller ikke)
+  await spil(h, ude, 900, '2026-10-05T12:00:00+02:00');
+  await spil(h, ude, 1000, '2026-10-06T10:00:00+02:00');
+  await spil(h, ude, 1500, '2026-10-06T23:30:00+02:00');
+  await spil(h, ude, 1200, '2026-10-08T12:00:00+02:00');
+  await spil(h, ude, 9999, '2026-10-19T00:30:00+02:00');
+  // Messe-firma: under turneringen (tæller ikke her), efter 16.30 samme dag (1 lod)
+  await spil(h, messe, 5000, '2026-10-08T12:00:00+02:00');
+  await spil(h, messe, 1300, '2026-10-08T17:00:00+02:00');
+  // SmartPack (udelukket): kun efter turneringen
+  await spil(h, sp, 4000, '2026-10-07T10:00:00+02:00');
+
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const ac = (login.headers.get('set-cookie') || '').split(';')[0];
+  const r = await api(h.baseUrl, 'GET', '/admin/efteraar', { adminCookie: ac });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  const by = Object.fromEntries(r.body.spillere.map((p) => [p.email, p]));
+  assert.equal(by['ude@x.dk'].lodder, 2, 'to forskellige dage');
+  assert.equal(by['ude@x.dk'].bedste, 1500);
+  assert.equal(by['messe@x.dk'].lodder, 1);
+  assert.equal(by['messe@x.dk'].bedste, 1300, 'messe-spillet kl. 12 tæller ikke');
+  assert.equal(by['ansat@smartpack.dk'], undefined, 'SmartPack før turneringen tæller ikke');
+  assert.equal(r.body.lodder_i_alt, 3);
+  assert.equal(r.body.top[0].email, 'ude@x.dk');
+
+  const pub = await api(h.baseUrl, 'GET', '/efteraar');
+  assert.equal(pub.status, 200);
+  assert.equal(pub.body.spillere, 2);
+  assert.equal(JSON.stringify(pub.body).includes('@'), false, 'ingen mails offentligt');
+
+  const top = await api(h.baseUrl, 'POST', '/admin/efteraar/traek', { adminCookie: ac, body: { type: 'top' } });
+  assert.equal(top.body.vinder.email, 'ude@x.dk');
+  const lod = await api(h.baseUrl, 'POST', '/admin/efteraar/traek', { adminCookie: ac, body: { type: 'lod' } });
+  assert.equal(lod.status, 200);
+  assert.ok(['ude@x.dk', 'messe@x.dk'].includes(lod.body.vinder.email));
+  assert.equal(lod.body.reserver.length, 1, 'kun én anden person som reserve');
+  const log = (await h.pool.query('SELECT count(*)::int n FROM efteraar_traekning')).rows[0].n;
+  assert.equal(log, 2);
+
+  // Messe-turneringens lodder er upåvirkede: ingen konkurrence_traekning oprettet
+  const k = (await h.pool.query('SELECT count(*)::int n FROM konkurrence_traekning')).rows[0].n;
+  assert.equal(k, 0);
+});

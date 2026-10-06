@@ -21,4 +21,6 @@ FROM (VALUES
    'fakturering og betaling for B2B-kunder i Shopify', 'https://fikpay.com/privacy', '',
    '6 måneders gratis FikPay', 'Vinderen får 6 måneders gratis abonnement på FikPay, fakturaer med FI-kode til Shopify.')
 ) AS v(slug, navn, firmanavn, cvr, adresse, hjemmeside, kort, kategori, privatliv, afmeld, titel, beskr)
-WHERE NOT EXISTS (SELECT 1 FROM partner p WHERE p.slug = v.slug);
+WHERE NOT EXISTS (SELECT 1 FROM partner p WHERE p.slug = v.slug)
+  -- Kun i den rigtige database (hvor Zignifikant findes), ikke i en tom testdatabase.
+  AND EXISTS (SELECT 1 FROM partner z WHERE lower(z.navn) = 'zignifikant');
