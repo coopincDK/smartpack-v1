@@ -14,6 +14,14 @@ const AFSENDER = 'Packrush';
 const MAX_PR_DAG = 2;
 // Beskeder, der ikke må blokeres af grænsen pr. modtager (præmiebeskeder).
 const UNDTAGET_MODTAGERGRAENSE = new Set(['vinder', 'efteraar']);
+// Alle sms får inMobiles linje (aftale med inMobile, okt. 2026). Den indsættes før en
+// eventuel afmeldingslinje, så afmeldingen altid står sidst.
+const FOD = 'Sendt via inMobile.com';
+function medFod(t) {
+  if (t == null) return t;
+  const i = t.indexOf(' Afmeld sms:');
+  return i >= 0 ? `${t.slice(0, i)} ${FOD}.${t.slice(i)}` : `${t} ${FOD}`;
+}
 
 function msisdn(raw) {
   const d = String(raw || '').replace(/[^0-9]/g, '');
@@ -103,6 +111,7 @@ function afvistModtager(body) {
 // kunNodstop: respekterer kun smsAfsendelse, ikke smsOn (partnerlogin hører ikke
 // under spillernes sms-tilmelding).
 async function send(pool, { type, noegle, spillerId = null, til, tekst, logTekst = null, test = false, adminTest = false, kunNodstop = false }) {
+  tekst = medFod(tekst); if (logTekst) logTekst = medFod(logTekst);
   const to = msisdn(til);
   if (!to) return { ok: false, grund: 'ugyldigt_nummer' };
   if (!adminTest && (await smsSlaaetFra(pool, { kunNodstop }))) return { ok: false, grund: 'sms_slaaet_fra', stop: true };
@@ -187,4 +196,4 @@ async function smsModtager(pool, spillerId) {
 
 function nulstilAutoStop() { afvisteITraek = 0; }
 
-module.exports = { nulstilAutoStop, send, smsModtager, msisdn, cphTime, smsSlaaetFra, AFSENDER, MAX_PR_DAG };
+module.exports = { FOD, medFod, nulstilAutoStop, send, smsModtager, msisdn, cphTime, smsSlaaetFra, AFSENDER, MAX_PR_DAG };

@@ -45,13 +45,14 @@ async function startInMobile() {
 
 async function opsaet(t, { sms = true, poolMax } = {}) {
   nulstilAutoStop();
+  process.env.SMS_AABNING = '1'; // åbnings-sms'en er slået fra i drift; testene her bruger den som eksempel
   const im = await startInMobile();
   const h = await startHarness({ poolMax });
   t.mock.timers.enable({ apis: ['Date'], now: KL12 });
   t.after(async () => {
     t.mock.timers.reset();
     await h.teardown(); im.srv.close();
-    for (const k of ['INMOBILE_URL', 'INMOBILE_API_KEY', 'SMS_MAKS_PR_DOEGN', 'SMS_AABNING_MAKS', 'SMS_IP_MAKS_PR_TIME']) delete process.env[k];
+    for (const k of ['INMOBILE_URL', 'INMOBILE_API_KEY', 'SMS_MAKS_PR_DOEGN', 'SMS_AABNING_MAKS', 'SMS_IP_MAKS_PR_TIME', 'SMS_AABNING']) delete process.env[k];
   });
   if (sms) await slaaSmsTil(h.pool);
   // Turnering i dag kl. 12.00-18.00, så "nu" kl. 12.00 ligger i åbningstimen
@@ -456,4 +457,31 @@ test('partnerens startkode maskeres i sms_log, men sendes i klartekst', async (t
   const l = (await h.pool.query("SELECT tekst FROM sms_log WHERE type = 'partner_login'")).rows[0].tekst;
   assert.doesNotMatch(l, /startkode456/);
   assert.match(l, /Startkode: \*\*\*\*/);
+});
+
+test('sidste chance: én time før slut, kun firmaer på deltagerlisten og kun dem uden sms i dag; inMobile-linjen står før afmeldingen', async (t) => {
+  const { im, h, spiller, log } = await opsaet(t);
+  await h.pool.query("INSERT INTO deltagerliste_firma (firma, firma_noegle, kilde) VALUES ('Testfirma ApS', $1, 'test') ON CONFLICT DO NOTHING", [matchNoegle('Testfirma ApS')]);
+  const a = await spiller('sc-a@x.dk');
+  const b = await spiller('sc-b@x.dk');
+  await h.pool.query("UPDATE spiller SET firma = 'Ude ApS' WHERE id = $1", [b.id]);
+  const c = await spiller('sc-c@x.dk');
+  await h.pool.query("INSERT INTO sms_log (type, noegle, spiller_id, til, tekst, status) VALUES ('aabning', 'x', $1, '4500000000', 'x', 'sendt')", [c.id]);
+  await koer(h.pool, tz('17:05'));
+  const l = await log('sidste_chance');
+  assert.deepEqual(l.map((r) => String(r.spiller_id)), [String(a.id)], 'kun a: b er ikke på listen, c har allerede fået en sms');
+  assert.equal(l[0].status, 'sendt');
+  const tekst = im.kald[im.kald.length - 1].messages[0].text;
+  assert.match(tekst, /Sidste time til flere lodder.*Sendt via inMobile\.com\. Afmeld sms: smartpack\.dk\/spil, Mine tilmeldinger\.$/);
+  assert.ok(tekst.length <= 160, 'én sms: ' + tekst.length);
+  await koer(h.pool, tz('17:06'));
+  assert.equal((await log('sidste_chance')).length, 1, 'ingen dublet');
+});
+
+test('åbnings-sms er slået fra som standard i drift', async (t) => {
+  const { h, spiller, log } = await opsaet(t);
+  delete process.env.SMS_AABNING;
+  await spiller('ingen-aabning@x.dk');
+  await koer(h.pool, tz('12:01'));
+  assert.equal((await log('aabning')).length, 0);
 });

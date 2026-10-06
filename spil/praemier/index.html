@@ -60,6 +60,8 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
 .time-kort{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;border-color:#6b5a23;background:linear-gradient(135deg,rgba(245,196,81,.10),transparent),var(--panel)}
 .time-ikoner{display:flex;align-items:center;gap:8px;font-size:34px;color:var(--muted)}
 .time-ikoner img{height:44px;border-radius:8px;background:#fff;padding:3px}
+.time-ikoner img.sp-ikon{background:none;padding:0;height:40px}
+.time-ikoner .vin{margin-left:-4px}
 @media (max-width:640px){.time-kort{grid-template-columns:1fr}}
 .bliv{background:linear-gradient(135deg,rgba(200,149,90,.12),transparent),var(--panel)}
 @media (max-width:640px){.hero{padding:20px 16px}.grid,.grid.smal{grid-template-columns:1fr}}
@@ -97,10 +99,10 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
       <p class="muted">Den 8. oktober kåres timens boss hver hele time i turneringen. Det er den spiller, der har timens bedste score.</p>
     </div>
     <div class="kort time-kort">
-      <div class="time-ikoner" aria-hidden="true">🍷 + <img src="/api/spil/partnere/sandhed/logo" alt="" loading="lazy" onerror="this.remove()"></div>
+      <div class="time-ikoner" aria-hidden="true"><img class="sp-ikon" src="/assets/cropped-favicon-smartpack.png" alt="" loading="lazy"><span class="vin">🍷</span> + <img src="/api/spil/partnere/sandhed/logo" alt="" loading="lazy" onerror="this.remove()"></div>
       <div>
         <h3>En flaske vin og 6 måneders gratis Sandhed</h3>
-        <p>Vinen hentes på SmartPacks stand inden for en time efter kåringen. Adgangen til Sandhed, den digitale tvilling med live 3D-overblik over lager og drift (værdi 1.800 kr. ekskl. moms), aktiveres bagefter via hello@sandhed.com.</p>
+        <p>Vinen er fra SmartPack og hentes på SmartPacks stand inden for en time efter kåringen. Adgangen til Sandhed, den digitale tvilling med live 3D-overblik over lager og drift (værdi 1.800 kr. ekskl. moms), aktiveres bagefter via hello@sandhed.com.</p>
         <p class="small muted">Man kan vinde én time om dagen. Vin kun til personer over 18 år. <a href="/spil/vilkaar/">Vilkår, pkt. 9</a></p>
       </div>
     </div>

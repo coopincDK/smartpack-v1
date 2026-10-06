@@ -9,10 +9,13 @@
 //  1. Timens boss: ved hver kåring på konferencedagen (kl. 9, 10, ..., 16 og ved
 //     spillets slut) findes timens bedste spiller blandt dem, der ikke har vundet en
 //     time tidligere samme dag. Gemmes i time_vinder; sms, hvis spilleren har sms-samtykke.
-//  2. Åbning: når turneringen starter, én sms til dem, der har bekræftet sms-samtykke inden
+//  2. Åbning (FRAVALGT, kun med SMS_AABNING=1): når turneringen starter, én sms til dem, der har bekræftet sms-samtykke inden
 //     for de sidste 7 dage, har en gemt samtykketekst og mindst ét godkendt spil (inden for første time).
 //  3. Vinderen af lodtrækningen: sms til vinderfirmaets bedste spiller med sms-samtykke.
 //  4. Efterårsferieudfordringen: sms til hver trukken vinder med sms-samtykke.
+//  5. Sidste chance: én time før turneringen slutter, samme regler som åbningen, kun
+//     spillere fra firmaer på deltagerlisten, og kun dem, der ikke har fået en sms i dag.
+//  Alle sms får inMobiles linje (sms.FOD) før afmeldingslinjen.
 
 const { send, smsModtager, cphTime, smsSlaaetFra } = require('./sms');
 const { matchNoegle } = require('./konkurrence');
@@ -76,7 +79,7 @@ async function timensBoss(pool, k, nu) {
     const frist = fmt(new Date(til.getTime() + 3600e3));
     const r = await send(pool, {
       type: 'timens_boss', noegle: `${dag}-${time}`, spillerId: v.id, til: m.telefon,
-      tekst: `Tillykke ${fornavn(m.navn)}! Du er timens boss i Packrush ${fmt(fra)}-${fmt(til)}. Hent din flaske vin og 6 mdr. gratis Sandhed på SmartPacks stand senest kl. ${frist}.${AFMELD}`,
+      tekst: `Du er timens boss i Packrush! Hent vin + 6 mdr. Sandhed på standen inden kl. ${frist}.${AFMELD}`,
     });
     if (r.stop) return true;
   }
@@ -105,7 +108,44 @@ async function aabning(pool, k, nu) {
   for (const r of rows) {
     const x = await send(pool, {
       type: 'aabning', noegle: `${dag}-${r.id}`, spillerId: r.id, til: r.telefon,
-      tekst: `Packrush-turneringen på E-handelskonferencen er åben nu. Timens boss vinder vin hver time. Spil på smartpack.dk/spil${AFMELD}`,
+      tekst: `Packrush-turneringen er i gang på smartpack.dk/spil. Timens boss vinder vin hver time.${AFMELD}`,
+    });
+    if (x.stop) return true;
+  }
+  return false;
+}
+
+// Sidste chance: én time før turneringen slutter. Samme modtagerregler som åbningen
+// (bekræftet sms-samtykke inden for 7 dage med gemt tekst og mindst ét godkendt spil),
+// og kun spillere fra firmaer på deltagerlisten, da kun de kan få lodder.
+async function sidsteChance(pool, k, nu) {
+  if (!k || !k.spil_slut) return false;
+  const slut = new Date(k.spil_slut), fra = new Date(slut.getTime() - 60 * 60e3);
+  if (nu < fra || nu > new Date(fra.getTime() + 20 * 60e3)) return false;
+  const dag = dagCph(slut);
+  const { rows: liste } = await pool.query('SELECT firma_noegle FROM deltagerliste_firma');
+  const paaListe = new Set(liste.map((r) => r.firma_noegle));
+  const { rows } = await pool.query(
+    `SELECT s.id, s.firma, s.telefon FROM spiller s
+       JOIN LATERAL (SELECT type, tidspunkt, tekst FROM samtykke
+                      WHERE spiller_id = s.id AND liste = 'sms'
+                      ORDER BY tidspunkt DESC, id DESC LIMIT 1) c
+         ON c.type = 'bekraeftet' AND c.tidspunkt >= $1::timestamptz - interval '7 days'
+        AND COALESCE(c.tekst, '') <> ''
+      WHERE s.skjult = false AND s.telefon IS NOT NULL AND s.telefon <> ''
+        AND EXISTS (SELECT 1 FROM forsoeg f WHERE f.spiller_id = s.id AND f.status = 'godkendt')
+        -- Ingen spam: kun til dem, der ikke allerede har fået en sms i dag (fx åbningen),
+        -- så der stadig er plads til en evt. timens boss-sms under grænsen pr. modtager.
+        AND NOT EXISTS (SELECT 1 FROM sms_log l WHERE l.spiller_id = s.id AND l.status = 'sendt'
+                         AND (l.tidspunkt AT TIME ZONE 'Europe/Copenhagen')::date = (now() AT TIME ZONE 'Europe/Copenhagen')::date)
+      ORDER BY s.id`,
+    [nu]
+  );
+  for (const r of rows) {
+    if (!paaListe.has(matchNoegle(r.firma))) continue;
+    const x = await send(pool, {
+      type: 'sidste_chance', noegle: `${dag}-${r.id}`, spillerId: r.id, til: r.telefon,
+      tekst: `På E-handelskonferencen? Sidste time til flere lodder i Packrush. Vi lukker kl. ${fmt(slut)}.${AFMELD}`,
     });
     if (x.stop) return true;
   }
@@ -136,7 +176,7 @@ async function vinder(pool) {
   if (alleredeFaaet.rows.length) return false;
   const r = await send(pool, {
     type: 'vinder', noegle: String(t.id), spillerId: v.id, til: v.telefon,
-    tekst: `Tillykke! ${t.vinder_firma} har vundet præmiepuljen i Packrush. Kom forbi SmartPacks stand, eller hold øje med din mail, så aftaler vi resten.${AFMELD}`,
+    tekst: `Tillykke! ${t.vinder_firma} har vundet præmiepuljen i Packrush. Kom til SmartPacks stand.${AFMELD}`,
   });
   return !!r.stop;
 }
@@ -151,7 +191,7 @@ async function efteraar(pool) {
     if (skjult.rows.length) continue;
     const r = await send(pool, {
       type: 'efteraar', noegle: String(t.id), spillerId: m.id, til: m.telefon,
-      tekst: `Tillykke ${fornavn(m.navn)}! Du er trukket som vinder af ${i === 0 ? '2 flasker' : '1 flaske'} vin i Packrush Efterårsferieudfordring. Tjek din mail, så aftaler vi levering.${AFMELD}`,
+      tekst: `Tillykke! Du har vundet ${i === 0 ? '2 flasker' : '1 flaske'} vin i Packrush. Tjek din mail.${AFMELD}`,
     });
     if (r.stop) return true;
   }
@@ -163,7 +203,9 @@ async function koer(pool, nu = new Date()) {
   if (await smsSlaaetFra(pool)) return;
   const k = await konkurrence(pool);
   if (await timensBoss(pool, k, nu)) return;
-  if (await aabning(pool, k, nu)) return;
+  // Åbnings-sms'en er fravalgt (Martin, 6/10). Koden bevares og kan slås til med SMS_AABNING=1.
+  if (process.env.SMS_AABNING === '1' && (await aabning(pool, k, nu))) return;
+  if (await sidsteChance(pool, k, nu)) return;
   if (await vinder(pool)) return;
   await efteraar(pool);
 }
