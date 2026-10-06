@@ -69,6 +69,14 @@ td b{font-weight:700}
       <tbody id="rows"></tbody>
     </table></div>
 
+    <h2 style="font:800 22px var(--display);margin:28px 0 6px">VAR-tjek 📺</h2>
+    <p class="sub" style="margin-bottom:10px">Spil, der ser automatiserede ud, er sat på pause og tæller ikke på tavlen eller i lodderne. Godkend dem, der er rent spil.</p>
+    <div class="tablewrap" style="margin-bottom:28px"><table><thead><tr><th>Spiller</th><th>Score</th><th>Hvorfor</th><th>Status</th><th>Spillerens besked</th><th></th></tr></thead><tbody id="v-rows"><tr><td colspan="6" class="empty">Henter …</td></tr></tbody></table></div>
+
+    <h2 style="font:800 22px var(--display);margin:28px 0 6px">Samlet lodliste</h2>
+    <p class="sub" style="margin-bottom:10px">Én CSV med messe-turneringens lodder pr. firma, timens boss, efterårslodder pr. spiller og alle trækninger. Hver eksport gemmes som låst kopi med fingeraftryk (SHA-256) på serveren.</p>
+    <p style="margin:0 0 18px"><a href="/api/spil/admin/lodliste.csv" download style="display:inline-block;text-decoration:none;font:700 14px/1 var(--body);border-radius:10px;padding:12px 16px;color:#1a0d00;background:var(--orange)">Hent samlet lodliste (CSV)</a></p>
+
     <h2 style="font:800 22px var(--display);margin:28px 0 6px">Sms (afsender "Packrush")</h2>
     <p class="sub" style="margin-bottom:10px" id="s-status">Henter …</p>
     <div class="row" style="margin:0 0 10px"><input type="search" id="s-tel" placeholder="Dit mobilnummer, fx 23247508" style="max-width:240px"><button id="s-test" class="ghost">Send test-sms</button><span id="s-msg" class="sub" style="margin:0"></span></div>
@@ -198,7 +206,20 @@ $('s-test').addEventListener('click', async () => {
   $('s-msg').textContent = r.ok ? 'Sendt. Tjek din telefon.' : (b.fejl || ({ ingen_noegle: 'Nøglen mangler på serveren.', fejl: 'inMobile afviste beskeden.' })[b.grund] || 'Fejl ' + r.status);
   loadSms();
 });
-load(); loadArr(); loadEft(); loadSms();
+async function loadVar() {
+  let r; try { r = await fetch(API + '/admin/var', { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return; }
+  if (!r.ok) { $('v-rows').innerHTML = '<tr><td colspan="6" class="empty">VAR kræver, at serveren er opdateret.</td></tr>'; return; }
+  const b = await r.json();
+  const st = { flag: 'Sat på pause', anmodet: '📺 Anmodet om tjek', godkendt: '✓ Godkendt', afvist: '✕ Afvist' };
+  $('v-rows').innerHTML = b.var.length ? b.var.map((v) => `<tr><td><b>${esc(v.navn)}</b><br><span class="sub" style="margin:0">${esc(v.firma || '')} · ${esc(v.email)}</span></td><td class="num">${v.samlet}<br><span class="sub" style="margin:0">${v.runde1} / ${v.runde2} / ${v.runde3}</span></td><td>${esc(v.var_grunde || '')}</td><td>${esc(st[v.var_status] || v.var_status)}</td><td>${esc(v.var_besked || '')}</td><td>${['flag', 'anmodet'].includes(v.var_status) ? `<button class="ghost" data-v="${v.id}" data-ok="1">Godkend</button> <button class="ghost" data-v="${v.id}" data-ok="0">Afvis</button>` : ''}</td></tr>`).join('') : '<tr><td colspan="6" class="empty">Ingen spil til VAR-tjek.</td></tr>';
+  $('v-rows').querySelectorAll('button[data-v]').forEach((btn) => btn.addEventListener('click', async () => {
+    const ok = btn.dataset.ok === '1';
+    if (!confirm(ok ? 'Godkend spillet? Det kommer på tavlen og tæller i lodderne.' : 'Afvis spillet?')) return;
+    await fetch(API + '/admin/var/' + btn.dataset.v, { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ godkend: ok }) });
+    loadVar();
+  }));
+}
+load(); loadArr(); loadEft(); loadSms(); loadVar();
 </script>
 </body>
 </html>

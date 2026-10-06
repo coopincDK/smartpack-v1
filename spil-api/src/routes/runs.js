@@ -3,6 +3,7 @@
 const { loadOffentligCfg } = require('../cfgLoad');
 
 const express = require('express');
+const { mistaenkt } = require('../rules/varCheck');
 const crypto = require('crypto');
 const { requirePlayer } = require('../middleware/playerAuth');
 const { createRateLimiter } = require('../middleware/rateLimit');
@@ -150,6 +151,20 @@ function runsRouter(pool, ws) {
     }
   });
 
+  // Spilleren anmoder om et VAR-tjek af et spil, der er sat på pause.
+  router.post('/runs/:runde_id/var', auth, async (req, res, next) => {
+    try {
+      const besked = String((req.body && req.body.besked) || '').trim().slice(0, 500);
+      const r = await pool.query(
+        `UPDATE forsoeg SET var_status = 'anmodet', var_besked = $1, var_anmodet = now()
+          WHERE runde_id::text = $2 AND spiller_id = $3 AND status = 'var' AND var_status IN ('flag', 'anmodet') RETURNING id`,
+        [besked, String(req.params.runde_id), req.player.id]
+      );
+      if (!r.rowCount) return res.status(404).json({ fejl: 'Spillet findes ikke eller er allerede vurderet.', kode: 'ikke_fundet' });
+      res.json({ ok: true });
+    } catch (e) { next(e); }
+  });
+
   router.post('/runs/:runde_id/finish', auth, async (req, res, next) => {
     const rundeId = req.params.runde_id;
     const client = await pool.connect();
@@ -262,6 +277,24 @@ function runsRouter(pool, ws) {
             JSON.stringify(resultat),
             forsoeg.id,
           ]
+        );
+        await client.query('COMMIT');
+        return res.status(400).json(resultat);
+      }
+
+      // VAR: ser spillet automatiseret ud, kommer det ikke på tavlen, før arrangøren har kigget.
+      const varGrunde = mistaenkt(s, roundsRaw);
+      if (varGrunde.length) {
+        const resultat = {
+          godkendt: false, aarsag: 'var', var: true, grunde: varGrunde,
+          besked: 'VAR-tjek: Spillet er så stærkt, at vi lige kigger på det, før det kommer på tavlen (' + varGrunde.join(', ') + '). Er det rent spil, så anmod om et VAR-tjek.',
+        };
+        await client.query(
+          `UPDATE forsoeg SET status='var', afvist_aarsag='var', var_grunde=$1, var_status='flag', slut_server=$2, spilletid_server_ms=$3,
+             spilletid_klient_ms=$4, runde1=$5, runde2=$6, runde3=$7, samlet=$8, stats=$9, bf=$10, duel=$11, resultat=$12
+           WHERE id = $13`,
+          [varGrunde.join('; '), now, serverMs, Number.isFinite(klientMs) ? klientMs : null, roundsRaw[0], roundsRaw[1], roundsRaw[2], samlet,
+            JSON.stringify(s), bf, duel ? JSON.stringify(duel) : null, JSON.stringify(resultat), forsoeg.id]
         );
         await client.query('COMMIT');
         return res.status(400).json(resultat);
