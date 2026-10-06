@@ -292,6 +292,12 @@ kun sætter det ene ALDRIG nulstiller det andet:
   tværs af spillere når det er sat: `400 telefon_i_brug` hvis et ANDET
   spiller allerede har nummeret, `400 ugyldigt_telefon` hvis under 8 cifre.
 
+**Nyt nummer trækker sms-samtykket tilbage:** skifter (eller ryddes) `telefon`, og
+spilleren har et aktivt sms-samtykke, logges `trukket_tilbage` (kilde
+`telefon_skiftet`), `notify` slås fra, og dagens sms-flueben fjernes. Svaret får
+`"sms_samtykke_traekt": true`. Spilleren skal selv sætte fluebenet igen for det
+nye nummer. Samme nummer igen ændrer intet.
+
 `200 { "ok": true, "firma": "...", "telefon": "..." }` — kun de(t) felt(er),
 der rent faktisk blev opdateret, er med i svaret. `400 { "kode":
 "intet_at_opdatere" }` hvis hverken `firma` eller `telefon` er med i
@@ -749,7 +755,8 @@ for de lister der rent faktisk var aktive.
 ```
 `400 { "kode": "mangler_liste" }` / `{ "kode": "mangler_emails" }` /
 `{ "kode": "ukendt_liste" }` (ukendt tilmeldings-nøgle for den aktuelle
-config — `"alle"` er altid gyldig).
+config — `"alle"` og `"sms"` er altid gyldige; afmelding fra sms afvises ikke, selv om
+`smsOn` er slået fra).
 
 ### `POST /admin/nulstil` — fuld nulstilling (RYDDER AL SPILLERDATA)
 Body: `{ "bekraeft": "NULSTIL" }` — kræver PRÆCIS denne streng, case-
@@ -1656,3 +1663,73 @@ sendes aldrig til CRM'et.
   accepterer Cloudflare, er uverificeret; ellers kan `X-Client-IP` forfalskes.
 - **Origin-tjekket** stopper ikke et script, der selv sætter headeren; det fjerner kun simple
   bots og tilfældige curl-kald.
+
+## Sms via inMobile (`src/sms.js`, `src/smsJobs.js`, migration `042_sms_doegnloft.sql`)
+
+Afsender er **Packrush** (alfanumerisk, så modtageren kan ikke svare STOP). Alt går gennem
+`sms.send()`, og alt logges i `sms_log` (`(type, noegle)` er unik, så samme besked aldrig
+sendes to gange). Uden `INMOBILE_API_KEY` logges `ingen_noegle`, og intet sendes.
+
+### Miljøvariabler
+
+| Variabel | Standard | Betydning |
+|---|---|---|
+| `INMOBILE_API_KEY` | (ingen) | API-nøglen. Sæt den aldrig uden for produktionen. |
+| `SMS_MAKS_PR_DOEGN` | 1000 | Samlet nødloft for ALLE sms pr. døgn (Europe/Copenhagen), inkl. vinder-, test- og partnerlogin-sms. Over loftet logges `over_doegnloft`, og intet sendes. |
+| `SMS_AABNING_MAKS` | 500 | Underloft for åbnings-sms'en (`over_aabningsloft`), inden for døgnloftet. |
+| `SMS_IP_MAKS_PR_TIME` | 30 | Højst så mange nye sms-tilmeldinger (registrering med `sms` og nye sms-flueben) pr. IP pr. time. `429 sms_ip_graense`. Stand- og admin-sessioner er undtaget. |
+
+Døgnloftet håndhæves atomisk i databasen: `sms_taeller` har én række pr. dag, som `send()`
+opdaterer med én `INSERT ... ON CONFLICT DO UPDATE ... WHERE antal < loft`, så to parallelle
+jobs ikke kan overskride det. En plads, som inMobile afviser pga. opsætning, frigives igen.
+
+### Nødstop
+
+Hver kørsel og hver `send()` læser den offentlige config frisk fra DB. Afsendelse stopper med
+det samme, hvis `smsOn` er `false` (spillernes sms-tilmelding slået fra) eller
+`smsAfsendelse` er `false` (rent afsendelses-stop, rører ikke tilmeldingen). Der logges intet
+og forbruges ingen nøgler, så sms'erne kan sendes, når stoppet løftes (åbnings-sms'en kun
+inden for den første time). Sæt det fx med `PUT /admin/config { "offentlig": { "smsAfsendelse": false } }`.
+
+- Admins eksplicitte test-sms (`POST /admin/sms/test`) går uden om nødstoppet, men er under døgnloftet.
+- Partnerlogin-sms'en respekterer kun `smsAfsendelse` (den hører ikke under spillernes tilmelding).
+- Afmelding kan altid ske: `POST /admin/afmeld` accepterer `sms` uanset `smsOn`, og spillets
+  "Mine tilmeldinger" viser sms, så længe spilleren står på listen.
+- Uden adgang til serveren kan nøglen fjernes fra `.env`, men så skal containeren genskabes:
+  `docker compose up -d --force-recreate api` (`restart` læser ikke `env_file` igen).
+
+### Hvem får hvad
+
+- **Samtykke:** alle jobs kræver, at spillerens seneste sms-hændelse er `bekraeftet`, og at
+  spilleren har et nummer og ikke er skjult. Serveren ejer samtykketeksten
+  (`SMS_SAMTYKKE_TEKST` i `src/rules/life.js`, vises i klienten via `cfg.smsTekst`) og gemmer den
+  på hver sms-samtykke-række (`samtykke.tekst`, `tekst_version` 3), både ved registrering og ved
+  dagens flueben/`PUT /me/subs`. En tekst sendt fra klienten ignoreres.
+- **Åbning** (første time efter `spil_start`): kun spillere, hvis seneste sms-samtykke er
+  bekræftet inden for de sidste 7 dage og har en gemt samtykketekst.
+- **Timens boss, vinder og efterår:** som ovenfor, uden 7-dages-kravet.
+- Alle beskeder slutter med "Afmeld sms: smartpack.dk/spil, Mine tilmeldinger." Afmeldingsvejen er
+  spillets "Mine tilmeldinger" (kræver login); der findes ikke et selvstændigt afmeldingslink.
+
+### Grænser og dubletter
+
+- Højst 2 sendte sms pr. spiller pr. døgn. **Vinder-, efterårs- og test-sms blokeres ikke af
+  grænsen** (men tæller med, og er under døgnloftet).
+- `vinder`: højst én sms pr. trækning (nøgle = trækningens id) og højst én pr. spiller; en ny
+  trækning af samme vinder giver ikke en ny sms.
+- Tidsvindue 8-21 dansk tid for alle automatiske sms'er.
+
+### Når inMobile afviser
+
+- **HTTP 4xx på hele kaldet** (401/403/404/429 osv.): kørslen stoppes, og rækken fjernes igen, så
+  næste kørsel (hvert minut) prøver på ny. Gælder ikke test-sms, som beholder rækken som `fejl`.
+- **HTTP 400/422** kan også være ét ugyldigt nummer: den modtager markeres `afvist` (endeligt),
+  men kørslen stoppes alligevel, så en forkert opsætning højst koster én modtager pr. minut.
+- **2xx med `results[0].error`**: modtageren er `afvist` (endeligt), kørslen fortsætter.
+- 5xx og timeout: `fejl` (endeligt, for ikke at risikere en dobbelt sms).
+
+### Persondata
+
+- `sms_log.tekst` indeholder aldrig partnerens startkode i klartekst (`Startkode: ****`).
+- Sletter/anonymiserer man en spiller (`deletePlayerFully`, også den natlige oprydning), ryddes
+  `sms_log.til`/`tekst` og `time_vinder.navn` for spilleren.

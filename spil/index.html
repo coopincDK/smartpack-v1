@@ -1494,7 +1494,8 @@ function subOptions(){
   // faste samtykketekst med firma og CVR. Findes listen ikke (ingen partnere slået til), bruges navnene som før.
   const info = new Map((cfg.partnerLister || []).map(l => [l.slug, l]));
   mailPartners().forEach(n => { const l = info.get(n); o.push({ k: 'm:' + n, name: l ? l.navn : n, text: l ? l.tekst : `Nyheder fra ${n} på mail`, privacy: l ? l.privatlivspolitik : '', life: true }); });
-  if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: cfg.smsSponsor, text: `Sms'er om spillet, fx når nogen slår din score. Sendes af ${cfg.smsSponsor}, og du kommer på ${cfg.smsSponsor}s sms-liste`, life: true });
+  /* sms'erne sendes af SmartPack som Packrush; serveren ejer samtykketeksten (cfg.smsTekst) og gemmer den ved samtykket */
+  if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: 'Packrush', text: cfg.smsTekst || "Sms'er om Packrush fra SmartPack. Du kan altid afmelde dig under Mine tilmeldinger.", life: true });
   return o;
 }
 function subKeys(p){ const k = []; if(p.marketing) k.push('sp'); (p.mailTo || []).forEach(n => k.push('m:' + n)); if(p.notify) k.push('sms'); return k; }
@@ -2833,6 +2834,8 @@ function unsubscribeOne(key){
 function renderSubsBox(){
   const box = $('#l-subs'); if(!box) return;
   const p = current, opts = subOptions(), on = subKeys(p);
+  /* afmelding skal altid kunne ske, også når sms er slået fra i opsætningen */
+  if(on.includes('sms') && !opts.some(o => o.k === 'sms')) opts.push({ k: 'sms', name: 'Packrush', life: true });
   box.replaceChildren();
   if(!opts.length) return;
   const d = el('details', 'more'), sm = el('summary'); sm.textContent = `Mine tilmeldinger, ${on.length} af ${opts.length}`;
@@ -3578,7 +3581,8 @@ $('#b-csv').onclick = () => window.open(API.admin.exportUrl('spillere'), '_blank
    til, når kontrakten er endelig. */
 function fillUnlist(){
   const sl = $('#a-unlist'); if(!sl) return; const cur = sl.value;
-  sl.replaceChildren(el('option', null, 'Alle lister'), ...subOptions().map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
+  const afmeldOpts = subOptions(); if(!afmeldOpts.some(o => o.k === 'sms')) afmeldOpts.push({ k: 'sms', name: 'Packrush' }); /* sms kan altid afmeldes */
+  sl.replaceChildren(el('option', null, 'Alle lister'), ...afmeldOpts.map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
   sl.firstChild.value = 'alle';
   if(cur) sl.value = cur;
 }

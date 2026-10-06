@@ -13,6 +13,7 @@
 // `mailPartners` uændret (bagudkompatibelt).
 
 const { erSynlig, samtykkeTekst } = require('./partners');
+const { SMS_SAMTYKKE_TEKST } = require('./rules/life');
 
 async function partnerLister(db) {
   const { rows } = await db.query(
@@ -28,6 +29,8 @@ async function partnerLister(db) {
 
 function medPartnere(offentlig, lister) {
   const cfg = { ...(offentlig || {}) };
+  // Sms-samtykketeksten ejes af serveren; klienten viser den (gemmes ikke i config).
+  cfg.smsTekst = SMS_SAMTYKKE_TEKST;
   if (lister && lister.length) {
     cfg.mailPartners = lister.map((l) => l.slug).join(', ');
     cfg.partnerLister = lister;

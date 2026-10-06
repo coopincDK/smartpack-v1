@@ -1,7 +1,6 @@
 'use strict';
 
 const { loadOffentligCfg } = require('../cfgLoad');
-const { SAMTYKKE_VERSION } = require('../partners');
 
 const express = require('express');
 const { requirePlayer } = require('../middleware/playerAuth');
@@ -14,6 +13,7 @@ const {
   todayStr,
   todayTickKeys,
   samtykkeTekstFor,
+  samtykkeVersionFor,
 } = require('../rules/life');
 const { boostCode } = require('../rules/boostCode');
 const { MAX_LIVES } = require('../rules/constants');
@@ -32,6 +32,8 @@ const {
   normalizePhone,
   PIN_RE,
   createIpLoginLimiter,
+  createSmsIpLimiter,
+  SMS_IP_BESKED,
   pinLaast,
   registrerPinFejl,
   ryddPinFejl,
@@ -72,10 +74,12 @@ async function samtykkerFor(client, spillerId) {
 // Logger én samtykke-hændelse (bekraeftet/trukket_tilbage) — se API.md,
 // afsnit "Packrush-ændringer".
 async function logSamtykke(client, spillerId, liste, type, kilde, req, now, tekst) {
+  // Et sms-samtykke uden gemt tekst er ikke et gyldigt samtykke (se rules/life.js).
+  if (liste === 'sms' && type === 'bekraeftet' && !tekst) throw new Error('sms-samtykke uden tekst');
   await client.query(
     `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst, tekst_version, kilde, ip, user_agent, type)
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-    [spillerId, liste, now, tekst || null, tekst ? SAMTYKKE_VERSION : 1, kilde, clientIp(req), req.headers['user-agent'] || null, type]
+    [spillerId, liste, now, tekst || null, tekst ? samtykkeVersionFor(liste) : 1, kilde, clientIp(req), req.headers['user-agent'] || null, type]
   );
 }
 
@@ -131,6 +135,7 @@ function meRouter(pool, ws, opts) {
   // pr.-spiller-tæller (pin_fejl/pin_spaerret_til på spiller-rækken) OG den
   // samme IP-tæller som login, se DELETE /me nedenfor.
   const ipLoginLimiter = opts.ipLoginLimiter || createIpLoginLimiter();
+  const smsIpLimiter = opts.smsIpLimiter || createSmsIpLimiter();
 
   router.get('/me', auth, async (req, res, next) => {
     const client = await pool.connect();
@@ -271,7 +276,29 @@ function meRouter(pool, ws, opts) {
           req.player.id,
         ]);
       }
+      let smsTrukket = false;
       if (harTelefon) {
+        // Samtykket gælder det nummer, spilleren sagde ja med. Skifter nummeret, trækkes
+        // et aktivt sms-samtykke tilbage, så spilleren selv skal sætte flueben igen.
+        const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
+        const row = rowRes.rows[0];
+        if ((row.telefon || null) !== telefonForDb) {
+          const aktiv = await client.query(
+            "SELECT 1 FROM samtykke_status WHERE spiller_id = $1 AND liste = 'sms' AND seneste_type = 'bekraeftet'",
+            [row.id]
+          );
+          if (aktiv.rows.length) {
+            const now = new Date();
+            const p = playerToP(row);
+            const result = setSubsPure(p, subKeys(p).filter((k) => k !== 'sms'), await getCfg(pool), now);
+            await client.query(
+              'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5 WHERE id = $6',
+              [result.p.marketing, JSON.stringify(result.p.mailTo), result.p.notify, result.p.tick.day, JSON.stringify(result.p.tick.keys), row.id]
+            );
+            await logSamtykke(client, row.id, 'sms', 'trukket_tilbage', 'telefon_skiftet', req, now);
+            smsTrukket = true;
+          }
+        }
         await client.query('UPDATE spiller SET telefon = $1 WHERE id = $2', [telefonForDb, req.player.id]);
       }
       await client.query('COMMIT');
@@ -280,7 +307,7 @@ function meRouter(pool, ws, opts) {
       // companyKey/company i GET /state's players-liste). Telefon rører
       // ikke GET /state (det er allerede PII-fritaget, se publicState.js).
       if (ws && ws.broadcastStateChanged) ws.broadcastStateChanged();
-      res.json({ ok: true, firma: harFirma ? firma : undefined, telefon: harTelefon ? telefonForDb : undefined });
+      res.json({ ok: true, firma: harFirma ? firma : undefined, telefon: harTelefon ? telefonForDb : undefined, sms_samtykke_traekt: smsTrukket || undefined });
     } catch (e) {
       await client.query('ROLLBACK');
       // Hærdning mod en race mellem to samtidige PATCH /me-kald med SAMME nye
@@ -459,6 +486,17 @@ function meRouter(pool, ws, opts) {
       await persistBag(client, row.id, bag);
 
       const result = setSubsPure(playerToP(row), keys, cfg, now);
+      let smsIpUndtaget = false;
+      if (result.added.includes('sms')) {
+        const t = await smsIpLimiter.check(pool, req);
+        if (t.retry !== null) {
+          await client.query('ROLLBACK');
+          res.set('Retry-After', String(t.retry));
+          return res.status(429).json(SMS_IP_BESKED);
+        }
+        smsIpUndtaget = t.undtaget;
+        smsIpLimiter.consume(req, smsIpUndtaget);
+      }
       await client.query(
         'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5 WHERE id = $6',
         [result.p.marketing, JSON.stringify(result.p.mailTo), result.p.notify, result.p.tick.day, JSON.stringify(result.p.tick.keys), row.id]
@@ -557,6 +595,15 @@ function meRouter(pool, ws, opts) {
 
       const bagBefore = await currentBag(client, row, cfg, now);
       const result = setTicksPure(playerToP(row), keys, cfg, bagBefore, now);
+      if (result.added.includes('sms')) {
+        const t = await smsIpLimiter.check(pool, req);
+        if (t.retry !== null) {
+          await client.query('ROLLBACK');
+          res.set('Retry-After', String(t.retry));
+          return res.status(429).json(SMS_IP_BESKED);
+        }
+        smsIpLimiter.consume(req, t.undtaget);
+      }
 
       await client.query(
         `UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5,

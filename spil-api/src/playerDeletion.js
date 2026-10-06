@@ -74,6 +74,11 @@ async function anonymizeReferencesToPlayer(client, id, navn) {
   );
 
   await client.query(`UPDATE spiller SET ref_spiller_id = NULL WHERE ref_spiller_id = $1`, [id]);
+
+  // sms_log og time_vinder har kun en FK med SET NULL; telefonnummer, fornavn (i
+  // teksten) og fuldt navn er kopier, der ellers overlever sletningen.
+  await client.query(`UPDATE sms_log SET til = '', tekst = '[slettet]', fejl = NULL WHERE spiller_id = $1`, [id]);
+  await client.query('UPDATE time_vinder SET navn = $2 WHERE spiller_id = $1', [id, SLETTET_SPILLER]);
 }
 
 // Selve cascade-sletningen af spillerens EGNE rækker + spilleren selv.

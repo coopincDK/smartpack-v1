@@ -93,6 +93,10 @@ uden at påvirke andre testfiler.
   gang pr. liste pr. dag)) som rene funktionstests, ingen DB.
 - `nameDisplay.test.js` — `shortName()` ("Fornavn E."): flere ord, ét ord,
   mellemnavne, ekstra mellemrum, tomt/manglende navn, danske bogstaver.
+- `sms.test.js` / `sms-fixes.test.js` — sms via inMobile (falsk inMobile-server, klokken fryses til kl. 12):
+  døgnloft (også parallelt) og åbningens underloft, samtykkefilter i åbningen (7 dage, gemt tekst),
+  nødstop (`smsOn`/`smsAfsendelse`), afvisning fra inMobile (opsætning vs. modtager), vinder-sms,
+  samtykketekst, nummerskifte, sms-grænse pr. IP, sletning og maskeret startkode.
 - `retention.test.js` — GDPR-oprydningens `findRetentionCandidates`/
   `deleteInactivePlayers` (`src/retention.js`) mod syntetiske spillere:
   aktivt samtykke beholdes uanset alder, nyligt spillet uden samtykke

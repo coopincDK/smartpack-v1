@@ -4,8 +4,7 @@ const { loadOffentligCfg } = require('../cfgLoad');
 
 const express = require('express');
 const { firmKey } = require('../rules/firmKey');
-const { lifeState, setSubsPure, setTicksPure, todayStr, samtykkeTekstFor } = require('../rules/life');
-const { SAMTYKKE_VERSION } = require('../partners');
+const { lifeState, setSubsPure, setTicksPure, todayStr, samtykkeTekstFor, samtykkeVersionFor } = require('../rules/life');
 const { randomPublicId, randomCode, hashPassword, verifyPassword } = require('../crypto');
 const { issueToken } = require('../spillerToken');
 const { clientIp } = require('../middleware/clientIp');
@@ -142,6 +141,33 @@ function createIpLoginLimiter() {
   return { check, consume };
 }
 
+// Sms-samtykke pr. IP: nummeret bekræftes aldrig, så en enkelt forbindelse må kun
+// tilmelde et begrænset antal numre til sms i timen (SMS_IP_MAKS_PR_TIME, standard 30).
+// Stand- og admin-sessioner er undtaget (samme princip som pinkode-grænsen ovenfor),
+// fordi standens tablet deler IP med mange spillere. Tæller både nye registreringer
+// med sms og nye sms-flueben (PUT /me/subs og /me/ticks).
+function createSmsIpLimiter() {
+  const n = Number(process.env.SMS_IP_MAKS_PR_TIME);
+  const limiter = createRateLimiter({
+    windowMs: 3600 * 1000,
+    max: Number.isFinite(n) && n >= 0 && process.env.SMS_IP_MAKS_PR_TIME !== '' ? Math.floor(n) : 30,
+    keyFn: (req) => clientIp(req),
+  });
+  return {
+    // { retry: sekunder hvis blokeret ellers null, undtaget: stand-/admin-session }
+    async check(pool, req) {
+      const rolle = await resolveSessionRole(pool, req);
+      const undtaget = rolle === 'stand' || rolle === 'admin';
+      return { retry: undtaget ? null : limiter.check(req), undtaget };
+    },
+    consume(req, undtaget) { if (!undtaget) limiter.consume(req); },
+  };
+}
+const SMS_IP_BESKED = {
+  fejl: 'For mange sms-tilmeldinger fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
+  kode: 'sms_ip_graense',
+};
+
 // M4 (opfølgende sikkerhedsgennemgang): pr.-spiller pin-spærringen
 // (pin_fejl/pin_spaerret_til) var hidtil kun skrevet inline i login-flowet
 // nedenfor. DELETE /me's pinkode-bekræftelse (src/routes/me.js) skal bruge
@@ -192,6 +218,7 @@ function playersRouter(pool, ws, opts) {
   // tilbage til sin egen instans hvis routeren undtagelsesvis bygges alene
   // (fx et fremtidigt script), men createApp() sender altid den delte ind.
   const ipLoginLimiter = opts.ipLoginLimiter || createIpLoginLimiter();
+  const smsIpLimiter = opts.smsIpLimiter || createSmsIpLimiter();
 
   router.post('/players', async (req, res, next) => {
     const body = req.body || {};
@@ -370,6 +397,17 @@ function playersRouter(pool, ws, opts) {
         return res.status(400).json({ fejl: 'Vælg en pinkode på 4 cifre.', kode: 'ugyldig_pin' });
       }
 
+      let smsIpUndtaget = false;
+      if (tilmeldinger.includes('sms')) {
+        const t = await smsIpLimiter.check(pool, req);
+        if (t.retry !== null) {
+          await client.query('ROLLBACK');
+          res.set('Retry-After', String(t.retry));
+          return res.status(429).json(SMS_IP_BESKED);
+        }
+        smsIpUndtaget = t.undtaget;
+      }
+
       // Telefon-opfølgning (brugerens beslutning): valgfrit ved
       // registrering, men SKAL normalisere til mindst 8 cifre når det rent
       // faktisk er udfyldt (tomt/udeladt er OK, se telefonInput ovenfor).
@@ -470,10 +508,12 @@ function playersRouter(pool, ws, opts) {
       for (const key of subResult.added) {
         const liste = key === 'sp' ? 'smartpack' : key === 'sms' ? 'sms' : 'partner:' + key.slice(2);
         const tekst = samtykkeTekstFor(cfg, key);
+        if (liste === 'sms' && !tekst) throw new Error('sms-samtykke uden tekst');
+        if (liste === 'sms') smsIpLimiter.consume(req, smsIpUndtaget);
         await client.query(
           `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst, tekst_version, kilde, ip, user_agent, type)
            VALUES ($1,$2,$3,$4,$5,'registrering',$6,$7,'bekraeftet')`,
-          [spillerId, liste, nowIso, tekst, tekst ? SAMTYKKE_VERSION : 1, clientIp(req), req.headers['user-agent'] || null]
+          [spillerId, liste, nowIso, tekst, tekst ? samtykkeVersionFor(liste) : 1, clientIp(req), req.headers['user-agent'] || null]
         );
       }
 
@@ -521,6 +561,8 @@ module.exports = {
   MAKS_FIRMA,
   PIN_RE,
   createIpLoginLimiter,
+  createSmsIpLimiter,
+  SMS_IP_BESKED,
   pinLaast,
   registrerPinFejl,
   ryddPinFejl,

@@ -3,7 +3,7 @@
 const express = require('express');
 const { healthRouter } = require('./routes/health');
 const { stateRouter } = require('./routes/state');
-const { playersRouter, createIpLoginLimiter } = require('./routes/players');
+const { playersRouter, createIpLoginLimiter, createSmsIpLimiter } = require('./routes/players');
 const { meRouter } = require('./routes/me');
 const { runsRouter } = require('./routes/runs');
 const { adminRouter } = require('./routes/admin');
@@ -53,11 +53,13 @@ function createApp(pool, ws, opts) {
   // begrundelsen: et separat eksemplar pr. router ville omgå den fælles
   // beskyttelse).
   const ipLoginLimiter = createIpLoginLimiter();
+  // Samme princip for sms-tilmeldinger pr. IP: ÉN delt instans til registrering og flueben.
+  const smsIpLimiter = createSmsIpLimiter();
 
   app.use(healthRouter());
   app.use(stateRouter(pool));
-  app.use(playersRouter(pool, ws, { ipLoginLimiter }));
-  app.use(meRouter(pool, ws, { ipLoginLimiter }));
+  app.use(playersRouter(pool, ws, { ipLoginLimiter, smsIpLimiter }));
+  app.use(meRouter(pool, ws, { ipLoginLimiter, smsIpLimiter }));
   app.use(runsRouter(pool, ws));
   app.use(adminRouter(pool, ws, opts.adminRouterOpts));
   app.use(partnersRouter(pool));

@@ -2,6 +2,7 @@
 
 const { REGEN_MS, regenCap, MAX_LIVES } = require('./constants');
 const { todayStr } = require('./tzDate');
+const { SAMTYKKE_VERSION } = require('../partners');
 
 // Dags-nøgle brugt overalt i liv-reglen — 'YYYY-MM-DD' i Europe/Copenhagen
 // (IKKE UTC siden denne opfølgningsrunde), se src/rules/tzDate.js og API.md,
@@ -24,7 +25,7 @@ function subOptions(cfg) {
     opts.push({ key: 'm:' + navn, label: l ? l.navn : navn, tekst: l ? l.tekst : null, life: true });
   }
   if (cfg.smsOn !== false && cfg.smsSponsor) {
-    opts.push({ key: 'sms', label: cfg.smsSponsor, life: true });
+    opts.push({ key: 'sms', label: cfg.smsSponsor, tekst: SMS_SAMTYKKE_TEKST, life: true });
   }
   return opts;
 }
@@ -133,8 +134,19 @@ function refill(bag, p, cfg, now) {
 // Den tekst, spilleren så ved fluebenet, gemmes i samtykke.tekst. Partnernes
 // tekst bygges af partner-tabellen (firma, CVR, produkt), se src/partners.js.
 const SP_SAMTYKKE_TEKST = 'Ja tak, SmartPack må sende mig nyheder på mail. Jeg kan altid afmelde mig igen.';
+// Sms-samtykket: serveren ejer teksten, så den altid gemmes på samtykke-rækken og passer
+// til det, der faktisk sker (afsender Packrush/SmartPack via inMobile, afmelding i spillet).
+// Ændres teksten, skal SMS_SAMTYKKE_VERSION hæves.
+const SMS_SAMTYKKE_VERSION = 3;
+const SMS_SAMTYKKE_TEKST =
+  "Ja tak, SmartPack må sende mig sms'er om Packrush, fx at turneringen er åben, eller at jeg er timens boss eller har vundet. " +
+  "Sms'erne sendes af SmartPack (afsender Packrush) via inMobile. Jeg kan altid afmelde mig igen under Mine tilmeldinger i spillet på smartpack.dk/spil.";
+function samtykkeVersionFor(key) {
+  return key === 'sms' ? SMS_SAMTYKKE_VERSION : SAMTYKKE_VERSION;
+}
 function samtykkeTekstFor(cfg, key) {
   if (key === 'sp') return SP_SAMTYKKE_TEKST;
+  if (key === 'sms') return SMS_SAMTYKKE_TEKST;
   const o = subOptions(cfg || {}).find((x) => x.key === key);
   return (o && o.tekst) || null;
 }
@@ -226,6 +238,8 @@ module.exports = {
   refill,
   listNameFor,
   samtykkeTekstFor,
+  samtykkeVersionFor,
+  SMS_SAMTYKKE_TEKST,
   setSubsPure,
   setTicksPure,
 };

@@ -532,7 +532,7 @@ function adminRouter(pool, ws, opts) {
       const cfgRow = await getCfgRow(pool, { raw: true });
       // partnerLister er afledt af partner-tabellen og må ikke gemmes i config.
       const ind = body.offentlig ? { ...body.offentlig } : null;
-      if (ind) delete ind.partnerLister;
+      if (ind) { delete ind.partnerLister; delete ind.smsTekst; }
       const offentlig = ind ? { ...cfgRow.offentlig, ...ind } : cfgRow.offentlig;
       const hemmelig = body.hemmelig ? { ...cfgRow.hemmelig, ...body.hemmelig } : cfgRow.hemmelig;
       await pool.query('UPDATE config SET offentlig = $1, hemmelig = $2 WHERE id = 1', [
@@ -664,7 +664,9 @@ function adminRouter(pool, ws, opts) {
     try {
       const cfgRow = await getCfgRow(pool);
       const erAlle = key === 'alle';
-      if (!erAlle && !subOptions(cfgRow.offentlig).some((o) => o.key === key)) {
+      // Afmelding skal altid kunne ske: 'sms' afvises ikke, selv om smsOn er slået fra
+      // (så er sms-valget væk fra subOptions, men spillere kan stadig stå på listen).
+      if (!erAlle && key !== 'sms' && !subOptions(cfgRow.offentlig).some((o) => o.key === key)) {
         return res.status(400).json({ fejl: 'Ukendt tilmeldings-liste.', kode: 'ukendt_liste' });
       }
 

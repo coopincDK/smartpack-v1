@@ -22,7 +22,7 @@ function smsRouter(pool) {
     try {
       const til = String((req.body && req.body.telefon) || '');
       if (!msisdn(til)) return res.status(400).json({ fejl: 'Skriv et dansk mobilnummer med 8 cifre.', kode: 'ugyldigt_nummer' });
-      const r = await send(pool, { type: 'test', noegle: `${Date.now()}`, til, tekst: 'Test fra Packrush: sms-opsætningen virker.', test: true });
+      const r = await send(pool, { type: 'test', noegle: `${Date.now()}`, til, tekst: 'Test fra Packrush: sms-opsætningen virker.', test: true, adminTest: true });
       res.status(r.ok ? 200 : 502).json(r);
     } catch (e) { next(e); }
   });
