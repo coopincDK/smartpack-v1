@@ -188,6 +188,13 @@ function renFelter(input, tilladte) {
 
 // Hvad mangler, før partneren kan vises i spillet, og før præmien kan vises
 // på præmieoversigten. Tom liste = færdig.
+function erUdenlandsk(adresse) {
+  const a = String(adresse || '').trim();
+  if (!a) return false;
+  if (/danmark|denmark|\b\d{4}\b/i.test(a)) return false; // dansk postnummer eller land
+  return /,\s*[A-ZÆØÅ][A-Za-zÆØÅæøå .'-]{2,}$/.test(a); // slutter med et land, fx ", Malta"
+}
+
 function manglerProfil(p) {
   const m = [];
   if (!p.navn) m.push('navn');
@@ -196,7 +203,9 @@ function manglerProfil(p) {
   if (!p.kort_beskrivelse) m.push('kort_beskrivelse');
   // Partnervilkår: samtykket skal kunne navngive firma, CVR og produkt, og
   // spilleren skal kunne læse partnerens privatlivspolitik.
-  if (!p.cvr) m.push('cvr');
+  // Udenlandske firmaer har intet dansk CVR. De må undværes, når adressen tydeligt
+  // ligger uden for Danmark (fx 'Gzira, Malta'); samtykket navngiver så firma og land.
+  if (!p.cvr && !erUdenlandsk(p.adresse)) m.push('cvr');
   if (!p.produktkategori) m.push('produktkategori');
   if (!p.privatlivspolitik) m.push('privatlivspolitik');
   return m;
