@@ -590,6 +590,11 @@ details.more summary:hover{color:var(--text)}
 .turn-chip.efter b{color:#FDBA74}
 .turn-chip .tc-ikon{font-size:18px;flex:none}
 .turn-chip .tc-pil{margin-left:auto;font-size:18px;opacity:.6;flex:none}
+
+/* "Ja tak til alle" i fluebensboksen */
+.alle-btn{width:100%;margin:10px 0 4px;font-size:16px;padding:12px 14px}
+.alle-btn:disabled{opacity:.75}
+.alle-note{margin:0 0 8px;font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1488,10 +1493,14 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
   t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Fluebenene starter tomme hver dag, så du vælger selv. Når dine liv er brugt, får du et nyt hver time. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
-  // Ingen "Tilmeld alle": hver partner skal vælges for sig (vilkår pkt. 12). Knappen findes stadig i koden,
-  // så resten af logikken er uændret, men den vises ikke.
-  const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button'; all.hidden = true;
-  head.append(t, all); box.append(head);
+  // "Ja tak til alle" (Martin, 6/10): sætter de synlige flueben på én gang. Ingen er sat på forhånd,
+  // hver partners tekst står stadig ved sit flueben, og man kan fjerne dem enkeltvis bagefter (vilkår pkt. 12).
+  // Sms (kræver telefonnummer) er ikke med i "alle".
+  const allCount = opts.filter(o => o.k !== 'sms').length;
+  const allLife = opts.filter(o => o.k !== 'sms' && o.life).length;
+  const all = el('button', 'btn green alle-btn', bonus && allLife ? `Ja tak til alle, giv mig ${allLife} ekstra liv` : 'Ja tak til alle'); all.type = 'button';
+  const allNote = el('p', 'alle-note', 'Du kan fjerne flueben enkeltvis nedenfor, før du fortsætter.');
+  head.append(t); box.append(head, all, allNote);
   const list = el('div', 'subs-list'), inputs = [];
   opts.forEach(o => {
     const l = el('label', 'check'), i = el('input'); i.type = 'checkbox'; i.checked = chosen.has(o.k); i.dataset.k = o.k;
@@ -1528,8 +1537,8 @@ function subsBox(box, initial, onChange, fold, knownPhone){
       onChange && onChange([...chosen]);
     };
   });
-  const sync = () => { const every = inputs.every(i => i.checked); all.textContent = every ? 'Alle er valgt' : 'Tilmeld alle'; all.disabled = every; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
-  all.onclick = () => { inputs.forEach(i => { i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge'); onChange && onChange([...chosen]); };
+  const sync = () => { const every = inputs.filter(i => i.dataset.k !== 'sms').every(i => i.checked); all.textContent = every ? `✓ Alle ${allCount} er valgt` : (bonus && allLife ? `Ja tak til alle, giv mig ${allLife} ekstra liv` : 'Ja tak til alle'); all.disabled = every; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
+  all.onclick = () => { inputs.forEach(i => { if(i.dataset.k === 'sms') return; i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge'); onChange && onChange([...chosen]); };
   if(fold){ const d = el('details', 'pick'), sm = el('summary'); d.append(sm, list); box.append(d); box._sum = sm; } else { box._sum = null; box.append(list); }
   sync();
   return () => [...chosen];
@@ -2635,7 +2644,7 @@ function renderLobby(){
   }
   const nx = nextLifeMs(p), mins = nx != null ? Math.ceil(nx / 60000) : 0;
   if(nx != null && nx <= 0) debouncedRefreshMe(); // M4: nedtællingen er udløbet — hent /me igen for at få den friske livtælling
-  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Nye liv ved midnat.' : ' Kom igen i morgen.');
+  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Når det er brugt, får du et nyt hver time.' : ' Du får et nyt liv inden for en time.');
   const pips = $('#l-pips'); pips.replaceChildren(); const shown = Math.min(12, Math.max(l, 1)); pips.classList.toggle('many', shown > 6);
   for(let i = 0; i < shown; i++){ const d = el('div', 'pip ' + (i < l ? 'free' : 'used')); const im = new Image(); im.src = IMG.cubeW; im.alt = ''; d.append(im); pips.append(d); }
   // gaver fra venner
