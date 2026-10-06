@@ -595,6 +595,21 @@ details.more summary:hover{color:var(--text)}
 .alle-btn{width:100%;margin:10px 0 4px;font-size:16px;padding:12px 14px}
 .alle-btn:disabled{opacity:.75}
 .alle-note{margin:0 0 8px;font-size:12px;color:var(--muted)}
+
+/* Dagens timevindere under timens tavle */
+li.tv-head{display:block;list-style:none;margin:14px 0 4px;padding:0;font:800 13px var(--display,inherit);letter-spacing:.06em;text-transform:uppercase;color:#F5C451;background:none;border:0}
+li.tv-tom{display:block;list-style:none;padding:14px 4px;color:var(--muted,#94A3B8);text-align:center;background:none;border:0}
+li.tv{opacity:.95}
+li.tv.nu{border-color:#F5C451}
+li.tv.senere{opacity:.5}
+
+/* "Mød os på E-handelskonferencen": partnere med stand eller talk (vises til og med 8/10) */
+.konf-strip{margin:18px 0 6px;text-align:center}
+.konf-strip h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#F5C451;margin:0 0 10px}
+.konf-strip .kl{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.konf-strip a{display:flex;flex-direction:column;align-items:center;gap:4px;width:112px;text-decoration:none;color:inherit}
+.konf-strip img{height:34px;max-width:96px;border-radius:7px;background:#fff;padding:3px;object-fit:contain}
+.konf-strip small{font-size:11px;opacity:.75;line-height:1.2}
 </style>
 </head>
 <body>
@@ -616,7 +631,7 @@ details.more summary:hover{color:var(--text)}
   </div>
   <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b> med mulighed for at få flere, og din bedste score kommer på tavlen.</p>
   <a class="turn-chip" href="vilkaar/"><span class="tc-ikon" aria-hidden="true">🏆</span><span><b>Lukket turnering 8. okt.</b> Kun konferencedeltagere får lodder til præmierne.</span><span class="tc-pil" aria-hidden="true">›</span></a>
-  <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Ét lod om dagen til 18. okt., og 2 flasker vin til topscoren.</span><span class="tc-pil" aria-hidden="true">›</span></a>
+  <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Saml op til 5 lodder om dagen til 18. okt. Vi trækker to vindere af vin. Her gælder de særskilte vilkår for efterårsferieudfordringen.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <div class="live" id="st-live"></div>
   <p class="muted small" id="st-invited" hidden></p>
   <div class="mission" id="st-mission" hidden></div>
@@ -630,6 +645,7 @@ details.more summary:hover{color:var(--text)}
   <button class="link" id="b-all">Se hele listen</button>
   <a class="link" href="praemier/" style="text-align:center">Præmier og partnere</a>
   <a class="link" href="/spil/vilkaar/" style="text-align:center">Vilkår for konkurrencen</a>
+  <div class="konf-strip" id="konf-strip" hidden></div>
   <div class="foot"><img src="data:image/png;base64,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" alt=""><span>smartpack.dk</span><button class="icon vib" type="button" aria-label="Vibration til og fra" hidden></button><button class="icon snd" type="button" aria-label="Lyd til og fra"></button><button class="link" id="b-admin">Login</button></div>
 </section>
 
@@ -827,6 +843,8 @@ details.more summary:hover{color:var(--text)}
     <h4 class="sub">QR-kode på standen</h4>
     <p class="muted small">Print den og hæng den på standen. Scanner en spiller den på messedagen, bliver spillerens firma godkendt til konkurrencen, også selvom navnet er stavet anderledes end på deltagerlisten. Virker kun 8. oktober til kl. 16.30.</p>
     <div id="a-qr"></div>
+    <a class="btn ghost" href="/api/spil/admin/lodliste.csv" download>Hent samlet lodliste (CSV)</a>
+    <p class="muted small">Hent den lige før lodtrækningen kl. 16.45. Hver eksport gemmes også som låst kopi på serveren til dokumentation.</p>
     <button class="btn" id="b-draw">Træk vinderen</button>
     <div id="a-draw"></div>
   </div>
@@ -963,6 +981,14 @@ const CUBE = loadImg(IMG.cubeK), CUBEW = loadImg(IMG.cubeW), LOGO = loadImg(IMG.
    cphTodayAt() bruges også til timens boss og kronetidspunktet, så alt regner i samme tidszone. */
 const CPH_TZ = 'Europe/Copenhagen';
 const today = () => new Date().toLocaleDateString('sv-SE', { timeZone: CPH_TZ });
+/* Timens boss kører kun, mens konkurrencen er aktiv: på periodens dage (cfg.periodStart..periodEnd)
+   og kun kl. 8-17 dansk tid. Uden for det skjules fanen, linjen i lobbyen og standvæggens dias. */
+function hourlyDay(){
+  if(cfg.hourly === false || !cfg.periodStart) return false;
+  const c = cphParts(new Date()), d = `${c.year}-${String(c.month).padStart(2, '0')}-${String(c.day).padStart(2, '0')}`;
+  return d >= cfg.periodStart && d <= (cfg.periodEnd || cfg.periodStart) && c.hour >= 8;
+}
+function hourlyOn(){ return hourlyDay() && cphParts(new Date()).hour < 17; }
 function cphParts(d){
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone: CPH_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(d);
   const get = t => +parts.find(p => p.type === t).value;
@@ -1104,6 +1130,7 @@ function apiFetch(path, opts){
 const API = {
   state(){ return apiFetch('/state', { noAuth: true }); },
   me(){ return getToken() ? apiFetch('/me') : Promise.resolve(null); },
+  varAnmod(runId, besked){ return apiFetch('/runs/' + encodeURIComponent(runId) + '/var', { method: 'POST', body: { besked: besked || '' } }); },
   stand(kode){ return apiFetch('/me/stand', { method: 'POST', body: { kode } }); },
   register(payload){
     return apiFetch('/players', { method: 'POST', noAuth: true, body: {
@@ -1476,7 +1503,8 @@ function subOptions(){
   // faste samtykketekst med firma og CVR. Findes listen ikke (ingen partnere slået til), bruges navnene som før.
   const info = new Map((cfg.partnerLister || []).map(l => [l.slug, l]));
   mailPartners().forEach(n => { const l = info.get(n); o.push({ k: 'm:' + n, name: l ? l.navn : n, text: l ? l.tekst : `Nyheder fra ${n} på mail`, privacy: l ? l.privatlivspolitik : '', life: true }); });
-  if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: cfg.smsSponsor, text: `Sms'er om spillet, fx når nogen slår din score. Sendes af ${cfg.smsSponsor}, og du kommer på ${cfg.smsSponsor}s sms-liste`, life: true });
+  /* sms'erne sendes af SmartPack som Packrush; serveren ejer samtykketeksten (cfg.smsTekst) og gemmer den ved samtykket */
+  if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: 'Packrush', text: cfg.smsTekst || "Sms'er om Packrush fra SmartPack. Du kan altid afmelde dig under Mine tilmeldinger.", life: true });
   return o;
 }
 function subKeys(p){ const k = []; if(p.marketing) k.push('sp'); (p.mailTo || []).forEach(n => k.push('m:' + n)); if(p.notify) k.push('sms'); return k; }
@@ -1498,8 +1526,10 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   // Sms (kræver telefonnummer) er ikke med i "alle".
   const allCount = opts.filter(o => o.k !== 'sms').length;
   const allLife = opts.filter(o => o.k !== 'sms' && o.life).length;
-  const all = el('button', 'btn green alle-btn', bonus && allLife ? `Ja tak til alle, giv mig ${allLife} ekstra liv` : 'Ja tak til alle'); all.type = 'button';
-  const allNote = el('p', 'alle-note', 'Du kan fjerne flueben enkeltvis nedenfor, før du fortsætter.');
+  // Ved tilmelding (onChange er null) sender knappen også formularen, så man kommer direkte videre.
+  const allTxt = () => !onChange ? 'Ja tak til alle, og lad os spille 🚀' : (bonus && allLife ? `Ja tak til alle, giv mig ${allLife} ekstra liv` : 'Ja tak til alle');
+  const all = el('button', 'btn green alle-btn', allTxt()); all.type = 'button';
+  const allNote = el('p', 'alle-note', !onChange ? 'Sætter flueben ved alle partnere og fortsætter. Vil du hellere vælge selv, så sæt fluebenene nedenfor og tryk Fortsæt.' : 'Du kan fjerne flueben enkeltvis nedenfor.');
   head.append(t); box.append(head, all, allNote);
   const list = el('div', 'subs-list'), inputs = [];
   opts.forEach(o => {
@@ -1537,8 +1567,13 @@ function subsBox(box, initial, onChange, fold, knownPhone){
       onChange && onChange([...chosen]);
     };
   });
-  const sync = () => { const every = inputs.filter(i => i.dataset.k !== 'sms').every(i => i.checked); all.textContent = every ? `✓ Alle ${allCount} er valgt` : (bonus && allLife ? `Ja tak til alle, giv mig ${allLife} ekstra liv` : 'Ja tak til alle'); all.disabled = every; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
-  all.onclick = () => { inputs.forEach(i => { if(i.dataset.k === 'sms') return; i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge'); onChange && onChange([...chosen]); };
+  const sync = () => { const every = inputs.filter(i => i.dataset.k !== 'sms').every(i => i.checked); all.textContent = every && onChange ? `✓ Alle ${allCount} er valgt` : allTxt(); all.disabled = every && !!onChange; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
+  all.onclick = () => {
+    inputs.forEach(i => { if(i.dataset.k === 'sms') return; i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge');
+    if(onChange) return onChange([...chosen]);
+    // Tilmelding: send formularen med det samme (manglende felter/vilkår vises som normalt)
+    const f = box.closest('form'); if(f){ f.requestSubmit ? f.requestSubmit() : f.querySelector('button[type=submit]').click(); }
+  };
   if(fold){ const d = el('details', 'pick'), sm = el('summary'); d.append(sm, list); box.append(d); box._sum = sm; } else { box._sum = null; box.append(list); }
   sync();
   return () => [...chosen];
@@ -1560,7 +1595,7 @@ function hourWinners(pool){
   const ps = pool || Object.values(data.players);
   const now = nowHour(), won = new Set(), out = [], hs = new Set();
   ps.forEach(p => done(p).filter(F.today).forEach(a => hs.add(hourOf(a.end || a.at))));
-  [...hs].filter(h => h < now).sort((a, b) => a - b).forEach(h => {
+  [...hs].filter(h => h < now && h >= 8 && h < 17).sort((a, b) => a - b).forEach(h => {
     const r = rank('total', inHour(h), ps).filter(x => !won.has(x.p.pid));
     if(r[0]){ won.add(r[0].p.pid); out.push({ h, p: r[0].p, v: r[0].v }); }
   });
@@ -2434,7 +2469,7 @@ document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', 
 
 /* ---------- tavler ---------- */
 function scopes(){
-  const s = [['today', 'I dag']]; if(cfg.hourly !== false) s.push(['hour', 'Timen']); s.push(['period', cfg.periodName || 'Perioden']);
+  const s = [['today', 'I dag']]; if(hourlyDay()) s.push(['hour', 'Timen']); s.push(['period', cfg.periodName || 'Perioden']);
   // Før en afgrænset periode (messedagen) er periodens tavle tom: vis en opvarmningstavle med alt, der er spillet indtil nu.
   if(cfg.periodEnd && cfg.periodStart > today()) s.push(['warmup', 'Opvarmning']);
   if(cfg.mission && cfg.mission !== 'total') s.push(['mission', 'Mission']);
@@ -2475,9 +2510,17 @@ function renderBoard(list, note, limit){
   if(scope === 'mission') note.textContent = `${MET[k].name}. ${MET[k].how}`;
   if(scope === 'period' && cfg.periodEnd && cfg.periodStart > today()) note.textContent = `Tavlen åbner ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}. Indtil da kan du varme op under "Opvarmning".`;
   else if(scope === 'period' && cfg.periodStart > '2000-01-01'){ const dd = d => new Date(d).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }); note.textContent = cfg.periodEnd && cfg.periodEnd === cfg.periodStart ? `Kun forsøg fra ${dd(cfg.periodStart)}.` : cfg.periodEnd ? `Alle forsøg fra ${dd(cfg.periodStart)} til ${dd(cfg.periodEnd)}.` : `Alle forsøg fra ${dd(cfg.periodStart)}.`; }
-  if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize + ', som hentes på standen inden for en time' : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
+  if(scope === 'hour'){
+    const ws = hourWinners(), h = nowHour();
+    note.textContent = hourlyOn() ? `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize + ', som hentes på standen inden for en time' : ''}. Man kan vinde én time om dagen, så flere får en chance.` : 'Timens boss er kåret for i dag. Her er dagens vindere.';
+    if(!hourlyOn()){
+      hourSchedule(list);
+      return;
+    }
+  }
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
-  if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
+  if(!r.length && scope !== 'hour') return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
+  if(!r.length) list.append(el('li', 'tv-tom', 'Ingen har spillet i denne time endnu. Tag føringen.'));
   r.forEach(({ p, v }, i) => {
     const mine = !!(current && p.pid === current.pid);
     const li = el('li'); if(mine) li.classList.add('me');
@@ -2487,6 +2530,23 @@ function renderBoard(list, note, limit){
     li.append(el('span', 'rank', i + 1), el('span', 'name', p.name), el('span', 'score', MET[k].f(v)), el('span', 'left', sub));
     list.append(li);
   });
+  // Under timens tavle: dagens tidligere timevindere
+  if(scope === 'hour'){
+    hourSchedule(list);
+  }
+}
+function hourSchedule(list){
+  const ws = hourWinners(), h = nowHour(), by = new Map(ws.map(w => [w.h, w]));
+  list.append(el('li', 'tv-head', 'Dagens timer'));
+  for(let t = 8; t <= 16; t++){
+    const w = by.get(t), li = el('li', 'tv');
+    let ikon, navn, score = '', tekst;
+    if(t < h){ ikon = w ? '🍷' : '–'; navn = w ? w.p.name : 'Ingen vinder'; score = w ? fmt(w.v) : ''; tekst = 'Afsluttet'; if(w && current && w.p.pid === current.pid) li.classList.add('me'); }
+    else if(t === h){ ikon = '⏳'; navn = 'I gang nu'; tekst = `Kåres kl. ${hh(t + 1)}, om ${hourLeftMin()} min`; li.classList.add('nu'); }
+    else { ikon = '·'; navn = 'Ikke startet'; tekst = 'Kommende'; li.classList.add('senere'); }
+    li.append(el('span', 'rank', ikon), el('span', 'name', `kl. ${hh(t)}-${hh(t + 1)}: ${navn}`), el('span', 'score', score), el('span', 'left', tekst));
+    list.append(li);
+  }
 }
 function renderBoardScreen(){ renderTabs($('#tabs-all')); renderBoard($('#board-all'), $('#note-all'), 100); }
 
@@ -2681,8 +2741,8 @@ function renderLobby(){
     cb.replaceChildren(t, el('p', null, 'Del dit link, så er din kode udfyldt, når vennen tilmelder sig. Spiller en ny ven med din kode, får du fuld liv. Tager en ven din udfordring op, får du et ekstra liv, højst ét i timen fra hver ven.'), btn, kop); cb.hidden = false;
   } else cb.hidden = true;
   // timens boss
-  const hb = $('#l-hour'); hb.hidden = cfg.hourly === false;
-  if(cfg.hourly !== false){
+  const hb = $('#l-hour'); hb.hidden = !hourlyOn();
+  if(hourlyOn()){
     const mine = hourWinners().find(w => w.p.pid === p.pid), top = hourBoard()[0], h = nowHour(); hb.replaceChildren();
     if(mine) hb.append('Du vandt ', el('b', null, `timens boss kl. ${hh(mine.h + 1)}`), `${cfg.hourPrize ? '. Hent ' + cfg.hourPrize + ' på SmartPacks stand inden for en time' : ''}. Nu får de andre en chance.`);
     else if(top && top.p.pid === p.pid) hb.append('Du er ', el('b', null, 'timens boss'), ` lige nu. Hold pladsen til kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
@@ -2783,6 +2843,8 @@ function unsubscribeOne(key){
 function renderSubsBox(){
   const box = $('#l-subs'); if(!box) return;
   const p = current, opts = subOptions(), on = subKeys(p);
+  /* afmelding skal altid kunne ske, også når sms er slået fra i opsætningen */
+  if(on.includes('sms') && !opts.some(o => o.k === 'sms')) opts.push({ k: 'sms', name: 'Packrush', life: true });
   box.replaceChildren();
   if(!opts.length) return;
   const d = el('details', 'more'), sm = el('summary'); sm.textContent = `Mine tilmeldinger, ${on.length} af ${opts.length}`;
@@ -3118,7 +3180,7 @@ function finish(){
     if(res && res.godkendt === false) afterFinish(p, g, { ok: false, message: res.besked || 'Forsøget kunne ikke godkendes.' });
     else afterFinish(p, g, { ok: true, ...res });
   }).catch(e => {
-    if(isFinalRejection(e)) afterFinish(p, g, { ok: false, message: (e && e.message) || 'Forsøget kunne ikke godkendes.' });
+    if(isFinalRejection(e)) afterFinish(p, g, { ok: false, message: (e && e.message) || 'Forsøget kunne ikke godkendes.', var: !!(e && e.code === 'var'), runId });
     else { queueFinish(p.pid, getToken(), p.name, runId, payload); afterFinish(p, g, { ok: null }); }
   });
 }
@@ -3161,6 +3223,18 @@ function showResult(p, g){
   let pb = false;
   if(res.ok === false){
     near.append(res.message || 'Forsøget kunne ikke godkendes.');
+    if(res.var && res.runId){
+      // VAR: spillet ser automatiseret ud og er sat på pause; spilleren kan bede om et tjek
+      const vb = el('button', 'btn small', '📺 Anmod om VAR-tjek'); vb.type = 'button';
+      vb.onclick = () => {
+        const kommentar = prompt('Fortæl kort, hvordan du spillede (valgfrit). Arrangøren kigger på det og giver besked.') ;
+        if(kommentar === null) return;
+        vb.disabled = true;
+        API.varAnmod(res.runId, kommentar).then(() => { vb.replaceWith(el('p', 'muted small', 'Tak. Dit spil er sendt til VAR-tjek. Godkendes det, kommer det på tavlen.')); })
+          .catch(e => { vb.disabled = false; toast((e && e.message) || 'Kunne ikke sende. Prøv igen.'); });
+      };
+      near.append(el('br'), vb);
+    }
     $('#r-badge').hidden = true;
   } else if(res.ok == null){
     near.append('Gemmes, når der er net. Det kommer på tavlen, så snart det er sendt.');
@@ -3516,7 +3590,8 @@ $('#b-csv').onclick = () => window.open(API.admin.exportUrl('spillere'), '_blank
    til, når kontrakten er endelig. */
 function fillUnlist(){
   const sl = $('#a-unlist'); if(!sl) return; const cur = sl.value;
-  sl.replaceChildren(el('option', null, 'Alle lister'), ...subOptions().map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
+  const afmeldOpts = subOptions(); if(!afmeldOpts.some(o => o.k === 'sms')) afmeldOpts.push({ k: 'sms', name: 'Packrush' }); /* sms kan altid afmeldes */
+  sl.replaceChildren(el('option', null, 'Alle lister'), ...afmeldOpts.map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
   sl.firstChild.value = 'alle';
   if(cur) sl.value = cur;
 }
@@ -3604,7 +3679,7 @@ function wallPanels(){
   const t = rank('total', F.today).slice(0, 8), rec = rank('total', F.period)[0], n = rank('total', F.today).length;
   P.push({ dur: 16, title: 'Dagens topscore', rows: t.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i dag endnu. Bliv dagens første boss.',
     foot: [rec ? ['Rekord i ' + pnl() + ': ', `${fmt(rec.v)} af ${rec.p.name}`] : null, n ? ['', `${n} ${n === 1 ? 'spiller' : 'spillere'} i dag`] : null] });
-  if(cfg.hourly !== false){
+  if(hourlyOn()){
     const h = nowHour(), r = hourBoard().slice(0, 7);
     P.push({ dur: 10, title: `Timens boss, kåres kl. ${hh(h + 1)}`, note: `Om ${hourLeftMin()} min${cfg.hourPrize ? '. Præmie: ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen`, rows: r.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i denne time endnu. Bliv timens boss.' });
   }
@@ -3671,7 +3746,7 @@ function renderWall(){
       WALL.queue = WALL.queue.filter(q => q.kind === 'lead').concat(WALL.queue.filter(q => q.kind === 'rec').slice(0, 2));
     }
   }
-  const hw = cfg.hourly !== false ? hourWinners() : [];
+  const hw = hourlyOn() ? hourWinners() : [];
   if(WALL.hw != null && hw.length > WALL.hw){ const w = hw[hw.length - 1]; WALL.queue.unshift({ kind: 'hour', name: w.p.name, firm: w.p.company, v: w.v, h: w.h }); }
   WALL.hw = hw.length;
   WALL.leader = lead ? { pid: lead.p.pid, name: lead.p.name, v: lead.v } : null; WALL.recs = recs;
@@ -3898,5 +3973,32 @@ setInterval(flushFinishQueue, 30000);
 })();
 </script>
 <script src="/spil/vilkaar-overlay.js?v=1"></script>
+
+<script>
+/* Mød os på E-handelskonferencen: logoer for partnere med stand eller talk, kun til og med 8/10-2026 */
+(function(){
+  var KONF = [["smartpack","SmartPack","Stand 6"],["inmobile","inMobile","Stand 20"],["sitesage","SiteSage","På konferencen"],["poetype","Poetype","Rød scene kl. 10.00"],["herodesk","Herodesk","Blå scene kl. 11.45"]];
+  function vis(boks, api){
+    var d = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Copenhagen' }).format(new Date());
+    if(!boks || d > '2026-10-08') return;
+    fetch(api + '/partnere', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(b){
+      var by = {}; (b.partnere || []).forEach(function(p){ by[p.slug] = p; });
+      var kl = document.createElement('div'); kl.className = 'kl';
+      KONF.forEach(function(k){
+        var p = by[k[0]]; if(!p || !p.logo_url) return;
+        var a = document.createElement('a'); a.href = '/spil/praemier/#' + encodeURIComponent(k[0]);
+        var img = document.createElement('img'); img.src = api + p.logo_url; img.alt = k[1]; img.loading = 'lazy';
+        var sm = document.createElement('small'); sm.textContent = k[2];
+        a.append(img, sm); kl.append(a);
+      });
+      if(!kl.children.length) return;
+      var h = document.createElement('h3'); h.textContent = 'Mød os på E-handelskonferencen';
+      boks.replaceChildren(h, kl); boks.hidden = false;
+    }).catch(function(){});
+  }
+  window.__konfStrip = vis;
+})();
+</script>
+<script>window.__konfStrip && window.__konfStrip(document.getElementById('konf-strip'), '/api/spil');</script>
 </body>
 </html>

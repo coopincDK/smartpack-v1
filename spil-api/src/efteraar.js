@@ -2,13 +2,15 @@
 
 // Packrush Efterårsferieudfordring 2026 (vilkår: /spil/efteraar/).
 // Åben, gratis konkurrence, ADSKILT fra messe-turneringen:
-//  - ét lod pr. person pr. dansk kalenderdag med mindst ét godkendt spil i perioden
+//  - ét lod pr. godkendt spil, højst MAX_PR_DAG lodder pr. person pr. dansk kalenderdag
+//    (loftet sikrer, at ekstra liv fra flueben ikke giver flere lodder end de liv, alle får hver time)
 //  - spillere fra firmaer på konferencens deltagerliste (eller udelukkede firmaer,
 //    fx SmartPack) får først lodder for spil afsluttet efter messe-turneringen
 //    (KONF_SLUT); deres spil i turneringen tæller aldrig her
-//  - flere spil, vennekoder, ekstra liv, power-ups og samtykker giver ingen ekstra lodder
-//  - topscoren (bedste godkendte spil i perioden, samme regel) vinder 2 flasker
-//  - lodtrækningen: 1 vinder + 2 reserver blandt alle lodder
+//  - vennekoder, ekstra liv, power-ups og samtykker giver ingen lodder ud over loftet
+//  - topscoren giver kun æren (ingen præmie, så præmierne er rene lodtrækningspræmier)
+//  - lodtrækningen: 2 vindere trækkes hver for sig blandt alle lodder; 1. vinder får 2 flasker,
+//    2. vinder 1 flaske. Samme person kan ikke vinde to gange. Hver trækning har 2 reserver.
 // Påvirker aldrig messe-turneringens lodder (src/konkurrence.js).
 
 const crypto = require('crypto');
@@ -17,6 +19,8 @@ const { matchNoegle } = require('./konkurrence');
 const START = new Date('2026-10-06T00:00:00+02:00');
 const KONF_SLUT = new Date('2026-10-08T16:30:00+02:00');
 const SLUT = new Date('2026-10-18T23:59:59+02:00');
+const MAX_PR_DAG = 5;
+const PRAEMIER = ['2 flasker', '1 flaske'];
 
 async function messeNoegler(db) {
   const { rows } = await db.query('SELECT firma_noegle FROM deltagerliste_firma');
@@ -48,11 +52,11 @@ async function beregn(db) {
     if (erMesse && new Date(r.tid) <= KONF_SLUT) continue; // messe-spillere: først efter turneringen
     const id = String(r.spiller_id);
     let p = pr.get(id);
-    if (!p) { p = { spiller_id: id, navn: r.navn, email: r.email, firma: r.firma, dage: new Set(), bedste: 0, bedste_tid: null }; pr.set(id, p); }
-    p.dage.add(r.dag);
+    if (!p) { p = { spiller_id: id, navn: r.navn, email: r.email, firma: r.firma, dage: new Map(), bedste: 0, bedste_tid: null }; pr.set(id, p); }
+    p.dage.set(r.dag, Math.min(MAX_PR_DAG, (p.dage.get(r.dag) || 0) + 1));
     if (r.samlet > p.bedste || (r.samlet === p.bedste && new Date(r.tid) < new Date(p.bedste_tid))) { p.bedste = r.samlet; p.bedste_tid = r.tid; }
   }
-  const spillere = [...pr.values()].map((p) => ({ ...p, lodder: p.dage.size, dage: [...p.dage].sort() }))
+  const spillere = [...pr.values()].map((p) => ({ ...p, lodder: [...p.dage.values()].reduce((a, n) => a + n, 0), dage: [...p.dage.entries()].sort().map(([d, n]) => `${d}: ${n}`) }))
     .sort((a, b) => b.lodder - a.lodder || a.spiller_id.localeCompare(b.spiller_id));
   const top = [...spillere].sort((a, b) => b.bedste - a.bedste || new Date(a.bedste_tid) - new Date(b.bedste_tid));
   const nu = new Date();
@@ -69,8 +73,17 @@ async function beregn(db) {
 async function traek(pool, type, adminSessionId) {
   const g = await beregn(pool);
   if (!g.spillere.length) return null;
-  let vinder = null, tal = null;
+  let vinder = null, tal = null, praemie = null;
   const reserver = [];
+  // Tidligere lodtrækningsvindere kan ikke trækkes igen; højst to vindere i alt.
+  const { rows: tidl } = await pool.query("SELECT vinder_spiller_id FROM efteraar_traekning WHERE type = 'lod' ORDER BY id");
+  if (type !== 'top') {
+    if (tidl.length >= PRAEMIER.length) return { fejl: 'Begge vindere er allerede trukket.' };
+    praemie = PRAEMIER[tidl.length];
+    const ude = new Set(tidl.map((r) => String(r.vinder_spiller_id)));
+    g.spillere = g.spillere.filter((p) => !ude.has(p.spiller_id));
+    if (!g.spillere.length) return null;
+  }
   if (type === 'top') {
     vinder = g.top[0];
     g.top.slice(1, 3).forEach((p) => reserver.push({ spiller_id: p.spiller_id, navn: p.navn, email: p.email, bedste: p.bedste }));
@@ -95,7 +108,7 @@ async function traek(pool, type, adminSessionId) {
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id, tidspunkt`,
     [type, adminSessionId || null, JSON.stringify(grundlag), g.lodder_i_alt, tal, vinder.spiller_id, vinder.navn, vinder.email, JSON.stringify(reserver)]
   );
-  return { id: String(rows[0].id), tidspunkt: rows[0].tidspunkt, type, vinder: { navn: vinder.navn, email: vinder.email, firma: vinder.firma, lodder: vinder.lodder, bedste: vinder.bedste }, reserver, lodder_i_alt: g.lodder_i_alt };
+  return { id: String(rows[0].id), tidspunkt: rows[0].tidspunkt, type, praemie, vinder: { navn: vinder.navn, email: vinder.email, firma: vinder.firma, lodder: vinder.lodder, bedste: vinder.bedste }, reserver, lodder_i_alt: g.lodder_i_alt };
 }
 
-module.exports = { beregn, traek, START, KONF_SLUT, SLUT };
+module.exports = { beregn, traek, START, KONF_SLUT, SLUT, MAX_PR_DAG, PRAEMIER };
