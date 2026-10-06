@@ -69,6 +69,12 @@ td b{font-weight:700}
       <tbody id="rows"></tbody>
     </table></div>
 
+    <h2 style="font:800 22px var(--display);margin:28px 0 6px">Sms (afsender "Packrush")</h2>
+    <p class="sub" style="margin-bottom:10px" id="s-status">Henter …</p>
+    <div class="row" style="margin:0 0 10px"><input type="search" id="s-tel" placeholder="Dit mobilnummer, fx 23247508" style="max-width:240px"><button id="s-test" class="ghost">Send test-sms</button><span id="s-msg" class="sub" style="margin:0"></span></div>
+    <div class="stats" style="margin-bottom:10px" id="s-tv"></div>
+    <div class="tablewrap" style="margin-bottom:28px"><table><thead><tr><th>Tid</th><th>Type</th><th>Til</th><th>Status</th><th>Tekst</th></tr></thead><tbody id="s-rows"><tr><td colspan="5" class="empty">Henter …</td></tr></tbody></table></div>
+
     <h2 style="font:800 22px var(--display);margin:28px 0 6px">Efterårsferieudfordringen</h2>
     <p class="sub" style="margin-bottom:12px">Åben konkurrence 6.–18. oktober, adskilt fra messe-turneringen. Ét lod pr. person pr. dag. Træk vinderne mandag 19. oktober. <a href="/spil/efteraar/" style="color:var(--kraft)">Vilkår</a></p>
     <div class="stats" style="margin-bottom:10px">
@@ -178,7 +184,22 @@ async function traekEft(type) {
 }
 $('e-traek-top').addEventListener('click', () => traekEft('top'));
 $('e-traek-lod').addEventListener('click', () => traekEft('lod'));
-load(); loadArr(); loadEft();
+async function loadSms() {
+  let r; try { r = await fetch(API + '/admin/sms', { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return; }
+  if (!r.ok) { $('s-status').textContent = 'Sms-oversigten kræver, at serveren er opdateret.'; return; }
+  const b = await r.json();
+  $('s-status').textContent = b.har_noegle ? 'inMobile-nøglen er sat op. Sms sendes kun kl. 8-21, højst 2 pr. person pr. dag, og kun til spillere med sms-flueben.' : 'inMobile-nøglen mangler på serveren (INMOBILE_API_KEY). Indtil den er sat op, sendes ingen sms, men alt logges.';
+  $('s-tv').innerHTML = (b.timens_boss || []).slice(0, 9).map((t) => `<div class="stat"><div class="n" style="font-size:16px">${esc(t.navn || 'ingen')}</div><div class="l">Timens boss ${String(t.time).padStart(4, '0').replace(/(\d\d)(\d\d)/, '$1.$2')}${t.score ? ', ' + t.score : ''}</div></div>`).join('');
+  const st = { sendt: '✓ sendt', ingen_noegle: 'ingen nøgle', uden_for_tid: 'uden for kl. 8-21', over_graense: 'over 2 i dag', fejl: 'fejl', afventer: 'afventer' };
+  $('s-rows').innerHTML = (b.log || []).length ? b.log.map((x) => `<tr><td>${new Date(x.tidspunkt).toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })}</td><td>${esc(x.type)}</td><td>${esc(x.til)}</td><td>${esc(st[x.status] || x.status)}${x.fejl ? ' (' + esc(x.fejl) + ')' : ''}</td><td>${esc(x.tekst)}</td></tr>`).join('') : '<tr><td colspan="5" class="empty">Ingen sms endnu.</td></tr>';
+}
+$('s-test').addEventListener('click', async () => {
+  const r = await fetch(API + '/admin/sms/test', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ telefon: $('s-tel').value }) });
+  const b = await r.json().catch(() => ({}));
+  $('s-msg').textContent = r.ok ? 'Sendt. Tjek din telefon.' : (b.fejl || ({ ingen_noegle: 'Nøglen mangler på serveren.', fejl: 'inMobile afviste beskeden.' })[b.grund] || 'Fejl ' + r.status);
+  loadSms();
+});
+load(); loadArr(); loadEft(); loadSms();
 </script>
 </body>
 </html>

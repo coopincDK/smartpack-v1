@@ -218,8 +218,9 @@
           el('span', { class: 'muted small', text: (b.skal_skifte_kode ? 'Har ikke valgt egen kode endnu' : 'Har valgt egen kode') + (b.sidst_login ? ' · sidst logget ind ' + new Date(b.sidst_login).toLocaleString('da-DK') : ' · aldrig logget ind') })]),
         el('span', { class: 'row' }, [
           el('button', { class: 'btn ghost small', text: 'Ny startkode', onclick: function () {
-            var k = prompt('Ny startkode til ' + b.email + ' (mindst 10 tegn):'); if (!k) return;
-            api('/admin/partner-brugere/' + b.id + '/nulstil', { method: 'POST', body: { kode: k } }).then(function () { alert('Ny startkode er sat. Brugeren skal vælge sin egen kode ved næste login.'); aabn(p.id); })
+            var k = prompt('Ny startkode til ' + b.email + ' (mindst 10 tegn):', forslagKode()); if (!k) return;
+            var tlf = prompt('Send den nye kode på sms til (tom = ingen sms):', p.kontakt_telefon || '');
+            api('/admin/partner-brugere/' + b.id + '/nulstil', { method: 'POST', body: { kode: k, sms_telefon: tlf || '' } }).then(function (r) { alert('Ny startkode er sat.' + smsTekst(r && r.sms)); aabn(p.id); })
               .catch(function (e) { alert(e.message); });
           } }),
           el('button', { class: 'btn danger small', text: 'Slet bruger', onclick: function () {
@@ -233,21 +234,33 @@
     var bNavn = el('input', { type: 'text', id: 'nb-navn' });
     var bKode = el('input', { type: 'text', id: 'nb-kode', autocomplete: 'off' });
     bKode.value = forslagKode();
+    var bTlf = el('input', { type: 'tel', id: 'nb-tlf', placeholder: 'Fx 12345678' });
+    bTlf.value = p.kontakt_telefon || '';
+    bEmail.value = p.kontakt_email || '';
+    bNavn.value = p.kontakt_navn || '';
     var bMsg = el('div');
     bc.append(el('fieldset', null, [el('legend', { text: 'Ny bruger' }),
       el('div', { class: 'grid2' }, [
         el('label', { class: 'f', for: 'nb-email' }, [document.createTextNode('E-mail *'), bEmail]),
         el('label', { class: 'f', for: 'nb-navn' }, [document.createTextNode('Navn'), bNavn]),
       ]),
-      el('label', { class: 'f', for: 'nb-kode' }, [document.createTextNode('Startkode *'), el('small', { text: 'Mindst 10 tegn. Send den til partneren ad en anden vej end e-mailen, fx sms.' }), bKode]),
+      el('label', { class: 'f', for: 'nb-kode' }, [document.createTextNode('Startkode *'), el('small', { text: 'Mindst 10 tegn. Brugeren vælger sin egen kode første gang.' }), bKode]),
+      el('label', { class: 'f', for: 'nb-tlf' }, [document.createTextNode('Send login og startkode på sms til'), el('small', { text: 'Sendes fra "Packrush" med det samme. Lad feltet være tomt, hvis du selv sender koden.' }), bTlf]),
       bMsg,
       el('div', null, [el('button', { class: 'btn', text: 'Opret bruger', onclick: function () {
-        api('/admin/partnere/' + p.id + '/brugere', { method: 'POST', body: { email: bEmail.value, navn: bNavn.value, kode: bKode.value } })
-          .then(function () { aabn(p.id); hentListe(); })
+        api('/admin/partnere/' + p.id + '/brugere', { method: 'POST', body: { email: bEmail.value, navn: bNavn.value, kode: bKode.value, sms_telefon: bTlf.value } })
+          .then(function (r) { var t = smsTekst(r && r.sms); if (t) alert('Brugeren er oprettet.' + t); aabn(p.id); hentListe(); })
           .catch(function (e) { SP.besked(bMsg, e.message, 'err'); });
       } })]),
     ]));
     d.append(bc);
+  }
+
+  function smsTekst(sms) {
+    if (!sms) return '';
+    if (sms.ok) return ' Login og startkode er sendt på sms.';
+    var g = { ingen_noegle: 'sms er ikke sat op på serveren endnu', ugyldigt_nummer: 'telefonnummeret er ikke gyldigt', fejl: 'inMobile afviste beskeden', dublet: 'den er allerede sendt' };
+    return ' Sms blev ikke sendt (' + (g[sms.grund] || sms.grund) + '), så send koden selv.';
   }
 
   function forslagKode() {

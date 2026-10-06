@@ -19,6 +19,17 @@ const P = require('../partners');
 const { toCsv } = require('../csv');
 const { clientIp } = require('../middleware/clientIp');
 const { sendTilCrm, crmKontaktUrl } = require('../crm');
+const SMS = require('../sms');
+
+// Login og startkode på sms til en ny/nulstillet partnerbruger (kun hvis admin har bedt om det).
+async function smsLogin(pool, { til, email, kode, ny }) {
+  if (!til) return null;
+  if (!SMS.msisdn(til)) return { ok: false, grund: 'ugyldigt_nummer' };
+  return SMS.send(pool, {
+    type: 'partner_login', noegle: `${email}-${Date.now()}`, til, test: true,
+    tekst: `${ny ? 'Dit login' : 'Ny startkode'} til Packrush-partnerportalen: smartpack.dk/spil/partner/ Mail: ${email} Startkode: ${kode} Du vælger din egen kode, når du logger ind første gang.`,
+  });
+}
 
 const PARTNER_COOKIE = 'spil_partner_session';
 const PARTNER_SESSION_TTL_MS = 12 * 3600 * 1000;
@@ -447,7 +458,8 @@ function partnersRouter(pool) {
         [id, p.id, email, navn, hashPassword(kode)]
       );
       await audit(pool, req, 'partner_bruger_oprettet', { partner_id: p.id, bruger_id: id });
-      res.status(201).json({ bruger: { id, email, navn, skal_skifte_kode: true } });
+      const sms = await smsLogin(pool, { til: b.sms_telefon, email, kode, ny: true }).catch(() => ({ ok: false, grund: 'fejl' }));
+      res.status(201).json({ bruger: { id, email, navn, skal_skifte_kode: true }, sms });
     } catch (e) {
       sendFejl(res, e, next);
     }
@@ -466,7 +478,12 @@ function partnersRouter(pool) {
       if (!r.rowCount) return res.status(404).json({ fejl: 'Brugeren findes ikke.', kode: 'ikke_fundet' });
       await pool.query('DELETE FROM partner_session WHERE bruger_id = $1', [req.params.bid]);
       await audit(pool, req, 'partner_bruger_nulstillet', { bruger_id: req.params.bid });
-      res.json({ ok: true });
+      let sms = null;
+      if (req.body && req.body.sms_telefon) {
+        const { rows: br } = await pool.query('SELECT email FROM partner_bruger WHERE id = $1', [req.params.bid]);
+        sms = await smsLogin(pool, { til: req.body.sms_telefon, email: br[0].email, kode, ny: false }).catch(() => ({ ok: false, grund: 'fejl' }));
+      }
+      res.json({ ok: true, sms });
     } catch (e) {
       sendFejl(res, e, next);
     }

@@ -6,6 +6,7 @@ const { createPool, migrate } = require('./db');
 const { createApp } = require('./app');
 const { attachWs } = require('./ws');
 const { startCrmSynk } = require('./crmSynk');
+const { startSmsJobs } = require('./smsJobs');
 
 // Serveren kender IKKE selv til hvilken port den ender med at blive
 // eksponeret på udadtil — den lytter blot på PORT (default 3000). I
@@ -19,6 +20,7 @@ async function main() {
   const app = createApp(pool, ws);
   server.on('request', app);
   startCrmSynk(pool);
+  startSmsJobs(pool);
 
   server.listen(config.port, () => {
     // eslint-disable-next-line no-console

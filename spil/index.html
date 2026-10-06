@@ -595,6 +595,13 @@ details.more summary:hover{color:var(--text)}
 .alle-btn{width:100%;margin:10px 0 4px;font-size:16px;padding:12px 14px}
 .alle-btn:disabled{opacity:.75}
 .alle-note{margin:0 0 8px;font-size:12px;color:var(--muted)}
+
+/* Dagens timevindere under timens tavle */
+li.tv-head{display:block;list-style:none;margin:14px 0 4px;padding:0;font:800 13px var(--display,inherit);letter-spacing:.06em;text-transform:uppercase;color:#F5C451;background:none;border:0}
+li.tv-tom{display:block;list-style:none;padding:14px 4px;color:var(--muted,#94A3B8);text-align:center;background:none;border:0}
+li.tv{opacity:.95}
+li.tv.nu{border-color:#F5C451}
+li.tv.senere{opacity:.5}
 </style>
 </head>
 <body>
@@ -616,7 +623,7 @@ details.more summary:hover{color:var(--text)}
   </div>
   <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b> med mulighed for at få flere, og din bedste score kommer på tavlen.</p>
   <a class="turn-chip" href="vilkaar/"><span class="tc-ikon" aria-hidden="true">🏆</span><span><b>Lukket turnering 8. okt.</b> Kun konferencedeltagere får lodder til præmierne.</span><span class="tc-pil" aria-hidden="true">›</span></a>
-  <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Ét lod om dagen til 18. okt., og 2 flasker vin til topscoren.</span><span class="tc-pil" aria-hidden="true">›</span></a>
+  <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Saml op til 5 lodder om dagen til 18. okt., og 2 flasker vin til topscoren.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <div class="live" id="st-live"></div>
   <p class="muted small" id="st-invited" hidden></p>
   <div class="mission" id="st-mission" hidden></div>
@@ -963,6 +970,14 @@ const CUBE = loadImg(IMG.cubeK), CUBEW = loadImg(IMG.cubeW), LOGO = loadImg(IMG.
    cphTodayAt() bruges også til timens boss og kronetidspunktet, så alt regner i samme tidszone. */
 const CPH_TZ = 'Europe/Copenhagen';
 const today = () => new Date().toLocaleDateString('sv-SE', { timeZone: CPH_TZ });
+/* Timens boss kører kun, mens konkurrencen er aktiv: på periodens dage (cfg.periodStart..periodEnd)
+   og kun kl. 8-17 dansk tid. Uden for det skjules fanen, linjen i lobbyen og standvæggens dias. */
+function hourlyDay(){
+  if(cfg.hourly === false || !cfg.periodStart) return false;
+  const c = cphParts(new Date()), d = `${c.year}-${String(c.month).padStart(2, '0')}-${String(c.day).padStart(2, '0')}`;
+  return d >= cfg.periodStart && d <= (cfg.periodEnd || cfg.periodStart) && c.hour >= 8;
+}
+function hourlyOn(){ return hourlyDay() && cphParts(new Date()).hour < 17; }
 function cphParts(d){
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone: CPH_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(d);
   const get = t => +parts.find(p => p.type === t).value;
@@ -1567,7 +1582,7 @@ function hourWinners(pool){
   const ps = pool || Object.values(data.players);
   const now = nowHour(), won = new Set(), out = [], hs = new Set();
   ps.forEach(p => done(p).filter(F.today).forEach(a => hs.add(hourOf(a.end || a.at))));
-  [...hs].filter(h => h < now).sort((a, b) => a - b).forEach(h => {
+  [...hs].filter(h => h < now && h >= 8 && h < 17).sort((a, b) => a - b).forEach(h => {
     const r = rank('total', inHour(h), ps).filter(x => !won.has(x.p.pid));
     if(r[0]){ won.add(r[0].p.pid); out.push({ h, p: r[0].p, v: r[0].v }); }
   });
@@ -2441,7 +2456,7 @@ document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', 
 
 /* ---------- tavler ---------- */
 function scopes(){
-  const s = [['today', 'I dag']]; if(cfg.hourly !== false) s.push(['hour', 'Timen']); s.push(['period', cfg.periodName || 'Perioden']);
+  const s = [['today', 'I dag']]; if(hourlyDay()) s.push(['hour', 'Timen']); s.push(['period', cfg.periodName || 'Perioden']);
   // Før en afgrænset periode (messedagen) er periodens tavle tom: vis en opvarmningstavle med alt, der er spillet indtil nu.
   if(cfg.periodEnd && cfg.periodStart > today()) s.push(['warmup', 'Opvarmning']);
   if(cfg.mission && cfg.mission !== 'total') s.push(['mission', 'Mission']);
@@ -2482,9 +2497,17 @@ function renderBoard(list, note, limit){
   if(scope === 'mission') note.textContent = `${MET[k].name}. ${MET[k].how}`;
   if(scope === 'period' && cfg.periodEnd && cfg.periodStart > today()) note.textContent = `Tavlen åbner ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}. Indtil da kan du varme op under "Opvarmning".`;
   else if(scope === 'period' && cfg.periodStart > '2000-01-01'){ const dd = d => new Date(d).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }); note.textContent = cfg.periodEnd && cfg.periodEnd === cfg.periodStart ? `Kun forsøg fra ${dd(cfg.periodStart)}.` : cfg.periodEnd ? `Alle forsøg fra ${dd(cfg.periodStart)} til ${dd(cfg.periodEnd)}.` : `Alle forsøg fra ${dd(cfg.periodStart)}.`; }
-  if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize + ', som hentes på standen inden for en time' : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
+  if(scope === 'hour'){
+    const ws = hourWinners(), h = nowHour();
+    note.textContent = hourlyOn() ? `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize + ', som hentes på standen inden for en time' : ''}. Man kan vinde én time om dagen, så flere får en chance.` : 'Timens boss er kåret for i dag. Her er dagens vindere.';
+    if(!hourlyOn()){
+      hourSchedule(list);
+      return;
+    }
+  }
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
-  if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
+  if(!r.length && scope !== 'hour') return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
+  if(!r.length) list.append(el('li', 'tv-tom', 'Ingen har spillet i denne time endnu. Tag føringen.'));
   r.forEach(({ p, v }, i) => {
     const mine = !!(current && p.pid === current.pid);
     const li = el('li'); if(mine) li.classList.add('me');
@@ -2494,6 +2517,23 @@ function renderBoard(list, note, limit){
     li.append(el('span', 'rank', i + 1), el('span', 'name', p.name), el('span', 'score', MET[k].f(v)), el('span', 'left', sub));
     list.append(li);
   });
+  // Under timens tavle: dagens tidligere timevindere
+  if(scope === 'hour'){
+    hourSchedule(list);
+  }
+}
+function hourSchedule(list){
+  const ws = hourWinners(), h = nowHour(), by = new Map(ws.map(w => [w.h, w]));
+  list.append(el('li', 'tv-head', 'Dagens timer'));
+  for(let t = 8; t <= 16; t++){
+    const w = by.get(t), li = el('li', 'tv');
+    let ikon, navn, score = '', tekst;
+    if(t < h){ ikon = w ? '🍷' : '–'; navn = w ? w.p.name : 'Ingen vinder'; score = w ? fmt(w.v) : ''; tekst = 'Afsluttet'; if(w && current && w.p.pid === current.pid) li.classList.add('me'); }
+    else if(t === h){ ikon = '⏳'; navn = 'I gang nu'; tekst = `Kåres kl. ${hh(t + 1)}, om ${hourLeftMin()} min`; li.classList.add('nu'); }
+    else { ikon = '·'; navn = 'Ikke startet'; tekst = 'Kommende'; li.classList.add('senere'); }
+    li.append(el('span', 'rank', ikon), el('span', 'name', `kl. ${hh(t)}-${hh(t + 1)}: ${navn}`), el('span', 'score', score), el('span', 'left', tekst));
+    list.append(li);
+  }
 }
 function renderBoardScreen(){ renderTabs($('#tabs-all')); renderBoard($('#board-all'), $('#note-all'), 100); }
 
@@ -2688,8 +2728,8 @@ function renderLobby(){
     cb.replaceChildren(t, el('p', null, 'Del dit link, så er din kode udfyldt, når vennen tilmelder sig. Spiller en ny ven med din kode, får du fuld liv. Tager en ven din udfordring op, får du et ekstra liv, højst ét i timen fra hver ven.'), btn, kop); cb.hidden = false;
   } else cb.hidden = true;
   // timens boss
-  const hb = $('#l-hour'); hb.hidden = cfg.hourly === false;
-  if(cfg.hourly !== false){
+  const hb = $('#l-hour'); hb.hidden = !hourlyOn();
+  if(hourlyOn()){
     const mine = hourWinners().find(w => w.p.pid === p.pid), top = hourBoard()[0], h = nowHour(); hb.replaceChildren();
     if(mine) hb.append('Du vandt ', el('b', null, `timens boss kl. ${hh(mine.h + 1)}`), `${cfg.hourPrize ? '. Hent ' + cfg.hourPrize + ' på SmartPacks stand inden for en time' : ''}. Nu får de andre en chance.`);
     else if(top && top.p.pid === p.pid) hb.append('Du er ', el('b', null, 'timens boss'), ` lige nu. Hold pladsen til kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
@@ -3611,7 +3651,7 @@ function wallPanels(){
   const t = rank('total', F.today).slice(0, 8), rec = rank('total', F.period)[0], n = rank('total', F.today).length;
   P.push({ dur: 16, title: 'Dagens topscore', rows: t.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i dag endnu. Bliv dagens første boss.',
     foot: [rec ? ['Rekord i ' + pnl() + ': ', `${fmt(rec.v)} af ${rec.p.name}`] : null, n ? ['', `${n} ${n === 1 ? 'spiller' : 'spillere'} i dag`] : null] });
-  if(cfg.hourly !== false){
+  if(hourlyOn()){
     const h = nowHour(), r = hourBoard().slice(0, 7);
     P.push({ dur: 10, title: `Timens boss, kåres kl. ${hh(h + 1)}`, note: `Om ${hourLeftMin()} min${cfg.hourPrize ? '. Præmie: ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen`, rows: r.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i denne time endnu. Bliv timens boss.' });
   }
@@ -3678,7 +3718,7 @@ function renderWall(){
       WALL.queue = WALL.queue.filter(q => q.kind === 'lead').concat(WALL.queue.filter(q => q.kind === 'rec').slice(0, 2));
     }
   }
-  const hw = cfg.hourly !== false ? hourWinners() : [];
+  const hw = hourlyOn() ? hourWinners() : [];
   if(WALL.hw != null && hw.length > WALL.hw){ const w = hw[hw.length - 1]; WALL.queue.unshift({ kind: 'hour', name: w.p.name, firm: w.p.company, v: w.v, h: w.h }); }
   WALL.hw = hw.length;
   WALL.leader = lead ? { pid: lead.p.pid, name: lead.p.name, v: lead.v } : null; WALL.recs = recs;
