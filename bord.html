@@ -327,6 +327,7 @@ setInterval(hentReklame, 300000);
 /* ---------------- rytmen ---------------- */
 var n = -1;
 function naeste(){
+  if (nyUdgave) { location.reload(); return; }
   var start = n;
   do {
     n = (n+1) % KORT.length;
@@ -343,6 +344,29 @@ function naeste(){
   setTimeout(naeste, KORT[n].tid);
 }
 naeste();
+
+/* ---------------- ny udgave: genindlæs af sig selv ----------------
+   Skærmen viser siden via en URL og genindlæser den ikke selv. Hvert 5. minut
+   hentes siden igen uden cache; er indholdet ændret (ny udgave lagt op),
+   genindlæses siden ved næste billedskift, så det falder sammen med en overgang. Uden netværk sker der ingenting, og den kører bare videre. */
+var mitFingeraftryk = null, nyUdgave = false;
+function fingeraftryk(t){ var h = 0; for (var i=0;i<t.length;i++){ h = (h*31 + t.charCodeAt(i)) | 0; } return h + ':' + t.length; }
+function tjekNyUdgave(){
+  var x = new XMLHttpRequest();
+  x.open('GET', location.pathname + '?v=' + Date.now(), true);
+  x.timeout = 15000;
+  x.onreadystatechange = function(){
+    if (x.readyState !== 4 || x.status !== 200 || x.responseText.length < 1000) return;
+    var f = fingeraftryk(x.responseText);
+    if (mitFingeraftryk === null) { mitFingeraftryk = f; return; }
+    if (f !== mitFingeraftryk) nyUdgave = true;   /* genindlæses ved næste skift, se naeste() */
+  };
+  try { x.send(); } catch(e){}
+}
+tjekNyUdgave();
+setInterval(tjekNyUdgave, 300000);   /* hvert 5. minut */
+/* Sikkerhedsnet: genindlæs også én gang i døgnet om natten */
+setInterval(function(){ var h = new Date().getHours(); if (h === 4) location.reload(); }, 3600000);
 </script>
 </body>
 </html>
