@@ -606,10 +606,10 @@ li.tv.senere{opacity:.5}
 /* "Mød os på E-handelskonferencen": partnere med stand eller talk (vises til og med 8/10) */
 .konf-strip{margin:18px 0 6px;text-align:center}
 .konf-strip h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#F5C451;margin:0 0 10px}
-.konf-strip .kl{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.konf-strip a{display:flex;flex-direction:column;align-items:center;gap:4px;width:112px;text-decoration:none;color:inherit}
-.konf-strip img{height:34px;max-width:96px;border-radius:7px;background:#fff;padding:3px;object-fit:contain}
-.konf-strip small{font-size:11px;opacity:.75;line-height:1.2}
+.konf-strip .kl{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.konf-strip a{display:flex;flex-direction:column;align-items:center;gap:4px;width:86px;text-decoration:none;color:inherit}
+.konf-strip img{height:30px;max-width:86px;border-radius:7px;background:#fff;padding:3px;object-fit:contain}
+.konf-strip small{font-size:10.5px;opacity:.75;line-height:1.2}
 </style>
 </head>
 <body>
@@ -3977,7 +3977,7 @@ setInterval(flushFinishQueue, 30000);
 <script>
 /* Mød os på E-handelskonferencen: logoer for partnere med stand eller talk, kun til og med 8/10-2026 */
 (function(){
-  var KONF = [["smartpack","SmartPack","Stand 6"],["inmobile","inMobile","Stand 20"],["sitesage","SiteSage","På konferencen"],["poetype","Poetype","Rød scene kl. 10.00"],["herodesk","Herodesk","Blå scene kl. 11.45"]];
+  var KONF = [["smartpack","SmartPack","Stand 6"],["inmobile","inMobile","Stand 20"],["sitesage","SiteSage","På konf."],["poetype","Poetype","Rød scene 10.00"],["herodesk","Herodesk","Blå scene 11.45"]];
   function vis(boks, api){
     var d = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Copenhagen' }).format(new Date());
     if(!boks || d > '2026-10-08') return;
