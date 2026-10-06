@@ -66,12 +66,13 @@ test('efterårsferie: 1 lod pr. spil (højst 5 pr. dag), messe-firmaer først ef
   assert.equal(pub.body.spillere, 3);
   assert.equal(JSON.stringify(pub.body).includes('@'), false, 'ingen mails offentligt');
 
-  const top = await api(h.baseUrl, 'POST', '/admin/efteraar/traek', { adminCookie: ac, body: { type: 'top' } });
-  assert.equal(top.body.vinder.email, 'ude@x.dk');
-  const lod = await api(h.baseUrl, 'POST', '/admin/efteraar/traek', { adminCookie: ac, body: { type: 'lod' } });
-  assert.equal(lod.status, 200);
-  assert.ok(['ude@x.dk', 'messe@x.dk', 'mange@x.dk'].includes(lod.body.vinder.email));
-  assert.equal(lod.body.reserver.length, 2, 'to reserver blandt de andre');
+  const v1 = await api(h.baseUrl, 'POST', '/admin/efteraar/traek', { adminCookie: ac, body: { type: 'lod' } });
+  assert.equal(v1.status, 200); assert.equal(v1.body.praemie, '2 flasker');
+  const v2 = await api(h.baseUrl, 'POST', '/admin/efteraar/traek', { adminCookie: ac, body: { type: 'lod' } });
+  assert.equal(v2.status, 200); assert.equal(v2.body.praemie, '1 flaske');
+  assert.notEqual(v1.body.vinder.email, v2.body.vinder.email, 'samme person kan ikke vinde begge');
+  const v3 = await api(h.baseUrl, 'POST', '/admin/efteraar/traek', { adminCookie: ac, body: { type: 'lod' } });
+  assert.equal(v3.status, 400, 'højst to vindere');
   const log = (await h.pool.query('SELECT count(*)::int n FROM efteraar_traekning')).rows[0].n;
   assert.equal(log, 2);
 

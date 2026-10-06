@@ -31,6 +31,7 @@ function efteraarRouter(pool) {
       const type = req.body && req.body.type === 'top' ? 'top' : 'lod';
       const r = await E.traek(pool, type, req.adminSession && req.adminSession.id);
       if (!r) return res.status(400).json({ fejl: 'Ingen gyldige spillere endnu.', kode: 'ingen_lodder' });
+      if (r.fejl) return res.status(400).json({ fejl: r.fejl, kode: 'faerdig' });
       res.json(r);
     } catch (e) { next(e); }
   });

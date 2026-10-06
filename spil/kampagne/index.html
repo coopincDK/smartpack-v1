@@ -82,7 +82,7 @@ td b{font-weight:700}
       <div class="stat"><div class="n" id="e-lod">–</div><div class="l">lodder i alt</div></div>
       <div class="stat"><div class="n" id="e-top">–</div><div class="l">topscore</div></div>
     </div>
-    <div class="row" style="margin:0 0 10px"><button id="e-traek-top" class="ghost">Find topscore-vinderen (2 flasker)</button><button id="e-traek-lod" class="ghost">Træk lodtrækningsvinderen (1 flaske)</button></div>
+    <div class="row" style="margin:0 0 10px"><button id="e-traek-lod" class="ghost">Træk næste vinder (1.: 2 flasker, 2.: 1 flaske)</button></div>
     <div id="e-res" class="sub"></div>
     <div class="tablewrap" style="margin-bottom:28px"><table><thead><tr><th>Navn</th><th>Firma</th><th>Kontakt</th><th class="num">Lodder</th><th class="num">Bedste score</th></tr></thead><tbody id="e-rows"><tr><td colspan="5" class="empty">Henter …</td></tr></tbody></table></div>
 
@@ -176,13 +176,12 @@ async function loadEft() {
   if (b.traekninger && b.traekninger.length) $('e-res').innerHTML = b.traekninger.map((t) => `${new Date(t.tidspunkt).toLocaleString('da-DK', { timeZone: 'Europe/Copenhagen' })}: ${t.type === 'top' ? 'Topscore' : 'Lodtrækning'} → <b>${esc(t.vinder_navn)}</b> (${esc(t.vinder_email)}). Reserver: ${(t.reserver || []).map((x) => esc(x.navn)).join(', ') || 'ingen'}`).join('<br>');
 }
 async function traekEft(type) {
-  if (!confirm(type === 'top' ? 'Find topscore-vinderen nu? Det bliver logget.' : 'Træk lodtrækningsvinderen nu? Det bliver logget og kan ikke gøres om.')) return;
+  if (!confirm('Træk næste vinder nu? Det bliver logget og kan ikke gøres om.')) return;
   const r = await fetch(API + '/admin/efteraar/traek', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ type }) });
   const b = await r.json().catch(() => ({}));
   if (!r.ok) { $('e-res').textContent = b.fejl || 'Fejl ' + r.status; return; }
   loadEft();
 }
-$('e-traek-top').addEventListener('click', () => traekEft('top'));
 $('e-traek-lod').addEventListener('click', () => traekEft('lod'));
 async function loadSms() {
   let r; try { r = await fetch(API + '/admin/sms', { credentials: 'same-origin', cache: 'no-store' }); } catch (e) { return; }

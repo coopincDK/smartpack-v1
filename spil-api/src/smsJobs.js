@@ -107,14 +107,14 @@ async function vinder(pool) {
 }
 
 async function efteraar(pool) {
-  const { rows } = await pool.query('SELECT id, type, vinder_spiller_id FROM efteraar_traekning ORDER BY id');
-  for (const t of rows) {
-    if (!t.vinder_spiller_id) continue;
+  const { rows } = await pool.query("SELECT id, type, vinder_spiller_id FROM efteraar_traekning WHERE type = 'lod' ORDER BY id");
+  for (const [i, t] of rows.entries()) {
+    if (!t.vinder_spiller_id || i > 1) continue;
     const m = await smsModtager(pool, t.vinder_spiller_id);
     if (!m) continue;
     await send(pool, {
       type: 'efteraar', noegle: String(t.id), spillerId: m.id, til: m.telefon,
-      tekst: `Tillykke ${fornavn(m.navn)}! Du har vundet ${t.type === 'top' ? '2 flasker' : '1 flaske'} vin i Packrush Efterårsferieudfordring. Tjek din mail, så aftaler vi levering.`,
+      tekst: `Tillykke ${fornavn(m.navn)}! Du er trukket som vinder af ${i === 0 ? '2 flasker' : '1 flaske'} vin i Packrush Efterårsferieudfordring. Tjek din mail, så aftaler vi levering.`,
     });
   }
 }
