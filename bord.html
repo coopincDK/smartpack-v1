@@ -32,8 +32,10 @@
   .fin{font-size:15px;color:#94A3B8;margin-top:10px}
   .knap{display:inline-block;margin-top:14px;background:#F97316;color:#1a0d00;font-weight:800;font-size:22px;padding:9px 18px;border-radius:12px}
   .logogrid{position:absolute;left:120px;right:120px;top:0;height:384px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-  .logogrid .rk{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:820px}
-  .logogrid img{height:46px;width:92px;object-fit:contain;background:#fff;border-radius:8px;padding:4px}
+  .logogrid .rk{display:flex;flex-wrap:nowrap;justify-content:center;gap:14px}
+  .logogrid img{height:54px;width:122px;object-fit:contain;background:#fff;border-radius:10px;padding:5px;display:block}
+  .logogrid .p{display:flex;flex-direction:column;align-items:center;gap:7px}
+  .logogrid .p span{font-size:16px;font-weight:700;color:#F1F5F9;white-space:nowrap}
   .logo-midt{position:absolute;left:0;right:0;top:0;height:384px;display:flex;align-items:center;justify-content:center;gap:26px}
   .logo-ord{font-weight:300;font-size:104px;letter-spacing:-.02em;line-height:.95;color:#FFFFFF}
   .logo-ord span{font-weight:800}
@@ -147,8 +149,9 @@
 
   <!-- 6: partnerne -->
   <div class="kort" id="k6"><div class="logogrid">
-    <div class="eyebrow" style="margin:0">Med i Packrush</div>
+    <div class="eyebrow" style="margin:0">Mød os på konferencen</div>
     <div class="rk" id="logoer"></div>
+    <div class="fin" style="margin:0">Se alle partnere og præmier på smartpack.dk/spil/praemier</div>
   </div></div>
 
 </div>
@@ -172,7 +175,7 @@ var KORT = [
   { id:'k4', tid: 12000 },   /* præmiepuljen + QR "Deltag her" */
   { id:'k3', tid: 14000 },   /* topscore + QR */
   { id:'k5', tid: 10000 },   /* timens boss */
-  { id:'k6', tid: 10000 }    /* partnerlogoer */
+  { id:'k6', tid: 10000 }    /* mød os: de 5 partnere på konferencen */
 ];
 
 /* ---------------- skalering til skaermen ---------------- */
@@ -288,11 +291,19 @@ function hentReklame(){
     document.getElementById('pulje').firstChild.nodeValue = (opTil ? 'Op til ' : '') + kr(sum);
     document.getElementById('pulje-sub').textContent = 'ekskl. moms · ' + ps.length + ' gaver fra vores partnere';
   });
+  /* Kun partnerne på konferencen (stand eller talk) */
+  var KONF = [['smartpack','Stand 6'],['inmobile','Stand 20'],['sitesage','På konf.'],['poetype','Rød scene 10.00'],['herodesk','Blå scene 11.45']];
   hentJson('/api/spil/partnere', function(b){
     var box = document.getElementById('logoer'); box.innerHTML = '';
-    var ps = (b && b.partnere) || [];
-    for (var i=0;i<ps.length;i++){ if (!ps[i].logo_url) continue;
-      var im = document.createElement('img'); im.src = '/api/spil' + ps[i].logo_url; im.alt = ps[i].navn; box.appendChild(im); }
+    var by = {}, ps = (b && b.partnere) || [];
+    for (var i=0;i<ps.length;i++) by[ps[i].slug] = ps[i];
+    for (var j=0;j<KONF.length;j++){
+      var p = by[KONF[j][0]]; if (!p || !p.logo_url) continue;
+      var d = document.createElement('div'); d.className = 'p';
+      var im = document.createElement('img'); im.src = '/api/spil' + p.logo_url; im.alt = p.navn;
+      var sp = document.createElement('span'); sp.textContent = KONF[j][1];
+      d.appendChild(im); d.appendChild(sp); box.appendChild(d);
+    }
     logoerKlar = box.children.length > 0;
   });
 }
