@@ -13,7 +13,7 @@ process.env.ADMIN_PASSWORD_HASH = hashPassword(ADMIN_PW);
 process.env.COOKIE_SECURE = 'false';
 const { startHarness, api, registrerSpiller, slaaSmsTil } = require('./helpers/appHarness');
 const { koer } = require('../src/smsJobs');
-const { send } = require('../src/sms');
+const { send, nulstilAutoStop } = require('../src/sms');
 const { SMS_SAMTYKKE_TEKST } = require('../src/rules/life');
 const { deletePlayerFully } = require('../src/playerDeletion');
 const { matchNoegle } = require('../src/konkurrence');
@@ -43,9 +43,10 @@ async function startInMobile() {
   return s;
 }
 
-async function opsaet(t, { sms = true } = {}) {
+async function opsaet(t, { sms = true, poolMax } = {}) {
+  nulstilAutoStop();
   const im = await startInMobile();
-  const h = await startHarness();
+  const h = await startHarness({ poolMax });
   t.mock.timers.enable({ apis: ['Date'], now: KL12 });
   t.after(async () => {
     t.mock.timers.reset();
@@ -60,12 +61,19 @@ async function opsaet(t, { sms = true } = {}) {
     return (login.headers.get('set-cookie') || '').split(';')[0];
   };
   // Spiller med sms-samtykke via den rigtige registrering.
-  async function spiller(email, { sms: medSms = true, telefon = nytNummer(), headers } = {}) {
+  async function spiller(email, { sms: medSms = true, telefon = nytNummer(), headers, spil = true } = {}) {
     const { body } = registrerSpiller(h.baseUrl, { email, telefon, tilmeldinger: medSms ? ['sms'] : [] });
     const r = await api(h.baseUrl, 'POST', '/players', { body, headers });
     assert.equal(r.status, 201, JSON.stringify(r.body));
     const id = (await h.pool.query('SELECT id FROM spiller WHERE email = $1', [email])).rows[0].id;
-    return { id, token: r.body.token, telefon };
+    // Et godkendt spil før turneringen (åbningen kræver mindst ét), uden for timens boss' vindue
+    if (spil) {
+      await h.pool.query(
+        `INSERT INTO forsoeg (spiller_id, runde_id, start_server, slut_server, samlet, status, oprettet) VALUES ($1, gen_random_uuid(), $2, $3, 1, 'godkendt', $3)`,
+        [id, tz('11:00'), tz('11:02')]
+      );
+    }
+    return { id, token: r.body.token, telefon, body: r.body };
   }
   const log = async (type) => (await h.pool.query('SELECT status, spiller_id, tekst FROM sms_log WHERE type = $1 ORDER BY id', [type])).rows;
   return { im, h, admin, spiller, log };
@@ -116,12 +124,14 @@ test('åbning: kun seneste bekræftede samtykke inden for 7 dage med gemt tekst'
   const utekst = await spiller('utekst@x.dk');
   const traekt = await spiller('traekt@x.dk');
   const skjult = await spiller('skjult@x.dk');
+  const udenSpil = await spiller('udenspil@x.dk', { spil: false });
   const enkelt = (id, tid, tekst, type = 'bekraeftet') => h.pool.query(
     `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst, tekst_version, kilde, type) VALUES ($1,'sms',$2,$3,1,'test',$4)`,
     [id, tid, tekst, type]
   );
   // Gør de tre samtykker "ufuldkomne" ved at erstatte rækkerne
   await h.pool.query("DELETE FROM samtykke WHERE spiller_id = ANY($1) AND liste = 'sms'", [[gammel.id, utekst.id, traekt.id, skjult.id]]);
+  assert.ok(udenSpil.id);
   await enkelt(gammel.id, new Date(KL12.getTime() - 8 * 86400e3), 'tekst');
   await enkelt(utekst.id, KL12, null);
   await enkelt(traekt.id, new Date(KL12.getTime() - 3600e3), 'tekst');
@@ -131,7 +141,7 @@ test('åbning: kun seneste bekræftede samtykke inden for 7 dage med gemt tekst'
 
   await koer(h.pool, KL12);
   const rows = await log('aabning');
-  assert.deepEqual(rows.map((r) => String(r.spiller_id)), [String(ny.id)], 'kun den nye spiller med tekst får åbningen');
+  assert.deepEqual(rows.map((r) => String(r.spiller_id)), [String(ny.id)], 'kun den nye spiller med tekst og et godkendt spil får åbningen');
   assert.equal(im.kald.length, 1);
   assert.equal(im.kald[0].messages[0].to, '45' + ny.telefon);
 });
@@ -317,30 +327,106 @@ test('nyt telefonnummer trækker sms-samtykket tilbage', async (t) => {
   assert.equal(igen.body.sms_samtykke_traekt, undefined, 'intet at trække tilbage næste gang');
 });
 
-test('sms-tilmeldinger pr. IP: grænse, andre IP-adresser og admin-session undtaget', async (t) => {
+test('sms-tilmeldinger pr. IP: kun sms-fluebenet afvises, atomisk, admin og andre IP-adresser undtaget', async (t) => {
   process.env.SMS_IP_MAKS_PR_TIME = '3';
   const { h, spiller, admin } = await opsaet(t);
   const ip = { 'x-client-ip': '10.1.1.1' };
+  const smsRaekker = async (id) => (await h.pool.query("SELECT 1 FROM samtykke WHERE spiller_id = $1 AND liste = 'sms'", [id])).rows.length;
   for (let i = 0; i < 3; i++) await spiller(`ip${i}@x.dk`, { headers: ip });
-  const { body } = registrerSpiller(h.baseUrl, { email: 'ip3@x.dk', telefon: nytNummer(), tilmeldinger: ['sms'] });
-  const blok = await api(h.baseUrl, 'POST', '/players', { body, headers: ip });
-  assert.equal(blok.status, 429); assert.equal(blok.body.kode, 'sms_ip_graense');
-  const uden = registrerSpiller(h.baseUrl, { email: 'ip4@x.dk', tilmeldinger: [] });
-  assert.equal((await api(h.baseUrl, 'POST', '/players', { body: uden.body, headers: ip })).status, 201, 'uden sms rammes ikke');
-  await spiller('ip5@x.dk', { headers: { 'x-client-ip': '10.1.1.2' } });
+  // Fjerde registrering med sms: spilleren oprettes, men uden sms, med en tydelig besked
+  const blok = await spiller('ip3@x.dk', { headers: ip });
+  assert.equal(blok.body.sms_afvist.kode, 'sms_ip_graense');
+  assert.match(blok.body.sms_afvist.fejl, /sms/);
+  assert.equal(await smsRaekker(blok.id), 0, 'intet sms-samtykke gemt');
+  assert.equal((await h.pool.query('SELECT notify FROM spiller WHERE id = $1', [blok.id])).rows[0].notify, false);
+  const uden = await spiller('ip4@x.dk', { sms: false, headers: ip });
+  assert.equal(uden.body.sms_afvist, undefined);
+  const andenIp = await spiller('ip5@x.dk', { headers: { 'x-client-ip': '10.1.1.2' } });
+  assert.equal(andenIp.body.sms_afvist, undefined);
   const ac = await admin();
   const adm = registrerSpiller(h.baseUrl, { email: 'ip6@x.dk', telefon: nytNummer(), tilmeldinger: ['sms'] });
   const rA = await api(h.baseUrl, 'POST', '/players', { body: adm.body, headers: ip, adminCookie: ac });
-  assert.equal(rA.status, 201, 'admin-session er undtaget');
-  // Flueben tæller også
-  const p = await spiller('ip7@x.dk', { sms: false, headers: { 'x-client-ip': '10.1.1.3' } });
+  assert.equal(rA.status, 201); assert.equal(rA.body.sms_afvist, undefined, 'admin-session er undtaget');
+  // Flueben: samme grænse, men kun sms afvises
+  const ip3 = { 'x-client-ip': '10.1.1.3' };
+  const spillere = [];
+  for (let i = 0; i < 4; i++) spillere.push(await spiller(`ipq${i}@x.dk`, { sms: false, headers: ip3 }));
   for (let i = 0; i < 3; i++) {
-    const q = await spiller(`ipq${i}@x.dk`, { sms: false, headers: { 'x-client-ip': '10.1.1.3' } });
-    const r = await api(h.baseUrl, 'PUT', '/me/ticks', { token: q.token, body: { keys: ['sms'] }, headers: { 'x-client-ip': '10.1.1.3' } });
-    assert.equal(r.status, 200);
+    const r = await api(h.baseUrl, 'PUT', '/me/ticks', { token: spillere[i].token, body: { keys: ['sms'] }, headers: ip3 });
+    assert.equal(r.status, 200); assert.equal(r.body.sms_afvist, undefined);
   }
-  const sidste = await api(h.baseUrl, 'PUT', '/me/ticks', { token: p.token, body: { keys: ['sms'] }, headers: { 'x-client-ip': '10.1.1.3' } });
-  assert.equal(sidste.status, 429);
+  const sidste = await api(h.baseUrl, 'PUT', '/me/ticks', { token: spillere[3].token, body: { keys: ['sms'] }, headers: ip3 });
+  assert.equal(sidste.status, 200);
+  assert.equal(sidste.body.sms_afvist.kode, 'sms_ip_graense');
+  assert.ok(!sidste.body.mine_noegler.includes('sms'));
+  const subs = await api(h.baseUrl, 'PUT', '/me/subs', { token: spillere[3].token, body: { keys: ['sp', 'sms'] }, headers: ip3 });
+  assert.equal(subs.status, 200); assert.equal(subs.body.sms_afvist.kode, 'sms_ip_graense');
+  assert.deepEqual(subs.body.mine_noegler, ['sp'], 'resten af tilmeldingen går igennem');
+});
+
+test('sms-grænsen pr. IP er atomisk: samtidige registreringer slipper ikke forbi', async (t) => {
+  process.env.SMS_IP_MAKS_PR_TIME = '5';
+  const { h } = await opsaet(t);
+  const ip = { 'x-client-ip': '10.2.2.2' };
+  const rs = await Promise.all(Array.from({ length: 20 }, (_, i) => {
+    const { body } = registrerSpiller(h.baseUrl, { email: `at${i}@x.dk`, telefon: nytNummer(), tilmeldinger: ['sms'] });
+    return api(h.baseUrl, 'POST', '/players', { body, headers: ip });
+  }));
+  assert.ok(rs.every((r) => r.status === 201), JSON.stringify(rs.map((r) => r.status)));
+  assert.equal(rs.filter((r) => !r.body.sms_afvist).length, 5, 'præcis fem får sms');
+  const n = (await h.pool.query("SELECT count(*)::int n FROM samtykke WHERE liste = 'sms'")).rows[0].n;
+  assert.equal(n, 5);
+});
+
+test('standardgrænsen for sms pr. IP er 120 i timen', async (t) => {
+  const { h } = await opsaet(t);
+  await h.pool.query("INSERT INTO sms_ip_taeller (ip, vindue, antal) VALUES ('10.3.3.3', date_trunc('hour', now()), 119)");
+  const ip = { 'x-client-ip': '10.3.3.3' };
+  const reg = (email) => api(h.baseUrl, 'POST', '/players', { body: registrerSpiller(h.baseUrl, { email, telefon: nytNummer(), tilmeldinger: ['sms'] }).body, headers: ip });
+  assert.equal((await reg('d1@x.dk')).body.sms_afvist, undefined);
+  assert.equal((await reg('d2@x.dk')).body.sms_afvist.kode, 'sms_ip_graense');
+});
+
+test('ingen hængning: samtidige kald mod en lille pool færdiggøres (transaktioner bruger deres egen client)', { timeout: 60000 }, async (t) => {
+  const { h, spiller } = await opsaet(t, { poolMax: 5 });
+  const ip = (i) => ({ 'x-client-ip': '10.4.4.' + (i % 7) });
+  const rs = await Promise.all(Array.from({ length: 25 }, (_, i) => {
+    const { body } = registrerSpiller(h.baseUrl, { email: `pool${i}@x.dk`, telefon: nytNummer(), tilmeldinger: ['sms'] });
+    return api(h.baseUrl, 'POST', '/players', { body, headers: ip(i) });
+  }));
+  assert.deepEqual(rs.map((r) => r.status), Array(25).fill(201), JSON.stringify(rs.filter((r) => r.status !== 201).map((r) => r.body)));
+  // Flueben, varig tilmelding og nummerskifte samtidigt
+  const sp = [];
+  for (let i = 0; i < 10; i++) sp.push(await spiller(`pq${i}@x.dk`, { sms: false }));
+  const kald = sp.flatMap((s) => [
+    api(h.baseUrl, 'PUT', '/me/ticks', { token: s.token, body: { keys: ['sms'] } }),
+    api(h.baseUrl, 'PUT', '/me/subs', { token: s.token, body: { keys: ['sp'] } }),
+    api(h.baseUrl, 'PATCH', '/me', { token: s.token, body: { telefon: nytNummer() } }),
+    api(h.baseUrl, 'GET', '/me', { token: s.token }),
+  ]);
+  const ud = await Promise.all(kald);
+  assert.ok(ud.every((r) => r.status === 200), JSON.stringify(ud.filter((r) => r.status !== 200).map((r) => [r.status, r.body])));
+});
+
+test('auto-stop: fem afviste kald i træk (401) slår smsAfsendelse fra; et vellykket kald nulstiller tælleren', async (t) => {
+  const { im, h, spiller } = await opsaet(t);
+  for (let i = 0; i < 2; i++) await spiller(`as${i}@x.dk`);
+  const kaldet = async (n) => { for (let i = 0; i < n; i++) await koer(h.pool, KL12); };
+  const cfg = async () => (await h.pool.query('SELECT offentlig FROM config WHERE id = 1')).rows[0].offentlig;
+  im.mode = 401;
+  await kaldet(4);
+  assert.equal(im.kald.length, 4); assert.notEqual((await cfg()).smsAfsendelse, false);
+  im.mode = 200; await koer(h.pool, KL12); // sender begge, nulstiller tælleren
+  await h.pool.query('DELETE FROM sms_log');
+  im.mode = 401; im.kald.length = 0;
+  await kaldet(4);
+  assert.notEqual((await cfg()).smsAfsendelse, false, 'tælleren blev nulstillet af det vellykkede kald');
+  await kaldet(1);
+  assert.equal((await cfg()).smsAfsendelse, false, 'stoppet efter 5 i træk');
+  const antal = im.kald.length;
+  await kaldet(3);
+  assert.equal(im.kald.length, antal, 'ingen flere kald, efter at afsendelsen er slået fra');
+  assert.equal((await h.pool.query("SELECT count(*)::int n FROM sms_log WHERE type = 'aabning'")).rows[0].n, 0, 'rækkerne er bevaret til genoptagelse');
 });
 
 test('sletning af spiller rydder telefon og navn i sms_log og time_vinder', async (t) => {

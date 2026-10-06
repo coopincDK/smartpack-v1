@@ -139,11 +139,12 @@ async function setupLocalPg(adminUrl) {
   };
 }
 
-async function setupTestDb() {
+// opts.poolMax: lille pool til at afsløre kode, der holder en forbindelse og beder om en til.
+async function setupTestDb(opts = {}) {
   if (process.env.TEST_PG_ADMIN_URL) return setupLocalPg(process.env.TEST_PG_ADMIN_URL);
   if (dockerAvailable()) {
     const { connectionString, stop } = await startDockerPg();
-    const pool = new Pool({ connectionString });
+    const pool = new Pool(opts.poolMax ? { connectionString, max: opts.poolMax, connectionTimeoutMillis: 4000 } : { connectionString });
     await migrate(pool);
     return {
       pool,

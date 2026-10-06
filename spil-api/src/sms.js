@@ -45,6 +45,17 @@ async function smsSlaaetFra(pool, { kunNodstop = false } = {}) {
   return !kunNodstop && cfg.smsOn === false;
 }
 
+// Auto-stop: efter AUTO_STOP_EFTER afviste kald i træk (401/403/404) på hele kaldet slås
+// cfg.smsAfsendelse fra i DB, så en forkert nøgle ikke giver et kald hvert minut hele dagen.
+// Tælleren ligger i hukommelsen og nulstilles af et vellykket kald eller en genstart.
+const AUTO_STOP_EFTER = 5;
+let afvisteITraek = 0;
+async function autoStop(pool) {
+  console.error('[sms] ALARM: ' + AUTO_STOP_EFTER + ' afviste kald i træk fra inMobile, sms-afsendelse slået fra (smsAfsendelse=false). Tjek INMOBILE_API_KEY.');
+  await pool.query('UPDATE config SET offentlig = offentlig || $1::jsonb WHERE id = 1', ['{"smsAfsendelse": false}']);
+  try { require('./publicState').invalidateStateCache(); } catch (e) { /* ikke kritisk */ }
+}
+
 const DAG_CPH = "(now() AT TIME ZONE 'Europe/Copenhagen')::date";
 
 // Reserverer én plads under døgnloftet (og for aabning under underloftet). Én enkelt
@@ -143,11 +154,16 @@ async function send(pool, { type, noegle, spillerId = null, til, tekst, logTekst
         if (test || modtagerfejl) await saet(test ? 'fejl' : 'afvist', `HTTP ${r.status} ${b}`);
         else await pool.query('DELETE FROM sms_log WHERE id = $1', [id]);
         if (!modtagerfejl) await frigivPlads(pool, type);
+        if (!test && [401, 403, 404].includes(r.status) && ++afvisteITraek >= AUTO_STOP_EFTER) {
+          afvisteITraek = 0;
+          await autoStop(pool);
+        }
         return { ok: false, grund: 'konfig_afvist', status: r.status, stop: true };
       }
       await saet('fejl', `HTTP ${r.status} ${b}`);
       return { ok: false, grund: 'fejl', status: r.status };
     }
+    afvisteITraek = 0;
     const afvist = afvistModtager(b);
     if (afvist) { await saet('afvist', afvist); return { ok: false, grund: 'afvist' }; }
     await saet('sendt');
@@ -169,4 +185,6 @@ async function smsModtager(pool, spillerId) {
   return rows[0] || null;
 }
 
-module.exports = { send, smsModtager, msisdn, cphTime, smsSlaaetFra, AFSENDER, MAX_PR_DAG };
+function nulstilAutoStop() { afvisteITraek = 0; }
+
+module.exports = { nulstilAutoStop, send, smsModtager, msisdn, cphTime, smsSlaaetFra, AFSENDER, MAX_PR_DAG };

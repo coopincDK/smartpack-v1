@@ -17,7 +17,17 @@ const { Pool, types } = require('pg');
 types.setTypeParser(1082, (val) => val);
 
 function createPool(connectionString) {
-  return new Pool({ connectionString: connectionString || process.env.DATABASE_URL });
+  // Max 30 forbindelser (DB_POOL_MAX) og en timeout på at få en forbindelse, så en
+  // overbelastning giver fejl i stedet for en API, der hænger for altid. Kode, der
+  // holder en transaktion åben, skal bruge SIN client til alle queries (ellers beder
+  // hver anmodning om to forbindelser, og poolen kan køre fast).
+  const max = Number(process.env.DB_POOL_MAX);
+  return new Pool({
+    connectionString: connectionString || process.env.DATABASE_URL,
+    max: Number.isFinite(max) && max > 0 ? Math.floor(max) : 30,
+    connectionTimeoutMillis: 5000,
+    idleTimeoutMillis: 30000,
+  });
 }
 
 // Simpelt migrationssystem: kører nummererede .sql-filer i rækkefølge,

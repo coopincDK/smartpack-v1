@@ -140,7 +140,7 @@ function meRouter(pool, ws, opts) {
   router.get('/me', auth, async (req, res, next) => {
     const client = await pool.connect();
     try {
-      const cfg = await getCfg(pool);
+      const cfg = await getCfg(client);
       const now = new Date();
       const row = req.player;
       const bag = await currentBag(client, row, cfg, now);
@@ -158,7 +158,7 @@ function meRouter(pool, ws, opts) {
       // dette er UAFHÆNGIGT af hvem spilleren selv er (bearer-tokenet),
       // udelukkende om DENNE forbindelse har en gyldig admin/stand-
       // sessionscookie, nøjagtig samme regel som GET /state.
-      const rolle = await resolveSessionRole(pool, req);
+      const rolle = await resolveSessionRole(client, req);
       const privilegeret = rolle === 'admin' || rolle === 'stand';
       const navnIds = new Set();
       for (const n of notifs.rows) {
@@ -290,7 +290,7 @@ function meRouter(pool, ws, opts) {
           if (aktiv.rows.length) {
             const now = new Date();
             const p = playerToP(row);
-            const result = setSubsPure(p, subKeys(p).filter((k) => k !== 'sms'), await getCfg(pool), now);
+            const result = setSubsPure(p, subKeys(p).filter((k) => k !== 'sms'), await getCfg(client), now);
             await client.query(
               'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5 WHERE id = $6',
               [result.p.marketing, JSON.stringify(result.p.mailTo), result.p.notify, result.p.tick.day, JSON.stringify(result.p.tick.keys), row.id]
@@ -463,7 +463,7 @@ function meRouter(pool, ws, opts) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      const cfg = await getCfg(pool);
+      const cfg = await getCfg(client);
       const now = new Date();
       const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
       const row = rowRes.rows[0];
@@ -485,17 +485,12 @@ function meRouter(pool, ws, opts) {
       const bag = await currentBag(client, row, cfg, now);
       await persistBag(client, row.id, bag);
 
-      const result = setSubsPure(playerToP(row), keys, cfg, now);
-      let smsIpUndtaget = false;
-      if (result.added.includes('sms')) {
-        const t = await smsIpLimiter.check(pool, req);
-        if (t.retry !== null) {
-          await client.query('ROLLBACK');
-          res.set('Retry-After', String(t.retry));
-          return res.status(429).json(SMS_IP_BESKED);
-        }
-        smsIpUndtaget = t.undtaget;
-        smsIpLimiter.consume(req, smsIpUndtaget);
+      let result = setSubsPure(playerToP(row), keys, cfg, now);
+      let smsAfvist = false;
+      if (result.added.includes('sms') && !(await smsIpLimiter.reserver(client, req))) {
+        // Grænsen pr. IP er nået: kun sms-fluebenet afvises
+        result = setSubsPure(playerToP(row), keys.filter((k) => k !== 'sms'), cfg, now);
+        smsAfvist = true;
       }
       await client.query(
         'UPDATE spiller SET marketing = $1, mail_to = $2, notify = $3, tick_dag = $4, tick_keys = $5 WHERE id = $6',
@@ -522,6 +517,7 @@ function meRouter(pool, ws, opts) {
         ok: true,
         liv: livView(bag, result.p, cfg, now),
         mine_noegler: subKeys(result.p),
+        sms_afvist: smsAfvist ? SMS_IP_BESKED : undefined,
       });
     } catch (e) {
       await client.query('ROLLBACK');
@@ -540,7 +536,7 @@ function meRouter(pool, ws, opts) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      const cfg = await getCfg(pool);
+      const cfg = await getCfg(client);
       const now = new Date();
       const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
       const row = rowRes.rows[0];
@@ -579,7 +575,7 @@ function meRouter(pool, ws, opts) {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
-      const cfg = await getCfg(pool);
+      const cfg = await getCfg(client);
       const now = new Date();
       const rowRes = await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id]);
       const row = rowRes.rows[0];
@@ -594,15 +590,12 @@ function meRouter(pool, ws, opts) {
       }
 
       const bagBefore = await currentBag(client, row, cfg, now);
-      const result = setTicksPure(playerToP(row), keys, cfg, bagBefore, now);
-      if (result.added.includes('sms')) {
-        const t = await smsIpLimiter.check(pool, req);
-        if (t.retry !== null) {
-          await client.query('ROLLBACK');
-          res.set('Retry-After', String(t.retry));
-          return res.status(429).json(SMS_IP_BESKED);
-        }
-        smsIpLimiter.consume(req, t.undtaget);
+      let result = setTicksPure(playerToP(row), keys, cfg, bagBefore, now);
+      let smsAfvist = false;
+      if (result.added.includes('sms') && !(await smsIpLimiter.reserver(client, req))) {
+        // Grænsen pr. IP er nået: kun sms-fluebenet afvises
+        result = setTicksPure(playerToP(row), keys.filter((k) => k !== 'sms'), cfg, bagBefore, now);
+        smsAfvist = true;
       }
 
       await client.query(
@@ -637,6 +630,7 @@ function meRouter(pool, ws, opts) {
         liv: livView(result.bag, result.p, cfg, now),
         mine_noegler: subKeys(result.p),
         mine_flueben: result.p.tick.keys,
+        sms_afvist: smsAfvist ? SMS_IP_BESKED : undefined,
       });
     } catch (e) {
       await client.query('ROLLBACK');
@@ -675,7 +669,7 @@ function meRouter(pool, ws, opts) {
       // S1: samme stand-/admin-session-undtagelse for IP-ALENE-loftet som
       // login i src/routes/players.js — se begrundelsen ved
       // createIpLoginLimiter(). Det snævre pr.-(IP, email)-lag er upåvirket.
-      const rolle = await resolveSessionRole(pool, req);
+      const rolle = await resolveSessionRole(client, req);
       const standPrivilegeret = rolle === 'stand' || rolle === 'admin';
 
       // M3: IP-grænsen tjekkes FØRST, nøjagtig samme rækkefølge/begrundelse

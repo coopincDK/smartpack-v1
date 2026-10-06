@@ -147,24 +147,30 @@ function createIpLoginLimiter() {
 // fordi standens tablet deler IP med mange spillere. Tæller både nye registreringer
 // med sms og nye sms-flueben (PUT /me/subs og /me/ticks).
 function createSmsIpLimiter() {
-  const n = Number(process.env.SMS_IP_MAKS_PR_TIME);
-  const limiter = createRateLimiter({
-    windowMs: 3600 * 1000,
-    max: Number.isFinite(n) && n >= 0 && process.env.SMS_IP_MAKS_PR_TIME !== '' ? Math.floor(n) : 30,
-    keyFn: (req) => clientIp(req),
-  });
   return {
-    // { retry: sekunder hvis blokeret ellers null, undtaget: stand-/admin-session }
-    async check(pool, req) {
-      const rolle = await resolveSessionRole(pool, req);
-      const undtaget = rolle === 'stand' || rolle === 'admin';
-      return { retry: undtaget ? null : limiter.check(req), undtaget };
+    // Reserverer ét sms-tilmeldingsslot for denne IP i den aktuelle time. Atomisk i
+    // databasen. Returnerer false, hvis grænsen er nået (stand-/admin-session: altid true).
+    // db skal være den client, som kalderens transaktion bruger.
+    async reserver(db, req) {
+      const rolle = await resolveSessionRole(db, req);
+      if (rolle === 'stand' || rolle === 'admin') return true;
+      const raa = process.env.SMS_IP_MAKS_PR_TIME;
+      const n = Number(raa);
+      const maks = raa !== undefined && raa !== '' && Number.isFinite(n) && n >= 0 ? Math.floor(n) : 120;
+      const { rows } = await db.query(
+        `INSERT INTO sms_ip_taeller AS t (ip, vindue, antal) VALUES ($1, date_trunc('hour', now()), 1)
+         ON CONFLICT (ip, vindue) DO UPDATE SET antal = t.antal + 1 WHERE t.antal < $2::int
+         RETURNING antal`,
+        [String(clientIp(req) || 'ukendt'), maks]
+      );
+      if (maks < 1) return false;
+      return rows.length > 0;
     },
-    consume(req, undtaget) { if (!undtaget) limiter.consume(req); },
   };
 }
+// Rammes grænsen, afvises kun sms-fluebenet; resten af kaldet (registrering/flueben) går igennem.
 const SMS_IP_BESKED = {
-  fejl: 'For mange sms-tilmeldinger fra denne forbindelse. Prøv igen senere, eller kom forbi standen.',
+  fejl: 'Der er for mange sms-tilmeldinger fra denne forbindelse lige nu, så sms er ikke slået til. Prøv igen senere, eller kom forbi standen.',
   kode: 'sms_ip_graense',
 };
 
@@ -254,7 +260,7 @@ function playersRouter(pool, ws, opts) {
     const firma = String(body.firma || '').trim();
     const vennekode = String(body.vennekode || '').trim().toUpperCase().slice(0, MAKS_KODE);
     const udfordringskode = String(body.udfordringskode || '').trim().toUpperCase().slice(0, MAKS_KODE);
-    const tilmeldinger = Array.isArray(body.tilmeldinger) ? body.tilmeldinger.map(String) : [];
+    let tilmeldinger = Array.isArray(body.tilmeldinger) ? body.tilmeldinger.map(String) : [];
 
     if (!EMAIL_RE.test(email)) {
       return res.status(400).json({ fejl: 'Ugyldig emailadresse.', kode: 'ugyldig_email' });
@@ -282,7 +288,7 @@ function playersRouter(pool, ws, opts) {
         // samme IP. Det snævre pr.-(IP, email)-lag er UPÅVIRKET (se
         // createIpLoginLimiter() ovenfor) — det beskytter stadig DENNE ene
         // konto, uanset standPrivilegeret.
-        const rolle = await resolveSessionRole(pool, req);
+        const rolle = await resolveSessionRole(client, req);
         const standPrivilegeret = rolle === 'stand' || rolle === 'admin';
 
         // M3: IP-grænsen tjekkes FØRST (før vi overhovedet ser på DENNE
@@ -340,7 +346,7 @@ function playersRouter(pool, ws, opts) {
 
         let chFromUpdate = p.ekstra_02;
         if (udfordringskode) {
-          const cfg = await getCfg(pool);
+          const cfg = await getCfg(client);
           const chal = await client.query(
             'SELECT id, navn FROM spiller WHERE vennekode = $1 AND id != $2',
             [udfordringskode, p.id]
@@ -397,15 +403,11 @@ function playersRouter(pool, ws, opts) {
         return res.status(400).json({ fejl: 'Vælg en pinkode på 4 cifre.', kode: 'ugyldig_pin' });
       }
 
-      let smsIpUndtaget = false;
-      if (tilmeldinger.includes('sms')) {
-        const t = await smsIpLimiter.check(pool, req);
-        if (t.retry !== null) {
-          await client.query('ROLLBACK');
-          res.set('Retry-After', String(t.retry));
-          return res.status(429).json(SMS_IP_BESKED);
-        }
-        smsIpUndtaget = t.undtaget;
+      // Grænse for sms-tilmeldinger pr. IP: ved overskridelse registreres spilleren uden sms.
+      let smsAfvist = false;
+      if (tilmeldinger.includes('sms') && !(await smsIpLimiter.reserver(client, req))) {
+        tilmeldinger = tilmeldinger.filter((k) => k !== 'sms');
+        smsAfvist = true;
       }
 
       // Telefon-opfølgning (brugerens beslutning): valgfrit ved
@@ -445,7 +447,7 @@ function playersRouter(pool, ws, opts) {
           .json({ fejl: 'Du skal angive et telefonnummer for at tilmelde dig sms.', kode: 'telefon_kraeves' });
       }
 
-      const cfg = await getCfg(pool);
+      const cfg = await getCfg(client);
 
       let refSpillerId = null;
       if (vennekode) {
@@ -509,7 +511,6 @@ function playersRouter(pool, ws, opts) {
         const liste = key === 'sp' ? 'smartpack' : key === 'sms' ? 'sms' : 'partner:' + key.slice(2);
         const tekst = samtykkeTekstFor(cfg, key);
         if (liste === 'sms' && !tekst) throw new Error('sms-samtykke uden tekst');
-        if (liste === 'sms') smsIpLimiter.consume(req, smsIpUndtaget);
         await client.query(
           `INSERT INTO samtykke (spiller_id, liste, tidspunkt, tekst, tekst_version, kilde, ip, user_agent, type)
            VALUES ($1,$2,$3,$4,$5,'registrering',$6,$7,'bekraeftet')`,
@@ -529,6 +530,7 @@ function playersRouter(pool, ws, opts) {
         token,
         type: 'ny',
         spiller: { pid: publicId, navn, firma, vennekode: nyVennekode },
+        sms_afvist: smsAfvist ? SMS_IP_BESKED : undefined,
       });
     } catch (e) {
       await client.query('ROLLBACK');

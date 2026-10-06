@@ -10,7 +10,7 @@ const { setupTestDb } = require('./testDb');
 // opts.adminRouterOpts videresendes til adminRouter() (fx { runBackup } for
 // at stubbe POST /admin/nulstil's pg_dump-kald, se src/backup.js).
 async function startHarness(opts = {}) {
-  const { pool, teardown, backend } = await setupTestDb();
+  const { pool, teardown, backend } = await setupTestDb({ poolMax: opts.poolMax });
   const server = http.createServer();
   const ws = attachWs(server, pool, opts.wsOpts);
   const app = createApp(pool, ws, { adminRouterOpts: opts.adminRouterOpts });

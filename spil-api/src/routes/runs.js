@@ -54,7 +54,7 @@ function runsRouter(pool, ws) {
     try {
       await client.query('BEGIN');
       const row = (await client.query('SELECT * FROM spiller WHERE id = $1 FOR UPDATE', [req.player.id])).rows[0];
-      const cfg = await getCfg(pool);
+      const cfg = await getCfg(client);
       const now = new Date();
       // Opgave B: {ny:true} opgiver et evt. aktivt forsøg og starter et HELT
       // NYT (nyt liv, refunderes ikke) — se API.md.
@@ -199,7 +199,7 @@ function runsRouter(pool, ws) {
           .json({ fejl: 'Forsøget er udløbet (dagsskifte siden det blev startet).', kode: 'forsoeg_udloebet' });
       }
 
-      const cfg = await getCfg(pool);
+      const cfg = await getCfg(client);
       const body = req.body || {};
       const roundsRaw = Array.isArray(body.rounds) ? body.rounds.map((n) => Math.round(Number(n))) : null;
       const s = sanitizeStats(body.s);

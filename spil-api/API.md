@@ -1677,7 +1677,8 @@ sendes to gange). Uden `INMOBILE_API_KEY` logges `ingen_noegle`, og intet sendes
 | `INMOBILE_API_KEY` | (ingen) | API-nøglen. Sæt den aldrig uden for produktionen. |
 | `SMS_MAKS_PR_DOEGN` | 1000 | Samlet nødloft for ALLE sms pr. døgn (Europe/Copenhagen), inkl. vinder-, test- og partnerlogin-sms. Over loftet logges `over_doegnloft`, og intet sendes. |
 | `SMS_AABNING_MAKS` | 500 | Underloft for åbnings-sms'en (`over_aabningsloft`), inden for døgnloftet. |
-| `SMS_IP_MAKS_PR_TIME` | 30 | Højst så mange nye sms-tilmeldinger (registrering med `sms` og nye sms-flueben) pr. IP pr. time. `429 sms_ip_graense`. Stand- og admin-sessioner er undtaget. |
+| `SMS_IP_MAKS_PR_TIME` | 120 | Højst så mange nye sms-tilmeldinger (registrering med `sms` og nye sms-flueben) pr. IP pr. time, talt atomisk i `sms_ip_taeller` (migration 043). Rammes grænsen, afvises KUN sms-fluebenet: spilleren registreres/tilmeldes alligevel uden sms, og svaret får `sms_afvist: { kode: "sms_ip_graense", fejl }`. Stand- og admin-sessioner er undtaget. |
+| `DB_POOL_MAX` | 30 | Størrelsen på databasepoolen (timeout på at få en forbindelse: 5 s). Kode med en åben transaktion bruger altid sin egen `client` til alle queries. |
 
 Døgnloftet håndhæves atomisk i databasen: `sms_taeller` har én række pr. dag, som `send()`
 opdaterer med én `INSERT ... ON CONFLICT DO UPDATE ... WHERE antal < loft`, så to parallelle
@@ -1706,7 +1707,8 @@ inden for den første time). Sæt det fx med `PUT /admin/config { "offentlig": {
   på hver sms-samtykke-række (`samtykke.tekst`, `tekst_version` 3), både ved registrering og ved
   dagens flueben/`PUT /me/subs`. En tekst sendt fra klienten ignoreres.
 - **Åbning** (første time efter `spil_start`): kun spillere, hvis seneste sms-samtykke er
-  bekræftet inden for de sidste 7 dage og har en gemt samtykketekst.
+  bekræftet inden for de sidste 7 dage og har en gemt samtykketekst, og som har mindst ét
+  godkendt spil.
 - **Timens boss, vinder og efterår:** som ovenfor, uden 7-dages-kravet.
 - Alle beskeder slutter med "Afmeld sms: smartpack.dk/spil, Mine tilmeldinger." Afmeldingsvejen er
   spillets "Mine tilmeldinger" (kræver login); der findes ikke et selvstændigt afmeldingslink.
@@ -1727,6 +1729,9 @@ inden for den første time). Sæt det fx med `PUT /admin/config { "offentlig": {
   men kørslen stoppes alligevel, så en forkert opsætning højst koster én modtager pr. minut.
 - **2xx med `results[0].error`**: modtageren er `afvist` (endeligt), kørslen fortsætter.
 - 5xx og timeout: `fejl` (endeligt, for ikke at risikere en dobbelt sms).
+- **Auto-stop:** efter 5 afviste kald i træk (401/403/404, tælleren er i hukommelsen og nulstilles af et
+  vellykket kald) sættes `smsAfsendelse` til `false` i DB, og der logges en `[sms] ALARM`. Sæt den til
+  `true` igen, når nøglen er rettet.
 
 ### Persondata
 

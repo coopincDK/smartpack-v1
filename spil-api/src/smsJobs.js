@@ -10,7 +10,7 @@
 //     spillets slut) findes timens bedste spiller blandt dem, der ikke har vundet en
 //     time tidligere samme dag. Gemmes i time_vinder; sms, hvis spilleren har sms-samtykke.
 //  2. Åbning: når turneringen starter, én sms til dem, der har bekræftet sms-samtykke inden
-//     for de sidste 7 dage og har en gemt samtykketekst (inden for første time).
+//     for de sidste 7 dage, har en gemt samtykketekst og mindst ét godkendt spil (inden for første time).
 //  3. Vinderen af lodtrækningen: sms til vinderfirmaets bedste spiller med sms-samtykke.
 //  4. Efterårsferieudfordringen: sms til hver trukken vinder med sms-samtykke.
 
@@ -89,7 +89,7 @@ async function aabning(pool, k, nu) {
   if (nu < start || nu > new Date(start.getTime() + 60 * 60e3)) return false;
   const dag = dagCph(start);
   // Markedsføring: kun dem, hvis SENESTE sms-samtykke er bekræftet inden for de sidste
-  // 7 dage og har en gemt samtykketekst. Et ældre eller tekstløst samtykke er ikke nok.
+  // 7 dage og har en gemt samtykketekst, og som har mindst ét godkendt spil.
   const { rows } = await pool.query(
     `SELECT s.id, s.telefon FROM spiller s
        JOIN LATERAL (SELECT type, tidspunkt, tekst FROM samtykke
@@ -98,6 +98,7 @@ async function aabning(pool, k, nu) {
          ON c.type = 'bekraeftet' AND c.tidspunkt >= $1::timestamptz - interval '7 days'
         AND COALESCE(c.tekst, '') <> ''
       WHERE s.skjult = false AND s.telefon IS NOT NULL AND s.telefon <> ''
+        AND EXISTS (SELECT 1 FROM forsoeg f WHERE f.spiller_id = s.id AND f.status = 'godkendt')
       ORDER BY s.id`,
     [nu]
   );

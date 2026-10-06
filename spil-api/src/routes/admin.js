@@ -662,7 +662,7 @@ function adminRouter(pool, ws, opts) {
 
     const client = await pool.connect();
     try {
-      const cfgRow = await getCfgRow(pool);
+      const cfgRow = await getCfgRow(client);
       const erAlle = key === 'alle';
       // Afmelding skal altid kunne ske: 'sms' afvises ikke, selv om smsOn er slået fra
       // (så er sms-valget væk fra subOptions, men spillere kan stadig stå på listen).
