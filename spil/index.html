@@ -590,18 +590,6 @@ details.more summary:hover{color:var(--text)}
 .turn-chip.efter b{color:#FDBA74}
 .turn-chip .tc-ikon{font-size:18px;flex:none}
 .turn-chip .tc-pil{margin-left:auto;font-size:18px;opacity:.6;flex:none}
-
-/* "Ja tak til alle" i fluebensboksen */
-.alle-btn{width:100%;margin:10px 0 4px;font-size:16px;padding:12px 14px}
-.alle-btn:disabled{opacity:.75}
-.alle-note{margin:0 0 8px;font-size:12px;color:var(--muted)}
-
-/* Dagens timevindere under timens tavle */
-li.tv-head{display:block;list-style:none;margin:14px 0 4px;padding:0;font:800 13px var(--display,inherit);letter-spacing:.06em;text-transform:uppercase;color:#F5C451;background:none;border:0}
-li.tv-tom{display:block;list-style:none;padding:14px 4px;color:var(--muted,#94A3B8);text-align:center;background:none;border:0}
-li.tv{opacity:.95}
-li.tv.nu{border-color:#F5C451}
-li.tv.senere{opacity:.5}
 </style>
 </head>
 <body>
@@ -623,7 +611,7 @@ li.tv.senere{opacity:.5}
   </div>
   <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b> med mulighed for at få flere, og din bedste score kommer på tavlen.</p>
   <a class="turn-chip" href="vilkaar/"><span class="tc-ikon" aria-hidden="true">🏆</span><span><b>Lukket turnering 8. okt.</b> Kun konferencedeltagere får lodder til præmierne.</span><span class="tc-pil" aria-hidden="true">›</span></a>
-  <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Saml op til 5 lodder om dagen til 18. okt. Vi trækker to vindere af vin. Her gælder de særskilte vilkår for efterårsferieudfordringen.</span><span class="tc-pil" aria-hidden="true">›</span></a>
+  <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Ét lod om dagen til 18. okt., og 2 flasker vin til topscoren.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <div class="live" id="st-live"></div>
   <p class="muted small" id="st-invited" hidden></p>
   <div class="mission" id="st-mission" hidden></div>
@@ -834,8 +822,6 @@ li.tv.senere{opacity:.5}
     <h4 class="sub">QR-kode på standen</h4>
     <p class="muted small">Print den og hæng den på standen. Scanner en spiller den på messedagen, bliver spillerens firma godkendt til konkurrencen, også selvom navnet er stavet anderledes end på deltagerlisten. Virker kun 8. oktober til kl. 16.30.</p>
     <div id="a-qr"></div>
-    <a class="btn ghost" href="/api/spil/admin/lodliste.csv" download>Hent samlet lodliste (CSV)</a>
-    <p class="muted small">Hent den lige før lodtrækningen kl. 16.45. Hver eksport gemmes også som låst kopi på serveren til dokumentation.</p>
     <button class="btn" id="b-draw">Træk vinderen</button>
     <div id="a-draw"></div>
   </div>
@@ -972,14 +958,6 @@ const CUBE = loadImg(IMG.cubeK), CUBEW = loadImg(IMG.cubeW), LOGO = loadImg(IMG.
    cphTodayAt() bruges også til timens boss og kronetidspunktet, så alt regner i samme tidszone. */
 const CPH_TZ = 'Europe/Copenhagen';
 const today = () => new Date().toLocaleDateString('sv-SE', { timeZone: CPH_TZ });
-/* Timens boss kører kun, mens konkurrencen er aktiv: på periodens dage (cfg.periodStart..periodEnd)
-   og kun kl. 8-17 dansk tid. Uden for det skjules fanen, linjen i lobbyen og standvæggens dias. */
-function hourlyDay(){
-  if(cfg.hourly === false || !cfg.periodStart) return false;
-  const c = cphParts(new Date()), d = `${c.year}-${String(c.month).padStart(2, '0')}-${String(c.day).padStart(2, '0')}`;
-  return d >= cfg.periodStart && d <= (cfg.periodEnd || cfg.periodStart) && c.hour >= 8;
-}
-function hourlyOn(){ return hourlyDay() && cphParts(new Date()).hour < 17; }
 function cphParts(d){
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone: CPH_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(d);
   const get = t => +parts.find(p => p.type === t).value;
@@ -1121,7 +1099,6 @@ function apiFetch(path, opts){
 const API = {
   state(){ return apiFetch('/state', { noAuth: true }); },
   me(){ return getToken() ? apiFetch('/me') : Promise.resolve(null); },
-  varAnmod(runId, besked){ return apiFetch('/runs/' + encodeURIComponent(runId) + '/var', { method: 'POST', body: { besked: besked || '' } }); },
   stand(kode){ return apiFetch('/me/stand', { method: 'POST', body: { kode } }); },
   register(payload){
     return apiFetch('/players', { method: 'POST', noAuth: true, body: {
@@ -1494,8 +1471,7 @@ function subOptions(){
   // faste samtykketekst med firma og CVR. Findes listen ikke (ingen partnere slået til), bruges navnene som før.
   const info = new Map((cfg.partnerLister || []).map(l => [l.slug, l]));
   mailPartners().forEach(n => { const l = info.get(n); o.push({ k: 'm:' + n, name: l ? l.navn : n, text: l ? l.tekst : `Nyheder fra ${n} på mail`, privacy: l ? l.privatlivspolitik : '', life: true }); });
-  /* sms'erne sendes af SmartPack som Packrush; serveren ejer samtykketeksten (cfg.smsTekst) og gemmer den ved samtykket */
-  if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: 'Packrush', text: cfg.smsTekst || "Sms'er om Packrush fra SmartPack. Du kan altid afmelde dig under Mine tilmeldinger.", life: true });
+  if(cfg.smsOn !== false && cfg.smsSponsor) o.push({ k: 'sms', name: cfg.smsSponsor, text: `Sms'er om spillet, fx når nogen slår din score. Sendes af ${cfg.smsSponsor}, og du kommer på ${cfg.smsSponsor}s sms-liste`, life: true });
   return o;
 }
 function subKeys(p){ const k = []; if(p.marketing) k.push('sp'); (p.mailTo || []).forEach(n => k.push('m:' + n)); if(p.notify) k.push('sms'); return k; }
@@ -1512,16 +1488,10 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
   t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Fluebenene starter tomme hver dag, så du vælger selv. Når dine liv er brugt, får du et nyt hver time. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
-  // "Ja tak til alle" (Martin, 6/10): sætter de synlige flueben på én gang. Ingen er sat på forhånd,
-  // hver partners tekst står stadig ved sit flueben, og man kan fjerne dem enkeltvis bagefter (vilkår pkt. 12).
-  // Sms (kræver telefonnummer) er ikke med i "alle".
-  const allCount = opts.filter(o => o.k !== 'sms').length;
-  const allLife = opts.filter(o => o.k !== 'sms' && o.life).length;
-  // Ved tilmelding (onChange er null) sender knappen også formularen, så man kommer direkte videre.
-  const allTxt = () => !onChange ? 'Ja tak til alle, og lad os spille 🚀' : (bonus && allLife ? `Ja tak til alle, giv mig ${allLife} ekstra liv` : 'Ja tak til alle');
-  const all = el('button', 'btn green alle-btn', allTxt()); all.type = 'button';
-  const allNote = el('p', 'alle-note', !onChange ? 'Sætter flueben ved alle partnere og fortsætter. Vil du hellere vælge selv, så sæt fluebenene nedenfor og tryk Fortsæt.' : 'Du kan fjerne flueben enkeltvis nedenfor.');
-  head.append(t); box.append(head, all, allNote);
+  // Ingen "Tilmeld alle": hver partner skal vælges for sig (vilkår pkt. 12). Knappen findes stadig i koden,
+  // så resten af logikken er uændret, men den vises ikke.
+  const all = el('button', 'btn green small', 'Tilmeld alle'); all.type = 'button'; all.hidden = true;
+  head.append(t, all); box.append(head);
   const list = el('div', 'subs-list'), inputs = [];
   opts.forEach(o => {
     const l = el('label', 'check'), i = el('input'); i.type = 'checkbox'; i.checked = chosen.has(o.k); i.dataset.k = o.k;
@@ -1558,13 +1528,8 @@ function subsBox(box, initial, onChange, fold, knownPhone){
       onChange && onChange([...chosen]);
     };
   });
-  const sync = () => { const every = inputs.filter(i => i.dataset.k !== 'sms').every(i => i.checked); all.textContent = every && onChange ? `✓ Alle ${allCount} er valgt` : allTxt(); all.disabled = every && !!onChange; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
-  all.onclick = () => {
-    inputs.forEach(i => { if(i.dataset.k === 'sms') return; i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge');
-    if(onChange) return onChange([...chosen]);
-    // Tilmelding: send formularen med det samme (manglende felter/vilkår vises som normalt)
-    const f = box.closest('form'); if(f){ f.requestSubmit ? f.requestSubmit() : f.querySelector('button[type=submit]').click(); }
-  };
+  const sync = () => { const every = inputs.every(i => i.checked); all.textContent = every ? 'Alle er valgt' : 'Tilmeld alle'; all.disabled = every; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
+  all.onclick = () => { inputs.forEach(i => { i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge'); onChange && onChange([...chosen]); };
   if(fold){ const d = el('details', 'pick'), sm = el('summary'); d.append(sm, list); box.append(d); box._sum = sm; } else { box._sum = null; box.append(list); }
   sync();
   return () => [...chosen];
@@ -1586,7 +1551,7 @@ function hourWinners(pool){
   const ps = pool || Object.values(data.players);
   const now = nowHour(), won = new Set(), out = [], hs = new Set();
   ps.forEach(p => done(p).filter(F.today).forEach(a => hs.add(hourOf(a.end || a.at))));
-  [...hs].filter(h => h < now && h >= 8 && h < 17).sort((a, b) => a - b).forEach(h => {
+  [...hs].filter(h => h < now).sort((a, b) => a - b).forEach(h => {
     const r = rank('total', inHour(h), ps).filter(x => !won.has(x.p.pid));
     if(r[0]){ won.add(r[0].p.pid); out.push({ h, p: r[0].p, v: r[0].v }); }
   });
@@ -2460,7 +2425,7 @@ document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', 
 
 /* ---------- tavler ---------- */
 function scopes(){
-  const s = [['today', 'I dag']]; if(hourlyDay()) s.push(['hour', 'Timen']); s.push(['period', cfg.periodName || 'Perioden']);
+  const s = [['today', 'I dag']]; if(cfg.hourly !== false) s.push(['hour', 'Timen']); s.push(['period', cfg.periodName || 'Perioden']);
   // Før en afgrænset periode (messedagen) er periodens tavle tom: vis en opvarmningstavle med alt, der er spillet indtil nu.
   if(cfg.periodEnd && cfg.periodStart > today()) s.push(['warmup', 'Opvarmning']);
   if(cfg.mission && cfg.mission !== 'total') s.push(['mission', 'Mission']);
@@ -2501,17 +2466,9 @@ function renderBoard(list, note, limit){
   if(scope === 'mission') note.textContent = `${MET[k].name}. ${MET[k].how}`;
   if(scope === 'period' && cfg.periodEnd && cfg.periodStart > today()) note.textContent = `Tavlen åbner ${new Date(cfg.periodStart).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' })}. Indtil da kan du varme op under "Opvarmning".`;
   else if(scope === 'period' && cfg.periodStart > '2000-01-01'){ const dd = d => new Date(d).toLocaleDateString('da-DK', { day: 'numeric', month: 'long' }); note.textContent = cfg.periodEnd && cfg.periodEnd === cfg.periodStart ? `Kun forsøg fra ${dd(cfg.periodStart)}.` : cfg.periodEnd ? `Alle forsøg fra ${dd(cfg.periodStart)} til ${dd(cfg.periodEnd)}.` : `Alle forsøg fra ${dd(cfg.periodStart)}.`; }
-  if(scope === 'hour'){
-    const ws = hourWinners(), h = nowHour();
-    note.textContent = hourlyOn() ? `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize + ', som hentes på standen inden for en time' : ''}. Man kan vinde én time om dagen, så flere får en chance.` : 'Timens boss er kåret for i dag. Her er dagens vindere.';
-    if(!hourlyOn()){
-      hourSchedule(list);
-      return;
-    }
-  }
+  if(scope === 'hour'){ const ws = hourWinners(), h = nowHour(); note.textContent = `Timens boss kåres kl. ${hh(h + 1)}, om ${hourLeftMin()} min${cfg.hourPrize ? ', og vinder ' + cfg.hourPrize + ', som hentes på standen inden for en time' : ''}. Man kan vinde én time om dagen, så flere får en chance.${ws.length ? ' Vundet i dag: ' + ws.map(w => `kl. ${hh(w.h + 1)} ${w.p.name}`).join(', ') + '.' : ''}`; }
   const r = (scope === 'hour' ? hourBoard() : rank(k, filt)).slice(0, limit);
-  if(!r.length && scope !== 'hour') return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
-  if(!r.length) list.append(el('li', 'tv-tom', 'Ingen har spillet i denne time endnu. Tag føringen.'));
+  if(!r.length) return empty(scope === 'hour' ? 'Ingen har spillet i denne time endnu. Tag føringen.' : scope === 'today' ? 'Ingen har spillet i dag endnu. Bliv den første på tavlen.' : 'Ingen på tavlen endnu. Bliv den første.');
   r.forEach(({ p, v }, i) => {
     const mine = !!(current && p.pid === current.pid);
     const li = el('li'); if(mine) li.classList.add('me');
@@ -2521,23 +2478,6 @@ function renderBoard(list, note, limit){
     li.append(el('span', 'rank', i + 1), el('span', 'name', p.name), el('span', 'score', MET[k].f(v)), el('span', 'left', sub));
     list.append(li);
   });
-  // Under timens tavle: dagens tidligere timevindere
-  if(scope === 'hour'){
-    hourSchedule(list);
-  }
-}
-function hourSchedule(list){
-  const ws = hourWinners(), h = nowHour(), by = new Map(ws.map(w => [w.h, w]));
-  list.append(el('li', 'tv-head', 'Dagens timer'));
-  for(let t = 8; t <= 16; t++){
-    const w = by.get(t), li = el('li', 'tv');
-    let ikon, navn, score = '', tekst;
-    if(t < h){ ikon = w ? '🍷' : '–'; navn = w ? w.p.name : 'Ingen vinder'; score = w ? fmt(w.v) : ''; tekst = 'Afsluttet'; if(w && current && w.p.pid === current.pid) li.classList.add('me'); }
-    else if(t === h){ ikon = '⏳'; navn = 'I gang nu'; tekst = `Kåres kl. ${hh(t + 1)}, om ${hourLeftMin()} min`; li.classList.add('nu'); }
-    else { ikon = '·'; navn = 'Ikke startet'; tekst = 'Kommende'; li.classList.add('senere'); }
-    li.append(el('span', 'rank', ikon), el('span', 'name', `kl. ${hh(t)}-${hh(t + 1)}: ${navn}`), el('span', 'score', score), el('span', 'left', tekst));
-    list.append(li);
-  }
 }
 function renderBoardScreen(){ renderTabs($('#tabs-all')); renderBoard($('#board-all'), $('#note-all'), 100); }
 
@@ -2695,7 +2635,7 @@ function renderLobby(){
   }
   const nx = nextLifeMs(p), mins = nx != null ? Math.ceil(nx / 60000) : 0;
   if(nx != null && nx <= 0) debouncedRefreshMe(); // M4: nedtællingen er udløbet — hent /me igen for at få den friske livtælling
-  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Når det er brugt, får du et nyt hver time.' : ' Du får et nyt liv inden for en time.');
+  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Nye liv ved midnat.' : ' Kom igen i morgen.');
   const pips = $('#l-pips'); pips.replaceChildren(); const shown = Math.min(12, Math.max(l, 1)); pips.classList.toggle('many', shown > 6);
   for(let i = 0; i < shown; i++){ const d = el('div', 'pip ' + (i < l ? 'free' : 'used')); const im = new Image(); im.src = IMG.cubeW; im.alt = ''; d.append(im); pips.append(d); }
   // gaver fra venner
@@ -2732,8 +2672,8 @@ function renderLobby(){
     cb.replaceChildren(t, el('p', null, 'Del dit link, så er din kode udfyldt, når vennen tilmelder sig. Spiller en ny ven med din kode, får du fuld liv. Tager en ven din udfordring op, får du et ekstra liv, højst ét i timen fra hver ven.'), btn, kop); cb.hidden = false;
   } else cb.hidden = true;
   // timens boss
-  const hb = $('#l-hour'); hb.hidden = !hourlyOn();
-  if(hourlyOn()){
+  const hb = $('#l-hour'); hb.hidden = cfg.hourly === false;
+  if(cfg.hourly !== false){
     const mine = hourWinners().find(w => w.p.pid === p.pid), top = hourBoard()[0], h = nowHour(); hb.replaceChildren();
     if(mine) hb.append('Du vandt ', el('b', null, `timens boss kl. ${hh(mine.h + 1)}`), `${cfg.hourPrize ? '. Hent ' + cfg.hourPrize + ' på SmartPacks stand inden for en time' : ''}. Nu får de andre en chance.`);
     else if(top && top.p.pid === p.pid) hb.append('Du er ', el('b', null, 'timens boss'), ` lige nu. Hold pladsen til kl. ${hh(h + 1)}, om ${hourLeftMin()} min.`);
@@ -2834,8 +2774,6 @@ function unsubscribeOne(key){
 function renderSubsBox(){
   const box = $('#l-subs'); if(!box) return;
   const p = current, opts = subOptions(), on = subKeys(p);
-  /* afmelding skal altid kunne ske, også når sms er slået fra i opsætningen */
-  if(on.includes('sms') && !opts.some(o => o.k === 'sms')) opts.push({ k: 'sms', name: 'Packrush', life: true });
   box.replaceChildren();
   if(!opts.length) return;
   const d = el('details', 'more'), sm = el('summary'); sm.textContent = `Mine tilmeldinger, ${on.length} af ${opts.length}`;
@@ -3171,7 +3109,7 @@ function finish(){
     if(res && res.godkendt === false) afterFinish(p, g, { ok: false, message: res.besked || 'Forsøget kunne ikke godkendes.' });
     else afterFinish(p, g, { ok: true, ...res });
   }).catch(e => {
-    if(isFinalRejection(e)) afterFinish(p, g, { ok: false, message: (e && e.message) || 'Forsøget kunne ikke godkendes.', var: !!(e && e.code === 'var'), runId });
+    if(isFinalRejection(e)) afterFinish(p, g, { ok: false, message: (e && e.message) || 'Forsøget kunne ikke godkendes.' });
     else { queueFinish(p.pid, getToken(), p.name, runId, payload); afterFinish(p, g, { ok: null }); }
   });
 }
@@ -3214,18 +3152,6 @@ function showResult(p, g){
   let pb = false;
   if(res.ok === false){
     near.append(res.message || 'Forsøget kunne ikke godkendes.');
-    if(res.var && res.runId){
-      // VAR: spillet ser automatiseret ud og er sat på pause; spilleren kan bede om et tjek
-      const vb = el('button', 'btn small', '📺 Anmod om VAR-tjek'); vb.type = 'button';
-      vb.onclick = () => {
-        const kommentar = prompt('Fortæl kort, hvordan du spillede (valgfrit). Arrangøren kigger på det og giver besked.') ;
-        if(kommentar === null) return;
-        vb.disabled = true;
-        API.varAnmod(res.runId, kommentar).then(() => { vb.replaceWith(el('p', 'muted small', 'Tak. Dit spil er sendt til VAR-tjek. Godkendes det, kommer det på tavlen.')); })
-          .catch(e => { vb.disabled = false; toast((e && e.message) || 'Kunne ikke sende. Prøv igen.'); });
-      };
-      near.append(el('br'), vb);
-    }
     $('#r-badge').hidden = true;
   } else if(res.ok == null){
     near.append('Gemmes, når der er net. Det kommer på tavlen, så snart det er sendt.');
@@ -3581,8 +3507,7 @@ $('#b-csv').onclick = () => window.open(API.admin.exportUrl('spillere'), '_blank
    til, når kontrakten er endelig. */
 function fillUnlist(){
   const sl = $('#a-unlist'); if(!sl) return; const cur = sl.value;
-  const afmeldOpts = subOptions(); if(!afmeldOpts.some(o => o.k === 'sms')) afmeldOpts.push({ k: 'sms', name: 'Packrush' }); /* sms kan altid afmeldes */
-  sl.replaceChildren(el('option', null, 'Alle lister'), ...afmeldOpts.map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
+  sl.replaceChildren(el('option', null, 'Alle lister'), ...subOptions().map(o => { const e = el('option', null, o.k === 'sms' ? `Sms fra ${o.name}` : `Mail fra ${o.name}`); e.value = o.k; return e; }));
   sl.firstChild.value = 'alle';
   if(cur) sl.value = cur;
 }
@@ -3670,7 +3595,7 @@ function wallPanels(){
   const t = rank('total', F.today).slice(0, 8), rec = rank('total', F.period)[0], n = rank('total', F.today).length;
   P.push({ dur: 16, title: 'Dagens topscore', rows: t.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i dag endnu. Bliv dagens første boss.',
     foot: [rec ? ['Rekord i ' + pnl() + ': ', `${fmt(rec.v)} af ${rec.p.name}`] : null, n ? ['', `${n} ${n === 1 ? 'spiller' : 'spillere'} i dag`] : null] });
-  if(hourlyOn()){
+  if(cfg.hourly !== false){
     const h = nowHour(), r = hourBoard().slice(0, 7);
     P.push({ dur: 10, title: `Timens boss, kåres kl. ${hh(h + 1)}`, note: `Om ${hourLeftMin()} min${cfg.hourPrize ? '. Præmie: ' + cfg.hourPrize : ''}. Man kan vinde én time om dagen`, rows: r.map(({ p, v }) => ({ name: p.name, sub: p.company, score: fmt(v) })), empty: 'Ingen har spillet i denne time endnu. Bliv timens boss.' });
   }
@@ -3737,7 +3662,7 @@ function renderWall(){
       WALL.queue = WALL.queue.filter(q => q.kind === 'lead').concat(WALL.queue.filter(q => q.kind === 'rec').slice(0, 2));
     }
   }
-  const hw = hourlyOn() ? hourWinners() : [];
+  const hw = cfg.hourly !== false ? hourWinners() : [];
   if(WALL.hw != null && hw.length > WALL.hw){ const w = hw[hw.length - 1]; WALL.queue.unshift({ kind: 'hour', name: w.p.name, firm: w.p.company, v: w.v, h: w.h }); }
   WALL.hw = hw.length;
   WALL.leader = lead ? { pid: lead.p.pid, name: lead.p.name, v: lead.v } : null; WALL.recs = recs;
