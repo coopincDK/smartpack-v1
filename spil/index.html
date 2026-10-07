@@ -2611,7 +2611,7 @@ function renderStart(){
   const live = $('#st-live'); live.replaceChildren();
   const players = rank('total', F.today), boss = players[0];
   const c1 = el('p', 'chip'); c1.append(el('span', 'dot'));
-  const t1 = el('span'); if(boss){ t1.append(el('b', null, `${players.length} ${players.length === 1 ? 'spiller' : 'spillere'} i dag. `), `Dagens boss er ${boss.p.name} med ${fmt(boss.v)} point.`); } else t1.append('Ingen har spillet i dag endnu. Bliv dagens første boss.');
+  const t1 = el('span'); if(boss){ t1.append('Dagens boss er ', el('b', null, boss.p.name), ` med ${fmt(boss.v)} point.`); } else t1.append('Ingen har spillet i dag endnu. Bliv dagens første boss.');
   c1.append(t1); live.append(c1);
   if(cfg.prize){ const c3 = el('p', 'chip crown'); c3.append(el('span', 'dot'), el('span', null, `Præmie: ${cfg.prize}`)); live.append(c3); }
   const cl = crownLine(); if(cl){ const c2 = el('p', 'chip crown'); c2.append(el('span', 'dot'), el('span', null, cl[1])); live.append(c2); }
@@ -2796,7 +2796,7 @@ function renderLobby(){
   const bt = bestToday(p), r = rank('total', F.today), pos = r.findIndex(x => x.p.pid === p.pid);
   $('#l-best').textContent = fmt(bt);
   $('#l-rank').textContent = pos >= 0 ? `nr. ${pos + 1}` : '–';
-  $('#l-ranklbl').textContent = pos >= 0 ? `Din plads af ${r.length}` : 'Din plads i dag';
+  $('#l-ranklbl').textContent = 'Din plads i dag';
   const near = $('#l-near'); near.replaceChildren();
   if(pos > 0){ const up = r[pos - 1]; near.append('Du mangler ', el('b', null, `${fmt(up.v - bt + 1)} point`), ` for at slå ${up.p.name} og rykke op som nr. ${pos}.`); }
   else if(pos === 0 && r.length > 1) near.append('Du er ', el('b', null, 'dagens boss'), `. ${r[1].p.name} er ${fmt(bt - r[1].v)} point efter dig.`);
@@ -3286,7 +3286,7 @@ function showResult(p, g){
     $('#r-badge').hidden = !pb;
     if(g.rank === 1 && g.count > 1) near.append('Du er ', el('b', null, 'dagens boss'), afterRank[1] ? `. ${afterRank[1].p.name} er ${fmt(bestToday(p) - afterRank[1].v)} point efter dig.` : '.');
     else if(g.rank === 1) near.append('Du er ', el('b', null, 'dagens første boss'), '. Nu skal du forsvare pladsen.');
-    else if(g.rank){ const up = afterRank[g.rank - 2]; if(up) near.append(`Nr. ${g.rank} af ${g.count}. Kun `, el('b', null, `${fmt(up.v - bestToday(p) + 1)} point`), ` fra at slå ${up.p.name}.`); else near.append(`Nr. ${g.rank} af ${g.count}.`); }
+    else if(g.rank){ const up = afterRank[g.rank - 2]; if(up) near.append(`Nr. ${g.rank} på dagens tavle. Kun `, el('b', null, `${fmt(up.v - bestToday(p) + 1)} point`), ` fra at slå ${up.p.name}.`); else near.append(`Nr. ${g.rank} på dagens tavle.`); }
     fb.replaceChildren(...(g.feats || []).slice(0, 4).map((f, i) => { const q = el('p', null, f.t); q.style.animationDelay = (1.5 + i * .1) + 's'; return q; }));
     if((g.newB || []).length){ const w = el('div', 'badges'); g.newB.forEach((b, i) => { const e = badgeEl(b, true, true); e.style.animationDelay = (1.7 + i * .12) + 's'; w.append(e); }); nb.append(el('p', 'muted small', g.newB.length === 1 ? 'Nyt mærke' : 'Nye mærker'), w); }
   }
@@ -3353,7 +3353,7 @@ async function buildReport(){
   c.fillStyle = C.text; c.fillText(sc, 70, 660);
   const sw = c.measureText(sc).width; c.fillStyle = C.green; c.font = `700 40px ${FONT}`; c.fillText('point', 80 + sw + 10, 660);
   c.fillStyle = C.green; c.fillRect(80, 700, 6, 44);
-  c.fillStyle = C.text; c.font = `600 34px ${FONT}`; c.fillText(`Nr. ${g.rank} af ${g.count} på dagens tavle${cfg.eventName ? ', ' + cfg.eventName : ''}`, 104, 734, 900);
+  c.fillStyle = C.text; c.font = `600 34px ${FONT}`; c.fillText(`Nr. ${g.rank} på dagens tavle${cfg.eventName ? ', ' + cfg.eventName : ''}`, 104, 734, 900);
   const rows = [
     ['Pluk', `${s.orders} ordrer${s.fast ? `, hurtigste på ${sek(s.fast)}` : ''}`, g.scores[0]],
     ['Pak', `Tårn på ${s.tower} kasser${s.streak > 1 ? `, ${s.streak} perfekte i træk` : ''}`, g.scores[1]],
