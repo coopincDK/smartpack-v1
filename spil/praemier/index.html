@@ -33,6 +33,25 @@
 .hero .meta{display:flex;flex-wrap:wrap;gap:8px}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
 .cd{font-variant-numeric:tabular-nums}
+.hero .sub{color:var(--muted);font-size:15px;max-width:640px}
+.hero .sub b{color:var(--text)}
+.hkort{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hk{display:flex;gap:14px;align-items:flex-start;background:rgba(9,14,22,.55);border:1px solid var(--line);border-radius:14px;padding:14px}
+.hk .ik{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(249,115,22,.14);color:var(--accent)}
+.hk .ik svg{width:24px;height:24px}
+.hk .lbl{font:700 11px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.hk .hv{font:800 22px/1.15 var(--display);color:var(--text);letter-spacing:-.01em}
+.hk .tx{font-size:14px;color:var(--text);line-height:1.35}
+.hk .sm{font-size:12px;color:var(--muted)}
+.hk.raekke{align-items:center;padding:10px 14px}
+.hk.gron{border-color:#1f5a40;background:rgba(15,46,34,.6)}
+.hk.gron .ik{background:rgba(62,207,142,.14);color:var(--green)}
+.hk.gron .lbl{color:var(--green)}
+.hero .note{font-size:13px;color:var(--muted);text-align:center}
+.hero .note a{color:var(--muted)}
+.hero .cta{justify-content:center}
+.hero .cta .btn.stor{min-width:min(100%,320px);text-align:center;font-size:17px;padding:15px 22px}
+@media (max-width:640px){.hkort{grid-template-columns:1fr}}
 .vinder{color:var(--text);border:1px solid var(--accent);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:6px;background:linear-gradient(135deg,rgba(249,115,22,.14),transparent)}
 .nav{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:-10px 0;background:linear-gradient(var(--bg) 75%,transparent)}
 .nav a{flex:none;text-decoration:none;color:var(--muted);font-weight:700;font-size:14px;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--panel)}
@@ -98,12 +117,13 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
     <div class="eyebrow">Præmier i Packrush</div>
     <h1>Det kan du vinde</h1>
     <div id="total"></div>
+    <div class="hkort" id="hkort" hidden></div>
     <div id="konk-tekst" class="muted">Henter …</div>
+    <p class="note" id="hero-note">Lodder kan kun optjenes i den lukkede messe-turnering den 8. oktober af konferencedeltagere. Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. <a href="/spil/vilkaar/">Læs vilkårene</a></p>
     <div class="cta">
-      <a class="btn" href="../">Spil Packrush</a>
+      <a class="btn stor" href="../">Spil Packrush →</a>
       <a class="btn ghost" href="#fordele">Se fordelene ved tilmelding</a>
     </div>
-    <p class="small muted" style="margin:-4px 0 0">Lodder kan kun optjenes i den lukkede messe-turnering den 8. oktober af konferencedeltagere.</p>
   </section>
 
   <nav class="nav" id="nav" aria-label="Afsnit">
@@ -183,6 +203,20 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
     dele = dele.filter(Boolean); if (!dele.length) return null;
     return el('details', { class: 'mere' }, [el('summary', { text: titel }), el('div', { class: 'indhold' }, dele)]);
   }
+  var IKON = {
+    trofae: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+    gave: '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C9.5 3 11 5 12 8c1-3 2.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+    kalender: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>',
+    ur: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  };
+  function ikon(navn) {
+    var d = el('div', { class: 'ik', 'aria-hidden': 'true' });
+    d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + IKON[navn] + '</svg>';
+    return d;
+  }
+  function hk(navn, lbl, indhold, klasse) {
+    return el('div', { class: 'hk' + (klasse ? ' ' + klasse : '') }, [ikon(navn), el('div', null, [el('div', { class: 'lbl', text: lbl })].concat(indhold))]);
+  }
   function nedtaelling(t) {
     var ms = new Date(t) - Date.now(); if (ms <= 0) return null;
     var d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60;
@@ -199,15 +233,9 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
         v.tekst ? el('p', { class: 'pre', text: v.tekst }) : null,
       ]));
     }
+    var hkort = $('hkort'), lod = k.aktiv && k.lodtraekning ? new Date(k.lodtraekning) : null;
     if (k.aktiv) {
-      var cd = nedtaelling(k.lodtraekning);
-      kt.append(el('div', { class: 'meta' }, [
-        el('span', { class: 'chip warn', text: k.navn }),
-        el('span', { class: 'chip', text: 'Lodtrækning ' + new Date(k.lodtraekning).toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Europe/Copenhagen' }) }),
-        cd ? el('span', { class: 'chip ok cd', text: 'Om ' + cd }) : null,
-      ]));
       if (k.tekst) kt.append(el('p', { class: 'pre', text: k.tekst }));
-      kt.append(el('p', { class: 'small' }, [document.createTextNode('Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. '), el('a', { href: '/spil/vilkaar/', text: 'Læs vilkårene' })]));
     } else {
       kt.append(el('div', { class: 'msg info', role: 'status' }, [el('strong', { text: 'Lige nu er der ingen aktiv konkurrence.' }),
         k.tekst && k.tekst !== 'Lige nu er der ingen aktiv konkurrence.' ? el('p', { class: 'pre', text: k.tekst, style: 'margin-top:6px' }) : null]));
@@ -218,9 +246,26 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
       var ink = pr.praemier.filter(function (p) { return p.praemie.moms === 'inkl'; });
       var sum = eks.reduce(function (a, p) { return a + (p.praemie.vaerdi || 0); }, 0);
       var opTil = eks.some(function (p) { return p.praemie.vaerdi_type === 'op_til'; });
-      $('total').append(el('div', { class: 'total' }, [el('small', { text: 'Samlet værdi af præmiepuljen' }), document.createTextNode((opTil ? 'Op til ' : '') + SP.kr(sum) + ' ekskl. moms')]));
-      if (ink.length) $('total').append(el('p', { class: 'small muted', style: 'margin-top:6px', text: 'plus ' + ink.map(function (p) { return p.navn + 's gave (' + p.praemie.titel + ') til ' + SP.kr(p.praemie.vaerdi) + ' inkl. moms'; }).join(' og ') + '.' }));
+      var belob = (opTil ? 'Op til ' : '') + SP.kr(sum);
+      $('total').append(el('div', { class: 'total' }, [document.createTextNode(belob), el('br'), document.createTextNode('ekskl. moms')]));
+      // Hovedpræmien er SmartPacks egen gave (slug "smartpack"); findes den ikke, den mest værdifulde.
+      var hoved = pr.praemier.filter(function (p) { return p.slug === 'smartpack'; })[0] || pr.praemier[0];
+      var hovedMoms = hoved.praemie.moms === 'inkl' ? 'inkl. moms' : 'ekskl. moms';
+      $('total').append(el('p', { class: 'sub' }, ink.length
+        ? [document.createTextNode('Samlet værdi af ' + eks.length + ' gaver fra partnerne, ekskl. moms. Hertil kommer '), el('b', { text: ink.map(function (p) { return p.navn + 's gave'; }).join(' og ') }), document.createTextNode(' til ' + SP.kr(ink.reduce(function (a, p) { return a + (p.praemie.vaerdi || 0); }, 0)) + ' inkl. moms.')]
+        : [document.createTextNode('Samlet værdi af ' + pr.praemier.length + ' gaver fra partnerne, ekskl. moms.')]));
+      hkort.append(
+        hk('trofae', 'Hovedpræmie', [el('div', { class: 'tx', text: hoved.praemie.titel }), el('div', { class: 'hv', style: 'font-size:17px;color:var(--accent);margin-top:4px', text: 'Værdi: ' + SP.vaerdiTekst(hoved.praemie).replace(/ (ekskl|inkl)\. moms$/, '') }), el('div', { class: 'sm', text: hovedMoms })]),
+        hk('gave', 'Samlet præmiepulje', [el('div', { class: 'hv', text: SP.kr(sum) }), el('div', { class: 'sm', text: 'ekskl. moms' + (ink.length ? ' · plus ' + SP.kr(ink.reduce(function (a, p) { return a + (p.praemie.vaerdi || 0); }, 0)) + ' inkl. moms' : '') + ' · ' + pr.praemier.length + ' gaver' })])
+      );
     }
+    if (lod) {
+      hkort.append(hk('kalender', 'Lodtrækning', [el('div', { class: 'tx', style: 'font-weight:700', text: lod.toLocaleString('da-DK', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Copenhagen' }) + ' kl. ' + lod.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Copenhagen' }).replace(':', '.') })], 'raekke'));
+      var cdTxt = el('div', { class: 'tx cd', style: 'font-weight:700' }), cdKort = hk('ur', 'Tid tilbage', [cdTxt], 'raekke gron');
+      var tik = function () { var c = nedtaelling(k.lodtraekning); if (!c) { cdKort.remove(); return false; } cdTxt.textContent = 'Om ' + c; return true; };
+      if (tik()) { hkort.append(cdKort); setInterval(tik, 30000); }
+    }
+    hkort.hidden = !hkort.children.length;
 
     var ps = $('praemie-liste');
     $('n-pr').textContent = pr.praemier.length || '';
