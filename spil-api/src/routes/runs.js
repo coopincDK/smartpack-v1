@@ -4,6 +4,7 @@ const { loadOffentligCfg } = require('../cfgLoad');
 
 const express = require('express');
 const { mistaenkt } = require('../rules/varCheck');
+const { iTurnering } = require('../rules/turnering');
 const crypto = require('crypto');
 const { requirePlayer } = require('../middleware/playerAuth');
 const { createRateLimiter } = require('../middleware/rateLimit');
@@ -204,6 +205,26 @@ function runsRouter(pool, ws) {
       const roundsRaw = Array.isArray(body.rounds) ? body.rounds.map((n) => Math.round(Number(n))) : null;
       const s = sanitizeStats(body.s);
       const bf = !!body.bf;
+      // Black Friday-vagt (Martin 7/10): i turneringen én pr. time for alle; ellers én pr. dag,
+      // eller ubegrænset med SmartPacks nyhedsmail. Tidspunktet regnes fra forsøgets start.
+      if (bf) {
+        const start = new Date(forsoeg.start_server);
+        const turn = iTurnering(cfg, start);
+        const { rows: mk } = await client.query('SELECT marketing FROM spiller WHERE id = $1', [req.player.id]);
+        if (turn || !(mk[0] && mk[0].marketing)) {
+          const { rows: bfr } = await client.query(
+            `SELECT count(*)::int n FROM forsoeg
+              WHERE spiller_id = $1 AND bf = true AND status IN ('godkendt', 'var') AND id <> $2
+                AND date_trunc($3, start_server AT TIME ZONE 'Europe/Copenhagen') = date_trunc($3, $4::timestamptz AT TIME ZONE 'Europe/Copenhagen')`,
+            [req.player.id, forsoeg.id, turn ? 'hour' : 'day', start]
+          );
+          if (bfr[0].n > 0) {
+            await client.query(`UPDATE forsoeg SET status = 'afvist', afvist_aarsag = 'bf_brugt', slut_server = $1 WHERE id = $2`, [now, forsoeg.id]);
+            await client.query('COMMIT');
+            return res.status(400).json({ godkendt: false, aarsag: 'bf_brugt', besked: turn ? 'Du har allerede brugt timens Black Friday-vagt.' : 'Du har allerede brugt dagens Black Friday-vagt. Tilmeld dig SmartPacks nyhedsmail for ubegrænset Black Friday-vagt uden for turneringen.' });
+          }
+        }
+      }
       const duelRaw = body.duel && typeof body.duel === 'object' ? body.duel : null;
       const klientMs = Math.round(Number(body.spilletid_klient_ms));
 

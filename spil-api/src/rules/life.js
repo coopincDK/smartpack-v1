@@ -2,6 +2,7 @@
 
 const { REGEN_MS, regenCap, MAX_LIVES } = require('./constants');
 const { todayStr } = require('./tzDate');
+const { iTurnering } = require('./turnering');
 const { SAMTYKKE_VERSION } = require('../partners');
 
 // Dags-nøgle brugt overalt i liv-reglen — 'YYYY-MM-DD' i Europe/Copenhagen
@@ -66,13 +67,14 @@ function subsCount(p, cfg, now) {
   return lifeKeys(p, cfg, now).length;
 }
 
-// Turbo-regen (Martin 6/10 2026): har spilleren sat mindst TURBO_MIN flueben i dag,
+// Turbo-regen (Martin 6/10 2026): har spilleren sat mindst TURBO_MIN flueben i dag (og er vi
+// uden for den lukkede turnering, Martin 7/10),
 // kommer der TURBO_PR_TIME liv pr. time (ét pr. REGEN_MS / TURBO_PR_TIME) op til
 // TURBO_PR_TIME liv, i stedet for ét liv i timen.
 const TURBO_MIN = 3;
 const TURBO_PR_TIME = 3;
 function regenFor(p, cfg, now) {
-  const turbo = !!(p && now && subsCount(p, cfg, now) >= TURBO_MIN);
+  const turbo = !!(p && now && subsCount(p, cfg, now) >= TURBO_MIN && !iTurnering(cfg, now));
   return turbo
     ? { ms: Math.round(REGEN_MS / TURBO_PR_TIME), cap: Math.max(regenCap(cfg), TURBO_PR_TIME), turbo: true }
     : { ms: REGEN_MS, cap: regenCap(cfg), turbo: false };

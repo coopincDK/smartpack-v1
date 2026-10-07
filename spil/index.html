@@ -1544,7 +1544,7 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   box.replaceChildren();
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
-  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Sætter du mindst 3 flueben, får du også 3 liv i timen i stedet for 1. Fluebenene starter tomme hver dag, så du vælger selv. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
+  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Sætter du mindst 3 flueben, får du også 3 liv i timen i stedet for 1 (ikke i den lukkede turnering). Fluebenene starter tomme hver dag, så du vælger selv. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
   // "Ja tak til alle" (Martin, 6/10): sætter de synlige flueben på én gang. Ingen er sat på forhånd,
   // hver partners tekst står stadig ved sit flueben, og man kan fjerne dem enkeltvis bagefter (vilkår pkt. 12).
   // Sms (kræver telefonnummer) er ikke med i "alle".
@@ -1627,7 +1627,20 @@ function hourWinners(pool){
 }
 function hourBoard(pool){ const ps = pool || Object.values(data.players), won = new Set(hourWinners(ps).map(w => w.p.pid)); return rank('total', inHour(nowHour()), ps).filter(x => !won.has(x.p.pid)); }
 const hourLeftMin = () => 60 - cphParts(new Date()).minute;
-const bfToday = p => todays(p).some(a => a.bf);
+/* Black Friday-vagt (Martin 7/10): i den lukkede turnering (periodens dage kl. 8-16.30) én pr. time for alle;
+   ellers én om dagen, eller ubegrænset med SmartPacks nyhedsmail. Serveren håndhæver det samme. */
+function iTurnering(){
+  if(!cfg.periodStart) return false;
+  const c = cphParts(new Date()), d = `${c.year}-${String(c.month).padStart(2, '0')}-${String(c.day).padStart(2, '0')}`;
+  if(d < cfg.periodStart || d > (cfg.periodEnd || cfg.periodStart)) return false;
+  const m = c.hour * 60 + c.minute; return m >= 480 && m < 990;
+}
+const bfUbegraenset = p => !iTurnering() && !!(p && p === current && current.marketing);
+const bfToday = p => {
+  if(bfUbegraenset(p)) return false;
+  if(iTurnering()) return todays(p).some(a => a.bf && hourOf(a.at) === nowHour());
+  return todays(p).some(a => a.bf);
+};
 function crownMs(){ const [h, m] = (cfg.crownTime || '16:00').split(':').map(Number); return cphTodayAt(h || 0, m || 0); }
 const F = {
   today: a => a.day === today(),
@@ -2728,7 +2741,7 @@ function renderLobby(){
   }
   const nx = nextLifeMs(p), mins = nx != null ? Math.ceil(nx / 60000) : 0;
   if(nx != null && nx <= 0) debouncedRefreshMe(); // M4: nedtællingen er udløbet — hent /me igen for at få den friske livtælling
-  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? (turboLiv() ? ' Med dine flueben får du 3 nye liv i timen.' : ' Når det er brugt, får du et nyt hver time. Sæt 3 flueben, så får du 3 i timen.') : ' Du får et nyt liv inden for en time.');
+  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? (turboLiv() ? ' Med dine flueben får du 3 nye liv i timen.' : iTurnering() ? ' Når det er brugt, får du et nyt hver time.' : ' Når det er brugt, får du et nyt hver time. Sæt 3 flueben, så får du 3 i timen.') : ' Du får et nyt liv inden for en time.');
   const pips = $('#l-pips'); pips.replaceChildren(); const shown = Math.min(12, Math.max(l, 1)); pips.classList.toggle('many', shown > 6);
   for(let i = 0; i < shown; i++){ const d = el('div', 'pip ' + (i < l ? 'free' : 'used')); const im = new Image(); im.src = IMG.cubeW; im.alt = ''; d.append(im); pips.append(d); }
   // gaver fra venner
@@ -2826,7 +2839,11 @@ function renderLobby(){
   $('#l-bf').hidden = !cfg.bf;
   $('#bf').checked = false; $('#bf').disabled = bu || !l;
   $('#l-bf').classList.toggle('used', bu);
-  $('#l-bftext').textContent = bu ? 'Dagens Black Friday-vagt er brugt. Du får en ny i morgen.' : 'Højere tempo og dobbelte point. Du har én om dagen, så vælg forsøget med omhu.';
+  $('#l-bftext').textContent = iTurnering()
+    ? (bu ? `Timens Black Friday-vagt er brugt. Du får en ny kl. ${hh(nowHour() + 1)}.` : 'Højere tempo og dobbelte point. I turneringen får alle én Black Friday-vagt i timen.')
+    : bfUbegraenset(p)
+      ? 'Højere tempo og dobbelte point. Du er tilmeldt SmartPacks nyhedsmail, så du har ubegrænset Black Friday-vagt.'
+      : (bu ? 'Dagens Black Friday-vagt er brugt. Tilmeld dig SmartPacks nyhedsmail, så får du ubegrænset Black Friday-vagt.' : 'Højere tempo og dobbelte point. Du har én om dagen. Med SmartPacks nyhedsmail får du ubegrænset Black Friday-vagt.');
   $('#l-rule').textContent = 'Et liv bruges, så snart du trykker start.' + (cfg.crownOn && Date.now() < crownMs() ? ` Dagens vinder kåres kl. ${cfg.crownTime.replace(':', '.')}.` : '');
   $('#b-start').disabled = !l;
   $('#b-start').textContent = l ? `Start dagens spil nr. ${used + 1}` : (nx != null ? `Næste liv om ${mins} min.` : 'Ingen liv tilbage i dag');
