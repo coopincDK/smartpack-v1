@@ -134,3 +134,31 @@ test('glemt kode: mobilnummer giver et engangslink på sms, som sætter en ny ko
   assert.equal(ind.status, 200, JSON.stringify(ind.body));
   assert.equal(ind.body.skal_skifte_kode, false);
 });
+
+test('login-info på sms til alle partnerbrugere med mobilnummer, kun én gang pr. bruger', async (t) => {
+  const kald = [];
+  const srv = http.createServer((req, res) => {
+    let b = ''; req.on('data', (c) => (b += c));
+    req.on('end', () => { kald.push(JSON.parse(b)); res.writeHead(200, { 'content-type': 'application/json' }); res.end('{}'); });
+  });
+  await new Promise((r) => srv.listen(0, r));
+  process.env.INMOBILE_URL = `http://127.0.0.1:${srv.address().port}/v4`;
+  process.env.INMOBILE_API_KEY = 'testnoegle';
+  const h = await startHarness();
+  t.after(async () => { await h.teardown(); srv.close(); delete process.env.INMOBILE_URL; delete process.env.INMOBILE_API_KEY; });
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const ac = (login.headers.get('set-cookie') || '').split(';')[0];
+  const p = await api(h.baseUrl, 'POST', '/admin/partnere', { adminCookie: ac, body: { navn: 'Infopartner', firmanavn: 'Info ApS' } });
+  await h.pool.query("UPDATE partner SET status = 'aktiv' WHERE id = $1", [p.body.partner.id]);
+  await api(h.baseUrl, 'POST', `/admin/partnere/${p.body.partner.id}/brugere`, { adminCookie: ac, body: { email: 'med@p.dk', kode: 'startkode123', sms_telefon: '22334455' } });
+  await api(h.baseUrl, 'POST', `/admin/partnere/${p.body.partner.id}/brugere`, { adminCookie: ac, body: { email: 'uden@p.dk', kode: 'startkode456' } });
+  const foer = kald.length;
+  const vis = await api(h.baseUrl, 'POST', '/admin/partner-brugere/sms-info?vis=1', { adminCookie: ac });
+  assert.equal(vis.body.med.length, 1); assert.equal(vis.body.uden.length, 1); assert.equal(kald.length, foer, 'visning sender intet');
+  const r = await api(h.baseUrl, 'POST', '/admin/partner-brugere/sms-info', { adminCookie: ac });
+  assert.equal(r.body.resultat.filter((x) => x.ok).length, 1);
+  assert.match(kald[kald.length - 1].messages[0].text, /smartpack\.dk\/spil\/partner\/.*med@p\.dk.*Glemt koden/);
+  assert.ok(!/startkode123/.test(kald[kald.length - 1].messages[0].text), 'ingen kode i sms');
+  const igen = await api(h.baseUrl, 'POST', '/admin/partner-brugere/sms-info', { adminCookie: ac });
+  assert.equal(igen.body.resultat[0].grund, 'dublet');
+});

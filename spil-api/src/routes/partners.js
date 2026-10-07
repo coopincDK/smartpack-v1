@@ -466,6 +466,35 @@ function partnersRouter(pool) {
     }
   });
 
+  // Login-info på sms til alle partnerbrugere med et mobilnummer (Martin 7/10). Ingen koder i sms'en,
+  // kun adressen, mailen og vejen til "Glemt koden". ?vis=1 viser modtagerne uden at sende.
+  // Hver bruger får højst én (type partner_info, nøgle = bruger-id).
+  router.post('/admin/partner-brugere/sms-info', admin, async (req, res, next) => {
+    try {
+      const { rows } = await pool.query(
+        `SELECT b.id, b.email, b.telefon, p.navn, p.kontakt_telefon, p.kontakt_email
+           FROM partner_bruger b JOIN partner p ON p.id = b.partner_id
+          WHERE p.status = 'aktiv' ORDER BY p.navn, b.email`
+      );
+      const modtagere = rows.map((r) => {
+        const tlf = SMS.msisdn(r.telefon) || ((!r.telefon && SMS.msisdn(r.kontakt_telefon)) ? SMS.msisdn(r.kontakt_telefon) : null);
+        return { id: r.id, partner: r.navn, email: r.email, telefon: tlf };
+      });
+      const med = modtagere.filter((m) => m.telefon), uden = modtagere.filter((m) => !m.telefon);
+      if (req.query.vis === '1') return res.json({ med, uden });
+      const resultat = [];
+      for (const m of med) {
+        const r = await SMS.send(pool, {
+          type: 'partner_info', noegle: m.id, til: m.telefon, test: true, kunNodstop: true,
+          tekst: `Din bruger til Packrush-partnerportalen er klar: smartpack.dk/spil/partner/ Log ind med din mail ${m.email}. Har du glemt koden eller ikke fået en, så tryk "Glemt koden" og skriv dit mobilnummer.`,
+        }).catch(() => ({ ok: false, grund: 'fejl' }));
+        resultat.push({ partner: m.partner, email: m.email, ok: !!r.ok, grund: r.grund || null });
+      }
+      await audit(pool, req, 'partner_sms_info', { sendt: resultat.filter((r) => r.ok).length, i_alt: med.length });
+      res.json({ resultat, uden });
+    } catch (e) { next(e); }
+  });
+
   // Ny startkode (fx glemt kode). Logger brugeren ud overalt.
   router.post('/admin/partner-brugere/:bid/nulstil', admin, async (req, res, next) => {
     try {
