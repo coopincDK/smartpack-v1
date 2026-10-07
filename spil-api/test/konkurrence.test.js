@@ -152,7 +152,9 @@ test('QR-koden på standen godkender spillerens firma, kun med rigtig kode og ku
   const { body } = registrerSpiller(h.baseUrl, { email: 'q@example.dk', firma: 'Scannet Shop' });
   const tok = (await api(h.baseUrl, 'POST', '/players', { body })).body.token;
 
-  // Uden for perioden (seedet konkurrence er 8/10 2026): afvises.
+  // Uden for perioden: afvises. Perioden lægges eksplicit i fremtiden, så testen
+  // ikke afhænger af klokken (koden åbner 12 timer før spil_start).
+  await h.pool.query("UPDATE konkurrence SET spil_start = now() + interval '2 days', spil_slut = now() + interval '2 days 8 hours' WHERE id = 1");
   const udenfor = await api(h.baseUrl, 'POST', '/me/stand', { token: tok, body: { kode: sk.body.kode } });
   assert.equal(udenfor.status, 400);
   assert.equal(udenfor.body.kode, 'uden_for_perioden');
