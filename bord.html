@@ -67,6 +67,10 @@
   .liste{flex:0 1 430px;min-width:0}
   .listetop{font-size:19px;letter-spacing:.12em;white-space:nowrap;text-transform:uppercase;color:#3ECF8E;
             font-weight:600;margin-bottom:10px}
+
+  /* Buet bord: kun midten af skærmen ses forfra. Alt indhold skaleres ind mod midten,
+     mens baggrunden fylder hele skærmen. Juster med ?zoom=0.8 i adressen (standard 0.72). */
+  .kort > div{transform:scale(var(--zoom,.72));transform-origin:50% 50%}
 </style>
 </head>
 <body>
@@ -171,6 +175,9 @@
 </div>
 
 <script>
+/* Zoom til det buede bord: ?zoom=0.6 til 1 i adressen */
+(function(){ var m = /[?&]zoom=([0-9.]+)/.exec(location.search); if (m) { var z = Math.max(.5, Math.min(1, +m[1])); document.documentElement.style.setProperty('--zoom', z); } })();
+
 /* =======================================================================
    TOPSCORE-KILDEN - det eneste der skal rettes for at gaa live
    Saet URL'en til det endpoint der returnerer listen. Svaret maa gerne
