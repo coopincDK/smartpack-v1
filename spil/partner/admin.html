@@ -93,13 +93,15 @@
       var n = r.advarsler.length;
       box.append(el('h3', { text: n ? n + (n === 1 ? ' ting mangler' : ' ting mangler') + ' for at komme live' : 'Alt er klar til konkurrencen' }));
       box.append(el('p', { class: 'muted small', text: r.synlige_partnere + ' partnere vises i spillet · ' + r.gaver_i_puljen + ' gaver i puljen · ' + r.deltagerliste_antal + ' firmaer på deltagerlisten' }));
-      var smsKnap = el('button', { class: 'btn ghost small', type: 'button', text: 'Send login-info på sms til alle partnere' });
+      var smsKnap = el('button', { class: 'btn ghost small', type: 'button', text: 'Send login på sms til alle partnere' });
       smsKnap.onclick = function () {
         api('/admin/partner-brugere/sms-info?vis=1', { method: 'POST' }).then(function (v) {
-          var tekst = 'Send login-info til ' + v.med.length + ' partnerbrugere med mobilnummer?\n\n' + v.med.map(function (m) { return m.partner + ': ' + m.email + ' (' + m.telefon + ')'; }).join('\n') +
-            (v.uden.length ? '\n\nUden mobilnummer (får intet): ' + v.uden.map(function (m) { return m.partner + ' ' + m.email; }).join(', ') : '') +
-            '\n\nSms\'en indeholder ingen kode, kun adressen, mailen og vejen til "Glemt koden". Hver bruger får den kun én gang.';
-          if (!v.med.length) return alert('Ingen partnerbrugere har et mobilnummer.');
+          var opret = v.opret || [];
+          var tekst = 'Send login på sms til ' + (v.med.length + opret.length) + ' partnere?' +
+            (v.med.length ? '\n\nHar en bruger (får login-info uden kode, kun én gang):\n' + v.med.map(function (m) { return m.partner + ': ' + m.email + ' (' + m.telefon + ')'; }).join('\n') : '') +
+            (opret.length ? '\n\nHar ingen bruger endnu (der oprettes en med kontaktens mail, og login + startkode sendes):\n' + opret.map(function (m) { return m.partner + ': ' + m.email + ' (' + m.telefon + ')'; }).join('\n') : '') +
+            (v.uden.length ? '\n\nFår intet: ' + v.uden.map(function (m) { return m.partner + (m.email ? ' ' + m.email : '') + (m.grund ? ' (' + m.grund + ')' : ' (intet mobilnummer)'); }).join(', ') : '');
+          if (!v.med.length && !opret.length) return alert('Ingen partnere har et mobilnummer.');
           if (!confirm(tekst)) return;
           smsKnap.disabled = true;
           return api('/admin/partner-brugere/sms-info', { method: 'POST' }).then(function (r) {
