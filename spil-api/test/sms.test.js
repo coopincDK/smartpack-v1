@@ -94,5 +94,5 @@ test('sms: login og startkode til ny partnerbruger, kun når admin beder om det'
   assert.match(kald[0].messages[0].text, /b@p\.dk.*startkode456/);
   const nul = await api(h.baseUrl, 'POST', `/admin/partner-brugere/${med.body.bruger.id}/nulstil`, { adminCookie: ac, body: { kode: 'nykode789xx', sms_telefon: '22792914' } });
   assert.equal(nul.body.sms.ok, true);
-  assert.match(kald[1].messages[0].text, /Ny kode.*Startkode: nykode789xx.*Sendt via inMobile\.com/);
+  assert.match(kald[1].messages[0].text, /Ny kode.*smartpack\.dk\/spil\/partner\/.*b@p\.dk.*Startkode: nykode789xx.*vælge din egen kode.*Sendt via inMobile\.com/);
 });

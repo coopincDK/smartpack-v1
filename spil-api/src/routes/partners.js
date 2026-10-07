@@ -27,8 +27,8 @@ async function smsLogin(pool, { til, email, kode, ny }) {
   if (!SMS.msisdn(til)) return { ok: false, grund: 'ugyldigt_nummer' };
   return SMS.send(pool, {
     type: 'partner_login', noegle: `${email}-${Date.now()}`, til, test: true, kunNodstop: true,
-    logTekst: `${ny ? 'Login' : 'Ny kode'} til Packrush-partnerportalen: smartpack.dk/spil/partner/ Mail: ${email} Startkode: ****`,
-    tekst: `${ny ? 'Login' : 'Ny kode'} til Packrush-partnerportalen: smartpack.dk/spil/partner/ Mail: ${email} Startkode: ${kode}`,
+    logTekst: `${ny ? 'Dit login' : 'Ny kode'} til Packrush-partnerportalen. Log ind på smartpack.dk/spil/partner/ med din mail ${email} og Startkode: ****. Du bliver bedt om at vælge din egen kode første gang.`,
+    tekst: `${ny ? 'Dit login' : 'Ny kode'} til Packrush-partnerportalen. Log ind på smartpack.dk/spil/partner/ med din mail ${email} og Startkode: ${kode}. Du bliver bedt om at vælge din egen kode første gang.`,
   });
 }
 
