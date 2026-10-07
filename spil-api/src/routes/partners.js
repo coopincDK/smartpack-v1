@@ -455,8 +455,8 @@ function partnersRouter(pool) {
       if (findes.length) throw new P.Valideringsfejl('Der findes allerede en bruger med den e-mail.', 'email');
       const id = crypto.randomUUID();
       await pool.query(
-        'INSERT INTO partner_bruger (id, partner_id, email, navn, password_hash, skal_skifte_kode) VALUES ($1, $2, $3, $4, $5, true)',
-        [id, p.id, email, navn, hashPassword(kode)]
+        'INSERT INTO partner_bruger (id, partner_id, email, navn, password_hash, skal_skifte_kode, telefon) VALUES ($1, $2, $3, $4, $5, true, $6)',
+        [id, p.id, email, navn, hashPassword(kode), SMS.msisdn(b.sms_telefon || p.kontakt_telefon) || null]
       );
       await audit(pool, req, 'partner_bruger_oprettet', { partner_id: p.id, bruger_id: id });
       const sms = await smsLogin(pool, { til: b.sms_telefon, email, kode, ny: true }).catch(() => ({ ok: false, grund: 'fejl' }));
@@ -473,8 +473,8 @@ function partnersRouter(pool) {
       const kode = String((req.body && req.body.kode) || '');
       if (kode.length < MIN_KODE) throw new P.Valideringsfejl(`Startkoden skal være mindst ${MIN_KODE} tegn.`, 'kode');
       const r = await pool.query(
-        'UPDATE partner_bruger SET password_hash = $2, skal_skifte_kode = true WHERE id = $1',
-        [req.params.bid, hashPassword(kode)]
+        'UPDATE partner_bruger SET password_hash = $2, skal_skifte_kode = true, telefon = COALESCE($3, telefon) WHERE id = $1',
+        [req.params.bid, hashPassword(kode), SMS.msisdn((req.body && req.body.sms_telefon) || '') || null]
       );
       if (!r.rowCount) return res.status(404).json({ fejl: 'Brugeren findes ikke.', kode: 'ikke_fundet' });
       await pool.query('DELETE FROM partner_session WHERE bruger_id = $1', [req.params.bid]);
@@ -590,6 +590,52 @@ function partnersRouter(pool) {
     } catch (e) {
       next(e);
     }
+  });
+
+  // Glemt kode: partneren skriver sit mobilnummer og får et engangslink på sms.
+  // Svaret er altid det samme, så man ikke kan bruge formularen til at se, hvilke numre der findes.
+  const glemtLimiter = createRateLimiter({ windowMs: 10 * 60 * 1000, max: 5, besked: 'For mange forsøg. Prøv igen om lidt.' });
+  router.post('/partner/glemt-kode', glemtLimiter, async (req, res, next) => {
+    try {
+      const tlf = SMS.msisdn((req.body && req.body.telefon) || '');
+      const svar = { ok: true, besked: 'Er nummeret registreret hos os, sender vi et link på sms om et øjeblik. Linket virker i 30 minutter.' };
+      if (!tlf) return res.json(svar);
+      const { rows } = await pool.query(
+        `SELECT b.id, b.email, b.telefon, p.kontakt_telefon, p.kontakt_email
+           FROM partner_bruger b JOIN partner p ON p.id = b.partner_id
+          WHERE p.status <> 'arkiveret'`
+      );
+      const ramt = rows.filter((r) => SMS.msisdn(r.telefon) === tlf
+        || (SMS.msisdn(r.kontakt_telefon) === tlf && (!r.telefon || String(r.kontakt_email || '').toLowerCase() === r.email))).slice(0, 3);
+      for (const r of ramt) {
+        const token = crypto.randomBytes(24).toString('base64url');
+        await pool.query("UPDATE partner_bruger SET nulstil_hash = $2, nulstil_udloeber = now() + interval '30 minutes' WHERE id = $1", [r.id, sha256Hex(token)]);
+        const link = `https://smartpack.dk/spil/partner/?nulstil=${token}`;
+        await SMS.send(pool, {
+          type: 'partner_nulstil', noegle: `${r.id}-${Date.now()}`, til: tlf, test: true, kunNodstop: true,
+          logTekst: `Nulstil din kode til Packrush-partnerportalen (${r.email}): https://smartpack.dk/spil/partner/?nulstil=****. Linket virker i 30 minutter.`,
+          tekst: `Nulstil din kode til Packrush-partnerportalen (${r.email}): ${link} Linket virker i 30 minutter.`,
+        }).catch(() => null);
+      }
+      res.json(svar);
+    } catch (e) { next(e); }
+  });
+
+  // Ny kode via engangslinket fra sms'en. Logger brugeren ud overalt.
+  router.post('/partner/nulstil-kode', loginLimiter, async (req, res, next) => {
+    try {
+      const token = String((req.body && req.body.token) || '');
+      const ny = String((req.body && req.body.ny) || '');
+      if (ny.length < MIN_KODE) throw new P.Valideringsfejl(`Den nye kode skal være mindst ${MIN_KODE} tegn.`, 'ny');
+      const { rows } = await pool.query(
+        `UPDATE partner_bruger SET password_hash = $2, skal_skifte_kode = false, nulstil_hash = NULL, nulstil_udloeber = NULL
+          WHERE nulstil_hash = $1 AND nulstil_udloeber > now() RETURNING id, email`,
+        [sha256Hex(token), hashPassword(ny)]
+      );
+      if (!rows.length) return res.status(400).json({ fejl: 'Linket er udløbet eller allerede brugt. Bed om et nyt.', kode: 'ugyldigt_link' });
+      await pool.query('DELETE FROM partner_session WHERE bruger_id = $1', [rows[0].id]);
+      res.json({ ok: true, email: rows[0].email });
+    } catch (e) { sendFejl(res, e, next); }
   });
 
   router.post('/partner/skift-kode', loginLimiter, partnerFoerSkift, async (req, res, next) => {

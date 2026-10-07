@@ -96,3 +96,41 @@ test('sms: login og startkode til ny partnerbruger, kun når admin beder om det'
   assert.equal(nul.body.sms.ok, true);
   assert.match(kald[1].messages[0].text, /Ny kode.*smartpack\.dk\/spil\/partner\/.*b@p\.dk.*Startkode: nykode789xx.*vælge din egen kode.*Sendt via inMobile\.com/);
 });
+
+test('glemt kode: mobilnummer giver et engangslink på sms, som sætter en ny kode', async (t) => {
+  const kald = [];
+  const srv = http.createServer((req, res) => {
+    let b = ''; req.on('data', (c) => (b += c));
+    req.on('end', () => { kald.push(JSON.parse(b)); res.writeHead(200, { 'content-type': 'application/json' }); res.end('{}'); });
+  });
+  await new Promise((r) => srv.listen(0, r));
+  process.env.INMOBILE_URL = `http://127.0.0.1:${srv.address().port}/v4`;
+  process.env.INMOBILE_API_KEY = 'testnoegle';
+  const h = await startHarness();
+  t.after(async () => { await h.teardown(); srv.close(); delete process.env.INMOBILE_URL; delete process.env.INMOBILE_API_KEY; });
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const ac = (login.headers.get('set-cookie') || '').split(';')[0];
+  const p = await api(h.baseUrl, 'POST', '/admin/partnere', { adminCookie: ac, body: { navn: 'Glemtpartner', firmanavn: 'Glemt ApS' } });
+  await api(h.baseUrl, 'POST', `/admin/partnere/${p.body.partner.id}/brugere`, { adminCookie: ac, body: { email: 'g@p.dk', kode: 'startkode123', sms_telefon: '22334455' } });
+  const foer = kald.length;
+
+  const ukendt = await api(h.baseUrl, 'POST', '/partner/glemt-kode', { body: { telefon: '99887766' } });
+  assert.equal(ukendt.status, 200); assert.equal(kald.length, foer, 'ingen sms til ukendt nummer');
+  const kendt = await api(h.baseUrl, 'POST', '/partner/glemt-kode', { body: { telefon: '+45 22 33 44 55' } });
+  assert.equal(kendt.status, 200); assert.equal(kendt.body.besked, ukendt.body.besked, 'samme svar uanset nummer');
+  const tekst = kald[kald.length - 1].messages[0].text;
+  const token = tekst.match(/nulstil=([A-Za-z0-9_-]+)/)[1];
+  assert.match(tekst, /g@p\.dk/);
+  const log = (await h.pool.query("SELECT tekst FROM sms_log WHERE type = 'partner_nulstil'")).rows[0].tekst;
+  assert.ok(!log.includes(token), 'linket gemmes ikke i loggen');
+
+  const kort = await api(h.baseUrl, 'POST', '/partner/nulstil-kode', { body: { token, ny: 'kort' } });
+  assert.equal(kort.status, 400);
+  const ok = await api(h.baseUrl, 'POST', '/partner/nulstil-kode', { body: { token, ny: 'minnyekode2026' } });
+  assert.equal(ok.status, 200); assert.equal(ok.body.email, 'g@p.dk');
+  const igen = await api(h.baseUrl, 'POST', '/partner/nulstil-kode', { body: { token, ny: 'endnuenkode99' } });
+  assert.equal(igen.status, 400, 'linket kan kun bruges én gang');
+  const ind = await api(h.baseUrl, 'POST', '/partner/login', { body: { email: 'g@p.dk', kode: 'minnyekode2026' } });
+  assert.equal(ind.status, 200, JSON.stringify(ind.body));
+  assert.equal(ind.body.skal_skifte_kode, false);
+});

@@ -27,8 +27,28 @@
     <label class="f" for="l-kode">Kode<input type="password" id="l-kode" autocomplete="current-password" required></label>
     <div id="l-msg"></div>
     <button class="btn" type="submit">Log ind</button>
-    <p class="small muted">Glemt koden? Kontakt Martin hos SmartPack, så får du en ny startkode.</p>
+    <p class="small"><a href="#glemt" id="til-glemt">Glemt koden, eller har du ikke fået en? Få et link på sms</a></p>
     <p class="small"><a href="#" id="til-ansoeg">Er I ikke partner endnu? Søg om at blive partner</a></p>
+  </form>
+
+  <!-- Glemt kode -->
+  <form class="card" id="v-glemt" hidden>
+    <h2>Nulstil din kode</h2>
+    <p class="muted small">Skriv det mobilnummer, SmartPack har registreret for dig. Så sender vi et link på sms, hvor du vælger en ny kode. Linket virker i 30 minutter.</p>
+    <label class="f" for="g-tlf">Mobilnummer<input type="tel" id="g-tlf" autocomplete="tel" placeholder="Fx 12345678" required></label>
+    <div id="g-msg"></div>
+    <button class="btn" type="submit">Send link på sms</button>
+    <p class="small"><a href="#" id="glemt-tilbage">Tilbage til log ind</a></p>
+  </form>
+
+  <!-- Ny kode via link -->
+  <form class="card" id="v-nulstil" hidden>
+    <h2>Vælg en ny kode</h2>
+    <p class="muted small">Mindst 10 tegn. Bagefter logger du ind med din e-mail og den nye kode.</p>
+    <label class="f" for="n-ny">Ny kode<input type="password" id="n-ny" autocomplete="new-password" minlength="10" required></label>
+    <label class="f" for="n-ny2">Gentag ny kode<input type="password" id="n-ny2" autocomplete="new-password" minlength="10" required></label>
+    <div id="n-msg"></div>
+    <button class="btn" type="submit">Gem ny kode</button>
   </form>
 
   <!-- Skift kode -->
@@ -108,11 +128,14 @@
 (function () {
   'use strict';
   var api = SP.api, el = SP.el, $ = function (id) { return document.getElementById(id); };
-  var VIEWS = ['v-login', 'v-skift', 'v-profil', 'v-ansoeg'];
+  var VIEWS = ['v-login', 'v-skift', 'v-profil', 'v-ansoeg', 'v-glemt', 'v-nulstil'];
+  var NULSTIL = new URLSearchParams(location.search).get('nulstil');
   function vis(id) { VIEWS.forEach(function (v) { $(v).hidden = v !== id; }); $('b-logout').hidden = !(id === 'v-skift' || id === 'v-profil'); }
 
   function start() {
     if (location.hash === '#ansoeg') return vis('v-ansoeg');
+    if (NULSTIL) return vis('v-nulstil');
+    if (location.hash === '#glemt') return vis('v-glemt');
     api('/partner/mig').then(function (r) {
       if (r.bruger.skal_skifte_kode) return vis('v-skift');
       tegnProfil(r.partner); vis('v-profil');
@@ -251,6 +274,27 @@
     }).catch(function (err) { SP.besked($('a-msg'), err.message, 'err'); });
   });
 
+  $('til-glemt').addEventListener('click', function (e) { e.preventDefault(); location.hash = 'glemt'; vis('v-glemt'); });
+  $('glemt-tilbage').addEventListener('click', function (e) { e.preventDefault(); history.replaceState(null, '', location.pathname); vis('v-login'); });
+  $('v-glemt').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var b = $('v-glemt').querySelector('button[type=submit]'); b.disabled = true;
+    api('/partner/glemt-kode', { method: 'POST', body: { telefon: $('g-tlf').value } })
+      .then(function (r) { SP.besked($('g-msg'), r.besked, 'ok'); })
+      .catch(function (err) { SP.besked($('g-msg'), err.message, 'err'); })
+      .then(function () { b.disabled = false; });
+  });
+  $('v-nulstil').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if ($('n-ny').value !== $('n-ny2').value) return SP.besked($('n-msg'), 'De to koder er ikke ens.', 'err');
+    api('/partner/nulstil-kode', { method: 'POST', body: { token: NULSTIL, ny: $('n-ny').value } })
+      .then(function (r) {
+        NULSTIL = null; history.replaceState(null, '', location.pathname);
+        $('l-email').value = r.email || ''; $('n-ny').value = ''; $('n-ny2').value = '';
+        vis('v-login'); SP.besked($('l-msg'), 'Din nye kode er gemt. Log ind med din e-mail og den nye kode.', 'ok');
+      })
+      .catch(function (err) { SP.besked($('n-msg'), err.message, 'err'); });
+  });
   $('til-ansoeg').addEventListener('click', function (e) { e.preventDefault(); location.hash = 'ansoeg'; vis('v-ansoeg'); });
   $('til-login').addEventListener('click', function (e) { e.preventDefault(); history.replaceState(null, '', location.pathname); vis('v-login'); });
   $('b-logout').addEventListener('click', function () { api('/partner/logout', { method: 'POST' }).catch(function () {}).then(function () { vis('v-login'); }); });
