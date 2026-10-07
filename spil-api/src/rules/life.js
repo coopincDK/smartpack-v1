@@ -66,6 +66,18 @@ function subsCount(p, cfg, now) {
   return lifeKeys(p, cfg, now).length;
 }
 
+// Turbo-regen (Martin 6/10 2026): har spilleren sat mindst TURBO_MIN flueben i dag,
+// kommer der TURBO_PR_TIME liv pr. time (ét pr. REGEN_MS / TURBO_PR_TIME) op til
+// TURBO_PR_TIME liv, i stedet for ét liv i timen.
+const TURBO_MIN = 3;
+const TURBO_PR_TIME = 3;
+function regenFor(p, cfg, now) {
+  const turbo = !!(p && now && subsCount(p, cfg, now) >= TURBO_MIN);
+  return turbo
+    ? { ms: Math.round(REGEN_MS / TURBO_PR_TIME), cap: Math.max(regenCap(cfg), TURBO_PR_TIME), turbo: true }
+    : { ms: REGEN_MS, cap: regenCap(cfg), turbo: false };
+}
+
 function dailyStart(p, cfg, now) {
   return (cfg.perDay == null ? 3 : cfg.perDay) + subsCount(p, cfg, now);
 }
@@ -89,14 +101,15 @@ function lifeState(bag, p, cfg, now, attemptsToday) {
     g = lifeKeys(p, cfg, now);
     day = today;
   }
-  // Naturlig regen: ét liv pr. REGEN_MS op til grundtallet (cfg.perDay), uanset flueben.
-  const cap = regenCap(cfg);
+  // Naturlig regen: ét liv pr. REGEN_MS op til grundtallet (cfg.perDay); med mindst
+  // TURBO_MIN af dagens flueben går det TURBO_PR_TIME gange hurtigere op til TURBO_PR_TIME liv.
+  const { ms: regenMs, cap } = regenFor(p, cfg, now);
   if (n < cap) {
-    const ticks = Math.floor((now.getTime() - t) / REGEN_MS);
+    const ticks = Math.floor((now.getTime() - t) / regenMs);
     if (ticks > 0) {
       const add = Math.min(ticks, cap - n);
       n += add;
-      t += add * REGEN_MS;
+      t += add * regenMs;
     }
   } else if (n > cap) {
     // Over grundtallet (bonusliv): ankeret følger med, så regen først tæller fra det øjeblik, man er under.
@@ -110,17 +123,19 @@ function lifeState(bag, p, cfg, now, attemptsToday) {
 // Hvor lang tid (ms) til næste naturlige regen — null hvis der ikke regenereres
 // (ingen dagens-flueben-abonnementer, eller allerede ved cap).
 function nextRegenMs(bag, p, cfg, now) {
-  if (bag.n >= regenCap(cfg)) return null;
+  const { ms: regenMs, cap } = regenFor(p, cfg, now);
+  if (bag.n >= cap) return null;
   const t = bag.t instanceof Date ? bag.t.getTime() : bag.t;
   const elapsed = now.getTime() - t;
-  return Math.max(0, REGEN_MS - (elapsed % REGEN_MS));
+  return Math.max(0, regenMs - (elapsed % regenMs));
 }
 
 // useLife(bag): null hvis intet liv tilbage. Ellers: hvis n var ved cap,
 // nulstil regen-ankeret til nu (undgår at "banke" regen-tid op mens man er fuld).
-function useLife(bag, cfg) {
+function useLife(bag, cfg, p, now) {
   if (bag.n <= 0) return null;
-  const t = bag.n >= regenCap(cfg) ? Date.now() : bag.t;
+  const cap = p ? regenFor(p, cfg, now || new Date()).cap : regenCap(cfg);
+  const t = bag.n >= cap ? Date.now() : bag.t;
   return { ...bag, n: bag.n - 1, t };
 }
 
@@ -234,6 +249,9 @@ module.exports = {
   dailyStart,
   lifeState,
   nextRegenMs,
+  regenFor,
+  TURBO_MIN,
+  TURBO_PR_TIME,
   useLife,
   refill,
   listNameFor,

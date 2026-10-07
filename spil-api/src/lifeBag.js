@@ -1,6 +1,6 @@
 'use strict';
 
-const { lifeState, nextRegenMs, todayStr } = require('./rules/life');
+const { lifeState, nextRegenMs, todayStr, regenFor } = require('./rules/life');
 const { cphDateExpr } = require('./rules/tzDate');
 
 // Bemærk: `liv_dag`/`tick_dag` er Postgres `date`-kolonner (ingen
@@ -63,7 +63,8 @@ async function persistBag(client, spillerId, bag) {
 // enten med `playerToP(row)` (uændret spiller) eller `result.p` (efter
 // setSubsPure/setTicksPure) — se src/routes/me.js og src/routes/runs.js.
 function livView(bag, p, cfg, now) {
-  return { n: bag.n, next_regen_ms: nextRegenMs(bag, p, cfg, now) };
+  const r = regenFor(p, cfg, now);
+  return { n: bag.n, next_regen_ms: nextRegenMs(bag, p, cfg, now), turbo: r.turbo, liv_pr_time: Math.round(3600000 / r.ms) };
 }
 
 module.exports = { playerToP, rowToBag, currentBag, persistBag, livView };

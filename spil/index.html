@@ -14,6 +14,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Packrush – SmartPack</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SmartPack">
+<meta property="og:title" content="Packrush: kan du slå messen?">
+<meta property="og:description" content="Lagerspillet fra SmartPack. Pluk, pak og send i tre runder, og kom på toplisten. Spil gratis på telefonen.">
+<meta property="og:url" content="https://smartpack.dk/spil/">
+<meta property="og:image" content="https://smartpack.dk/spil/og-packrush.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Packrush: Kan du slå messen? Lagerspillet fra SmartPack">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://smartpack.dk/spil/og-packrush.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@700;800&display=swap" rel="stylesheet">
@@ -610,6 +622,16 @@ li.tv.senere{opacity:.5}
 .konf-strip a{display:flex;flex-direction:column;align-items:center;gap:4px;width:86px;text-decoration:none;color:inherit}
 .konf-strip img{height:30px;max-width:86px;border-radius:7px;background:#fff;padding:3px;object-fit:contain}
 .konf-strip small{font-size:10.5px;opacity:.75;line-height:1.2}
+
+/* aktivitetstæller i arrangør-admin */
+details.trafik{margin:10px 0 14px}
+details.trafik summary{cursor:pointer;font-weight:700}
+.trafik-t{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px}
+.trafik-t th,.trafik-t td{text-align:left;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.08)}
+.trafik-t td:nth-child(2),.trafik-t td:nth-child(3){font-variant-numeric:tabular-nums}
+.trafik-t tr.nu td{color:#F5C451;font-weight:700}
+.trafik-t td:last-child{width:40%}
+.trafik-t .bar{display:inline-block;height:8px;border-radius:4px;background:#3ECF8E;min-width:2px}
 </style>
 </head>
 <body>
@@ -629,7 +651,7 @@ li.tv.senere{opacity:.5}
     <h1 class="prlogo"><img src="packrush-logo.webp" alt="Packrush" width="1200" height="233" decoding="async"></h1>
     <div class="rule"></div>
   </div>
-  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b> med mulighed for at få flere, og din bedste score kommer på tavlen.</p>
+  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b>, eller 3 i timen med mindst 3 flueben, og din bedste score kommer på tavlen.</p>
   <a class="turn-chip" href="vilkaar/"><span class="tc-ikon" aria-hidden="true">🏆</span><span><b>Lukket turnering 8. okt.</b> Kun konferencedeltagere får lodder til præmierne.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Saml op til 5 lodder om dagen til 18. okt. Vi trækker to vindere af vin. Her gælder de særskilte vilkår for efterårsferieudfordringen.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <div class="live" id="st-live"></div>
@@ -784,6 +806,7 @@ li.tv.senere{opacity:.5}
   <div class="head"><h2>Arrangør</h2><button class="link" data-go="s-start">Tilbage</button></div>
   <a class="btn ghost small" href="partner/admin.html" target="_blank" rel="noopener">Partnere, præmier og vinder</a>
   <p id="a-stats"></p>
+  <details class="trafik" open><summary>Aktivitet: spil og spillere pr. time og pr. dag</summary><div id="a-trafik"></div></details>
   <div class="hours" id="a-hours"></div>
   <label class="check"><input type="checkbox" id="a-stand">Denne enhed er en standtablet. Den husker ikke spilleren og går tilbage til start efter 2 minutter uden tryk</label>
   <p class="muted small" id="a-mode"></p>
@@ -989,6 +1012,7 @@ function hourlyDay(){
   return d >= cfg.periodStart && d <= (cfg.periodEnd || cfg.periodStart) && c.hour >= 8;
 }
 function hourlyOn(){ return hourlyDay() && cphParts(new Date()).hour < 17; }
+function turboLiv(){ return !!(current && current.liv && current.liv.turbo); }
 function cphParts(d){
   const parts = new Intl.DateTimeFormat('en-CA', { timeZone: CPH_TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(d);
   const get = t => +parts.find(p => p.type === t).value;
@@ -1520,7 +1544,7 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   box.replaceChildren();
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
-  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Fluebenene starter tomme hver dag, så du vælger selv. Når dine liv er brugt, får du et nyt hver time. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
+  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Sætter du mindst 3 flueben, får du også 3 liv i timen i stedet for 1. Fluebenene starter tomme hver dag, så du vælger selv. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
   // "Ja tak til alle" (Martin, 6/10): sætter de synlige flueben på én gang. Ingen er sat på forhånd,
   // hver partners tekst står stadig ved sit flueben, og man kan fjerne dem enkeltvis bagefter (vilkår pkt. 12).
   // Sms (kræver telefonnummer) er ikke med i "alle".
@@ -2704,7 +2728,7 @@ function renderLobby(){
   }
   const nx = nextLifeMs(p), mins = nx != null ? Math.ceil(nx / 60000) : 0;
   if(nx != null && nx <= 0) debouncedRefreshMe(); // M4: nedtællingen er udløbet — hent /me igen for at få den friske livtælling
-  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? ' Når det er brugt, får du et nyt hver time.' : ' Du får et nyt liv inden for en time.');
+  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? (turboLiv() ? ' Med dine flueben får du 3 nye liv i timen.' : ' Når det er brugt, får du et nyt hver time. Sæt 3 flueben, så får du 3 i timen.') : ' Du får et nyt liv inden for en time.');
   const pips = $('#l-pips'); pips.replaceChildren(); const shown = Math.min(12, Math.max(l, 1)); pips.classList.toggle('many', shown > 6);
   for(let i = 0; i < shown; i++){ const d = el('div', 'pip ' + (i < l ? 'free' : 'used')); const im = new Image(); im.src = IMG.cubeW; im.alt = ''; d.append(im); pips.append(d); }
   // gaver fra venner
@@ -3501,10 +3525,30 @@ function paintBc(){
 $('#a-bc').addEventListener('input', paintBc);
 [['#s-day', 'day'], ['#s-prize', 'prize'], ['#s-last', 'last'], ['#s-boost', 'boost']].forEach(([id, k]) => $(id).onclick = () => { $('#a-bc').value = smsTemplates()[k]; paintBc(); });
 $('#b-bc').onclick = () => { const text = $('#a-bc').value.trim() + sponsorLine(); offer('sms-liste.csv', csvOf([['Navn', 'Telefon', 'Webshop', 'Besked']].concat(adminPlayers.filter(p => p.notify).map(p => [p.name, p.phone, p.company || '', text]))), $('#a-sms')); };
+/* Simpel tæller til arrangøren: godkendte spil og unikke spillere pr. time i dag og pr. dag de sidste 14 dage (dansk tid). */
+function renderTrafik(ps){
+  const box = $('#a-trafik'); if(!box) return;
+  const alle = []; ps.forEach(p => done(p).forEach(a => alle.push({ pid: p.pid, day: a.day, h: hourOf(a.end || a.at) })));
+  const d0 = today();
+  const timer = Array.from({ length: 24 }, () => ({ spil: 0, sp: new Set() }));
+  alle.filter(a => a.day === d0).forEach(a => { timer[a.h].spil++; timer[a.h].sp.add(a.pid); });
+  const maks = Math.max(1, ...timer.map(t => t.spil));
+  const fra = timer.findIndex(t => t.spil), til = 23 - [...timer].reverse().findIndex(t => t.spil);
+  const lo = fra < 0 ? 8 : Math.min(fra, 8), hi = fra < 0 ? 17 : Math.max(til, 16);
+  let html = '<table class="trafik-t"><thead><tr><th>Time i dag</th><th>Spil</th><th>Spillere</th><th></th></tr></thead><tbody>';
+  for(let h = lo; h <= hi; h++){ const t = timer[h]; html += `<tr${h === nowHour() ? ' class="nu"' : ''}><td>${hh(h)}-${hh(h + 1)}</td><td>${t.spil}</td><td>${t.sp.size}</td><td><span class="bar" style="width:${Math.round(t.spil / maks * 100)}%"></span></td></tr>`; }
+  html += '</tbody></table>';
+  const dage = {}; alle.forEach(a => { (dage[a.day] = dage[a.day] || { spil: 0, sp: new Set() }).spil++; dage[a.day].sp.add(a.pid); });
+  const keys = Object.keys(dage).sort().reverse().slice(0, 14);
+  html += '<table class="trafik-t"><thead><tr><th>Dag</th><th>Spil</th><th>Spillere</th></tr></thead><tbody>' + (keys.length ? keys.map(k => `<tr${k === d0 ? ' class="nu"' : ''}><td>${k}</td><td>${dage[k].spil}</td><td>${dage[k].sp.size}</td></tr>`).join('') : '<tr><td colspan="3">Ingen spil endnu.</td></tr>') + '</tbody></table>';
+  html += '<p class="muted small">Tæller godkendte spil. Besøg på siden uden spil tælles ikke her.</p>';
+  box.innerHTML = html;
+}
 function renderAdmin(){
   Promise.all([loadAdminPlayers(), API.admin.boostCode().then(r => { adminBoostCode = (r && (r.kode || r.boostkode || r.code)) || ''; }).catch(() => {})]).then(([ps]) => {
     if(screen !== 's-admin') return;
     $('#a-stats').textContent = `${ps.length} tilmeldte, ${ps.reduce((a, p) => a + p.attempts.length, 0)} forsøg i alt, ${ps.reduce((a, p) => a + todays(p).length, 0)} i dag, ${ps.filter(p => p.company).length} med webshop, ${ps.filter(p => subKeys(p).length).length} er tilmeldt mindst én liste.`;
+    renderTrafik(ps);
     $('#a-mode').textContent = 'Tilmeldinger, topscore og opsætning ligger på serveren og deles af alle enheder ved standen.';
     $('#a-csv').hidden = true;
     if(document.activeElement == null || !document.activeElement.closest || !document.activeElement.closest('.adm')) fillCfg();
