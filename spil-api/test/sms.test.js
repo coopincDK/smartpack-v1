@@ -161,4 +161,29 @@ test('login-info på sms til alle partnerbrugere med mobilnummer, kun én gang p
   assert.ok(!/startkode123/.test(kald[kald.length - 1].messages[0].text), 'ingen kode i sms');
   const igen = await api(h.baseUrl, 'POST', '/admin/partner-brugere/sms-info', { adminCookie: ac });
   assert.equal(igen.body.resultat[0].grund, 'dublet');
+
+  // Partnere uden bruger (også ansøgte) får oprettet en bruger og login + startkode;
+  // afviste/arkiverede og partnere uden mobil eller mail får intet.
+  const mk = async (navn, status, felter) => {
+    const x = await api(h.baseUrl, 'POST', '/admin/partnere', { adminCookie: ac, body: { navn, firmanavn: navn + ' ApS' } });
+    await h.pool.query('UPDATE partner SET status = $2, kontakt_email = $3, kontakt_telefon = $4 WHERE id = $1', [x.body.partner.id, status, felter.email || '', felter.tlf || '']);
+    return x.body.partner.id;
+  };
+  await mk('Nyopret', 'ansoegt', { email: 'ny@n.dk', tlf: '+45 30 22 31 24' });
+  await mk('Udenmobil', 'aktiv', { email: 'um@u.dk' });
+  await mk('Arkiv', 'arkiveret', { email: 'ark@a.dk', tlf: '30223125' });
+  const vis2 = await api(h.baseUrl, 'POST', '/admin/partner-brugere/sms-info?vis=1', { adminCookie: ac });
+  assert.deepEqual(vis2.body.opret.map((o) => o.partner), ['Nyopret']);
+  assert.ok(vis2.body.uden.some((u) => u.partner === 'Udenmobil' && /mobilnummer/.test(u.grund)));
+  assert.ok(!JSON.stringify(vis2.body).includes('Arkiv'));
+  const r2 = await api(h.baseUrl, 'POST', '/admin/partner-brugere/sms-info', { adminCookie: ac });
+  const ny = r2.body.resultat.find((x) => x.partner === 'Nyopret');
+  assert.ok(ny && ny.ok && ny.oprettet);
+  const smsNy = kald[kald.length - 1].messages[0];
+  assert.match(smsNy.text, /ny@n\.dk.*Startkode: [A-Z2-9]{12}/);
+  const { rows: b } = await h.pool.query("SELECT telefon, skal_skifte_kode FROM partner_bruger WHERE email = 'ny@n.dk'");
+  assert.equal(b.length, 1); assert.equal(b[0].skal_skifte_kode, true);
+  // Tredje tryk: ingen nye brugere og ingen dubletter.
+  const vis3 = await api(h.baseUrl, 'POST', '/admin/partner-brugere/sms-info?vis=1', { adminCookie: ac });
+  assert.equal(vis3.body.opret.length, 0);
 });

@@ -12,7 +12,7 @@ const { invalidateStateCache } = require('../publicState');
 const crypto = require('crypto');
 const express = require('express');
 const config = require('../config');
-const { sha256Hex, hashPassword, verifyPassword } = require('../crypto');
+const { sha256Hex, hashPassword, verifyPassword, randomCode } = require('../crypto');
 const { requireAdmin, parseCookies } = require('../middleware/adminAuth');
 const { createRateLimiter } = require('../middleware/rateLimit');
 const P = require('../partners');
@@ -466,22 +466,46 @@ function partnersRouter(pool) {
     }
   });
 
-  // Login-info på sms til alle partnerbrugere med et mobilnummer (Martin 7/10). Ingen koder i sms'en,
-  // kun adressen, mailen og vejen til "Glemt koden". ?vis=1 viser modtagerne uden at sende.
-  // Hver bruger får højst én (type partner_info, nøgle = bruger-id).
+  // Login-info på sms til ALLE partnere (Martin 7/10), uanset om de har været logget ind, og
+  // uanset status, undtagen afviste og arkiverede.
+  //  - Partnerbrugere med mobilnummer: login-info uden kode (adressen, mailen og "Glemt koden").
+  //    Hver bruger får højst én (type partner_info, nøgle = bruger-id).
+  //  - Partnere UDEN bruger, men med kontaktens mail og mobilnummer: der oprettes en bruger
+  //    (kontaktens mail), og login + en ny startkode sendes på sms, præcis som "Ny bruger".
+  // ?vis=1 viser modtagerne uden at sende eller oprette noget.
   router.post('/admin/partner-brugere/sms-info', admin, async (req, res, next) => {
     try {
       const { rows } = await pool.query(
-        `SELECT b.id, b.email, b.telefon, p.navn, p.kontakt_telefon, p.kontakt_email
+        `SELECT b.id, b.email, b.telefon, p.navn, p.kontakt_telefon
            FROM partner_bruger b JOIN partner p ON p.id = b.partner_id
-          WHERE p.status = 'aktiv' ORDER BY p.navn, b.email`
+          WHERE p.status NOT IN ('afvist', 'arkiveret') ORDER BY p.navn, b.email`
       );
       const modtagere = rows.map((r) => {
         const tlf = SMS.msisdn(r.telefon) || ((!r.telefon && SMS.msisdn(r.kontakt_telefon)) ? SMS.msisdn(r.kontakt_telefon) : null);
         return { id: r.id, partner: r.navn, email: r.email, telefon: tlf };
       });
       const med = modtagere.filter((m) => m.telefon), uden = modtagere.filter((m) => !m.telefon);
-      if (req.query.vis === '1') return res.json({ med, uden });
+
+      const { rows: udenBruger } = await pool.query(
+        `SELECT p.id, p.navn, p.kontakt_navn, p.kontakt_email, p.kontakt_telefon FROM partner p
+          WHERE p.status NOT IN ('afvist', 'arkiveret')
+            AND NOT EXISTS (SELECT 1 FROM partner_bruger b WHERE b.partner_id = p.id)
+          ORDER BY p.navn`
+      );
+      const opret = [];
+      for (const p of udenBruger) {
+        let email = null;
+        try { email = P.renEmail(p.kontakt_email, 'email'); } catch (e) { email = null; }
+        const tlf = SMS.msisdn(p.kontakt_telefon);
+        const mangler = !email ? 'kontaktens mail mangler' : !tlf ? 'kontaktens mobilnummer mangler' : null;
+        if (!mangler) {
+          const { rows: findes } = await pool.query('SELECT 1 FROM partner_bruger WHERE email = $1', [email]);
+          if (findes.length) { uden.push({ partner: p.navn, email, telefon: null, grund: 'mailen bruges allerede af en anden partner' }); continue; }
+          opret.push({ partner_id: p.id, partner: p.navn, navn: p.kontakt_navn || '', email, telefon: tlf });
+        } else uden.push({ partner: p.navn, email: email || '', telefon: null, grund: mangler });
+      }
+      if (req.query.vis === '1') return res.json({ med, opret, uden });
+
       const resultat = [];
       for (const m of med) {
         const r = await SMS.send(pool, {
@@ -490,7 +514,18 @@ function partnersRouter(pool) {
         }).catch(() => ({ ok: false, grund: 'fejl' }));
         resultat.push({ partner: m.partner, email: m.email, ok: !!r.ok, grund: r.grund || null });
       }
-      await audit(pool, req, 'partner_sms_info', { sendt: resultat.filter((r) => r.ok).length, i_alt: med.length });
+      for (const o of opret) {
+        const kode = randomCode(12);
+        const id = crypto.randomUUID();
+        await pool.query(
+          'INSERT INTO partner_bruger (id, partner_id, email, navn, password_hash, skal_skifte_kode, telefon) VALUES ($1, $2, $3, $4, $5, true, $6)',
+          [id, o.partner_id, o.email, o.navn, hashPassword(kode), o.telefon]
+        );
+        await audit(pool, req, 'partner_bruger_oprettet', { partner_id: o.partner_id, bruger_id: id, via: 'sms_alle' });
+        const r = await smsLogin(pool, { til: o.telefon, email: o.email, kode, ny: true }).catch(() => ({ ok: false, grund: 'fejl' }));
+        resultat.push({ partner: o.partner, email: o.email, ok: !!(r && r.ok), grund: (r && r.grund) || null, oprettet: true });
+      }
+      await audit(pool, req, 'partner_sms_info', { sendt: resultat.filter((r) => r.ok).length, i_alt: med.length + opret.length, oprettet: opret.length });
       res.json({ resultat, uden });
     } catch (e) { next(e); }
   });
