@@ -232,8 +232,13 @@ function render(t){
   bg.style.transform = 'translateX(' + bx.toFixed(0) + 'px)';
   bg.style.opacity = 0.42;
 }
-function loop(){ render((Date.now()-t0)/1000); requestAnimationFrame(loop); }
-loop();
+/* Skærmafspillere (fx NovaStar/ViPlex) har en svag browser. 60 billeder i sekundet med skiftende
+   gradienter kan få skærmen til at blinke. Derfor tegnes baggrunden kun 8 gange i sekundet, og med
+   ?rolig=1 i adressen står baggrunden helt stille (tekst og billedskift virker som normalt). */
+var ROLIG = /[?&]rolig=1/.test(location.search);
+var FPS = /[?&]fps=(\d+)/.exec(location.search); FPS = FPS ? Math.max(1, Math.min(30, +FPS[1])) : 8;
+render(0);
+if (!ROLIG) setInterval(function(){ render((Date.now()-t0)/1000); }, Math.round(1000 / FPS));
 
 /* ---------------- topscore ---------------- */
 var scores = [];
