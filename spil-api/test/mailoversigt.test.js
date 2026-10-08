@@ -54,3 +54,27 @@ test('mail-oversigt: samlet antal, SmartPack-nyheder og aktive samtykker pr. par
   const mp = r.body.partnere.find((x) => x.slug === slug);
   assert.equal(mp.antal, 1);
 });
+
+test('mail-oversigt og tilmeldingslister: partnere der ikke samler mails er udeladt', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const login = await api(h.baseUrl, 'POST', '/admin/login', { body: { password: ADMIN_PW } });
+  const ac = login.headers.get('set-cookie').split(';')[0];
+
+  const p = await api(h.baseUrl, 'POST', '/admin/partnere', { adminCookie: ac, body: { navn: 'Kun gave' } });
+  const slug = p.body.partner.slug;
+  await h.pool.query('UPDATE partner SET samler_mails = false WHERE slug = $1', [slug]);
+  const a = await mkSpiller(h.pool);
+  await mkSamtykke(h.pool, a, 'partner:' + slug, 'bekraeftet');
+
+  const r = await api(h.baseUrl, 'GET', '/admin/mail-oversigt', { adminCookie: ac });
+  assert.equal(r.status, 200);
+  assert.equal(r.body.partnere.find((x) => x.slug === slug), undefined);
+  assert.equal(r.body.mindst_en_partner, 0);
+
+  // Selv som aktiv og synlig partner kommer den ikke med i spillets flueben.
+  const { partnerLister } = require('../src/cfgLoad');
+  await h.pool.query("UPDATE partner SET status = 'aktiv', vist_i_spil = true WHERE slug = $1", [slug]);
+  const lister = await partnerLister(h.pool);
+  assert.equal(lister.find((l) => l.slug === slug), undefined);
+});

@@ -17,7 +17,7 @@ const { SMS_SAMTYKKE_TEKST } = require('./rules/life');
 
 async function partnerLister(db) {
   const { rows } = await db.query(
-    `SELECT * FROM partner WHERE status = 'aktiv' AND vist_i_spil = true ORDER BY navn ASC`
+    `SELECT * FROM partner WHERE status = 'aktiv' AND vist_i_spil = true AND samler_mails = true ORDER BY navn ASC`
   );
   return rows.filter(erSynlig).map((p) => ({
     slug: p.slug,
