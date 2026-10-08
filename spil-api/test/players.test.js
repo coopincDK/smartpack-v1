@@ -347,8 +347,8 @@ test('PUT /me/ticks (dagens flueben) giver friske liv, PUT /me/subs gør ikke', 
 
   const ticks = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sms'] } });
   assert.equal(ticks.status, 200);
-  assert.equal(ticks.body.friske_liv, 1); // 'sms' giver liv når den er tikket af i dag
-  assert.equal(ticks.body.liv.n, foer.body.liv.n + 1);
+  assert.equal(ticks.body.friske_liv, 3); // at tage stilling giver 3 liv (VALG_LIV), ens for alle
+  assert.equal(ticks.body.liv.n, foer.body.liv.n + 3);
   assert.deepEqual(ticks.body.mine_flueben, ['sms']);
 
   // Gentikning samme dag giver IKKE ekstra liv.
@@ -356,6 +356,29 @@ test('PUT /me/ticks (dagens flueben) giver friske liv, PUT /me/subs gør ikke', 
   assert.equal(ticksIgen.body.friske_liv, 0);
   const ticksIgen2 = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sms'] } });
   assert.equal(ticksIgen2.body.friske_liv, 0);
+});
+
+test('PUT /me/ticks med "Nej tak" giver de samme liv som et flueben og logger intet samtykke', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const { body } = await registrerSpiller(h.baseUrl);
+  const reg = await api(h.baseUrl, 'POST', '/players', { body });
+  const token = reg.body.token;
+  const foer = await api(h.baseUrl, 'GET', '/me', { token });
+
+  const nej = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['nej'] } });
+  assert.equal(nej.status, 200);
+  assert.equal(nej.body.friske_liv, 3);
+  assert.equal(nej.body.liv.n, foer.body.liv.n + 3);
+  assert.deepEqual(nej.body.mine_flueben, ['nej']);
+  assert.deepEqual(nej.body.mine_noegler, []);
+  const { rows } = await h.pool.query('SELECT count(*)::int AS n FROM samtykke s JOIN spiller p ON p.id = s.spiller_id WHERE p.public_id = $1', [reg.body.spiller.pid]);
+  assert.equal(rows[0].n, 0);
+
+  // Skifter man bagefter til ja, kommer der ikke flere liv samme dag.
+  const ja = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sp'] } });
+  assert.equal(ja.body.friske_liv, 0);
+  assert.deepEqual(ja.body.mine_flueben, ['sp']);
 });
 
 test('DELETE /me/subs/:liste er en ægte, varig afmelding (trukket_tilbage logges, fjernes fra dagens flueben)', async (t) => {

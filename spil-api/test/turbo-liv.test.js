@@ -20,8 +20,13 @@ test('turbo-liv: med 3 af dagens flueben kommer der 3 liv i timen (op til 3)', (
   assert.ok(nextRegenMs({ day: dag, n: 0, t: nu }, p, cfg, nu) <= 20 * 60000);
 });
 
-test('turbo-liv: med færre end 3 flueben er det stadig ét liv i timen (op til 1)', () => {
-  const p = spiller(['sp', 'm:a']);
+test('turbo-liv: ét flueben eller "Nej tak" giver også turbo (bonus for at tage stilling)', () => {
+  assert.equal(regenFor(spiller(['m:a']), cfg, nu).turbo, true);
+  assert.equal(regenFor(spiller(['nej']), cfg, nu).turbo, true);
+});
+
+test('turbo-liv: uden dagens valg er det stadig ét liv i timen (op til 1)', () => {
+  const p = spiller([]);
   assert.equal(regenFor(p, cfg, nu).turbo, false);
   const ud = lifeState({ day: dag, n: 0, t: new Date(nu.getTime() - 3 * 60 * 60000), g: [] }, p, cfg, nu, 0);
   assert.equal(ud.n, 1);
