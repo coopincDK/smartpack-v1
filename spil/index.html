@@ -654,14 +654,15 @@ details.trafik summary{cursor:pointer;font-weight:700}
     <h1 class="prlogo"><img src="packrush-logo.webp" alt="Packrush" width="1200" height="233" decoding="async"></h1>
     <div class="rule"></div>
   </div>
+  <!-- Startknappen står øverst lige under logoet, så den ses uden at scrolle (Martin 8/10: nogle fandt den ikke) -->
+  <button class="btn primary" id="b-me" hidden></button>
+  <button class="btn primary" id="b-play">Spil med</button>
   <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b>, og din bedste score kommer på tavlen. Tag stilling til nyheder fra os og partnerne, så får du 3 ekstra liv om dagen, uanset om du siger ja eller nej tak.</p>
   <a class="turn-chip" href="vilkaar/"><span class="tc-ikon" aria-hidden="true">🏆</span><span><b>Lukket turnering 8. okt.</b> Kun konferencedeltagere får lodder til præmierne.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Saml op til 5 lodder om dagen til 18. okt. Vi trækker to vindere af vin. Her gælder de særskilte vilkår for efterårsferieudfordringen.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <div class="live" id="st-live"></div>
   <p class="muted small" id="st-invited" hidden></p>
   <div class="mission" id="st-mission" hidden></div>
-  <button class="btn primary" id="b-me" hidden></button>
-  <button class="btn primary" id="b-play">Spil med</button>
   <button class="btn install" id="b-install" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7M9 11l3 3 3-3"/></svg>Læg spillet på din telefon</button>
   <div class="head"><h2>Topscoren</h2></div>
   <div class="tabs" id="tabs-top" role="tablist"></div>
