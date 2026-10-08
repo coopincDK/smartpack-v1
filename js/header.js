@@ -11,6 +11,28 @@
 
   (function(){var s=document.createElement('style');s.textContent='@media(max-width:1080px){.theme-toggle{display:none!important;}.nav__cta--always{display:inline-flex!important;align-items:center;padding:.35rem .75rem;font-size:.82rem;white-space:nowrap;flex-shrink:0;border-radius:.4rem;}}';document.head.appendChild(s);})();
 
+  // Packrush-bjaelke paa alle sider under efteraarsferieudfordringen (6.-18. okt. 2026).
+  // Bruger den eksisterende announce-bjaelke (.site-announce, --announce-h) og slukker
+  // af sig selv efter 18/10 (dansk tid). Sider med deres egen announce-bjaelke beholder den.
+  function packrushBjaelke() {
+    if (document.getElementById('site-announce')) return '';
+    var d = '';
+    try { d = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Copenhagen' }).format(new Date()); } catch (e) { return ''; }
+    if (!d || d > '2026-10-18') return '';
+    return [
+      '<div class="site-announce" id="site-announce" role="region" aria-label="Packrush">',
+      '  <div class="site-announce__inner">',
+      '    <span aria-hidden="true">&#127918;</span>',
+      '    <span class="pr-lang">Spil Packrush, vores lagerspil, i efter&aring;rsferien og vind vin. Vinderne tr&aelig;kkes 19. oktober.</span>',
+      '    <span class="pr-kort">Spil Packrush og vind vin</span>',
+      '    <a class="site-announce__link" href="' + url('/spil/') + '">Deltag her &rarr;</a>',
+      '  </div>',
+      '  <button class="site-announce__close" id="site-announce-close" aria-label="Luk">&times;</button>',
+      '</div>'
+    ].join('\n');
+  }
+  (function(){var s=document.createElement('style');s.textContent='.pr-kort{display:none}@media(max-width:640px){.pr-lang{display:none}.pr-kort{display:inline}}';document.head.appendChild(s);})();
+
   function injectHeader() {
     var placeholder = document.getElementById('sp-header');
     if (!placeholder) return;
@@ -57,7 +79,7 @@
       '</header>'
     ].join('\n');
 
-    placeholder.insertAdjacentHTML('beforebegin', html);
+    placeholder.insertAdjacentHTML('beforebegin', packrushBjaelke() + html);
     placeholder.parentNode.removeChild(placeholder);
     initNav();
   }
@@ -67,9 +89,11 @@
     var announce      = document.getElementById('site-announce');
     var announceClose = document.getElementById('site-announce-close');
 
+    // offsetParent er altid null for position:fixed, saa den maaltes som 0. Synlig bjaelke
+    // bruger CSS'ens faste hoejde (:root --announce-h), ellers 0.
     function updateAnnounceH() {
-      var h = (announce && announce.offsetParent !== null) ? announce.offsetHeight : 0;
-      document.documentElement.style.setProperty('--announce-h', h + 'px');
+      if (announce && getComputedStyle(announce).display !== 'none') document.documentElement.style.removeProperty('--announce-h');
+      else document.documentElement.style.setProperty('--announce-h', '0px');
     }
 
     if (announce && sessionStorage.getItem('sp-announce-closed')) {
