@@ -654,7 +654,7 @@ details.trafik summary{cursor:pointer;font-weight:700}
     <h1 class="prlogo"><img src="packrush-logo.webp" alt="Packrush" width="1200" height="233" decoding="async"></h1>
     <div class="rule"></div>
   </div>
-  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b>, eller 3 i timen med mindst 3 flueben, og din bedste score kommer på tavlen.</p>
+  <p class="lede">Tre runder på et travlt lager, hvor hver runde bygger på den forrige. Du får <b id="st-per">1 liv i timen</b>, og din bedste score kommer på tavlen. Tag stilling til nyheder fra os og partnerne, så får du 3 ekstra liv om dagen, uanset om du siger ja eller nej tak.</p>
   <a class="turn-chip" href="vilkaar/"><span class="tc-ikon" aria-hidden="true">🏆</span><span><b>Lukket turnering 8. okt.</b> Kun konferencedeltagere får lodder til præmierne.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <a class="turn-chip efter" href="efteraar/"><span class="tc-ikon" aria-hidden="true">🍂</span><span><b>Efterårsferieudfordring, åben for alle</b> Saml op til 5 lodder om dagen til 18. okt. Vi trækker to vindere af vin. Her gælder de særskilte vilkår for efterårsferieudfordringen.</span><span class="tc-pil" aria-hidden="true">›</span></a>
   <div class="live" id="st-live"></div>
@@ -840,7 +840,7 @@ details.trafik summary{cursor:pointer;font-weight:700}
     <label class="check"><input type="checkbox" id="c-sms">Sms'er om spillet, når nogen bliver overhalet, og om præmier</label>
     <label class="f">Sponsor for sms'erne <small>Man kommer på sponsorens sms-liste, når man siger ja til sms</small><input type="text" id="c-sponsor" maxlength="30"></label>
     <label class="f">Partnere på nyhedsmailen <small>Adskil med komma. Man kommer på alle deres lister, når man siger ja til nyheder</small><input type="text" id="c-mailp" maxlength="200"></label>
-    <label class="check"><input type="checkbox" id="c-life">Ekstra liv for tilmelding: ét pr. partner om dagen, og ét nyt liv hver time, når man er løbet tør</label>
+    <label class="check"><input type="checkbox" id="c-life">Ekstra liv for at tage stilling til nyheder: 3 liv om dagen og 3 liv i timen uden for turneringen, ens for ja og nej tak</label>
     <label class="check"><input type="checkbox" id="c-ref">Vennekoder og udfordringer: fuld liv for en ny ven, ét liv i timen for hver ven, der tager udfordringen op</label>
     <label class="f">Link til spillet <small>Bruges i udfordringer og på LinkedIn, når spillet ligger på jeres egen side. Tomt betyder, at kun koden bliver delt</small><input type="url" id="c-share" maxlength="200" placeholder="https://"></label>
     <label class="check"><input type="checkbox" id="c-fixed">Samme bane for alle hele dagen, så det er dygtighed og ikke held, der afgør tavlen</label>
@@ -1540,23 +1540,24 @@ function subKeys(p){ const k = []; if(p.marketing) k.push('sp'); (p.mailTo || []
 /* dagens flueben: separat fra den varige tilmelding (subKeys). At fjerne et flueben her afmelder IKKE
    listen varigt (kun "Mine tilmeldinger" gør det) — det betyder blot, at man ikke får dagens liv-bonus. */
 const todayKeys = p => (p && p.todayTicks) || [];
+// Bonus for at tage stilling (ens for ja og nej tak), se spil-api/src/rules/life.js (NEJ_TAK, VALG_LIV).
+const NEJ_TAK = 'nej', VALG_LIV = 3;
 // Brugerens beslutning: telefonnummer vises og kræves KUN, når sms-fluebenet sættes (ikke resten
 // af tilmeldingen) — både ved selve tilmeldingen og ved dagens flueben i lobbyen. knownPhone er den
 // allerede gemte telefon (fra /me, ved genlogin/dagens flueben); er den tom, skal feltet udfyldes.
 function subsBox(box, initial, onChange, fold, knownPhone){
   // "Tilmeld alle" øverst, og hver liste kan fjernes enkeltvis nedenunder
-  const opts = subOptions(), chosen = new Set(initial), lifeOpts = opts.filter(o => o.life).length, bonus = cfg.lifeBonus !== false;
+  const opts = subOptions(), chosen = new Set(initial), bonus = cfg.lifeBonus !== false;
   box.replaceChildren();
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
-  t.append(el('strong', null, bonus && lifeOpts ? `Få op til ${lifeOpts} ekstra liv hver dag` : 'Nyheder og sms'), el('p', null, bonus && lifeOpts ? 'Hver partner, du sætter flueben ved, giver et ekstra liv med det samme. Sætter du mindst 3 flueben, får du også 3 liv i timen i stedet for 1 (ikke i den lukkede turnering). Fluebenene starter tomme hver dag, så du vælger selv. Frivilligt, og du kan altid afmelde dig.' : 'Frivilligt, og du kan altid afmelde dig.'));
+  t.append(el('strong', null, bonus ? `Tag stilling og få ${VALG_LIV} ekstra liv i dag` : 'Nyheder og sms'), el('p', null, bonus ? `Du får ${VALG_LIV} ekstra liv, uanset om du siger ja til en eller flere, eller nej tak til dem alle. Uden for den lukkede turnering får du også 3 liv i timen i stedet for 1. Dit valg har ingen betydning for dine chancer for at vinde. Fluebenene starter tomme hver dag. Frivilligt, og du kan altid afmelde dig.` : 'Frivilligt, og du kan altid afmelde dig.'));
   // "Ja tak til alle" (Martin, 6/10): sætter de synlige flueben på én gang. Ingen er sat på forhånd,
   // hver partners tekst står stadig ved sit flueben, og man kan fjerne dem enkeltvis bagefter (vilkår pkt. 12).
   // Sms (kræver telefonnummer) er ikke med i "alle".
   const allCount = opts.filter(o => o.k !== 'sms').length;
-  const allLife = opts.filter(o => o.k !== 'sms' && o.life).length;
-  // Ved tilmelding (onChange er null) sender knappen også formularen, så man kommer direkte videre.
-  const allTxt = () => !onChange ? 'Ja tak til alle, og lad os spille 🚀' : (bonus && allLife ? `Ja tak til alle, giv mig ${allLife} ekstra liv` : 'Ja tak til alle');
+    // Ved tilmelding (onChange er null) sender knappen også formularen, så man kommer direkte videre.
+  const allTxt = () => !onChange ? 'Ja tak til alle, og lad os spille 🚀' : 'Ja tak til alle';
   const all = el('button', 'btn green alle-btn', allTxt()); all.type = 'button';
   const allNote = el('p', 'alle-note', !onChange ? 'Sætter flueben ved alle partnere og fortsætter. Vil du hellere vælge selv, så sæt fluebenene nedenfor og tryk Fortsæt.' : 'Du kan fjerne flueben enkeltvis nedenfor.');
   head.append(t); box.append(head, all, allNote);
@@ -1565,7 +1566,6 @@ function subsBox(box, initial, onChange, fold, knownPhone){
     const l = el('label', 'check'), i = el('input'); i.type = 'checkbox'; i.checked = chosen.has(o.k); i.dataset.k = o.k;
     const sp = el('span'); sp.append(/[.!?]$/.test(o.text) ? o.text : o.text + '.');
     if(o.privacy){ const a = el('a', null, `Læs ${o.name}s privatlivspolitik`); a.href = o.privacy; a.target = '_blank'; a.rel = 'noopener'; sp.append(' ', a); }
-    if(bonus && o.life) sp.append(' ', el('b', 'plus', '+1 liv i dag'));
     l.append(i, sp); list.append(l); inputs.push(i);
     let phoneRow = null;
     if(o.k === 'sms'){
@@ -1596,7 +1596,19 @@ function subsBox(box, initial, onChange, fold, knownPhone){
       onChange && onChange([...chosen]);
     };
   });
-  const sync = () => { const every = inputs.filter(i => i.dataset.k !== 'sms').every(i => i.checked); all.textContent = every && onChange ? `✓ Alle ${allCount} er valgt` : allTxt(); all.disabled = every && !!onChange; if(box._sum) box._sum.textContent = `Vælg selv, ${chosen.size} af ${opts.length} valgt`; };
+  // "Nej tak" (Martin 8/10): giver de samme liv som fluebenene, så samtykket er frivilligt. Det står
+  // nederst og forsvinder, så snart der er sat ét flueben (de udelukker hinanden).
+  const nejL = el('label', 'check nej-tak'), nejI = el('input'); nejI.type = 'checkbox'; nejI.checked = chosen.has(NEJ_TAK);
+  const nejSp = el('span'); nejSp.append('Nej tak, jeg vil ikke have mails eller sms fra jer eller partnerne.');
+  if(bonus) nejSp.append(' ', el('b', 'plus', `+${VALG_LIV} liv i dag`));
+  nejL.append(nejI, nejSp); list.append(nejL);
+  nejI.onchange = () => { nejI.checked ? chosen.add(NEJ_TAK) : chosen.delete(NEJ_TAK); sync(); onChange && onChange([...chosen]); };
+  const sync = () => {
+    const ja = [...chosen].filter(k => k !== NEJ_TAK).length;
+    if(ja && chosen.has(NEJ_TAK)){ chosen.delete(NEJ_TAK); nejI.checked = false; }
+    nejL.hidden = ja > 0;
+    const every = inputs.filter(i => i.dataset.k !== 'sms').every(i => i.checked); all.textContent = every && onChange ? `✓ Alle ${allCount} er valgt` : allTxt(); all.disabled = every && !!onChange; if(box._sum) box._sum.textContent = chosen.has(NEJ_TAK) ? 'Vælg selv, nej tak valgt' : `Vælg selv, ${ja} af ${opts.length} valgt`;
+  };
   all.onclick = () => {
     inputs.forEach(i => { if(i.dataset.k === 'sms') return; i.checked = true; chosen.add(i.dataset.k); }); sync(); sfx('badge');
     if(onChange) return onChange([...chosen]);
@@ -2746,7 +2758,7 @@ function renderLobby(){
   }
   const nx = nextLifeMs(p), mins = nx != null ? Math.ceil(nx / 60000) : 0;
   if(nx != null && nx <= 0) debouncedRefreshMe(); // M4: nedtællingen er udløbet — hent /me igen for at få den friske livtælling
-  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? (turboLiv() ? ' Med dine flueben får du 3 nye liv i timen.' : iTurnering() ? ' Når det er brugt, får du et nyt hver time.' : ' Når det er brugt, får du et nyt hver time. Sæt 3 flueben, så får du 3 i timen.') : ' Du får et nyt liv inden for en time.');
+  $('#l-left').textContent = (l ? `Du har ${l} ${l === 1 ? 'liv' : 'liv'} lige nu.` : 'Du har ikke flere liv lige nu.') + (nx != null ? ` Næste liv om ${mins} min.` : l ? (turboLiv() ? ' Fordi du har taget stilling i dag, får du 3 nye liv i timen.' : iTurnering() ? ' Når det er brugt, får du et nyt hver time.' : ' Når det er brugt, får du et nyt hver time. Tag stilling under dagens flueben, så får du 3 i timen.') : ' Du får et nyt liv inden for en time.');
   const pips = $('#l-pips'); pips.replaceChildren(); const shown = Math.min(12, Math.max(l, 1)); pips.classList.toggle('many', shown > 6);
   for(let i = 0; i < shown; i++){ const d = el('div', 'pip ' + (i < l ? 'free' : 'used')); const im = new Image(); im.src = IMG.cubeW; im.alt = ''; d.append(im); pips.append(d); }
   // gaver fra venner
@@ -2766,8 +2778,8 @@ function renderLobby(){
   // tilmelding — at fjerne et flueben her afmelder ikke listen, kun "Mine tilmeldinger" gør det.
   const mb = $('#l-more'); mb.replaceChildren();
   if(subOptions().length){
-    const d = el('details', 'more'), sm = el('summary'); const on = todayKeys(p).length, tot = subOptions().length;
-    sm.textContent = on ? `Dagens flueben, ${on} af ${tot}` : `Få flere liv i dag, sæt dine flueben`;
+    const d = el('details', 'more'), sm = el('summary'); const tk = todayKeys(p), on = tk.filter(k => k !== NEJ_TAK).length, tot = subOptions().length;
+    sm.textContent = on ? `Dagens flueben, ${on} af ${tot}` : tk.includes(NEJ_TAK) ? 'Dagens valg: nej tak' : cfg.lifeBonus !== false ? `Få ${VALG_LIV} ekstra liv i dag, tag stilling` : 'Dagens flueben';
     const box = el('div', 'subs'); d.append(sm, box); mb.append(d);
     subsBox(box, todayKeys(p), keys => {
       applyTicks(keys, d);
@@ -3575,7 +3587,7 @@ function renderAdmin(){
       const box = $('#a-mails'); if(!m || !box) return;
       const rows = (m.partnere || []).map(p => { const d = el('div'); d.append(el('span', null, p.navn), el('b', null, fmt(p.antal))); return d; });
       const list = el('div', 'a-mails-liste'); list.append(...rows);
-      box.replaceChildren(el('h4', 'sub', 'Indsamlede mails'), el('p', 'small', `${fmt(m.spillere)} spillere i alt (alle med mail) · ${fmt(m.smartpack)} tilmeldt SmartPacks nyheder · ${fmt(m.mindst_en_partner)} har sagt ja til mindst én partner`), list);
+      box.replaceChildren(el('h4', 'sub', 'Indsamlede mails'), el('p', 'small', `${fmt(m.spillere)} spillere i alt (alle med mail) · ${fmt(m.smartpack)} tilmeldt SmartPacks nyheder · ${fmt(m.mindst_en_partner)} har sagt ja til mindst én partner · ${fmt(m.nej_tak_i_dag || 0)} har valgt nej tak i dag (${fmt(m.nej_tak_i_alt || 0)} i alt)`), list);
     }).catch(() => {});
     renderTrafik(ps);
     $('#a-mode').textContent = 'Tilmeldinger, topscore og opsætning ligger på serveren og deles af alle enheder ved standen.';

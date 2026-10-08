@@ -12,6 +12,8 @@ const {
   todayTickKeys,
   lifeKeys,
   dailyStart,
+  NEJ_TAK,
+  VALG_LIV,
 } = require('../src/rules/life');
 const { REGEN_MS, REGEN_CAP, regenCap, MAX_LIVES, DEFAULT_CFG } = require('../src/rules/constants');
 
@@ -59,7 +61,7 @@ test('lifeState nulstiller ved dags-skift til dailyStart minus dagens forsøg', 
 });
 
 test('lifeState regenererer ét liv i timen op til grundtallet (cfg.perDay), med 3 som grundtal', () => {
-  const p = med(['m:Herodesk'], '2026-01-02');
+  const p = med([], '2026-01-02'); // uden dagens valg (et valg giver turbo-regen, se turbo-liv.test.js)
   const c3 = { ...cfg, perDay: 3 };
   const t0 = new Date('2026-01-02T09:00:00Z');
   const bag0 = { day: '2026-01-02', n: 0, t: t0.getTime(), g: [] };
@@ -141,28 +143,45 @@ test('setSubsPure klipper dagens flueben ned til fællesmængden med det nye øn
   assert.deepEqual(r.p.tick.keys, ['sms']); // Herodesk kan ikke længere være tikket af i dag
 });
 
-test('setTicksPure giver kun liv for FRISKE lister (ikke allerede givet i dag)', () => {
+test('setTicksPure giver VALG_LIV liv én gang om dagen for at tage stilling, uanset ja eller nej', () => {
   const p = { marketing: false, mailTo: [], notify: false, tick: null };
   const now = new Date('2026-01-02T09:00:00Z');
   const bag = { day: '2026-01-02', n: 5, t: 0, g: [] };
 
-  const r1 = setTicksPure(p, ['sp', 'm:Herodesk'], cfg, bag, now);
-  assert.equal(r1.fresh, 2); // både SmartPack og Herodesk giver liv
-  assert.equal(r1.bag.n, 7);
-  assert.deepEqual(new Set(r1.bag.g), new Set(['sp', 'm:Herodesk']));
-  assert.deepEqual(r1.added, ['sp', 'm:Herodesk']); // begge er NYE i dag (bekræftelser)
+  // Ét flueben giver det samme som alle: VALG_LIV liv.
+  const r1 = setTicksPure(p, ['sp'], cfg, bag, now);
+  assert.equal(r1.fresh, VALG_LIV);
+  assert.equal(r1.bag.n, 5 + VALG_LIV);
+  assert.deepEqual(r1.added, ['sp']);
 
-  // Gentikning samme dag af samme liste giver IKKE liv igen (bag.g husker
-  // det, uafhængigt af om fluebenet siden er fjernet) — men tælles STADIG
-  // som en ny bekræftelse pr. gentikning (svarer 1:1 til klientens
-  // reference-implementering: hvert nyt flueben er en ny, varig
-  // bekræftelse, uanset om samme liste blev tikket af tidligere i dag).
-  const r1b = setTicksPure(r1.p, [], cfg, r1.bag, now); // fjerner fluebenet igen
+  // Flere flueben, fjernet og sat igen samme dag: ingen nye liv, men stadig nye bekræftelser.
+  const r1b = setTicksPure(r1.p, [], cfg, r1.bag, now);
   assert.deepEqual(r1b.p.tick.keys, []);
   const r2 = setTicksPure(r1b.p, ['sp', 'm:Herodesk', 'sms'], cfg, r1b.bag, now);
-  assert.equal(r2.fresh, 1); // kun 'sms' er ny i dag; sp og Herodesk stod allerede i bag.g -> intet ekstra liv
-  assert.equal(r2.bag.n, 8);
-  assert.deepEqual(r2.added, ['sp', 'm:Herodesk', 'sms']); // alle tre logges som nye bekræftelser
+  assert.equal(r2.fresh, 0);
+  assert.equal(r2.bag.n, 5 + VALG_LIV);
+  assert.deepEqual(r2.added, ['sp', 'm:Herodesk', 'sms']);
+
+  // "Nej tak" giver præcis det samme som at sige ja, og logger intet samtykke.
+  const n1 = setTicksPure(p, [NEJ_TAK], cfg, bag, now);
+  assert.equal(n1.fresh, VALG_LIV);
+  assert.deepEqual(n1.added, []);
+  assert.deepEqual(n1.p.tick.keys, [NEJ_TAK]);
+  assert.equal(n1.p.marketing, false);
+  // "Nej tak" sammen med et flueben: fluebenet vinder, "Nej tak" droppes.
+  const n2 = setTicksPure(p, ['sp', NEJ_TAK], cfg, bag, now);
+  assert.deepEqual(n2.p.tick.keys, ['sp']);
+  // Ukendte nøgler tæller ikke som et valg.
+  assert.equal(setTicksPure(p, ['m:Ukendt'], cfg, bag, now).fresh, 0);
+});
+
+test('setTicksPure: liv givet tidligere i dag efter den gamle regel trækkes fra', () => {
+  const p = { marketing: false, mailTo: [], notify: false, tick: null };
+  const now = new Date('2026-01-02T09:00:00Z');
+  const r = setTicksPure(p, ['sp'], cfg, { day: '2026-01-02', n: 2, t: 0, g: ['m:Herodesk'] }, now);
+  assert.equal(r.fresh, VALG_LIV - 1);
+  const r2 = setTicksPure(p, ['sp'], cfg, { day: '2026-01-02', n: 2, t: 0, g: ['a', 'b', 'c', 'd'] }, now);
+  assert.equal(r2.fresh, 0);
 });
 
 test('setTicksPure klemmer til MAX_LIVES og vokser (aldrig krymper) marketing/mailTo/notify', () => {

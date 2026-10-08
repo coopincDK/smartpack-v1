@@ -51,24 +51,31 @@ function todayTickKeys(p, now) {
   return p && p.tick && p.tick.day === today ? p.tick.keys.slice() : [];
 }
 
-// lifeKeys(p, cfg, now): siden Packrush er det DAGENS FLUEBEN (ikke den
-// varige tilmelding) der afgør om en liste giver liv i dag — en spiller kan
-// være varigt tilmeldt uden at have logget ind og tikket af i dag, og får da
-// ingen bonus-liv den dag.
+// Bonusliv for at TAGE STILLING (Martin 8/10 2026): samtykke må ikke give en fordel i spillet
+// (GDPR art. 7 og vilkår pkt. 12), så bonussen gives for at have valgt, ikke for at have sagt ja.
+// Man har valgt i dag, når man har sat mindst ét flueben ELLER valgt "Nej tak" (NEJ_TAK), og alle
+// får det samme: VALG_LIV ekstra liv én gang om dagen og (uden for turneringen) turbo-regen.
+const NEJ_TAK = 'nej';
+const VALG_LIV = 3;
+
+function harValgt(p, cfg, now) {
+  const opts = new Set(subOptions(cfg).map((o) => o.key));
+  return todayTickKeys(p, now).some((k) => k === NEJ_TAK || opts.has(k));
+}
+
+// lifeKeys(p, cfg, now): de bonusliv-enheder, dagens valg giver (VALG_LIV stk., ens for alle).
 function lifeKeys(p, cfg, now) {
   if (cfg.lifeBonus === false) return [];
-  const on = new Set(todayTickKeys(p, now));
-  return subOptions(cfg)
-    .filter((o) => o.life && on.has(o.key))
-    .map((o) => o.key);
+  if (!harValgt(p, cfg, now)) return [];
+  return Array.from({ length: VALG_LIV }, (_, i) => 'valg:' + (i + 1));
 }
 
 function subsCount(p, cfg, now) {
   return lifeKeys(p, cfg, now).length;
 }
 
-// Turbo-regen (Martin 6/10 2026): har spilleren sat mindst TURBO_MIN flueben i dag (og er vi
-// uden for den lukkede turnering, Martin 7/10),
+// Turbo-regen (Martin 6/10 2026): har spilleren taget stilling i dag (lifeKeys giver VALG_LIV >=
+// TURBO_MIN, Martin 8/10) og er vi uden for den lukkede turnering (Martin 7/10),
 // kommer der TURBO_PR_TIME liv pr. time (ét pr. REGEN_MS / TURBO_PR_TIME) op til
 // TURBO_PR_TIME liv, i stedet for ét liv i timen.
 const TURBO_MIN = 3;
@@ -217,11 +224,14 @@ function setSubsPure(p, keys, cfg, now) {
  */
 function setTicksPure(p, keys, cfg, bag, now) {
   const opts = new Map(subOptions(cfg).map((o) => [o.key, o]));
-  const validKeys = (Array.isArray(keys) ? keys : []).map(String).filter((k) => opts.has(k));
+  const raw = (Array.isArray(keys) ? keys : []).map(String);
+  const validKeys = raw.filter((k) => opts.has(k));
   const had = todayTickKeys(p, now);
   const added = validKeys.filter((k) => !had.includes(k));
+  // "Nej tak" gælder kun, når der ikke er sat et eneste flueben (de udelukker hinanden).
+  const tickKeys = validKeys.length ? validKeys : raw.includes(NEJ_TAK) ? [NEJ_TAK] : [];
 
-  const newP = { ...p, tick: { day: todayStr(now), keys: validKeys } };
+  const newP = { ...p, tick: { day: todayStr(now), keys: tickKeys } };
   if (added.includes('sp')) newP.marketing = true;
   if (added.some((k) => k.startsWith('m:'))) {
     const mt = new Set(newP.mailTo || []);
@@ -232,15 +242,20 @@ function setTicksPure(p, keys, cfg, bag, now) {
   }
   if (added.includes('sms')) newP.notify = true;
 
+  // Bonusliv højst VALG_LIV om dagen i alt: liv, der allerede er givet i dag (også efter den
+  // gamle regel med ét liv pr. flueben), trækkes fra, og at skifte valg giver ikke nye liv.
   const before = (bag.g || []).slice();
   const newLifeKeys = lifeKeys(newP, cfg, now);
-  const fresh = newLifeKeys.filter((k) => !before.includes(k));
+  const fresh = newLifeKeys.filter((k) => !before.includes(k)).slice(0, Math.max(0, newLifeKeys.length - before.length));
   const newBag = { ...bag, g: before.concat(fresh), n: Math.min(MAX_LIVES, bag.n + fresh.length) };
 
   return { p: newP, bag: newBag, fresh: fresh.length, added };
 }
 
 module.exports = {
+  NEJ_TAK,
+  VALG_LIV,
+  harValgt,
   todayStr,
   mailPartnersList,
   subOptions,

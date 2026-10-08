@@ -136,7 +136,7 @@
     api('/admin/mail-oversigt').then(function (m) {
       boks.replaceChildren(
         el('h4', { text: 'Indsamlede mails' }),
-        el('p', { class: 'small', text: m.spillere + ' spillere i alt (alle med mail) · ' + m.smartpack + ' tilmeldt SmartPacks nyheder · ' + m.mindst_en_partner + ' har sagt ja til mindst én partner' })
+        el('p', { class: 'small', text: m.spillere + ' spillere i alt (alle med mail) · ' + m.smartpack + ' tilmeldt SmartPacks nyheder · ' + m.mindst_en_partner + ' har sagt ja til mindst én partner · ' + (m.nej_tak_i_dag || 0) + ' har valgt nej tak i dag (' + (m.nej_tak_i_alt || 0) + ' i alt)' })
       );
       var tbl = el('div', { class: 'mails-liste' });
       m.partnere.forEach(function (p) {
