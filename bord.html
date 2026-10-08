@@ -36,7 +36,7 @@
   .logogrid img{height:44px;width:96px;object-fit:contain;background:#fff;border-radius:10px;padding:5px;display:block}
   .logogrid .p{display:flex;flex-direction:column;align-items:center;gap:7px}
   .logogrid .p span{font-size:13px;font-weight:700;color:#F1F5F9;white-space:nowrap}
-  #fastlogo{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:8px;
+  #fastlogo{position:absolute;left:50%;top:14px;transform:translateX(calc(-50% + var(--skub)));z-index:20;display:flex;align-items:center;gap:8px;
     font-weight:700;font-size:17px;color:#F1F5F9;opacity:.9;transition:opacity .7s ease}
   #fastlogo svg{width:20px;height:23px}
   #fastlogo.skjul{opacity:0}
@@ -46,8 +46,10 @@
   .logo-under{font-weight:700;font-size:27px;letter-spacing:.04em;text-transform:uppercase;color:#FFFFFF;margin-top:8px}
   .ind{position:absolute;left:150px;top:0;right:150px;height:384px;
        display:flex;align-items:center;justify-content:center;gap:56px}
-  /* Topscoren: rykket mod højre, så placeringerne ikke forsvinder i skærmens buede venstre side (Martin 8/10) */
-  #k3 .ind{left:240px;right:70px}
+  /* Alt indhold rykkes samlet mod højre, så det står midt på den synlige del af den buede LED-skærm
+     og ikke forsvinder i venstre side (Martin 8/10). Justér --skub for at flytte alle kort på én gang. */
+  :root{--skub:85px}
+  .kort > div{transform:translateX(var(--skub))}
 
   .ord{font-weight:700;letter-spacing:-.02em;line-height:1.04}
   .stor{font-size:58px;white-space:nowrap}
