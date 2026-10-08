@@ -635,6 +635,18 @@ details.trafik summary{cursor:pointer;font-weight:700}
 .a-mails{margin:6px 0 10px}
 .a-mails-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:2px 14px;font-size:14px;margin-top:4px}
 .a-mails-liste div{display:flex;justify-content:space-between;border-bottom:1px dashed rgba(255,255,255,.12);padding:3px 0}
+
+/* kort partnerboks: Læs mere, Vælg selv og kompakte linjer */
+details.subs-laes > summary{cursor:pointer;font-size:13px;color:var(--muted,#94A3B8);margin-top:4px;list-style:none}
+details.subs-laes > summary::-webkit-details-marker{display:none}
+details.subs-laes > summary::after{content:' ▾'}
+details.subs-laes[open] > summary::after{content:' ▴'}
+.vaelg-selv{display:block;width:100%;margin:8px 0 0}
+details.samtykke-mere{margin:-6px 0 6px 34px;font-size:12px;opacity:.85}
+details.samtykke-mere > summary{cursor:pointer;color:var(--muted,#94A3B8);list-style:none}
+details.samtykke-mere > summary::-webkit-details-marker{display:none}
+details.samtykke-mere > summary::before{content:'ⓘ ';}
+details.samtykke-mere p{margin:4px 0 0;line-height:1.35}
 </style>
 </head>
 <body>
@@ -1569,7 +1581,9 @@ function subsBox(box, initial, onChange, fold, knownPhone){
   box.replaceChildren();
   box._phoneInput = null;
   const head = el('div', 'subs-head'), t = el('div');
-  t.append(el('strong', null, bonus ? `Tag stilling og få ${VALG_LIV} ekstra liv i dag` : 'Nyheder og sms'), el('p', null, bonus ? `Du får ${VALG_LIV} ekstra liv, uanset om du siger ja til en eller flere, eller nej tak til dem alle. Uden for den lukkede turnering får du også 3 liv i timen i stedet for 1. Dit valg har ingen betydning for dine chancer for at vinde. Fluebenene starter tomme hver dag. Frivilligt, og du kan altid afmelde dig.` : 'Frivilligt, og du kan altid afmelde dig.'));
+  const laes = el('details', 'subs-laes'); laes.append(el('summary', null, 'Læs mere'));
+  t.append(el('strong', null, bonus ? `🎁 Partnere: få ${VALG_LIV} ekstra liv i dag` : 'Nyheder og sms'), laes);
+  laes.append(el('p', null, bonus ? `Du får ${VALG_LIV} ekstra liv, uanset om du siger ja til en eller flere, eller nej tak til dem alle. Uden for den lukkede turnering får du også 3 liv i timen i stedet for 1. Dit valg har ingen betydning for dine chancer for at vinde. Fluebenene starter tomme hver dag. Frivilligt, og du kan altid afmelde dig.` : 'Frivilligt, og du kan altid afmelde dig.'));
   // "Ja tak til alle" (Martin, 6/10): sætter de synlige flueben på én gang. Ingen er sat på forhånd,
   // hver partners tekst står stadig ved sit flueben, og man kan fjerne dem enkeltvis bagefter (vilkår pkt. 12).
   // Sms (kræver telefonnummer) er ikke med i "alle".
@@ -1577,14 +1591,31 @@ function subsBox(box, initial, onChange, fold, knownPhone){
     // Ved tilmelding (onChange er null) sender knappen også formularen, så man kommer direkte videre.
   const allTxt = () => !onChange ? 'Ja tak til alle, og lad os spille 🚀' : 'Ja tak til alle';
   const all = el('button', 'btn green alle-btn', allTxt()); all.type = 'button';
-  const allNote = el('p', 'alle-note', !onChange ? 'Sætter flueben ved alle partnere og fortsætter. Vil du hellere vælge selv, så sæt fluebenene nedenfor og tryk Fortsæt.' : 'Du kan fjerne flueben enkeltvis nedenfor.');
-  head.append(t); box.append(head, all, allNote);
+  const allNote = null;
+  // "Vælg selv" folder den fulde liste ud; ellers er boksen kort (titel, Læs mere, Ja tak til alle)
+  const selv = el('button', 'btn ghost small vaelg-selv', 'Vælg selv ▾'); selv.type = 'button';
+  head.append(t); box.append(head, all, selv);
   const list = el('div', 'subs-list'), inputs = [];
+  list.hidden = !(initial && [...initial].length);
+  selv.textContent = list.hidden ? 'Vælg selv ▾' : 'Skjul listen ▴';
+  selv.onclick = () => { list.hidden = !list.hidden; selv.textContent = list.hidden ? 'Vælg selv ▾' : 'Skjul listen ▴'; };
   opts.forEach(o => {
     const l = el('label', 'check'), i = el('input'); i.type = 'checkbox'; i.checked = chosen.has(o.k); i.dataset.k = o.k;
-    const sp = el('span'); sp.append(/[.!?]$/.test(o.text) ? o.text : o.text + '.');
-    if(o.privacy){ const a = el('a', null, `Læs ${o.name}s privatlivspolitik`); a.href = o.privacy; a.target = '_blank'; a.rel = 'noopener'; sp.append(' ', a); }
-    l.append(i, sp); list.append(l); inputs.push(i);
+    const sp = el('span');
+    const fuld = /[.!?]$/.test(o.text) ? o.text : o.text + '.';
+    let mere = null;
+    if(o.k.startsWith('m:')){
+      // Kort linje ved fluebenet; den fulde samtykketekst og privatlivspolitikken ligger lige under (lagdelt information)
+      sp.append(el('b', null, o.name), ' · nyheder på mail');
+      mere = el('details', 'samtykke-mere'); mere.append(el('summary', null, 'Se hvad du siger ja til'));
+      const t = el('p', null, fuld);
+      if(o.privacy){ const a = el('a', null, `Læs ${o.name}s privatlivspolitik`); a.href = o.privacy; a.target = '_blank'; a.rel = 'noopener'; t.append(' ', a); }
+      mere.append(t);
+    } else {
+      sp.append(fuld);
+      if(o.privacy){ const a = el('a', null, `Læs ${o.name}s privatlivspolitik`); a.href = o.privacy; a.target = '_blank'; a.rel = 'noopener'; sp.append(' ', a); }
+    }
+    l.append(i, sp); list.append(l); if(mere) list.append(mere); inputs.push(i);
     let phoneRow = null;
     if(o.k === 'sms'){
       const pl = el('label', 'f'); pl.append('Telefonnummer ', el('small', null, 'Kun til sms, bruges ikke til andet'));
@@ -2637,6 +2668,10 @@ $('#b-me').onclick = () => { if(!savedMe) return; audio(); current = savedMe; sy
 let idleT = 0;
 function idleReset(){ clearTimeout(idleT); if(!isStand()) return; idleT = setTimeout(() => { if(['s-lobby', 's-result', 's-reg', 's-board'].includes(screen)){ $('#d-delpin').close(); current = null; forgetMe(); show('s-start'); } }, 120000); }
 ['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, idleReset, { passive: true }));
+/* Antal virksomheder, der har spillet Packrush i alt (fra serveren, opdateres hvert minut) */
+var VIRKSOMHEDER = 0;
+function hentVirksomheder(){ fetch(API_BASE + '/virksomheder', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(b => { if(b && b.virksomheder > VIRKSOMHEDER){ VIRKSOMHEDER = b.virksomheder; try{ if(screen === 's-start') renderStart(); }catch(e){} } }).catch(() => {}); }
+setTimeout(hentVirksomheder, 500); setInterval(hentVirksomheder, 60000);
 function renderStart(){
   { const hv = venKode(); const si = $('#st-invited'); if(si){ si.hidden = !hv || !!current; if(hv && !current) si.textContent = `Du er inviteret af en ven (kode ${hv}). Tilmeld dig, så får din ven et ekstra liv.`; } }
   const me = isStand() ? null : savedMe, bm = $('#b-me');
@@ -2648,6 +2683,7 @@ function renderStart(){
   const c1 = el('p', 'chip'); c1.append(el('span', 'dot'));
   const t1 = el('span'); if(boss){ t1.append('Dagens boss er ', el('b', null, boss.p.name), ` med ${fmt(boss.v)} point.`); } else t1.append('Ingen har spillet i dag endnu. Bliv dagens første boss.');
   c1.append(t1); live.append(c1);
+  if(VIRKSOMHEDER){ const cv = el('p', 'chip'); cv.append(el('span', 'dot'), el('span', null, `🏢 ${fmt(VIRKSOMHEDER)} virksomheder har spillet Packrush`)); live.append(cv); }
   if(cfg.prize){ const c3 = el('p', 'chip crown'); c3.append(el('span', 'dot'), el('span', null, `Præmie: ${cfg.prize}`)); live.append(c3); }
   const cl = crownLine(); if(cl){ const c2 = el('p', 'chip crown'); c2.append(el('span', 'dot'), el('span', null, cl[1])); live.append(c2); }
   const ms = $('#st-mission');
