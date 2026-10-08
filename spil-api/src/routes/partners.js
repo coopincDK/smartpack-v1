@@ -990,14 +990,15 @@ function partnersRouter(pool) {
            (SELECT count(DISTINCT c.spiller_id)::int FROM samtykke_status c JOIN spiller s ON s.id = c.spiller_id
              WHERE s.skjult = false AND c.liste = 'smartpack' AND c.seneste_type = 'bekraeftet') AS smartpack,
            (SELECT count(DISTINCT c.spiller_id)::int FROM samtykke_status c JOIN spiller s ON s.id = c.spiller_id
-             WHERE s.skjult = false AND c.liste LIKE 'partner:%' AND c.seneste_type = 'bekraeftet') AS mindst_en_partner`
+             JOIN partner p ON c.liste = 'partner:' || p.slug AND p.samler_mails = true
+             WHERE s.skjult = false AND c.seneste_type = 'bekraeftet') AS mindst_en_partner`
       );
       const { rows: pr } = await pool.query(
         `SELECT p.slug, p.navn, count(DISTINCT s.id)::int AS antal
            FROM partner p
            LEFT JOIN samtykke_status c ON c.liste = 'partner:' || p.slug AND c.seneste_type = 'bekraeftet'
            LEFT JOIN spiller s ON s.id = c.spiller_id AND s.skjult = false
-          WHERE p.status NOT IN ('afvist', 'arkiveret')
+          WHERE p.status NOT IN ('afvist', 'arkiveret') AND p.samler_mails = true
           GROUP BY p.slug, p.navn
           ORDER BY antal DESC, p.navn`
       );
