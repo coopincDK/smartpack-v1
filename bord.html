@@ -36,7 +36,7 @@
   .logogrid img{height:44px;width:96px;object-fit:contain;background:#fff;border-radius:10px;padding:5px;display:block}
   .logogrid .p{display:flex;flex-direction:column;align-items:center;gap:7px}
   .logogrid .p span{font-size:13px;font-weight:700;color:#F1F5F9;white-space:nowrap}
-  #fastlogo{position:absolute;left:50%;top:14px;transform:translateX(-50%) translateX(85px);transform:translateX(-50%) translateX(var(--skub,85px));z-index:20;display:flex;align-items:center;gap:8px;
+  #fastlogo{position:absolute;left:50%;top:14px;transform:translateX(-50%) translateX(150px);transform:translateX(-50%) translateX(var(--skub,150px));z-index:20;display:flex;align-items:center;gap:8px;
     font-weight:700;font-size:17px;color:#F1F5F9;opacity:.9;transition:opacity .7s ease}
   #fastlogo svg{width:20px;height:23px}
   #fastlogo.skjul{opacity:0}
@@ -72,8 +72,8 @@
      mens baggrunden fylder hele skærmen. Juster med ?zoom=0.8 i adressen (standard 0.72). */
   /* Alt indhold rykkes samlet mod højre (Martin 8/10), så det står midt på den synlige del af det buede
      bord. Skal være i SAMME transform som skaleringen, ellers overskriver den ene den anden.
-     Juster med ?skub=120 i adressen (pixels, standard 85). Første linje er til ældre browsere. */
-  .kort > div{transform:translateX(85px) scale(.72);transform:translateX(var(--skub,85px)) scale(var(--zoom,.72));transform-origin:50% 50%}
+     Juster med ?skub=120 i adressen (pixels, standard 150). Første linje er til ældre browsere. */
+  .kort > div{transform:translateX(150px) scale(.72);transform:translateX(var(--skub,150px)) scale(var(--zoom,.72));transform-origin:50% 50%}
 </style>
 </head>
 <body>
