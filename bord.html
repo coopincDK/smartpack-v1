@@ -36,7 +36,7 @@
   .logogrid img{height:44px;width:96px;object-fit:contain;background:#fff;border-radius:10px;padding:5px;display:block}
   .logogrid .p{display:flex;flex-direction:column;align-items:center;gap:7px}
   .logogrid .p span{font-size:13px;font-weight:700;color:#F1F5F9;white-space:nowrap}
-  #fastlogo{position:absolute;left:50%;top:14px;transform:translateX(calc(-50% + var(--skub)));z-index:20;display:flex;align-items:center;gap:8px;
+  #fastlogo{position:absolute;left:50%;top:14px;transform:translateX(-50%) translateX(85px);transform:translateX(-50%) translateX(var(--skub,85px));z-index:20;display:flex;align-items:center;gap:8px;
     font-weight:700;font-size:17px;color:#F1F5F9;opacity:.9;transition:opacity .7s ease}
   #fastlogo svg{width:20px;height:23px}
   #fastlogo.skjul{opacity:0}
@@ -46,10 +46,6 @@
   .logo-under{font-weight:700;font-size:27px;letter-spacing:.04em;text-transform:uppercase;color:#FFFFFF;margin-top:8px}
   .ind{position:absolute;left:150px;top:0;right:150px;height:384px;
        display:flex;align-items:center;justify-content:center;gap:56px}
-  /* Alt indhold rykkes samlet mod højre, så det står midt på den synlige del af den buede LED-skærm
-     og ikke forsvinder i venstre side (Martin 8/10). Justér --skub for at flytte alle kort på én gang. */
-  :root{--skub:85px}
-  .kort > div{transform:translateX(var(--skub))}
 
   .ord{font-weight:700;letter-spacing:-.02em;line-height:1.04}
   .stor{font-size:58px;white-space:nowrap}
@@ -74,7 +70,10 @@
 
   /* Buet bord: kun midten af skærmen ses forfra. Alt indhold skaleres ind mod midten,
      mens baggrunden fylder hele skærmen. Juster med ?zoom=0.8 i adressen (standard 0.72). */
-  .kort > div{transform:scale(var(--zoom,.72));transform-origin:50% 50%}
+  /* Alt indhold rykkes samlet mod højre (Martin 8/10), så det står midt på den synlige del af det buede
+     bord. Skal være i SAMME transform som skaleringen, ellers overskriver den ene den anden.
+     Juster med ?skub=120 i adressen (pixels, standard 85). Første linje er til ældre browsere. */
+  .kort > div{transform:translateX(85px) scale(.72);transform:translateX(var(--skub,85px)) scale(var(--zoom,.72));transform-origin:50% 50%}
 </style>
 </head>
 <body>
@@ -181,6 +180,8 @@
 <script>
 /* Zoom til det buede bord: ?zoom=0.6 til 1 i adressen */
 (function(){ var m = /[?&]zoom=([0-9.]+)/.exec(location.search); if (m) { var z = Math.max(.5, Math.min(1, +m[1])); document.documentElement.style.setProperty('--zoom', z); } })();
+/* Skub til højre (eller venstre med minus): ?skub=120 i adressen, i pixels, -300 til 300 */
+(function(){ var m = /[?&]skub=(-?[0-9]+)/.exec(location.search); if (m) { var v = Math.max(-300, Math.min(300, +m[1])); document.documentElement.style.setProperty('--skub', v + 'px'); } })();
 
 /* =======================================================================
    TOPSCORE-KILDEN - det eneste der skal rettes for at gaa live
