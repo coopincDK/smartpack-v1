@@ -13,8 +13,10 @@ function shortName(navn) {
   if (parts.length === 0) return '';
   if (parts.length === 1) return parts[0];
   const first = parts[0];
-  const sidsteInitial = parts[parts.length - 1].charAt(0);
-  return sidsteInitial ? `${first} ${sidsteInitial}.` : first;
+  // Første BOGSTAV i efternavnet (ikke charAt(0)): et efternavn, der starter med en emoji eller et
+  // andet tegn uden for BMP, gav ellers et halvt tegn, som vises som "�" på toplisten og skærmen.
+  const m = parts[parts.length - 1].match(/\p{L}/u);
+  return m ? `${first} ${m[0].toUpperCase()}.` : first;
 }
 
 // Sentinel-værdien src/playerDeletion.js skriver ind i stedet for en slettet

@@ -31,3 +31,9 @@ test('shortName: tomt/manglende navn er defensivt (tom streng)', () => {
 test('shortName: bevarer specialtegn/danske bogstaver', () => {
   assert.equal(shortName('Åse Østergård'), 'Åse Ø.');
 });
+
+test('shortName: efternavn der starter med emoji eller småt bogstav giver et helt bogstav', () => {
+  assert.equal(shortName('Niels 🦄Hansen'), 'Niels H.');
+  assert.equal(shortName('Niels 🦄'), 'Niels');
+  assert.equal(shortName('Niels østergaard'), 'Niels Ø.');
+});
