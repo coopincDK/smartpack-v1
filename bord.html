@@ -186,7 +186,8 @@
    tal for hver 100 px i top og bund, og en grøn streg ved indholdets midte. Tag et billede, så kan vi se,
    hvilke tal der er synlige forfra. Uden ?maal=1 vises intet. */
 (function(){
-  if (!/[?&]maal=1/.test(location.search)) return;
+  /* MIDLERTIDIGT slået til som standard under justeringen på messen 8/10 (skærmens adresse kan ikke ændres). ?maal=0 skjuler. Slås fra igen bagefter. */
+  if (/[?&]maal=0/.test(location.search)) return;
   var st = document.getElementById('stage'), lag = document.createElement('div');
   lag.style.cssText = 'position:absolute;left:0;top:0;width:1024px;height:384px;z-index:99;pointer-events:none';
   for (var x = 0; x <= 1000; x += 50) {
