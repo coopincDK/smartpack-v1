@@ -26,3 +26,17 @@ test('topliste til bordskærmen: dagens bedste pr. spiller, maskerede navne, ude
   assert.ok(!JSON.stringify(r.body).includes('Andersen'), 'efternavn maskeret');
   assert.ok(!JSON.stringify(r.body).includes('@'), 'ingen mails');
 });
+
+test('tæller: antal virksomheder, der har spillet (godkendt, ikke skjult)', async (t) => {
+  const h = await startHarness();
+  t.after(() => h.teardown());
+  const opret = async (email, firma) => {
+    const { body } = registrerSpiller(h.baseUrl, { email, firma });
+    assert.equal((await api(h.baseUrl, 'POST', '/players', { body })).status, 201);
+    return (await h.pool.query('SELECT id FROM spiller WHERE email = $1', [email])).rows[0].id;
+  };
+  const a = await opret('a@x.dk', 'Alfa ApS'); const b = await opret('b@x.dk', 'Alfa ApS'); const c = await opret('c@x.dk', 'Beta ApS'); await opret('d@x.dk', 'Gamma ApS');
+  for (const id of [a, b, c]) await h.pool.query(`INSERT INTO forsoeg (spiller_id, runde_id, start_server, slut_server, samlet, status, oprettet) VALUES ($1, gen_random_uuid(), now(), now(), 1000, 'godkendt', now())`, [id]);
+  const r = await api(h.baseUrl, 'GET', '/virksomheder');
+  assert.equal(r.status, 200); assert.equal(r.body.virksomheder, 2, 'Alfa og Beta; Gamma har ikke spillet');
+});

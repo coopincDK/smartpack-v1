@@ -36,6 +36,23 @@ function toplisteRouter(pool) {
     } catch (e) { next(e); }
   });
 
+  // Antal virksomheder, der nogensinde har spillet (godkendt spil, ikke skjult). Stiger kun over tid.
+  let firmaCache = { t: 0, n: null };
+  router.get('/virksomheder', async (req, res, next) => {
+    try {
+      if (firmaCache.n === null || Date.now() - firmaCache.t > 60000) {
+        const { rows } = await pool.query(
+          `SELECT count(DISTINCT s.firma_noegle)::int n FROM spiller s
+            WHERE s.skjult = false AND s.firma_noegle <> ''
+              AND EXISTS (SELECT 1 FROM forsoeg f WHERE f.spiller_id = s.id AND f.status = 'godkendt')`
+        );
+        firmaCache = { t: Date.now(), n: Math.max(firmaCache.n || 0, rows[0].n) };
+      }
+      res.set('Cache-Control', 'public, max-age=60');
+      res.json({ virksomheder: firmaCache.n });
+    } catch (e) { next(e); }
+  });
+
   return router;
 }
 
