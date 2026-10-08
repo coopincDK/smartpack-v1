@@ -46,5 +46,6 @@ test('arrangementets hemmelige QR-kode bekræfter deltagelse, ugyldig kode gør 
   const anna = l.body.tilmeldinger.find((x) => x.email === 'anna@shop.dk');
   assert.equal(anna.bekraeftet, true);
   assert.equal(anna.arrangement, 'Digi Day 2026');
-  assert.equal(l.body.bekraeftede, 1);
+  // På konferencedagen bekræfter konferencens kode også "C" ovenfor.
+  assert.equal(l.body.bekraeftede, idag === '2026-10-08' ? 2 : 1);
 });
