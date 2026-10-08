@@ -95,6 +95,8 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
 .time-ikoner img.sp-ikon{background:none;padding:0;height:40px}
 .time-ikoner .vin{margin-left:-4px}
 @media (max-width:640px){.time-kort{grid-template-columns:1fr}}
+.regel{display:flex;gap:12px;align-items:flex-start;background:rgba(249,115,22,.10);border:1px solid #6b3a15;border-radius:14px;padding:14px;font-size:15px;line-height:1.45}
+.regel a{color:var(--muted);font-size:13px}
 .bliv{background:linear-gradient(135deg,rgba(200,149,90,.12),transparent),var(--panel)}
 @media (max-width:640px){.hero{padding:20px 16px}.grid,.grid.smal{grid-template-columns:1fr}}
 
@@ -120,7 +122,7 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
     <div id="total"></div>
     <div class="hkort" id="hkort" hidden></div>
     <div id="konk-tekst" class="muted">Henter …</div>
-    <p class="note" id="hero-note">Lodder kan kun optjenes i den lukkede messe-turnering den 8. oktober af konferencedeltagere. Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. <a href="/spil/vilkaar/">Læs vilkårene</a></p>
+    <p class="note" id="hero-note">Lodder kan kun optjenes i den lukkede messe-turnering den 8. oktober af konferencedeltagere. Kun firmaer på Dansk Erhvervs deltagerliste kan vinde. <b>Præmier kan ikke byttes til kontanter og kan ikke overdrages uden partnerens accept.</b> <a href="/spil/vilkaar/">Læs vilkårene</a></p>
     <div class="cta">
       <a class="btn stor" href="../">Spil Packrush →</a>
       <a class="btn ghost" href="#fordele">Se fordelene ved tilmelding</a>
@@ -154,6 +156,7 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
       <h2>Præmiepuljen</h2>
       <p class="muted">Det vindende firma vælger selv sine præmier. Partnerne leverer hver deres.</p>
     </div>
+    <div class="regel" role="note"><span aria-hidden="true">⚠️</span><div><b>Ingen præmier kan byttes til kontanter.</b><br><b>Ingen præmier kan overdrages til andre uden den leverende partners accept.</b> <a href="/spil/vilkaar/">Vilkår, pkt. 8</a></div></div>
     <div class="grid" id="praemie-liste"></div>
   </section>
 
