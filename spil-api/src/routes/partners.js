@@ -833,7 +833,7 @@ function partnersRouter(pool) {
   }
   async function spillerMap(ids) {
     if (!ids.length) return new Map();
-    const { rows } = await pool.query('SELECT id, public_id, navn, email, firma FROM spiller WHERE id = ANY($1::bigint[])', [ids]);
+    const { rows } = await pool.query('SELECT id, public_id, navn, email, firma FROM spiller WHERE id = ANY($1::bigint[]) AND skjult = false', [ids]);
     return new Map(rows.map((x) => [String(x.id), x]));
   }
   function tilLead(slug, x, r, status, afmeldt) {

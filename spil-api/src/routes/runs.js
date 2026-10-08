@@ -21,6 +21,7 @@ const {
 const { computeFeats, todayLeaderboard, daysPlayedAll, computeTickets } = require('../gameQueries');
 const { invalidateStateCache } = require('../publicState');
 const config = require('../config');
+const K = require('../konkurrence');
 
 const MAKS_STATS_FELTER = 40; // simpel størrelses-guard på indsendt s-objekt
 
@@ -490,6 +491,8 @@ function runsRouter(pool, ws) {
       const scorerFrisk = (await client.query('SELECT * FROM spiller WHERE id = $1', [scorer.id])).rows[0];
       const bagScorer = await currentBag(client, scorerFrisk, cfg, now);
       const tickets = await computeTickets(client, scorer.id, cfg);
+      // Firmaets lodder efter dette spil (vilkår pkt. 5-7), til resultatskærmen.
+      const konkurrence = await K.firmaStatus(client, scorerFrisk.firma, now);
 
       const resultat = {
         godkendt: true,
@@ -499,6 +502,7 @@ function runsRouter(pool, ws) {
         rang: rangKontekst,
         liv: livView(bagScorer, playerToP(scorerFrisk), cfg, now),
         tickets,
+        konkurrence,
       };
 
       await client.query('UPDATE forsoeg SET resultat = $1 WHERE id = $2', [JSON.stringify(resultat), forsoeg.id]);
