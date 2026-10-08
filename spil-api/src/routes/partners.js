@@ -980,6 +980,33 @@ function partnersRouter(pool) {
     }
   });
 
+  // Admin: indsamlede mails. Samlet antal spillere (alle har en mail), hvor mange der er
+  // tilmeldt SmartPacks nyheder, og antal aktive samtykker (leads) pr. partner lige nu.
+  router.get('/admin/mail-oversigt', admin, async (req, res, next) => {
+    try {
+      const { rows: [t] } = await pool.query(
+        `SELECT
+           (SELECT count(*)::int FROM spiller WHERE skjult = false) AS spillere,
+           (SELECT count(DISTINCT c.spiller_id)::int FROM samtykke_status c JOIN spiller s ON s.id = c.spiller_id
+             WHERE s.skjult = false AND c.liste = 'smartpack' AND c.seneste_type = 'bekraeftet') AS smartpack,
+           (SELECT count(DISTINCT c.spiller_id)::int FROM samtykke_status c JOIN spiller s ON s.id = c.spiller_id
+             WHERE s.skjult = false AND c.liste LIKE 'partner:%' AND c.seneste_type = 'bekraeftet') AS mindst_en_partner`
+      );
+      const { rows: pr } = await pool.query(
+        `SELECT p.slug, p.navn, count(DISTINCT s.id)::int AS antal
+           FROM partner p
+           LEFT JOIN samtykke_status c ON c.liste = 'partner:' || p.slug AND c.seneste_type = 'bekraeftet'
+           LEFT JOIN spiller s ON s.id = c.spiller_id AND s.skjult = false
+          WHERE p.status NOT IN ('afvist', 'arkiveret')
+          GROUP BY p.slug, p.navn
+          ORDER BY antal DESC, p.navn`
+      );
+      res.json({ ...t, partnere: pr });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   // Admin: hvem har accepteret, og hvem har hentet leads.
   router.get('/admin/partnere/:id/log', admin, async (req, res, next) => {
     try {

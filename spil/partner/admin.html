@@ -19,6 +19,10 @@
 .liste button[aria-current="true"]{border-color:var(--accent)}
 .liste .navn{font-weight:700}
 .bruger{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line)}
+.mails-box{border-top:1px solid var(--line);margin-top:10px;padding-top:10px}
+.mails-box h4{margin:0 0 4px}
+.mails-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px 16px;margin-top:6px;font-size:14px}
+.mails-liste div{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:3px 0}
 </style>
 </head>
 <body>
@@ -112,6 +116,8 @@
         }).catch(function (e) { alert(e.message); }).then(function () { smsKnap.disabled = false; });
       };
       box.append(smsKnap);
+      var mails = el('div', { class: 'mails-box' }); box.append(mails);
+      tegnMails(mails);
       var generelt = r.advarsler.filter(function (a) { return !a.partner; });
       generelt.forEach(function (a) { box.append(el('p', { class: a.niveau === 'fejl' ? 'mangler' : 'small', text: (a.niveau === 'fejl' ? '⚠ ' : '') + a.tekst })); });
       var pr = {};
@@ -125,13 +131,29 @@
     }).catch(function () {});
   }
 
+  // Indsamlede mails: samlet og pr. partner (aktive samtykker lige nu).
+  function tegnMails(boks) {
+    api('/admin/mail-oversigt').then(function (m) {
+      boks.replaceChildren(
+        el('h4', { text: 'Indsamlede mails' }),
+        el('p', { class: 'small', text: m.spillere + ' spillere i alt (alle med mail) · ' + m.smartpack + ' tilmeldt SmartPacks nyheder · ' + m.mindst_en_partner + ' har sagt ja til mindst én partner' })
+      );
+      var tbl = el('div', { class: 'mails-liste' });
+      m.partnere.forEach(function (p) {
+        tbl.append(el('div', null, [el('span', { text: p.navn }), el('b', { text: String(p.antal) })]));
+        var t = document.getElementById('mails-' + p.slug); if (t) t.textContent = ' · ' + p.antal + (p.antal === 1 ? ' mail' : ' mails');
+      });
+      boks.append(tbl);
+    }).catch(function () {});
+  }
+
   function tegnListe() {
     tegnTjek();
     var l = $('liste'); l.replaceChildren();
     if (!state.partnere.length) l.append(el('p', { class: 'muted small', text: 'Ingen partnere endnu.' }));
     state.partnere.forEach(function (p) {
       l.append(el('button', { 'aria-current': state.valgt === p.id ? 'true' : 'false', onclick: function () { aabn(p.id); } }, [
-        el('span', null, [el('span', { class: 'navn', text: p.navn }), el('br'), el('span', { class: 'muted small', text: p.powerup ? 'Power-up: ' + p.powerup : 'Ingen power-up' })]),
+        el('span', null, [el('span', { class: 'navn', text: p.navn }), el('br'), el('span', { class: 'muted small', text: p.powerup ? 'Power-up: ' + p.powerup : 'Ingen power-up' }), el('span', { class: 'muted small', id: 'mails-' + p.slug })]),
         chip(p),
       ]));
     });

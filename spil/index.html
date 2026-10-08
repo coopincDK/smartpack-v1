@@ -632,6 +632,9 @@ details.trafik summary{cursor:pointer;font-weight:700}
 .trafik-t tr.nu td{color:#F5C451;font-weight:700}
 .trafik-t td:last-child{width:40%}
 .trafik-t .bar{display:inline-block;height:8px;border-radius:4px;background:#3ECF8E;min-width:2px}
+.a-mails{margin:6px 0 10px}
+.a-mails-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:2px 14px;font-size:14px;margin-top:4px}
+.a-mails-liste div{display:flex;justify-content:space-between;border-bottom:1px dashed rgba(255,255,255,.12);padding:3px 0}
 </style>
 </head>
 <body>
@@ -806,6 +809,7 @@ details.trafik summary{cursor:pointer;font-weight:700}
   <div class="head"><h2>Arrangør</h2><button class="link" data-go="s-start">Tilbage</button></div>
   <a class="btn ghost small" href="partner/admin.html" target="_blank" rel="noopener">Partnere, præmier og vinder</a>
   <p id="a-stats"></p>
+  <div id="a-mails" class="a-mails"></div>
   <details class="trafik" open><summary>Aktivitet: spil og spillere pr. time og pr. dag</summary><div id="a-trafik"></div></details>
   <div class="hours" id="a-hours"></div>
   <label class="check"><input type="checkbox" id="a-stand">Denne enhed er en standtablet. Den husker ikke spilleren og går tilbage til start efter 2 minutter uden tryk</label>
@@ -1219,6 +1223,7 @@ const API = {
     closeUser(id){ return apiFetch('/admin/brugere/' + encodeURIComponent(id), { method: 'DELETE', admin: true }); },
     logout(){ return apiFetch('/admin/logout', { method: 'POST', admin: true }); },
     players(){ return apiFetch('/admin/spillere', { admin: true }); },
+    mails(){ return apiFetch('/admin/mail-oversigt', { admin: true }); },
     config(){ return apiFetch('/admin/config', { admin: true }); },
     saveConfig(c){ return apiFetch('/admin/config', { method: 'PUT', body: { offentlig: c }, admin: true }); },
     boostCode(){ return apiFetch('/admin/boostkode', { admin: true }); },
@@ -3565,6 +3570,13 @@ function renderAdmin(){
   Promise.all([loadAdminPlayers(), API.admin.boostCode().then(r => { adminBoostCode = (r && (r.kode || r.boostkode || r.code)) || ''; }).catch(() => {})]).then(([ps]) => {
     if(screen !== 's-admin') return;
     $('#a-stats').textContent = `${ps.length} tilmeldte, ${ps.reduce((a, p) => a + p.attempts.length, 0)} forsøg i alt, ${ps.reduce((a, p) => a + todays(p).length, 0)} i dag, ${ps.filter(p => p.company).length} med webshop, ${ps.filter(p => subKeys(p).length).length} er tilmeldt mindst én liste.`;
+    /* Indsamlede mails: samlet og pr. partner (aktive samtykker lige nu), fra /admin/mail-oversigt */
+    API.admin.mails().then(m => {
+      const box = $('#a-mails'); if(!m || !box) return;
+      const rows = (m.partnere || []).map(p => { const d = el('div'); d.append(el('span', null, p.navn), el('b', null, fmt(p.antal))); return d; });
+      const list = el('div', 'a-mails-liste'); list.append(...rows);
+      box.replaceChildren(el('h4', 'sub', 'Indsamlede mails'), el('p', 'small', `${fmt(m.spillere)} spillere i alt (alle med mail) · ${fmt(m.smartpack)} tilmeldt SmartPacks nyheder · ${fmt(m.mindst_en_partner)} har sagt ja til mindst én partner`), list);
+    }).catch(() => {});
     renderTrafik(ps);
     $('#a-mode').textContent = 'Tilmeldinger, topscore og opsætning ligger på serveren og deles af alle enheder ved standen.';
     $('#a-csv').hidden = true;
