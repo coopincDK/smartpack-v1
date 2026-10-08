@@ -54,6 +54,19 @@ async function activeSpillerIds(pool, liste) {
   );
 }
 
+// Hvorfor en spiller ligner en testkonto (null = ligner en rigtig spiller). Bevidst forsigtig:
+// listen er kun et forslag, og arrangøren tager stilling til hver konto.
+function testkontoGrund(r) {
+  const navn = String(r.navn || '').toLowerCase().trim();
+  const email = String(r.email || '').toLowerCase().trim();
+  const [lokal, domaene] = email.split('@');
+  if (/[vw][oua]l+[aeiouy]p[yi][kgc]/.test(navn + ' ' + email)) return 'Navn eller mail ligner "wollapyk"';
+  if (/^(example\.(com|dk|org)|test\.(dk|com)|mailinator\.com|yopmail\.com|asdf\.(dk|com))$/.test(domaene || '')) return 'Testdomæne i mailen';
+  if (/^(test|asdf|qwerty|abc|aaa|xxx|foo|bar)[0-9]*$/.test(lokal || '')) return 'Mailen ligner en testadresse';
+  if (/^(test|asdf|qwerty)( |$)/.test(navn)) return 'Navnet ligner en test';
+  return null;
+}
+
 async function drawWinner(pool, cfg) {
   const { rows } = await pool.query('SELECT id, navn, email FROM spiller WHERE skjult = false');
   const vaegte = [];
@@ -575,6 +588,21 @@ function adminRouter(pool, ws, opts) {
     }
   });
 
+  // Mulige testkonti (Martin 8/10 2026), fx "wollapyk": kun et FORSLAG til arrangøren, som selv
+  // skjuler hver konto med POST /admin/spillere/:pid/skjul (kan fortrydes). Intet ændres her.
+  router.get('/admin/testkonti', admin, async (req, res, next) => {
+    try {
+      const { rows } = await pool.query(
+        `SELECT s.public_id, s.navn, s.email, s.firma, s.oprettet,
+                (SELECT count(*)::int FROM forsoeg f WHERE f.spiller_id = s.id) AS forsoeg
+           FROM spiller s WHERE s.skjult = false ORDER BY s.oprettet ASC`
+      );
+      res.json({ konti: rows.map((r) => ({ ...r, grund: testkontoGrund(r) })).filter((r) => r.grund) });
+    } catch (e) {
+      next(e);
+    }
+  });
+
   // Nulstil en spillers pinkode (glemt pinkode eller profil oprettet før
   // pinkoderne). Standen giver spilleren en ny, tilfældig 4-cifret pinkode,
   // som kun vises her én gang. Spærringen ophæves samtidig.
@@ -847,4 +875,4 @@ function adminRouter(pool, ws, opts) {
   return router;
 }
 
-module.exports = { adminRouter };
+module.exports = { adminRouter, testkontoGrund };
