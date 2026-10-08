@@ -182,6 +182,34 @@
 (function(){ var m = /[?&]zoom=([0-9.]+)/.exec(location.search); if (m) { var z = Math.max(.5, Math.min(1, +m[1])); document.documentElement.style.setProperty('--zoom', z); } })();
 /* Skub til højre (eller venstre med minus): ?skub=120 i adressen, i pixels, -300 til 300 */
 (function(){ var m = /[?&]skub=(-?[0-9]+)/.exec(location.search); if (m) { var v = Math.max(-300, Math.min(300, +m[1])); document.documentElement.style.setProperty('--skub', v + 'px'); } })();
+/* Målepunkter til justering af det buede bord (Martin 8/10): ?maal=1 i adressen viser diskrete prikker med
+   tal for hver 100 px i top og bund, og en grøn streg ved indholdets midte. Tag et billede, så kan vi se,
+   hvilke tal der er synlige forfra. Uden ?maal=1 vises intet. */
+(function(){
+  if (!/[?&]maal=1/.test(location.search)) return;
+  var st = document.getElementById('stage'), lag = document.createElement('div');
+  lag.style.cssText = 'position:absolute;left:0;top:0;width:1024px;height:384px;z-index:99;pointer-events:none';
+  for (var x = 0; x <= 1000; x += 50) {
+    var stor = x % 100 === 0;
+    for (var r = 0; r < 2; r++) {
+      var d = document.createElement('div'), y = r ? 352 : 34;
+      d.style.cssText = 'position:absolute;left:' + (x - 3) + 'px;top:' + y + 'px;width:6px;height:6px;border-radius:50%;background:' + (stor ? '#F97316' : 'rgba(255,255,255,.45)');
+      lag.appendChild(d);
+      if (stor) {
+        var t = document.createElement('div');
+        t.textContent = x / 100;
+        t.style.cssText = 'position:absolute;left:' + (x - 10) + 'px;top:' + (r ? 334 : 42) + 'px;width:20px;text-align:center;font-size:13px;font-weight:700;color:#F97316';
+        lag.appendChild(t);
+      }
+    }
+  }
+  var skub = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--skub'), 10);
+  if (isNaN(skub)) skub = 150;
+  var m = document.createElement('div');
+  m.style.cssText = 'position:absolute;left:' + (512 + skub - 1) + 'px;top:60px;width:2px;height:264px;background:rgba(62,207,142,.6)';
+  lag.appendChild(m);
+  st.appendChild(lag);
+})();
 
 /* =======================================================================
    TOPSCORE-KILDEN - det eneste der skal rettes for at gaa live
