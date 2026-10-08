@@ -251,9 +251,7 @@ details.mere h4{margin:6px 0 0;font-size:12px;text-transform:uppercase;letter-sp
       // Hovedpræmien er SmartPacks egen gave (slug "smartpack"); findes den ikke, den mest værdifulde.
       var hoved = pr.praemier.filter(function (p) { return p.slug === 'smartpack'; })[0] || pr.praemier[0];
       var hovedMoms = hoved.praemie.moms === 'inkl' ? 'inkl. moms' : 'ekskl. moms';
-      $('total').append(el('p', { class: 'sub' }, ink.length
-        ? [document.createTextNode('Samlet værdi af ' + eks.length + ' gaver fra partnerne, ekskl. moms. Hertil kommer '), el('b', { text: ink.map(function (p) { return p.navn + 's gave'; }).join(' og ') }), document.createTextNode(' til ' + SP.kr(ink.reduce(function (a, p) { return a + (p.praemie.vaerdi || 0); }, 0)) + ' inkl. moms.')]
-        : [document.createTextNode('Samlet værdi af ' + pr.praemier.length + ' gaver fra partnerne, ekskl. moms.')]));
+      $('total').append(el('p', { class: 'sub', text: 'Samlet værdi af ' + eks.length + ' gaver fra partnerne, ekskl. moms.' }));
       hkort.append(
         hk('trofae', 'Hovedpræmie', [el('div', { class: 'tx', text: hoved.praemie.titel }), el('div', { class: 'hv', style: 'font-size:17px;color:var(--accent);margin-top:4px', text: 'Værdi: ' + SP.vaerdiTekst(hoved.praemie).replace(/ (ekskl|inkl)\. moms$/, '') }), el('div', { class: 'sm', text: hovedMoms })]),
         hk('gave', 'Samlet præmiepulje', [el('div', { class: 'hv', text: SP.kr(sum) }), el('div', { class: 'sm', text: 'ekskl. moms' + (ink.length ? ' · plus ' + SP.kr(ink.reduce(function (a, p) { return a + (p.praemie.vaerdi || 0); }, 0)) + ' inkl. moms' : '') + ' · ' + pr.praemier.length + ' gaver' })])
