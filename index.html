@@ -214,6 +214,14 @@
 <!-- ================================================================
      SLUT PAA TRACKING BLOK
 ================================================================ -->
+<style>
+.pr-banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px;padding:10px 14px;border-radius:14px;background:rgba(249,115,22,.14);border:1px solid rgba(249,115,22,.55);color:inherit;text-decoration:none;font-size:15px;line-height:1.4;max-width:620px;transition:background .15s,transform .15s}
+.pr-banner:hover{background:rgba(249,115,22,.22);transform:translateY(-1px)}
+.pr-banner[hidden]{display:none}
+.pr-banner__ikon{font-size:22px}
+.pr-banner__tekst{flex:1 1 260px}
+.pr-banner__cta{font-weight:700;color:#F97316;white-space:nowrap}
+</style>
 </head>
 <body>
 
@@ -232,6 +240,13 @@
 
   <div class="container hero__inner">
     <div class="hero__content reveal">
+      <!-- Packrush-banner: efter&aring;rsferieudfordringen 6.-18. okt. 2026. Skjules automatisk efter 18/10. -->
+      <a class="pr-banner" id="pr-banner" href="spil/" hidden>
+        <span class="pr-banner__ikon" aria-hidden="true">&#127918;</span>
+        <span class="pr-banner__tekst"><strong>Spil Packrush</strong>, vores lagerspil, og v&aelig;r med i efter&aring;rsferieudfordringen. Vind Ch&acirc;teau Belle-Vue, vinderne tr&aelig;kkes 19. oktober.</span>
+        <span class="pr-banner__cta">Deltag her &rarr;</span>
+      </a>
+      <script>(function(){try{var d=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Copenhagen'}).format(new Date());if(d<='2026-10-18'){document.getElementById('pr-banner').hidden=false;}}catch(e){}})();</script>
       <div class="eyebrow">Bygget af e-k&oslash;bm&aelig;nd der selv har st&aring;et p&aring; lageret, siden 2005</div>
       <h1 class="hero__headline">
 Du vokser.<br>
