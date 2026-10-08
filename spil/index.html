@@ -3587,7 +3587,7 @@ function renderAdmin(){
       const box = $('#a-mails'); if(!m || !box) return;
       const rows = (m.partnere || []).map(p => { const d = el('div'); d.append(el('span', null, p.navn), el('b', null, fmt(p.antal))); return d; });
       const list = el('div', 'a-mails-liste'); list.append(...rows);
-      box.replaceChildren(el('h4', 'sub', 'Indsamlede mails'), el('p', 'small', `${fmt(m.spillere)} spillere i alt (alle med mail) · ${fmt(m.smartpack)} tilmeldt SmartPacks nyheder · ${fmt(m.mindst_en_partner)} har sagt ja til mindst én partner`), list);
+      box.replaceChildren(el('h4', 'sub', 'Indsamlede mails'), el('p', 'small', `${fmt(m.spillere)} spillere i alt (alle med mail) · ${fmt(m.smartpack)} tilmeldt SmartPacks nyheder · ${fmt(m.mindst_en_partner)} har sagt ja til mindst én partner · ${fmt(m.nej_tak_i_dag || 0)} har valgt nej tak i dag (${fmt(m.nej_tak_i_alt || 0)} i alt)`), list);
     }).catch(() => {});
     renderTrafik(ps);
     $('#a-mode').textContent = 'Tilmeldinger, topscore og opsætning ligger på serveren og deles af alle enheder ved standen.';

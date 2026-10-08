@@ -1,6 +1,7 @@
 'use strict';
 
 const { invalidateStateCache } = require('../publicState');
+const { todayStr } = require('../rules/tzDate');
 
 // Partnere til Packrush — se API.md, afsnit "Partnere".
 //  - Offentligt: GET /partnere, GET /partnere/:slug/logo, GET /praemier,
@@ -1001,7 +1002,13 @@ function partnersRouter(pool) {
           GROUP BY p.slug, p.navn
           ORDER BY antal DESC, p.navn`
       );
-      res.json({ ...t, partnere: pr });
+      // "Nej tak" i tilmeldingsboksen (057_nej_tak.sql): i dag og antal spillere i alt.
+      const { rows: [nej] } = await pool.query(
+        `SELECT count(*) FILTER (WHERE n.dag = $1)::int AS nej_tak_i_dag, count(DISTINCT n.spiller_id)::int AS nej_tak_i_alt
+           FROM nej_tak n JOIN spiller s ON s.id = n.spiller_id AND s.skjult = false`,
+        [todayStr(new Date())]
+      );
+      res.json({ ...t, ...nej, partnere: pr });
     } catch (e) {
       next(e);
     }

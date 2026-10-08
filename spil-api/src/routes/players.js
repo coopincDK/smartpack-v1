@@ -4,7 +4,7 @@ const { loadOffentligCfg } = require('../cfgLoad');
 
 const express = require('express');
 const { firmKey } = require('../rules/firmKey');
-const { lifeState, setSubsPure, setTicksPure, todayStr, samtykkeTekstFor, samtykkeVersionFor } = require('../rules/life');
+const { lifeState, setSubsPure, setTicksPure, todayStr, samtykkeTekstFor, samtykkeVersionFor, NEJ_TAK } = require('../rules/life');
 const { randomPublicId, randomCode, hashPassword, verifyPassword } = require('../crypto');
 const { issueToken } = require('../spillerToken');
 const { clientIp } = require('../middleware/clientIp');
@@ -505,6 +505,10 @@ function playersRouter(pool, ws, opts) {
       // token-række — der er intet "gammelt" token at overskrive her, men
       // samme fælles funktion bruges for konsistens.
       const token = await issueToken(client, spillerId);
+
+      if (nyP.tick.keys.includes(NEJ_TAK)) {
+        await client.query('INSERT INTO nej_tak (spiller_id, dag) VALUES ($1, $2) ON CONFLICT DO NOTHING', [spillerId, nyP.tick.day]);
+      }
 
       const nowIso = new Date();
       for (const key of subResult.added) {

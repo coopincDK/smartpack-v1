@@ -375,6 +375,9 @@ test('PUT /me/ticks med "Nej tak" giver de samme liv som et flueben og logger in
   const { rows } = await h.pool.query('SELECT count(*)::int AS n FROM samtykke s JOIN spiller p ON p.id = s.spiller_id WHERE p.public_id = $1', [reg.body.spiller.pid]);
   assert.equal(rows[0].n, 0);
 
+  const log = await h.pool.query('SELECT count(*)::int AS n FROM nej_tak n JOIN spiller p ON p.id = n.spiller_id WHERE p.public_id = $1', [reg.body.spiller.pid]);
+  assert.equal(log.rows[0].n, 1); // talt med i tilmeldingsoversigten
+
   // Skifter man bagefter til ja, kommer der ikke flere liv samme dag.
   const ja = await api(h.baseUrl, 'PUT', '/me/ticks', { token, body: { keys: ['sp'] } });
   assert.equal(ja.body.friske_liv, 0);

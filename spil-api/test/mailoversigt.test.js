@@ -46,9 +46,14 @@ test('mail-oversigt: samlet antal, SmartPack-nyheder og aktive samtykker pr. par
   await mkSamtykke(h.pool, c, 'smartpack', 'bekraeftet');
   await mkSamtykke(h.pool, skjult, 'partner:' + slug, 'bekraeftet'); // skjulte spillere tæller ikke
 
+  const { todayStr } = require('../src/rules/tzDate');
+  await h.pool.query('INSERT INTO nej_tak (spiller_id, dag) VALUES ($1, $2), ($1, $3), ($4, $2)', [c, todayStr(new Date()), '2026-01-01', skjult]);
+
   const r = await api(h.baseUrl, 'GET', '/admin/mail-oversigt', { adminCookie: ac });
   assert.equal(r.status, 200);
   assert.equal(r.body.spillere, 3);
+  assert.equal(r.body.nej_tak_i_dag, 1); // skjulte spillere tæller ikke
+  assert.equal(r.body.nej_tak_i_alt, 1);
   assert.equal(r.body.smartpack, 2);
   assert.equal(r.body.mindst_en_partner, 1);
   const mp = r.body.partnere.find((x) => x.slug === slug);

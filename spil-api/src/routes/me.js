@@ -9,6 +9,7 @@ const {
   subOptions,
   setSubsPure,
   setTicksPure,
+  NEJ_TAK,
   listNameFor,
   todayStr,
   todayTickKeys,
@@ -617,6 +618,9 @@ function meRouter(pool, ws, opts) {
 
       for (const key of result.added) {
         await logSamtykke(client, row.id, listNameFor(key), 'bekraeftet', 'ticks', req, now, samtykkeTekstFor(cfg, key));
+      }
+      if (result.p.tick.keys.includes(NEJ_TAK)) {
+        await client.query('INSERT INTO nej_tak (spiller_id, dag) VALUES ($1, $2) ON CONFLICT DO NOTHING', [row.id, result.p.tick.day]);
       }
 
       await client.query('COMMIT');
