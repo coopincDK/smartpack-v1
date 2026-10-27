@@ -2,18 +2,20 @@
 
 const express = require('express');
 
-// Vaegstyring til standen.
+// Vægstyring til standen.
 //
-// En messegaest scanner en QR paa bordskaermen. Telefonen lander paa
-// GET /vaeg/vis?case=<id>, som noterer oensket og viser en kvittering.
-// Vaegskaermen spoerger GET /vaeg/aktuel et par gange i sekundet og
-// skifter til den case.
+// En messegæst scanner en QR på bordskærmen. Telefonen lander på
+// GET /vaeg/vis?case=<id>, som lægger ønsket i en kø og viser hvornår
+// det bliver dets tur. Vægskærmen henter GET /vaeg/naeste, men KUN når
+// den er ledig — så en case bliver aldrig afbrudt af den næste scanning.
 //
-// Tilstanden ligger MED VILJE i hukommelsen: et oenske er kun relevant i
-// faa sekunder, og en genstart maa gerne nulstille det. Ingen database,
-// ingen migration, ingen beroering af spillets data.
+// Køen ligger med vilje i hukommelsen: et ønske er kun relevant i få
+// minutter, og en genstart må gerne rydde den. Ingen database, ingen
+// migration, ingen berøring af spillets data.
 
-const GYLDIG_MS = 90 * 1000;
+const GYLDIG_MS = 5 * 60 * 1000;   // et ønske dør efter fem minutter i kø
+const PR_CASE_MS = 120 * 1000;     // groft skøn pr. case foran dig
+const MAKS_KOE = 12;
 
 function sanitiser(s) {
   return typeof s === 'string' && /^[a-z0-9-]{1,40}$/.test(s) ? s : null;
@@ -27,33 +29,61 @@ function side(overskrift, tekst, gron) {
 <style>html,body{margin:0;height:100%;background:#010E22;color:#F1F5F9;
 font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
 display:flex;align-items:center;justify-content:center;text-align:center}
-div{padding:32px;max-width:460px}h1{font-size:34px;margin:0 0 14px;color:${farve}}
+div{padding:32px;max-width:460px}h1{font-size:34px;margin:0 0 14px;color:${farve};
+letter-spacing:-.02em;line-height:1.15}
 p{font-size:19px;line-height:1.5;color:#94A3B8;margin:0}</style></head>
 <body><div><h1>${overskrift}</h1><p>${tekst}</p></div></body></html>`;
 }
 
 function vaegRouter() {
   const router = express.Router();
-  let oenske = null;
+  let koe = [];
   let taeller = 0;
+
+  function ryd() {
+    const nu = Date.now();
+    koe = koe.filter((x) => nu - x.tid < GYLDIG_MS);
+  }
 
   // Telefonen lander her efter et scan.
   router.get('/vaeg/vis', (req, res) => {
-    const id = sanitiser(req.query.case);
     res.set('Cache-Control', 'no-store');
+    const id = sanitiser(req.query.case);
     if (!id) {
-      return res.status(400).send(side('Koden kunne ikke laeses', 'Proev en af de andre koder paa bordet.', false));
+      return res.status(400).send(side('Koden kunne ikke læses',
+        'Prøv en af de andre koder på bordet.', false));
+    }
+    ryd();
+    if (koe.length >= MAKS_KOE) {
+      return res.status(429).send(side('Der er run på lige nu',
+        'Prøv igen om et øjeblik — køen er fuld.', false));
     }
     taeller += 1;
-    oenske = { id, tid: Date.now(), nr: taeller };
-    return res.send(side('Den starter nu', 'Kig op paa vaeggen bag bordet.', true));
+    koe.push({ id, tid: Date.now(), nr: taeller });
+    const plads = koe.length;
+    if (plads === 1) {
+      return res.send(side('Den starter nu', 'Kig op på væggen bag bordet.', true));
+    }
+    const min = Math.max(1, Math.round(((plads - 1) * PR_CASE_MS) / 60000));
+    return res.send(side(`Du er nummer ${plads}`,
+      `Den kommer om cirka ${min} minut${min === 1 ? '' : 'ter'}. Bliv stående — den starter af sig selv.`, true));
   });
 
-  // Vaegskaermen spoerger her.
-  router.get('/vaeg/aktuel', (req, res) => {
+  // Vægskærmen henter her, men kun når den er ledig.
+  // At hente ÉT ønske fjerner det fra køen.
+  router.get('/vaeg/naeste', (req, res) => {
     res.set('Cache-Control', 'no-store');
-    if (!oenske || Date.now() - oenske.tid > GYLDIG_MS) return res.json({ case: null, nr: 0 });
-    return res.json({ case: oenske.id, nr: oenske.nr });
+    ryd();
+    const naeste = koe.shift();
+    if (!naeste) return res.json({ case: null, nr: 0, koe: 0 });
+    return res.json({ case: naeste.id, nr: naeste.nr, koe: koe.length });
+  });
+
+  // Kun til at kigge med — ændrer ingenting.
+  router.get('/vaeg/koe', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    ryd();
+    return res.json({ koe: koe.map((x) => ({ case: x.id, nr: x.nr })) });
   });
 
   return router;
