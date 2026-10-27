@@ -35,7 +35,20 @@ const CASENAVNE = {
   'den-sidste-flaske': 'Den Sidste Flaske',
   'jule-sweaters': 'Jule-Sweaters',
   billigfitness: 'Billigfitness',
+  'banger-dit-lager': 'Dit Lager Part II',
+  'banger-halloween': 'Halloween er død',
+  'banger-hero': 'Your Warehouse Hero',
 };
+
+// Teksten ved nyhedsbrevsfluebenet skal vaere praecis den samme som paa
+// hjemmesidens formular - serveren gemmer den som samtykke.
+const NYHEDSBREV_TEKST = 'Ja tak til praktiske tips om lager og logistik';
+
+function chipgruppe(felt, titel, valg, multi) {
+  const knapper = valg.map((v) => `<button type="button" data-v="${v}">${v}</button>`).join('');
+  return `<div class="gruppe"><span class="lbl">${titel}</span>` +
+         `<div class="chips" data-felt="${felt}"${multi ? ' data-multi="1"' : ''}>${knapper}</div></div>`;
+}
 
 function side(overskrift, tekst, gron, caseId) {
   const farve = gron ? '#3ECF8E' : '#F97316';
@@ -65,11 +78,15 @@ input.gal{border-color:#F97316}
 textarea{resize:vertical;min-height:62px}
 .gruppe{margin-bottom:16px}
 .gruppe .lbl{display:block;font-size:14px;color:#94A3B8;margin-bottom:8px}
+.valgfri{color:#64748B;font-size:12px;margin-left:6px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips button{background:#0B1220;border:1.5px solid rgba(241,245,249,.12);
 border-radius:999px;color:#94A3B8;font-family:inherit;font-size:14px;
 padding:9px 14px;cursor:pointer}
 .chips button.valgt{border-color:#3ECF8E;color:#F1F5F9;background:rgba(62,207,142,.12)}
+.nyhed{display:flex;align-items:flex-start;gap:11px;margin:4px 0 18px;
+font-size:14px;line-height:1.45;color:#94A3B8;cursor:pointer}
+.nyhed input{width:20px;height:20px;flex:0 0 auto;margin:1px 0 0;accent-color:#3ECF8E;padding:0}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .knap{display:block;width:100%;box-sizing:border-box;border:0;border-radius:12px;
 background:#3ECF8E;color:#010E22;font-family:inherit;font-size:17px;font-weight:600;
@@ -92,13 +109,12 @@ padding:16px;margin-top:4px;cursor:pointer}
 <label>Virksomhed <span class="kr">*</span><input name="company" autocomplete="organization"></label>
 <label>E-mail <span class="kr">*</span><input name="email" type="email" inputmode="email" autocomplete="email"></label>
 <label>Telefon<input name="phone" type="tel" inputmode="tel" autocomplete="tel"></label>
-<div class="gruppe"><span class="lbl">Ordrer pr. dag</span><div class="chips" id="chips">
-<button type="button" data-v="Under 50">Under 50</button>
-<button type="button" data-v="50-200">50-200</button>
-<button type="button" data-v="200-1.000">200-1.000</button>
-<button type="button" data-v="Over 1.000">Over 1.000</button>
-</div></div>
+${chipgruppe('orders', 'Ordrer pr. dag', ['Under 50', '50-200', '200-1.000', 'Over 1.000'], false)}
+${chipgruppe('shops', 'Webshop<span class="valgfri">vælg gerne flere</span>', ['Shopify', 'WooCommerce', 'Magento', 'DanDomain', 'PrestaShop', 'Andet'], true)}
+${chipgruppe('erp', 'ERP og regnskab<span class="valgfri">vælg gerne flere</span>', ['e-conomic', 'Business Central', 'Uniconta', 'Billy', 'SAP', 'Andet'], true)}
+${chipgruppe('carriers_dk', 'Fragt<span class="valgfri">vælg gerne flere</span>', ['GLS', 'PostNord', 'DAO', 'Bring', 'Shipmondo', 'Andet'], true)}
 <label>Noget vi skal vide på forhånd?<textarea name="comment" rows="2"></textarea></label>
+<label class="nyhed"><input type="checkbox" id="nyhed"><span>${NYHEDSBREV_TEKST}</span></label>
 <input class="hp" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
 <button class="knap" type="submit" id="send">Book en gennemgang</button>
 <p class="fejl" id="fejl"></p>
@@ -107,13 +123,25 @@ padding:16px;margin-top:4px;cursor:pointer}
 </div></div>
 <script>
 var SET_CASE = ${JSON.stringify(setCase)};
-var f = document.getElementById('f'), ordrer = '';
-document.getElementById('chips').addEventListener('click', function(e){
-  var b = e.target.closest('button'); if (!b) return;
-  var alle = this.querySelectorAll('button');
-  for (var i=0;i<alle.length;i++) alle[i].classList.remove('valgt');
-  if (ordrer === b.dataset.v){ ordrer = ''; return; }
-  ordrer = b.dataset.v; b.classList.add('valgt');
+var f = document.getElementById('f');
+var valgt = {};
+[].slice.call(document.querySelectorAll('.chips')).forEach(function(g){
+  var felt = g.dataset.felt, multi = g.dataset.multi === '1';
+  valgt[felt] = multi ? [] : '';
+  g.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    var v = b.dataset.v;
+    if (multi){
+      var i = valgt[felt].indexOf(v);
+      if (i === -1){ valgt[felt].push(v); b.classList.add('valgt'); }
+      else { valgt[felt].splice(i,1); b.classList.remove('valgt'); }
+      return;
+    }
+    var alle = g.querySelectorAll('button');
+    for (var k=0;k<alle.length;k++) alle[k].classList.remove('valgt');
+    if (valgt[felt] === v){ valgt[felt] = ''; return; }
+    valgt[felt] = v; b.classList.add('valgt');
+  });
 });
 function v(n){ return (f.elements[n].value || '').trim(); }
 function visFejl(h){ var e = document.getElementById('fejl'); e.innerHTML = h; e.style.display = 'block'; }
@@ -140,8 +168,10 @@ f.addEventListener('submit', function(e){
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({
       type: 'learn', name: v('name'), company: v('company'), email: v('email'),
-      phone: v('phone'), orders: ordrer, comment: noter.join('\\n\\n'),
-      source: 'Messestand', page: location.href, _hp: v('_hp')
+      phone: v('phone'), orders: valgt.orders, shops: valgt.shops,
+      erp: valgt.erp, carriers_dk: valgt.carriers_dk,
+      comment: noter.join('\\n\\n'), source: 'Messestand', page: location.href,
+      newsletter: document.getElementById('nyhed').checked, _hp: v('_hp')
     })
   }).then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(){
