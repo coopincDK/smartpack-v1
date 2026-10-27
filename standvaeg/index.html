@@ -301,6 +301,12 @@ function visStor(){
     storVideo.src = PRAESENTATION;
     storVideo.loop = true; storVideo.muted = true; storVideo.playsInline = true;
     storVideo.addEventListener('timeupdate', function(){ storTid = storVideo.currentTime; });
+    /* kan filmen ikke hentes, maa vaeggen ikke bare staa sort - saa vises kortene i stedet */
+    storVideo.addEventListener('error', function(){
+      console.error('Kunne ikke hente ' + PRAESENTATION);
+      PRAESENTATION = '';
+      visValg(false);
+    });
     h.appendChild(storVideo);
   }
   try { storVideo.currentTime = storTid; } catch(e){}
