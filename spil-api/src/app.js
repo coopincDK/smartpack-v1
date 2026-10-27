@@ -16,6 +16,7 @@ const { lodlisteRouter } = require('./routes/lodliste');
 const { varRouter } = require('./routes/var');
 const { toplisteRouter } = require('./routes/topliste');
 const { hjemmesideRouter } = require('./routes/hjemmeside');
+const { vaegRouter } = require('./routes/vaeg');
 const { createRateLimiter } = require('./middleware/rateLimit');
 const { paalaegAsyncFejlhaandtering } = require('./middleware/asyncFejl');
 
@@ -72,6 +73,7 @@ function createApp(pool, ws, opts) {
   app.use(varRouter(pool));
   app.use(toplisteRouter(pool));
   app.use(hjemmesideRouter());
+  app.use(vaegRouter());
 
   app.use((req, res) => {
     res.status(404).json({ fejl: 'Ukendt endpoint.', kode: 'ikke_fundet' });
