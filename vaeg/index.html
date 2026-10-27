@@ -599,6 +599,20 @@ setInterval(function(){
   tagLydPaa();
 }, 3000);
 
+/* Skaermen skal selv opdage at der er lagt en ny version op - ellers staar
+   den med den gamle side til nogen henter et tastatur. Hvert 5. minut
+   hentes siden selv og byggestemplet sammenlignes; er det nyt, og er
+   vaeggen ledig, hentes siden forfra. */
+var BYGGET = '20261027-224040';
+setInterval(function(){
+  fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      var m = /var BYGGET = '([^']+)'/.exec(t);
+      if (m && m[1] !== BYGGET && erLedig()) location.reload();
+    }).catch(function(){});
+}, 300000);
+
 if (document.readyState === 'complete') start();
 else window.addEventListener('load', start);
 window.addEventListener('hashchange', function(){ var c = fraHash(); if (c) spil(c); });
