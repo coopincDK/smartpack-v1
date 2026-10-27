@@ -26,13 +26,36 @@ function side(overskrift, tekst, gron) {
   return `<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>SmartPack</title>
-<style>html,body{margin:0;height:100%;background:#010E22;color:#F1F5F9;
-font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-display:flex;align-items:center;justify-content:center;text-align:center}
-div{padding:32px;max-width:460px}h1{font-size:34px;margin:0 0 14px;color:${farve};
-letter-spacing:-.02em;line-height:1.15}
-p{font-size:19px;line-height:1.5;color:#94A3B8;margin:0}</style></head>
-<body><div><h1>${overskrift}</h1><p>${tekst}</p></div></body></html>`;
+<style>html,body{margin:0;min-height:100%;background:#010E22;color:#F1F5F9;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 20px;box-sizing:border-box}
+.ark{width:100%;max-width:460px;text-align:center}
+h1{font-size:34px;margin:0 0 14px;color:${farve};letter-spacing:-.02em;line-height:1.15}
+.led{font-size:19px;line-height:1.5;color:#94A3B8;margin:0}
+.kort{margin-top:36px;background:#161C24;border:1px solid rgba(241,245,249,.08);
+border-radius:18px;padding:24px 22px;text-align:left}
+.kort h2{font-size:19px;margin:0 0 8px;color:#F1F5F9;letter-spacing:-.01em}
+.kort p{font-size:15px;line-height:1.5;color:#94A3B8;margin:0 0 18px}
+.knap{display:block;width:100%;box-sizing:border-box;border:0;border-radius:12px;
+background:#3ECF8E;color:#010E22;font-family:inherit;font-size:17px;font-weight:600;
+padding:16px;cursor:pointer}
+.knap:active{transform:translateY(1px)}</style></head>
+<body><div class="ark">
+<h1>${overskrift}</h1><p class="led">${tekst}</p>
+<div class="kort">
+<h2>Hvad kan vi hjælpe med?</h2>
+<p>Udfyld dine oplysninger og vælg emne. Vi kommer normalt retur inden for en hverdag.</p>
+<button class="knap" type="button" onclick="aabenForm()">Skriv til os</button>
+</div></div>
+<script>window._spcovBase='https://smartpack.dk';
+var forsoeg=0;
+function aabenForm(){
+  if (window.spcov) { window.spcov.open(); return; }
+  if (forsoeg++ < 25) { setTimeout(aabenForm, 200); return; }
+  location.href = 'https://smartpack.dk/kontakt';
+}</script>
+<script src="https://smartpack.dk/js/contact-form.js" defer></script>
+</body></html>`;
 }
 
 function vaegRouter() {
