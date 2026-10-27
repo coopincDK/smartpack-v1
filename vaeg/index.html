@@ -415,13 +415,20 @@ function spilBanger(c){
   skjulStor();
   var fyld = document.getElementById('festfyld'); fyld.style.width = '0%';
   var k = document.getElementById('faerv');
-  var ctx = k.getContext('2d');
+  var ctx = k.getContext('2d', { alpha: false });
+  /* Videoen skaleres EEN gang ind paa et felt-laerred, og feltet kopieres
+     derefter hen over muren. Otte felter kostede ellers otte skaleringer
+     direkte fra videoen pr. billede - det er dyrt, og det var dér hakket kom
+     fra. Spejlvendingen laves ogsaa kun een gang pr. billede. */
+  var felt = document.createElement('canvas'), fctx = felt.getContext('2d', { alpha: false });
+  var spejl = document.createElement('canvas'), sctx = spejl.getContext('2d', { alpha: false });
   k.width = 2048; k.height = NYT;
   k.style.width = '2048px'; k.style.height = NYT + 'px';
   ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 2048, NYT);
 
   var v = document.getElementById('fkilde');
   var T = 1024, N = 2;
+  felt.width = T; felt.height = NYT; spejl.width = T; spejl.height = NYT;
 
   function vaelgFelt(){
     var r = v.videoWidth / v.videoHeight;
@@ -432,6 +439,8 @@ function spilBanger(c){
       if (d < bd){ bd = d; bedst = t; }
     });
     T = bedst; N = 2048 / T;
+    felt.width = T; felt.height = NYT;
+    spejl.width = T; spejl.height = NYT;
   }
 
   function tegnEn(){
@@ -440,20 +449,38 @@ function spilBanger(c){
     var sw, sh, sx, sy;
     if (r > tr){ sh = v.videoHeight; sw = sh * tr; sx = (v.videoWidth - sw)/2; sy = 0; }
     else       { sw = v.videoWidth;  sh = sw / tr; sx = 0; sy = (v.videoHeight - sh)/2; }
+    fctx.drawImage(v, sx, sy, sw, sh, 0, 0, T, NYT);
+    if (N > 1){
+      sctx.save(); sctx.translate(T, 0); sctx.scale(-1, 1);
+      sctx.drawImage(felt, 0, 0); sctx.restore();
+    }
     for (var i = 0; i < N; i++){
-      ctx.save();
-      if (i % 2 === 1){ ctx.translate((i+1)*T, 0); ctx.scale(-1, 1); }
-      else            { ctx.translate(i*T, 0); }
-      ctx.drawImage(v, sx, sy, sw, sh, 0, 0, T, NYT);
-      ctx.restore();
+      ctx.drawImage(i % 2 === 1 ? spejl : felt, i*T, 0);
     }
   }
   /* En banger er 30 billeder i sekundet. Tegnede vi 60 gange i sekundet,
      ville halvdelen af arbejdet vaere spildt - og det er praecis det, der
      faar en messe-pc til at hakke. requestVideoFrameCallback giver os
      besked naar der ER et nyt billede, og ellers falder vi tilbage. */
-  function tegn(){
+  /* Sikkerhedsventil: kan maskinen ikke foelge med, skaeres antallet af
+     felter ned undervejs i stedet for at staa og hakke resten af sangen.
+     Faerre felter = faerre kopier pr. billede. */
+  var taelt = 0, vindueStart = 0;
+  function pasPaa(nu){
+    if (!vindueStart){ vindueStart = nu; taelt = 0; return; }
+    taelt++;
+    if (nu - vindueStart < 4000) return;
+    var pr = taelt / ((nu - vindueStart)/1000);
+    vindueStart = nu; taelt = 0;
+    if (pr < 15 && N > 1){
+      T = T * 2; N = 2048 / T;
+      felt.width = T; felt.height = NYT; spejl.width = T; spejl.height = NYT;
+    }
+  }
+
+  function tegn(nu){
     tegnEn();
+    pasPaa(nu || performance.now());
     if (v.requestVideoFrameCallback) festRaf = { v: v, id: v.requestVideoFrameCallback(tegn) };
     else festRaf = requestAnimationFrame(tegn);
   }
@@ -625,7 +652,7 @@ setInterval(function(){
    den med den gamle side til nogen henter et tastatur. Hvert 5. minut
    hentes siden selv og byggestemplet sammenlignes; er det nyt, og er
    vaeggen ledig, hentes siden forfra. */
-var BYGGET = '20261027-230222';
+var BYGGET = '20261027-230731';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
