@@ -54,7 +54,7 @@
   #nedtaelfyld{height:100%;width:100%;background:linear-gradient(90deg,#F97316,#3ECF8E)}
 
   #start{position:absolute;inset:0;z-index:99;background:rgba(1,14,34,.97);
-         display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer}
+         display:none;align-items:center;justify-content:center;flex-direction:column;cursor:pointer}
   #start h1{font-size:92px;font-weight:700;letter-spacing:-.03em;margin:0}
   #start p{font-size:34px;color:#94A3B8;margin:18px 0 0}
 </style>
@@ -429,12 +429,37 @@ function fraHash(){
 }
 
 /* ---------- start ---------- */
-document.getElementById('start').addEventListener('click', function(){
-  this.style.display = 'none';
+/* ingen klik-skaerm: siden starter selv.
+   Praesentationen koerer uden lyd og maa derfor altid spille af sig selv.
+   En case forsoeger foerst MED lyd og falder tilbage til uden, hvis browseren naegter.
+   Sker der nogensinde et klik, et tryk eller et tastetryk, er lyden laast op bagefter. */
+function start(){
+  document.getElementById('start').style.display = 'none';
   var c = fraHash();
   if (c) spil(c); else if (PRAESENTATION) visStor(); else visValg(false);
   lyt();
+}
+['pointerdown','keydown','touchstart'].forEach(function(h){
+  window.addEventListener(h, function(){
+    if (storVideo) { var q = storVideo.play(); if (q && q.catch) q.catch(function(){}); }
+  }, {passive:true});
 });
+/* vagthund: en skaerm paa en stand maa aldrig staa stille.
+   Hvert 3. sekund tjekkes det at det der skal koere, rent faktisk koerer. */
+setInterval(function(){
+  var storPaa = document.getElementById('stor').classList.contains('paa');
+  if (storPaa && storVideo && storVideo.paused){
+    storVideo.muted = true;
+    var q = storVideo.play(); if (q && q.catch) q.catch(function(){});
+  }
+  var v = document.querySelector('#ramme video');
+  if (v && v.paused && v.currentTime > 0 && !v.ended){
+    var w = v.play(); if (w && w.catch) w.catch(function(){ v.muted = true; v.play().catch(function(){}); });
+  }
+}, 3000);
+
+if (document.readyState === 'complete') start();
+else window.addEventListener('load', start);
 window.addEventListener('hashchange', function(){ var c = fraHash(); if (c) spil(c); });
 </script>
 </body>
