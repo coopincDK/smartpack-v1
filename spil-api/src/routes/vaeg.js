@@ -21,39 +21,151 @@ function sanitiser(s) {
   return typeof s === 'string' && /^[a-z0-9-]{1,40}$/.test(s) ? s : null;
 }
 
-function side(overskrift, tekst, gron) {
+const CASENAVNE = {
+  danfilter: 'Danfilter',
+  sygeplejebutikken: 'Sygeplejebutikken',
+  'skagen-clothing': 'Skagen Clothing',
+  'uniq-perler': 'Uniq Perler',
+  luksushund: 'Luksushund',
+  firstgrade: 'FirstGrade',
+  vinhuset: 'Vinhuset.dk',
+  create2stay: 'create2STAY',
+  totteland: 'Totteland.dk',
+  littleunbox: 'LittleUnBox',
+  'den-sidste-flaske': 'Den Sidste Flaske',
+  'jule-sweaters': 'Jule-Sweaters',
+  billigfitness: 'Billigfitness',
+};
+
+function side(overskrift, tekst, gron, caseId) {
   const farve = gron ? '#3ECF8E' : '#F97316';
+  const setCase = (caseId && CASENAVNE[caseId]) || '';
   return `<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow"><title>SmartPack</title>
-<style>html,body{margin:0;min-height:100%;background:#010E22;color:#F1F5F9;
+<style>html,body{margin:0;background:#010E22;color:#F1F5F9;
 font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
-body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 20px;box-sizing:border-box}
-.ark{width:100%;max-width:460px;text-align:center}
-h1{font-size:34px;margin:0 0 14px;color:${farve};letter-spacing:-.02em;line-height:1.15}
-.led{font-size:19px;line-height:1.5;color:#94A3B8;margin:0}
-.kort{margin-top:36px;background:#161C24;border:1px solid rgba(241,245,249,.08);
-border-radius:18px;padding:24px 22px;text-align:left}
-.kort h2{font-size:19px;margin:0 0 8px;color:#F1F5F9;letter-spacing:-.01em}
-.kort p{font-size:15px;line-height:1.5;color:#94A3B8;margin:0 0 18px}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;
+padding:28px 20px 40px;box-sizing:border-box}
+.ark{width:100%;max-width:460px}
+h1{font-size:32px;margin:0 0 12px;color:${farve};letter-spacing:-.02em;
+line-height:1.15;text-align:center}
+.led{font-size:18px;line-height:1.5;color:#94A3B8;margin:0;text-align:center}
+.kort{margin-top:34px;background:#161C24;border:1px solid rgba(241,245,249,.08);
+border-radius:18px;padding:24px 22px}
+.kort h2{font-size:21px;margin:0 0 8px;color:#F1F5F9;letter-spacing:-.01em}
+.und{font-size:15px;line-height:1.5;color:#94A3B8;margin:0 0 20px}
+label{display:block;margin-bottom:14px;font-size:14px;color:#94A3B8}
+label .kr{color:#3ECF8E}
+input,textarea{display:block;width:100%;box-sizing:border-box;margin-top:6px;
+background:#0B1220;border:1.5px solid rgba(241,245,249,.12);border-radius:10px;
+color:#F1F5F9;font-family:inherit;font-size:16px;padding:13px 14px;outline:none}
+input:focus,textarea:focus{border-color:#3ECF8E}
+input.gal{border-color:#F97316}
+textarea{resize:vertical;min-height:62px}
+.gruppe{margin-bottom:16px}
+.gruppe .lbl{display:block;font-size:14px;color:#94A3B8;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{background:#0B1220;border:1.5px solid rgba(241,245,249,.12);
+border-radius:999px;color:#94A3B8;font-family:inherit;font-size:14px;
+padding:9px 14px;cursor:pointer}
+.chips button.valgt{border-color:#3ECF8E;color:#F1F5F9;background:rgba(62,207,142,.12)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .knap{display:block;width:100%;box-sizing:border-box;border:0;border-radius:12px;
 background:#3ECF8E;color:#010E22;font-family:inherit;font-size:17px;font-weight:600;
-padding:16px;cursor:pointer}
-.knap:active{transform:translateY(1px)}</style></head>
+padding:16px;margin-top:4px;cursor:pointer}
+.knap:disabled{opacity:.6}
+.knap:active{transform:translateY(1px)}
+.fejl{display:none;font-size:14px;line-height:1.5;color:#F97316;margin:14px 0 0}
+.fejl a{color:#F97316}
+.andet{font-size:14px;color:#94A3B8;margin:18px 0 0;text-align:center}
+.andet a{color:#3ECF8E;text-decoration:none}
+.tak h2{margin-bottom:10px}
+.tak p{font-size:16px;line-height:1.5;color:#94A3B8;margin:0}</style></head>
 <body><div class="ark">
 <h1>${overskrift}</h1><p class="led">${tekst}</p>
-<div class="kort">
-<h2>Hvad kan vi hjælpe med?</h2>
-<p>Udfyld dine oplysninger og vælg emne. Vi kommer normalt retur inden for en hverdag.</p>
-<button class="knap" type="button" onclick="aabenForm()">Skriv til os</button>
+<div class="kort" id="kort">
+<h2>Book en gennemgang</h2>
+<p class="und">Vi kigger på jeres setup sammen og finder flaskehalsene. Cirka 20 minutter, helt uforpligtende.</p>
+<form id="f" novalidate autocomplete="on">
+<label>Navn <span class="kr">*</span><input name="name" autocomplete="name"></label>
+<label>Virksomhed <span class="kr">*</span><input name="company" autocomplete="organization"></label>
+<label>E-mail <span class="kr">*</span><input name="email" type="email" inputmode="email" autocomplete="email"></label>
+<label>Telefon<input name="phone" type="tel" inputmode="tel" autocomplete="tel"></label>
+<div class="gruppe"><span class="lbl">Ordrer pr. dag</span><div class="chips" id="chips">
+<button type="button" data-v="Under 50">Under 50</button>
+<button type="button" data-v="50-200">50-200</button>
+<button type="button" data-v="200-1.000">200-1.000</button>
+<button type="button" data-v="Over 1.000">Over 1.000</button>
 </div></div>
-<script>window._spcovBase='https://smartpack.dk';
-var forsoeg=0;
+<label>Noget vi skal vide på forhånd?<textarea name="comment" rows="2"></textarea></label>
+<input class="hp" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="knap" type="submit" id="send">Book en gennemgang</button>
+<p class="fejl" id="fejl"></p>
+</form>
+<p class="andet">Andet spørgsmål? <a href="#" id="andet">Skriv til os</a></p>
+</div></div>
+<script>
+var SET_CASE = ${JSON.stringify(setCase)};
+var f = document.getElementById('f'), ordrer = '';
+document.getElementById('chips').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if (!b) return;
+  var alle = this.querySelectorAll('button');
+  for (var i=0;i<alle.length;i++) alle[i].classList.remove('valgt');
+  if (ordrer === b.dataset.v){ ordrer = ''; return; }
+  ordrer = b.dataset.v; b.classList.add('valgt');
+});
+function v(n){ return (f.elements[n].value || '').trim(); }
+function visFejl(h){ var e = document.getElementById('fejl'); e.innerHTML = h; e.style.display = 'block'; }
+f.addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('fejl').style.display = 'none';
+  var gale = [];
+  ['name','company','email'].forEach(function(n){
+    var el = f.elements[n], ok = !!el.value.trim();
+    if (n === 'email') ok = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(el.value.trim());
+    el.classList.toggle('gal', !ok); if (!ok) gale.push(el);
+  });
+  if (gale.length){
+    visFejl('Udfyld navn, virksomhed og en gyldig e-mail.');
+    gale[0].focus(); return;
+  }
+  var knap = document.getElementById('send');
+  knap.disabled = true; knap.textContent = 'Sender...';
+  var noter = [];
+  if (SET_CASE) noter.push('Så casen om ' + SET_CASE + ' på standen.');
+  noter.push('Vil gerne booke en gennemgang.');
+  if (v('comment')) noter.push(v('comment'));
+  fetch('/api/spil/hjemmeside/kontakt', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      type: 'learn', name: v('name'), company: v('company'), email: v('email'),
+      phone: v('phone'), orders: ordrer, comment: noter.join('\\n\\n'),
+      source: 'Messestand', page: location.href, _hp: v('_hp')
+    })
+  }).then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function(){
+      var fornavn = v('name').split(' ')[0];
+      document.getElementById('kort').innerHTML =
+        '<div class="tak"><h2>Tak, ' + fornavn.replace(/[<>&]/g,'') + '.</h2>' +
+        '<p>Vi vender tilbage inden for en hverdag og finder et tidspunkt.</p></div>';
+      window.scrollTo(0,0);
+    })
+    .catch(function(){
+      knap.disabled = false; knap.textContent = 'Book en gennemgang';
+      visFejl('Det ville ikke sende lige nu. Prøv igen, eller skriv til ' +
+        '<a href="mailto:bundlinjeboost@smartpack.dk">bundlinjeboost@smartpack.dk</a>.');
+    });
+});
+window._spcovBase = 'https://smartpack.dk';
+var forsoeg = 0;
 function aabenForm(){
   if (window.spcov) { window.spcov.open(); return; }
   if (forsoeg++ < 25) { setTimeout(aabenForm, 200); return; }
   location.href = 'https://smartpack.dk/kontakt';
-}</script>
+}
+document.getElementById('andet').addEventListener('click', function(e){ e.preventDefault(); aabenForm(); });
+</script>
 <script src="https://smartpack.dk/js/contact-form.js" defer></script>
 </body></html>`;
 }
@@ -83,15 +195,15 @@ function vaegRouter() {
     // To gaester der scanner den samme kode staar i den samme plads.
     const iKoe = koe.findIndex((x) => x.id === id);
     if (iKoe === 0) {
-      return res.send(side('Den er lige på vej', 'Kig op på væggen bag bordet.', true));
+      return res.send(side('Den er lige på vej', 'Kig op på væggen bag bordet.', true, id));
     }
     if (iKoe > 0) {
       const vent = Math.max(1, Math.round((iKoe * PR_CASE_MS) / 60000));
       return res.send(side('Den er allerede bestilt',
-        `Den kommer om cirka ${vent} minut${vent === 1 ? '' : 'ter'}. Bliv stående — den starter af sig selv.`, true));
+        `Den kommer om cirka ${vent} minut${vent === 1 ? '' : 'ter'}. Bliv stående — den starter af sig selv.`, true, id));
     }
     if (sidst && sidst.id === id && Date.now() - sidst.tid < PR_CASE_MS) {
-      return res.send(side('Den kører lige nu', 'Kig op på væggen bag bordet.', true));
+      return res.send(side('Den kører lige nu', 'Kig op på væggen bag bordet.', true, id));
     }
 
     if (koe.length >= MAKS_KOE) {
@@ -102,11 +214,11 @@ function vaegRouter() {
     koe.push({ id, tid: Date.now(), nr: taeller });
     const plads = koe.length;
     if (plads === 1) {
-      return res.send(side('Den starter nu', 'Kig op på væggen bag bordet.', true));
+      return res.send(side('Den starter nu', 'Kig op på væggen bag bordet.', true, id));
     }
     const min = Math.max(1, Math.round(((plads - 1) * PR_CASE_MS) / 60000));
     return res.send(side(`Du er nummer ${plads}`,
-      `Den kommer om cirka ${min} minut${min === 1 ? '' : 'ter'}. Bliv stående — den starter af sig selv.`, true));
+      `Den kommer om cirka ${min} minut${min === 1 ? '' : 'ter'}. Bliv stående — den starter af sig selv.`, true, id));
   });
 
   // Vægskærmen henter her, men kun når den er ledig.
