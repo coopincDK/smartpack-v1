@@ -62,6 +62,7 @@ function vaegRouter() {
   const router = express.Router();
   let koe = [];
   let taeller = 0;
+  let sidst = null;   // den case vaeggen senest fik udleveret
 
   function ryd() {
     const nu = Date.now();
@@ -77,6 +78,22 @@ function vaegRouter() {
         'Prøv en af de andre koder på bordet.', false));
     }
     ryd();
+
+    // Er den samme case allerede bestilt, skal den ikke i kø igen.
+    // To gaester der scanner den samme kode staar i den samme plads.
+    const iKoe = koe.findIndex((x) => x.id === id);
+    if (iKoe === 0) {
+      return res.send(side('Den er lige på vej', 'Kig op på væggen bag bordet.', true));
+    }
+    if (iKoe > 0) {
+      const vent = Math.max(1, Math.round((iKoe * PR_CASE_MS) / 60000));
+      return res.send(side('Den er allerede bestilt',
+        `Den kommer om cirka ${vent} minut${vent === 1 ? '' : 'ter'}. Bliv stående — den starter af sig selv.`, true));
+    }
+    if (sidst && sidst.id === id && Date.now() - sidst.tid < PR_CASE_MS) {
+      return res.send(side('Den kører lige nu', 'Kig op på væggen bag bordet.', true));
+    }
+
     if (koe.length >= MAKS_KOE) {
       return res.status(429).send(side('Der er run på lige nu',
         'Prøv igen om et øjeblik — køen er fuld.', false));
@@ -99,6 +116,7 @@ function vaegRouter() {
     ryd();
     const naeste = koe.shift();
     if (!naeste) return res.json({ case: null, nr: 0, koe: 0 });
+    sidst = { id: naeste.id, tid: Date.now() };
     return res.json({ case: naeste.id, nr: naeste.nr, koe: koe.length });
   });
 
