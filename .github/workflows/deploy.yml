@@ -13,7 +13,7 @@ jobs:
   deploy:
     name: Rsync to smartpack.dk
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
 
     env:
       DEPLOY_HOST: 168.119.186.156
