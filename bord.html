@@ -97,6 +97,19 @@
   #prikker i.m{opacity:.30;width:4px;height:4px;margin-left:-2px}
   #prikker i.k{opacity:.85;width:6px;height:6px;margin-left:-3px;background:#3ECF8E;
                box-shadow:0 0 6px rgba(62,207,142,.7)}
+  /* Kundelogo-baand som paa forsiden: samme spor, samme hvide knockout,
+     bare langsommere og svagere, saa det ikke stjaeler opmaerksomhed fra
+     QR-koderne. Koerer kun paa de sider hvor der er plads til det. */
+  #baand{position:absolute;left:0;bottom:20px;width:1024px;height:40px;z-index:6;
+         overflow:hidden;opacity:0;transition:opacity .8s ease;pointer-events:none;
+         -webkit-mask-image:linear-gradient(to right,transparent 0,#000 16%,#000 84%,transparent 100%);
+                 mask-image:linear-gradient(to right,transparent 0,#000 16%,#000 84%,transparent 100%)}
+  #baand.paa{opacity:1}
+  #spor{display:flex;align-items:center;gap:54px;width:max-content;height:40px;
+        animation:logoglid 72s linear infinite}
+  #spor img{height:24px;width:auto;flex:0 0 auto;object-fit:contain;
+            filter:brightness(0) invert(1);opacity:.40}
+  @keyframes logoglid{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   #linje{position:absolute;left:0;bottom:12px;width:1024px;height:2px;z-index:6;
     background:linear-gradient(90deg,rgba(62,207,142,.05),rgba(62,207,142,.22),rgba(62,207,142,.05))}
   #puls{position:absolute;bottom:11px;left:0;height:4px;width:0;z-index:7;
@@ -156,6 +169,7 @@
   </div>
   </div>
 
+  <div id="baand"><div id="spor"></div></div>
   <div id="prikker"></div>
   <div id="linje"></div>
   <div id="puls"></div>
@@ -192,7 +206,7 @@ window.addEventListener('resize', tilpas); tilpas();
 var BREDDE = INDRE, QR = 130;
 /* QR'ens stoerrelse foelger pladsen: navn + kasse + branche skal kunne vaere der */
 
-var KORT_H = 266;
+var KORT_H = 266, NU_H = 220;
 (function opsaet(){
   document.getElementById('indhold').style.transform =
     'translate(' + SKUB_X + 'px,' + SKUB_Y + 'px)';
@@ -211,7 +225,8 @@ var KORT_H = 266;
     e.style.top = kTop + 'px'; e.style.height = KORT_H + 'px';
   });
   var ni = document.getElementById('nuind');
-  ni.style.top = kTop + 'px'; ni.style.height = KORT_H + 'px';
+  NU_H = KORT_H - 46;                 /* plads til logobaandet nederst */
+  ni.style.top = kTop + 'px'; ni.style.height = NU_H + 'px';
 
   /* maalepunkter: hver 32. px, lysere hver 128., og to groenne hvor
      indholdet begynder og slutter. Staar slukket til dagligt. */
@@ -239,7 +254,7 @@ function lav(c, i, n, egenB, bar){
     ? '<div class="kcover"><img src="' + c.cover + '" alt="' + c.navn + '"><div class="spil"></div></div>'
     : '<div class="klogo' + (c.moerk ? ' moerk' : '') + '">' +
         '<img src="' + c.logo + '" alt="' + c.navn + '"></div>';
-  var loft = KORT_H - (31 + 12 + 46 + 8 + 12 + 22);   /* navn, luft, logofelt, luft, luft, branche */
+  var loft = (bar ? NU_H : KORT_H) - (bar ? 24 : 31 + 12 + 46 + 8 + 12 + 22);   /* navn, luft, logofelt, luft, luft, branche */
   var qr = Math.max(80, Math.min(c.cover ? QR - 18 : QR, loft));
   d.innerHTML =
     (bar ? '' : '<div class="kn">' + c.navn + '</div>') +
@@ -266,6 +281,17 @@ function fyld(holder, liste){
   });
 }
 
+(function byg_baand(){
+  var sp = document.getElementById('spor'), ud = '';
+  for (var runde = 0; runde < 2; runde++){
+    SAGER.forEach(function(c){
+      /* create2STAY er en hvid cirkel - den bliver til en klat i knockout */
+      if (c.logo && c.id !== 'create2stay') ud += '<img src="' + c.logo + '" alt="' + c.navn + '">';
+    });
+  }
+  sp.innerHTML = ud;
+})();
+
 var pos = 0;
 function naesteSager(){
   var ud = [];
@@ -284,6 +310,9 @@ function vis(el){
   sFest.classList.remove('paa'); sNu.classList.remove('paa');
   if (stribeTimer){ clearInterval(stribeTimer); stribeTimer = null; }
   el.classList.add('paa');
+  /* kun hvor der er plads under indholdet - paa kortsiderne skal hver
+     millimeter bruges paa QR-koderne */
+  document.getElementById('baand').classList.toggle('paa', el === sLogo || el === sNu);
 }
 var stribeTimer = null;
 function stribe(ms, naeste){
@@ -355,7 +384,7 @@ function visFest(){
 
 /* samme selvopdatering som vaeggen - skaermen henter en ny version naar
    der er lagt en op, men kun mens logosiden staar, saa ingen mister sin QR */
-var BYGGET = '20261028-092816';
+var BYGGET = '20261028-102954';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
