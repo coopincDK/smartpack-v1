@@ -176,8 +176,11 @@ var TEKST_MIN = 520, GAB = 64;
 
 /* videoen maa hverken blive hoejere end pladsen eller bredere end budgettet */
 var budget = miniX - M - GAB - TEKST_MIN;
-var vidB = Math.min(Math.round((NYT - 2*M) * 16/9), budget);
-var vidH = Math.round(vidB * 9/16);
+/* Videoen fylder hele den synlige hoejde. Der er ingen grund til at spare
+   paa hoejden - alt under NYT er alligevel daekket af bordet. */
+var vidH = NYT;
+var vidB = Math.min(Math.round(NYT * 16/9), budget);
+if (vidB < Math.round(NYT * 16/9)) vidH = Math.round(vidB * 9/16);
 
 var r = document.getElementById('ramme');
 r.style.left = M + 'px'; r.style.top = Math.round((NYT - vidH)/2) + 'px';
@@ -327,6 +330,23 @@ function vaelgTilfaeldige(n){
   return pulje.slice(0, Math.min(n, pulje.length));
 }
 
+/* Bordet skal kunne vise hvad muren spiller lige nu. Muren melder selv ind
+   og banker paa hvert 10. sekund, saa bordet ikke bliver haengende i en
+   gammel sandhed hvis skaermen genstartes midt i en case. */
+var MELD_URL = '/api/spil/vaeg/spiller';
+var meldTimer = null, melder = '';
+function meld(id){
+  var ny = id || '';
+  if (ny === melder && meldTimer) return;
+  melder = ny;
+  if (meldTimer){ clearInterval(meldTimer); meldTimer = null; }
+  var send = function(){
+    fetch(MELD_URL + '?case=' + encodeURIComponent(melder), {cache:'no-store'}).catch(function(){});
+  };
+  send();
+  if (melder) meldTimer = setInterval(send, 10000);
+}
+
 var storVideo = null, storTid = 0;
 
 function visStor(){
@@ -346,6 +366,7 @@ function visStor(){
     });
     h.appendChild(storVideo);
   }
+  meld('');
   try { storVideo.currentTime = storTid; } catch(e){}
   var p = storVideo.play(); if (p && p.catch) p.catch(function(){});
   h.classList.add('paa');
@@ -358,6 +379,7 @@ function skjulStor(){
 }
 
 function visValg(efterCase){
+  meld('');
   ryd();
   skjulStor();
   tegnKort(vaelgTilfaeldige(ANTAL_KORT));
@@ -429,6 +451,7 @@ var FELTER = [256, 512, 1024, 2048];
 var festRaf = null;
 
 function spilBanger(c){
+  meld(c.id);
   ryd();
   skjulStor();
   var fyld = document.getElementById('festfyld'); fyld.style.width = '0%';
@@ -523,6 +546,7 @@ function spilBanger(c){
 
 function spil(c){
   if (!c) return visValg(false);
+  meld(c.id);
   if (c.musik) return spilBanger(c);
   ryd();
   skjulStor();
@@ -666,7 +690,7 @@ setInterval(function(){
    den med den gamle side til nogen henter et tastatur. Hvert 5. minut
    hentes siden selv og byggestemplet sammenlignes; er det nyt, og er
    vaeggen ledig, hentes siden forfra. */
-var BYGGET = '20261028-073142';
+var BYGGET = '20261028-075716';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })

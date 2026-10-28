@@ -205,6 +205,7 @@ function vaegRouter() {
   let koe = [];
   let taeller = 0;
   let sidst = null;   // den case vaeggen senest fik udleveret
+  let spiller = null; // det vaeggen viser lige nu, meldt ind af vaeggen selv
 
   function ryd() {
     const nu = Date.now();
@@ -260,6 +261,25 @@ function vaegRouter() {
     if (!naeste) return res.json({ case: null, nr: 0, koe: 0 });
     sidst = { id: naeste.id, tid: Date.now() };
     return res.json({ case: naeste.id, nr: naeste.nr, koe: koe.length });
+  });
+
+  // Vaeggen melder selv ind hvad den viser, og banker paa hvert 10. sekund
+  // mens den spiller. Uden et bank i 25 sekunder regnes muren for ledig igen,
+  // saa bordet ikke staar og paastaar at noget spiller efter en genstart.
+  router.get('/vaeg/spiller', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    const id = sanitiser(req.query.case);
+    spiller = id ? { id, tid: Date.now() } : null;
+    return res.json({ ok: true });
+  });
+
+  // Bordet spoerger her: hvad koerer der lige nu paa muren?
+  router.get('/vaeg/nu', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    if (spiller && Date.now() - spiller.tid < 25000) {
+      return res.json({ case: spiller.id, navn: CASENAVNE[spiller.id] || '' });
+    }
+    return res.json({ case: null, navn: '' });
   });
 
   // Kun til at kigge med — ændrer ingenting.
