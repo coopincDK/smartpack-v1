@@ -123,6 +123,7 @@ ${chipgruppe('carriers_dk', 'Fragt<span class="valgfri">vælg gerne flere</span>
 </div></div>
 <script>
 var SET_CASE = ${JSON.stringify(setCase)};
+var SET_ID = ${JSON.stringify(caseId || '')};
 var f = document.getElementById('f');
 var valgt = {};
 [].slice.call(document.querySelectorAll('.chips')).forEach(function(g){
@@ -175,6 +176,8 @@ f.addEventListener('submit', function(e){
     })
   }).then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(){
+      /* tael den med i messestatistikken - maa aldrig kunne vaelte kvitteringen */
+      try { fetch('/api/spil/vaeg/lead?case=' + encodeURIComponent(SET_ID), {cache:'no-store'}).catch(function(){}); } catch(e){}
       var fornavn = v('name').split(' ')[0];
       document.getElementById('kort').innerHTML =
         '<div class="tak"><h2>Tak, ' + fornavn.replace(/[<>&]/g,'') + '.</h2>' +
@@ -200,8 +203,36 @@ document.getElementById('andet').addEventListener('click', function(e){ e.preven
 </body></html>`;
 }
 
-function vaegRouter() {
+// Koden til messestyringen. Saettes med MESSE_KODE paa serveren; staar den
+// ikke, bruges den her. Siden er ikke hemmelig - den skal bare ikke kunne
+// aabnes af en tilfaeldig gaest der gaetter adressen.
+const MESSE_KODE = process.env.MESSE_KODE || 'S88202010s!';
+
+function vaegRouter(pool) {
   const router = express.Router();
+
+  // Tael en haendelse. Fire-and-forget: statistik maa aldrig kunne
+  // forsinke eller vaelte et scan.
+  function tael(slags, caseId) {
+    if (!pool) return;
+    pool
+      .query('INSERT INTO messe_haendelse (slags, case_id) VALUES ($1, $2)', [slags, caseId || null])
+      .catch((e) => console.error('[messe] kunne ikke taelle', slags, e.message));
+  }
+
+  // Ordrer fra messestyringen. De gaar UDEN OM koen: en ordre afbryder
+  // med det samme, mens koen aldrig afbryder noget.
+  let ordre = null;   // { spil: '<id>' } eller { stop: true }
+
+  function kodeOk(req) {
+    const k = req.get('x-messe-kode') || req.query.kode || (req.body && req.body.kode);
+    return typeof k === 'string' && k === MESSE_KODE;
+  }
+  function kraevKode(req, res, next) {
+    if (kodeOk(req)) return next();
+    res.set('Cache-Control', 'no-store');
+    return res.status(401).json({ fejl: 'Forkert kode.' });
+  }
   let koe = [];
   let taeller = 0;
   let sidst = null;   // den case vaeggen senest fik udleveret
@@ -242,6 +273,7 @@ function vaegRouter() {
         'Prøv igen om et øjeblik — køen er fuld.', false));
     }
     taeller += 1;
+    tael('scan', id);
     koe.push({ id, tid: Date.now(), nr: taeller });
     const plads = koe.length;
     if (plads === 1) {
@@ -280,6 +312,76 @@ function vaegRouter() {
       return res.json({ case: spiller.id, navn: CASENAVNE[spiller.id] || '' });
     }
     return res.json({ case: null, navn: '' });
+  });
+
+  // Vaeggen spoerger her hele tiden - ogsaa mens den spiller. En ordre fra
+  // messestyringen afbryder derfor med det samme.
+  router.get('/vaeg/ordre', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    const o = ordre;
+    ordre = null;
+    return res.json(o || {});
+  });
+
+  // ---- messestyring ----
+  router.post('/messe/ordre', kraevKode, (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    const b = req.body || {};
+    if (b.stop) { ordre = { stop: true }; tael('ordre', null); return res.json({ ok: true, ordre }); }
+    const id = sanitiser(b.case);
+    if (!id) return res.status(400).json({ fejl: 'Ukendt case.' });
+    ordre = { spil: id };
+    tael('ordre', id);
+    return res.json({ ok: true, ordre });
+  });
+
+  // Hvad er tilstanden lige nu - til styringens forside.
+  router.get('/messe/nu', kraevKode, (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    ryd();
+    const koerer = spiller && Date.now() - spiller.tid < 25000 ? spiller.id : null;
+    return res.json({
+      spiller: koerer,
+      navn: koerer ? CASENAVNE[koerer] || '' : '',
+      koe: koe.map((x) => ({ case: x.id, navn: CASENAVNE[x.id] || '' })),
+      venter: ordre || null,
+    });
+  });
+
+  // Tal. 'i_dag' regnes i dansk tid, saa en messedag er en messedag.
+  router.get('/messe/stat', kraevKode, async (req, res, next) => {
+    res.set('Cache-Control', 'no-store');
+    if (!pool) return res.json({ scan: [], lead: 0, lead_i_dag: 0, scan_i_alt: 0, scan_i_dag: 0 });
+    try {
+      const q = await pool.query(
+        `SELECT slags, case_id,
+                count(*) AS i_alt,
+                count(*) FILTER (
+                  WHERE (tid AT TIME ZONE 'Europe/Copenhagen')::date
+                      = (now() AT TIME ZONE 'Europe/Copenhagen')::date
+                ) AS i_dag
+           FROM messe_haendelse
+          WHERE slags IN ('scan','lead')
+          GROUP BY slags, case_id`
+      );
+      const scan = [];
+      let lead = 0, lead_i_dag = 0, scan_i_alt = 0, scan_i_dag = 0;
+      for (const r of q.rows) {
+        const ia = Number(r.i_alt), id_ = Number(r.i_dag);
+        if (r.slags === 'lead') { lead += ia; lead_i_dag += id_; continue; }
+        scan_i_alt += ia; scan_i_dag += id_;
+        scan.push({ case: r.case_id, navn: CASENAVNE[r.case_id] || r.case_id, i_alt: ia, i_dag: id_ });
+      }
+      scan.sort((a, b) => b.i_alt - a.i_alt);
+      return res.json({ scan, lead, lead_i_dag, scan_i_alt, scan_i_dag });
+    } catch (e) { return next(e); }
+  });
+
+  // Booking-formularen melder selv ind naar den er sendt.
+  router.get('/vaeg/lead', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    tael('lead', sanitiser(req.query.case));
+    return res.json({ ok: true });
   });
 
   // Kun til at kigge med — ændrer ingenting.

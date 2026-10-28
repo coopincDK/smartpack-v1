@@ -649,6 +649,24 @@ function start(){
   if (c) spil(c); else if (PRAESENTATION) visStor(); else visValg(false);
   lyt();
 }
+/* Ordrer fra messestyringen. De spoerges der efter hele tiden - ogsaa mens
+   noget spiller - saa en ordre fra telefonen afbryder med det samme.
+   Koen fra gaesternes scan afbryder derimod aldrig noget. */
+var ORDRE_URL = '/api/spil/vaeg/ordre';
+setInterval(function(){
+  fetch(ORDRE_URL, {cache:'no-store'}).then(function(r){ return r.json(); }).then(function(o){
+    if (!o) return;
+    if (o.stop){
+      if (PRAESENTATION) visStor(); else visValg(false);
+      return;
+    }
+    if (o.spil){
+      var c = CASES.filter(function(x){ return x.id === o.spil; })[0];
+      if (c) spil(c);
+    }
+  }).catch(function(){});
+}, 2000);
+
 /* Chrome spiller kun med lyd af sig selv, hvis browseren er startet med
    --autoplay-policy=no-user-gesture-required, ELLER hvis nogen har roert
    siden mindst een gang. Vi holder oeje med begge dele. */
@@ -693,7 +711,7 @@ setInterval(function(){
    den med den gamle side til nogen henter et tastatur. Hvert 5. minut
    hentes siden selv og byggestemplet sammenlignes; er det nyt, og er
    vaeggen ledig, hentes siden forfra. */
-var BYGGET = '20261028-083222';
+var BYGGET = '20261028-095829';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })

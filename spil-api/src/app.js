@@ -73,7 +73,7 @@ function createApp(pool, ws, opts) {
   app.use(varRouter(pool));
   app.use(toplisteRouter(pool));
   app.use(hjemmesideRouter());
-  app.use(vaegRouter());
+  app.use(vaegRouter(pool));
 
   app.use((req, res) => {
     res.status(404).json({ fejl: 'Ukendt endpoint.', kode: 'ikke_fundet' });
