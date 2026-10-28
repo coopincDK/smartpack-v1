@@ -255,10 +255,8 @@ function fyld(holder, liste){
   holder.innerHTML = '';
   liste.forEach(function(c,i){ holder.appendChild(lav(c, i, liste.length)); });
   krymp(holder);
-  requestAnimationFrame(function(){
-    [].slice.call(holder.children).forEach(function(e,i){
-      setTimeout(function(){ e.classList.add('paa'); }, i*90);
-    });
+  [].slice.call(holder.children).forEach(function(e,i){
+    setTimeout(function(){ e.classList.add('paa'); }, 30 + i*90);
   });
 }
 
@@ -284,12 +282,15 @@ function vis(el){
 var stribeTimer = null;
 function stribe(ms, naeste){
   var t0 = Date.now();
-  stribeTimer = setInterval(function(){
-    if (nuID) return;                     /* muren spiller - lad striben staa */
+  var min;
+  min = setInterval(function(){
+    if (min !== stribeTimer){ clearInterval(min); return; }  /* en nyere har overtaget */
+    if (nuID) { t0 = Date.now(); return; }   /* muren spiller - striben venter */
     var f = (Date.now()-t0)/ms;
-    if (f >= 1){ clearInterval(stribeTimer); stribeTimer = null; p.style.width = '0px'; naeste(); return; }
+    if (f >= 1){ clearInterval(min); stribeTimer = null; p.style.width = '0px'; naeste(); return; }
     p.style.width = (f*1024).toFixed(0) + 'px';
   }, 80);
+  stribeTimer = min;
 }
 
 /* ---- spiller nu ----
@@ -307,10 +308,13 @@ function visNu(c){
   nuKort.innerHTML = '';
   var d = lav(c, 0, 1, 200, true);
   d.style.left = '0px'; d.style.top = '14px';
+  /* Kortet gjorde sig synligt i en requestAnimationFrame. Den falder vaek,
+     hvis vinduet ikke tegner - og saa stod bordet sort med en usynlig kode.
+     Nu er det synligt fra det oejeblik det laegges ind. */
+  d.classList.add('paa');
   nuKort.appendChild(d);
   krymp(nuKort);
   vis(sNu);
-  requestAnimationFrame(function(){ d.classList.add('paa'); });
   p.style.width = '0px';
 }
 
@@ -323,7 +327,8 @@ function lytTilVaeggen(){
       if (nuStop){ clearInterval(nuStop); nuStop = null; }
       if (id){
         var c = ALLE.filter(function(x){ return x.id === id; })[0];
-        if (c) visNu(c);
+        if (c) { visNu(c); }
+        else   { nuID = null; }     /* kender vi den ikke, koerer runden videre */
       } else {
         visLogo(visCases);           /* tilbage i den faste runde */
       }
@@ -344,7 +349,7 @@ function visFest(){
 
 /* samme selvopdatering som vaeggen - skaermen henter en ny version naar
    der er lagt en op, men kun mens logosiden staar, saa ingen mister sin QR */
-var BYGGET = '20261028-084528';
+var BYGGET = '20261028-091848';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
