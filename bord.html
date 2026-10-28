@@ -87,6 +87,16 @@
       line-height:1.1;font-size:12px;margin-top:9px;width:100%;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+  /* Diskrete maalepunkter nederst. De staar paa selve skaermen, ikke paa det
+     forskudte indhold, saa et billede forfra viser baade hvad der er synligt
+     og hvor indholdet faktisk ligger. */
+  #prikker{position:absolute;left:0;bottom:22px;width:1024px;height:8px;z-index:4;
+           pointer-events:none}
+  #prikker i{position:absolute;bottom:0;display:block;border-radius:50%;
+             background:#F1F5F9;opacity:.14;width:3px;height:3px;margin-left:-1.5px}
+  #prikker i.m{opacity:.30;width:4px;height:4px;margin-left:-2px}
+  #prikker i.k{opacity:.85;width:6px;height:6px;margin-left:-3px;background:#3ECF8E;
+               box-shadow:0 0 6px rgba(62,207,142,.7)}
   #linje{position:absolute;left:0;bottom:12px;width:1024px;height:2px;z-index:6;
     background:linear-gradient(90deg,rgba(62,207,142,.05),rgba(62,207,142,.22),rgba(62,207,142,.05))}
   #puls{position:absolute;bottom:11px;left:0;height:4px;width:0;z-index:7;
@@ -146,6 +156,7 @@
   </div>
   </div>
 
+  <div id="prikker"></div>
   <div id="linje"></div>
   <div id="puls"></div>
 </div>
@@ -200,6 +211,16 @@ var KORT_H = 266;
   });
   var ni = document.getElementById('nuind');
   ni.style.top = kTop + 'px'; ni.style.height = KORT_H + 'px';
+
+  /* maalepunkter: hver 32. px, lysere hver 128., og to groenne hvor
+     indholdet begynder og slutter */
+  var pk = document.getElementById('prikker'), ud = '';
+  for (var x = 0; x <= 1024; x += 32){
+    ud += '<i class="' + (x % 128 === 0 ? 'm' : '') + '" style="left:' + x + 'px"></i>';
+  }
+  ud += '<i class="k" style="left:' + (v + SKUB_X) + 'px"></i>';
+  ud += '<i class="k" style="left:' + (v + INDRE + SKUB_X) + 'px"></i>';
+  pk.innerHTML = ud;
 })();
 
 function lav(c, i, n, egenB, bar){
@@ -323,7 +344,7 @@ function visFest(){
 
 /* samme selvopdatering som vaeggen - skaermen henter en ny version naar
    der er lagt en op, men kun mens logosiden staar, saa ingen mister sin QR */
-var BYGGET = '20261028-080150';
+var BYGGET = '20261028-084528';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
