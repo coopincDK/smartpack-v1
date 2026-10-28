@@ -177,6 +177,7 @@ var FEST_TID  = 14000;
 var SKUB_X = 56;    /* til hoejre */
 var SKUB_Y = 26;    /* ned */
 var INDRE  = 616;   /* bredden kortene maa fylde */
+var PRIKKER = false;  /* diskrete maalepunkter nederst - saet til true naar bordet skal maales op igen */
 
 var NU_URL   = '/api/spil/vaeg/nu';
 var NU_HVER  = 2000;
@@ -213,14 +214,19 @@ var KORT_H = 266;
   ni.style.top = kTop + 'px'; ni.style.height = KORT_H + 'px';
 
   /* maalepunkter: hver 32. px, lysere hver 128., og to groenne hvor
-     indholdet begynder og slutter */
-  var pk = document.getElementById('prikker'), ud = '';
-  for (var x = 0; x <= 1024; x += 32){
-    ud += '<i class="' + (x % 128 === 0 ? 'm' : '') + '" style="left:' + x + 'px"></i>';
+     indholdet begynder og slutter. Staar slukket til dagligt. */
+  var pk = document.getElementById('prikker');
+  if (PRIKKER){
+    var ud = '';
+    for (var x = 0; x <= 1024; x += 32){
+      ud += '<i class="' + (x % 128 === 0 ? 'm' : '') + '" style="left:' + x + 'px"></i>';
+    }
+    ud += '<i class="k" style="left:' + (v + SKUB_X) + 'px"></i>';
+    ud += '<i class="k" style="left:' + (v + INDRE + SKUB_X) + 'px"></i>';
+    pk.innerHTML = ud;
+  } else {
+    pk.style.display = 'none';
   }
-  ud += '<i class="k" style="left:' + (v + SKUB_X) + 'px"></i>';
-  ud += '<i class="k" style="left:' + (v + INDRE + SKUB_X) + 'px"></i>';
-  pk.innerHTML = ud;
 })();
 
 function lav(c, i, n, egenB, bar){
@@ -349,7 +355,7 @@ function visFest(){
 
 /* samme selvopdatering som vaeggen - skaermen henter en ny version naar
    der er lagt en op, men kun mens logosiden staar, saa ingen mister sin QR */
-var BYGGET = '20261028-091848';
+var BYGGET = '20261028-092816';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
