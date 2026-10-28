@@ -400,6 +400,24 @@ function ryd(){
   if (fk){ fk.pause(); fk.ontimeupdate = null; }
 }
 
+/* Faa en video i gang og bliv ved. Foerst med lyd; naegter browseren,
+   proeves der uden. Staar den stadig paa billede nul efter et par sekunder,
+   tvinges den i gang uden lyd - ellers staar skaermen med Chromes
+   afspil-ikon resten af dagen, og det er der ingen der opdager i tide. */
+function saetIGang(v){
+  var p = v.play();
+  if (p && p.catch) p.catch(function(){
+    v.muted = true;
+    var q = v.play(); if (q && q.catch) q.catch(function(){});
+  });
+  setTimeout(function(){
+    if (v.currentTime === 0 && !v.ended && v.paused){
+      v.muted = true;
+      var q = v.play(); if (q && q.catch) q.catch(function(){});
+    }
+  }, 2500);
+}
+
 /* En SmartPack-banger fylder hele den synlige mur. Muren er otte paneler a
    256 px, saa videoen gentages i felter, der er et helt antal paneler brede -
    256, 512, 1024 eller hele 2048 - og feltbredden vaelges efter videoens
@@ -496,8 +514,8 @@ function spilBanger(c){
   };
 
   v.muted = false;
-  var p = v.play();
-  if (p && p.catch) p.catch(function(){ v.muted = true; v.play().catch(function(){}); });
+  saetIGang(v);
+  v.addEventListener('canplay', function(){ if (v.paused) saetIGang(v); }, { once: true });
 
   tegn();
   vis(sF);
@@ -527,12 +545,8 @@ function spil(c){
     });
     r.appendChild(v);
     v.muted = false;
-    var p = v.play();
-    if (p && p.catch) p.catch(function(){
-      /* browseren naegtede lyd - start uden, og tag lyden paa saa snart den maa */
-      v.muted = true;
-      v.play().catch(function(){});
-    });
+    saetIGang(v);
+    v.addEventListener('canplay', function(){ if (v.paused) saetIGang(v); });
   } else if (c.yt){
     var f = document.createElement('iframe');
     f.src = 'https://www.youtube.com/embed/' + c.yt +
@@ -642,7 +656,7 @@ setInterval(function(){
   }
   var v = document.querySelector('#ramme video') ||
           (sF.classList.contains('paa') ? document.getElementById('fkilde') : null);
-  if (v && v.paused && v.currentTime > 0 && !v.ended){
+  if (v && v.paused && !v.ended && v.readyState >= 2){
     var w = v.play(); if (w && w.catch) w.catch(function(){ v.muted = true; v.play().catch(function(){}); });
   }
   tagLydPaa();
@@ -652,7 +666,7 @@ setInterval(function(){
    den med den gamle side til nogen henter et tastatur. Hvert 5. minut
    hentes siden selv og byggestemplet sammenlignes; er det nyt, og er
    vaeggen ledig, hentes siden forfra. */
-var BYGGET = '20261027-230731';
+var BYGGET = '20261028-073142';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
