@@ -711,15 +711,24 @@ setInterval(function(){
    den med den gamle side til nogen henter et tastatur. Hvert 5. minut
    hentes siden selv og byggestemplet sammenlignes; er det nyt, og er
    vaeggen ledig, hentes siden forfra. */
-var BYGGET = '20261028-095829';
+/* Selvopdatering. Henter den nye version med et friskt navn, saa hverken
+   browseren eller Cloudflare kan give den gamle fil tilbage. Er vaeggen
+   optaget for laenge, tages den alligevel. */
+var BYGGET = '20261028-104418';
+var nyereSet = 0;
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
     .then(function(t){
       var m = /var BYGGET = '([^']+)'/.exec(t);
-      if (m && m[1] !== BYGGET && erLedig()) location.reload();
+      if (!m || m[1] === BYGGET){ nyereSet = 0; return; }
+      if (!nyereSet) nyereSet = Date.now();
+      var laenge = Date.now() - nyereSet > 8*60*1000;
+      if (erLedig() || laenge){
+        location.replace(location.pathname + '?v=' + m[1]);
+      }
     }).catch(function(){});
-}, 300000);
+}, 120000);
 
 if (document.readyState === 'complete') start();
 else window.addEventListener('load', start);
