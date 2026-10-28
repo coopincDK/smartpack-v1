@@ -427,6 +427,28 @@ function ryd(){
    proeves der uden. Staar den stadig paa billede nul efter et par sekunder,
    tvinges den i gang uden lyd - ellers staar skaermen med Chromes
    afspil-ikon resten af dagen, og det er der ingen der opdager i tide. */
+/* Hver afspilning faar sit eget nummer. En 'ended' eller 'error' fra en
+   AFLOEST video kan dermed ikke lukke den der koerer nu - det var en af de
+   maader en film kunne blive klippet af midtvejs paa. */
+var spilNr = 0;
+
+/* Et enkelt forsoeg mere, foer vi giver op. Et hak i nettet midt i en film
+   skal ikke sende gaesten tilbage til kortene. */
+function fejlPaaVideo(v, mit, videre){
+  return function(){
+    if (mit !== spilNr) return;
+    if (v.dataset.forsoegt === '1'){ videre(); return; }
+    v.dataset.forsoegt = '1';
+    var t = v.currentTime || 0;
+    try { v.load(); } catch(e){}
+    v.addEventListener('loadedmetadata', function(){
+      if (mit !== spilNr) return;
+      try { if (t > 0.5) v.currentTime = t; } catch(e){}
+      saetIGang(v);
+    }, { once: true });
+  };
+}
+
 function saetIGang(v){
   var p = v.play();
   if (p && p.catch) p.catch(function(){
@@ -529,12 +551,14 @@ function spilBanger(c){
     else festRaf = requestAnimationFrame(tegn);
   }
 
+  var mit = ++spilNr;
+  v.dataset.forsoegt = '';
   v.removeAttribute('src');
   v.src = c.fil;
   v.loop = false;
   v.addEventListener('loadedmetadata', vaelgFelt, { once: true });
-  v.addEventListener('ended', caseSlut, { once: true });
-  v.addEventListener('error', caseSlut, { once: true });
+  v.addEventListener('ended', function(){ if (mit === spilNr) caseSlut(); }, { once: true });
+  v.addEventListener('error', fejlPaaVideo(v, mit, caseSlut));
   v.ontimeupdate = function(){
     if (v.duration) fyld.style.width = (v.currentTime/v.duration*100).toFixed(2) + '%';
   };
@@ -563,10 +587,11 @@ function spil(c){
 
   if (c.fil){
     var v = document.createElement('video');
+    var mit = ++spilNr;
     v.src = c.fil; v.autoplay = true; v.playsInline = true; v.controls = false;
     v.preload = 'auto';
-    v.addEventListener('ended', caseSlut);
-    v.addEventListener('error', caseSlut);
+    v.addEventListener('ended', function(){ if (mit === spilNr) caseSlut(); });
+    v.addEventListener('error', fejlPaaVideo(v, mit, caseSlut));
     v.addEventListener('timeupdate', function(){
       if (v.duration) fyld.style.width = (v.currentTime/v.duration*100).toFixed(2) + '%';
     });
@@ -650,6 +675,38 @@ function start(){
   if (c) spil(c); else if (PRAESENTATION) visStor(); else visValg(false);
   lyt();
 }
+/* ---- hent videoerne ned paa maskinen ----
+   Serveren siger 'public, max-age=2592000' paa videoerne, saa browserens egen
+   cache beholder dem i 30 dage. Vi henter dem derfor een ad gangen mens muren
+   er ledig. Efter foerste runde ligger de paa disken: ingen buffering, og et
+   hak i messe-wifi'en kan ikke laengere klippe en film af midtvejs. */
+var varmListe = null, varmIGang = false, varmFaerdig = 0;
+
+function slugHelt(r){
+  if (!r.body || !r.body.getReader) return r.arrayBuffer().then(function(){});
+  var l = r.body.getReader();
+  return (function naeste(){
+    return l.read().then(function(x){ return x.done ? null : naeste(); });
+  })();
+}
+
+function varmOp(){
+  if (varmIGang || !erLedig()) return;
+  if (!varmListe){
+    varmListe = [];
+    if (PRAESENTATION) varmListe.push(PRAESENTATION);
+    CASES.forEach(function(c){ if (c.fil) varmListe.push(c.fil); });
+  }
+  if (!varmListe.length) return;
+  varmIGang = true;
+  var u = varmListe.shift();
+  fetch(u, {cache: 'force-cache'})
+    .then(slugHelt)
+    .then(function(){ varmFaerdig++; varmIGang = false; })
+    .catch(function(){ varmIGang = false; });
+}
+setInterval(varmOp, 3000);
+
 /* ---- hold Bluetooth-hoejttaleren vaagen ----
    Baade Sandberg-senderen og hoejttaleren slukker efter nogle minutters
    stilhed. Vi lader derfor en meget svag tone koere hele tiden, og giver et
@@ -757,7 +814,7 @@ setInterval(function(){
 /* Selvopdatering. Henter den nye version med et friskt navn, saa hverken
    browseren eller Cloudflare kan give den gamle fil tilbage. Er vaeggen
    optaget for laenge, tages den alligevel. */
-var BYGGET = '20261028-105454';
+var BYGGET = '20261028-115001';
 var nyereSet = 0;
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
