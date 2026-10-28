@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="da"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=1024,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>SmartPack bord - opmaaling</title>
+<style>
+html,body{margin:0;padding:0;height:100%;background:#000;overflow:hidden;cursor:none}
+#s{position:absolute;left:50%;top:50%;width:1024px;height:384px;margin:-192px 0 0 -512px;
+   transform-origin:50% 50%;overflow:hidden;background:#010E22;
+   font-family:'Inter Tight','Inter',system-ui,Arial,sans-serif;color:#F1F5F9}
+.kol{position:absolute;top:0;width:64px;height:384px;box-sizing:border-box;
+     border-left:1px solid rgba(241,245,249,.22)}
+.kol.a{background:rgba(62,207,142,.18)}
+.kol .tal{position:absolute;top:6px;left:0;width:64px;text-align:center;
+          font-size:16px;font-weight:700;color:#3ECF8E;letter-spacing:-.02em}
+.kol .tal.ned{top:auto;bottom:6px}
+.rk{position:absolute;left:0;width:1024px;height:0;border-top:1px solid rgba(241,245,249,.13)}
+.rk span{position:absolute;left:3px;top:2px;font-size:11px;color:#94A3B8}
+#midtlinje{position:absolute;left:512px;top:0;width:2px;height:384px;background:#F97316}
+#midttxt{position:absolute;left:520px;top:160px;font-size:13px;color:#F97316;font-weight:700}
+.hj{position:absolute;width:46px;height:46px;border:3px solid #F97316}
+#h1{left:0;top:0;border-right:0;border-bottom:0}
+#h2{right:0;top:0;border-left:0;border-bottom:0}
+#h3{left:0;bottom:0;border-right:0;border-top:0}
+#h4{right:0;bottom:0;border-left:0;border-top:0}
+#besked{position:absolute;left:0;top:168px;width:1024px;text-align:center;
+        font-size:26px;font-weight:700;letter-spacing:-.02em;
+        text-shadow:0 2px 10px #010E22}
+#under{position:absolute;left:0;top:202px;width:1024px;text-align:center;
+       font-size:15px;color:#94A3B8;text-shadow:0 2px 10px #010E22}
+</style></head>
+<body><div id="s">
+<div class="rk" style="top:0px"><span>0</span></div>
+<div class="rk" style="top:32px"><span>32</span></div>
+<div class="rk" style="top:64px"><span>64</span></div>
+<div class="rk" style="top:96px"><span>96</span></div>
+<div class="rk" style="top:128px"><span>128</span></div>
+<div class="rk" style="top:160px"><span>160</span></div>
+<div class="rk" style="top:192px"><span>192</span></div>
+<div class="rk" style="top:224px"><span>224</span></div>
+<div class="rk" style="top:256px"><span>256</span></div>
+<div class="rk" style="top:288px"><span>288</span></div>
+<div class="rk" style="top:320px"><span>320</span></div>
+<div class="rk" style="top:352px"><span>352</span></div>
+<div class="kol a" style="left:0px"><div class="tal">0</div><div class="tal ned">0</div></div>
+<div class="kol" style="left:64px"><div class="tal">64</div><div class="tal ned">64</div></div>
+<div class="kol a" style="left:128px"><div class="tal">128</div><div class="tal ned">128</div></div>
+<div class="kol" style="left:192px"><div class="tal">192</div><div class="tal ned">192</div></div>
+<div class="kol a" style="left:256px"><div class="tal">256</div><div class="tal ned">256</div></div>
+<div class="kol" style="left:320px"><div class="tal">320</div><div class="tal ned">320</div></div>
+<div class="kol a" style="left:384px"><div class="tal">384</div><div class="tal ned">384</div></div>
+<div class="kol" style="left:448px"><div class="tal">448</div><div class="tal ned">448</div></div>
+<div class="kol a" style="left:512px"><div class="tal">512</div><div class="tal ned">512</div></div>
+<div class="kol" style="left:576px"><div class="tal">576</div><div class="tal ned">576</div></div>
+<div class="kol a" style="left:640px"><div class="tal">640</div><div class="tal ned">640</div></div>
+<div class="kol" style="left:704px"><div class="tal">704</div><div class="tal ned">704</div></div>
+<div class="kol a" style="left:768px"><div class="tal">768</div><div class="tal ned">768</div></div>
+<div class="kol" style="left:832px"><div class="tal">832</div><div class="tal ned">832</div></div>
+<div class="kol a" style="left:896px"><div class="tal">896</div><div class="tal ned">896</div></div>
+<div class="kol" style="left:960px"><div class="tal">960</div><div class="tal ned">960</div></div>
+<div id="midtlinje"></div><div id="midttxt">512 = midten</div>
+<div class="hj" id="h1"></div><div class="hj" id="h2"></div>
+<div class="hj" id="h3"></div><div class="hj" id="h4"></div>
+<div id="besked">Tag et billede lige forfra</div>
+<div id="under">Fort&aelig;l hvilke gr&oslash;nne tal du kan l&aelig;se yderst til venstre og h&oslash;jre</div>
+</div>
+<script>
+var s = document.getElementById('s');
+function tilpas(){
+  var f = Math.min(window.innerWidth/1024, window.innerHeight/384);
+  s.style.transform = 'scale(' + f + ')';
+}
+window.addEventListener('resize', tilpas); tilpas();
+</script>
+</body></html>
