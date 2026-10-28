@@ -645,10 +645,52 @@ function fraHash(){
    Sker der nogensinde et klik, et tryk eller et tastetryk, er lyden laast op bagefter. */
 function start(){
   document.getElementById('start').style.display = 'none';
+  holdHoejttalerVaagen();
   var c = fraHash();
   if (c) spil(c); else if (PRAESENTATION) visStor(); else visValg(false);
   lyt();
 }
+/* ---- hold Bluetooth-hoejttaleren vaagen ----
+   Baade Sandberg-senderen og hoejttaleren slukker efter nogle minutters
+   stilhed. Vi lader derfor en meget svag tone koere hele tiden, og giver et
+   lidt kraftigere pust hvert 3. minut. 60 Hz ved det her niveau hoerer man
+   ikke i et messelokale, men baade sender og hoejttaler ser et signal.
+   Skal det skrues op eller ned, er det de fire tal her. */
+var VAAGEN_HZ   = 60;
+var VAAGEN_BUND = 0.003;    /* konstant, ca. -50 dB */
+var VAAGEN_PUST = 0.020;    /* hvert 3. minut, ca. -34 dB */
+var VAAGEN_HVER = 180000;
+
+var lydMotor = null, vaagenGain = null;
+function holdHoejttalerVaagen(){
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  if (lydMotor){ if (lydMotor.state === 'suspended') lydMotor.resume(); return; }
+  try {
+    lydMotor = new AC();
+    var osc = lydMotor.createOscillator();
+    vaagenGain = lydMotor.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = VAAGEN_HZ;
+    vaagenGain.gain.value = VAAGEN_BUND;
+    osc.connect(vaagenGain);
+    vaagenGain.connect(lydMotor.destination);
+    osc.start();
+  } catch(e){ lydMotor = null; return; }
+
+  setInterval(function(){
+    if (!lydMotor || !vaagenGain) return;
+    if (lydMotor.state === 'suspended') lydMotor.resume();
+    if (lydMotor.state !== 'running') return;
+    var n = lydMotor.currentTime;
+    /* bloede ramper, saa der aldrig kommer et klik ud af hoejttaleren */
+    vaagenGain.gain.cancelScheduledValues(n);
+    vaagenGain.gain.setValueAtTime(VAAGEN_BUND, n);
+    vaagenGain.gain.linearRampToValueAtTime(VAAGEN_PUST, n + 0.6);
+    vaagenGain.gain.linearRampToValueAtTime(VAAGEN_BUND, n + 2.2);
+  }, VAAGEN_HVER);
+}
+
 /* Ordrer fra messestyringen. De spoerges der efter hele tiden - ogsaa mens
    noget spiller - saa en ordre fra telefonen afbryder med det samme.
    Koen fra gaesternes scan afbryder derimod aldrig noget. */
@@ -687,6 +729,7 @@ function tagLydPaa(){
 ['pointerdown','keydown','touchstart','mousedown','click'].forEach(function(h){
   window.addEventListener(h, function(){
     lydLaast = true;
+    holdHoejttalerVaagen();
     if (storVideo) { var q = storVideo.play(); if (q && q.catch) q.catch(function(){}); }
     tagLydPaa();
   }, {passive:true, capture:true});
@@ -714,7 +757,7 @@ setInterval(function(){
 /* Selvopdatering. Henter den nye version med et friskt navn, saa hverken
    browseren eller Cloudflare kan give den gamle fil tilbage. Er vaeggen
    optaget for laenge, tages den alligevel. */
-var BYGGET = '20261028-104418';
+var BYGGET = '20261028-105454';
 var nyereSet = 0;
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
