@@ -52,7 +52,7 @@
   #overskrift em{font-style:normal;color:#3ECF8E}
   #hjaelp{position:absolute;font-weight:500;color:#94A3B8}
   .kort{box-sizing:border-box;text-align:center;
-        display:flex;flex-direction:column;align-items:center}
+        display:flex;flex-direction:column;align-items:center;justify-content:center}
   .kort > *{flex:0 0 auto}
   .kort .knavn{font-weight:700;letter-spacing:-.01em;line-height:1.1}
   .kort .kbranche{font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:#3ECF8E;line-height:1.1}
@@ -139,7 +139,7 @@
                 (bedst - giver lyd og hurtig start). 'yt' er et YouTube-id
                 og bruges kun hvis 'fil' er tom.
    ===================================================================== */
-var SKJULT_BUND = 368;
+var SKJULT_BUND = 0;
 var PRAESENTATION = '/vaeg/video/smartpack-vaeg.mp4';  /* den store film - koerer naar ingen scanner */
 var VALG_TID      = 25000;   /* ms valgskaermen staar efter en case, foer filmen fortsaetter */
 var VENTETID    = 30000;
@@ -167,20 +167,18 @@ var M = Math.min(Math.round(H * 0.055), 44);
 var BAR = 6;                                   /* plads til bjaelken nederst */
 var NYT = H - BAR;                             /* nyttehoejde */
 
-/* afspilning: video til venstre, tekst i midten, tre mini-kort til hoejre */
+/* Afspilning: videoen saa stor som muren tillader til venstre, og alt det
+   andet - logo, navn, pointe og de tre mini-kort - i EEN soejle til hoejre.
+   Da hele muren er synlig, er der hoejde nok til at stable dem. */
 var MINI_N = 3;
 var miniB  = 224, miniGab = 18;
 var miniW  = MINI_N*miniB + (MINI_N-1)*miniGab;
-var miniX  = 2048 - M - miniW;
-var TEKST_MIN = 520, GAB = 64;
+var GAB = 64;
+var HOEJRE = Math.max(miniW, 520);
+var miniX  = 2048 - M - HOEJRE;
 
-/* videoen maa hverken blive hoejere end pladsen eller bredere end budgettet */
-var budget = miniX - M - GAB - TEKST_MIN;
-/* Videoen fylder hele den synlige hoejde. Der er ingen grund til at spare
-   paa hoejden - alt under NYT er alligevel daekket af bordet. */
-var vidH = NYT;
-var vidB = Math.min(Math.round(NYT * 16/9), budget);
-if (vidB < Math.round(NYT * 16/9)) vidH = Math.round(vidB * 9/16);
+var vidB = Math.min(Math.round(NYT * 16/9), miniX - M - GAB);
+var vidH = Math.round(vidB * 9/16);
 
 var r = document.getElementById('ramme');
 r.style.left = M + 'px'; r.style.top = Math.round((NYT - vidH)/2) + 'px';
@@ -196,7 +194,7 @@ var mNavn    = Math.min(Math.round(H*0.025), 18);
 /* tekstblokken centreres lodret sammen med logoet over den */
 var hLogo = Math.round(logoB_ * 171/640);
 var hTekst = hLogo + 26 + fBranche + mNavn + Math.round(fNavn*1.05) + mNavn + Math.round(fPointe*1.35);
-var tekstTop = Math.max(M, Math.round((NYT - hTekst)/2));
+var tekstTop = M;
 
 var la = document.getElementById('logoA');
 la.style.left = tekstX + 'px'; la.style.right = 'auto';
@@ -204,22 +202,24 @@ la.style.top = tekstTop + 'px'; la.style.width = logoB_ + 'px';
 
 var info = document.getElementById('info');
 info.style.left = tekstX + 'px';
-info.style.width = (miniX - tekstX - 48) + 'px';
+info.style.width = HOEJRE + 'px';
 info.style.top = (tekstTop + hLogo + 26) + 'px';
 document.getElementById('branche').style.fontSize = fBranche + 'px';
 document.getElementById('navn').style.fontSize    = fNavn + 'px';
 document.getElementById('navn').style.margin      = mNavn + 'px 0';
 document.getElementById('pointe').style.fontSize  = fPointe + 'px';
 
-/* mini-kortene centreres ogsaa lodret */
-var miniH = Math.min(NYT - 2*M - 34, 420);
-var miniTop = Math.round((NYT - miniH)/2) + 17;
+/* mini-kortene staar nederst i hoejresoejlen, under teksten */
+var miniTop = tekstTop + hTekst + Math.round(H*0.055) + 30;
+var miniH = Math.max(220, NYT - miniTop - 10);
 var mt = document.getElementById('minitxt');
 mt.style.left = miniX + 'px'; mt.style.top = (miniTop - 30) + 'px';
 mt.style.fontSize = Math.min(Math.round(H*0.042), 24) + 'px';
 var mh = document.getElementById('mini');
 mh.style.left = miniX + 'px'; mh.style.top = miniTop + 'px';
 mh.style.width = miniW + 'px'; mh.style.height = miniH + 'px';
+mh.style.left = (miniX + Math.round((HOEJRE - miniW)/2)) + 'px';
+mt.style.left = mh.style.left;
 
 var fst = document.getElementById('fest');
 fst.style.height = NYT + 'px';
@@ -285,7 +285,8 @@ function tilpasNavne(holder){
 function tegnKort(liste){
   var h = document.getElementById('kort'); h.innerHTML = '';
   var n = liste.length, bredde = 2048 / n;
-  var top = Math.min(Math.round(H*0.235), 150), hoejde = Math.min(NYT - top - 8, 440);
+  var hoejde = Math.min(NYT - Math.round(H*0.235) - 20, 520);
+  var top = Math.round((NYT - hoejde)/2) + Math.round(H*0.04);
   liste.forEach(function(c, i){
     var d = lavKort(c, bredde, hoejde);
     d.style.position = 'absolute';
@@ -447,7 +448,9 @@ function saetIGang(v){
    saa overgangen falder praecis der hvor muren knaekker.
    Det hele tegnes fra EEN video ind i eet laerred: otte felter koster altsaa
    ikke otte afkodninger. */
-var FELTER = [256, 512, 1024, 2048];
+/* Hele muren som eet felt ville betyde et voldsomt beskaaret billede, saa
+   mindst to felter - det giver ogsaa spejlvendingen ved knaekket. */
+var FELTER = [256, 512, 1024];
 var festRaf = null;
 
 function spilBanger(c){
@@ -690,7 +693,7 @@ setInterval(function(){
    den med den gamle side til nogen henter et tastatur. Hvert 5. minut
    hentes siden selv og byggestemplet sammenlignes; er det nyt, og er
    vaeggen ledig, hentes siden forfra. */
-var BYGGET = '20261028-075716';
+var BYGGET = '20261028-083222';
 setInterval(function(){
   fetch(location.pathname + '?v=' + Date.now(), {cache:'no-store'})
     .then(function(r){ return r.text(); })
