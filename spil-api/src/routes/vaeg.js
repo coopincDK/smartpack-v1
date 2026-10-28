@@ -206,7 +206,7 @@ document.getElementById('andet').addEventListener('click', function(e){ e.preven
 // Koden til messestyringen. Saettes med MESSE_KODE paa serveren; staar den
 // ikke, bruges den her. Siden er ikke hemmelig - den skal bare ikke kunne
 // aabnes af en tilfaeldig gaest der gaetter adressen.
-const MESSE_KODE = process.env.MESSE_KODE || 'S88202010s!';
+const MESSE_KODE = process.env.MESSE_KODE || 'S61607478s!';
 
 function vaegRouter(pool) {
   const router = express.Router();
