@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Glædelig jul fra Venner af e-handel</title>
+<meta name="description" content="En julehilsen fra Venner af e-handel: julekalender, julespillet Pakkepanik og julehandelstips til danske webshops.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1f4d3a">
+<link rel="icon" type="image/png" href="../assets/favicon-smartpack0.png">
+<link rel="apple-touch-icon" href="../assets/favicon-smartpack0.png">
+<script src="../js/theme-toggle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Lyst tema er standard. theme-toggle.js saetter data-theme="dark" paa <html> ud fra brugerens valg eller systemet. */
+:root{
+  --bg:#f6f4ee; --surface:#ffffff; --ink:#1c2620; --soft:#5b675f; --line:#dde2dc;
+  --pine:#1f4d3a; --pine-tint:#e5efe9; --berry:#b8323a; --berry-tint:#f7e6e6; --gold:#c9a24a;
+  --on-dark:#ffffff;
+  --display:"Bricolage Grotesque","Avenir Next",system-ui,sans-serif;
+  --body:Figtree,"Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#121a16; --surface:#1a2520; --ink:#e9efe9; --soft:#9fb0a6; --line:#2c3a33;
+  --pine:#5fae8a; --pine-tint:#1f3029; --berry:#e2666d; --berry-tint:#35201f; --gold:#d9b664; --on-dark:#0f1612;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body);overflow-x:hidden}
+.theme-transition,.theme-transition *{transition:background-color .3s,color .3s,border-color .3s!important}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:48px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);margin-bottom:20px;font-size:13px;color:var(--soft)}
+.topbar b{color:var(--berry);letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+.theme-toggle{flex:none;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.theme-toggle svg{width:20px;height:20px}
+.theme-toggle .moon{display:none}
+:root[data-theme="dark"] .theme-toggle .sun{display:none}
+:root[data-theme="dark"] .theme-toggle .moon{display:block}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.08}
+h1{font-size:clamp(36px,9vw,54px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(24px,6vw,30px);font-weight:800;margin-bottom:6px}
+h3{font-size:20px;font-weight:600}
+p{margin:0}
+.lede{color:var(--soft);max-width:60ch}
+section{display:grid;gap:14px;padding-block:28px;border-top:1px solid var(--line)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--berry)}
+.note{font-size:13px;color:var(--soft)}
+.fine{font-size:12.5px;color:var(--soft)}
+
+/* Hero */
+.hero{display:grid;gap:16px;padding-block:8px 28px}
+.hero h1 span{color:var(--berry)}
+.hero-art svg{width:100%;max-width:420px;height:auto;display:block}
+.sub{font-family:var(--display);font-weight:600;font-size:clamp(20px,5vw,24px);line-height:1.2;color:var(--pine);margin-top:-6px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-block;font:700 16px var(--body);text-decoration:none;background:var(--berry);color:#fff;padding:12px 18px;border-radius:10px;border:0;cursor:pointer}
+.btn.alt{background:none;color:var(--pine);border:1.5px solid var(--pine)}
+.btn.gold{background:var(--gold);color:#1c2620}
+.btn[aria-disabled="true"]{opacity:.6;cursor:not-allowed}
+
+/* Spil */
+.game{background:var(--pine);color:var(--on-dark);border-radius:16px;padding:20px;display:grid;gap:12px}
+.game h2{color:var(--on-dark)}
+.game .eyebrow{color:var(--gold)}
+.game p{opacity:.92}
+.game svg{width:100%;max-width:100%;height:auto;display:block}
+.game .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.game .stats div{background:rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;display:grid;gap:2px;min-width:0}
+.game .stats span{font-size:12px;opacity:.8}
+.game .stats b{font-family:var(--display);font-size:18px;font-variant-numeric:tabular-nums}
+.game .fine{color:inherit;opacity:.85}
+.board{background:rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;display:grid;gap:4px}
+.board-h{font-size:12px;opacity:.8}
+
+/* Laager */
+.doors{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.door{aspect-ratio:1/1.1;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;padding:6px;min-width:0;font:inherit;color:inherit;cursor:pointer;text-align:left;transition:transform .15s}
+.door:hover{transform:translateY(-2px)}
+.door b{font-family:var(--display);font-size:20px;font-weight:800;line-height:1;color:var(--pine)}
+.door small{font-size:10.5px;line-height:1.15;color:var(--soft);overflow-wrap:anywhere}
+.door.big{background:var(--berry);border-color:var(--berry)}
+.door.big b,.door.big small{color:var(--on-dark)}
+.door.locked{opacity:.55}
+.door.now{outline:3px solid var(--gold);outline-offset:1px}
+.door.opened:not(.big){background:var(--pine-tint);border-color:var(--pine)}
+.door-panel{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:12px 14px;display:grid;gap:2px}
+.door-panel b{font-family:var(--display);font-size:18px}
+.door-panel span{font-size:14px;color:var(--soft)}
+
+/* Partnere */
+.partners{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:8px;align-content:start;min-width:0}
+.logo{height:40px;border-radius:8px;background:var(--pine-tint);color:var(--pine);display:flex;align-items:center;padding-inline:12px;font-family:var(--display);font-weight:800;font-size:17px;overflow:hidden}
+.tag{font-size:12px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.08em}
+.card p{font-size:14px}
+.actions{display:grid;gap:4px;justify-items:start}
+.later{font:600 13px var(--body);background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
+.later:hover{border-color:var(--gold)}
+.later-hint{font-size:12px;color:var(--soft)}
+.book{justify-self:start;font:600 14px var(--body);color:var(--pine);text-decoration:none;border-bottom:2px solid var(--gold);padding-bottom:1px}
+
+/* Tips */
+.tips{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.tips li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.tips .who{font-size:12px;font-weight:700;color:var(--pine);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;padding-top:2px}
+.tips p{font-size:15px}
+
+/* Formularer */
+form{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:12px;min-width:0}
+label.field{display:grid;gap:6px;font-weight:600;font-size:14px;min-width:0}
+input[type=email],input[type=text],input[type=tel],select{font:500 16px var(--body);padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%;min-width:0}
+.check{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-size:14px}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--pine)}
+form button[type=submit]{justify-self:start}
+.ok{background:var(--pine-tint);color:var(--pine);border-radius:10px;padding:10px 12px;font-size:14px;font-weight:600}
+#laterBox{background:var(--berry-tint)}
+#laterBox .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#laterBox input,#laterBox select{background:var(--surface)}
+#lPartners{border:0;padding:0;margin:0;display:grid;gap:8px;min-width:0}
+#lPartners legend{font-weight:600;font-size:14px;padding:0;margin-bottom:8px}
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pick label{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.pick input{width:16px;height:16px;accent-color:var(--pine);margin:0}
+.pick label:has(input:checked){border-color:var(--pine);background:var(--pine-tint)}
+.ghost{font:600 14px var(--body);background:none;border:0;color:var(--soft);padding:0;cursor:pointer;justify-self:start}
+
+footer{border-top:1px solid var(--line);padding-top:20px;display:grid;gap:6px;font-size:13px;color:var(--soft)}
+footer a{color:var(--pine)}
+
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (max-width:420px){
+  .doors{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .game .stats{grid-template-columns:1fr}
+  #laterBox .row{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span><b>Forhåndsvisning</b> Siden er ikke live endnu.</span>
+    <button type="button" class="theme-toggle" aria-label="Skift mellem lyst og mørkt tema">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+
+  <header class="hero">
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 320 170">
+        <rect x="20" y="22" width="200" height="140" rx="10" fill="var(--berry)"/>
+        <rect x="20" y="22" width="200" height="26" rx="10" fill="var(--pine)"/>
+        <rect x="20" y="38" width="200" height="10" fill="var(--pine)"/>
+        <text x="120" y="40" text-anchor="middle" font-family="Bricolage Grotesque,system-ui,sans-serif" font-weight="800" font-size="13" fill="#fff">DECEMBER</text>
+        <g fill="#ffffff" fill-opacity=".16" stroke="#ffffff" stroke-opacity=".5" stroke-width="1">
+          <rect x="32" y="58" width="34" height="26" rx="4"/><rect x="72" y="58" width="34" height="26" rx="4"/><rect x="112" y="58" width="34" height="26" rx="4"/><rect x="152" y="58" width="56" height="26" rx="4"/>
+          <rect x="32" y="90" width="56" height="26" rx="4"/><rect x="94" y="90" width="34" height="26" rx="4"/><rect x="134" y="90" width="34" height="26" rx="4"/><rect x="174" y="90" width="34" height="26" rx="4"/>
+          <rect x="32" y="122" width="34" height="28" rx="4"/><rect x="72" y="122" width="34" height="28" rx="4"/><rect x="112" y="122" width="34" height="28" rx="4"/>
+        </g>
+        <g font-family="Bricolage Grotesque,system-ui,sans-serif" font-weight="800" font-size="12" fill="#fff"><text x="38" y="74">1</text><text x="78" y="74">7</text><text x="118" y="74">12</text><text x="158" y="74">24</text><text x="38" y="106">3</text><text x="100" y="106">18</text><text x="140" y="106">9</text><text x="180" y="106">15</text><text x="38" y="139">21</text><text x="78" y="139">5</text><text x="118" y="139">11</text></g>
+        <rect x="152" y="122" width="56" height="28" rx="4" fill="var(--gold)"/>
+        <text x="180" y="140" text-anchor="middle" font-family="Figtree,system-ui,sans-serif" font-weight="700" font-size="10" fill="#1c2620">I DAG</text>
+        <g transform="translate(262 92)">
+          <path d="M-12 -8c-18-24-46-16-36 3c6 10 26 8 36 3z" fill="var(--surface)" stroke="var(--line)"/>
+          <path d="M12 -8c18-24 46-16 36 3c-6 10-26 8-36 3z" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="-22" y="-18" width="44" height="38" rx="5" fill="var(--berry)"/>
+          <rect x="-4" y="-18" width="8" height="38" fill="var(--gold)"/><rect x="-22" y="-3" width="44" height="8" fill="var(--gold)"/>
+          <path d="M0 -18c-6-10-16-6-9 0zM0 -18c6-10 16-6 9 0z" fill="var(--gold)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="eyebrow">Glædelig jul fra Venner af e-handel</div>
+    <h1>Vi elsker <span>e-handel</span>.</h1>
+    <p class="sub">Og vi elsker at forkæle dem, der driver den. 🎄</p>
+    <p class="lede">I har fået en julekalender, fordi vi kender jer, eller fordi vi ser op til jer. Derfor er vi gået sammen om en lille juleoverraskelse til jer, der holder lageret kørende, også når december går stærkt.</p>
+    <div class="cta"><a class="btn" href="#spil">Spil med</a><a class="btn alt" href="#laager">Se dagens låge</a></div>
+  </header>
+
+  <section aria-labelledby="spil">
+    <div class="game">
+      <div class="eyebrow">Julespil · 1. til 24. december</div>
+      <h2 id="spil">Pakkepanik</h2>
+      <svg viewBox="0 0 320 110" role="img" aria-label="En julepakke med vinger flyver gennem et lager">
+        <rect x="0" y="0" width="320" height="110" rx="12" fill="#ffffff" fill-opacity=".08"/>
+        <g fill="#c9a24a" fill-opacity=".55"><rect x="18" y="62" width="38" height="34"/><rect x="62" y="44" width="38" height="52"/><rect x="226" y="54" width="34" height="42"/><rect x="266" y="36" width="36" height="60"/></g>
+        <line x1="0" y1="96" x2="320" y2="96" stroke="#ffffff" stroke-opacity=".3"/>
+        <g transform="translate(150 48)">
+          <path d="M-10 -6c-14-20-38-14-30 2c5 9 21 7 30 2z" fill="#ffffff" fill-opacity=".9"/>
+          <path d="M10 -6c14-20 38-14 30 2c-5 9-21 7-30 2z" fill="#ffffff" fill-opacity=".9"/>
+          <rect x="-18" y="-14" width="36" height="30" rx="4" fill="#b8323a"/>
+          <rect x="-3" y="-14" width="6" height="30" fill="#c9a24a"/><rect x="-18" y="-2" width="36" height="6" fill="#c9a24a"/>
+        </g>
+        <g fill="#c9a24a"><circle cx="208" cy="34" r="6"/><circle cx="240" cy="22" r="6"/><circle cx="272" cy="30" r="6"/></g>
+      </svg>
+      <p>Flyv julepakken gennem lageret, saml point, og vær med i dagens lodtrækning. Hele lagerholdet kan spille, og jeres point tæller sammen.</p>
+      <div class="stats">
+        <div><span>Første låge åbner om</span><b id="countdown">Snart</b></div>
+        <div><span>Dagens præmie</span><b>[Præmie aftales]</b></div>
+      </div>
+      <div class="board">
+        <span class="board-h">Lagerhold mod lagerhold</span>
+        <span class="fine">[Leaderboardet vises her, når spillet kører]</span>
+      </div>
+      <div class="cta"><a class="btn gold" href="#" aria-disabled="true" id="playLink">Spil med</a><span class="fine">[Link til Pakkepanik indsættes]</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="laager">
+    <h2 id="laager">24 låger, 24 præmier</h2>
+    <p class="lede">Hver dag fra 1. december åbner en ny låge med dagens partner og præmie. Lodtrækningen sker blandt dem, der har spillet den dag.</p>
+    <div class="doors" id="doors" role="group" aria-label="Julekalender. Tryk på en låge"></div>
+    <div class="door-panel" id="doorPanel" aria-live="polite"><b>Tryk på en låge</b><span>Lågerne åbner dag for dag fra 1. december.</span></div>
+    <p class="note">[Fordelingen af dage og præmier aftales mellem partnerne.]</p>
+  </section>
+
+  <section aria-labelledby="partnere">
+    <h2 id="partnere">Vennerne bag gaven</h2>
+    <p class="lede">Vi er en samling af danske værktøjer og leverandører til e-handel, én fra hver branche. Vi arbejder med mange af de samme butikker og ville gerne sige glædelig jul sammen. Ingen tilbud, intet salg. Bare en hilsen og lidt julesjov, hvis I eller jeres personale har tid.</p>
+    <p class="note">Samme plads til alle, i tilfældig rækkefølge.</p>
+    <div class="partners" id="partners">
+      <article class="card"><div class="logo">SmartPack</div><span class="tag">Lagersystem</span><p>Vi elsker lagre, der kører som smurt, og hjælper webshops med at få flere pakker ud ad døren med færre skridt og færre fejl.</p><a class="book" href="https://crm.smartpack.dk/kort/martin" target="_blank" rel="noopener noreferrer">Book en snak</a></article>
+      <article class="card"><div class="logo">BFT</div><span class="tag">Fragt</span><p>[Én linje fra BFT]</p><a class="book" href="#">Book en snak</a></article>
+      <article class="card"><div class="logo">UniTroll</div><span class="tag">Plukkevogne</span><p>[Én linje fra UniTroll]</p><a class="book" href="#">Book en snak</a></article>
+      <article class="card"><div class="logo">Zignifikant</div><span class="tag">Bogføring</span><p>[Én linje fra Zignifikant]</p><a class="book" href="#">Book en snak</a></article>
+      <article class="card"><div class="logo">Sprii</div><span class="tag">Live shopping</span><p>[Én linje fra Sprii]</p><a class="book" href="#">Book en snak</a></article>
+      <article class="card"><div class="logo">Kendskab</div><span class="tag">Marketing</span><p>[Én linje fra Kendskab]</p><a class="book" href="#">Book en snak</a></article>
+      <article class="card"><div class="logo">ProfitMetrics</div><span class="tag">Profitdata</span><p>[Én linje fra ProfitMetrics]</p><a class="book" href="#">Book en snak</a></article>
+      <article class="card"><div class="logo">Stok</div><span class="tag">Emballage</span><p>[Én linje fra Stok]</p><a class="book" href="#">Book en snak</a></article>
+      <article class="card"><div class="logo">Clarefy.ai</div><span class="tag">Lagerplanlægning</span><p>[Én linje fra Clarefy.ai]</p><a class="book" href="#">Book en snak</a></article>
+    </div>
+
+    <form id="laterBox" hidden novalidate>
+      <h3>Book en snak</h3>
+      <p class="fine">Vælg, hvem du vil snakke med, og hvornår vi tidligst må forstyrre. Vi kontakter dig først der.</p>
+      <fieldset id="lPartners"><legend>Hvem vil du snakke med? Vælg gerne flere</legend><div class="pick" id="lPick"></div></fieldset>
+      <div class="row">
+        <label class="field" for="lName">Navn<input id="lName" type="text" autocomplete="name"></label>
+        <label class="field" for="lShop">Webshop<input id="lShop" type="text" placeholder="minbutik.dk"></label>
+      </div>
+      <div class="row">
+        <label class="field" for="lMail">Mail<input id="lMail" type="email" autocomplete="email" required></label>
+        <label class="field" for="lPhone">Telefon<input id="lPhone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+45"></label>
+      </div>
+      <label class="field" for="lWhen">Tidligst kontakt
+        <select id="lWhen">
+          <option>Hellere i dag end i morgen 😉</option>
+          <option selected>Efter julehandlen, januar 2027</option>
+          <option>Februar 2027</option>
+          <option>Marts 2027</option>
+          <option>Efter sommerferien 2027</option>
+          <option>Jeg skriver selv, når jeg er klar</option>
+        </select>
+      </label>
+      <label class="check" for="lOk"><input id="lOk" type="checkbox"><span>Ja, de partnere, jeg har valgt, må kontakte mig om en snak fra det tidspunkt, jeg har valgt.</span></label>
+      <label class="check" for="lNews"><input id="lNews" type="checkbox"><span>Ja tak til nyhedsmail fra de partnere, jeg har valgt. Den kan afmeldes med ét klik.</span></label>
+      <button type="submit" class="btn">Book en snak</button>
+      <a class="book" id="lDirect" href="#" target="_blank" rel="noopener noreferrer" hidden>Eller vælg selv en tid i kalenderen</a>
+      <p class="ok" id="lDone" hidden></p>
+      <button type="button" class="ghost" id="lClose">Luk</button>
+    </form>
+  </section>
+
+  <section aria-labelledby="tips">
+    <h2 id="tips">Julehandelstips fra vennerne</h2>
+    <p class="lede">Ét konkret tip fra hver partner.</p>
+    <ul class="tips">
+      <li><span class="who">SmartPack</span><p>Pak de 20 mest solgte varer tættest på pakkebordet i december. Det sparer flere skridt pr. ordre, end man tror.</p></li>
+      <li><span class="who">BFT</span><p>[Tip fra BFT]</p></li>
+      <li><span class="who">UniTroll</span><p>[Tip fra UniTroll]</p></li>
+      <li><span class="who">Zignifikant</span><p>[Tip fra Zignifikant]</p></li>
+      <li><span class="who">Sprii</span><p>[Tip fra Sprii]</p></li>
+      <li><span class="who">Kendskab</span><p>[Tip fra Kendskab]</p></li>
+      <li><span class="who">ProfitMetrics</span><p>[Tip fra ProfitMetrics]</p></li>
+      <li><span class="who">Stok</span><p>[Tip fra Stok]</p></li>
+      <li><span class="who">Clarefy.ai</span><p>[Tip fra Clarefy.ai]</p></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="hold">
+    <h2 id="hold">Vær med i julespillet</h2>
+    <form id="signup" novalidate>
+      <label class="field" for="email">Din mail, så vi kan give besked, hvis du vinder
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="navn@webshop.dk" required>
+      </label>
+      <label class="check" for="optin"><input id="optin" name="optin" type="checkbox"><span>Ja tak til nyhedsmail fra Venner af e-handel (SmartPack, BFT, UniTroll, Zignifikant, Sprii, Kendskab, ProfitMetrics, Stok og Clarefy.ai). Den kan afmeldes med ét klik.</span></label>
+      <button type="submit" class="btn">Vær med i julespillet</button>
+      <p class="fine">Du kan spille og vinde, uanset om du siger ja til nyhedsmail. Vi bruger kun din mail til spillet og, hvis du har sagt ja, til nyhedsmailen. [Dataansvarlig og privatlivslink indsættes.]</p>
+      <p class="ok" id="ok" hidden></p>
+    </form>
+  </section>
+
+  <footer>
+    <span><b>Venner af e-handel</b> · julen 2026</span>
+    <span>[Kontaktperson og fælles afsender indsættes.]</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var NOT_OPEN='Tilmeldingen er ikke åben endnu. [Modtager af tilmeldinger mangler.]';
+  var box=document.getElementById('partners');
+
+  // Partnerkort i tilfaeldig raekkefoelge, saa ingen altid ligger oeverst.
+  var cards=Array.prototype.slice.call(box.children);
+  for(var i=cards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=cards[i];cards[i]=cards[j];cards[j]=t;}
+  cards.forEach(function(c){box.appendChild(c);});
+
+  // Spil-knappen er slaaet fra, indtil linket findes.
+  document.getElementById('playLink').addEventListener('click',function(e){e.preventDefault();});
+
+  // Laager. ?demo i adressen viser dem, som om det er d. 24. december.
+  var names=['SmartPack','BFT','UniTroll','Zignifikant','Sprii','Kendskab','ProfitMetrics','Stok','Clarefy.ai'];
+  var demo=/[?&]demo\b/.test(location.search);
+  var doors=document.getElementById('doors'),panel=document.getElementById('doorPanel');
+  for(var d=1;d<=24;d++){
+    var el=document.createElement('button');el.type='button';
+    el.className='door'+(d===24?' big':'');el.dataset.day=d;
+    var n=document.createElement('b');n.textContent=d;
+    var s=document.createElement('small');s.textContent=d===24?'Highscore':names[(d-1)%names.length];
+    el.appendChild(n);el.appendChild(s);doors.appendChild(el);
+  }
+  function today(){
+    if(demo)return 24;
+    var t=new Date();
+    if(t.getFullYear()===2026&&t.getMonth()===11)return Math.min(t.getDate(),24);
+    return t>new Date(2026,11,24)?24:0;
+  }
+  function paint(){
+    var td=today();
+    Array.prototype.forEach.call(doors.children,function(b){var dd=+b.dataset.day;b.classList.toggle('locked',dd>td);b.classList.toggle('now',dd===td);});
+  }
+  function say(title,text){
+    panel.textContent='';
+    var h=document.createElement('b');h.textContent=title;
+    var p=document.createElement('span');p.textContent=text;
+    panel.appendChild(h);panel.appendChild(p);
+  }
+  doors.addEventListener('click',function(e){
+    var b=e.target.closest('.door');if(!b)return;
+    var dd=+b.dataset.day,td=today(),who=dd===24?'Alle partnere':names[(dd-1)%names.length];
+    if(dd>td){say('Låge '+dd+' er stadig lukket',td===0?'Første låge åbner 1. december.':'Den åbner '+dd+'. december.');return;}
+    b.classList.add('opened');
+    say('Låge '+dd+' · '+who,dd===24?'Samlet highscore: [Præmie aftales].':'Dagens præmie fra '+who+': [Præmie aftales]. Spil i dag, og vær med i lodtrækningen.');
+  });
+  paint();
+
+  // Nedtaelling til foerste laage.
+  var cd=document.getElementById('countdown');
+  function tick(){
+    var ms=new Date(2026,11,1)-new Date();
+    if(ms<=0){cd.textContent='Lågerne er åbne';return;}
+    var dd=Math.floor(ms/864e5),hh=Math.floor(ms%864e5/36e5);
+    cd.textContent=dd+' dage og '+hh+' timer';
+  }
+  tick();setInterval(tick,60000);
+
+  // "Book en snak": en faelles formular, der aabnes fra alle partnerkort.
+  var lb=document.getElementById('laterBox'),ld=document.getElementById('lDone'),pick=document.getElementById('lPick'),dl=document.getElementById('lDirect');
+  names.forEach(function(name,i){
+    var l=document.createElement('label'),c=document.createElement('input');
+    c.type='checkbox';c.id='lp'+i;c.value=name;l.htmlFor=c.id;
+    l.appendChild(c);l.appendChild(document.createTextNode(name));pick.appendChild(l);
+  });
+  Array.prototype.forEach.call(box.querySelectorAll('.card'),function(card){
+    var name=card.querySelector('.logo').textContent,link=card.querySelector('.book'),href=link.getAttribute('href');
+    var wrap=document.createElement('div');wrap.className='actions';
+    link.parentNode.insertBefore(wrap,link);link.remove();
+    var b=document.createElement('button');b.type='button';b.className='later';b.textContent='Book en snak';
+    var h=document.createElement('span');h.className='later-hint';h.textContent='I dag eller senere. Vi kontakter dig først, når du siger, vi må 😉';
+    wrap.appendChild(b);wrap.appendChild(h);
+    b.addEventListener('click',function(){
+      if(href&&href!=='#'){dl.href=href;dl.hidden=false;}else{dl.hidden=true;}
+      Array.prototype.forEach.call(pick.querySelectorAll('input'),function(c){if(c.value===name)c.checked=true;});
+      ld.hidden=true;lb.hidden=false;
+      lb.scrollIntoView({behavior:'smooth',block:'start'});
+      document.getElementById('lName').focus({preventScroll:true});
+    });
+  });
+  document.getElementById('lClose').addEventListener('click',function(){lb.hidden=true;});
+  lb.addEventListener('submit',function(e){
+    // Intet sendes eller gemmes, foer der er aftalt en modtager.
+    e.preventDefault();ld.hidden=false;
+    var m=document.getElementById('lMail');
+    if(!m.value||!m.checkValidity()){ld.textContent='Skriv din mail, så vi kan finde dig igen.';m.focus();return;}
+    var sel=pick.querySelectorAll('input:checked');
+    if(!sel.length){ld.textContent='Vælg mindst én partner, du vil snakke med.';return;}
+    if(!document.getElementById('lOk').checked){ld.textContent='Sæt flueben, hvis de valgte må kontakte dig.';return;}
+    ld.textContent=NOT_OPEN;
+  });
+
+  // Tilmelding til spillet: intet sendes eller gemmes endnu.
+  var f=document.getElementById('signup'),ok=document.getElementById('ok'),em=document.getElementById('email');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();ok.hidden=false;
+    if(!em.value||!em.checkValidity()){ok.textContent='Skriv en gyldig mailadresse for at spille.';em.focus();return;}
+    ok.textContent=NOT_OPEN;
+  });
+})();
+</script>
+</body>
+</html>
