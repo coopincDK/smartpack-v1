@@ -29,8 +29,8 @@ const TYPER = { learn: 'Lead', general: 'Generel', support: 'Support' };
 // ligger her på serveren, så browseren ikke kan ændre dem. Ukendte id'er
 // behandles som den almindelige kontaktformular.
 const FORMULARER = {
-  'pjece-jul-2026': {
-    kilde: 'Pjece jul 2026',
+  'pjece': {
+    kilde: 'Pjece',
     nyhedsbrevTekst: 'Ja tak, jeg vil gerne have nyheder, invitationer til webinarer og gode råd fra SmartPack på mail.',
   },
 };

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Landingsside til QR-koden i julepjecen 2026. Adressen /opdateret er trykt og må ikke ændres.
+  <!-- Landingsside til QR-koden i SmartPacks pjece (julekalenderne 2026, E-handelsdagen m.fl.). Adressen /opdateret er trykt og må ikke ændres.
        Ikke i menuen og ikke i sitemap; noindex som de andre kampagnesider (fx messe.html). -->
   <title>Nyt fra SmartPack | Skriv dig op</title>
   <meta name="description" content="Skriv dig op og få besked om nye funktioner i SmartPack, webinarer og gode råd om e-handel. Du kan altid melde dig fra igen.">
@@ -214,8 +214,8 @@
 <script>
 (function () {
   // Sender til samme rute som kontaktformularen (spil-api: POST /hjemmeside/kontakt), der
-  // lægger henvendelsen i CRM'et. formular: 'pjece-jul-2026' får serveren til at mærke den
-  // med kilden "Pjece jul 2026" og gemme den præcise tekst ved nyhedsbrev-fluebenet.
+  // lægger henvendelsen i CRM'et. formular: 'pjece' får serveren til at mærke den
+  // med kilden "Pjece" og gemme den præcise tekst ved nyhedsbrev-fluebenet.
   var form = document.getElementById('opd-form');
   var fejl = document.getElementById('opd-fejl');
   var send = document.getElementById('opd-send');
@@ -258,7 +258,7 @@
 
     var kommentar = v('opd-kommentar');
     var data = {
-      formular: 'pjece-jul-2026',
+      formular: 'pjece',
       name: navn,
       company: firma,
       email: email,
@@ -303,7 +303,7 @@
         kvit.hidden = false;
         kvit.focus({ preventScroll: true });
         document.querySelector('.opd-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        try { if (window.posthog && posthog.capture) posthog.capture('pjece_jul_2026_tilmeldt', { gennemgang: gennemgang.checked, nyheder: nyheder.checked }); } catch (x) { /* ignorer */ }
+        try { if (window.posthog && posthog.capture) posthog.capture('pjece_tilmeldt', { gennemgang: gennemgang.checked, nyheder: nyheder.checked }); } catch (x) { /* ignorer */ }
       })
       .catch(function (err) {
         send.disabled = false;
