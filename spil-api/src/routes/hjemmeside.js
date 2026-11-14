@@ -23,6 +23,17 @@ const kunTekst = (b, felter) => felter.every((k) => b[k] === undefined || b[k] =
 // Den præcise tekst ved fluebenet i kontaktformularen.
 const KONTAKT_NYHEDSBREV_TEKST = 'Ja tak til praktiske tips om lager og logistik';
 const TYPER = { learn: 'Lead', general: 'Generel', support: 'Support' };
+
+// Kampagnesider, der bruger samme rute som kontaktformularen. Siden sender kun
+// sit id (formular); kilden og den præcise tekst ved nyhedsbrev-fluebenet
+// ligger her på serveren, så browseren ikke kan ændre dem. Ukendte id'er
+// behandles som den almindelige kontaktformular.
+const FORMULARER = {
+  'pjece-jul-2026': {
+    kilde: 'Pjece jul 2026',
+    nyhedsbrevTekst: 'Ja tak, jeg vil gerne have nyheder, invitationer til webinarer og gode råd fra SmartPack på mail.',
+  },
+};
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const t = (v, max = 2000) => {
@@ -40,7 +51,7 @@ const MAKS_LISTE = 30;
 const TEKST_FELTER = [
   'type', 'name', 'email', 'phone', 'company', 'comment', 'subject', 'message', 'page', 'cvr', 'orders',
   'employees', 'urgency', 'shop_andet', 'erp_andet', 'carriers_dk_andet', 'carriers_int_andet',
-  'source_andet', '_hp', 'newsletter',
+  'source_andet', '_hp', 'newsletter', 'formular',
 ];
 const LISTE_FELTER = ['shops', 'erp', 'carriers_dk', 'carriers_int', 'source'];
 
@@ -90,12 +101,14 @@ function kontaktTilCrm(b) {
     hoert_via: [t(b.source, 80), t(b.source_andet, 120)].filter(Boolean).join(' · '),
     emne: type === 'learn' ? '' : t(b.subject, 200),
   };
+  const formular = Object.prototype.hasOwnProperty.call(FORMULARER, b.formular) ? FORMULARER[b.formular] : null;
+  if (formular) ekstra.hoert_via = formular.kilde;
   for (const [k, v] of Object.entries(ekstra)) if (v) body[k] = v;
   for (const k of Object.keys(body)) if (body[k] === '') delete body[k];
   const nyhedsbrev = b.newsletter === true || b.newsletter === 'Ja';
   if (nyhedsbrev) {
     body.newsletter = true;
-    body.consentText = KONTAKT_NYHEDSBREV_TEKST;
+    body.consentText = formular ? formular.nyhedsbrevTekst : KONTAKT_NYHEDSBREV_TEKST;
   }
   return body;
 }
@@ -191,4 +204,4 @@ function hjemmesideRouter() {
   return router;
 }
 
-module.exports = { hjemmesideRouter, kontaktTilCrm, KONTAKT_NYHEDSBREV_TEKST, FOOTER_NYHEDSBREV_TEKST };
+module.exports = { hjemmesideRouter, kontaktTilCrm, KONTAKT_NYHEDSBREV_TEKST, FOOTER_NYHEDSBREV_TEKST, FORMULARER };

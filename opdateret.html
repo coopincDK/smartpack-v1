@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Landingsside til QR-koden i julepjecen 2026. Adressen /opdateret er trykt og må ikke ændres.
+       Ikke i menuen og ikke i sitemap; noindex som de andre kampagnesider (fx messe.html). -->
+  <title>Nyt fra SmartPack | Skriv dig op</title>
+  <meta name="description" content="Skriv dig op og få besked om nye funktioner i SmartPack, webinarer og gode råd om e-handel. Du kan altid melde dig fra igen.">
+  <link rel="canonical" href="https://smartpack.dk/opdateret">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#0c1117">
+  <meta name="author" content="SmartPack">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://smartpack.dk/opdateret">
+  <meta property="og:site_name" content="SmartPack">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:title" content="Nysgerrig på, hvad der kommer i SmartPack?">
+  <meta property="og:description" content="Skriv dig op og få besked om nye funktioner, webinarer og gode råd om e-handel.">
+  <meta property="og:image" content="https://smartpack.dk/images/og-image.jpg">
+
+  <link rel="icon" type="image/png" href="assets/favicon-smartpack0.png">
+  <link rel="apple-touch-icon" href="assets/favicon-smartpack0.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=1790088007">
+  <script src="js/theme-toggle.js"></script>
+  <style>
+    .opd-hero { padding: 120px 0 2rem; text-align: center; }
+    .opd-badge {
+      display: inline-block; font-size: .72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--accent-text); background: var(--accent-glow);
+      border: 1px solid rgba(26,138,90,.25); border-radius: 999px; padding: .4rem .9rem;
+    }
+    .opd-hero h1 {
+      font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 900; letter-spacing: -.035em;
+      line-height: 1.1; margin: 1rem auto .9rem; max-width: 720px;
+    }
+    .opd-hero p { font-size: clamp(1rem, 2.4vw, 1.15rem); color: var(--text-2); max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+    .opd-section { padding: 1rem 0 var(--section-py); }
+    .opd-card {
+      max-width: 560px; margin: 0 auto; background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 2rem; box-shadow: var(--shadow-md);
+    }
+    .opd-field { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1.1rem; }
+    .opd-field label { font-size: .9rem; font-weight: 700; color: var(--text-1); }
+    .opd-field .opd-valgfri { font-weight: 500; color: var(--text-3); }
+    .opd-field input, .opd-field textarea {
+      font: inherit; font-size: 16px; /* 16px: iOS zoomer ikke ind */
+      color: var(--text-1); background: var(--bg); border: 1px solid var(--border-2);
+      border-radius: var(--r-sm); padding: .8rem .9rem; width: 100%; box-sizing: border-box;
+      transition: border-color var(--t-fast), box-shadow var(--t-fast);
+    }
+    .opd-field textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
+    .opd-field input:focus, .opd-field textarea:focus {
+      outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .opd-field input[aria-invalid="true"] { border-color: var(--red); }
+    .opd-hint { font-size: .8rem; color: var(--text-3); line-height: 1.45; }
+
+    .opd-check {
+      display: flex; gap: .75rem; align-items: flex-start; padding: .9rem 1rem; margin-bottom: .75rem;
+      background: var(--bg); border: 1px solid var(--border-2); border-radius: var(--r-md); cursor: pointer;
+      font-size: .95rem; line-height: 1.5; color: var(--text-1);
+    }
+    .opd-check input { width: 22px; height: 22px; margin: 1px 0 0; flex-shrink: 0; accent-color: var(--accent); cursor: pointer; }
+    .opd-check a { color: var(--accent-text); text-decoration: underline; }
+
+    .opd-hvornaar { border: 0; min-width: 0; margin: -.25rem 0 1rem; padding: .9rem 1rem 1rem; border-left: 3px solid var(--accent); background: var(--bg); border-radius: 0 var(--r-md) var(--r-md) 0; }
+    .opd-hvornaar legend { font-size: .9rem; font-weight: 700; color: var(--text-1); padding: 0; margin-bottom: .6rem; }
+    .opd-radio { display: flex; gap: .6rem; align-items: center; padding: .45rem 0; font-size: .95rem; cursor: pointer; }
+    .opd-radio input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); cursor: pointer; }
+
+    .opd-fejl {
+      display: none; margin: 0 0 1rem; padding: .75rem 1rem; border-radius: var(--r-sm);
+      background: rgba(225,29,72,.08); border: 1px solid rgba(225,29,72,.3); color: var(--red); font-size: .9rem; font-weight: 600;
+    }
+    .opd-fejl.vis { display: block; }
+    .opd-send { width: 100%; justify-content: center; margin-top: .5rem; }
+    .opd-send[disabled] { opacity: .6; cursor: wait; }
+    /* Footerens egen nyhedsbrevsformular skjules her, så siden kun har én tilmelding. */
+    .footer__newsletter { display: none !important; }
+    .opd-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    .opd-kvittering { text-align: center; padding: 1rem 0; }
+    .opd-kvittering__ikon {
+      width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center;
+      background: var(--accent-glow); color: var(--accent-text); border: 1px solid rgba(26,138,90,.3);
+    }
+    .opd-kvittering h2 { font-size: 1.6rem; font-weight: 900; letter-spacing: -.02em; margin: 0 0 .75rem; }
+    .opd-kvittering p { color: var(--text-2); line-height: 1.6; margin: 0 0 1rem; }
+
+    @media (max-width: 600px) {
+      .opd-hero { padding: 96px 0 1.5rem; }
+      .opd-card { padding: 1.4rem 1.1rem; border-radius: var(--r-md); }
+    }
+  </style>
+
+<!-- ================================================================
+     SMARTPACK TRACKING. Skal med paa alle nye sider.
+     Se _TRACKING_TEMPLATE.html i roden.
+================================================================ -->
+
+<!-- 1. Iubenda Cookie Consent (GDPR) -->
+<script>var _iub=_iub||[];_iub.csConfiguration={"askConsentAtCookiePolicyUpdate":true,"floatingPreferencesButtonDisplay":"anchored-bottom-left","lang":"da","perPurposeConsent":true,"purposes":"1,2,3,4,5","siteId":3498077,"cookiePolicyId":58367222,"banner":{"acceptButtonColor":"#1EB070","acceptButtonDisplay":true,"backgroundColor":"#FAFAFA","closeButtonDisplay":false,"customizeButtonColor":"#363636","customizeButtonDisplay":true,"rejectButtonColor":"#1EB070","rejectButtonDisplay":true,"showPurposesToggles":true,"textColor":"#363636","position":"float-bottom-center"}};</script>
+<script src="https://cs.iubenda.com/autoblocking/3498077.js"></script>
+<script async src="//cdn.iubenda.com/cs/iubenda_cs.js"></script>
+
+<!-- 2. Google Analytics 4 (styret af iubenda) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DTNMQ2MD3X" type="text/plain" class="_iub_cs_activate" data-iub-purposes="4"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DTNMQ2MD3X');</script>
+
+
+
+
+
+<!-- 7. PostHog -->
+<script>!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);posthog.init('phc_F1fM3dT21d2Wpy5B08BeYfBovJLTmDGCpQQhEYzhGor',{api_host:'https://eu.posthog.com'});</script>
+
+<!-- 8. Leadinfo -->
+<script>(function(l,e,a,d,i,n,f,o){if(!l[i]){l.GlobalLeadinfoNamespace=l.GlobalLeadinfoNamespace||[];l.GlobalLeadinfoNamespace.push(i);l[i]=function(){(l[i].q=l[i].q||[]).push(arguments)};l[i].t=l[i].t||n;l[i].q=l[i].q||[];o=e.createElement(a);f=e.getElementsByTagName(a)[0];o.async=1;o.src=d;f.parentNode.insertBefore(o,f);}}(window,document,'script','https://cdn.leadinfo.net/ping.js','leadinfo','LI-65B796F3082B3'));</script>
+
+<!-- ================================================================
+     SLUT PAA TRACKING BLOK
+================================================================ -->
+</head>
+<body>
+
+<div id="sp-header"></div>
+<script src="js/header.js?v=20261008"></script>
+<main id="main-content">
+
+<section class="opd-hero">
+  <div class="container">
+    <span class="opd-badge">Nyt fra SmartPack</span>
+    <h1>Nysgerrig på, hvad der kommer i SmartPack?</h1>
+    <p>Skriv dig op, og få besked om nye funktioner, webinarer og gode råd om e-handel. Du kan altid melde dig fra igen.</p>
+  </div>
+</section>
+
+<section class="opd-section">
+  <div class="container">
+    <div class="opd-card">
+
+      <form id="opd-form" novalidate>
+        <div class="opd-field">
+          <label for="opd-navn">Navn</label>
+          <input id="opd-navn" name="name" type="text" autocomplete="name" required maxlength="120">
+        </div>
+        <div class="opd-field">
+          <label for="opd-firma">Firma</label>
+          <input id="opd-firma" name="company" type="text" autocomplete="organization" required maxlength="160">
+        </div>
+        <div class="opd-field">
+          <label for="opd-email">E-mail</label>
+          <input id="opd-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="200">
+        </div>
+        <div class="opd-field">
+          <label for="opd-tlf">Telefonnummer <span class="opd-valgfri">(valgfrit)</span></label>
+          <input id="opd-tlf" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40">
+        </div>
+
+        <label class="opd-check" for="opd-nyheder">
+          <input id="opd-nyheder" name="newsletter" type="checkbox">
+          <span>Ja tak, jeg vil gerne have nyheder, invitationer til webinarer og gode råd fra SmartPack på mail. Se vores <a href="/privatlivspolitik" target="_blank" rel="noopener">privatlivspolitik</a>.</span>
+        </label>
+
+        <label class="opd-check" for="opd-gennemgang">
+          <input id="opd-gennemgang" name="gennemgang" type="checkbox" aria-controls="opd-hvornaar" aria-expanded="false">
+          <span>I må gerne kontakte mig for at aftale en gennemgang af SmartPack.</span>
+        </label>
+
+        <fieldset class="opd-hvornaar" id="opd-hvornaar" hidden>
+          <legend>Hvornår passer det?</legend>
+          <label class="opd-radio"><input type="radio" name="hvornaar" value="Hurtigst muligt"> Hurtigst muligt</label>
+          <label class="opd-radio"><input type="radio" name="hvornaar" value="Først i det nye år"> Først i det nye år</label>
+        </fieldset>
+
+        <div class="opd-field">
+          <label for="opd-kommentar">Fortæl lidt om jeres butik <span class="opd-valgfri">(valgfrit)</span></label>
+          <textarea id="opd-kommentar" name="comment" maxlength="2000" placeholder="Fx hvad I sælger, hvor mange ordrer I har, og hvad I bruger i dag."></textarea>
+        </div>
+
+        <!-- Honeypot: samme spam-beskyttelse som kontaktformularen. Mennesker ser ikke feltet. -->
+        <div class="opd-hp" aria-hidden="true"><label for="opd-hp">Lad dette felt være tomt</label><input type="text" id="opd-hp" name="_hp" tabindex="-1" autocomplete="off"></div>
+
+        <div class="opd-fejl" id="opd-fejl" role="alert"></div>
+        <button type="submit" class="btn btn--primary btn--lg opd-send" id="opd-send">Skriv mig op</button>
+      </form>
+
+      <div class="opd-kvittering" id="opd-kvittering" hidden tabindex="-1">
+        <div class="opd-kvittering__ikon" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 id="opd-kvittering-titel">Tak, du er skrevet op.</h2>
+        <p id="opd-kvittering-tekst">Vi har modtaget din tilmelding.</p>
+        <a href="/" class="btn btn--ghost">Se mere om SmartPack</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="sp-footer"></div>
+<script src="js/footer.js?v=20261005"></script>
+<script src="js/main.js?v=1790088007" defer></script>
+<script>
+(function () {
+  // Sender til samme rute som kontaktformularen (spil-api: POST /hjemmeside/kontakt), der
+  // lægger henvendelsen i CRM'et. formular: 'pjece-jul-2026' får serveren til at mærke den
+  // med kilden "Pjece jul 2026" og gemme den præcise tekst ved nyhedsbrev-fluebenet.
+  var form = document.getElementById('opd-form');
+  var fejl = document.getElementById('opd-fejl');
+  var send = document.getElementById('opd-send');
+  var gennemgang = document.getElementById('opd-gennemgang');
+  var nyheder = document.getElementById('opd-nyheder');
+  var hvornaarBoks = document.getElementById('opd-hvornaar');
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function v(id) { return document.getElementById(id).value.trim(); }
+  function visFejl(tekst, felt) {
+    fejl.textContent = tekst;
+    fejl.classList.add('vis');
+    if (felt) { felt.setAttribute('aria-invalid', 'true'); felt.focus(); }
+  }
+  function skjulFejl() {
+    fejl.classList.remove('vis');
+    form.querySelectorAll('[aria-invalid]').forEach(function (el) { el.removeAttribute('aria-invalid'); });
+  }
+
+  gennemgang.addEventListener('change', function () {
+    hvornaarBoks.hidden = !gennemgang.checked;
+    gennemgang.setAttribute('aria-expanded', String(gennemgang.checked));
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    skjulFejl();
+
+    var navn = v('opd-navn'), firma = v('opd-firma'), email = v('opd-email');
+    if (!navn) return visFejl('Skriv dit navn.', document.getElementById('opd-navn'));
+    if (!firma) return visFejl('Skriv navnet på dit firma.', document.getElementById('opd-firma'));
+    if (!EMAIL_RE.test(email)) return visFejl('Skriv en gyldig e-mail.', document.getElementById('opd-email'));
+    if (!nyheder.checked && !gennemgang.checked) {
+      return visFejl('Sæt mindst ét flueben: nyheder på mail, en gennemgang eller begge dele.', nyheder);
+    }
+    var valgt = form.querySelector('input[name="hvornaar"]:checked');
+    if (gennemgang.checked && !valgt) {
+      return visFejl('Vælg, hvornår det passer at blive kontaktet.', form.querySelector('input[name="hvornaar"]'));
+    }
+
+    var kommentar = v('opd-kommentar');
+    var data = {
+      formular: 'pjece-jul-2026',
+      name: navn,
+      company: firma,
+      email: email,
+      phone: v('opd-tlf'),
+      newsletter: nyheder.checked,
+      page: location.href,
+      _hp: document.getElementById('opd-hp').value
+    };
+    if (gennemgang.checked) {
+      data.type = 'learn';
+      data.urgency = valgt.value;
+      data.comment = 'Ønsker en gennemgang af SmartPack (' + valgt.value.toLowerCase() + ').' + (kommentar ? '\n\n' + kommentar : '');
+    } else {
+      data.type = 'general';
+      data.subject = 'Tilmelding til nyheder fra pjecen';
+      data.message = kommentar || 'Ingen kommentar.';
+    }
+
+    send.disabled = true;
+    send.textContent = 'Sender...';
+
+    fetch('/api/spil/hjemmeside/kontakt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (svar) {
+        if (!svar.ok || !svar.j.ok) throw new Error(svar.j.fejl || '');
+        var fornavn = navn.split(' ')[0];
+        document.getElementById('opd-kvittering-titel').textContent = 'Tak, ' + fornavn + '. Du er skrevet op.';
+        var tekst = [];
+        if (nyheder.checked) tekst.push('Du får nyheder, invitationer til webinarer og gode råd fra os på mail.');
+        if (gennemgang.checked) {
+          tekst.push(valgt.value === 'Hurtigst muligt'
+            ? 'Vi kontakter dig snarest for at aftale en gennemgang af SmartPack.'
+            : 'Vi kontakter dig først i det nye år for at aftale en gennemgang af SmartPack.');
+        }
+        document.getElementById('opd-kvittering-tekst').textContent = tekst.join(' ');
+        form.hidden = true;
+        var kvit = document.getElementById('opd-kvittering');
+        kvit.hidden = false;
+        kvit.focus({ preventScroll: true });
+        document.querySelector('.opd-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        try { if (window.posthog && posthog.capture) posthog.capture('pjece_jul_2026_tilmeldt', { gennemgang: gennemgang.checked, nyheder: nyheder.checked }); } catch (x) { /* ignorer */ }
+      })
+      .catch(function (err) {
+        send.disabled = false;
+        send.textContent = 'Skriv mig op';
+        visFejl((err && err.message) || 'Det lykkedes ikke at sende. Prøv igen, eller skriv til bundlinjeboost@smartpack.dk.');
+      });
+  });
+})();
+</script>
+</body>
+</html>
