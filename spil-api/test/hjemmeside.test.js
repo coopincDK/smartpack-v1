@@ -89,3 +89,40 @@ test('footerens nyhedsbrev og afmelding sendes til CRM', async (t) => {
   assert.equal(crm.kald[1].url, '/api/v1/newsletter/unsubscribe');
   assert.equal(crm.kald[1].body.email, 'lise@shop.dk');
 });
+
+test('pjecens landingsside (formular pjece) får kilde og egen samtykketekst fra serveren', async (t) => {
+  const crm = await fakeCrm();
+  process.env.SMARTPACK_CRM_URL = crm.url;
+  process.env.SMARTPACK_CRM_KEY = 'spk_test';
+  const h = await startHarness();
+  t.after(async () => { await h.teardown(); crm.srv.close(); delete process.env.SMARTPACK_CRM_KEY; delete process.env.SMARTPACK_CRM_URL; });
+
+  const r = await api(h.baseUrl, 'POST', '/hjemmeside/kontakt', {
+    body: { type: 'learn', formular: 'pjece', name: 'Jens Hansen', email: 'jens@firma.dk', company: 'Firma ApS', phone: '22334455', urgency: 'Først i det nye år', comment: 'Vi sælger cykler, 40 ordrer om dagen.', newsletter: true, source: 'forsøg på at ændre kilden', page: 'https://smartpack.dk/opdateret', _hp: '' },
+  });
+  assert.equal(r.status, 200);
+  const k = crm.kald[0].body;
+  assert.equal(k.hoert_via, 'Pjece');
+  assert.equal(k.type, 'Lead');
+  assert.equal(k.hastegrad, 'Først i det nye år');
+  assert.equal(k.newsletter, true);
+  assert.equal(k.consentText, 'Ja tak, jeg vil gerne have nyheder, invitationer til webinarer og gode råd fra SmartPack på mail.');
+
+  // Kun nyheder, ingen gennemgang: stadig mærket fra pjecen, ingen hastegrad.
+  await api(h.baseUrl, 'POST', '/hjemmeside/kontakt', {
+    body: { type: 'general', formular: 'pjece', name: 'B', company: 'B ApS', email: 'b@x.dk', subject: 'Tilmelding til nyheder fra pjecen', message: 'Ingen kommentar.', newsletter: true, _hp: '' },
+  });
+  const k2 = crm.kald[1].body;
+  assert.equal(k2.hoert_via, 'Pjece');
+  assert.equal(k2.type, 'Generel');
+  assert.equal(k2.hastegrad, undefined);
+
+  // Ukendt formular-id: behandles som den almindelige kontaktformular.
+  await api(h.baseUrl, 'POST', '/hjemmeside/kontakt', { body: { type: 'learn', formular: 'toString', name: 'C', email: 'c@x.dk', newsletter: true, _hp: '' } });
+  const k3 = crm.kald[2].body;
+  assert.equal(k3.hoert_via, undefined);
+  assert.equal(k3.consentText, 'Ja tak til praktiske tips om lager og logistik');
+
+  // formular skal være tekst
+  assert.equal((await api(h.baseUrl, 'POST', '/hjemmeside/kontakt', { body: { name: 'D', email: 'd@x.dk', formular: { x: 1 } } })).status, 400);
+});
