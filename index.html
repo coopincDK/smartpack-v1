@@ -215,12 +215,15 @@
      SLUT PAA TRACKING BLOK
 ================================================================ -->
 <style>
-.pr-banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px;padding:10px 14px;border-radius:14px;background:rgba(249,115,22,.14);border:1px solid rgba(249,115,22,.55);color:inherit;text-decoration:none;font-size:15px;line-height:1.4;max-width:620px;transition:background .15s,transform .15s}
-.pr-banner:hover{background:rgba(249,115,22,.22);transform:translateY(-1px)}
-.pr-banner[hidden]{display:none}
-.pr-banner__ikon{font-size:22px}
-.pr-banner__tekst{flex:1 1 260px}
-.pr-banner__cta{font-weight:700;color:#F97316;white-space:nowrap}
+/* Julekalender-banner (Pakkepanik), vises 15/11-24/12 2026. Se scriptet ved banneret. */
+.jul-banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 18px;padding:12px 16px;border-radius:14px;background:linear-gradient(135deg,rgba(185,28,28,.10),rgba(21,128,61,.10));border:1px solid rgba(185,28,28,.45);color:inherit;text-decoration:none;font-size:15px;line-height:1.45;max-width:640px;transition:background .15s,transform .15s}
+.jul-banner:hover{background:linear-gradient(135deg,rgba(185,28,28,.16),rgba(21,128,61,.16));transform:translateY(-1px)}
+.jul-banner[hidden]{display:none}
+.jul-banner__ikon{font-size:26px;line-height:1}
+.jul-banner__tekst{flex:1 1 260px}
+.jul-banner__ned{display:block;margin-top:2px;font-weight:800;font-variant-numeric:tabular-nums;color:#b91c1c}
+.jul-banner__cta{font-weight:700;color:#b91c1c;white-space:nowrap}
+[data-theme="dark"] .jul-banner__ned,[data-theme="dark"] .jul-banner__cta{color:#f87171}
 </style>
 </head>
 <body>
@@ -240,13 +243,38 @@
 
   <div class="container hero__inner">
     <div class="hero__content reveal">
-      <!-- Packrush-banner: efter&aring;rsferieudfordringen 6.-18. okt. 2026. Skjules automatisk efter 18/10. -->
-      <a class="pr-banner" id="pr-banner" href="spil/" hidden>
-        <span class="pr-banner__ikon" aria-hidden="true">&#127918;</span>
-        <span class="pr-banner__tekst"><strong>Spil Packrush</strong>, vores lagerspil, og v&aelig;r med i efter&aring;rsferieudfordringen. Vind Ch&acirc;teau Belle-Vue, vinderne tr&aelig;kkes 19. oktober.</span>
-        <span class="pr-banner__cta">Deltag her &rarr;</span>
+      <!-- Julekalender-banner: nedtælling til Pakkepanik 1/12, derefter "dagens låge". Skjules automatisk 25/12 kl. 00 (dansk tid).
+           Test et andet tidspunkt med ?jul=2026-12-05T10:00 i adressen. -->
+      <a class="jul-banner" id="jul-banner" href="https://www.bertthebird.io/pakkepanik/" target="_blank" rel="noopener" hidden>
+        <span class="jul-banner__ikon" aria-hidden="true">&#127876;</span>
+        <span class="jul-banner__tekst"><strong>Pakkepanik</strong>: den ultimative julekalender for e-k&oslash;bm&aelig;nd og alle, der knokler for at f&aring; julen til at h&aelig;nge sammen.<span class="jul-banner__ned" id="jul-ned">Starter 1. december</span></span>
+        <span class="jul-banner__cta" id="jul-cta">Se mere &rarr;</span>
       </a>
-      <script>(function(){try{var d=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Copenhagen'}).format(new Date());if(d<='2026-10-18'){document.getElementById('pr-banner').hidden=false;}}catch(e){}})();</script>
+      <script>(function(){try{
+        var START=Date.UTC(2026,10,30,23,0,0), SLUT=Date.UTC(2026,11,24,23,0,0); /* 1/12 og 25/12 kl. 00 dansk tid */
+        var el=document.getElementById('jul-banner'), ned=document.getElementById('jul-ned'), cta=document.getElementById('jul-cta');
+        var test=(location.search.match(/[?&]jul=([0-9T:-]+)/)||[])[1], forskyd=0;
+        if(test){var t=new Date(test+(test.length<=10?'T00:00':'')+':00+01:00').getTime();if(!isNaN(t))forskyd=t-Date.now();}
+        function nu(){return Date.now()+forskyd;}
+        function to(n){return (n<10?'0':'')+n;}
+        function opdater(){
+          var n=nu();
+          if(n>=SLUT){el.hidden=true;return false;}
+          el.hidden=false;
+          if(n<START){
+            var s=Math.floor((START-n)/1000), d=Math.floor(s/86400); s-=d*86400;
+            var h=Math.floor(s/3600); s-=h*3600; var m=Math.floor(s/60); s-=m*60;
+            ned.textContent='\u00c5bner 1. december om '+(d>0?d+(d===1?' dag ':' dage '):'')+to(h)+':'+to(m)+':'+to(s);
+            el.href='https://www.bertthebird.io/pakkepanik/'; cta.textContent='Se mere \u2192';
+          }else{
+            var dag=parseInt(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Copenhagen',day:'numeric'}).format(new Date(n)),10);
+            ned.textContent='L\u00e5ge '+dag+' er \u00e5ben nu';
+            el.href='https://www.bertthebird.io/pakkepanik/kalender'; cta.textContent='\u00c5bn dagens l\u00e5ge \u2192';
+          }
+          return true;
+        }
+        if(opdater()){var iv=setInterval(function(){if(!opdater())clearInterval(iv);},1000);}
+      }catch(e){}})();</script>
       <div class="eyebrow">Bygget af e-k&oslash;bm&aelig;nd der selv har st&aring;et p&aring; lageret, siden 2005</div>
       <h1 class="hero__headline">
 Du vokser.<br>
