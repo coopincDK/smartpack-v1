@@ -16,6 +16,7 @@ const { lodlisteRouter } = require('./routes/lodliste');
 const { varRouter } = require('./routes/var');
 const { toplisteRouter } = require('./routes/topliste');
 const { hjemmesideRouter } = require('./routes/hjemmeside');
+const { alyothDemoRouter } = require('./routes/alyothDemo');
 const { vaegRouter } = require('./routes/vaeg');
 const { createRateLimiter } = require('./middleware/rateLimit');
 const { paalaegAsyncFejlhaandtering } = require('./middleware/asyncFejl');
@@ -31,7 +32,8 @@ function createApp(pool, ws, opts) {
   paalaegAsyncFejlhaandtering();
   const app = express();
   app.disable('x-powered-by');
-  // Ingen CORS-headers (same-origin). Ingen app.set('trust proxy', ...) —
+  // Eksisterende endpoints er same-origin. Kun Alyoths separate demo-rute
+  // har afgrænset CORS. Ingen app.set('trust proxy', ...) —
   // se src/middleware/clientIp.js og API.md for begrundelsen.
   app.use(express.json({ limit: '64kb' }));
 
@@ -73,6 +75,7 @@ function createApp(pool, ws, opts) {
   app.use(varRouter(pool));
   app.use(toplisteRouter(pool));
   app.use(hjemmesideRouter());
+  app.use(alyothDemoRouter());
   app.use(vaegRouter(pool));
 
   app.use((req, res) => {

@@ -331,3 +331,11 @@ HELT — ingen spillere slettes. Se `src/backup.js`.
 - **Rate-limits** er in-memory pr. Node-proces (`src/middleware/rateLimit.js`)
   — fint til én instans, skal erstattes af en delt store hvis der nogensinde
   køres flere API-instanser parallelt.
+
+## Alyoth demo requests
+
+`POST /api/spil/hjemmeside/alyoth-demo` (proxy path; Express route `/hjemmeside/alyoth-demo`) reuses `sendTilCrm` and `crmKontaktUrl` with the existing server-only `SMARTPACK_CRM_KEY`. It sends a Lead to the CRM contact-form inbox, labelled Alyoth website / Alyoth demo. The contact message includes the complete accepted setup, keep/replace decisions, module IDs, all usage inputs, separate label provider, fixed and usage line items, draft estimate version and optional external label budget. The quoted prices are explicitly a customer-browser snapshot, not a verified offer. No newsletter opt-in is inferred. No changes to the existing SmartPack contact route or its origin policy.
+
+Only the Alyoth origin `https://coopincdk.github.io` gets CORS on this new route. GET on the same route reports `{ready,schemaVersion}` without contacting CRM or disclosing the key. POST requires schemaVersion 1, a 16-80 character requestId, bounded contact strings, known modules/categories, numeric volume limits, coherent EUR-cent totals and line sums. Requests larger than the existing JSON body limit are rejected; the CRM message is limited to 24,000 characters without truncation. Honeypot submissions do not reach CRM. Normal submissions only return `{ok:true,crm:true,requestId}` after CRM acknowledges delivery; failures return 502 and must not be presented as received. Successful/in-flight requests are deduplicated by ID and payload hash for 10 minutes in process memory; failures are retryable. The same ID with changed content returns 409. Process restarts clear this deduplication cache.
+
+Tests: `node --test test/alyoth-demo.test.js`. Existing full database tests run in the deploy workflow against PostgreSQL; the local pg-mem fallback cannot parse the existing migration 006 DISTINCT expression. No new migration is needed for this route.
