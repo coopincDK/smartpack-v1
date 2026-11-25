@@ -47,3 +47,16 @@ test('Long valid plans retain all systems rather than the old contact route 2,00
   const b=sample();b.plan.systems.webshop=Array.from({length:40},(_,n)=>'Webshop '+n+' '+('x'.repeat(80)));
   assert.equal(validateDemo(b),true);assert.match(demoTilCrm(b).message,/Webshop 39/);assert.ok(demoTilCrm(b).message.length>4000);
 });
+
+test('Need is forwarded with the current customised plan; old requests remain supported',async t=>{
+  const calls=[],h=await harness(t,async body=>{calls.push(body);return {ok:true};});
+  const cases=[{id:'operations'},{id:'connected'},...['shipping','wms','oms','returns','finance','pim','support','checkout','insight','ai','tpl'].map(task=>({id:'task',task}))];
+  for(const [i,need]of cases.entries()){
+    const b=sample();b.requestId='alyoth-need-test-'+String(i).padStart(8,'0');b.plan.need=need;
+    assert.equal((await post(h,b)).status,200);assert.match(calls[i].message,/CUSTOMER NEED/);assert.ok(!calls[i].message.includes('undefined'));assert.match(calls[i].message,/may have customised/);assert.match(calls[i].message,/wms, shipping, oms/);
+  }
+  assert.match(calls[0].message,/Run my warehouse & shipping/);assert.match(calls[1].message,/Connect operations & accounting/);assert.match(calls[5].message,/Handle returns/);
+  assert.equal(validateDemo(sample()),true);
+  for(const need of [{id:'unknown'},{id:'task',task:'unknown'},'operations',{id:'operations',task:'returns'},{id:'connected',extra:'untrusted'}]){const b=sample();b.plan.need=need;assert.equal((await post(h,b)).status,400);}
+  assert.equal(calls.length,cases.length);
+});

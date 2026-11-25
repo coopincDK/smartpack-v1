@@ -19,6 +19,7 @@ function validateDemo(b) {
   const c=b.contact,p=b.plan,q=b.quote;
   if(!plain(c)||!text(c.name,120)||!c.name.trim()||!text(c.email,200)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email)||!text(c.company,160)||!text(c.phone,40)||!text(c.message,4000))return false;
   if(!text(b._hp,200)||!plain(p)||!plain(p.systems)||!plain(p.volumes)||!plain(p.decisions))return false;
+  if(p.need!=null&&(!plain(p.need)||!['operations','task','connected'].includes(p.need.id)||Object.keys(p.need).some(k=>!['id','task'].includes(k))||(p.need.id==='task'?!MODULES.has(p.need.task):p.need.task!==undefined)))return false;
   if(!Array.isArray(p.modules)||p.modules.length>11||new Set(p.modules).size!==p.modules.length||!p.modules.every(m=>text(m,20)&&MODULES.has(m)))return false;
   if(!['alyoth','shipmondo','webshipper','mixed','other'].includes(p.labelProvider)||typeof p.labelFollow!=='boolean')return false;
   if((p.labelProvider==='alyoth'||p.labelProvider==='mixed')!==p.modules.includes('shipping'))return false;
@@ -35,6 +36,13 @@ function validateDemo(b) {
   return true;
 }
 
+function needLabel(n){
+  if(!n)return 'No specific need selected';
+  if(n.id==='operations')return 'Run my warehouse & shipping';
+  if(n.id==='connected')return 'Connect operations & accounting';
+  const tasks={shipping:'Create shipping labels',wms:'Pick, pack and manage stock',oms:'Manage orders across channels',returns:'Handle returns',pim:'Maintain product data',finance:'Bring my accounting together',support:'Handle customer enquiries',checkout:'Connect store sales and checkout',insight:'Understand stock and performance',ai:'Automate agreed operational tasks with AI',tpl:'Run fulfilment for client brands'};
+  return 'Improve one specific task: '+tasks[n.task];
+}
 const eur = n => (n/100).toFixed(2)+' EUR';
 function demoTilCrm(b) {
   const c=b.contact,p=b.plan,q=b.quote;
@@ -42,6 +50,8 @@ function demoTilCrm(b) {
     'ALYOTH — DEMO REQUEST',
     'Customer plan and browser-calculated estimate. Draft pricing, excluding VAT; not an offer or a verified quotation.',
     'Pricing version: '+q.version,
+    '', 'CUSTOMER NEED',needLabel(p.need),
+    'The customer may have customised the suggested modules. The selections and estimate below reflect their current plan.',
     '', 'CURRENT SYSTEMS AND INTENDED SETUP',
     ...Object.entries(p.systems).filter(([,values])=>values.length).map(([cat,values])=>cat+': '+values.join(', ')+' — '+(p.decisions[cat]||'keep')),
     '', 'SELECTED ALYOTH MODULES',p.modules.length?p.modules.join(', '):'None selected',
@@ -78,7 +88,7 @@ function alyothDemoRouter(opts={}) {
     }
     next();
   });
-  router.get(PATH,(_req,res)=>res.json({ready:!!process.env.SMARTPACK_CRM_KEY,schemaVersion:1}));
+  router.get(PATH,(_req,res)=>res.json({ready:!!process.env.SMARTPACK_CRM_KEY,schemaVersion:1,features:['customerNeed']}));
   router.post(PATH,limiter,async(req,res,next)=>{
     try {
       const b=req.body;
