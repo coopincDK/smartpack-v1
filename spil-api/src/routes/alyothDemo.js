@@ -45,6 +45,21 @@ function needLabel(n){
   return 'Improve one specific task: '+tasks[n.task];
 }
 const eur = n => (n/100).toFixed(2)+' EUR';
+function introductionPrices(p,q) {
+  const normal=eur(q.totalCents)+' / month',out=['','NORMAL AND INTRODUCTORY PRICES — DRAFT, EXCLUDING VAT','Normal Alyoth software estimate: '+normal];
+  if(p.startOffer==='free-month')out.push(
+    'During initial free trial: 0.00 EUR in Alyoth software charges for 30 days from first real use.',
+    'After the free trial: '+normal+' at the same modules and usage.',
+    'Trial usage limits and AI budgets apply.');
+  else if(p.startOffer==='half-price')out.push(
+    'During introduction: '+eur(Math.round(q.totalCents/2))+' / month for the first three months from activation (50% off ordinary Alyoth software charges).',
+    'After the three-month introduction: '+normal+' at the same modules and usage.');
+  else out.push('No introductory offer selected. The normal estimate above applies.');
+  if(p.startOffer)out.push('Offer start and end dates: not scheduled; the offer has not been activated.');
+  out.push('These are estimates, not invoices. Actual usage and approved module changes can change the amounts. Freight, external apps, external label agreements and expert services are not discounted or made free by the start offer.');
+  if(q.externalLabelCents!==null)out.push('Known external label agreement: '+eur(q.externalLabelCents)+' / month, separate from both Alyoth prices.');
+  return out;
+}
 function demoTilCrm(b) {
   const c=b.contact,p=b.plan,q=b.quote;
   const lines=[
@@ -52,7 +67,8 @@ function demoTilCrm(b) {
     'Customer plan and browser-calculated estimate. Draft pricing, excluding VAT; not an offer or a verified quotation.',
     'Pricing version: '+q.version,
     '', 'START OFFER PREFERENCE',p.startOffer==='free-month'?'One month free (30 days from first real use)':p.startOffer==='half-price'?'50% off ordinary Alyoth software charges for three months':'No start offer selected',
-    'Preference only: no account, trial, payment or subscription is activated by this demo request. The estimate below is the normal draft price before an introductory offer.',
+    'Preference only: no account, trial, payment or subscription is activated by this demo request. Both introductory and normal estimates are shown below; the itemized breakdown uses the normal prices.',
+    ...introductionPrices(p,q),
     '', 'CUSTOMER NEED',needLabel(p.need),
     'The customer may have customised the suggested modules. The selections and estimate below reflect their current plan.',
     '', 'CURRENT SYSTEMS AND INTENDED SETUP',
@@ -91,7 +107,7 @@ function alyothDemoRouter(opts={}) {
     }
     next();
   });
-  router.get(PATH,(_req,res)=>res.json({ready:!!process.env.SMARTPACK_CRM_KEY,schemaVersion:1,features:['customerNeed']}));
+  router.get(PATH,(_req,res)=>res.json({ready:!!process.env.SMARTPACK_CRM_KEY,schemaVersion:1,features:['customerNeed','introductoryPriceSummary']}));
   router.post(PATH,limiter,async(req,res,next)=>{
     try {
       const b=req.body;

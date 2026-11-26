@@ -65,3 +65,20 @@ test('Start offer preference reaches CRM without changing the normal quote or ac
   for(const startOffer of ['free-month','half-price']){const b=sample();b.plan.startOffer=startOffer;assert.equal(validateDemo(b),true);const message=demoTilCrm(b).message;assert.match(message,/START OFFER PREFERENCE/);assert.match(message,/no account, trial, payment or subscription/);assert.match(message,/1845.00 EUR/);assert.match(message,startOffer==='free-month'?/30 days/:/50%/);}
   const b=sample();b.plan.startOffer='unlimited';assert.equal(validateDemo(b),false);assert.equal(validateDemo(sample()),true);
 });
+
+test('CRM receives both normal and introductory prices through the real demo route',async t=>{
+  const calls=[],h=await harness(t,async body=>{calls.push(body);return {ok:true};});
+  for(const [i,startOffer] of ['free-month','half-price',null].entries()){
+    const b=sample();b.requestId='alyoth-price-test-'+String(i).padStart(8,'0');b.plan.startOffer=startOffer;
+    assert.equal((await post(h,b)).status,200);
+    const m=calls[i].message;assert.ok(m.includes('Normal Alyoth software estimate: 1845.00 EUR / month'));
+    assert.match(m,/Alyoth total: 1845.00 EUR/);assert.ok(m.includes('50.00 EUR / month, separate from both Alyoth prices'));
+    assert.match(m,/not invoices/);
+    if(startOffer==='free-month'){assert.match(m,/During initial free trial: 0.00 EUR/);assert.match(m,/30 days from first real use/);assert.match(m,/After the free trial: 1845.00 EUR/);}
+    else if(startOffer==='half-price'){assert.match(m,/During introduction: 922.50 EUR/);assert.match(m,/first three months from activation/);assert.match(m,/After the three-month introduction: 1845.00 EUR/);}
+    else {assert.match(m,/No introductory offer selected/);assert.doesNotMatch(m,/During introduction:|During initial free trial:/);}
+  }
+});
+test('Introductory estimate rounds cents consistently with the website, including zero',()=>{
+  for(const total of [0,12345,130000]){const b=sample();b.plan.startOffer='half-price';b.quote.totalCents=total;const expected=(Math.round(total/2)/100).toFixed(2)+' EUR';assert.ok(demoTilCrm(b).message.includes('During introduction: '+expected));}
+});
