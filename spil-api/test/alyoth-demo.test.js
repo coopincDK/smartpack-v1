@@ -60,3 +60,8 @@ test('Need is forwarded with the current customised plan; old requests remain su
   for(const need of [{id:'unknown'},{id:'task',task:'unknown'},'operations',{id:'operations',task:'returns'},{id:'connected',extra:'untrusted'}]){const b=sample();b.plan.need=need;assert.equal((await post(h,b)).status,400);}
   assert.equal(calls.length,cases.length);
 });
+
+test('Start offer preference reaches CRM without changing the normal quote or activating a subscription',()=>{
+  for(const startOffer of ['free-month','half-price']){const b=sample();b.plan.startOffer=startOffer;assert.equal(validateDemo(b),true);const message=demoTilCrm(b).message;assert.match(message,/START OFFER PREFERENCE/);assert.match(message,/no account, trial, payment or subscription/);assert.match(message,/1845.00 EUR/);assert.match(message,startOffer==='free-month'?/30 days/:/50%/);}
+  const b=sample();b.plan.startOffer='unlimited';assert.equal(validateDemo(b),false);assert.equal(validateDemo(sample()),true);
+});

@@ -19,6 +19,7 @@ function validateDemo(b) {
   const c=b.contact,p=b.plan,q=b.quote;
   if(!plain(c)||!text(c.name,120)||!c.name.trim()||!text(c.email,200)||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.email)||!text(c.company,160)||!text(c.phone,40)||!text(c.message,4000))return false;
   if(!text(b._hp,200)||!plain(p)||!plain(p.systems)||!plain(p.volumes)||!plain(p.decisions))return false;
+  if(p.startOffer!=null&&!['free-month','half-price'].includes(p.startOffer))return false;
   if(p.need!=null&&(!plain(p.need)||!['operations','task','connected'].includes(p.need.id)||Object.keys(p.need).some(k=>!['id','task'].includes(k))||(p.need.id==='task'?!MODULES.has(p.need.task):p.need.task!==undefined)))return false;
   if(!Array.isArray(p.modules)||p.modules.length>11||new Set(p.modules).size!==p.modules.length||!p.modules.every(m=>text(m,20)&&MODULES.has(m)))return false;
   if(!['alyoth','shipmondo','webshipper','mixed','other'].includes(p.labelProvider)||typeof p.labelFollow!=='boolean')return false;
@@ -50,6 +51,8 @@ function demoTilCrm(b) {
     'ALYOTH — DEMO REQUEST',
     'Customer plan and browser-calculated estimate. Draft pricing, excluding VAT; not an offer or a verified quotation.',
     'Pricing version: '+q.version,
+    '', 'START OFFER PREFERENCE',p.startOffer==='free-month'?'One month free (30 days from first real use)':p.startOffer==='half-price'?'50% off ordinary Alyoth software charges for three months':'No start offer selected',
+    'Preference only: no account, trial, payment or subscription is activated by this demo request. The estimate below is the normal draft price before an introductory offer.',
     '', 'CUSTOMER NEED',needLabel(p.need),
     'The customer may have customised the suggested modules. The selections and estimate below reflect their current plan.',
     '', 'CURRENT SYSTEMS AND INTENDED SETUP',
